@@ -2679,3 +2679,6 @@ references/text/** -text
 "/experiments/current/ch07/7-14-results.json" filter=lfs diff=lfs merge=lfs -text
 "/experiments/current/ch07/7-2-results.json" filter=lfs diff=lfs merge=lfs -text
 "/experiments/current/ch09/9-10-results.json" filter=lfs diff=lfs merge=lfs -text
+
+# Keep newly generated vector PDF figures in plain Git alongside SVG and PNG
+/manuscripts/ch*/*.pdf !filter !diff !merge binary

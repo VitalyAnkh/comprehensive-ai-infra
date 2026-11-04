@@ -22,9 +22,9 @@ for n in range(1,13):
  check(got==assets,f'{n}: active figure index')
  bp=R/'before'/p.relative_to(ROOT)
  before=(bp if bp.exists() else next((R/'before'/'manuscripts').glob(f'{n:02}-*.md'))).read_text()
- # Removing references must not remove exercises or alter their identifiers.
+ # Removing references must not remove exercises or alter their identifiers (adding new exercises is allowed).
  exercise=lambda x:re.findall(r'^> \*\*(?:练习|实验) (\d+-\d+)',x,re.M)
- check(exercise(s)==exercise(before),f'{n}: preserved exercise identifiers')
+ check(set(exercise(before))<=set(exercise(s)),f'{n}: preserved exercise identifiers')
  rows.append(dict(chapter=n,last_section=headings[-1],figures=len(assets),footnotes=len(defined)))
 d=json.loads((ROOT/'calculations/results/core-principles.json').read_text())
 check(d['old_static_capacity']==4 and d['new_static_capacity']==18,'capacity counterfactual')
