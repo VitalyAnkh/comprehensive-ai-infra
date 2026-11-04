@@ -5,12 +5,18 @@
 /* Keep wide block equations scrollable within the text column on small screens;
    leave inline math (span.arithmatex) inline so it sits on the baseline without scrollbars. */
 .md-typeset div.arithmatex { overflow-x: auto; overflow-y: hidden; }
+.md-typeset span.arithmatex { display: inline; overflow: visible; }
 /* Material renders tables as inline-block, which pins them to the left because
    auto margins do nothing on inline boxes. Force a block box, then centre it. */
 .md-typeset table:not([class]) {
   display: table;
   margin-inline: auto;
   font-size: .62rem;
+}
+.md-typeset table:not([class]) th,
+.md-typeset table:not([class]) td {
+  min-width: 0;
+  padding: .65em .75em;
 }
 .md-typeset table:not([class]) th { text-align: center; }
 .md-typeset a { overflow-wrap: anywhere; }
