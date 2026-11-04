@@ -1,18 +1,27 @@
-# 深入理解 AI Infra：量化分析与系统设计
+# 深入理解 AI Infra：量化分析与系统设计（清晰易读重述版 / Plain Edition）
 
-[![Build](https://github.com/bojieli/ai-infra-book/actions/workflows/book-site.yml/badge.svg)](https://github.com/bojieli/ai-infra-book/actions/workflows/book-site.yml)
+[![Build](https://github.com/VitalyAnkh/plain-ai-infra-book/actions/workflows/book-site.yml/badge.svg)](https://github.com/VitalyAnkh/plain-ai-infra-book/actions/workflows/book-site.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
-[![Stars](https://img.shields.io/github/stars/bojieli/ai-infra-book?style=social)](https://github.com/bojieli/ai-infra-book)
+[![Upstream](https://img.shields.io/badge/upstream-bojieli%2Fai--infra--book-brightgreen)](https://github.com/bojieli/ai-infra-book)
 
 **简体中文** · [English](book-en/) · [繁體中文](book-zh-tw/) · [Русский — community edition](book-ru/)
+
+> [!IMPORTANT]
+> **关于本仓库（清晰易读重述版）与版权说明**
+>
+> - **来源与致谢**：本仓库（[`VitalyAnkh/plain-ai-infra-book`](https://github.com/VitalyAnkh/plain-ai-infra-book)）修改自上游作者[李博杰](https://01.me/)（[@bojieli](https://github.com/bojieli)）所著的开源技术书籍[《深入理解 AI Infra：量化分析与系统设计》](https://github.com/bojieli/ai-infra-book)。
+> - **改写目标**：原书初稿有 AI 参与写作，部分段落存在拗口难懂的用词、生造概念与欧化长句。本版本在**严格保留原书全部技术事实、数学公式、量化算例、图表与配套实验**的基础上，去掉各类晦涩的 AI 行话（AI Jargon），将正文改写为人类更易读懂、文雅自然、符合现代汉语习惯的清晰书面语（目前已完成第 1、2 章深度改写与多轮审校，其余章节正按 [`refine-prose` Skill](.agents/skills/refine-prose/SKILL.md) 持续修订中）。
+> - **在线阅读（本仓库重述版）**：**<https://vitalyankh.github.io/plain-ai-infra-book/>**
+> - **版权与许可**：本仓库严格遵循上游作者的版权与开源许可协议，采用 **[Apache License 2.0](LICENSE)** 许可发布。原书著作权归上游原作者 **Bojie Li（李博杰）** 所有（Copyright © 2026 Bojie Li）。
 
 > [!TIP]
 > **下载与阅读** · [格式与版本说明](#版本与格式说明)
 >
-> - **简体中文（原版，作者 [@bojieli](https://github.com/bojieli)）**：[PDF](https://github.com/bojieli/ai-infra-book/releases/latest/download/AI-Infra-Book.pdf) · [EPUB](https://github.com/bojieli/ai-infra-book/releases/latest/download/AI-Infra-Book.epub) · [在线阅读](https://bojieli.github.io/ai-infra-book/)
-> - **English（社区翻译，[@tg1482](https://github.com/tg1482)）**: [PDF](https://github.com/bojieli/ai-infra-book/releases/latest/download/AI-Infra-Book-EN.pdf) · [EPUB](https://github.com/bojieli/ai-infra-book/releases/latest/download/AI-Infra-Book-EN.epub) · [Read online](https://bojieli.github.io/ai-infra-book/en/)
-> - **繁體中文（社区翻译，[@edward821220](https://github.com/edward821220)）**：[PDF](https://github.com/bojieli/ai-infra-book/releases/latest/download/AI-Infra-Book-ZH-TW.pdf) · [EPUB](https://github.com/bojieli/ai-infra-book/releases/latest/download/AI-Infra-Book-ZH-TW.epub) · [線上閱讀](https://bojieli.github.io/ai-infra-book/zh-tw/)
-> - **Русский — community edition, [@ilkruglov](https://github.com/ilkruglov)**: [PDF](https://github.com/bojieli/ai-infra-book/releases/latest/download/AI-Infra-in-Depth-RU.pdf) · [EPUB](https://github.com/bojieli/ai-infra-book/releases/latest/download/AI-Infra-in-Depth-RU.epub) · [Онлайн-чтение](https://bojieli.github.io/ai-infra-book/ru/) · [О переводе](book-ru/)
+> - **简体中文（本仓库清晰易读重述版）**：[在线阅读（GitHub Pages）](https://vitalyankh.github.io/plain-ai-infra-book/) · [GitHub 仓库](https://github.com/VitalyAnkh/plain-ai-infra-book)
+> - **简体中文（上游原版，作者 [@bojieli](https://github.com/bojieli)）**：[PDF](https://github.com/bojieli/ai-infra-book/releases/latest/download/AI-Infra-Book.pdf) · [EPUB](https://github.com/bojieli/ai-infra-book/releases/latest/download/AI-Infra-Book.epub) · [原版在线阅读](https://bojieli.github.io/ai-infra-book/)
+> - **English（社区翻译，[@tg1482](https://github.com/tg1482)）**: [PDF](https://github.com/bojieli/ai-infra-book/releases/latest/download/AI-Infra-Book-EN.pdf) · [EPUB](https://github.com/bojieli/ai-infra-book/releases/latest/download/AI-Infra-Book-EN.epub) · [Read online](https://vitalyankh.github.io/plain-ai-infra-book/en/)
+> - **繁體中文（社区翻译，[@edward821220](https://github.com/edward821220)）**：[PDF](https://github.com/bojieli/ai-infra-book/releases/latest/download/AI-Infra-Book-ZH-TW.pdf) · [EPUB](https://github.com/bojieli/ai-infra-book/releases/latest/download/AI-Infra-Book-ZH-TW.epub) · [線上閱讀](https://vitalyankh.github.io/plain-ai-infra-book/zh-tw/)
+> - **Русский — community edition, [@ilkruglov](https://github.com/ilkruglov)**: [PDF](https://github.com/bojieli/ai-infra-book/releases/latest/download/AI-Infra-in-Depth-RU.pdf) · [EPUB](https://github.com/bojieli/ai-infra-book/releases/latest/download/AI-Infra-in-Depth-RU.epub) · [Онлайн-чтение](https://vitalyankh.github.io/plain-ai-infra-book/ru/) · [О переводе](book-ru/)
 
 《深入理解 AI Infra》是 GitHub 上获得 **50k+ Star** 的[《深入理解 AI Agent：设计原理与工程实践》](https://github.com/bojieli/ai-agent-book)的姊妹篇。
 
@@ -161,16 +170,18 @@ python3 book/build_epub.py --edition zh       # EPUB 只需 Pandoc 与 Poppler�
 
 [查看 GitHub 上的全部贡献记录 →](https://github.com/bojieli/ai-infra-book/graphs/contributors)
 
-## 许可
+## 许可与版权说明
 
-本书原创正文、配图及配套代码采用 [Apache License 2.0](LICENSE) 许可。Copyright © 2026 Bojie Li（李博杰）。
+本书系在[李博杰（Bojie Li）](https://github.com/bojieli)所著上游开源书籍[《深入理解 AI Infra：量化分析与系统设计》](https://github.com/bojieli/ai-infra-book)基础上改写而成的清晰易读重述版（Plain Edition）。
+
+本书原创正文、配图、配套代码及本仓库的文字润色修改均遵循上游作者的版权与开源协议，采用 [Apache License 2.0](LICENSE) 许可发布。Copyright © 2026 Bojie Li（李博杰）。
 
 仓库中的第三方代码、字体、模板与参考资料保留各自的版权和许可声明，不因收录于本仓库而改用 Apache-2.0；具体来源和使用条件见相应目录。
 
 ## 版本与格式说明
 
+- **在线阅读（本仓库重述版）**：[阅读网站（Plain Edition）](https://vitalyankh.github.io/plain-ai-infra-book/)提供章节导航、全文搜索和深色模式，右上角可切换语言；上游原版在线阅读见 [bojieli.github.io/ai-infra-book](https://bojieli.github.io/ai-infra-book/)。
 - **PDF**：由 XeLaTeX 排版，公式、表格、脚注和交叉引用完整，推荐通读时使用。GitHub 直接显示 Markdown 时，LaTeX 公式和部分排版常常渲染不全或错位；上方目录链接到各章 Markdown 源文件，便于查找原文和提交勘误。
 - **EPUB**：字号可调，版面随屏幕自动重排，适合手机和电子书阅读器。
-- **在线阅读**：[阅读网站](https://bojieli.github.io/ai-infra-book/)提供章节导航、全文搜索和深色模式，右上角可切换语言。
-- **自动发布**：每次更新 `main` 后自动构建全部格式并发布到 [Releases](https://github.com/bojieli/ai-infra-book/releases)，上方链接始终指向最新版。
+- **自动发布**：每次更新 `main` 后自动构建并部署到 GitHub Pages（[vitalyankh.github.io/plain-ai-infra-book](https://vitalyankh.github.io/plain-ai-infra-book/)）；上游原版 PDF/EPUB 自动发布见[上游 Releases](https://github.com/bojieli/ai-infra-book/releases)。
 - **翻译版本与译者**：简体中文为原版，作者为 [Bojie Li（李博杰）](https://github.com/bojieli)，正文位于 [`manuscripts/`](manuscripts/README.md)。英文版由社区译者 [@tg1482](https://github.com/tg1482) 翻译，位于 [`book-en/`](book-en/)，包含前言与十二章正文、重绘为英文标注的配图和独立的构建脚本。繁體中文版由社区贡献者 [@edward821220](https://github.com/edward821220) 翻译并整理，位于 [`book-zh-tw/`](book-zh-tw/)，包含前言与十二章正文、繁體配图和独立的构建脚本；两项已知配图例外见[繁體版说明](book-zh-tw/README.md)。俄语 community edition 由 [@ilkruglov](https://github.com/ilkruglov) 组织并完成翻译与校验，位于 [`book-ru/`](book-ru/)，依据固定版本的中文原稿制作，原作者仍为 [Bojie Li](https://github.com/bojieli)。各译本的译者、来源版本和许可证见对应目录说明；译本数字、公式和引用以原版为准。

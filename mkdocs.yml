@@ -1,8 +1,8 @@
 site_name: 深入理解 AI Infra：量化分析与系统设计
-site_description: 从数据搬移理解芯片、网络、推理与训练系统
-site_url: https://bojieli.github.io/ai-infra-book/
-repo_url: https://github.com/bojieli/ai-infra-book
-repo_name: bojieli/ai-infra-book
+site_description: 从数据搬移理解芯片、网络、推理与训练系统（清晰易读重述版）
+site_url: https://vitalyankh.github.io/plain-ai-infra-book/
+repo_url: https://github.com/VitalyAnkh/plain-ai-infra-book
+repo_name: VitalyAnkh/plain-ai-infra-book
 docs_dir: build/docs
 site_dir: build/site
 use_directory_urls: false

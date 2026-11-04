@@ -49,6 +49,7 @@ jobs:
           if-no-files-found: error
 
   pdf:
+    if: github.event_name == 'workflow_dispatch'
     # Match local Apple fonts (Songti SC, Menlo, Arial Unicode MS and Heiti SC).
     runs-on: macos-15
     timeout-minutes: 60
@@ -129,6 +130,7 @@ jobs:
           if-no-files-found: ignore
 
   pdf-ru:
+    if: github.event_name == 'workflow_dispatch'
     runs-on: macos-15
     timeout-minutes: 60
     steps:
@@ -205,7 +207,7 @@ jobs:
           if-no-files-found: ignore
 
   release:
-    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    if: github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch'
     needs: [website, pdf, pdf-ru]
     runs-on: ubuntu-24.04
     permissions:
@@ -235,7 +237,7 @@ jobs:
           repo = os.environ['REPOSITORY']
           built = os.environ['BUILT_AT']
           latest = f'https://github.com/{repo}/releases/latest/download'
-          site = 'https://bojieli.github.io/ai-infra-book'
+          site = 'https://vitalyankh.github.io/plain-ai-infra-book'
           rows = [
               ('简体中文', 'AI-Infra-Book', f'{site}/'),
               ('English', 'AI-Infra-Book-EN', f'{site}/en/'),
@@ -288,7 +290,7 @@ jobs:
 
   deploy:
     if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
-    needs: [website, pdf, pdf-ru]
+    needs: [website]
     runs-on: ubuntu-24.04
     permissions:
       pages: write

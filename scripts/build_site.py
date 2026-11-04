@@ -25,8 +25,8 @@ from publishing_links import inherited_target
 DOCS = ROOT / 'build/docs'
 SITE = ROOT / 'build/site'
 FIGURE_CACHE = ROOT / 'build/site-figures'
-REPO = 'https://github.com/bojieli/ai-infra-book'
-SITE_URL = 'https://bojieli.github.io/ai-infra-book/'
+REPO = 'https://github.com/VitalyAnkh/plain-ai-infra-book'
+SITE_URL = 'https://vitalyankh.github.io/plain-ai-infra-book/'
 LFS_POINTER = b'version https://git-lfs.github.com/spec/v1'
 FIGURE_WIDTH = 1400  # pixels; translations ship PDF figures, browsers need raster images
 
