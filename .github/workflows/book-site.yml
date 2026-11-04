@@ -5,6 +5,12 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      build_pdf:
+        description: 'Build PDF/EPUB releases in addition to GitHub Pages website'
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: read
@@ -49,7 +55,7 @@ jobs:
           if-no-files-found: error
 
   pdf:
-    if: github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' && inputs.build_pdf == true
     # Match local Apple fonts (Songti SC, Menlo, Arial Unicode MS and Heiti SC).
     runs-on: macos-15
     timeout-minutes: 60
@@ -130,7 +136,7 @@ jobs:
           if-no-files-found: ignore
 
   pdf-ru:
-    if: github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' && inputs.build_pdf == true
     runs-on: macos-15
     timeout-minutes: 60
     steps:
@@ -207,7 +213,7 @@ jobs:
           if-no-files-found: ignore
 
   release:
-    if: github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch'
+    if: github.ref == 'refs/heads/main' && github.event_name == 'workflow_dispatch' && inputs.build_pdf == true
     needs: [website, pdf, pdf-ru]
     runs-on: ubuntu-24.04
     permissions:
