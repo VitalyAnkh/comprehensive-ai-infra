@@ -4,7 +4,7 @@
 
 [本版 GitHub 仓库（Plain Edition）](https://github.com/VitalyAnkh/plain-ai-infra-book) · [前言](../manuscripts/00-前言.md) · [上游原版仓库（@bojieli）](https://github.com/bojieli/ai-infra-book) · [下载原版 PDF](https://github.com/bojieli/ai-infra-book/releases/latest/download/AI-Infra-Book.pdf) · [EPUB](https://github.com/bojieli/ai-infra-book/releases/latest/download/AI-Infra-Book.epub)
 
-> **关于本在线版本（清晰易读重述版 / Plain Edition）**：本网站基于[李博杰（@bojieli）](https://github.com/bojieli)所著开源书籍[《深入理解 AI Infra：量化分析与系统设计》](https://github.com/bojieli/ai-infra-book)构建。在严格保留原书全部技术事实、数学推导、量化算例与配图的基础上，去除原初稿中因 AI 参与辅助写作产生的拗口生造词与翻译腔，改写为清晰易读、符合现代汉语习惯的书面语（目前已完成第 1、2 章深度改写，其余章节持续更新中）。本版遵循上游原书的 [Apache License 2.0](../LICENSE) 许可，原书著作权归原作者 Bojie Li（李博杰）所有。
+> **关于本在线版本（清晰易读重述版 / Plain Edition）**：本网站基于[李博杰（@bojieli）](https://github.com/bojieli)所著开源书籍[《深入理解 AI Infra：量化分析与系统设计》](https://github.com/bojieli/ai-infra-book)构建。在严格保留原书全部技术事实、数学推导、量化算例与配图的基础上，去除原初稿中因 AI 参与辅助写作产生的拗口生造词与翻译腔，改写为清晰易读、符合现代汉语习惯的书面语。本版遵循上游原书的 [Apache License 2.0](../LICENSE) 许可，原书著作权归原作者 Bojie Li（李博杰）所有。
 
 ## 这本书写什么
 

@@ -10,7 +10,7 @@
 > **关于本仓库（清晰易读重述版）与版权说明**
 >
 > - **来源与致谢**：本仓库（[`VitalyAnkh/plain-ai-infra-book`](https://github.com/VitalyAnkh/plain-ai-infra-book)）修改自上游作者[李博杰](https://01.me/)（[@bojieli](https://github.com/bojieli)）所著的开源技术书籍[《深入理解 AI Infra：量化分析与系统设计》](https://github.com/bojieli/ai-infra-book)。
-> - **改写目标**：原书初稿有 AI 参与写作，部分段落存在拗口难懂的用词、生造概念与欧化长句。本版本在**严格保留原书全部技术事实、数学公式、量化算例、图表与配套实验**的基础上，去掉各类晦涩的 AI 行话（AI Jargon），将正文改写为人类更易读懂、文雅自然、符合现代汉语习惯的清晰书面语（目前已完成第 1、2 章深度改写与多轮审校，其余章节正按 [`refine-prose` Skill](.agents/skills/refine-prose/SKILL.md) 持续修订中）。
+> - **改写目标**：原书初稿有 AI 参与写作，部分段落存在拗口难懂的用词、生造概念与欧化长句。本版本在**严格保留原书全部技术事实、数学公式、量化算例、图表与配套实验**的基础上，去掉各类晦涩的 AI 行话（AI Jargon），将正文改写为人类更易读懂、文雅自然、符合现代汉语习惯的清晰书面语。
 > - **在线阅读（本仓库重述版）**：**<https://vitalyankh.github.io/plain-ai-infra-book/>**
 > - **版权与许可**：本仓库严格遵循上游作者的版权与开源许可协议，采用 **[Apache License 2.0](LICENSE)** 许可发布。原书著作权归上游原作者 **Bojie Li（李博杰）** 所有（Copyright © 2026 Bojie Li）。
 
