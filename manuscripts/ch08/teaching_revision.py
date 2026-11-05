@@ -111,6 +111,66 @@ def draw(here,data):
         f,a=plot(3.6);s=np.array(data['task']['local_speedups'])
         for frac,col in zip(data['task']['decode_fractions'],['#267398','#388768','#a56c28']):a.plot(s,1/(1-frac+frac/s),label=f'decode 占 {frac:.0%}',color=col)
         a.set(xlabel='decode 加速比',ylabel='完整任务加速比',xlim=(1,8));a.legend(frameon=False);save(f,'15-task')
+        # Multi-LoRA batching diagram with proper math subscripts ($W_0$, $XW_0 + \Delta Y$)
+        f,a=canvas(4.6)
+        text(a,.03,.92,'(a) 计算路径：共享基础权重 + 分组低秩分支',12)
+        text(a,.72,.92,'(b) 显存容量对比',12)
+        box(a,.02,.40,.16,.44,'输入批次 $X$\n($b=16$ 行)','gray',11)
+        box(a,.21,.65,.27,.20,'共享基础权重 $W_0$\n(14.1 GiB, 读 1 次)','blue',11)
+        box(a,.21,.37,.27,.20,'分组低秩分支\n(按 Adapter 聚拢)','orange',11)
+        box(a,.51,.48,.18,.28,'相加输出\n$XW_0+\\Delta Y$','green',11)
+        arrow(a,(.18,.66),(.21,.74));arrow(a,(.18,.56),(.21,.48))
+        arrow(a,(.48,.74),(.51,.65));arrow(a,(.48,.48),(.51,.57))
+        box(a,.72,.68,.25,.18,'100 套 LoRA\n1.43 GiB','orange',11)
+        box(a,.72,.46,.25,.18,'基础模型权重\n15.3 GiB','blue',11)
+        box(a,.72,.24,.25,.18,'100 条 8K KV\n112.5 GiB (瓶颈)','purple',11)
+        box(a,.03,.04,.94,.15,'可驻留 Adapter 数量取决于低秩小矩阵容量 (100 套仅 1.43 GiB)\n可同时服务请求数量仍受限于上下文 KV 缓存容量 (100 条需 112.5 GiB)','gray',11)
+        save(f,'lora-batch')
+        # Draft generation methods timeline
+        f,a=canvas(4.2)
+        rows=[('普通自回归解码',[(0,26.3,'gray','目标 26.3 ms')],'1 tok → 26.3 ms/tok'),
+              ('串行草稿 ($E[N]=3$)',[(0,3.57,'orange',''),(3.57,3.57,'orange',''),(7.14,3.57,'orange',''),(10.71,3.57,'orange',''),(14.28,26.26,'blue','验证 26.3 ms')],'3 tok → 13.5 ms/tok'),
+              ('并行 DFlash ($E[N]=3$)',[(0,3.57,'green',''),(3.57,26.26,'blue','验证 26.3 ms')],'3 tok → 9.9 ms/tok'),
+              ('并行 DFlash ($E[N]=2$)',[(0,3.57,'orange',''),(3.57,26.26,'purple','验证 26.3 ms')],'2 tok → 14.9 ms/tok')]
+        x0=.27;scale=.0105
+        for idx,(label,segs,summary) in enumerate(rows):
+            y=.76-idx*.19
+            text(a,x0-.015,y+.06,label,11,ha='right')
+            end_x=x0
+            for st,dur,col,btxt in segs:
+                bx=x0+st*scale;bw=dur*scale
+                box(a,bx,y,bw,.12,btxt,col,11)
+                end_x=bx+bw
+            text(a,end_x+.015,y+.06,summary,11)
+        a.plot([x0,x0+62*scale],[.14,.14],color=COL['ink'],lw=1)
+        for tick in [0,10,20,30,40,50,60]:
+            tx=x0+tick*scale
+            a.plot([tx,tx],[.12,.14],color=COL['ink'],lw=1)
+            text(a,tx,.07,str(tick),11,ha='center')
+        text(a,x0+30*scale,.01,'单轮执行时间 / ms',11,ha='center')
+        save(f,'draft-methods')
+        # Path-A new 420pt 2-panel figure: XGrammar CPU-GPU overlap & Lossy KV compression reversal
+        f,a=canvas(6.8)
+        text(a,.50,.95,'A. 结构化生成（XGrammar）CPU-GPU 流水重叠与单步耗时（Qwen3-8B）',12,ha='center')
+        box(a,.02,.78,.28,.12,'串行未重叠\n合计 5.2 ms','gray',11)
+        box(a,.32,.78,.26,.12,'GPU 前向\n2.0 ms','blue',11)
+        box(a,.60,.78,.38,.12,'CPU 单线程掩码 3.2 ms\n阻塞等待','orange',11)
+        box(a,.02,.63,.28,.12,'单线程重叠\n合计 3.2 ms','gray',11)
+        box(a,.32,.63,.38,.12,'CPU 掩码 3.2 ms\n掩盖 GPU 2.0 ms','purple',11)
+        box(a,.72,.63,.26,.12,'受限于 CPU\n3.2 ms','orange',11)
+        box(a,.02,.48,.28,.12,'多线程重叠\n合计 2.0 ms','gray',11)
+        box(a,.32,.48,.38,.12,'GPU 前向 2.0 ms\n掩盖 4 线程 0.8 ms','green',11)
+        box(a,.72,.48,.26,.12,'零掩码阻塞\n2.0 ms','green',11)
+        text(a,.50,.42,'位图掩码 1.159 MiB（传输 48.6 μs）；融合采样省去 74.2 MiB Logits 读写',11,ha='center')
+        a.plot([.02,.98],[.38,.38],color=COL['line'],ls='--',lw=1.0)
+        text(a,.50,.33,'B. 有损 KV 压缩下“单步提速 20% 但输出膨胀 50%”引发耗时反转',12,ha='center')
+        box(a,.02,.18,.28,.12,'BF16 无损基线\n50 tok/s · 200 tok','blue',11)
+        box(a,.32,.18,.44,.12,'Prefill 0.5 s + Decode 4.0 s','green',11)
+        box(a,.78,.18,.20,.12,'总耗时\n4.5 s','green',11)
+        box(a,.02,.04,.28,.12,'有损 KV 压缩\n60 tok/s · 300 tok','orange',11)
+        box(a,.32,.04,.44,.12,'Prefill 0.5 s + Decode 5.0 s','orange',11)
+        box(a,.78,.04,.20,.12,'5.5 s\n(+22.2%)','orange',11)
+        out.save(f,'ch08-xgrammar-overlap-and-kv-compression-reversal')
     from core_principles_figures import draw as draw_principles
     draw_principles(8, out)
     from v41_case_figures import draw as draw_v41

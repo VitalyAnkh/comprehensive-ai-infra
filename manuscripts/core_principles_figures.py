@@ -118,11 +118,11 @@ def draw(chapter, out):
             a.legend(loc='upper right')
             out.save(f, 'figure-8-batch-counterfactual')
 
-            f, a = canvas(4.2)
+            f, a = canvas(4.4)
             rows = [
-                (0.71, '末尾追加', [(8, '8K 历史前缀直接复用', 'blue'), (1, '', 'orange')]),
-                (0.42, '改写开头', [(9, '9K 全量重新计算 KV', 'orange')]),
-                (0.13, '压缩总结', [(2, '2K 摘要', 'green'), (1, '1K 新增', 'orange')]),
+                (0.72, '末尾追加', [(8, '8K 历史前缀直接复用', 'blue'), (1, '', 'orange')]),
+                (0.45, '改写开头', [(9, '9K 全量重新计算 KV', 'orange')]),
+                (0.18, '压缩总结', [(2, '2K 摘要', 'green'), (1, '', 'orange')]),
             ]
             for y, label, segments in rows:
                 text(a, 0.03, y + 0.065, label, 12, weight='bold')
@@ -131,10 +131,10 @@ def draw(chapter, out):
                     width = length * 0.074
                     box(a, x, y, width, 0.13, lab, col, 11)
                     x += width
-                if label == '末尾追加':
+                if label in ('末尾追加', '压缩总结'):
                     badge(a, x - 0.037, y - 0.065, '1K 新增', 'orange', size=11)
                 if label == '压缩总结':
-                    badge(a, 0.66, y + 0.065, '另计一次摘要生成开销', 'gray', size=11)
+                    badge(a, 0.68, y + 0.065, '另计一次摘要生成开销', 'gray', size=11)
             text(a, 0.5, 0.94, '同一段多轮历史在三种上下文维护策略下的计算范围', 13.5, ha='center')
             out.save(f, 'figure-8-context-edits')
         if chapter == 10:

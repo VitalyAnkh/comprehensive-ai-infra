@@ -99,9 +99,9 @@ def draw(ch, out):
                 (0.27, '路径 C · 全局 KV 未命中', '前缀超出缓存或首次到达', '编码器重算缺失前缀', '补齐全局 KV 与 SWA 后处理新输入', 'orange'),
             ]
             for y, ltitle, lbody, rtitle, rbody, col in branches:
-                card(a, 0.03, y, 0.44, 0.16, ltitle, lbody, col, title_size=11.0, body_size=11.0)
-                card(a, 0.57, y, 0.40, 0.16, rtitle, rbody, 'orange' if col == 'orange' else 'green', title_size=11.0, body_size=11.0)
-                arrow(a, (0.47, y + 0.08), (0.57, y + 0.08), color=col)
+                card(a, 0.02, y, 0.43, 0.16, ltitle, lbody, col, title_size=11.0, body_size=11.0)
+                card(a, 0.53, y, 0.45, 0.16, rtitle, rbody, 'orange' if col == 'orange' else 'green', title_size=11.0, body_size=11.0)
+                arrow(a, (0.45, y + 0.08), (0.53, y + 0.08), color=col)
             badge(a, 0.50, 0.205, '三条路径汇合后统一进入解码器阶段', 'purple', size=11)
             card(a, 0.03, 0.04, 0.94, 0.125, '解码器 20 层末尾窗口重放 → 构建解码器局部 SWA → 自回归生成输出', '', 'purple', title_size=11.5)
             out.save(f, 'figure-8-v41-recovery')

@@ -161,9 +161,9 @@ def draw(here,data):
         from matplotlib.path import Path as MPath
         from matplotlib.patches import FancyArrowPatch
         for panel,(title,shifted) in enumerate([('对齐配对 rank i ↔ i+8：每一对留在自己的 rail 内',False),('错位配对 rank i ↔ i+9：每一对经脊交换机换到下一条 rail',True)]):
-            y0=.52-panel*.50;text(a,.03,y0+.45,title,12);xs=[.03+i*.1175 for i in range(8)]
+            y0=.52-panel*.50;text(a,.03,y0+.455,title,12);xs=[.03+i*.1175 for i in range(8)]
             box(a,.03,y0+.35,.94,.07,'脊交换机' if not shifted else '','green',11)
-            if shifted:text(a,.5,y0+.405,'脊交换机',11,ha='center')
+            if shifted:text(a,.5,y0+.385,'脊交换机',11,ha='center')
             for i,x in enumerate(xs):
                 box(a,x,y0+.22,.105,.08,f'rail {i}','blue',11);box(a,x,y0+.05,.048,.07,str(i),'orange',11);box(a,x+.057,y0+.05,.048,.07,str(i+8),'purple',11)
                 arrow(a,(x+.024,y0+.12),(x+.03,y0+.22))
@@ -176,7 +176,7 @@ def draw(here,data):
                     x=xs[i];x2=xs[(i+1)%8];xa=x+.012;xb=x2+.093
                     verts=[(xa,y0+.12),(xa,y0+.365),(xb,y0+.365),(xb,y0+.12)]
                     a.add_patch(FancyArrowPatch(path=MPath(verts),arrowstyle='-|>',mutation_scale=11,linewidth=1.6,color=col,shrinkA=0,shrinkB=0,zorder=5))
-                    text(a,(xa+xb)/2,y0+.397,label,11,ha='center',color=col)
+                    text(a,(xa+xb)/2,y0+.403,label,11,ha='center',color=col)
             text(a,.5,y0+.015,'橙：服务器 A 的网卡 0–7；紫：服务器 B 的网卡 8–15；每条 rail 一台叶交换机',11,ha='center')
         save(f,'rail-pairing')
         sw=data['7-in-network']['sweep'];f,a=plot(3.4,left=.15);xs=[r['servers'] for r in sw]
@@ -195,4 +195,36 @@ def draw(here,data):
             ex=float(Fraction(row['excess_bytes_per_second_exact']));a.plot(t,np.minimum(ex*t*1e-6,free)/1024,color=c,label=f"N = {row['N']}");ta=row['allowed_feedback_ns']/1000;a.scatter([ta],[free/1024],color=c,s=28,zorder=4);a.text(ta+.06,free/1024-140,f'{ta:.2f} μs',fontsize=11,color=c)
         a.axhline(free/1024,ls='--',color='#777777');a.text(2.6,free/1024+40,'1 MiB 剩余缓冲',fontsize=11);a.axvline(.33,ls=':',color='#a54b43');a.text(.40,1150,'PFC 一跳 0.33 μs',fontsize=11,color='#a54b43')
         a.set(xlabel='时间（μs）；端到端反馈 20 μs 在图外',ylabel='队列占用（KiB）',xlim=(0,4),ylim=(0,1260));a.legend(frameon=False,loc='lower right');save(f,'incast-feedback')
+        # Checkpoint recovery figure (Fig 7-63)
+        f,a=canvas(4.6)
+        text(a,.03,.94,'周期性保存与故障回滚恢复：开销比例 ε ≈ C/I + λ(I/2 + R)',12.5)
+        box(a,.03,.64,.22,.18,'正常计算 I\n600 s','blue',11)
+        box(a,.28,.64,.14,.18,'保存 C\n10 s','green',11)
+        box(a,.45,.64,.23,.18,'丢失进度\n平均 I/2 = 300 s','orange',11)
+        box(a,.71,.64,.26,.18,'回滚恢复 R\n60 s + 读回状态','purple',11)
+        arrow(a,(.25,.73),(.28,.73));arrow(a,(.42,.73),(.45,.73));arrow(a,(.68,.73),(.71,.73))
+        arrow(a,(.66,.64),(.43,.52),'control')
+        text(a,.54,.47,'故障中断，回退至最近一致检查点',11,ha='center')
+        box(a,.03,.14,.44,.26,'128 卡超节点：R = 188 s\n附加开销 ε ≈ 3.4%\n有效吞吐 150.9 万 token/s','blue',11)
+        box(a,.53,.14,.44,.26,'256 卡超节点：R = 316 s\n附加开销 ε ≈ 3.8%\n有效吞吐 152.3 万 token/s','green',11)
+        text(a,.5,.05,'平均中断间隔 7.9 小时；恢复通道 64 GB/s，每卡读回 64 GB 状态',11,ha='center')
+        save(f,'checkpoint-recovery')
+        # Path-A new figure: NVLS + Multi-rail AllReduce and UEC SACK vs GBN (Fig 7-64)
+        f,a=canvas(6.4)
+        text(a,.02,.955,'A. 1,024 卡集群同步 16 GiB 梯度的分阶段耗时账本（算例 7-A）',12)
+        box(a,.015,.75,.46,.15,'扁平连续环（1,024 卡）\n单轨网卡串行 2,046 轮\n每步 16 MiB → 耗时 688.2 ms','orange',11)
+        box(a,.525,.75,.46,.15,'节点内 Ring + 跨机 8 轨\n本地 66.8 ms + 跨机 85.4 ms\n三阶段合计 152.3 ms（4.5×）','blue',11)
+        arrow(a,(.475,.825),(.525,.825))
+        box(a,.015,.55,.46,.15,'8 卡 NVLS + 跨机 8 轨\nNVSwitch 网内规约 38.2 ms\n省 42.9% 本地耗时 → 123.6 ms','purple',11)
+        box(a,.525,.55,.46,.15,'64 卡超节点 NVLS + 64 轨\n机架内 38.2 ms + 跨柜 10.1 ms\n总耗时 48.3 ms（提速 14.3×）','green',11)
+        arrow(a,(.245,.75),(.245,.70));arrow(a,(.755,.75),(.755,.70));arrow(a,(.475,.625),(.525,.625))
+        a.plot([.015,.985],[.49,.49],color=COL['line'],lw=1.0,ls='--')
+        text(a,.02,.445,'B. 万卡链路微闪断（万分之一丢包）下 Go-Back-N 与 UEC SACK 对比',12)
+        box(a,.015,.24,.46,.15,'光模块温漂微闪断\n毫秒级 BER 突增越过 FEC 门限\n万分之一突发丢包（监控易漏检）','orange',11)
+        box(a,.525,.24,.46,.15,'传统 RoCEv2 回退 N 步（GBN）\n单包丢失回退整窗 N = 256 包\n200 μs 超时使带宽跌至 40.2 GB/s','orange',11)
+        arrow(a,(.475,.315),(.525,.315))
+        box(a,.015,.04,.46,.15,'UEC 逐包喷洒 + 选择性重传\n64–256 熵值轮转 + 乱序位图\n仅精准补发 4 KiB 缺失单包','blue',11)
+        box(a,.525,.04,.46,.15,'有效带宽保持率（50 GB/s 线速）\nSACK 保持 49.995 GB/s（99.99%）\n千分之一丢包 GBN 跌至 14.5 GB/s','green',11)
+        arrow(a,(.245,.24),(.245,.19));arrow(a,(.475,.115),(.525,.115))
+        out.save(f,'ch07-nvls-multirail-allreduce-and-sack')
     out.finish();return out.outputs,out.checks

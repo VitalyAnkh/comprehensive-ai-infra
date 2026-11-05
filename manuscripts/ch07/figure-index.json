@@ -1,254 +1,258 @@
 [
   {
-    "name": "figure-7-1-boundaries",
-    "number": 1
+    "number": 1,
+    "name": "figure-7-1-boundaries"
   },
   {
-    "name": "figure-7-2-cut",
-    "number": 2
+    "number": 2,
+    "name": "figure-7-2-cut"
   },
   {
-    "name": "figure-7-clos-cut",
-    "number": 3
+    "number": 3,
+    "name": "figure-7-clos-cut"
   },
   {
-    "name": "figure-7-3-hierarchy",
-    "number": 4
+    "number": 4,
+    "name": "figure-7-3-hierarchy"
   },
   {
-    "name": "figure-7-ring-interleaved",
-    "number": 5
+    "number": 5,
+    "name": "figure-7-ring-interleaved"
   },
   {
-    "name": "figure-7-hierarchy-stages",
-    "number": 6
+    "number": 6,
+    "name": "figure-7-hierarchy-stages"
   },
   {
-    "name": "figure-7-hierarchy-bytes",
-    "number": 7
+    "number": 7,
+    "name": "figure-7-hierarchy-bytes"
   },
   {
-    "name": "figure-7-in-network-sweep",
-    "number": 8
+    "number": 8,
+    "name": "figure-7-in-network-sweep"
   },
   {
-    "name": "figure-7-4-pipeline",
-    "number": 9
+    "number": 9,
+    "name": "figure-7-4-pipeline"
   },
   {
-    "name": "figure-7-5-expert",
-    "number": 10
+    "number": 10,
+    "name": "figure-7-5-expert"
   },
   {
-    "name": "figure-7-expert-path-1",
-    "number": 11
+    "number": 11,
+    "name": "figure-7-expert-path-1"
   },
   {
-    "name": "figure-7-expert-path-2",
-    "number": 12
+    "number": 12,
+    "name": "figure-7-expert-path-2"
   },
   {
-    "name": "figure-7-6-relay",
-    "number": 13
+    "number": 13,
+    "name": "figure-7-6-relay"
   },
   {
-    "name": "figure-7-rail-pairing",
-    "number": 14
+    "number": 14,
+    "name": "figure-7-rail-pairing"
   },
   {
-    "name": "figure-7-7-access",
-    "number": 15
+    "number": 15,
+    "name": "figure-7-7-access"
   },
   {
-    "name": "figure-7-access-1",
-    "number": 16
+    "number": 16,
+    "name": "figure-7-access-1"
   },
   {
-    "name": "figure-7-access-2",
-    "number": 17
+    "number": 17,
+    "name": "figure-7-access-2"
   },
   {
-    "name": "figure-7-access-3",
-    "number": 18
+    "number": 18,
+    "name": "figure-7-access-3"
   },
   {
-    "name": "figure-7-ub-round-trip",
-    "number": 19
+    "number": 19,
+    "name": "figure-7-ub-round-trip"
   },
   {
-    "name": "figure-7-ub-link-delay",
-    "number": 20
+    "number": 20,
+    "name": "figure-7-ub-link-delay"
   },
   {
-    "name": "figure-7-snapshot-paths",
-    "number": 21
+    "number": 21,
+    "name": "figure-7-snapshot-paths"
   },
   {
-    "name": "figure-7-8-snapshot",
-    "number": 22
+    "number": 22,
+    "name": "figure-7-8-snapshot"
   },
   {
-    "name": "figure-7-snapshot-partial",
-    "number": 23
+    "number": 23,
+    "name": "figure-7-snapshot-partial"
   },
   {
-    "name": "figure-7-slot-lifetime",
-    "number": 24
+    "number": 24,
+    "name": "figure-7-slot-lifetime"
   },
   {
-    "name": "figure-7-9-window",
-    "number": 25
+    "number": 25,
+    "name": "figure-7-9-window"
   },
   {
-    "name": "figure-7-window-rate",
-    "number": 26
+    "number": 26,
+    "name": "figure-7-window-rate"
   },
   {
-    "name": "figure-7-pcie-transactions",
-    "number": 27
+    "number": 27,
+    "name": "figure-7-pcie-transactions"
   },
   {
-    "name": "figure-7-pcie-limits",
-    "number": 28
+    "number": 28,
+    "name": "figure-7-pcie-limits"
   },
   {
-    "name": "figure-7-pcie-asymmetry",
-    "number": 29
+    "number": 29,
+    "name": "figure-7-pcie-asymmetry"
   },
   {
-    "name": "figure-7-10-lifetime",
-    "number": 30
+    "number": 30,
+    "name": "figure-7-10-lifetime"
   },
   {
-    "name": "figure-7-11-state",
-    "number": 31
+    "number": 31,
+    "name": "figure-7-11-state"
   },
   {
-    "name": "figure-7-state-capacity",
-    "number": 32
+    "number": 32,
+    "name": "figure-7-state-capacity"
   },
   {
-    "name": "figure-7-ub-state-growth",
-    "number": 33
+    "number": 33,
+    "name": "figure-7-ub-state-growth"
   },
   {
-    "name": "figure-7-ub-cache-cliff",
-    "number": 34
+    "number": 34,
+    "name": "figure-7-ub-cache-cliff"
   },
   {
-    "name": "figure-7-12-ordering",
-    "number": 35
+    "number": 35,
+    "name": "figure-7-12-ordering"
   },
   {
-    "name": "figure-7-ordering-independent",
-    "number": 36
+    "number": 36,
+    "name": "figure-7-ordering-independent"
   },
   {
-    "name": "figure-7-13-stale",
-    "number": 37
+    "number": 37,
+    "name": "figure-7-13-stale"
   },
   {
-    "name": "figure-7-14-reclaim",
-    "number": 38
+    "number": 38,
+    "name": "figure-7-14-reclaim"
   },
   {
-    "name": "figure-7-reclaim-more",
-    "number": 39
+    "number": 39,
+    "name": "figure-7-reclaim-more"
   },
   {
-    "name": "figure-7-15-congestion",
-    "number": 40
+    "number": 40,
+    "name": "figure-7-15-congestion"
   },
   {
-    "name": "figure-7-congestion-queue",
-    "number": 41
+    "number": 41,
+    "name": "figure-7-congestion-queue"
   },
   {
-    "name": "figure-7-feedback-loop",
-    "number": 42
+    "number": 42,
+    "name": "figure-7-feedback-loop"
   },
   {
-    "name": "figure-7-16-feedback",
-    "number": 43
+    "number": 43,
+    "name": "figure-7-16-feedback"
   },
   {
-    "name": "figure-7-incast-feedback",
-    "number": 44
+    "number": 44,
+    "name": "figure-7-incast-feedback"
   },
   {
-    "name": "figure-7-17-packets",
-    "number": 45
+    "number": 45,
+    "name": "figure-7-17-packets"
   },
   {
-    "name": "figure-7-packets-1",
-    "number": 46
+    "number": 46,
+    "name": "figure-7-packets-1"
   },
   {
-    "name": "figure-7-packets-2",
-    "number": 47
+    "number": 47,
+    "name": "figure-7-packets-2"
   },
   {
-    "name": "figure-7-ecmp-collision",
-    "number": 48
+    "number": 48,
+    "name": "figure-7-ecmp-collision"
   },
   {
-    "name": "figure-7-18-deadlock",
-    "number": 49
+    "number": 49,
+    "name": "figure-7-18-deadlock"
   },
   {
-    "name": "figure-7-response-reserve",
-    "number": 50
+    "number": 50,
+    "name": "figure-7-response-reserve"
   },
   {
-    "name": "figure-7-19-progress",
-    "number": 51
+    "number": 51,
+    "name": "figure-7-19-progress"
   },
   {
-    "name": "figure-7-progress-1",
-    "number": 52
+    "number": 52,
+    "name": "figure-7-progress-1"
   },
   {
-    "name": "figure-7-progress-2",
-    "number": 53
+    "number": 53,
+    "name": "figure-7-progress-2"
   },
   {
-    "name": "figure-7-20-step",
-    "number": 54
+    "number": 54,
+    "name": "figure-7-20-step"
   },
   {
-    "name": "figure-7-step-1",
-    "number": 55
+    "number": 55,
+    "name": "figure-7-step-1"
   },
   {
-    "name": "figure-7-step-2",
-    "number": 56
+    "number": 56,
+    "name": "figure-7-step-2"
   },
   {
-    "name": "figure-7-step-3",
-    "number": 57
+    "number": 57,
+    "name": "figure-7-step-3"
   },
   {
-    "name": "figure-7-step-4",
-    "number": 58
+    "number": 58,
+    "name": "figure-7-step-4"
   },
   {
-    "name": "figure-7-step-5",
-    "number": 59
+    "number": 59,
+    "name": "figure-7-step-5"
   },
   {
-    "name": "figure-7-21-message",
-    "number": 60
+    "number": 60,
+    "name": "figure-7-21-message"
   },
   {
-    "name": "figure-7-supernode-groups",
-    "number": 61
+    "number": 61,
+    "name": "figure-7-supernode-groups"
   },
   {
-    "name": "figure-7-supernode-scaling",
-    "number": 62
+    "number": 62,
+    "name": "figure-7-supernode-scaling"
   },
   {
-    "name": "figure-7-checkpoint-recovery",
-    "number": 63
+    "number": 63,
+    "name": "figure-7-checkpoint-recovery"
+  },
+  {
+    "number": 64,
+    "name": "ch07-nvls-multirail-allreduce-and-sack"
   }
 ]

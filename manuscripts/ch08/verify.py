@@ -15,17 +15,17 @@ def check(ok,msg):
 def load(p):return json.loads(p.read_text())
 outline=next(p for p in [ROOT/'outlines'/md.name,ROOT/'archive/outlines'/md.name,ROOT/'archive/outlines/08-单实例推理.md'] if p.exists()).read_text()
 check(re.findall(r'^#{2,3} (8\.\d+(?:\.\d+)?) ',raw,re.M)==re.findall(r'^#{2,3} (8\.\d+(?:\.\d+)?) ',outline,re.M),'Outline section numbering/order differs')
-check(re.findall(r'^> \*\*练习 (8-\d+)',raw,re.M)==[f'8-{i}' for i in range(1,10)],'Exercise sequence')
+check(re.findall(r'^> \*\*练习 (8-\d+)',raw,re.M)==[f'8-{i}' for i in range(1,14)],'Exercise sequence')
 check(re.findall(r'^> \*\*练习 (8-\d+) · 核心',raw,re.M)==['8-2','8-4','8-9'],'Core selection')
 figure_count=len(load(HERE/'figure-index.json'))
-check(re.findall(r'^\*图 (8-\d+)：',raw,re.M)==[f'8-{i}' for i in range(1,figure_count+1)],'External caption sequence')
+check(re.findall(r'^\*图 (8-\d+)[：　]',raw,re.M)==[f'8-{i}' for i in range(1,figure_count+1)],'External caption sequence')
 check(len(re.findall(r'^!\[',raw,re.M))==figure_count,'Image count')
 refs=re.findall(r'\[\^([^\]]+)\](?!:)',raw);defs=re.findall(r'^\[\^([^\]]+)\]:',raw,re.M);check(set(refs)==set(defs),'Footnote coverage');check(len(defs)==len(set(defs)),'Duplicate footnote')
 for u in re.findall(r'\]\(([^)]+)\)',raw):
  if re.match(r'\w+:',u):continue
  parts=urlsplit(u);p=(md.parent/unquote(parts.path)).resolve()
  check(p.exists(),'Missing link '+u)
-for p in HERE.glob('figure-*.svg'):
+for p in sorted(HERE.glob('figure-*.svg'))+sorted(HERE.glob('ch08-*.svg')):
  tree=ET.parse(p);texts=[''.join(t.itertext()) for t in tree.iter() if t.tag.endswith('}text')];check(not any(re.search(r'图\s*\d+[-－]\d+',t) for t in texts),'Number inside illustration '+p.name)
  for ext in ['png','pdf']:check(p.with_suffix('.'+ext).exists(),'Missing image format '+p.name)
  with Image.open(p.with_suffix('.png')) as im:im.verify()
@@ -72,5 +72,5 @@ example=d['verification_example'];check(example['output']==example['draft'][:exa
 reference={r['name']:r for r in load(HERE/'teaching-validation.json')['design_candidates']}
 for r in d['design_plane']['configurations']:
  check(all(abs(r[k]-reference[r['name']][k])<1e-12 for k in ['memory_gib','time_s']),'Configuration diagram '+r['name'])
-report={'passed':not errors,'checks':checks,'sections':6,'subsections':22,'exercises':9,'figures':figure_count,'formulas':load(HERE/'math-validation.json')['expressions'],'chinese_characters':len(re.findall(r'[\u4e00-\u9fff]',raw)),'errors':errors}
+report={'passed':not errors,'checks':checks,'sections':6,'subsections':22,'exercises':13,'figures':figure_count,'formulas':load(HERE/'math-validation.json')['expressions'],'chinese_characters':len(re.findall(r'[\u4e00-\u9fff]',raw)),'errors':errors}
 (HERE/'validation.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n');print(json.dumps(report,ensure_ascii=False,indent=2));sys.exit(bool(errors))

@@ -6,7 +6,7 @@
       "passed": true
     },
     {
-      "check": "fifteen exercises with core 5, 10, 15",
+      "check": "eighteen exercises with core 5, 10, 15",
       "passed": true
     },
     {
@@ -507,6 +507,22 @@
     },
     {
       "check": "three figure formats: figure-7-supernode-scaling",
+      "passed": true
+    },
+    {
+      "check": "no internal figure number: figure-7-checkpoint-recovery",
+      "passed": true
+    },
+    {
+      "check": "three figure formats: figure-7-checkpoint-recovery",
+      "passed": true
+    },
+    {
+      "check": "no internal figure number: ch07-nvls-multirail-allreduce-and-sack",
+      "passed": true
+    },
+    {
+      "check": "three figure formats: ch07-nvls-multirail-allreduce-and-sack",
       "passed": true
     },
     {

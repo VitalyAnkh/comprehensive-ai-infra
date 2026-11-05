@@ -459,7 +459,7 @@
     },
     {
       "path": "references/files/documents/dgx-superpod-h100-ra.pdf",
-      "sha256": "2747e8b5d225c7177dca9cf5adc116c37e385a956383281824e79a542ef03877"
+      "sha256": "99463a055c99bb10fe3b71b23a2dda9132cd8c4f9c5fd30f5705aa5ac1d882d1"
     },
     {
       "path": "references/files/documents/nccl-collectives.md",
@@ -483,7 +483,7 @@
     },
     {
       "path": "references/files/papers/bojieli-phd-thesis.pdf",
-      "sha256": "ea0c815d15b6f9da0e08d8f12cb11cc028cf3c566d2d3b1d0725941fa5b6360c"
+      "sha256": "bcb665057736515d460d0730fcc977698c11418e492be6544930096a4cd5fff1"
     },
     {
       "path": "references/files/papers/collective-algorithms.pdf",
@@ -495,11 +495,11 @@
     },
     {
       "path": "references/files/papers/deepseek-infra.pdf",
-      "sha256": "3e0067880bef3863581f94e43000d73aed1f680a715aedda1da6b2e52e735b81"
+      "sha256": "38697315308e71dfb4065519f53efb337d12aad9fc5660d9c118a23885442635"
     },
     {
       "path": "references/files/papers/deepseek-v4.pdf",
-      "sha256": "55b2d72f772ac00de2e470b3ee08443c648d971c7f57c52d6202895665e5978d"
+      "sha256": "14ab56fc476ef121ff01016e52874e01ae55e68756718ad0967e6c64803fe0fe"
     },
     {
       "path": "references/files/papers/fat-tree.pdf",
@@ -511,7 +511,7 @@
     },
     {
       "path": "references/files/papers/megatron.pdf",
-      "sha256": "fa89e54e23c0cea5cbd9d24720db7647c61af299afdb9a170c7119160e6d207a"
+      "sha256": "7c9d95cff6461a855ea567201937f4e4d367ab6e6e915fecc42ccb99e5e0f0e7"
     },
     {
       "path": "references/files/papers/openurma.pdf",
@@ -519,11 +519,11 @@
     },
     {
       "path": "references/files/papers/timely.pdf",
-      "sha256": "641366a7d7ff45b3be3e226e35d41b6cafc8878972201abc19eda46f708038c9"
+      "sha256": "273157fd3e42bdb9a1535f0cf0362ebbe65832decd2a8a7650756af2fb79eed2"
     },
     {
       "path": "references/files/specs/UB-Base-Specification-2.0.1-zh-clean.pdf",
-      "sha256": "ba6bfadb7ef0a9e340e5492b2105ac4d393a4f22f29101f02f2962189ea8c3fb"
+      "sha256": "6de580c0e6ca559e4f0a139964a65296cc4b3002ca4b616b70a00c20dc0f424f"
     },
     {
       "path": "references/files/specs/UB-Software-Reference-Design-for-OS-2.0-zh.pdf",
@@ -531,7 +531,7 @@
     },
     {
       "path": "references/files/specs/ascend-950-official.pdf",
-      "sha256": "ece3405e6a17fabdd462338fb94266558649a6407a2f28008403211387b3a927"
+      "sha256": "7d2657d61b0213a78c18514331c908a99ead54f94548b027f8a834d24c0724e0"
     },
     {
       "path": "references/files/specs/nvidia-connectx7-datasheet.pdf",
@@ -555,15 +555,15 @@
     },
     {
       "path": "references/proceedings/NSDI/2024/selected/nsdi24-hou.pdf",
-      "sha256": "31626ecc3f92148d178913e83b2a9b0ba0db0a3839ce6e4c5ab9e5397dd7473a"
+      "sha256": "a302f06b236388578631762d865146300905a69a3de734b738011f2d4040afdf"
     },
     {
       "path": "references/proceedings/NSDI/2024/selected/nsdi24-jiang-ziheng.pdf",
-      "sha256": "a998454d5a1554f4c3c56577f4a25cc8eea96a6968231564a5b4f84a2ffd07d2"
+      "sha256": "8ef392f267155d0c3a215171ba159a1e466afb45a6b8338ca419052888eec332"
     },
     {
       "path": "references/proceedings/OSDI/2025/selected/osdi25-ren.pdf",
-      "sha256": "7e37f3e1e5cd5557b764dcdfaef4284791448a942ea0c28697ca3a83d409eb87"
+      "sha256": "97b1dcca84e9fbd3e8ca84bc846bb594faac1a41293cf65f71035b03f9c1f196"
     },
     {
       "path": "research/2026-infra-survey/parallel-moe-ownership/NOTES.md",
