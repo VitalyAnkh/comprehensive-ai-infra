@@ -1,7 +1,7 @@
 # 《深入理解 AI Infra》路径 A 全景升级与扩写执行计划（Master Plan）
 
-> **版本**：v2.0（2026-11-06，根据第 1 轮审阅全面校准文件名、小节落点、练习编号、算例锁定真值与构建脚本边界）  
-> **目标定位**：采用**路径 A（既有 12 章全量深度扩充 + 新增第 13 章《AI 原生存储系统与数据底座》+ 新增第 14 章《模型与系统硬件协同设计》）**，将仓库内已储备但尚未被正文直接引用的 **16 篇深度案例（`case-studies/`）**、专项研究报告（`research/`）以及 **2025–2026 年顶会与工业界前沿机制**系统化织入全书；全程按章节分批推进，严格执行“**调用 `codex exec` 使用 `image_gen` 工具与 `gpt-image-2.6-sunburst` 模型（最高质量 `quality="high"`）结合 `figure_style` 绘制 420pt 出版级配图三件套（`.svg`、`.png`、`.pdf`）$\to$ `refine-prose` 深度润色去 AI 腔 $\to$ 本地自动化脚本全套校验 $\to$ Gemini 4 Argon High 同配置 Subagent 多轮审阅直至收敛 $\to$ 每完成一个批次推送部署**”的闭环工作流。
+> **版本**：v2.1（2026-11-06，全面校准文件名、小节落点、练习编号、算例锁定真值与构建脚本边界，并新增**全书 SVG 配图美学标准、底层样式库升级与存量简陋配图重绘方案**）  
+> **目标定位**：采用**路径 A（既有 12 章全量深度扩充 + 新增第 13 章《AI 原生存储系统与数据底座》+ 新增第 14 章《模型与系统硬件协同设计》）**，将仓库内已储备但尚未被正文直接引用的 **16 篇深度案例（`case-studies/`）**、专项研究报告（`research/`）以及 **2025–2026 年顶会与工业界前沿机制**系统化织入全书；同时对全书配图实施**出版级视觉与排版升级（涵盖字体字重层级、语义化高级配色、几何栅格对齐、防重叠/防贴边规范，结合 `codex exec` + `gpt-image-2.6-sunburst` `quality="high"` 绘制新图并逐章重绘存量简陋 SVG 配图）**；全程按章节分批推进，严格执行“**配图美学升级与新图绘制（`420pt` `.svg`/`.png`/`.pdf` 三件套）$\to$ `refine-prose` 深度润色去 AI 腔 $\to$ 本地自动化脚本与排版校验 $\to$ Gemini 4 Argon High 同配置 Subagent 多轮审阅（含视觉审图）直至收敛 $\to$ 每完成一个批次推送部署**”的闭环工作流。
 
 ---
 
@@ -337,7 +337,78 @@
 
 ---
 
-## 四、 构建与校验基础设施完备性适配方案（支撑 14 章体系）
+## 四、 出版级 SVG 配图美学标准与存量配图全面升级方案（Visual & Typography Overhaul）
+
+针对当前全书部分存量 SVG 配图存在的“色块单调、字重单一、几何对齐松散、局部构图空洞或文字贴边/压线”问题，本计划将 **“提高全书配图美学与排版质量（新增配图高标准绘制 + 存量低质量 SVG 配图巡检重绘）”** 列为一等工程目标。
+
+### 4.1 存量 SVG 配图的五大审美与排版痛点诊断（基于仓库真实配图审计）
+
+通过对 [`manuscripts/figure_style/__init__.py`](../../manuscripts/figure_style/__init__.py)、[`manuscripts/core_principles_figures.py`](../../manuscripts/core_principles_figures.py)、[`manuscripts/v41_case_figures.py`](../../manuscripts/v41_case_figures.py) 及各章 `manuscripts/chXX/build.py` 渲染产物的逐一审视，当前配图的主要短板集中在以下 5 点：
+1. **框体质感呆板、边框缺乏语义区分**：`figure_style/__init__.py` 目前对蓝（`#CBE3F3`）、绿（`#CFE8DB`）、橙（`#F9DEC0`）、紫（`#DDCDE8`）、灰（`#EEEEEE`）所有模块一律使用同一种 `#454545` 灰黑框线（`linewidth=1.1`），缺乏同色系高饱和度精描边（Semantic Accent Border）、柔和底衬微阴影（Subtle Drop Shadow）以及卡片标题栏与内容区的双层视觉分隔（Header Band Card）。
+2. **字体层级扁平、局部残留裸 ASCII 数学符号**：框体内部无论模块主标题、核心吞吐指标还是辅助注释，多以同一字重（`12pt Regular`）简单居中堆砌，缺乏“粗体标题 + 常规体副标题 + 等宽/数学体公式”的阅读主次；且部分存量图（如 `ch08/figure-8-lora-batch.svg` 中的 `W0`、`ch01/figure-1-amdahl-coding.svg` 中的 `s->inf`）直接用裸 ASCII 代替标准数学下标 $W_0$ 与极限符号 $s\to\infty$。
+3. **构图空洞或组件几何对齐失序**：
+   - 部分概念原理图（如 `ch01/figure-1-design-smartnic.svg`、`ch08/figure-8-v41-recovery.svg`、`ch04/figure-4-codesign-loop.svg`）仅在画布上摆放 3～4 个大号圆角矩形和两三根细箭头，大片画布留白空洞，缺乏内部流水线或定量拆解信息。
+   - 部分多分支流向图（如 `ch08/figure-8-lora-batch.svg`）左右两侧模块未对齐在同一水平/垂直基准线上，斜向穿插连线造成视觉杂乱。
+4. **连线单薄且线上标签缺少视觉衬底**：`arrow()` 仅绘制 `linewidth=1` 的细线，线上说明文字直接悬浮在箭头旁，既无端口锚定圆点，也无白底圆角胶囊徽章（Pill Callout），易与背景框线或箭头产生视觉粘连。
+5. **数据图表图例压线与末端数字贴边**：在条形图与折线图（如 `ch02/figure-2-long-context-state.svg`）中，`legend(frameon=False)` 使图例文字直接与背景网格线交叠切割，且横轴右侧最大值标签（如 `144.000 GiB`）因 `xlim` 余量不足紧贴画布右边框。
+
+---
+
+### 4.2 出版级 SVG 配图的五维美学与排版规范
+
+所有新增配图与重绘存量配图必须严格遵循以下 **五维出版级设计规范**：
+
+1. **维度一：字体规范与四级字重阶梯（Typography & Hierarchy）**
+   - **字体族与嵌入规范**：统一绑定 `Source Han Sans CN`（思源黑体 Regular / Medium / Bold）配合清晰的无衬线英文/数字与标准数学符号（`$W_0$`、`$\Delta W_i$`、`$s\to\infty$`、`$\mu\mathrm{s}$`，**严禁出现 `W0`、`s->inf`、`us` 等裸 ASCII 缩写**）；保持 `svg.fonttype = 'path'` 确保跨平台浏览器与 PDF 编译 100% 字形一致且可由 `typography.py` 精确提取 `BoundingBox`。
+   - **四级字号与字重阶梯（严格满足全书硬门禁 `min_label_pt >= 11.0`）**：
+     - **L1 子图/面板标题（Panel Title）**：`12.5–13.5 pt Bold`，深石板色 `#0F172A`，左对齐或居中对齐于面板顶部，与下方主体保持 $\ge 10\ \mathrm{pt}$ 间距。
+     - **L2 模块/卡片主标题（Card Header）**：`11.5–12.0 pt Bold/Medium`，高对比度深色，置于卡片顶部标题栏或首行。
+     - **L3 模块副标题与定量指标（Metric / Formula Body）**：`11.0 pt Regular`，次级深灰 `#334155`，行距控制在 `1.35x`～`1.45x`，每行中文不超过 14～16 字，杜绝单框内塞入超长段落。
+     - **L4 坐标轴刻度、胶囊边标签与图例（Axis / Badge / Legend）**：`11.0 pt Regular/Medium`，严禁任何文字低于 `11.0 pt`。
+
+2. **维度二：语义化高级配色与双层卡片质感（Semantic Palette & Card Styling）**
+   - 废除全图统一 `#454545` 灰黑框线，升级为 **“高明度柔和填充 + 同色系高饱和度精描边（`1.2–1.4 pt`）+ 浅灰微阴影底衬（偏移 `(+0.003, -0.005)`，透明度 `0.08`）+ 标题带/内容区分隔（Header Card）”** 的五色语义体系：
+     | 语义角色 | 主体柔和填充 | 顶部标题带填充 | 同色系精描边（Border） | 主标题文字色 | 典型适用对象 |
+     | :--- | :---: | :---: | :---: | :---: | :--- |
+     | **计算与流水线（Primary Blue）** | `#EBF4FA` | `#D2E5F5` | `#2B6CB0` | `#1A365D` | Tensor Core、算子核、Prefill/Decode 计算 |
+     | **存储与状态底座（Memory Teal）** | `#E6F5EE` | `#C5E7D7` | `#2F855A` | `#1C4532` | HBM、KV Cache、CXL、NVMe SSD、页缓存 |
+     | **通信、瓶颈与告警（Bottleneck Amber）** | `#FEF3E2` | `#FCDAB7` | `#C05621` | `#652B19` | 跨网传输、暴露停顿、写放大、OOM/越界阈值 |
+     | **控制流与调度策略（Control Purple）** | `#F3EEFA` | `#E1D4F4` | `#6B46C1` | `#322659` | 调度器、`plan` 元数据、路由表、语法自动机 |
+     | **硬件容器与背景域（Substrate Slate）** | `#F8FAFC` | `#E2E8F0` | `#64748B` | `#0F172A` | 主机/设备边界框、机架容器、只读基座 |
+
+3. **维度三：几何网格对齐与正交连线规范（Grid Alignment & Orthogonal Routing）**
+   - **严格栅格坐标对齐**：同一行模块的中心纵坐标 `y` 与高度 `h` 必须精确相等；同一列模块的中心横坐标 `x` 与宽度 `w` 必须精确相等；并列子图（双栏 `1×2` 或上下 `2×1`）的外框边界与内部留白严格对称，杜绝手写随意浮点数造成的肉眼高低错位。
+   - **端口锚定与圆角正交连线**：连线起止点必须精准锚定在框体边缘中点或等分端口（设置 `shrinkA=3, shrinkB=3` 留出呼吸间距），线宽提升至 `1.3–1.5 pt`；多分支汇合优先采用正交折线（Orthogonal Routing）或对称微弧线（`rad=±0.15`），**严禁斜向箭头横穿其他模块框或文字**。
+   - **白底胶囊边标签（Pill Callout Badge）**：凡跨线或靠近连线的说明文字，一律包裹圆角白底微边框（`boxstyle="round,pad=0.22", facecolor="#FFFFFF", edgecolor="#CBD5E1", linewidth=0.8`），彻底消除“文字压箭头线”。
+
+4. **维度四：数据图表（Bar / Line / Gantt / Roofline）排版精修规范**
+   - **防贴边安全余量**：水平条形图或带末端数值标注的折线图，横轴 `xlim` 必须在最大数据点外预留 **`18%–22%` 空白余量**，确保末端数字标签（如 `144.000 GiB`、`371.38 ms`）距离右侧画布边框至少 `12 pt`。
+   - **不透明白底图例框**：所有置于绘图区内部的 `legend` 必须开启 `frameon=True, facecolor="#FFFFFF", edgecolor="#CBD5E1", framealpha=0.94`，防止背景网格线穿透图例文字。
+   - **物理翻转点高亮**：在算例存在盈亏/快慢翻转的位置（如 $d=6.25\%$、$k=10/9$、`268 TFLOP/s`），统一使用虚线参考线配合琥珀色胶囊注释框明确标出翻转阈值。
+
+5. **维度五：双重质量门禁（`typography.py` 自动几何检测 + Subagent 视觉审图）**
+   - **自动化几何门禁**：每幅图生成后必须通过 `manuscripts/figure_style/typography.py` 的 `validate_figure()` 检验：`width="420pt"`、`min_label_pt >= 11.0`、文字框碰撞列表 `overlaps == []`、画布越界列表 `out_of_bounds == []`。
+   - **Subagent 视觉审图门禁**：在每个 Batch 的步骤 5 中，Gemini 4 Argon High 审校 Subagent 必须调用 `read_file` 直接查看该章新增及重绘配图的 `.png` 渲染图，从**字体层级、几何对齐、色彩和谐度、信息密度与零重叠/零贴边**五个维度逐幅把关。
+
+---
+
+### 4.3 存量 SVG 配图重绘与新增配图的双轨落地路径
+
+1. **第一轨：底层样式库与跨章共用生成脚本升级（在 Batch 1 启动时率先完成）**
+   - 升级 [`manuscripts/figure_style/__init__.py`](../../manuscripts/figure_style/__init__.py)：在保持现有导出符号与函数签名（`COL`, `STYLE`, `canvas`, `plot`, `text`, `box`, `arrow`, `Exporter`）100% 向后兼容的前提下，初始化时自动调用 `configure_font()` 注入 `Source Han Sans CN`，新增 `BORDER_COL` 字典为 `box()` 自动映射同色系高饱和度深色描边与微阴影底衬，新增支持双层标题栏卡片的 `card()` 辅助函数，升级 `arrow()` 线宽与端口间距，并在 `Exporter.save()` 中集成画布越界、字号下界（$\ge 11\ \mathrm{pt}$）与文本 `BoundingBox` 重叠检测。
+   - 升级并重绘四大跨章共用配图脚本，彻底改造构图空洞或贴边的存量图：
+     - [`manuscripts/core_principles_figures.py`](../../manuscripts/core_principles_figures.py)（重绘 `figure-1-design-smartnic`、`figure-2-long-context-state`、`figure-3-tail-admission`、`figure-4-codesign-loop` 等 12 幅跨章核心原理图，消除大块空洞留白、补齐内部流水线细节、修复 `figure-2-long-context-state` 图例压线与 `144.000 GiB` 贴边问题）。
+     - [`manuscripts/v41_case_figures.py`](../../manuscripts/v41_case_figures.py)（重绘 `figure-8-v41-recovery` 等 V4.1 案例图，将原本单调的 3 个大框升级为含 Owner/Follower 层与 128-token 局部重算细节的精致架构图）。
+     - [`manuscripts/ub_ep_figures.py`](../../manuscripts/ub_ep_figures.py) 与 [`manuscripts/parallel_figures.py`](../../manuscripts/parallel_figures.py)。
+2. **第二轨：按 Batch 1～6 逐章巡检并重绘各章 `manuscripts/chXX/build.py` 中的低质量存量配图**
+   - 在执行每个 Batch 的两章时，先用 `read_file` 检视该章现有配图，对构图简陋、对齐失序（如 `ch08/figure-8-lora-batch.svg`）、残留裸 ASCII 数学符号（如 `W0`、`s->inf`）或文字拥挤的存量配图在 `manuscripts/chXX/build.py`（及 `teaching_figures.py`）中进行精修重绘。
+   - **构建清单与哈希锁同步规范**：重绘任何存量配图后，必须同步运行该章构建器更新 `manuscripts/chXX/manifest.json`（及 `sources.json`），若涉及 `verify_teaching_book.py` 检查的归档脚本（如 `manuscripts/ch05/teaching_revision.py`），同步维护其兼容性，确保全套验证脚本零报错。
+3. **第三轨：全书新增 24 幅 `420pt` 出版级配图（Batch 1～6 共 12 幅 + Batch 7 第 13、14 章共 12 幅）**
+   - 调用 `codex exec` 启用 `image_gen` 工具（**强制指定使用 `gpt-image-2.6-sunburst` 模型并开启最高质量 `quality="high"`**），结合升级后的 `manuscripts/figure_style/` 矢量排版系统生成 `.svg`（`420pt`）、`.png`、`.pdf` 三件套。
+
+---
+
+## 五、 构建与校验基础设施完备性适配方案（支撑 14 章体系）
 
 为确保 Batch 1～6 推进期间随时可构建、且 Batch 7 新增第 13、14 章后全套校验脚本、在线站点与 PDF 编译 100% 绿灯通过，明确以下 **7 项工程适配规则**：
 
@@ -356,37 +427,38 @@
    - 同步更新 [`README.md`](../../README.md)、[`manuscripts/README.md`](../../manuscripts/README.md)、[`manuscripts/00-前言.md`](../../manuscripts/00-%E5%89%8D%E8%A8%80.md) 的章节结构导读。
    - 同步更新 [`case-studies/README.md`](../../case-studies/README.md)：将末尾“延伸阅读（正文未直接引用）”下的全部 16 篇案例移入各自首次引用的章节表格中，标注完整的“引用章节”列表，实现 **未直接引用案例清零（0 篇遗留）**。
 6. **[`.gitattributes`](../../.gitattributes) 与三件套配图（`.svg` / `.png` / `.pdf`）非 LFS 指针约束**：
-   - `.gitattributes` 末尾已配置 `/manuscripts/ch*/*.pdf !filter !diff !merge binary`。生成每幅新图的三件套（`.svg`、`.png`、`.pdf`）时，必须验证 `.svg` 根节点包含 `width="420pt"`，且 `.png` 与 `.pdf` 均为真实二进制文件（非 `version https://git-lfs.github.com/spec/v1` 指针），防止 `build_site.py` 与 `book/build_pdf.py` 触发 LFS 指针异常。
+   - `.gitattributes` 末尾已配置 `/manuscripts/ch*/*.pdf !filter !diff !merge binary`。生成每幅新图及重绘存量图的三件套（`.svg`、`.png`、`.pdf`）时，必须验证 `.svg` 根节点包含 `width="420pt"`，且 `.png` 与 `.pdf` 均为真实二进制文件（非 `version https://git-lfs.github.com/spec/v1` 指针），防止 `build_site.py` 与 `book/build_pdf.py` 触发 LFS 指针异常。
 7. **历史封存目录 [`experiments/ch13/`](../../experiments/README.md) 保护规则**：
    - 仓库中已存在 `experiments/ch13/`（含 `13-01/retrieval-generation`、`13-02`、`13-06/single-agent-serving`），被多篇 `case-studies/` 作为历史封存证据直接引用。**执行期间严禁删除、移动或覆盖 `experiments/ch13/` 下任何已有目录与文件**；若第 13 章（AI 原生存储）需新增配套脚本，统一放入 `calculations/` 或不冲突的 `experiments/ch13/storage-*` 子目录。
 
 ---
 
-## 五、 分批执行计划与标准化质量闭环工作流（7 个 Batch）
+## 六、 分批执行计划与标准化质量闭环工作流（7 个 Batch）
 
 全书共 **14 章**，按 **每 2 章一个 Batch（共 7 个 Batch）** 稳步推进：
 
-### 5.1 7 个执行批次划分
+### 6.1 7 个执行批次划分
 
-| 批次 | 涵盖章节（真实文件名） | 核心交付物概览 |
+| 批次 | 涵盖章节（真实文件名） | 核心交付物概览（含存量 SVG 重绘与新增 `420pt` 配图） |
 | :---: | :--- | :--- |
-| **Batch 1** | **第 1 章（`01-初识 AI Infra.md`）+ 第 2 章（`02-模型架构.md`）** | 消化 `logicfolding`（1.2.2）、`kernel-and-fleet-efficiency`（1.3.4 机队 MPG 教学算例）、`programmable-nic` & `host-policy-and-dispatch`（1.4.2）、CSA2 深度账本（2.3.6）、dLLM 与 `Qwen-Image-2512`/`FLUX.2-klein-4B` DiT+VAE 真值算例（2.6.2）；新增 2 幅 `420pt` 配图、3 个算例、4 道练习（`1-7`、`1-8`、`2-12`、`2-13`）。 |
-| **Batch 2** | **第 3 章（`03-推理与训练负载.md`）+ 第 4 章（`04-加速器架构.md`）** | 消化 `retrieval-and-generation`（3.1.3/3.2 真值 `310.168 ms` vs `371.378 ms`）、`queqiao` & `generative-multimodal-models` & 具身 VLA 双环路（3.3.2/3.3.3）、`logicfolding` 降压算例与链接（4.1.3）、FA4 链接与后端分派表（4.2.3，不重复建算例）、`macbook-rtx-pro6000` `4 GiB` 下界表（4.3.1/4.8.3）、GPU TEE Bounce Buffer（4.5.2）；新增 2 幅 `420pt` 配图、4 个算例、4 道练习/实验（`3-13`、`3-14`、`4-11`、`4-12`）。 |
-| **Batch 3** | **第 5 章（`05-算子与运行时.md`）+ 第 6 章（`06-超节点.md`）** | 消化 `macbook-rtx-pro6000` Metal 算子分派与 TileLang/CuTe DSL（5.4.1/5.4.5）、FlashInfer `plan/run` $20\ \mu\mathrm{s}$ vs $720\ \mu\mathrm{s}$ 推导与 Sleep 虚拟地址保留（5.5.2/5.5.3）、CPO 共封装光学与 $800\ \mathrm{VDC}$ 高压供电（6.5.2/6.5.3）、`memory-criticality-and-tiering` PACT/Camp（6.6）与 `profile-and-plan-ranking`（6.6.3）；新增 2 幅 `420pt` 配图、3 个算例、3 道实验（`5-12`、`6-14`、`6-15`）。 |
-| **Batch 4** | **第 7 章（`07-数据中心网络.md`）+ 第 8 章（`08-推理优化.md`）** | 消化 `programmable-nic` 链接与 ClickNP 对比（7.3.4）、光模块微闪断与 UEC SACK（7.5.3）、1,024 卡 NVLS+多轨 AllReduce（7.6.2/7.6.4）、`structured-generation` XGrammar 锁定真值（8.2.4/8.5.1）、`Fast-dLLM`、Marconi 检查点准入（8.3.4）与 `Rethinking KV Cache Compression` $4.5\ \mathrm{s}\to 5.5\ \mathrm{s}$ 反转（8.4.4）；新增 2 幅 `420pt` 配图、3 个算例、3 道实验/练习（`7-18`、`8-12`、`8-13`）。 |
-| **Batch 5** | **第 9 章（`09-分布式推理.md`）+ 第 10 章（`10-训练系统.md`）** | 消化 SWA 128-token 本地重算（9.2.2/9.5.3）、`pd-af-heterogeneous` A100/H20 vs KTransformers（9.2.3/9.3）、万卡 SDC 静默损坏排查（10.4）、`weight-handoff` + `rollout-tail-and-sampling`（RollPacker）+ `rl-scheduling-and-recovery`（RobustRL）（10.5.2/10.5.3）、`profile-and-plan-ranking` vTrain $k=10/9$ 反转（10.6.1）；新增 2 幅 `420pt` 配图、4 个算例、4 道练习/习题（`9-14`、`9-15`、`10-13`、`10-14`）。 |
-| **Batch 6** | **第 11 章（`11-资源调度与运行环境.md`）+ 第 12 章（`12-端边云协同.md`）** | 消化 `host-policy-and-dispatch` $600\to 720\ \mathrm{GiB}$ 预算（11.1.2）、`snapshot-residency-and-first-use` E2B/CXLfork（11.2.2/11.2.3）、Rubick $>400$ 步重配（11.3.1）、Weave 互补交错（11.3.3）、`single-agent-serving-cost`（11.4.4）、Ollama 计时口径与 UFS 4.0 闪存流式推理（12.1.5）、`queqiao` 三行十进制预算表与链接（12.3.5）、具身 VLA 动作块缓存（12.4）；新增 2 幅 `420pt` 配图、4 个算例、4 道实验/拓展练习（`11-13`、`11-14`、`12-13`、`12-14`）。 |
-| **Batch 7** | **新增第 13 章（`13-AI 原生存储系统与数据底座.md`）+ 新增第 14 章（`14-模型与系统硬件协同设计.md`）+ 全书收官** | 撰写第 13 章与第 14 章全文，生成 `ch13/`（6 幅）与 `ch14/`（6 幅）共 **12 幅 `420pt` 配图**、8 个核心算例、12 道练习/实验；同步升级 `verify_core_principles.py` / `build_site.py` / `check_site.py` / `book/build_pdf.py` 至 `range(1, 15)`，并更新 `website/index.md`、`README.md`、`manuscripts/README.md`、`00-前言.md` 与 `case-studies/README.md`（16 篇未引用案例清零）。 |
+| **Batch 1** | **底层 `figure_style` 升级 + 第 1 章（`01-初识 AI Infra.md`）+ 第 2 章（`02-模型架构.md`）** | **配图基础升级**：升级 `manuscripts/figure_style/__init__.py` 与共用图脚本，重绘第 1、2 章低质量存量图（如 `figure-1-design-smartnic`、`figure-1-amdahl-coding`、`figure-2-long-context-state` 等）；**内容扩充**：消化 `logicfolding`（1.2.2）、`kernel-and-fleet-efficiency`（1.3.4 机队 MPG 教学算例）、`programmable-nic` & `host-policy-and-dispatch`（1.4.2）、CSA2 深度账本（2.3.6）、dLLM 与 `Qwen-Image-2512`/`FLUX.2-klein-4B` DiT+VAE 真值算例（2.6.2）；新增 2 幅 `420pt` 配图、3 个算例、4 道练习（`1-7`、`1-8`、`2-12`、`2-13`）。 |
+| **Batch 2** | **第 3 章（`03-推理与训练负载.md`）+ 第 4 章（`04-加速器架构.md`）** | **存量图巡检重绘**：升级第 3、4 章存量简陋配图（如 `figure-3-tail-admission`、`figure-4-codesign-loop` 等）；**内容扩充**：消化 `retrieval-and-generation`（3.1.3/3.2 真值 `310.168 ms` vs `371.378 ms`）、`queqiao` & `generative-multimodal-models` & 具身 VLA 双环路（3.3.2/3.3.3）、`logicfolding` 降压算例与链接（4.1.3）、FA4 链接与后端分派表（4.2.3，不重复建算例）、`macbook-rtx-pro6000` `4 GiB` 下界表（4.3.1/4.8.3）、GPU TEE Bounce Buffer（4.5.2）；新增 2 幅 `420pt` 配图、4 个算例、4 道练习/实验（`3-13`、`3-14`、`4-11`、`4-12`）。 |
+| **Batch 3** | **第 5 章（`05-算子与运行时.md`）+ 第 6 章（`06-超节点.md`）** | **存量图巡检重绘**：升级第 5、6 章存量配图（保持 `ch05/teaching_revision.py` 校验兼容）；**内容扩充**：消化 `macbook-rtx-pro6000` Metal 算子分派与 TileLang/CuTe DSL（5.4.1/5.4.5）、FlashInfer `plan/run` $20\ \mu\mathrm{s}$ vs $720\ \mu\mathrm{s}$ 推导与 Sleep 虚拟地址保留（5.5.2/5.5.3）、CPO 共封装光学与 $800\ \mathrm{VDC}$ 高压供电（6.5.2/6.5.3）、`memory-criticality-and-tiering` PACT/Camp（6.6）与 `profile-and-plan-ranking`（6.6.3）；新增 2 幅 `420pt` 配图、3 个算例、3 道实验（`5-12`、`6-14`、`6-15`）。 |
+| **Batch 4** | **第 7 章（`07-数据中心网络.md`）+ 第 8 章（`08-推理优化.md`）** | **存量图巡检重绘**：重点重绘第 7、8 章对齐错位或空洞的存量图（如 `figure-8-lora-batch`、`figure-8-v41-recovery` 等）；**内容扩充**：消化 `programmable-nic` 链接与 ClickNP 对比（7.3.4）、光模块微闪断与 UEC SACK（7.5.3）、1,024 卡 NVLS+多轨 AllReduce（7.6.2/7.6.4）、`structured-generation` XGrammar 锁定真值（8.2.4/8.5.1）、`Fast-dLLM`、Marconi 检查点准入（8.3.4）与 `Rethinking KV Cache Compression` $4.5\ \mathrm{s}\to 5.5\ \mathrm{s}$ 反转（8.4.4）；新增 2 幅 `420pt` 配图、3 个算例、3 道实验/练习（`7-18`、`8-12`、`8-13`）。 |
+| **Batch 5** | **第 9 章（`09-分布式推理.md`）+ 第 10 章（`10-训练系统.md`）** | **存量图巡检重绘**：升级第 9、10 章存量配图；**内容扩充**：消化 SWA 128-token 本地重算（9.2.2/9.5.3）、`pd-af-heterogeneous` A100/H20 vs KTransformers（9.2.3/9.3）、万卡 SDC 静默损坏排查（10.4）、`weight-handoff` + `rollout-tail-and-sampling`（RollPacker）+ `rl-scheduling-and-recovery`（RobustRL）（10.5.2/10.5.3）、`profile-and-plan-ranking` vTrain $k=10/9$ 反转（10.6.1）；新增 2 幅 `420pt` 配图、4 个算例、4 道练习/习题（`9-14`、`9-15`、`10-13`、`10-14`）。 |
+| **Batch 6** | **第 11 章（`11-资源调度与运行环境.md`）+ 第 12 章（`12-端边云协同.md`）** | **存量图巡检重绘**：升级第 11、12 章存量配图；**内容扩充**：消化 `host-policy-and-dispatch` $600\to 720\ \mathrm{GiB}$ 预算（11.1.2）、`snapshot-residency-and-first-use` E2B/CXLfork（11.2.2/11.2.3）、Rubick $>400$ 步重配（11.3.1）、Weave 互补交错（11.3.3）、`single-agent-serving-cost`（11.4.4）、Ollama 计时口径与 UFS 4.0 闪存流式推理（12.1.5）、`queqiao` 三行十进制预算表与链接（12.3.5）、具身 VLA 动作块缓存（12.4）；新增 2 幅 `420pt` 配图、4 个算例、4 道实验/拓展练习（`11-13`、`11-14`、`12-13`、`12-14`）。 |
+| **Batch 7** | **新增第 13 章（`13-AI 原生存储系统与数据底座.md`）+ 新增第 14 章（`14-模型与系统硬件协同设计.md`）+ 全书收官** | 撰写第 13 章与第 14 章全文，按五维出版级美学规范生成 `ch13/`（6 幅）与 `ch14/`（6 幅）共 **12 幅 `420pt` 配图**、8 个核心算例、12 道练习/实验；同步升级 `verify_core_principles.py` / `build_site.py` / `check_site.py` / `book/build_pdf.py` 至 `range(1, 15)`，并更新 `website/index.md`、`README.md`、`manuscripts/README.md`、`00-前言.md` 与 `case-studies/README.md`（16 篇未引用案例清零）。 |
 
 ---
 
-### 5.2 每个 Batch 的 6 步标准化执行规程（SOP）与 3 条防呆红线
+### 6.2 每个 Batch 的 6 步标准化执行规程（SOP）与 3 条防呆红线
 
 对每个 Batch 内的每一章，严格按以下 6 步执行：
 
-1. **步骤 1：调用 `codex exec`（强制指定 `gpt-image-2.6-sunburst` 最高质量）与 `manuscripts/figure_style` 绘制 `420pt` 出版级配图**
-   - 调用 `codex exec` 启用 `image_gen` 工具，**强制指定使用 `gpt-image-2.6-sunburst` 模型并开启最高质量（`quality="high"`）** 生成高保真技术架构图或结合 `manuscripts/figure_style/` 矢量排版封装，落盘至 `manuscripts/chXX/` 的三件套（`.svg`、`.png`、`.pdf`）必须满足：`.svg` 根节点具有 `width="420pt"`、最小字号 $\ge 11\ \mathrm{pt}$、无文字重叠，且 `.pdf` 为非 LFS 指针的真实二进制文件；正文中统一以 `![alt](chXX/...svg)` 引用。
-   - 将新图注册至 `manuscripts/chXX/figure-index.json`。
+1. **步骤 1：存量简陋 SVG 配图巡检重绘 + 调用 `codex exec`（强制指定 `gpt-image-2.6-sunburst` 最高质量）绘制新增 `420pt` 出版级配图**
+   - **存量图巡检重绘**：先用 `read_file` 检视本章现有配图，凡存在构图空洞、对齐错位、裸 ASCII 数学符号、文字压线或末端贴边的存量图，一律基于升级后的 `manuscripts/figure_style/` 重绘并更新 `manuscripts/chXX/manifest.json`（及 `sources.json`）。
+   - **新增配图生成**：调用 `codex exec` 启用 `image_gen` 工具，**强制指定使用 `gpt-image-2.6-sunburst` 模型并开启最高质量（`quality="high"`）** 生成高保真技术架构图并结合 `manuscripts/figure_style/` 矢量排版系统导出落盘至 `manuscripts/chXX/` 的三件套（`.svg`、`.png`、`.pdf`）。
+   - **五维美学与几何门禁**：所有新增与重绘配图必须满足第四节规定的五维规范——`Source Han Sans CN` 四级字重阶梯、五色语义配色与双层标题卡片、严格栅格对齐与白底胶囊边标签、数据图 `18%–22%` 防贴边余量与白底图例框，并通过 `typography.py` 的 `validate_figure()` 检验（`width="420pt"`、`min_label_pt >= 11.0`、`overlaps == []`、`out_of_bounds == []`），且 `.pdf` 为非 LFS 指针的真实二进制文件；将新图注册至 `manuscripts/chXX/figure-index.json`。
    - **【防呆红线 1：图号重排与跨章引用同步】** 若在章节中部插入新图，该章后续所有配图的图号 `Y` 均会顺延 `+1`。不仅要顺延更新本章后续所有 `*图 X-Y　...*` 题注及本章内文中的 `图 X-Y` 引用，**还必须用 `rg "图 X-"` 扫描全书所有 `manuscripts/*.md`，若其他章节存在指向本章后续图号的跨章引用，必须一并同步更新**。
 2. **步骤 2：内容扩充与 [`refine-prose`](../../.agents/skills/refine-prose/SKILL.md) 深度润色**
    - 严格遵循“**实际工程场景/痛点引入 $\to$ 物理直觉与数学公式推导 $\to$ 锁定真值的手算算例与翻转条件 $\to$ 启发式量化练习/实验**”的教学法。
@@ -395,12 +467,13 @@
 3. **步骤 3：本地自动化校验门禁（Pre-Commit Gate）**
    - **【防呆红线 3：构建脚本切换时序】** 在 **Batch 1～Batch 6** 期间，`verify_core_principles.py`、`build_site.py`、`check_site.py`、`book/build_pdf.py` 保持 `range(1, 13)` 不变，使每批均能立即通过全套校验；进入 **Batch 7** 创建第 13、14 章时，在同一批次原子更新上述脚本至 `range(1, 15)`（含 `if n <= 12:` 历史快照保护）。
    - 运行 `python3 scripts/verify_core_principles.py`（检查并还原 `archive/reviews/core-principles-revision-2026-09-10/core-validation.json`），确认 `passed: true, errors: []`。
+   - 对本章所有新增及重绘 `.svg` 运行 `typography.py` 的 `validate_figure()` 校验，确认零文字碰撞、零画布越界、`min_label_pt >= 11.0`。
    - 运行感叹号、繁体字与 180 词 `strict_ai` 禁用词扫描脚本，确认计数全部为 `0`。
    - 运行 `git diff --check` 确认无空白字符格式错误。
 4. **步骤 4：提交初版 Git Commit**
-   - 将当前章节的正文、新增配图三件套与 `figure-index.json` 提交为原子 Commit。
-5. **步骤 5：启动 Gemini 4 Argon High 同配置 Subagent 多轮审校闭环（直至收敛）**
-   - 调用 `invoke_subagent`（`TypeName: 'self'`, `Model: 'inherit'`），由具备高推理强度的 Gemini 4 Argon High 同配置 Subagent 对照 `git diff` 与章节全文，从**教学法清晰度、现代汉语书面语文雅度、技术/数值/公式/图号/练习编号/脚注零差错**三个维度进行严苛审阅。
-   - 若 Subagent 提出任何修改意见，立即使用 `edit_file` 逐项修复 $\to$ 重新通过步骤 3 校验 $\to$ 提交修复 Commit $\to$ 使用 `send_message` 发回同一 Subagent 复核，循环迭代（最多 5 轮）直至获得明确的 **`Approved / Converged`（终审通过）** 结论。
+   - 将当前章节的正文、重绘及新增配图三件套、`manifest.json` 与 `figure-index.json` 提交为原子 Commit。
+5. **步骤 5：启动 Gemini 4 Argon High 同配置 Subagent 多轮审校闭环（含视觉审图，直至收敛）**
+   - 调用 `invoke_subagent`（`TypeName: 'self'`, `Model: 'inherit'`），由具备高推理强度的 Gemini 4 Argon High 同配置 Subagent 对照 `git diff`、章节全文及配图 `.png` 渲染件，从**教学法清晰度、现代汉语书面语文雅度、技术/数值/公式/图号/练习编号/脚注零差错、SVG 配图视觉与排版精美度（直接用 `read_file` 检视 `.png` 的字体层级、对齐、配色、留白与零重叠/零贴边）**四个维度进行严苛审阅。
+   - 若 Subagent 提出任何修改意见（无论是正文还是配图排版），立即逐项修复或重绘 $\to$ 重新通过步骤 3 校验 $\to$ 提交修复 Commit $\to$ 使用 `send_message` 发回同一 Subagent 复核，循环迭代（最多 5 轮）直至获得明确的 **`Approved / Converged`（终审通过）** 结论。
 6. **步骤 6：批次网站构建验证与推送部署（Push & Deploy）**
    - 每完成一个 Batch（两章均获得 Subagent `Approved / Converged`），运行 `python3 scripts/build_site.py && python3 scripts/check_site.py` 验证整站构建与所有内部锚点/图片链接 100% 完好，随后还原临时生成的 `.mkdocs-build-*.yml`（若未纳入版本变更），执行 `git push origin main` 推送部署。
