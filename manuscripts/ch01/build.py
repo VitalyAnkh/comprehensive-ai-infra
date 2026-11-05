@@ -28,7 +28,8 @@ C={'ink':'#193441','muted':'#55707D','blue':'#246F91','teal':'#138B83','orange':
  'pale':'#F0F6F8','line':'#CBD8DF','light':'#E7F3EF','sand':'#FCF2E7'}
 source_lock=json.loads((HERE/'sources.json').read_text())
 for row in source_lock['sources']:
- p=ROOT/row['path'];actual=hashlib.sha256(p.read_bytes()).hexdigest()
+ p=ROOT/row['path'];b=p.read_bytes()
+ actual=b.decode().split('oid sha256:')[1].splitlines()[0].strip() if b.startswith(b'version https://git-lfs.github.com/spec/v1') else hashlib.sha256(b).hexdigest()
  if actual!=row['sha256']:raise SystemExit(f'Source changed: {row["path"]}; review before rebuilding.')
 base=json.loads((ROOT/'calculations/results/decode-budget-base.json').read_text())
 # Existing result envelopes retain their independent assumptions and evidence.

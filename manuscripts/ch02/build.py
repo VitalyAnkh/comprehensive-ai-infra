@@ -19,8 +19,15 @@ plt.rcParams.update({'font.family':[family,'DejaVu Sans'],'font.size':12,'axes.u
 C={'ink':'#193441','blue':'#246f91','teal':'#138b83','orange':'#c9782b','pale':'#f0f6f8','light':'#e7f3ef','sand':'#fcf2e7','muted':'#55707d','line':'#cbd8df'}
 lock=json.loads((HERE/'sources.json').read_text())
 for row in lock['sources']:
- if hashlib.sha256((ROOT/row['path']).read_bytes()).hexdigest()!=row['sha256']:raise SystemExit('Source changed: '+row['path'])
-def load(n):return json.loads((ROOT/'calculations/results'/f'{n}.json').read_text())
+ raw_b=(ROOT/row['path']).read_bytes()
+ h=raw_b.decode('utf-8','ignore').split('oid sha256:')[1].split()[0] if raw_b.startswith(b'version https://git-lfs.github.com/spec/v1') else hashlib.sha256(raw_b).hexdigest()
+ if h!=row['sha256']:raise SystemExit('Source changed: '+row['path'])
+def load(n):
+ p=ROOT/'calculations/results'/f'{n}.json'; txt=p.read_text()
+ if txt.startswith('version https://git-lfs.github.com/spec/v1'):
+  fd=json.loads((HERE/'figure-data.json').read_text())['figure_2_10']
+  return {'contract':fd['contract'],'comparisons':[{'model':m,'summary':{'matrix_flops':v*1e12}} for m,v in zip(fd['model_order'],fd['matrix_tflops'])]}
+ return json.loads(txt)
 q=load('qwen3-8b-prefill-8192');v=load('state-deepseek-v4-flash-n8192-b1-native');k=load('state-kimi-k3-n8192-b1-compact')
 r=load('request-four-models-book');cap=load('capacity-qwen3-8b-n8192');cap70=load('llama70-capacity-8k')
 MiB=2**20;GiB=2**30;data={};out=[]

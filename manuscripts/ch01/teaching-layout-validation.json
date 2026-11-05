@@ -2,7 +2,7 @@
   {
     "figure": "figure-1-1-panorama",
     "width_pt": 420.0,
-    "min_label_pt": 12.0,
+    "min_label_pt": 11.0,
     "text_extent_warnings": []
   },
   {
@@ -30,6 +30,12 @@
     "text_extent_warnings": []
   },
   {
+    "figure": "figure-1-amdahl-coding",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
     "figure": "figure-1-capacity-path",
     "width_pt": 420.0,
     "min_label_pt": 11.0,
@@ -50,7 +56,7 @@
   {
     "figure": "figure-1-batch-reuse",
     "width_pt": 420.0,
-    "min_label_pt": 12.0,
+    "min_label_pt": 11.0,
     "text_extent_warnings": []
   },
   {
@@ -78,27 +84,39 @@
     "text_extent_warnings": []
   },
   {
+    "figure": "figure-1-step-breakdown",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
     "figure": "figure-1-design-tpu",
     "width_pt": 420.0,
-    "min_label_pt": 12.0,
+    "min_label_pt": 11.0,
     "text_extent_warnings": []
   },
   {
     "figure": "figure-1-design-smartnic",
     "width_pt": 420.0,
-    "min_label_pt": 12.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch01-fleet-goodput-and-smartnic-offload",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
     "text_extent_warnings": []
   },
   {
     "figure": "figure-1-design-ub",
     "width_pt": 420.0,
-    "min_label_pt": 12.0,
+    "min_label_pt": 11.0,
     "text_extent_warnings": []
   },
   {
     "figure": "figure-1-programmability",
     "width_pt": 420.0,
-    "min_label_pt": 12.0,
+    "min_label_pt": 11.0,
     "text_extent_warnings": []
   }
 ]

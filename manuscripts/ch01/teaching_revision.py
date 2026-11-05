@@ -1,133 +1,357 @@
-"""Chapter 1: one question per book-size figure. Inputs come from build.py's locked evidence."""
+"""Chapter 1: publication-grade book-size figures (420pt). Inputs come from build.py's locked evidence."""
 import numpy as np
 import matplotlib.pyplot as plt
-from figure_style import COL, STYLE, canvas, plot, text, box, arrow, Exporter
+from figure_style import (
+    COL, BORDER_COL, HEADER_COL, TEXT_COL, STYLE,
+    canvas, plot, text, box, card, badge, arrow, Exporter
+)
 
-def draw(here,data):
-    out=Exporter(here)
+
+def draw(here, data):
+    out = Exporter(here)
     with plt.rc_context(STYLE):
-        f,a=canvas(5.2)
-        layers=[('应用与任务','要完成什么，何时完成','orange'),
-                ('模型与负载','需要哪些计算和数据','blue'),
-                ('训练与推理系统','安排请求、batch 和加速器','green'),
-                ('算子与编译运行时','把运算变成可执行程序','purple'),
-                ('处理器与存储','计算并保存数据','blue'),
-                ('互联与数据中心','连接设备，提供电力与散热','gray')]
-        for i,(title,body,c) in enumerate(layers):
-            y=.825-i*.153
-            box(a,.06,y,.88,.125,title+'\n'+body,c)
-            if i<5:arrow(a,(.5,y),(.5,y-.028))
-        out.save(f,'figure-1-1-panorama')
+        # 1. figure-1-1-panorama: Six-layer AI Infra vertical stack + cross-layer governance
+        f, a = canvas(6.0)
+        layers = [
+            ('L6', '应用与任务', '对话、编程助手、多模态 · 延迟与吞吐 SLO', 'orange'),
+            ('L5', '模型与负载', '稠密/MoE 架构、长上下文 · 算力与显存需求', 'blue'),
+            ('L4', '训练与推理系统', '分布式并行、请求路由、连续批处理与 KV 管理', 'green'),
+            ('L3', '算子与编译运行时', '算子融合、计算图编译、显存分配与异步流调度', 'purple'),
+            ('L2', '处理器与存储', 'GPU / NPU / CPU · SRAM、HBM 与持久化存储', 'blue'),
+            ('L1', '互联与数据中心', '片间互联（Scale-Up）、跨机网络、供电与散热', 'gray'),
+        ]
+        for i, (lv, title, body, c) in enumerate(layers):
+            y = 0.855 - i * 0.135
+            card(a, 0.03, y, 0.68, 0.112, f'{lv}  {title}', body, c, title_size=12, body_size=11)
+            if i < 5:
+                arrow(a, (0.37, y), (0.37, y - 0.023), color=BORDER_COL[c])
+        card(
+            a, 0.735, 0.18, 0.235, 0.787,
+            '跨层平台治理',
+            '资源调度\n算力分配\n齐步排程\n\n运行环境\n容器镜像\n故障隔离\n\n可观测性\n全栈追踪\n能效核算',
+            'green', title_size=12, body_size=11
+        )
+        box(a, 0.03, 0.035, 0.94, 0.095, '共同物理边界：先进封装 · 机架供电与液冷散热 · 集群高可用', 'gray', size=11)
+        out.save(f, 'figure-1-1-panorama')
 
-        f,a=canvas(4.4)
-        for x,label,c in [(.02,'应用\n组织输入','orange'),(.36,'服务入口\n接收请求','gray'),(.70,'路由器\n选择实例','purple')]:
-            box(a,x,.76,.28,.18,label,c)
-        arrow(a,(.30,.85),(.36,.85));arrow(a,(.64,.85),(.70,.85))
-        box(a,.02,.06,.96,.52,'','gray');text(a,.05,.53,'被选中的推理实例',14)
-        box(a,.06,.17,.24,.22,'实例调度器\n组成 batch','green')
-        box(a,.38,.17,.24,.22,'CPU\n提交程序','blue')
-        box(a,.70,.17,.24,.22,'GPU\n执行运算','orange')
-        arrow(a,(.30,.28),(.38,.28));arrow(a,(.62,.28),(.70,.28))
-        arrow(a,(.84,.76),(.84,.61));text(a,.49,.65,'请求进入实例',11,ha='center')
-        out.save(f,'figure-1-2-request')
+        # 2. figure-1-2-request: Online inference request lifecycle
+        f, a = canvas(4.7)
+        for idx, (x, title, body, c) in enumerate([
+            (0.02, '1  应用与客户端', '组装提示词与上下文', 'orange'),
+            (0.36, '2  服务网关入口', '鉴权、限流与配额', 'gray'),
+            (0.70, '3  全局请求路由', '感知负载选定实例', 'purple'),
+        ], start=1):
+            card(a, x, 0.74, 0.28, 0.20, title, body, c, title_size=12, body_size=11)
+        arrow(a, (0.30, 0.84), (0.36, 0.84))
+        arrow(a, (0.64, 0.84), (0.70, 0.84))
 
-        f,a=canvas(3.7)
-        box(a,.04,.82,.29,.13,'模型文件','gray');box(a,.04,.63,.92,.13,'显存：保存一份权重','blue')
-        arrow(a,(.18,.82),(.18,.76));text(a,.46,.875,'启动时加载',11)
-        for x,s in [(.05,'第 1 步'),(.37,'第 2 步'),(.69,'第 3 步')]:
-            box(a,x,.20,.26,.23,s+'\n计算单元','green')
-            arrow(a,(x+.13,.63),(x+.13,.44))
-        text(a,.50,.55,'每步从显存读取所需权重',12,ha='center')
-        arrow(a,(.31,.31),(.37,.31));arrow(a,(.63,.31),(.69,.31))
-        text(a,.5,.08,'前一步输出成为下一步输入',12,ha='center')
-        out.save(f,'figure-1-weight-lifetime')
+        card(a, 0.02, 0.05, 0.96, 0.56, '被选中的推理服务实例（单卡或多卡协同）', '', 'gray', title_size=13)
+        card(a, 0.05, 0.14, 0.27, 0.34, '实例调度器', '分词编码与排队\n动态组成连续 Batch', 'green', title_size=12, body_size=11)
+        card(a, 0.365, 0.14, 0.27, 0.34, 'CPU 运行时', '分配 KV 显存块\n异步下发算子', 'blue', title_size=12, body_size=11)
+        card(a, 0.68, 0.14, 0.27, 0.34, 'GPU 与 HBM', '读写权重与 KV\n执行 Prefill/Decode', 'orange', title_size=12, body_size=11)
+        arrow(a, (0.32, 0.31), (0.365, 0.31))
+        arrow(a, (0.635, 0.31), (0.68, 0.31))
+        arrow(a, (0.84, 0.74), (0.84, 0.61), color=BORDER_COL['purple'])
+        text(a, 0.52, 0.655, '请求路由转发进入目标实例', 11, ha='center', color=TEXT_COL['purple'], weight='bold')
+        out.save(f, 'figure-1-2-request')
 
-        f,a=canvas(4.8)
-        box(a,.04,.77,.40,.17,'入口与共享存储','gray');box(a,.57,.77,.39,.17,'其他超节点','purple')
-        box(a,.20,.56,.60,.12,'数据中心网络','green')
-        arrow(a,(.24,.77),(.38,.68));arrow(a,(.76,.77),(.62,.68))
-        box(a,.02,.025,.96,.44,'','gray');text(a,.05,.425,'放大一个超节点',14)
-        box(a,.08,.27,.36,.11,'CPU 与主存','blue');box(a,.61,.27,.31,.11,'网卡','green')
-        arrow(a,(.5,.56),(.76,.39));arrow(a,(.44,.325),(.61,.325))
-        for x in [.08,.61]:box(a,x,.07,.31,.13,'GPU 与显存','orange')
-        arrow(a,(.235,.27),(.235,.20));arrow(a,(.765,.27),(.765,.20))
-        arrow(a,(.39,.135),(.61,.135));text(a,.50,.235,'内部互联',11,ha='center')
-        out.save(f,'figure-1-3-datacenter')
+        # 3. figure-1-weight-lifetime: Persistent weight vs per-step execution
+        f, a = canvas(4.1)
+        card(a, 0.03, 0.76, 0.28, 0.19, '持久化模型文件', '磁盘 / 对象存储', 'gray', title_size=12, body_size=11)
+        card(a, 0.37, 0.76, 0.60, 0.19, 'GPU 显存（HBM 常驻权重）', '启动时一次性加载，后续各生成步反复读取', 'blue', title_size=12, body_size=11)
+        arrow(a, (0.31, 0.855), (0.37, 0.855), color=BORDER_COL['blue'])
+        for i, (x, s) in enumerate([(0.04, '第 1 步生成'), (0.37, '第 2 步生成'), (0.70, '第 3 步生成')], start=1):
+            card(a, x, 0.21, 0.26, 0.31, s, 'GPU 计算单元\n读取权重并运算', 'green', title_size=12, body_size=11)
+            arrow(a, (0.44 + (i - 1) * 0.23, 0.76), (x + 0.13, 0.52), color=BORDER_COL['blue'])
+        badge(a, 0.48, 0.64, '每生成一个输出 token，均从 HBM 顺序读取权重', 'white', size=11)
+        arrow(a, (0.30, 0.365), (0.37, 0.365), color=BORDER_COL['green'])
+        arrow(a, (0.63, 0.365), (0.70, 0.365), color=BORDER_COL['green'])
+        box(a, 0.04, 0.04, 0.92, 0.11, '自回归依赖：前一步输出的 token 与追加的 KV 状态成为下一步输入', 'orange', size=11)
+        out.save(f, 'figure-1-weight-lifetime')
 
-        f,a=plot(3.4,left=.29)
-        names=['主存访问','机房内往返','磁盘寻道']; vals=[100,500000,10000000]
-        a.barh(names,vals,color=[COL['blue'],COL['green'],COL['orange']],edgecolor=COL['line'],height=.5)
-        a.set_xscale('log');a.set_xlim(10,1e8);a.set_xlabel('时间（ns，对数刻度）');a.invert_yaxis()
-        for i,(v,label) in enumerate(zip(vals,['0.1 μs','0.5 ms','10 ms'])):a.text(v*1.35,i,label,va='center',fontsize=12)
-        out.save(f,'figure-1-4-numbers')
+        # 4. figure-1-3-datacenter: Datacenter to Supernode hierarchy
+        f, a = canvas(5.2)
+        card(a, 0.03, 0.79, 0.43, 0.17, '在线入口与共享存储', '网关路由 · 数据集与检查点', 'gray', title_size=12, body_size=11)
+        card(a, 0.54, 0.79, 0.43, 0.17, '其他超节点（Scale-Out）', '跨机架并行训练与推理副本', 'purple', title_size=12, body_size=11)
+        box(a, 0.08, 0.60, 0.84, 0.105, '数据中心高速网络（RoCEv2 / InfiniBand 跨机互联）', 'green', size=12, weight='bold')
+        arrow(a, (0.245, 0.79), (0.36, 0.705))
+        arrow(a, (0.755, 0.79), (0.64, 0.705))
 
-        capacity=data['capacity_example']
-        bf16=capacity['bf16_weight_bytes']/1e9
-        int8=capacity['int8_weight_and_metadata_bytes']/1e9
-        f,a=plot(3.5,left=.25)
-        for y,v,c in [(3,bf16,'orange'),(2,bf16/2,'blue'),(1,bf16/2,'blue'),(0,int8,'green')]:
-            a.barh(y,v,height=.55,color=COL[c],edgecolor=COL['line'])
-            a.text(6,y,f'{v:.2f} GB',va='center',fontsize=12)
-        a.axvline(80,color='#80542e',ls='--',lw=1);a.text(82,3.65,'单卡容量 80 GB',fontsize=11)
-        a.axhline(.5,color='#999999',lw=.7)
-        a.set(yticks=[3,2,1,0],yticklabels=['BF16 单卡','BF16 卡 0','BF16 卡 1','8 比特单卡'],
-              xlim=(0,190),ylim=(-.55,4.05),xlabel='权重及量化附加数据（GB）',xticks=[0,40,80,120,160])
-        out.save(f,'figure-1-capacity-path')
+        card(a, 0.02, 0.03, 0.96, 0.49, '放大一个超节点（高带宽低延迟域 Scale-Up）', '', 'gray', title_size=12)
+        card(a, 0.06, 0.27, 0.40, 0.15, '主机 CPU 与系统主存', '控制面调度 · 算子下发', 'blue', title_size=11, body_size=11)
+        card(a, 0.56, 0.27, 0.38, 0.15, '可编程网卡（SmartNIC）', 'RDMA 零拷贝 · 协议卸载', 'green', title_size=11, body_size=11)
+        arrow(a, (0.75, 0.60), (0.75, 0.52), color=BORDER_COL['green'])
+        arrow(a, (0.46, 0.345), (0.56, 0.345))
+        card(a, 0.06, 0.06, 0.38, 0.15, 'GPU 组 A + HBM 显存', '张量计算与本地高带宽显存', 'orange', title_size=11, body_size=11)
+        card(a, 0.56, 0.06, 0.38, 0.15, 'GPU 组 B + HBM 显存', '张量计算与本地高带宽显存', 'orange', title_size=11, body_size=11)
+        arrow(a, (0.25, 0.27), (0.25, 0.21))
+        arrow(a, (0.75, 0.27), (0.75, 0.21))
+        arrow(a, (0.44, 0.135), (0.56, 0.135), color=BORDER_COL['orange'])
+        arrow(a, (0.56, 0.135), (0.44, 0.135), color=BORDER_COL['orange'])
+        text(a, 0.50, 0.175, '内部互联', 11, ha='center', color=TEXT_COL['orange'], weight='bold')
+        out.save(f, 'figure-1-3-datacenter')
 
-        f,a=canvas(3.0)
-        box(a,.04,.58,.37,.24,'显存\n70 GB 权重','blue');box(a,.61,.58,.35,.24,'计算单元\n完成乘加','green')
-        arrow(a,(.41,.70),(.61,.70));text(a,.5,.45,'读取路径：3350 GB/s',12,ha='center')
-        text(a,.5,.25,'70 GB ÷ 3350 GB/s ≈ 20.90 ms',14,ha='center')
-        text(a,.5,.09,'每参数一字节，每步完整读取一遍',11,ha='center')
-        out.save(f,'figure-1-read-path')
+        # 5. figure-1-4-numbers: Key latency numbers across orders of magnitude
+        f, a = plot(3.6, left=0.27)
+        names = ['L1/L2 缓存', '系统主存访问', '机房网络往返', '机械磁盘寻道']
+        vals = [3.0, 100.0, 500000.0, 10000000.0]
+        colors = [COL['purple'], COL['blue'], COL['green'], COL['orange']]
+        edges = [BORDER_COL['purple'], BORDER_COL['blue'], BORDER_COL['green'], BORDER_COL['orange']]
+        a.barh(names, vals, color=colors, edgecolor=edges, linewidth=1.3, height=0.52)
+        a.set_xscale('log')
+        a.set_xlim(1, 3e8)
+        a.set_xlabel('典型访问延迟（ns，对数刻度）')
+        a.invert_yaxis()
+        a.grid(axis='x', linestyle=':', alpha=0.5, color='#CBD5E1')
+        for i, (v, label) in enumerate(zip(vals, ['0.5–7 ns', '100 ns (0.1 μs)', '0.5 ms', '10 ms'])):
+            a.text(v * 1.45, i, label, va='center', fontsize=11, color=COL['ink'], weight='bold')
+        out.save(f, 'figure-1-4-numbers')
 
-        f,a=plot(3.7,left=.25)
-        comp=data['teaching']['compute_ms'];mem=data['teaching']['weight_read_ms']
-        labels=['原加速器','算力翻倍','带宽翻倍'];y=np.arange(3)
-        a.barh(y+.16,[mem,mem,mem/2],height=.29,color=COL['blue'],edgecolor=COL['line'],label='读取权重')
-        a.barh(y-.16,[comp,comp/2,comp],height=.29,color=COL['orange'],edgecolor=COL['line'],label='矩阵计算')
-        for i,v in enumerate([mem,mem,mem/2]):a.text(v+.4,i+.16,f'{v:.2f}',fontsize=12,va='center')
-        a.set(yticks=y,yticklabels=labels,xlim=(0,25),xlabel='资源时间下界（ms）');a.invert_yaxis();a.legend(loc='lower right',frameon=False)
-        out.save(f,'figure-1-5-budget')
+        # 6. figure-1-amdahl-coding: Amdahl's law speedup curves vs acceleratable fraction f
+        f, a = plot(3.9, left=0.16, bottom=0.18)
+        frac = np.linspace(0.0, 0.88, 200)
+        sp_5 = 1.0 / ((1.0 - frac) + frac / 5.0)
+        sp_10 = 1.0 / ((1.0 - frac) + frac / 10.0)
+        sp_inf = 1.0 / (1.0 - frac)
+        a.axvspan(20, 30, color=COL['orange'], alpha=0.45)
+        a.axvspan(70, 80, color=COL['green'], alpha=0.45)
+        a.plot(frac * 100, sp_inf, color='#64748B', ls=':', lw=1.8, label='理论上限 $1/(1-f)$')
+        a.plot(frac * 100, sp_10, color=BORDER_COL['green'], ls='--', lw=2.0, label='局部加速 $s = 10$')
+        a.plot(frac * 100, sp_5, color=BORDER_COL['blue'], ls='-', lw=2.3, label='局部加速 $s = 5$')
+        a.scatter([20, 30, 70, 80], [1 / (0.8 + 0.2 / 5), 1 / (0.7 + 0.3 / 5), 1 / (0.3 + 0.7 / 5), 1 / (0.2 + 0.8 / 5)], color=BORDER_COL['blue'], s=36, zorder=5)
+        a.text(
+            25, 3.55, '大型企业团队\n(20%–30%)\n1.19×–1.32×',
+            ha='center', va='center', fontsize=11, weight='bold', color=TEXT_COL['orange'],
+            bbox=dict(boxstyle='round,pad=0.28', facecolor='#FFFFFF', edgecolor=BORDER_COL['orange'], lw=1.0, alpha=0.96), zorder=6
+        )
+        a.text(
+            62, 4.85, '精简团队\n(70%–80%)\n2.27×–2.78×',
+            ha='center', va='center', fontsize=11, weight='bold', color=TEXT_COL['green'],
+            bbox=dict(boxstyle='round,pad=0.28', facecolor='#FFFFFF', edgecolor=BORDER_COL['green'], lw=1.0, alpha=0.96), zorder=6
+        )
+        a.set(
+            xlim=(0, 90),
+            ylim=(1.0, 6.4),
+            xticks=[0, 20, 40, 60, 80],
+            xticklabels=['0%', '20%', '40%', '60%', '80%'],
+            xlabel='可加速环节在原任务中的耗时占比 f',
+            ylabel='端到端总加速比（倍）',
+        )
+        a.grid(True, linestyle=':', alpha=0.45, color='#CBD5E1')
+        a.legend(loc='upper left', frameon=True)
+        out.save(f, 'figure-1-amdahl-coding')
 
-        f,a=canvas(3.5)
-        text(a,.04,.91,'同一份权重，为八个请求服务',14)
-        box(a,.04,.64,.92,.15,'一次读取：70 GB 权重','blue')
+        # 7. figure-1-capacity-path: 70B capacity budget vs 80 GB H100 limit
+        capacity = data['capacity_example']
+        bf16 = capacity['bf16_weight_bytes'] / 1e9
+        int8 = capacity['int8_weight_and_metadata_bytes'] / 1e9
+        f, a = plot(3.6, left=0.25)
+        rows_cap = [
+            (3, bf16, 'orange', f'{bf16:.2f} GB'),
+            (2, bf16 / 2, 'blue', f'{bf16/2:.2f} GB'),
+            (1, bf16 / 2, 'blue', f'{bf16/2:.2f} GB'),
+            (0, int8, 'green', f'{int8:.2f} GB'),
+        ]
+        for y, v, c, desc in rows_cap:
+            a.barh(y, v, height=0.55, color=COL[c], edgecolor=BORDER_COL[c], linewidth=1.3)
+            a.text(v + 3.0, y, desc, va='center', fontsize=11, color=COL['ink'], weight='bold')
+        a.axvline(80, color='#B45309', ls='--', lw=1.6)
+        a.text(82, 3.62, '单卡容量 80 GB', fontsize=11, color='#B45309', weight='bold')
+        a.axhline(0.5, color='#CBD5E1', lw=0.9)
+        a.set(
+            yticks=[3, 2, 1, 0],
+            yticklabels=['BF16 单卡', 'BF16 卡 0', 'BF16 卡 1', '8 比特单卡'],
+            xlim=(0, 195),
+            ylim=(-0.55, 4.05),
+            xlabel='权重及量化附加数据（GB）',
+            xticks=[0, 40, 80, 120, 160],
+        )
+        out.save(f, 'figure-1-capacity-path')
+
+        # 8. figure-1-read-path: Single-step weight read bandwidth lower bound
+        f, a = canvas(3.2)
+        card(a, 0.03, 0.46, 0.35, 0.44, 'HBM 显存', '常驻 70 GB 权重\n（每参数 1 字节）', 'blue', title_size=12, body_size=11)
+        card(a, 0.62, 0.46, 0.35, 0.44, 'GPU 计算单元', '接收权重与激活\n完成乘加运算', 'green', title_size=12, body_size=11)
+        arrow(a, (0.38, 0.68), (0.62, 0.68), color=BORDER_COL['blue'])
+        text(a, 0.50, 0.77, '峰值带宽', 11, ha='center', color=TEXT_COL['blue'], weight='bold')
+        text(a, 0.50, 0.56, '3350 GB/s', 12, ha='center', color=TEXT_COL['blue'], weight='bold')
+        box(a, 0.03, 0.08, 0.94, 0.25, '单步权重读取下界：70 GB ÷ 3350 GB/s ≈ 20.90 ms（每步完整读取）', 'orange', size=11, weight='bold')
+        out.save(f, 'figure-1-read-path')
+
+        # 9. figure-1-5-budget: Compute vs memory lower bound under hardware upgrades
+        f, a = plot(3.8, left=0.24)
+        comp = data['teaching']['compute_ms']
+        mem = data['teaching']['weight_read_ms']
+        labels = ['原加速器', '算力翻倍', '带宽翻倍']
+        y = np.arange(3)
+        mem_vals = [mem, mem, mem / 2]
+        comp_vals = [comp, comp / 2, comp]
+        a.barh(y + 0.17, mem_vals, height=0.30, color=COL['blue'], edgecolor=BORDER_COL['blue'], linewidth=1.2, label='读取权重下界')
+        a.barh(y - 0.17, comp_vals, height=0.30, color=COL['orange'], edgecolor=BORDER_COL['orange'], linewidth=1.2, label='矩阵计算下界')
+        for i, v in enumerate(mem_vals):
+            a.text(v + 0.45, i + 0.17, f'{v:.2f} ms', fontsize=11, va='center', color=TEXT_COL['blue'], weight='bold')
+        for i, v in enumerate(comp_vals):
+            a.text(v + 0.45, i - 0.17, f'{v:.2f} ms', fontsize=11, va='center', color=TEXT_COL['orange'])
+        a.set(yticks=y, yticklabels=labels, xlim=(0, 26.5), xlabel='单步资源服务时间下界（ms）')
+        a.invert_yaxis()
+        a.legend(loc='lower right', frameon=True)
+        out.save(f, 'figure-1-5-budget')
+
+        # 10. figure-1-batch-reuse: Weight read amortized across 8 batched requests
+        f, a = canvas(3.7)
+        card(a, 0.04, 0.66, 0.92, 0.25, 'HBM 一次读取：70 GB 模型权重（耗时仍约 20.90 ms）', '同一份权重读入片上缓存后，复用于批内 8 条并发请求', 'blue', title_size=12, body_size=11)
         for i in range(8):
-            x=.04+i*.117;box(a,x,.24,.105,.18,str(i+1),'green');arrow(a,(x+.052,.63),(x+.052,.43))
-        text(a,.5,.52,'八条输入各自完成运算',12,ha='center')
-        text(a,.5,.10,'整批约 20.90 ms；每输出 token 分摊约 2.61 ms',12,ha='center')
-        out.save(f,'figure-1-batch-reuse')
+            x = 0.04 + i * 0.117
+            box(a, x, 0.28, 0.102, 0.20, f'请求 {i+1}', 'green', size=11, weight='bold')
+            arrow(a, (x + 0.051, 0.66), (x + 0.051, 0.48), color=BORDER_COL['blue'])
+        box(a, 0.04, 0.05, 0.92, 0.15, '8 请求并发：整批读取仍约 20.90 ms → 每输出 token 分摊降至 2.61 ms', 'orange', size=11, weight='bold')
+        out.save(f, 'figure-1-batch-reuse')
 
-        d=data['teaching_diagrams']['batch_transition'];b=np.array(d['batch'])
-        f,a=plot(3.8)
-        a.plot(b,comp*b,color='#a96c28',label='矩阵计算');a.axhline(mem,color='#267398',label='权重读取')
-        a.plot(b,np.maximum(comp*b,mem),color='#333333',ls='--',label='两者最大值')
-        a.axvline(d['crossing_batch'],color='#777777',ls=':',lw=1)
-        a.text(156,mem+4,'约 148',fontsize=12);a.set(xlim=(0,512),ylim=(0,80),xlabel='批内请求数 B',ylabel='时间下界（ms）')
-        a.legend(loc='upper left',frameon=False);out.save(f,'figure-1-batch-transition')
-        f,a=plot(3.4)
-        a.plot(b,d['throughput'],color='#267398',lw=1.8);a.axvline(d['crossing_batch'],ls=':',color='#777777')
-        a.set(xlim=(0,512),ylim=(0,8000),xlabel='批内请求数 B',ylabel='输出吞吐（token/s）')
-        a.text(180,6200,'计算项开始主导',fontsize=12);out.save(f,'figure-1-batch-throughput')
+        # 11. figure-1-batch-transition: Crossing batch size B* ≈ 148
+        d = data['teaching_diagrams']['batch_transition']
+        b = np.array(d['batch'])
+        f, a = plot(3.8)
+        a.plot(b, comp * b, color=BORDER_COL['orange'], lw=2.0, label='矩阵计算 (0.1415 × B)')
+        a.axhline(mem, color=BORDER_COL['blue'], lw=2.0, label='权重读取 (20.90 ms)')
+        a.plot(b, np.maximum(comp * b, mem), color=COL['ink'], ls='--', lw=2.2, label='两者最大值')
+        a.axvline(d['crossing_batch'], color='#64748B', ls=':', lw=1.5)
+        a.scatter([d['crossing_batch']], [mem], color=BORDER_COL['orange'], s=55, zorder=5)
+        a.text(d['crossing_batch'] + 12, mem + 4.5, '转折点 $B^* \\approx 148$', fontsize=11, color=COL['ink'], weight='bold')
+        a.set(xlim=(0, 512), ylim=(0, 82), xlabel='批内并发请求数 B', ylabel='单步时间下界（ms）')
+        a.legend(loc='upper left', frameon=True)
+        out.save(f, 'figure-1-batch-transition')
 
-        rows=data['measured_short_group']
-        for key,ylabel,name in [('throughput','整批输出吞吐（token/s）','figure-1-measured-throughput'),('tpot_ms','每请求输出间隔（ms）','figure-1-measured-tpot')]:
-            f,a=plot(3.3)
-            vals=[r[key] for r in rows];a.plot(range(4),vals,'o-',color='#267398',lw=1.5)
-            for i,v in enumerate(vals):a.annotate(f'{v:.2f}',(i,v),xytext=(0,10),textcoords='offset points',ha='center',fontsize=11)
-            a.set(xlim=(-.45,3.45),ylim=(0,max(vals)*1.23),xticks=range(4),xticklabels=[r['batch'] for r in rows],xlabel='同时请求数（各档等距排列）',ylabel=ylabel)
-            out.save(f,name)
+        # 12. figure-1-batch-throughput: Ideal throughput upper bound vs batch size
+        f, a = plot(3.5)
+        a.plot(b, d['throughput'], color=BORDER_COL['blue'], lw=2.2, label='理想输出吞吐上界')
+        a.fill_between(b, 0, d['throughput'], color=COL['blue'], alpha=0.35)
+        a.axvline(d['crossing_batch'], ls=':', lw=1.5, color='#64748B')
+        a.text(18, 4800, '带宽受限区\n随 B 线性增长', fontsize=11, color=TEXT_COL['blue'], weight='bold')
+        a.text(165, 5600, '计算受限区（$B \\geq 148$）\n趋近 7067 token/s', fontsize=11, color=TEXT_COL['orange'], weight='bold')
+        a.set(xlim=(0, 512), ylim=(0, 8200), xlabel='批内并发请求数 B', ylabel='理想输出吞吐（token/s）')
+        out.save(f, 'figure-1-batch-throughput')
 
-        for slug,title,items in [
-            ('tpu','增加专用计算与数据搬移资源',[('输入缓冲','blue'),('矩阵计算阵列','orange'),('输出缓冲','green')]),
-            ('smartnic','把包处理放到数据经过的位置',[('网络数据','blue'),('可编程网卡\n完成包处理','orange'),('主机 CPU\n运行应用','green')]),
-            ('ub','让多台设备直接交换所需数据',[('设备 0\n计算与存储','blue'),('统一互联\n传递数据','green'),('设备 1\n计算与存储','orange')])]:
-            f,a=canvas(2.5);text(a,.04,.89,title,14)
-            for i,(label,c) in enumerate(items):
-                x=.03+.335*i;box(a,x,.30,.27,.34,label,c)
-                if i<2:arrow(a,(x+.27,.47),(x+.335,.47))
-            out.save(f,'figure-1-design-'+slug)
+        # 13 & 14. figure-1-measured-throughput and figure-1-measured-tpot
+        rows = data['measured_short_group']
+        for key, ylabel, name, theme in [
+            ('throughput', '整批输出吞吐（token/s）', 'figure-1-measured-throughput', 'blue'),
+            ('tpot_ms', '每请求输出间隔 TPOT（ms）', 'figure-1-measured-tpot', 'orange'),
+        ]:
+            f, a = plot(3.4)
+            vals = [r[key] for r in rows]
+            xs = list(range(len(rows)))
+            a.plot(xs, vals, 'o-', color=BORDER_COL[theme], markerfacecolor=COL[theme], markeredgewidth=1.8, markersize=7, lw=2.2)
+            a.fill_between(xs, 0, vals, color=COL[theme], alpha=0.28)
+            for i, v in enumerate(vals):
+                a.annotate(f'{v:.2f}', (i, v), xytext=(0, 10), textcoords='offset points', ha='center', fontsize=11, weight='bold', color=TEXT_COL[theme])
+            a.set(
+                xlim=(-0.45, 3.45),
+                ylim=(0, max(vals) * 1.26),
+                xticks=xs,
+                xticklabels=[f"B={r['batch']}" for r in rows],
+                xlabel='并发请求数档位（Qwen3-8B BF16 实测）',
+                ylabel=ylabel,
+            )
+            out.save(f, name)
+
+        # 15. figure-1-step-breakdown: Measured TPOT breakdown vs physical bandwidth lower bound
+        f, a = plot(3.6, left=0.31)
+        stages_bd = ['初始实测\n(含逐步日志)', '关闭日志后\n客户端实测', 'GPU 事件计时\n(仅模型前向)', '理想访存下界\n(权重+历史KV)']
+        ms_bd = [26.5, 12.1, 10.7, 8.62]
+        mbu_bd = ['33%', '71%', '81%', '100%']
+        cols_bd = [COL['gray'], COL['orange'], COL['blue'], COL['green']]
+        edges_bd = [BORDER_COL['gray'], BORDER_COL['orange'], BORDER_COL['blue'], BORDER_COL['green']]
+        y_bd = np.arange(4)
+        a.barh(y_bd, ms_bd, height=0.54, color=cols_bd, edgecolor=edges_bd, linewidth=1.3)
+        for i, (v, mbu) in enumerate(zip(ms_bd, mbu_bd)):
+            a.text(v + 0.6, i, f'{v:.2f} ms (MBU {mbu})', va='center', fontsize=11, weight='bold', color=COL['ink'])
+        a.set(yticks=y_bd, yticklabels=stages_bd, xlim=(0, 46), xlabel='单步解码耗时（ms）与显存带宽利用率（MBU）')
+        a.invert_yaxis()
+        a.grid(axis='x', linestyle=':', alpha=0.5, color='#CBD5E1')
+        out.save(f, 'figure-1-step-breakdown')
+
+        # 16. figure-1-design-tpu: Domain-specific systolic matrix architecture
+        f, a = canvas(3.7)
+        card(a, 0.02, 0.05, 0.96, 0.90, '定制 AI 加速器（以 TPU 为例）：围绕矩阵运算重组芯片面积', '', 'gray', title_size=12)
+        card(a, 0.05, 0.24, 0.24, 0.48, 'HBM 与输入缓冲', '批量预取权重\n与激活张量', 'blue', title_size=11, body_size=11)
+        card(a, 0.34, 0.24, 0.32, 0.48, '二维脉动矩阵阵列', '权重固定，激活与部分和\n在乘加单元间直接传递', 'orange', title_size=11, body_size=11)
+        card(a, 0.71, 0.24, 0.24, 0.48, '向量与输出缓冲', '融合激活函数\n写回片上缓存', 'green', title_size=11, body_size=11)
+        arrow(a, (0.29, 0.48), (0.34, 0.48), color=BORDER_COL['blue'])
+        arrow(a, (0.66, 0.48), (0.71, 0.48), color=BORDER_COL['orange'])
+        box(a, 0.05, 0.08, 0.90, 0.10, '设计收益：省去通用指令译码与寄存器往返，提升每瓦矩阵算力', 'purple', size=11)
+        out.save(f, 'figure-1-design-tpu')
+
+        # 17. figure-1-design-smartnic: Programmable SmartNIC / DPU data-path & policy offload
+        f, a = canvas(3.7)
+        card(a, 0.02, 0.05, 0.96, 0.90, '可编程网卡（SmartNIC）：在数据必经之路上卸载协议与策略', '', 'gray', title_size=12)
+        card(a, 0.05, 0.24, 0.24, 0.48, '数据中心网络', '以太网 / RoCE\n微秒级报文流', 'blue', title_size=11, body_size=11)
+        card(a, 0.34, 0.24, 0.32, 0.48, '可编程网卡', '硬件流水线 + Arm 核\n完成分包、加密与卸载', 'orange', title_size=11, body_size=11)
+        card(a, 0.71, 0.24, 0.24, 0.48, '主机 CPU 与 GPU', 'RDMA 直达显存\n释放主机核心', 'green', title_size=11, body_size=11)
+        arrow(a, (0.29, 0.48), (0.34, 0.48), color=BORDER_COL['blue'])
+        arrow(a, (0.66, 0.48), (0.71, 0.48), color=BORDER_COL['orange'])
+        box(a, 0.05, 0.08, 0.90, 0.10, '设计边界：数据面卸载收益显著；控制策略卸载受跨 PCIe 延迟约束', 'purple', size=11)
+        out.save(f, 'figure-1-design-smartnic')
+
+        # 18. ch01-fleet-goodput-and-smartnic-offload: Dual-panel new figure (MPG waterfall + SmartNIC offload boundary)
+        f, _ = canvas(4.0)
+        f.clf()
+        ax1 = f.add_axes([0.16, 0.18, 0.29, 0.70])
+        ax2 = f.add_axes([0.59, 0.18, 0.36, 0.70])
+
+        stages = ['总容量 C', '单卡分配', '齐步就绪 A', '有效进展 G', '参考时间 I']
+        pcts = [100.0, 97.2, 83.3, 66.7, 33.3]
+        bar_cols = [COL['gray'], COL['purple'], COL['blue'], COL['green'], COL['orange']]
+        edge_cols = [BORDER_COL['gray'], BORDER_COL['purple'], BORDER_COL['blue'], BORDER_COL['green'], BORDER_COL['orange']]
+        y_pos = np.arange(len(stages))
+        ax1.barh(y_pos, pcts, height=0.55, color=bar_cols, edgecolor=edge_cols, linewidth=1.2)
+        for i, p in enumerate(pcts):
+            ax1.text(p + 3.0, i, f'{p:.1f}%', va='center', fontsize=11, weight='bold', color=COL['ink'])
+        ax1.set_yticks(y_pos, stages)
+        ax1.invert_yaxis()
+        ax1.set_xlim(0, 155)
+        ax1.set_xlabel('占总容量比例（%）', fontsize=11)
+        ax1.set_title('A  机队效率漏斗', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(axis='x', linestyle=':', alpha=0.5, color='#CBD5E1')
+
+        d_pct = np.linspace(0, 10, 101)
+        ratio = 32.0 * (1.0 - d_pct / 100.0) / 30.0
+        ax2.plot(d_pct, ratio, color=BORDER_COL['blue'], lw=2.2)
+        ax2.axhline(1.0, color='#64748B', ls='--', lw=1.4)
+        ax2.axvline(6.25, color=BORDER_COL['orange'], ls=':', lw=1.5)
+        ax2.fill_between(d_pct, 1.0, ratio, where=(ratio >= 1.0), color=COL['green'], alpha=0.45)
+        ax2.fill_between(d_pct, ratio, 1.0, where=(ratio < 1.0), color=COL['orange'], alpha=0.35)
+        ax2.scatter([2.0, 6.25, 8.0], [32 * 0.98 / 30, 1.0, 32 * 0.92 / 30], color=[BORDER_COL['green'], BORDER_COL['orange'], '#DC2626'], s=45, zorder=5)
+        ax2.text(1.0, 1.055, '+4.53%', fontsize=11, weight='bold', color=TEXT_COL['green'])
+        ax2.text(6.55, 1.012, '6.25%', fontsize=11, weight='bold', color=TEXT_COL['orange'])
+        ax2.text(6.65, 0.955, '-1.87%', fontsize=11, weight='bold', color='#B91C1C')
+        ax2.set_xlim(0, 10.5)
+        ax2.set_ylim(0.93, 1.085)
+        ax2.set_xlabel('单核吞吐降幅 d（%）', fontsize=11)
+        ax2.set_ylabel('相对总吞吐倍数', fontsize=11)
+        ax2.set_title('B  策略卸载翻转边界', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(True, linestyle=':', alpha=0.5, color='#CBD5E1')
+        out.save(f, 'ch01-fleet-goodput-and-smartnic-offload')
+
+        # 19. figure-1-design-ub: Supernode Unified Bus (UB / NVLink Switch) architecture
+        f, a = canvas(3.8)
+        card(a, 0.02, 0.05, 0.96, 0.90, '超节点统一互联（UB / NVLink Switch）：对等高带宽资源池', '', 'gray', title_size=12)
+        for i, (x, label, c) in enumerate([
+            (0.05, '节点 0：加速器', 'blue'),
+            (0.36, '节点 1：加速器', 'blue'),
+            (0.67, '共享 CPU 与内存池', 'purple'),
+        ]):
+            card(a, x, 0.55, 0.28, 0.24, label, '计算与显存统一编址', c, title_size=11, body_size=11)
+            arrow(a, (x + 0.14, 0.55), (x + 0.14, 0.43), color=BORDER_COL['green'])
+            arrow(a, (x + 0.14, 0.43), (x + 0.14, 0.55), color=BORDER_COL['green'])
+        card(
+            a, 0.05, 0.21, 0.90, 0.22,
+            '超节点统一互联交换矩阵（高带宽 · 低延迟 · 统一内存语义）',
+            '支持跨设备直接 Load/Store 与集合通信，消除主机协议栈拷贝',
+            'green', title_size=11, body_size=11
+        )
+        box(a, 0.05, 0.08, 0.90, 0.095, '适用场景：大模型张量并行（TP）与专家并行（EP）高速通信', 'orange', size=11)
+        out.save(f, 'figure-1-design-ub')
+
     from core_principles_figures import draw as draw_principles
     draw_principles(1, out)
     return out.finish()

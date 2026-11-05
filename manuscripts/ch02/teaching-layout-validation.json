@@ -14,7 +14,7 @@
   {
     "figure": "figure-2-qkv-objects",
     "width_pt": 420.0,
-    "min_label_pt": 12.0,
+    "min_label_pt": 11.0,
     "text_extent_warnings": []
   },
   {
@@ -62,7 +62,7 @@
   {
     "figure": "figure-2-mla-paths",
     "width_pt": 420.0,
-    "min_label_pt": 12.0,
+    "min_label_pt": 11.0,
     "text_extent_warnings": []
   },
   {
@@ -92,7 +92,7 @@
   {
     "figure": "figure-2-recurrence",
     "width_pt": 420.0,
-    "min_label_pt": 12.0,
+    "min_label_pt": 11.0,
     "text_extent_warnings": []
   },
   {
@@ -116,7 +116,7 @@
   {
     "figure": "figure-2-expert-reuse",
     "width_pt": 420.0,
-    "min_label_pt": 12.0,
+    "min_label_pt": 11.0,
     "text_extent_warnings": []
   },
   {
@@ -162,7 +162,19 @@
     "text_extent_warnings": []
   },
   {
+    "figure": "figure-2-v41-prefill-breakdown",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
     "figure": "figure-2-long-context-compute",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "figure-2-long-context-state",
     "width_pt": 420.0,
     "min_label_pt": 11.0,
     "text_extent_warnings": []
@@ -175,6 +187,12 @@
   },
   {
     "figure": "figure-2-history-capacity",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch02-dit-vae-memory-and-dllm-attention",
     "width_pt": 420.0,
     "min_label_pt": 11.0,
     "text_extent_warnings": []
