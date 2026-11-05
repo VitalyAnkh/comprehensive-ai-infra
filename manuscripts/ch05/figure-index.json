@@ -105,58 +105,66 @@
   },
   {
     "number": 27,
-    "asset": "ch05/figure-5-launch-vs-graph.svg"
+    "asset": "ch05/figure-5-vllm-host-overhead.svg"
   },
   {
     "number": 28,
-    "asset": "ch05/figure-5-12-runtime.svg"
+    "asset": "ch05/figure-5-launch-vs-graph.svg"
   },
   {
     "number": 29,
-    "asset": "ch05/figure-5-runtime-1.svg"
+    "asset": "ch05/figure-5-12-runtime.svg"
   },
   {
     "number": 30,
-    "asset": "ch05/figure-5-runtime-2.svg"
+    "asset": "ch05/figure-5-runtime-1.svg"
   },
   {
     "number": 31,
-    "asset": "ch05/figure-5-runtime-3.svg"
+    "asset": "ch05/figure-5-runtime-2.svg"
   },
   {
     "number": 32,
-    "asset": "ch05/figure-5-graph-address.svg"
+    "asset": "ch05/figure-5-runtime-3.svg"
   },
   {
     "number": 33,
-    "asset": "ch05/figure-5-13-graph-copy.svg"
+    "asset": "ch05/figure-5-graph-address.svg"
   },
   {
     "number": 34,
-    "asset": "ch05/figure-5-shape-buckets.svg"
+    "asset": "ch05/figure-5-13-graph-copy.svg"
   },
   {
     "number": 35,
-    "asset": "ch05/figure-5-14-specialization.svg"
+    "asset": "ch05/figure-5-shape-buckets.svg"
   },
   {
     "number": 36,
-    "asset": "ch05/figure-5-15-persistent.svg"
+    "asset": "ch05/figure-5-14-specialization.svg"
   },
   {
     "number": 37,
-    "asset": "ch05/figure-5-persistent-blocks.svg"
+    "asset": "ch05/figure-5-15-persistent.svg"
   },
   {
     "number": 38,
-    "asset": "ch05/figure-5-16-critical-path.svg"
+    "asset": "ch05/figure-5-persistent-blocks.svg"
   },
   {
     "number": 39,
-    "asset": "ch05/figure-5-v41-traffic.svg"
+    "asset": "ch05/figure-5-all-sm-sync-tax.svg"
   },
   {
     "number": 40,
+    "asset": "ch05/figure-5-16-critical-path.svg"
+  },
+  {
+    "number": 41,
+    "asset": "ch05/figure-5-v41-traffic.svg"
+  },
+  {
+    "number": 42,
     "asset": "ch05/figure-5-17-request.svg"
   }
 ]
