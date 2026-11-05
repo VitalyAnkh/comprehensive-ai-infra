@@ -129,42 +129,50 @@
   },
   {
     "figure": "4-33",
-    "asset": "ch04/figure-4-evolution-img2col.svg"
+    "asset": "ch04/figure-4-nvidia-product-tiers.svg"
   },
   {
     "figure": "4-34",
-    "asset": "ch04/figure-4-evolution-ascend.svg"
+    "asset": "ch04/figure-4-evolution-img2col.svg"
   },
   {
     "figure": "4-35",
-    "asset": "ch04/figure-4-evolution-cv-budget.svg"
+    "asset": "ch04/figure-4-evolution-ascend.svg"
   },
   {
     "figure": "4-36",
-    "asset": "ch04/figure-4-evolution-apple.svg"
+    "asset": "ch04/figure-4-evolution-cv-budget.svg"
   },
   {
     "figure": "4-37",
-    "asset": "ch04/figure-4-12-specialization.svg"
+    "asset": "ch04/figure-4-evolution-apple.svg"
   },
   {
     "figure": "4-38",
-    "asset": "ch04/figure-4-rom-paths.svg"
+    "asset": "ch04/figure-4-sram-kv-scaling.svg"
   },
   {
     "figure": "4-39",
-    "asset": "ch04/figure-4-13-roofline.svg"
+    "asset": "ch04/figure-4-12-specialization.svg"
   },
   {
     "figure": "4-40",
-    "asset": "ch04/figure-4-evolution-convergence.svg"
+    "asset": "ch04/figure-4-rom-paths.svg"
   },
   {
     "figure": "4-41",
-    "asset": "ch04/figure-4-14-performance.svg"
+    "asset": "ch04/figure-4-13-roofline.svg"
   },
   {
     "figure": "4-42",
+    "asset": "ch04/figure-4-evolution-convergence.svg"
+  },
+  {
+    "figure": "4-43",
+    "asset": "ch04/figure-4-14-performance.svg"
+  },
+  {
+    "figure": "4-44",
     "asset": "ch04/figure-4-performance-traffic.svg"
   }
 ]
