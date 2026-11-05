@@ -32,7 +32,7 @@
   {
     "figure": "figure-3-queue-mechanism",
     "width_pt": 420.0,
-    "min_label_pt": 12.0,
+    "min_label_pt": 11.0,
     "text_extent_warnings": []
   },
   {
@@ -48,21 +48,21 @@
     "text_extent_warnings": []
   },
   {
+    "figure": "figure-3-agent-prefix-cache",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
     "figure": "figure-3-success-cost",
     "width_pt": 420.0,
-    "min_label_pt": 12.0,
+    "min_label_pt": 11.0,
     "text_extent_warnings": []
   },
   {
     "figure": "figure-3-3-agent",
     "width_pt": 420.0,
     "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "figure-3-branch-state",
-    "width_pt": 420.0,
-    "min_label_pt": 12.0,
     "text_extent_warnings": []
   },
   {
@@ -78,6 +78,12 @@
     "text_extent_warnings": []
   },
   {
+    "figure": "figure-3-branch-state",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
     "figure": "figure-3-decision-request",
     "width_pt": 420.0,
     "min_label_pt": 11.0,
@@ -86,19 +92,19 @@
   {
     "figure": "figure-3-vision-shapes",
     "width_pt": 420.0,
-    "min_label_pt": 12.0,
+    "min_label_pt": 11.0,
     "text_extent_warnings": []
   },
   {
     "figure": "figure-3-vision-state",
     "width_pt": 420.0,
-    "min_label_pt": 12.0,
+    "min_label_pt": 11.0,
     "text_extent_warnings": []
   },
   {
     "figure": "figure-3-4-realtime",
     "width_pt": 420.0,
-    "min_label_pt": 12.0,
+    "min_label_pt": 11.0,
     "text_extent_warnings": []
   },
   {
@@ -110,17 +116,23 @@
   {
     "figure": "figure-3-audio-interrupt",
     "width_pt": 420.0,
-    "min_label_pt": 12.0,
+    "min_label_pt": 11.0,
     "text_extent_warnings": []
   },
   {
-    "figure": "figure-3-5-training",
+    "figure": "ch03-rag-prefill-tradeoff-and-vla-loop",
     "width_pt": 420.0,
     "min_label_pt": 11.0,
     "text_extent_warnings": []
   },
   {
     "figure": "figure-3-activation-lifetime",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "figure-3-5-training",
     "width_pt": 420.0,
     "min_label_pt": 11.0,
     "text_extent_warnings": []
@@ -133,6 +145,12 @@
   },
   {
     "figure": "figure-3-training-states",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "figure-3-training-breakdown",
     "width_pt": 420.0,
     "min_label_pt": 11.0,
     "text_extent_warnings": []

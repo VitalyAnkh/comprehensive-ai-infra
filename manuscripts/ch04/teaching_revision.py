@@ -1,126 +1,436 @@
-"""Physical resources and finite buffers at final book dimensions."""
+"""Physical resources and finite buffers at final book dimensions (420pt publication grade)."""
+import json
 import numpy as np
 from pathlib import Path
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
-from figure_style import COL,STYLE,canvas,plot,text,box,arrow,Exporter
+from figure_style import COL, BORDER_COL, TEXT_COL, STYLE, canvas, plot, text, box, card, badge, arrow, Exporter
 
-def draw(here,data,teaching):
-    out=Exporter(here)
-    def save(f,n):out.save(f,'figure-4-'+n)
+
+def draw(here, data, teaching):
+    out = Exporter(here)
+    root = Path(here).resolve().parents[1]
+
+    def save(f, n):
+        out.save(f, 'figure-4-' + n)
+
     with plt.rc_context(STYLE):
-        f,a=canvas(4.7)
-        for row,m in enumerate([1,256]):
-            y=.58-row*.44;text(a,.04,y+.30,f'{m} 行共用 32 MiB 权重',14)
-            box(a,.34,y+.04,.32,.20,'权重 W','orange')
-            for j in range(1 if m==1 else 4):
-                yy=y+.12+(j-1.5)*.06 if m>1 else y+.12
-                box(a,.04,yy,.17,.045,'','blue');box(a,.80,yy,.16,.045,'','green');arrow(a,(.21,yy+.023),(.34,y+.14));arrow(a,(.66,y+.14),(.80,yy+.023))
-            text(a,.50,y-.07,'每行分摊：'+('32 MiB' if m==1 else '128 KiB'),12,ha='center')
-        save(f,'1-reuse')
-        f,a=canvas(4.9);box(a,.04,.79,.36,.14,'主机 CPU','gray');box(a,.60,.79,.36,.14,'片外显存','blue')
-        box(a,.03,.06,.94,.60,'','gray');text(a,.06,.62,'加速器芯片内部',14)
-        box(a,.10,.41,.80,.12,'共享缓存与数据搬移','blue');arrow(a,(.78,.79),(.68,.53));arrow(a,(.22,.79),(.24,.53),'control')
-        box(a,.10,.16,.24,.14,'局部缓冲','green');box(a,.41,.16,.24,.14,'矩阵单元','orange');box(a,.72,.16,.19,.14,'累加存储','purple',11)
-        arrow(a,(.25,.41),(.22,.30));arrow(a,(.34,.23),(.41,.23));arrow(a,(.65,.23),(.72,.23));save(f,'2-components')
-        f,a=canvas(3.9);text(a,.04,.94,'小阵列反复复用输入与权重',14)
+        # 1. figure-4-1-reuse
+        f, a = canvas(4.7)
+        for row, m in enumerate([1, 256]):
+            y = 0.58 - row * 0.44
+            text(a, 0.04, y + 0.30, f'{m} 行共用 32 MiB 权重', 13, weight='bold')
+            box(a, 0.34, y + 0.04, 0.32, 0.20, '权重 W\n(32 MiB)', 'orange', 11, weight='bold')
+            for j in range(1 if m == 1 else 4):
+                yy = y + 0.12 + (j - 1.5) * 0.06 if m > 1 else y + 0.12
+                box(a, 0.04, yy, 0.17, 0.045, '', 'blue')
+                box(a, 0.80, yy, 0.16, 0.045, '', 'green')
+                arrow(a, (0.215, yy + 0.023), (0.335, y + 0.14), 'blue')
+                arrow(a, (0.665, y + 0.14), (0.795, yy + 0.023), 'orange')
+            text(a, 0.50, y - 0.065, '每行分摊：' + ('32 MiB' if m == 1 else '128 KiB'), 11.5, ha='center', weight='bold', color=TEXT_COL['blue' if m == 1 else 'green'])
+        save(f, '1-reuse')
+
+        # 2. figure-4-2-components
+        f, a = canvas(4.9)
+        box(a, 0.04, 0.79, 0.36, 0.14, '主机 CPU', 'gray', 11.5, weight='bold')
+        box(a, 0.60, 0.79, 0.36, 0.14, '片外显存（HBM / GDDR）', 'blue', 11.5, weight='bold')
+        box(a, 0.03, 0.06, 0.94, 0.60, '', 'gray')
+        text(a, 0.06, 0.615, '加速器芯片内部', 12.5, weight='bold')
+        box(a, 0.10, 0.41, 0.80, 0.12, '共享缓存与数据搬移引擎', 'blue', 11.5, weight='bold')
+        arrow(a, (0.78, 0.785), (0.68, 0.535), 'blue')
+        arrow(a, (0.22, 0.785), (0.24, 0.535), kind='control', color='purple')
+        box(a, 0.08, 0.14, 0.25, 0.15, '局部缓冲\n(SRAM)', 'green', 11, weight='bold')
+        box(a, 0.38, 0.14, 0.24, 0.15, '矩阵单元\n(Tensor / Cube)', 'orange', 11, weight='bold')
+        box(a, 0.67, 0.14, 0.25, 0.15, '累加存储\n(寄存器 / TMEM)', 'purple', 11, weight='bold')
+        arrow(a, (0.24, 0.405), (0.21, 0.295), 'blue')
+        arrow(a, (0.335, 0.215), (0.375, 0.215), 'green')
+        arrow(a, (0.625, 0.215), (0.665, 0.215), 'orange')
+        save(f, '2-components')
+
+        # 3. figure-4-davinci-attention-path
+        f, a = canvas(4.5)
+        card(a, 0.02, 0.68, 0.22, 0.22, '全局内存', ['权重、Q/K/V'], 'orange', 11.5, 11)
+        card(a, 0.27, 0.68, 0.22, 0.22, 'MTE / NDDMA', ['搬移与地址'], 'green', 11.5, 11)
+        card(a, 0.52, 0.68, 0.22, 0.22, 'L1 / UB', ['行组、缓冲槽'], 'blue', 11.5, 11)
+        card(a, 0.77, 0.68, 0.21, 0.22, 'Scalar', ['循环、同步'], 'gray', 11.5, 11)
+        arrow(a, (0.242, 0.79), (0.268, 0.79), 'orange')
+        arrow(a, (0.492, 0.79), (0.518, 0.79), 'green')
+        arrow(a, (0.742, 0.79), (0.768, 0.79), kind='control', color='gray')
+
+        card(a, 0.10, 0.36, 0.24, 0.20, 'L0A / L0B', ['输入 tile'], 'orange', 11.5, 11)
+        card(a, 0.39, 0.36, 0.24, 0.20, 'Cube / AIC', ['QK、PV、L0C'], 'orange', 11.5, 11)
+        card(a, 0.68, 0.36, 0.24, 0.20, 'Vector / AIV', ['Softmax、归约'], 'blue', 11.5, 11)
+        arrow(a, (0.63, 0.675), (0.22, 0.565), 'blue')
+        arrow(a, (0.345, 0.46), (0.385, 0.46), 'orange')
+        arrow(a, (0.635, 0.46), (0.675, 0.46), 'orange')
+
+        card(a, 0.24, 0.06, 0.52, 0.20, 'CV 直通或 UB / L1 交接', ['QK → Softmax → PV'], 'green', 11.5, 11)
+        arrow(a, (0.51, 0.355), (0.50, 0.265), 'orange')
+        arrow(a, (0.78, 0.355), (0.58, 0.265), kind='control', color='blue')
+        save(f, 'davinci-attention-path')
+
+        # 4. figure-4-matrix-array
+        f, a = canvas(3.9)
+        text(a, 0.04, 0.94, '小阵列反复复用输入与权重', 13, weight='bold')
         for i in range(3):
-            text(a,.12,.67-i*.18,f'A{i}',12,ha='center')
+            text(a, 0.12, 0.66 - i * 0.18, f'$A_{i}$', 11.5, ha='center', weight='bold', color=TEXT_COL['blue'])
             for j in range(3):
-                x=.30+j*.22;y=.59-i*.18;box(a,x,y,.16,.14,'乘加','green',11)
-                arrow(a,(.18 if j==0 else x-.06,y+.07),(x,y+.07))
-                if i==0:text(a,x+.08,.84,f'W{j}',12,ha='center')
-                arrow(a,(x+.08,.79 if i==0 else y+.18),(x+.08,y+.14))
-        text(a,.5,.08,'每个乘加单元保留部分和，继续累加下一对输入',11,ha='center');save(f,'matrix-array')
-        f,a=canvas(4.0);text(a,.04,.94,'每块固定 16 行，灰色行也参与执行',14)
-        for x,count,label in [(.08,2,'每专家 2 行'),(.57,16,'每专家 64 行\n由四块组成')]:
-            for i in range(16):a.add_patch(Rectangle((x,.74-i*.034),.30,.029,facecolor=COL['green'] if i<count else COL['gray'],edgecolor=COL['line'],lw=.3))
-            text(a,x+.15,.10,label,12,ha='center')
-        save(f,'3-expert-rows')
-        f,a=plot(3.2,left=.28)
-        a.barh([0,1],[512,512],color=COL['green'],label='有效行');a.barh([0,1],[3584,0],left=[512,512],color=COL['gray'],edgecolor=COL['line'],label='补零行')
-        a.set(yticks=[0,1],yticklabels=['256 个专家','8 个专家'],xlim=(0,4500),ylim=(-.7,1.7),xlabel='执行的矩阵行数（含补零）');a.invert_yaxis();a.legend(frameon=False);save(f,'expert-padding-total')
-        vals=np.array(data['4-4']['service_cycles'])
-        f,a=plot(4.0,left=.27)
-        for i,(label,c) in enumerate([('矩阵','orange'),('共享内存','blue'),('指数','green')]):a.barh(np.arange(4)+(i-1)*.22,vals[:,i],height=.20,color=COL[c],edgecolor=COL['line'],label=label)
-        a.set(yticks=range(4),yticklabels=['原配置','矩阵 ×2','矩阵、指数均 ×2','三项 ×2'],xlabel='单计算组耗时（周期）',xlim=(0,1150),ylim=(-1.1,3.6));a.invert_yaxis();a.legend(ncol=3,loc='upper center',frameon=False,fontsize=11);save(f,'4-attention')
-        f,a=canvas(4.3)
-        for y,title,stages in [(.58,'先展开为高精度',[('压缩 8.5 MiB','blue'),('展开 32 MiB','orange'),('BF16 计算','green')]),(.12,'在低精度路径中计算',[('压缩 8.5 MiB','blue'),('低精度计算','orange'),('缩放与合并','green')])]:
-            text(a,.04,y+.29,title,14)
-            for i,(label,c) in enumerate(stages):
-                x=.03+i*.335;box(a,x,y,.27,.20,label,c,11)
-                if i<2:arrow(a,(x+.27,y+.10),(x+.335,y+.10))
-        save(f,'5-precision')
-        d=data['4-6'];f,a=plot(3.8,left=.28,bottom=.25)
-        for y,row in enumerate(d['cases']):
-            left=0
-            for n,c,label in [(d['weight_bytes'],'blue','权重'),(d['workspace_bytes'],'orange','工作区'),(row['requests']*row['context_multiplier']*d['kv_bytes_per_request'],'green','KV')]:
-                a.barh(y,n/1e9,left=left,height=.5,color=COL[c],edgecolor=COL['line'],label=label if y==0 else None);left+=n/1e9
-        a.axvline(24,ls='--',color='#555555');a.set(yticks=range(3),yticklabels=['8K token × 4 请求','8K token × 5 请求','16K token × 2 请求'],xlim=(0,27),xlabel='RTX 4090 显存占用（GB）');a.invert_yaxis();a.legend(ncol=3,loc='upper center',bbox_to_anchor=(.5,-.22),frameon=False);save(f,'6-capacity')
-        f,a=canvas(3.3);text(a,.04,.92,'同时等待返回的访问占用请求槽',14)
-        for i in range(4):box(a,.05+i*.235,.49,.20,.18,f'请求 {i+1}','blue',11)
-        text(a,.5,.31,'每请求 128 bytes，发出后 500 ns 返回',12,ha='center')
-        text(a,.5,.12,'持续带宽还取决于能同时处理多少请求',12,ha='center');save(f,'memory-inflight')
-        d=data['4-7'];f,a=plot(3.7)
-        for b,ys,c in zip(['RTX 4090：1008 GB/s','RTX 5090：1792 GB/s'],d['bandwidth_upper_bytes_per_second'],['#267398','#388768']):a.plot(d['requests'],np.array(ys)/1e12,label=b,color=c)
-        a.set(xlim=(0,10000),ylim=(0,2.4),xlabel='同时未完成请求数',ylabel='带宽上界（TB/s）');a.legend(frameon=False);save(f,'7-memory')
-        f,a=plot(3.4,left=.21)
-        for i in range(4):a.barh(i,8192,color=COL['gray'],edgecolor=COL['line'],height=.5);a.barh(i,256,color=COL['blue'],height=.5)
-        a.set(yticks=range(4),yticklabels=['第 0 行','第 1 行','第 2 行','第 127 行'],xlim=(0,8500),xlabel='相对每行起点的字节偏移',xticks=[0,4096,8192]);a.invert_yaxis();a.annotate('实际读取 256 bytes',(128,0),xytext=(2000,.65),arrowprops={'arrowstyle':'->'},fontsize=12);save(f,'8-layout')
-        f,a=plot(3.1,left=.16);a.barh(0,320,left=0,color=COL['gray'],height=.62,label='槽位占用');a.barh(0,64,left=0,color=COL['blue'],height=.4);a.barh(0,128,left=192,color=COL['green'],height=.4);a.axvline(192,color='#a56c28',lw=1)
-        a.set(xlim=(0,350),ylim=(-.7,.7),yticks=[],xticks=[0,64,192,320],xlabel='时间（tick）')
-        for x,label in [(32,'传输'),(128,'等待返回'),(256,'计算')]:a.text(x,.4,label,fontsize=11,ha='center')
-        a.text(175,-.4,'320 tick 后用完，输入槽才能再次写入',fontsize=11,ha='center');save(f,'slot-lifetime')
-        for slots,name in [(1,'9-pipeline'),(2,'pipeline-two'),(3,'pipeline-three')]:
-            r=teaching['baseline'][slots-1];f,a=plot(3.5,left=.17)
+                x = 0.30 + j * 0.22
+                y = 0.59 - i * 0.18
+                box(a, x, y, 0.16, 0.14, '乘加', 'green', 11, weight='bold')
+                arrow(a, (0.18 if j == 0 else x - 0.06, y + 0.07), (x, y + 0.07), 'blue')
+                if i == 0:
+                    text(a, x + 0.08, 0.84, f'$W_{j}$', 11.5, ha='center', weight='bold', color=TEXT_COL['orange'])
+                arrow(a, (x + 0.08, 0.79 if i == 0 else y + 0.18), (x + 0.08, y + 0.14), 'orange')
+        text(a, 0.50, 0.08, '每个乘加单元保留部分和，继续累加下一对输入', 11, ha='center', weight='bold', color=COL['muted'])
+        save(f, 'matrix-array')
+
+        # 5. figure-4-3-expert-rows
+        f, a = canvas(4.0)
+        text(a, 0.04, 0.94, '每块固定 16 行，灰色补零行也消耗阵列周期', 13, weight='bold')
+        for x, count, label in [(0.08, 2, '每专家 2 行\n(14 行补零)'), (0.57, 16, '每专家 64 行\n(由 4 个满块组成)')]:
+            for i in range(16):
+                c_fill = COL['green'] if i < count else COL['gray']
+                c_edge = BORDER_COL['green'] if i < count else BORDER_COL['gray']
+                a.add_patch(Rectangle((x, 0.74 - i * 0.034), 0.30, 0.028, facecolor=c_fill, edgecolor=c_edge, lw=0.5))
+            text(a, x + 0.15, 0.10, label, 11.5, ha='center', weight='bold')
+        save(f, '3-expert-rows')
+
+        # 6. figure-4-expert-padding-total
+        f, a = plot(3.3, left=0.28, bottom=0.19)
+        a.barh([0, 1], [512, 512], color=COL['green'], edgecolor=BORDER_COL['green'], linewidth=1.2, height=0.52, label='有效行')
+        a.barh([0, 1], [3584, 0], left=[512, 512], color=COL['gray'], edgecolor=BORDER_COL['gray'], linewidth=1.2, height=0.52, label='补零行')
+        a.text(4096 + 60, 0, '4,096', va='center', fontsize=11, weight='bold', color=COL['ink'])
+        a.text(512 + 60, 1, '512', va='center', fontsize=11, weight='bold', color=COL['ink'])
+        a.set(yticks=[0, 1], yticklabels=['256 个专家', '8 个专家'], xlim=(0, 4800), ylim=(-0.65, 1.65), xlabel='执行的矩阵行数（含补零）')
+        a.invert_yaxis()
+        a.grid(axis='x', linestyle=':', alpha=0.45, color='#CBD5E1')
+        a.legend(frameon=True, loc='lower right', fontsize=11)
+        save(f, 'expert-padding-total')
+
+        # 7. figure-4-4-attention
+        vals = np.array(data['4-4']['service_cycles'])
+        f, a = plot(4.1, left=0.28, bottom=0.17, top=0.84)
+        for i, (label, c) in enumerate([('矩阵', 'orange'), ('共享内存', 'blue'), ('指数', 'green')]):
+            a.barh(np.arange(4) + (i - 1) * 0.23, vals[:, i], height=0.21, color=COL[c], edgecolor=BORDER_COL[c], linewidth=1.1, label=label)
+        a.set(yticks=range(4), yticklabels=['原配置', '矩阵 ×2', '矩阵、指数均 ×2', '三项 ×2'], xlabel='单计算组耗时（周期）', xlim=(0, 1150), ylim=(-0.7, 3.6))
+        a.invert_yaxis()
+        a.grid(axis='x', linestyle=':', alpha=0.45, color='#CBD5E1')
+        a.legend(ncol=3, loc='upper center', bbox_to_anchor=(0.45, 1.18), frameon=True, fontsize=11)
+        save(f, '4-attention')
+
+        # 8. figure-4-5-precision
+        f, a = canvas(4.3)
+        for y, title, stages in [
+            (0.58, '先展开为高精度副本', [('压缩 8.5 MiB', 'blue'), ('展开 32 MiB', 'orange'), ('BF16 计算', 'green')]),
+            (0.12, '在低精度路径中直接计算', [('压缩 8.5 MiB', 'blue'), ('低精度计算', 'orange'), ('缩放与合并', 'green')]),
+        ]:
+            text(a, 0.04, y + 0.28, title, 12.5, weight='bold')
+            for i, (label, c) in enumerate(stages):
+                x = 0.03 + i * 0.335
+                box(a, x, y, 0.27, 0.20, label, c, 11, weight='bold')
+                if i < 2:
+                    arrow(a, (x + 0.275, y + 0.10), (x + 0.33, y + 0.10), c)
+        save(f, '5-precision')
+
+        # 9. figure-4-6-capacity
+        d = data['4-6']
+        f, a = plot(3.9, left=0.29, bottom=0.24, top=0.88)
+        for y, row in enumerate(d['cases']):
+            left = 0
+            for n, c, label in [
+                (d['weight_bytes'], 'blue', '权重'),
+                (d['workspace_bytes'], 'orange', '工作区'),
+                (row['requests'] * row['context_multiplier'] * d['kv_bytes_per_request'], 'green', 'KV'),
+            ]:
+                a.barh(y, n / 1e9, left=left, height=0.52, color=COL[c], edgecolor=BORDER_COL[c], linewidth=1.2, label=label if y == 0 else None)
+                left += n / 1e9
+        a.axvline(24, ls='--', color='#B91C1C', lw=1.4)
+        a.text(24, -0.52, '24 GB 上限', ha='center', va='bottom', fontsize=11, weight='bold', color='#B91C1C', bbox=dict(boxstyle='round,pad=0.18', facecolor='white', edgecolor='none'))
+        a.set(yticks=range(3), yticklabels=['8K token × 4 请求', '8K token × 5 请求', '16K token × 2 请求'], xlim=(0, 27.5), ylim=(-0.6, 2.6), xlabel='RTX 4090 显存占用（GB）')
+        a.invert_yaxis()
+        a.grid(axis='x', linestyle=':', alpha=0.45, color='#CBD5E1')
+        a.legend(ncol=3, loc='upper center', bbox_to_anchor=(0.45, -0.22), frameon=True, fontsize=11)
+        save(f, '6-capacity')
+
+        # 10. figure-4-memory-inflight
+        f, a = canvas(3.3)
+        text(a, 0.04, 0.92, '同时等待返回的访问持续占用请求槽', 13, weight='bold')
+        for i in range(4):
+            box(a, 0.05 + i * 0.235, 0.48, 0.20, 0.20, f'请求 {i+1}', 'blue', 11, weight='bold')
+        text(a, 0.50, 0.29, '每请求 128 bytes，发出后 500 ns 返回', 11.5, ha='center', weight='bold')
+        text(a, 0.50, 0.11, '持续带宽同时受限于物理接口速率与在途请求槽上限', 11, ha='center', weight='bold', color=COL['muted'])
+        save(f, 'memory-inflight')
+
+        # 11. figure-4-7-memory
+        d = data['4-7']
+        f, a = plot(3.7, left=0.18, bottom=0.18)
+        for b, ys, c in zip(['RTX 4090：1008 GB/s', 'RTX 5090：1792 GB/s'], d['bandwidth_upper_bytes_per_second'], ['blue', 'green']):
+            a.plot(d['requests'], np.array(ys) / 1e12, label=b, color=BORDER_COL[c], lw=2.2)
+        a.set(xlim=(0, 10000), ylim=(0, 2.4), xlabel='同时未完成请求数 N', ylabel='带宽上界（TB/s）')
+        a.grid(True, linestyle=':', alpha=0.45, color='#CBD5E1')
+        a.legend(frameon=True, loc='upper left', fontsize=11)
+        save(f, '7-memory')
+
+        # 12. figure-4-8-layout
+        f, a = plot(3.5, left=0.22, bottom=0.19)
+        for i in range(4):
+            a.barh(i, 8192, color=COL['gray'], edgecolor=BORDER_COL['gray'], linewidth=1.0, height=0.52)
+            a.barh(i, 256, color=COL['blue'], edgecolor=BORDER_COL['blue'], linewidth=1.2, height=0.52)
+        a.set(yticks=range(4), yticklabels=['第 0 行', '第 1 行', '第 2 行', '第 127 行'], xlim=(0, 8600), xlabel='相对每行起点的字节偏移', xticks=[0, 4096, 8192])
+        a.invert_yaxis()
+        a.grid(axis='x', linestyle=':', alpha=0.45, color='#CBD5E1')
+        a.annotate('实际读取 256 bytes', (256, 0), xytext=(2000, 0.65), arrowprops={'arrowstyle': '-|>', 'color': BORDER_COL['blue'], 'lw': 1.3}, fontsize=11, weight='bold', color=TEXT_COL['blue'])
+        save(f, '8-layout')
+
+        # 13. figure-4-slot-lifetime
+        f, a = plot(3.2, left=0.12, bottom=0.20)
+        a.barh(0, 320, left=0, color=COL['gray'], edgecolor=BORDER_COL['gray'], linewidth=1.1, height=0.62, label='槽位占用')
+        a.barh(0, 64, left=0, color=COL['blue'], edgecolor=BORDER_COL['blue'], linewidth=1.2, height=0.40)
+        a.barh(0, 128, left=192, color=COL['green'], edgecolor=BORDER_COL['green'], linewidth=1.2, height=0.40)
+        a.axvline(192, color=BORDER_COL['orange'], lw=1.4)
+        a.set(xlim=(0, 350), ylim=(-0.7, 0.7), yticks=[], xticks=[0, 64, 192, 320], xlabel='时间（tick）')
+        for x, label in [(32, '传输'), (128, '等待返回'), (256, '计算')]:
+            a.text(x, 0.42, label, fontsize=11, ha='center', weight='bold', color=COL['ink'])
+        a.text(175, -0.44, '320 tick 后计算完成，输入槽才能释放复用', fontsize=11, ha='center', weight='bold', color=COL['muted'])
+        save(f, 'slot-lifetime')
+
+        # 14, 15, 16. figure-4-9-pipeline, pipeline-two, pipeline-three
+        for slots, name in [(1, '9-pipeline'), (2, 'pipeline-two'), (3, 'pipeline-three')]:
+            r = teaching['baseline'][slots - 1]
+            f, a = plot(3.5, left=0.17, bottom=0.18)
             for t in r['chunks']:
-                y=t['chunk'];a.barh(y,t['slot_released']-t['issue_start'],left=t['issue_start'],height=.62,color=COL['gray']);a.barh(y,t['transfer_end']-t['issue_start'],left=t['issue_start'],height=.40,color=COL['blue']);a.barh(y,t['compute_end']-t['compute_start'],left=t['compute_start'],height=.40,color=COL['green']);a.plot(t['data_ready'],y,'|',color='#a56c28',markersize=12)
-            a.set(yticks=range(4),yticklabels=[f'块 {i}' for i in range(4)],xlim=(0,1320),xticks=[0,320,640,960,1280],xlabel='时间（tick）');a.invert_yaxis();save(f,name)
-        f,a=canvas(4.0);text(a,.04,.93,'传递完整行，两组交替使用缓冲区',14)
-        box(a,.04,.61,.26,.17,'矩阵单元\n计算 QK','orange');box(a,.70,.61,.26,.17,'向量单元\n计算 Softmax','green')
-        box(a,.38,.66,.23,.11,'槽 A','blue');box(a,.38,.42,.23,.11,'槽 B','purple')
-        arrow(a,(.30,.695),(.38,.715));arrow(a,(.61,.715),(.70,.695));arrow(a,(.17,.61),(.38,.475))
-        box(a,.28,.09,.44,.16,'矩阵单元计算 PV\n用完后释放缓冲区','orange');arrow(a,(.83,.61),(.72,.17));save(f,'matrix-vector-handoff')
-        cases=teaching['die_locality']['cases']
-        for move,name in [(False,'10-locality'),(True,'locality-compute')]:
-            f,a=canvas(4.8);text(a,.03,.96,'计算都放在 die 0' if not move else '计算放到权重所在的 die',14)
-            for row,c in enumerate(cases):
-                y=.56-row*.46;text(a,.03,y+.31,'HGX B200' if row==0 else '昇腾 910C',13)
-                box(a,.03,y,.27,.25,'die 0\n32 GiB 权重\n计算','blue',11)
-                box(a,.70,y,.27,.25,'die 1\n32 GiB 权重'+('\n计算' if move else ''),'orange',11)
+                y = t['chunk']
+                a.barh(y, t['slot_released'] - t['issue_start'], left=t['issue_start'], height=0.62, color=COL['gray'], edgecolor=BORDER_COL['gray'], linewidth=0.9)
+                a.barh(y, t['transfer_end'] - t['issue_start'], left=t['issue_start'], height=0.40, color=COL['blue'], edgecolor=BORDER_COL['blue'], linewidth=1.1)
+                a.barh(y, t['compute_end'] - t['compute_start'], left=t['compute_start'], height=0.40, color=COL['green'], edgecolor=BORDER_COL['green'], linewidth=1.1)
+                a.plot(t['data_ready'], y, '|', color=BORDER_COL['orange'], markersize=13, markeredgewidth=2.0)
+            a.set(yticks=range(4), yticklabels=[f'块 {i}' for i in range(4)], xlim=(0, 1320), xticks=[0, 320, 640, 960, 1280], xlabel='时间（tick）')
+            a.grid(axis='x', linestyle=':', alpha=0.45, color='#CBD5E1')
+            a.invert_yaxis()
+            save(f, name)
+
+        # 17. figure-4-matrix-vector-handoff
+        f, a = canvas(4.0)
+        text(a, 0.04, 0.93, '传递完整行，两组交替使用缓冲区', 13, weight='bold')
+        box(a, 0.04, 0.61, 0.26, 0.17, '矩阵单元\n计算 QK', 'orange', 11, weight='bold')
+        box(a, 0.70, 0.61, 0.26, 0.17, '向量单元\n计算 Softmax', 'green', 11, weight='bold')
+        box(a, 0.38, 0.66, 0.23, 0.11, '槽 A', 'blue', 11, weight='bold')
+        box(a, 0.38, 0.42, 0.23, 0.11, '槽 B', 'purple', 11, weight='bold')
+        arrow(a, (0.305, 0.695), (0.375, 0.715), 'orange')
+        arrow(a, (0.615, 0.715), (0.695, 0.695), 'blue')
+        arrow(a, (0.17, 0.605), (0.375, 0.475), 'orange')
+        box(a, 0.26, 0.09, 0.48, 0.17, '矩阵单元计算 PV\n用完后释放缓冲区', 'orange', 11, weight='bold')
+        arrow(a, (0.83, 0.605), (0.74, 0.18), 'green')
+        save(f, 'matrix-vector-handoff')
+
+        # 18. figure-4-davinci-attention-timeline (2 panels: Staged 3200 tick vs Direct 3008 tick)
+        staged = json.loads((root / 'calculations/results/matrix-vector-staged-rows32-slots2.json').read_text())
+        direct = json.loads((root / 'calculations/results/matrix-vector-direct-rows32-slots2.json').read_text())
+        f, axs = plt.subplots(2, 1, figsize=(420 / 72, 5.4), sharex=True)
+        f.subplots_adjust(left=0.22, right=0.96, bottom=0.12, top=0.91, hspace=0.45)
+        for ax, doc, title, fin in [
+            (axs[0], staged, 'A  写出再读入（两槽、32 行分组，完成于 3200 tick）', 3200),
+            (axs[1], direct, 'B  片上直接传递（两槽、32 行分组，完成于 3008 tick）', 3008),
+        ]:
+            ax.spines[['top', 'right']].set_visible(False)
+            ax.set_title(title, loc='left', fontsize=11.5, weight='bold', pad=6)
+            for item in doc['timeline']:
+                res = item['resource']
+                st, dur = item['start_tick'], item['duration_ticks']
+                if res == 'matrix':
+                    ax.barh(0, dur, left=st, height=0.48, color=COL['orange'], edgecolor=BORDER_COL['orange'], linewidth=0.9)
+                elif res == 'handoff':
+                    ax.barh(1, dur, left=st, height=0.48, color=COL['green'], edgecolor=BORDER_COL['green'], linewidth=0.9)
+                elif res == 'vector':
+                    ax.barh(2, dur, left=st, height=0.48, color=COL['blue'], edgecolor=BORDER_COL['blue'], linewidth=0.9)
+                    grp = item['id'].split('.')[0].upper()
+                    ax.text(st + dur / 2, 2, grp, ha='center', va='center', fontsize=11, weight='bold', color=COL['ink'])
+            for own in doc['slot_ownership']:
+                y_slot = 3 + own['slot'] * 0.45
+                st, rel = own['start_tick'], own['release_tick']
+                c_slot = 'gray' if own['slot'] == 0 else 'purple'
+                ax.barh(y_slot, rel - st, left=st, height=0.36, color=COL[c_slot], edgecolor=BORDER_COL[c_slot], linewidth=0.9)
+                ax.text(st + (rel - st) / 2, y_slot, f"G{own['group']} (槽{own['slot']})", ha='center', va='center', fontsize=11, weight='bold', color=COL['ink'])
+            ax.axvline(fin, ls='--', lw=1.2, color=BORDER_COL['orange'])
+            ax.set(yticks=[0, 1, 2, 3.22], yticklabels=['Cube / AIC', '交接 / CV', 'Vector / AIV', '槽位锁定'], xlim=(0, 3420), ylim=(-0.55, 3.85))
+            ax.set_xticks([0, 512, 1024, 1536, 2048, 2560, 3200])
+            ax.invert_yaxis()
+            ax.grid(axis='x', linestyle=':', alpha=0.45, color='#CBD5E1')
+        axs[1].text(3008 + 25, 0.95, '3008', ha='left', va='center', fontsize=11, weight='bold', color=TEXT_COL['orange'])
+        axs[1].set_xlabel('教学时间（tick）')
+        save(f, 'davinci-attention-timeline')
+
+        # 19 & 20. figure-4-10-locality & locality-compute
+        cases = teaching['die_locality']['cases']
+        for move, name in [(False, '10-locality'), (True, 'locality-compute')]:
+            f, a = canvas(4.8)
+            text(a, 0.03, 0.96, '计算都放在 die 0' if not move else '计算放到权重所在的 die', 13, weight='bold')
+            for row, c in enumerate(cases):
+                y = 0.56 - row * 0.46
+                text(a, 0.03, y + 0.30, 'HGX B200' if row == 0 else '昇腾 910C', 12, weight='bold')
+                box(a, 0.03, y, 0.27, 0.25, 'die 0\n32 GiB 权重\n计算', 'blue', 11, weight='bold')
+                box(a, 0.70, y, 0.27, 0.25, 'die 1\n32 GiB 权重' + ('\n计算' if move else ''), 'orange', 11, weight='bold')
                 if move:
-                    arrow(a,(.30,y+.17),(.70,y+.17));arrow(a,(.70,y+.08),(.30,y+.08))
-                    text(a,.50,y+.215,f"输入与结果 64 MiB：{c['activation_us']:.1f} μs" if c['activation_us']<100 else f"输入与结果 64 MiB：{c['activation_us']/1000:.2f} ms",11,ha='center')
-                    text(a,.50,y-.045,f"两侧各读本地权重：{c['split_ms']:.1f} ms",12,ha='center')
+                    arrow(a, (0.305, y + 0.17), (0.695, y + 0.17), 'blue')
+                    arrow(a, (0.695, y + 0.08), (0.305, y + 0.08), 'orange')
+                    act_txt = f"输入与结果 64 MiB：{c['activation_us']:.1f} μs" if c['activation_us'] < 100 else f"输入与结果 64 MiB：{c['activation_us']/1000:.2f} ms"
+                    text(a, 0.50, y + 0.215, act_txt, 11, ha='center', weight='bold')
+                    text(a, 0.50, y - 0.045, f"两侧各读本地权重：{c['split_ms']:.1f} ms", 11.5, ha='center', weight='bold', color=TEXT_COL['green'])
                 else:
-                    arrow(a,(.70,y+.125),(.30,y+.125))
-                    limit='受 die 1 的 HBM 限制' if c['link_to_hbm_ratio']>=1 else '受 die 间链路限制'
-                    text(a,.50,y+.20,f"跨 die 读 32 GiB：{c['remote_ms']:.1f} ms",11,ha='center')
-                    text(a,.50,y+.05,limit,11,ha='center')
-                    text(a,.50,y-.045,f"阶段读取时间：{c['overlapped_ms']:.1f} ms",12,ha='center')
-            save(f,name)
-        d=data['4-11']
-        for i,name in enumerate(['11-interconnect','large-message']):
-            f,a=plot(3.2);vals=np.array(d['total_us'][i]);alpha=d['alpha_seconds']*1e6;a.bar([0,1],[alpha,alpha],color=COL['orange'],edgecolor=COL['line'],label='启动');a.bar([0,1],vals-alpha,bottom=alpha,color=COL['blue'],edgecolor=COL['line'],label='传输')
-            a.set(xticks=[0,1],xticklabels=['A100 NVLink\n300 GB/s','H100 NVLink\n450 GB/s'],ylabel='传输时间（μs）',ylim=(0,max(vals)*1.45));a.legend(ncol=2,frameon=False)
-            for j,v in enumerate(vals):a.text(j,v+max(vals)*.035,f'{v:.3f}',ha='center',fontsize=12)
-            save(f,name)
-        d=data['4-12'];f,a=plot(3.5)
-        a.axhline(d['active_weight_bytes']/1e9,color='#267398',label='每批权重');a.plot(d['batch'],np.array(d['kv_read_bytes'])/1e9,color='#388768',label='各请求 KV');a.axvline(13,ls=':',color='#777777')
-        a.set(xlim=(1,32),ylim=(0,45),xlabel='批内请求数',ylabel='每步读取（GB）');a.legend(frameon=False);save(f,'12-specialization')
-        d=data['4-13'];f,a=plot(3.6)
-        for key,label,c in [('compute_us','矩阵计算','#a56c28'),('memory_us','片外读取','#267398')]:a.plot(d['rows'],d[key],label=label,color=c)
-        a.axvline(179,ls=':',color='#777777');a.set(xlim=(1,256),ylim=(0,65),xlabel='本次 token 数 M',ylabel='资源时间（μs）');a.legend(frameon=False);save(f,'13-roofline')
-        d=data['4-14']
-        for key,name,label in [('wall_us','14-performance','每次调用总耗时（μs）'),('dram_read_mib','performance-traffic','DRAM 读取（MiB）')]:
-            f,a=plot(3.5)
-            vals=d[key];a.bar(range(4),vals,color=[COL['blue'],COL['green']]*2,edgecolor=COL['line']);a.set(xticks=range(4),xticklabels=['1 行\n复用','1 行\n轮换','256 行\n复用','256 行\n轮换'],ylabel=label,ylim=(0,max(vals)*1.3))
-            for i,v in enumerate(vals):a.text(i,v+max(vals)*.025,'256 B' if v<.001 else f'{v:.1f}',ha='center',fontsize=11)
-            save(f,name)
+                    arrow(a, (0.695, y + 0.125), (0.305, y + 0.125), 'orange')
+                    limit = '受 die 1 的 HBM 限制' if c['link_to_hbm_ratio'] >= 1 else '受 die 间链路限制'
+                    text(a, 0.50, y + 0.20, f"跨 die 读 32 GiB：{c['remote_ms']:.1f} ms", 11, ha='center', weight='bold')
+                    text(a, 0.50, y + 0.05, limit, 11, ha='center', color=COL['muted'], weight='bold')
+                    text(a, 0.50, y - 0.045, f"阶段读取时间：{c['overlapped_ms']:.1f} ms", 11.5, ha='center', weight='bold', color=TEXT_COL['orange'])
+            save(f, name)
+
+        # NEW 21. ch04-unified-memory-vs-gddr7-and-gpu-tee (420pt, 2-panel vertical stack)
+        f = plt.figure(figsize=(420 / 72, 5.7))
+        ax1 = f.add_axes([0.28, 0.60, 0.67, 0.30])
+        ax1.spines[['top', 'right']].set_visible(False)
+        ax1.set_title('A  4 GiB 活跃权重单步读取下界（统一内存 vs GDDR7）', loc='left', fontsize=11.5, weight='bold', pad=8)
+        devs = ['Apple M2 Pro\n(200 GB/s)', 'Apple M2 Max\n(400 GB/s)', 'RTX PRO 6000\n(1,792 GB/s)']
+        ms_vals = [21.47, 10.74, 2.40]
+        cols_a = ['orange', 'blue', 'green']
+        for i, (v, c) in enumerate(zip(ms_vals, cols_a)):
+            ax1.barh(i, v, height=0.48, color=COL[c], edgecolor=BORDER_COL[c], linewidth=1.2)
+            ratio_txt = ' (8.96×)' if i == 0 else (' (4.48×)' if i == 1 else ' (1.00× 基准)')
+            ax1.text(v + 0.5, i, f'{v:.2f} ms{ratio_txt}', va='center', fontsize=11, weight='bold', color=COL['ink'])
+        ax1.set(yticks=range(3), yticklabels=devs, xlim=(0, 31.5), ylim=(-0.55, 2.55), xlabel='4 GiB (4.295 GB) 单步读取时间下界（ms）')
+        ax1.invert_yaxis()
+        ax1.grid(axis='x', linestyle=':', alpha=0.45, color='#CBD5E1')
+
+        ax2 = f.add_axes([0.28, 0.11, 0.67, 0.35])
+        ax2.spines[['top', 'right']].set_visible(False)
+        ax2.set_title('B  GPU 机密计算（TEE）跨 PCIe 64 MiB 传输拆解', loc='left', fontsize=11.5, weight='bold', pad=8)
+        tee_labels = ['非 TEE 明文直传', '软 TEE 串行弹跳', '软 TEE 16 块流水', '硬件 TEE-I/O (IDE)']
+        p_host = [0.0, 5.59, 5.59, 0.0]
+        p_dma = [1.20, 1.20, 0.08, 1.29]
+        tot_tee = [1.20, 6.79, 5.67, 1.29]
+        y_t = np.arange(4)
+        ax2.barh(y_t, p_host, height=0.48, color=COL['orange'], edgecolor=BORDER_COL['orange'], linewidth=1.1, label='CPU 弹跳加密')
+        ax2.barh(y_t, p_dma, left=p_host, height=0.48, color=COL['blue'], edgecolor=BORDER_COL['blue'], linewidth=1.1, label='暴露 PCIe 传输')
+        for yi, tot in enumerate(tot_tee):
+            ax2.text(tot + 0.15, yi, f'{tot:.2f} ms', va='center', fontsize=11, weight='bold', color=COL['ink'])
+        ax2.set(yticks=y_t, yticklabels=tee_labels, xlim=(0, 8.6), ylim=(-0.55, 4.75), xlabel='64 MiB 跨 PCIe 5.0 x16 端到端就绪时间（ms）')
+        ax2.invert_yaxis()
+        ax2.grid(axis='x', linestyle=':', alpha=0.45, color='#CBD5E1')
+        ax2.legend(ncol=2, frameon=True, loc='lower right', fontsize=11, columnspacing=1.0, handlelength=1.2)
+        out.save(f, 'ch04-unified-memory-vs-gddr7-and-gpu-tee')
+
+        # 22 & 23. figure-4-11-interconnect & large-message
+        d = data['4-11']
+        for i, name in enumerate(['11-interconnect', 'large-message']):
+            f, a = plot(3.3, left=0.20, bottom=0.18)
+            vals = np.array(d['total_us'][i])
+            alpha = d['alpha_seconds'] * 1e6
+            a.bar([0, 1], [alpha, alpha], width=0.52, color=COL['orange'], edgecolor=BORDER_COL['orange'], linewidth=1.2, label='启动')
+            a.bar([0, 1], vals - alpha, bottom=alpha, width=0.52, color=COL['blue'], edgecolor=BORDER_COL['blue'], linewidth=1.2, label='传输')
+            a.set(xticks=[0, 1], xticklabels=['A100 NVLink\n300 GB/s', 'H100 NVLink\n450 GB/s'], ylabel='传输时间（μs）', ylim=(0, max(vals) * 1.45))
+            a.grid(axis='y', linestyle=':', alpha=0.45, color='#CBD5E1')
+            a.legend(ncol=2, frameon=True, loc='upper right', fontsize=11)
+            for j, v in enumerate(vals):
+                a.text(j, v + max(vals) * 0.035, f'{v:.3f}', ha='center', fontsize=11, weight='bold', color=COL['ink'])
+            save(f, name)
+
+        # 24. figure-4-nvidia-product-tiers
+        f = plt.figure(figsize=(420 / 72, 3.9))
+        ax1 = f.add_axes([0.15, 0.19, 0.34, 0.68])
+        ax2 = f.add_axes([0.66, 0.19, 0.30, 0.68])
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+            ax.grid(True, linestyle=':', alpha=0.45, color='#CBD5E1')
+        tiers = [
+            ('RTX 3090', 936, 71.0, 75.9, 'blue', (220, -10), 'left'),
+            ('RTX 4090', 1008, 165.2, 163.9, 'blue', (-80, 75), 'center'),
+            ('RTX 5090', 1792, 209.5, 116.9, 'blue', (220, -35), 'left'),
+            ('PRO 6000', 1792, 503.8, 281.1, 'purple', (0, 80), 'center'),
+            ('A100 80GB', 2039, 312.0, 153.0, 'orange', (240, 20), 'left'),
+            ('H100 SXM', 3350, 989.4, 295.3, 'orange', (0, 85), 'center'),
+            ('H200 SXM', 4800, 989.4, 206.1, 'green', (-120, -115), 'center'),
+        ]
+        ax1.set_title('A  带宽—算力坐标', loc='left', fontsize=11.5, weight='bold', pad=8)
+        for name, bw, fp, _, col, (dx, dy), ha_mode in tiers:
+            ax1.scatter([bw], [fp], s=62, facecolor=COL[col], edgecolor=BORDER_COL[col], linewidth=1.4, zorder=4)
+            short = name.replace('RTX ', '').replace(' 80GB', '').replace(' SXM', '')
+            ax1.text(bw + dx, fp + dy, short, ha=ha_mode, va='center', fontsize=11, weight='bold', color=COL['ink'])
+        ax1.set(xlim=(100, 5500), ylim=(-40, 1180), xlabel='显存带宽（GB/s）', ylabel='稠密 BF16 算力（TFLOP/s）')
+
+        ax2.set_title('B  转折点 I* = P/R', loc='left', fontsize=11.5, weight='bold', pad=8)
+        for idx, (name, _, _, istar, col, _, _) in enumerate(tiers):
+            ax2.barh(idx, istar, height=0.55, color=COL[col], edgecolor=BORDER_COL[col], linewidth=1.2)
+            ax2.text(istar + 8, idx, f'{istar:.1f}', va='center', fontsize=11, weight='bold', color=COL['ink'])
+        ax2.set(yticks=range(len(tiers)), yticklabels=[t[0] for t in tiers], xlim=(0, 395), xlabel='转折点 I*（FLOP/B）')
+        ax2.invert_yaxis()
+        save(f, 'nvidia-product-tiers')
+
+        # 25. figure-4-sram-kv-scaling
+        f, a = plot(4.0, left=0.17, bottom=0.20, right=0.96, top=0.86)
+        a.set_title('纯片上 SRAM 架构（220 MiB/颗）下的级联芯片规模', loc='left', fontsize=11.5, weight='bold', pad=10)
+        x_sram = np.arange(4)
+        w_chips = np.array([72, 72, 72, 72])
+        kv_chips = np.array([0, 6, 42, 168])
+        a.bar(x_sram, w_chips, width=0.48, color=COL['blue'], edgecolor=BORDER_COL['blue'], linewidth=1.2, label='静态权重芯片数 (15,623 MiB → 72 颗)')
+        a.bar(x_sram, kv_chips, bottom=w_chips, width=0.48, color=COL['orange'], edgecolor=BORDER_COL['orange'], linewidth=1.2, label='动态 KV 缓存芯片数 (220 MiB SRAM/颗)')
+        for xi, wc, kc in zip(x_sram, w_chips, kv_chips):
+            a.text(xi, wc / 2, '72 颗', ha='center', va='center', fontsize=11, weight='bold', color=COL['ink'])
+            a.text(xi, wc + kc + 6, f'共 {wc + kc} 颗', ha='center', va='bottom', fontsize=11, weight='bold', color=COL['ink'])
+            if kc >= 30:
+                a.text(xi, wc + kc / 2, f'+{kc} 颗', ha='center', va='center', fontsize=11, weight='bold', color=TEXT_COL['orange'])
+            elif kc > 0:
+                a.text(xi + 0.28, wc + kc / 2, f'+{kc} 颗', ha='left', va='center', fontsize=11, weight='bold', color=TEXT_COL['orange'])
+        a.set(
+            xticks=x_sram,
+            xticklabels=['仅静态权重\n(B=0)', '单请求 8K\n(B=1, 8K)', '8 并发 8K\n(B=8, 8K)', '8 并发 32K\n(B=8, 32K)'],
+            ylim=(0, 285),
+            ylabel='级联 TSP 芯片数量（颗）',
+        )
+        a.grid(axis='y', linestyle=':', alpha=0.45, color='#CBD5E1')
+        a.legend(frameon=True, loc='upper left', fontsize=11)
+        save(f, 'sram-kv-scaling')
+
+        # 26. figure-4-12-specialization
+        d = data['4-12']
+        f, a = plot(3.5, left=0.18, bottom=0.18)
+        a.axhline(d['active_weight_bytes'] / 1e9, color=BORDER_COL['blue'], lw=2.2, label='每批权重')
+        a.plot(d['batch'], np.array(d['kv_read_bytes']) / 1e9, color=BORDER_COL['green'], lw=2.2, label='各请求 KV')
+        a.axvline(13, ls=':', color=BORDER_COL['orange'], lw=1.3)
+        a.set(xlim=(1, 32), ylim=(0, 45), xlabel='批内请求数 B', ylabel='每步读取（GB）')
+        a.grid(True, linestyle=':', alpha=0.45, color='#CBD5E1')
+        a.legend(frameon=True, loc='upper left', fontsize=11)
+        save(f, '12-specialization')
+
+        # 27. figure-4-13-roofline
+        d = data['4-13']
+        f, a = plot(3.6, left=0.18, bottom=0.18)
+        for key, label, c in [('compute_us', '矩阵计算', 'orange'), ('memory_us', '片外读取', 'blue')]:
+            a.plot(d['rows'], d[key], label=label, color=BORDER_COL[c], lw=2.2)
+        a.axvline(179, ls=':', color='#64748B', lw=1.3)
+        a.text(179 - 6, 52, 'M = 179', ha='right', fontsize=11, weight='bold', color=COL['muted'])
+        a.set(xlim=(1, 256), ylim=(0, 65), xlabel='本次 token 数 M', ylabel='资源时间（μs）')
+        a.grid(True, linestyle=':', alpha=0.45, color='#CBD5E1')
+        a.legend(frameon=True, loc='upper left', fontsize=11)
+        save(f, '13-roofline')
+
+        # 28 & 29. figure-4-14-performance & performance-traffic
+        d = data['4-14']
+        for key, name, label in [('wall_us', '14-performance', '每次调用总耗时（μs）'), ('dram_read_mib', 'performance-traffic', 'DRAM 读取（MiB）')]:
+            f, a = plot(3.5, left=0.19, bottom=0.19)
+            vals = d[key]
+            cols = ['blue', 'green', 'blue', 'green']
+            for idx, (v, c) in enumerate(zip(vals, cols)):
+                a.bar(idx, v, color=COL[c], edgecolor=BORDER_COL[c], linewidth=1.2, width=0.56)
+            a.set(xticks=range(4), xticklabels=['1 行\n复用', '1 行\n轮换', '256 行\n复用', '256 行\n轮换'], ylabel=label, ylim=(0, max(vals) * 1.32))
+            a.grid(axis='y', linestyle=':', alpha=0.45, color='#CBD5E1')
+            for i, v in enumerate(vals):
+                a.text(i, v + max(vals) * 0.03, '256 B' if v < 0.001 else f'{v:.1f}', ha='center', fontsize=11, weight='bold', color=COL['ink'])
+            save(f, name)
+
     from sync_figures import draw as draw_sync
-    data['4-sync']=draw_sync(out,Path(here).resolve().parents[1])
+    data['4-sync'] = draw_sync(out, root)
     from core_principles_figures import draw as draw_principles
     draw_principles(4, out)
     from energy_physics import draw as draw_energy
-    data['4-energy']=draw_energy(out)
+    data['4-energy'] = draw_energy(out)
     return out.finish()

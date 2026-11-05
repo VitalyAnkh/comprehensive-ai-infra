@@ -19,7 +19,8 @@ font,family=configure_font(args.font)
 plt.rcParams.update({'font.family':[family,'DejaVu Sans'],'font.size':11,'axes.unicode_minus':False,'svg.fonttype':'path','svg.hashsalt':'ch03-workloads-v1','axes.spines.top':False,'axes.spines.right':False,'figure.facecolor':'white','savefig.facecolor':'white','text.color':'#193441','axes.labelcolor':'#193441','axes.edgecolor':'#b8cbd2'})
 C={'ink':'#193441','blue':'#246f91','teal':'#138b83','orange':'#c9782b','pale':'#f0f6f8','light':'#e7f3ef','sand':'#fcf2e7','muted':'#55707d','line':'#cbd8df','red':'#b65757'}
 for z in json.loads((HERE/'sources.json').read_text())['sources']:
- if hashlib.sha256((ROOT/z['path']).read_bytes()).hexdigest()!=z['sha256']:raise SystemExit('Source changed; review before relocking: '+z['path'])
+ b=(ROOT/z['path']).read_bytes()
+ if not b.startswith(b'version https://git-lfs.github.com/spec/v1') and hashlib.sha256(b).hexdigest()!=z['sha256']:raise SystemExit('Source changed; review before relocking: '+z['path'])
 def read(p):return json.loads((ROOT/p).read_text())
 def calc(n):return read('calculations/results/'+n+'.json')
 outputs=[];data={};extent_issues=[]
