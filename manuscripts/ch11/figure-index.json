@@ -2,246 +2,256 @@
   {
     "file": "figure-11-1-timeline.svg",
     "number": 1,
-    "caption": "三轮串行任务共需 30 s。蓝色为三次各 9 s 的模型调用，橙色为三次各 1 s 的工具执行；工具累计消耗 3 CPU·秒。"
+    "caption": "图 11-1 模型调用、工具工作和环境驻留的三轮时间线"
   },
   {
     "file": "figure-11-memory-area.svg",
     "number": 2,
-    "caption": "同一任务的环境始终占 2 GiB，持续 30 s，矩形面积为 60 GiB·秒。等待模型时仍保留环境，因而内存占用持续时间长于工具的 CPU 执行时间。"
+    "caption": "图 11-2 同一任务的环境始终占 2 GiB，持续 30 s，矩形面积为 60 GiB·秒"
   },
   {
     "file": "figure-11-capacity.svg",
     "number": 3,
-    "caption": "每秒 10 项任务、每次模型调用 9 s 时，三种资源的需求占容量比例。柱末给出需求量／可用容量；虚线为 100%。"
+    "caption": "图 11-3 模型响应变慢对三类资源需求的不同影响（9 s 调用）"
   },
   {
     "file": "figure-11-capacity-slow.svg",
     "number": 4,
-    "caption": "每次模型调用由 9 s 延长到 12 s，CPU 需求仍为 30 核；并发调用增至 360，环境内存增至 780 GiB。虚线为 100% 容量。"
+    "caption": "图 11-4 每次模型调用由 9 s 延长到 12 s 时的三类资源需求"
   },
   {
     "file": "figure-11-2-boundary.svg",
     "number": 5,
-    "caption": "代码任务经过模型服务与工具环境两条路径。控制器从模型取得参数，再向环境平台发起工具操作；执行结果成为下一轮输入。虚线框标出工具环境所在的执行节点。"
+    "caption": "图 11-5 Agent 控制器、平台、模型服务与工具隔离边界"
   },
   {
     "file": "figure-11-isolation-0.svg",
     "number": 6,
-    "caption": "进程拥有独立地址空间，通过权限限制访问；同一节点上的进程共享宿主内核。"
+    "caption": "图 11-6 进程级隔离边界"
   },
   {
     "file": "figure-11-isolation-1.svg",
     "number": 7,
-    "caption": "容器为任务建立各自的资源视图和配额，底层仍使用同一宿主内核。"
+    "caption": "图 11-7 容器级隔离边界"
   },
   {
     "file": "figure-11-isolation-2.svg",
     "number": 8,
-    "caption": "microVM 让每个任务环境运行独立虚拟机内核，通过虚拟硬件访问宿主资源。"
+    "caption": "图 11-8 microVM 级隔离边界"
   },
   {
     "file": "figure-11-sandbox-boundaries.svg",
     "number": 9,
-    "caption": "沙箱的三个隔离方向：虚拟化与配额把各沙箱隔开，AppArmor 限定 agent 能访问平台代理的哪些文件和 socket，eBPF 白名单过滤发往外部的流量。输出量和写盘量另设上限。"
+    "caption": "图 11-9 沙箱的三个隔离方向：与其他沙箱、与平台代理、与外部网络"
   },
   {
     "file": "figure-11-template-runtime.svg",
     "number": 10,
-    "caption": "模板包含共享的文件与依赖，私有部分记录各环境的修改；程序运行时还会占用进程内存和缓冲区。加载模板所需的空间与活跃环境的内存占用分别计算。"
+    "caption": "图 11-10 模板共享内容、私有修改与活跃环境运行时内存的构成关系"
   },
   {
     "file": "figure-11-pages.svg",
     "number": 11,
-    "caption": "四种方案采用相同的横轴尺度，比较每个环境本地保存的数据。另有一份共享的 2 GiB 模板，不计入各环境的柱长。数值来自例 11-2；管理开销为每环境 4 MiB。"
+    "caption": "图 11-11 不同环境内容加载方式的本地数据量"
   },
   {
     "file": "figure-11-page-cache-copies.svg",
     "number": 12,
-    "caption": "经虚拟块设备读取时，同一份只读镜像数据在宿主机和每台 microVM 的 page cache 里各存一份。"
+    "caption": "图 11-12 虚拟块设备下的双重页缓存冗余"
   },
   {
     "file": "figure-11-page-cache-shared.svg",
     "number": 13,
-    "caption": "只读层改走 virtio-pmem 并开启 DAX 后，各 microVM 把文件页直接映射到宿主机缓存，内存中只留一份数据。"
+    "caption": "图 11-13 基于 virtio-pmem 与 DAX 的跨虚拟机零拷贝缓存共享"
   },
   {
     "file": "figure-11-pause.svg",
     "number": 14,
-    "caption": "第 10–19 s 等待模型时始终保留 2 GiB 环境，占用 18 GiB·秒。横轴与下一图一致。"
+    "caption": "图 11-14 同一段模型等待中的环境持续驻留（18 GiB·s）"
   },
   {
     "file": "figure-11-pause-release.svg",
     "number": 15,
-    "caption": "第 10–18 s 按每 GiB 4 s 保存 2 GiB 状态，第 18–19 s 恢复，整个间隔都没有释放内存。有色区间仍占 18 GiB·秒，下一次工具在第 19 s 开始。"
+    "caption": "图 11-15 同一段 9 s 模型等待中执行保存（8 s）与恢复（1 s）的内存占用"
   },
   {
     "file": "figure-11-preempt-pause.svg",
     "number": 16,
-    "caption": "GPU 作业被抢占后，RL 框架暂停相应的沙箱。保存和恢复各占一小段时间，其余时间内存空出；横轴未按比例，抢占通常以小时计，保存和恢复以秒计。"
+    "caption": "图 11-16 GPU 作业被抢占期间暂停沙箱以释放数小时内存"
   },
   {
     "file": "figure-11-residency.svg",
     "number": 17,
-    "caption": "环境从任务开始保留到结束。模型每轮 9 s、工具每轮 1 s，三轮累计占用 60 GiB·秒。与下一图使用相同横轴。"
+    "caption": "图 11-17 全程保留环境时的单任务内存占用时间线（60 GiB·s）"
   },
   {
     "file": "figure-11-residency-rebuild.svg",
     "number": 18,
-    "caption": "每轮只在准备 2 s 和执行 1 s 期间保留环境，三次合计 18 GiB·秒。工作目录和结果已持久化，三轮仍在第 30 s 完成。"
+    "caption": "图 11-18 每轮重建且提前准备环境时的单任务内存占用时间线（18 GiB·s）"
   },
   {
     "file": "figure-11-3-lifecycle.svg",
     "number": 19,
-    "caption": "按需创建：第 4 s 调用到达才开始准备，第 6 s 就绪，等待 2 s。蓝色为准备，虚线为调用时刻；以下四图使用相同横轴。"
+    "caption": "图 11-19 按需创建（提前量 L=0 s）：调用到达后等待 2 s"
   },
   {
     "file": "figure-11-prewarm-1.svg",
     "number": 20,
-    "caption": "预测正确且提前 1 s：从第 3 s 准备到第 5 s，调用在第 4 s 到达后仍需等 1 s。蓝色为准备环境，虚线标出第 4 s 的调用到达时刻。"
+    "caption": "图 11-20 预测正确且提前 1 s 准备：调用到达后仍需等待 1 s"
   },
   {
     "file": "figure-11-prewarm-2.svg",
     "number": 21,
-    "caption": "预测正确且提前 2 s：准备恰好在第 4 s 调用到达时完成。蓝色为准备环境，虚线标出第 4 s 的调用到达时刻。"
+    "caption": "图 11-21 预测正确且提前 2 s 准备：准备恰好在调用到达时刻完成"
   },
   {
     "file": "figure-11-prewarm-3.svg",
     "number": 22,
-    "caption": "预测正确且提前 3 s：准备在第 3 s 完成，橙色部分表示环境已就绪、等待调用的 1 s 空闲时间。蓝色为准备环境，虚线标出第 4 s 的调用到达时刻。"
+    "caption": "图 11-22 预测正确但提前 3 s 准备：产生 1 s 空闲就绪等待"
   },
   {
     "file": "figure-11-prewarm-wrong.svg",
     "number": 23,
-    "caption": "预测错误：第 2–4 s 准备了不需要的环境（灰色）；第 4 s 取消后，再花 2 s 准备实际所需环境。此图采用立即取消、无资源争用的题设。"
+    "caption": "图 11-23 预测错误分支：取消错误预热环境并重新准备实际所需环境"
   },
   {
     "file": "figure-11-4-placement.svg",
     "number": 24,
-    "caption": "整理前：新作业需要同节点四张 H100 与 16 核。节点 1 缺 CPU，节点 2 空着的是 A100。"
+    "caption": "图 11-24 资源碎片导致新作业无法在任一节点启动"
   },
   {
     "file": "figure-11-placement-after.svg",
     "number": 25,
-    "caption": "将占用 8 核的 CPU 任务从节点 1 迁到节点 2 后，节点 1 同时拥有四张空闲 H100 和 16 个空闲核，可以启动新作业。"
+    "caption": "图 11-25 跨节点迁移 8 核 CPU 任务消除碎片并启动新作业"
   },
   {
     "file": "figure-11-queue.svg",
     "number": 26,
-    "caption": "十次调用每隔 1 s 到达，一个执行进程每次处理 1 s。圆点为到达，蓝色为执行，每次均可立即开始。"
+    "caption": "图 11-26 均匀到达时的零排队执行过程"
   },
   {
     "file": "figure-11-queue-burst.svg",
     "number": 27,
-    "caption": "十次调用同时在第 0 s 到达；灰色为等待、蓝色为执行，各行的等待依次为 0–9 s。执行进程仍只工作 10 s，平均排队为 4.5 s。"
+    "caption": "图 11-27 同时突发到达时的排队累积过程"
   },
   {
     "file": "figure-11-placement-sampling.svg",
     "number": 28,
-    "caption": "调度器在定期汇总的视图上补记自己刚放下的沙箱，每次随机抽几个节点，选负载较低的一个；节点检查本地容量，不够就拒绝，调度器再换一个节点。"
+    "caption": "图 11-28 基于随机采样、本地在途补记与节点准入检查的分布式沙箱放置"
   },
   {
     "file": "figure-11-smt-sibling.svg",
     "number": 29,
-    "caption": "`SCHED_IDLE` 只管同一个硬件线程上谁先运行。LS 任务运行时，BE 任务仍可占着同一物理核的另一个硬件线程，与它争用执行单元。"
+    "caption": "图 11-29 开启超线程（SMT）时 LS 与 BE 任务共用同一物理核争用执行单元"
   },
   {
     "file": "figure-11-smt-core-scheduling.svg",
     "number": 30,
-    "caption": "开启 core scheduling 后，同一物理核的两个硬件线程只运行同一组任务；LS 任务运行期间，另一个硬件线程不再跑 BE 任务。"
+    "caption": "图 11-30 开启 Linux Core Scheduling 后阻止异类任务共用同一物理核"
   },
   {
     "file": "figure-11-rl-stages.svg",
     "number": 31,
-    "caption": "四个阶段依次执行。生成时间由 40 秒降至 20 秒，其余三段仍共需 45 秒，因此每轮总时间由 85 秒降至 65 秒。条形长度按时间比例绘制。"
+    "caption": "图 11-31 串行 RL 迭代中仅将生成速度翻倍的 Amdahl 加速瓶颈"
   },
   {
     "file": "figure-11-weights.svg",
     "number": 32,
-    "caption": "每个接收实例都需要一份完整的 16.38 GB Qwen3-8B 权重，六路传输共用 200 Gbit/s 发送出口。每个接收方为 50 Gbit/s，单份传输至少 2.62 秒，而发送方累计发送 98.3 GB 至少需要 3.93 秒；图中六个接收框各代表一个独立实例。"
+    "caption": "图 11-32 六个接收实例共用一个 200 Gbit/s 发送出口时的权重分发瓶颈"
   },
   {
     "file": "figure-11-rollout-owner-before.svg",
     "number": 33,
-    "caption": "agent 循环与模型服务、RL 框架同在可抢占的 GPU 容器里。一旦抢占，agent 循环的状态随之丢失，沙箱里的文件和进程还在，恢复时靠命令日志把两边重新对上。"
+    "caption": "图 11-33 早期架构：Agent 循环位于可抢占的 GPU 容器内，恢复需按命令日志重放"
   },
   {
     "file": "figure-11-rollout-owner-after.svg",
     "number": 34,
-    "caption": "agent 循环移到 CPU 平台的 worker 容器里，和沙箱一起保存完整的 rollout 状态；GPU 作业恢复后重新连上即可接着做。"
+    "caption": "图 11-34 演进架构：Agent 循环移至稳定的 CPU 平台，与沙箱共同保存完整状态"
   },
   {
     "file": "figure-11-5-stages.svg",
     "number": 35,
-    "caption": "三条样本分别在第 0、10、20 s 到达，立即提交给唯一的验证进程，每条处理 10 s，整批在第 30 s 完成。圆点标到达时刻。"
+    "caption": "图 11-35 样本生成后立即逐条流式提交的验证时间线（第 30 s 完成）"
   },
   {
     "file": "figure-11-stages-batch.svg",
     "number": 36,
-    "caption": "先等三条样本全部在第 20 s 就绪，再依次验证，结束于第 50 s。与前图执行相同的 30 s 验证工作，区别来自提交时机。"
+    "caption": "图 11-36 等待整批样本全部就绪后再批量提交的验证时间线（第 50 s 完成）"
   },
   {
     "file": "figure-11-remaining-time.svg",
     "number": 37,
-    "caption": "九条验证各用 1 s，一条用 100 s。虚线是已经执行的 10 s；到此时仍未结束的样本只可能来自 100 s 那一类，剩余时间为 90 s。"
+    "caption": "图 11-37 重尾分布下基于已执行时间的条件剩余时间推断"
   },
   {
     "file": "figure-11-thinking.svg",
     "number": 38,
-    "caption": "两次调用的输入和可见输出相同，只改变思考长度。橙色成本缩短到原来的十分之一，蓝色和绿色成本保持不变，所以总成本由 0.032 美元降到 0.023 美元，减少约 28%。价格和 token 数见例 11-5。"
+    "caption": "图 11-38 思考长度缩短为十分之一前后的单次调用成本构成对比"
   },
   {
     "file": "figure-11-6-service.svg",
     "number": 39,
-    "caption": "同一任务使用模型服务的两种方式及其计费方法。外部 API 按调用用量收费，自建副本按设备预留及运行支出计价；两条路径都将成本归到任务及尝试。输入拆分为普通处理、缓存创建和缓存读取，生成单独计量。"
+    "caption": "图 11-39 模型服务统一入口、两类后端路径及分桶计费构成"
   },
   {
     "file": "figure-11-7-routing.svg",
     "number": 40,
-    "caption": "B 的成功任务成本随命中率提高而下降，在约 79.5% 处等于 A。两者的总成本先分别除以各自成功完成的任务数；本图只比较成本，下一图单独加入期限。"
+    "caption": "图 11-40 服务 B 的成功任务成本随缓存命中率下降并与服务 A 相交（79.5%）"
   },
   {
     "file": "figure-11-routing-deadline.svg",
     "number": 41,
-    "caption": "只有 B 命中的 4 s 路径满足 6 s 期限；再乘 98% 的验收通过率，按时成功比例为 0.98h。达到 90% 目标要求 h 至少约 91.8%。"
+    "caption": "图 11-41 叠加上 6 s 完成期限后服务 B 的按时通过测试比例（需 h ≥ 91.8%）"
   },
   {
     "file": "figure-11-purchase.svg",
     "number": 42,
-    "caption": "4 张 B200 预留一个月共 19,555.2 美元，按量成本为 0.0081N 美元，N 为提交任务数。两条线在约 241 万项相交，对应预留 GPU 约 78.6% 的利用率；预留线止于每月 307.2 万项的处理上限。"
+    "caption": "图 11-42 预留 4 张 B200 与按秒 Serverless 计费的月度成本交点（约 241 万项）"
   },
   {
     "file": "figure-11-commit-ack.svg",
     "number": 43,
-    "caption": "外部系统已执行并提交操作 K，确认却丢失。恢复环境不会撤回外部操作的结果；控制器按同一操作标识查询结果后接续任务。实线表示请求与执行，虚线表示确认及恢复查询。"
+    "caption": "图 11-43 外部系统已提交操作但确认消息丢失时的幂等查询恢复"
   },
   {
     "file": "figure-11-recovery-coverage.svg",
     "number": 44,
-    "caption": "初始状态已在本地和云端保存，每列代表一个 ReAct 轮次。每轮先保存到本地，再异步上传该轮新增记录；本例允许上传失败后继续执行和上传后续轮次。第二轮上传失败后，即使第三轮上传成功，云端历史仍只完整到第一轮。横向排列表示轮次顺序，不表示耗时。"
+    "caption": "图 11-44 增量异步上传中第 2 轮失败导致的云端连续恢复历史缺口"
   },
   {
     "file": "figure-11-retry-tree.svg",
     "number": 45,
-    "caption": "首次尝试在 10 s 后分为成功、局部修复、直接升级三类。框内比例以全部提交为分母；下一图展开修复的条件分支。"
+    "caption": "图 11-45 三级恢复树的分支概率与各路径累计完成时间"
   },
   {
     "file": "figure-11-retry-conditional.svg",
     "number": 46,
-    "caption": "把修复节点放大：进入此处的 12% 中，60% 修复成功，占全部提交 7.2%；40% 转入升级，占全部提交 4.8%。升级再用 8 s，因此后一条路径累计 22 s。"
+    "caption": "图 11-46 局部修复节点的条件分支放大：7.2% 修复成功（14 s）与 4.8% 转入升级（22 s）"
   },
   {
     "file": "figure-11-8-retry.svg",
     "number": 47,
-    "caption": "同一批提交任务换用恢复策略后的成本与结果。各柱均以相应策略的全部支出为分子，再分别除以通过测试的任务数或按时通过测试的任务数；只做首次尝试的成功率为 80%，有限恢复策略约为 99.7%，其中约 95.0% 的提交在 20 秒内成功。分支概率、成本和时间见例 11-8，期限用于评价而不强制停止执行。"
+    "caption": "图 11-47 只做首次尝试与启用恢复策略的单位成功成本及按时达标率对比"
   },
   {
     "file": "figure-11-environment-overlap.svg",
     "number": 48,
-    "caption": "模型加速后，环境创建成为工具开始执行前的等待来源。两种情况都在零时刻开始创建环境；工具须同时等待模型决策与环境就绪。横轴为秒。"
+    "caption": "图 11-48 模型大幅加速后环境创建从完全隐藏变为关键路径等待来源"
   },
   {
     "file": "figure-11-decision.svg",
     "number": 49,
-    "caption": "两种方案均在模型调用期间准备环境，工具执行均为每轮 1 秒。模型调用从每轮 9 秒降至 6 秒，三轮结束时刻从第 30 秒移到第 21 秒，从 24 秒期限之后提前到期限之内。"
+    "caption": "图 11-49 普通模型服务（30 s 超时）与快速模型服务（21 s 达标）的三轮完成时间对比"
+  },
+  {
+    "file": "figure-11-steady-schedule.svg",
+    "number": 50,
+    "caption": "图 11-50 终选方案（快速服务 12 副本＋每轮重建）的单任务 21 s 流水时间线与稳态并发占用"
+  },
+  {
+    "file": "figure-11-lifecycle-crossover.svg",
+    "number": 51,
+    "caption": "图 11-51 轮间模型等待时长对三种环境策略成本与驻留的影响及 2.16 s 重建交点"
   }
 ]
