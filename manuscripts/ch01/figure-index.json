@@ -25,46 +25,54 @@
   },
   {
     "figure": "1-7",
-    "asset": "ch01/figure-1-capacity-path.svg"
+    "asset": "ch01/figure-1-amdahl-coding.svg"
   },
   {
     "figure": "1-8",
-    "asset": "ch01/figure-1-read-path.svg"
+    "asset": "ch01/figure-1-capacity-path.svg"
   },
   {
     "figure": "1-9",
-    "asset": "ch01/figure-1-5-budget.svg"
+    "asset": "ch01/figure-1-read-path.svg"
   },
   {
     "figure": "1-10",
-    "asset": "ch01/figure-1-batch-reuse.svg"
+    "asset": "ch01/figure-1-5-budget.svg"
   },
   {
     "figure": "1-11",
-    "asset": "ch01/figure-1-batch-transition.svg"
+    "asset": "ch01/figure-1-batch-reuse.svg"
   },
   {
     "figure": "1-12",
-    "asset": "ch01/figure-1-batch-throughput.svg"
+    "asset": "ch01/figure-1-batch-transition.svg"
   },
   {
     "figure": "1-13",
-    "asset": "ch01/figure-1-measured-throughput.svg"
+    "asset": "ch01/figure-1-batch-throughput.svg"
   },
   {
     "figure": "1-14",
-    "asset": "ch01/figure-1-measured-tpot.svg"
+    "asset": "ch01/figure-1-measured-throughput.svg"
   },
   {
     "figure": "1-15",
-    "asset": "ch01/figure-1-design-tpu.svg"
+    "asset": "ch01/figure-1-measured-tpot.svg"
   },
   {
     "figure": "1-16",
-    "asset": "ch01/figure-1-design-smartnic.svg"
+    "asset": "ch01/figure-1-step-breakdown.svg"
   },
   {
     "figure": "1-17",
+    "asset": "ch01/figure-1-design-tpu.svg"
+  },
+  {
+    "figure": "1-18",
+    "asset": "ch01/figure-1-design-smartnic.svg"
+  },
+  {
+    "figure": "1-19",
     "asset": "ch01/figure-1-design-ub.svg"
   }
 ]
