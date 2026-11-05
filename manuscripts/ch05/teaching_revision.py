@@ -2,6 +2,7 @@
 
 Existing numerical data keys remain stable; figure-index.json maps assets to captions.
 """
+import sys
 from pathlib import Path
 import json
 import matplotlib
@@ -9,21 +10,24 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle, FancyBboxPatch, FancyArrowPatch, Patch
 import numpy as np
 
-COL={'ink':'#252525','line':'#454545','blue':'#CBE3F3','green':'#CFE8DB',
-     'orange':'#F9DEC0','purple':'#DDCDE8','gray':'#EEEEEE','white':'#FFFFFF'}
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+from figure_style import COL, BORDER_COL, TEXT_COL, STYLE
+
 REPLACED={'figure-5-2-tiles','figure-5-3-banks','figure-5-4-reduction',
           'figure-5-5-boundaries','figure-5-6-fusion-buffer',
           'figure-5-7-online-softmax','figure-5-8-attention-tradeoff'}
 
 def draw(here, data):
     outputs=[]; checks=[]
-    def text(a,x,y,s,size=12,ha='left',**kw):
-        return a.text(x,y,s,fontsize=size,ha=ha,va='center',color=COL['ink'],linespacing=1.4,**kw)
+    def text(a,x,y,s,size=12,ha='left',color=None,**kw):
+        return a.text(x,y,s,fontsize=size,ha=ha,va='center',color=COL['ink'] if color is None else color,linespacing=1.38,**kw)
     def box(a,x,y,w,h,s='',c='blue',size=12):
-        a.add_patch(FancyBboxPatch((x,y),w,h,boxstyle='round,pad=0.002,rounding_size=0.009',facecolor=COL[c],edgecolor=COL['line'],lw=.9))
-        if s:text(a,x+w/2,y+h/2,s,size,ha='center')
+        ec=BORDER_COL.get(c,COL['line']); tc=TEXT_COL.get(c,COL['ink'])
+        a.add_patch(FancyBboxPatch((x,y),w,h,boxstyle='round,pad=0.002,rounding_size=0.010',facecolor=COL[c],edgecolor=ec,lw=1.15))
+        if s:text(a,x+w/2,y+h/2,s,size,ha='center',color=tc)
     def arrow(a,p,q,c='line'):
-        a.add_patch(FancyArrowPatch(p,q,arrowstyle='-|>',mutation_scale=11,lw=1,color=COL[c],shrinkA=2,shrinkB=3))
+        col=BORDER_COL.get(c,COL.get(c,c))
+        a.add_patch(FancyArrowPatch(p,q,arrowstyle='-|>',mutation_scale=11.5,lw=1.25,color=col,shrinkA=2,shrinkB=3))
     def canvas(height=3.7):
         f,a=plt.subplots(figsize=(420/72,height));f.subplots_adjust(left=.035,right=.965,bottom=.035,top=.965)
         a.set(xlim=(0,1),ylim=(0,1));a.axis('off');return f,a

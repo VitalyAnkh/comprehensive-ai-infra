@@ -1865,5 +1865,22 @@
       2.8621038661151488
     ],
     "completion_us": 5.444417895965895
+  },
+  "flashinfer_and_sleep": {
+    "kind": "plan_reuse_and_sleep_vaddr",
+    "sources": [
+      "case-studies/cache-and-reconfiguration.md",
+      "case-studies/weight-handoff.md",
+      "experiments/ch05/05-08/flashinfer-plan/README.md"
+    ],
+    "qwen3_8b_layers": 36,
+    "plan_us_per_call": 20.0,
+    "per_layer_plan_us": 720.0,
+    "shared_plan_us": 20.0,
+    "saved_host_plan_us": 700.0,
+    "hybrid_two_group_plan_us": 40.0,
+    "weight_gib": 15.2564,
+    "kv_gib": 24.0,
+    "level1_roundtrip_s": 1.31
   }
 }

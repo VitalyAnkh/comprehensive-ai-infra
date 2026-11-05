@@ -14,6 +14,7 @@ COL = dict(
     line='#475569',
     blue='#DCEBFA',
     green='#D8F1E5',
+    teal='#D5F5F0',
     orange='#FDE8CC',
     purple='#EAE0F6',
     gray='#F1F5F9',
@@ -23,6 +24,7 @@ COL = dict(
 BORDER_COL = dict(
     blue='#2B6CB0',
     green='#2F855A',
+    teal='#0F766E',
     orange='#C05621',
     purple='#6B46C1',
     gray='#64748B',
@@ -34,6 +36,7 @@ BORDER_COL = dict(
 HEADER_COL = dict(
     blue='#C3DDF6',
     green='#BCE5D2',
+    teal='#B2ECE4',
     orange='#FBD3A7',
     purple='#DAC8F0',
     gray='#E2E8F0',
@@ -43,6 +46,7 @@ HEADER_COL = dict(
 TEXT_COL = dict(
     blue='#1E3A8A',
     green='#14532D',
+    teal='#134E4A',
     orange='#7C2D12',
     purple='#3B0764',
     gray='#1E293B',
@@ -88,9 +92,9 @@ def canvas(height=3.6):
     return fig, ax
 
 
-def plot(height=3.6, left=0.17, bottom=0.20):
+def plot(height=3.6, left=0.17, bottom=0.20, right=0.95, top=0.93):
     fig, ax = plt.subplots(figsize=(420 / 72, height))
-    fig.subplots_adjust(left=left, right=0.95, bottom=bottom, top=0.93)
+    fig.subplots_adjust(left=left, right=right, bottom=bottom, top=top)
     ax.spines[['top', 'right']].set_visible(False)
     return fig, ax
 
@@ -139,6 +143,8 @@ def box(ax, x, y, w, h, label='', color='blue', size=12, **kw):
 
 def card(ax, x, y, w, h, title, body='', color='blue', title_size=11.5, body_size=11.0):
     """Two-tier publication card with header band, subtle shadow, and semantic border."""
+    if isinstance(body, (list, tuple)):
+        body = '\n'.join(str(line) for line in body)
     face = COL.get(color, color)
     head_face = HEADER_COL.get(color, COL['gray'])
     edge = BORDER_COL.get(color, COL['line'])

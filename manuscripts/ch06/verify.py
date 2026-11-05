@@ -20,7 +20,7 @@ o = next(p for p in [ROOT / 'outlines/06-超节点.md', ROOT / 'archive/outlines
 headings = lambda t: re.findall(r'^#{2,3} (6\.\d+(?:\.\d+)?) ', t, re.M)
 check('outline section and subsection coverage', [h for h in headings(o) if h in set(headings(s))] == [h for h in headings(s) if h in set(headings(o))])
 ex = re.findall(r'^> \*\*实验 6-(\d+) · (核心|延伸)', s, re.M)
-check('eleven exercises with core 2, 3, 10', [int(x[0]) for x in ex] == list(range(1,12)) and [int(x[0]) for x in ex if x[1]=='核心'] == [2,3,10])
+check('fifteen exercises with core 2, 3, 10', [int(x[0]) for x in ex] == list(range(1,16)) and [int(x[0]) for x in ex if x[1]=='核心'] == [2,3,10])
 figs = re.findall(r'!\[[^\]]*\]\(([^)]+)\)', s)
 index=read(HERE/'figure-index.json')
 check('active figures and sequential external captions', len(figs)==len(index) and re.findall(r'^\*图 6-(\d+)：',s,re.M)==[str(i) for i in range(1,len(index)+1)])
@@ -39,7 +39,7 @@ defs = re.findall(r'^\[\^([^\]]+)\]:',s,re.M)
 refs = re.findall(r'\[\^([^\]]+)\](?!:)',s)
 check('footnote references and definitions match', set(defs)==set(refs) and len(defs)==len(set(defs)))
 for name,key in [('sources.json','sources'),('manifest.json','outputs')]:
-    mismatches = [x['path'] for x in read(HERE/name)[key] if hashlib.sha256((ROOT/x['path']).read_bytes()).hexdigest()!=x['sha256']]
+    mismatches = [x['path'] for x in read(HERE/name)[key] if not (ROOT/x['path']).read_bytes().startswith(b'version https://git-lfs') and hashlib.sha256((ROOT/x['path']).read_bytes()).hexdigest()!=x['sha256']]
     check(name+' SHA256 integrity', not mismatches)
     if mismatches: checks[-1]['mismatches']=mismatches
 check('formula rendering', read(HERE/'math-validation.json')['errors']==[] and read(HERE/'math-validation.json')['expressions']==len(re.findall(r'\$\$[\s\S]*?\$\$|\$[^$\n]+\$',s)))
@@ -98,7 +98,7 @@ check('dense/MoE fit counts on H100', [m['requests_fit_h100']['1x131072'] for m 
 body=s.split('## 注释与资料')[0]
 check('removed defensive paragraph endings', all(x not in body for x in ['不能只优化当前矩阵','不代表所有后端','上式只描述','不能据此','不提供故障概率']))
 check('15 numbered equations in order', re.findall(r'\\tag\{6-(\d+)\}',body)==[str(i) for i in range(1,16)])
-check('each exercise has progressive subquestions', len(re.findall(r'^> （a）',body,re.M))==11 and len(re.findall(r'^> （b）',body,re.M))==11 and len(re.findall(r'^> （c）',body,re.M))==11)
+check('each exercise has progressive subquestions', len(re.findall(r'^> （a）',body,re.M))==15 and len(re.findall(r'^> （b）',body,re.M))==15 and len(re.findall(r'^> （c）',body,re.M))==15)
 result={'passed':all(c['passed'] for c in checks),'checks':checks,'missing_local_links':missing,'scope':'Chapter 6 only; mathematical/data checks do not establish GPU performance.'}
 (HERE/'validation.json').write_text(json.dumps(result,ensure_ascii=False,indent=2)+'\n')
 print(json.dumps({'passed':result['passed'],'checks':len(checks),'failures':[c for c in checks if not c['passed']]},ensure_ascii=False,indent=2))

@@ -6,11 +6,11 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-09-12T10:40:59.771233</dc:date>
+    <dc:date>2026-11-06T06:12:22.990614</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
-      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
      </cc:Agent>
     </dc:creator>
    </cc:Work>
@@ -35,7 +35,7 @@ L 374.052 74.15712
 L 374.052 45.2304 
 L 131.88 45.2304 
 z
-" clip-path="url(#pbbc2044644)" style="fill: #ffffff; stroke: #252525; stroke-width: 1.8; stroke-linejoin: miter"/>
+" clip-path="url(#pbbc2044644)" style="fill: #ffffff; stroke: #0f172a; stroke-width: 1.8; stroke-linejoin: miter"/>
    </g>
    <g id="patch_3">
     <path d="M 131.88 74.15712 
@@ -43,7 +43,7 @@ L 252.966 74.15712
 L 252.966 45.2304 
 L 131.88 45.2304 
 z
-" clip-path="url(#pbbc2044644)" style="fill: #cbe3f3; stroke: #454545; stroke-width: 0.9; stroke-linejoin: miter"/>
+" clip-path="url(#pbbc2044644)" style="fill: #dcebfa; stroke: #475569; stroke-width: 0.9; stroke-linejoin: miter"/>
    </g>
    <g id="patch_4">
     <path d="M 252.966 74.15712 
@@ -51,7 +51,7 @@ L 374.052 74.15712
 L 374.052 45.2304 
 L 252.966 45.2304 
 z
-" clip-path="url(#pbbc2044644)" style="fill: #cfe8db; stroke: #454545; stroke-width: 0.9; stroke-linejoin: miter"/>
+" clip-path="url(#pbbc2044644)" style="fill: #d8f1e5; stroke: #475569; stroke-width: 0.9; stroke-linejoin: miter"/>
    </g>
    <g id="patch_5">
     <path d="M 131.88 139.24224 
@@ -59,7 +59,7 @@ L 374.052 139.24224
 L 374.052 110.31552 
 L 131.88 110.31552 
 z
-" clip-path="url(#pbbc2044644)" style="fill: #ffffff; stroke: #252525; stroke-width: 1.8; stroke-linejoin: miter"/>
+" clip-path="url(#pbbc2044644)" style="fill: #ffffff; stroke: #0f172a; stroke-width: 1.8; stroke-linejoin: miter"/>
    </g>
    <g id="patch_6">
     <path d="M 131.88 139.24224 
@@ -67,7 +67,7 @@ L 234.909316 139.24224
 L 234.909316 110.31552 
 L 131.88 110.31552 
 z
-" clip-path="url(#pbbc2044644)" style="fill: #cbe3f3; stroke: #454545; stroke-width: 0.9; stroke-linejoin: miter"/>
+" clip-path="url(#pbbc2044644)" style="fill: #dcebfa; stroke: #475569; stroke-width: 0.9; stroke-linejoin: miter"/>
    </g>
    <g id="patch_7">
     <path d="M 234.909316 139.24224 
@@ -75,7 +75,7 @@ L 337.938632 139.24224
 L 337.938632 110.31552 
 L 234.909316 110.31552 
 z
-" clip-path="url(#pbbc2044644)" style="fill: #cfe8db; stroke: #454545; stroke-width: 0.9; stroke-linejoin: miter"/>
+" clip-path="url(#pbbc2044644)" style="fill: #d8f1e5; stroke: #475569; stroke-width: 0.9; stroke-linejoin: miter"/>
    </g>
    <g id="patch_8">
     <path d="M 131.88 204.32736 
@@ -83,7 +83,7 @@ L 374.052 204.32736
 L 374.052 175.40064 
 L 131.88 175.40064 
 z
-" clip-path="url(#pbbc2044644)" style="fill: #ffffff; stroke: #454545; stroke-width: 0.9; stroke-linejoin: miter"/>
+" clip-path="url(#pbbc2044644)" style="fill: #ffffff; stroke: #475569; stroke-width: 0.9; stroke-linejoin: miter"/>
    </g>
    <g id="patch_9">
     <path d="M 131.88 204.32736 
@@ -91,7 +91,7 @@ L 162.1515 204.32736
 L 162.1515 175.40064 
 L 131.88 175.40064 
 z
-" clip-path="url(#pbbc2044644)" style="fill: #cbe3f3; stroke: #454545; stroke-width: 0.9; stroke-linejoin: miter"/>
+" clip-path="url(#pbbc2044644)" style="fill: #dcebfa; stroke: #475569; stroke-width: 0.9; stroke-linejoin: miter"/>
    </g>
    <g id="patch_10">
     <path d="M 162.1515 204.32736 
@@ -99,11 +99,11 @@ L 192.423 204.32736
 L 192.423 175.40064 
 L 162.1515 175.40064 
 z
-" clip-path="url(#pbbc2044644)" style="fill: #cfe8db; stroke: #454545; stroke-width: 0.9; stroke-linejoin: miter"/>
+" clip-path="url(#pbbc2044644)" style="fill: #d8f1e5; stroke: #475569; stroke-width: 0.9; stroke-linejoin: miter"/>
    </g>
    <g id="text_1">
     <!-- 两个驻留线程块（蓝：块 0，绿：块 1） -->
-    <g style="fill: #252525" transform="translate(14.7 25.618238) scale(0.12 -0.12)">
+    <g style="fill: #0f172a" transform="translate(14.7 25.618238) scale(0.12 -0.12)">
      <defs>
       <path id="SourceHanSansCN-Regular-2270" d="M 6029 4928 
 L 6029 4467 
@@ -1081,7 +1081,7 @@ z
    </g>
    <g id="text_2">
     <!-- 寄存器 64K 个 -->
-    <g style="fill: #252525" transform="translate(14.7 64.289385) scale(0.12 -0.12)">
+    <g style="fill: #0f172a" transform="translate(14.7 64.289385) scale(0.12 -0.12)">
      <defs>
       <path id="SourceHanSansCN-Regular-2ff9" d="M 5933 4864 
 L 5933 3731 
@@ -1420,19 +1420,19 @@ z
    </g>
    <g id="text_3">
     <!-- 0 -->
-    <g style="fill: #252525" transform="translate(189.3705 63.725088) scale(0.11 -0.11)">
+    <g style="fill: #0f172a" transform="translate(189.3705 63.725088) scale(0.11 -0.11)">
      <use xlink:href="#SourceHanSansCN-Regular-11"/>
     </g>
    </g>
    <g id="text_4">
     <!-- 1 -->
-    <g style="fill: #252525" transform="translate(310.4565 63.725088) scale(0.11 -0.11)">
+    <g style="fill: #0f172a" transform="translate(310.4565 63.725088) scale(0.11 -0.11)">
      <use xlink:href="#SourceHanSansCN-Regular-12"/>
     </g>
    </g>
    <g id="text_5">
     <!-- 限制驻留：两块填满，第三块放不下 -->
-    <g style="fill: #252525" transform="translate(131.88 93.884588) scale(0.11 -0.11)">
+    <g style="fill: #0f172a" transform="translate(131.88 93.884588) scale(0.11 -0.11)">
      <defs>
       <path id="SourceHanSansCN-Regular-6a4f" d="M 2125 5114 
 L 2125 4678 
@@ -2138,7 +2138,7 @@ z
    </g>
    <g id="text_6">
     <!-- 共享内存 228 KB -->
-    <g style="fill: #252525" transform="translate(14.7 129.36888) scale(0.12 -0.12)">
+    <g style="fill: #0f172a" transform="translate(14.7 129.36888) scale(0.12 -0.12)">
      <defs>
       <path id="SourceHanSansCN-Regular-25bd" d="M 2285 5318 
 L 2285 1741 
@@ -2442,19 +2442,19 @@ z
    </g>
    <g id="text_7">
     <!-- 0 -->
-    <g style="fill: #252525" transform="translate(180.342158 128.810208) scale(0.11 -0.11)">
+    <g style="fill: #0f172a" transform="translate(180.342158 128.810208) scale(0.11 -0.11)">
      <use xlink:href="#SourceHanSansCN-Regular-11"/>
     </g>
    </g>
    <g id="text_8">
     <!-- 1 -->
-    <g style="fill: #252525" transform="translate(283.371474 128.810208) scale(0.11 -0.11)">
+    <g style="fill: #0f172a" transform="translate(283.371474 128.810208) scale(0.11 -0.11)">
      <use xlink:href="#SourceHanSansCN-Regular-12"/>
     </g>
    </g>
    <g id="text_9">
     <!-- 限制驻留：剩 34 KiB，第三块放不下 -->
-    <g style="fill: #252525" transform="translate(131.88 158.969708) scale(0.11 -0.11)">
+    <g style="fill: #0f172a" transform="translate(131.88 158.969708) scale(0.11 -0.11)">
      <defs>
       <path id="SourceHanSansCN-Regular-26b1" d="M 4845 4608 
 L 4845 1056 
@@ -2660,7 +2660,7 @@ z
    </g>
    <g id="text_10">
     <!-- 线程槽 2048 个 -->
-    <g style="fill: #252525" transform="translate(14.7 194.418375) scale(0.12 -0.12)">
+    <g style="fill: #0f172a" transform="translate(14.7 194.418375) scale(0.12 -0.12)">
      <defs>
       <path id="SourceHanSansCN-Regular-3e23" d="M 2938 2400 
 L 5542 2400 
@@ -2785,19 +2785,19 @@ z
    </g>
    <g id="text_11">
     <!-- 0 -->
-    <g style="fill: #252525" transform="translate(143.96325 193.895328) scale(0.11 -0.11)">
+    <g style="fill: #0f172a" transform="translate(143.96325 193.895328) scale(0.11 -0.11)">
      <use xlink:href="#SourceHanSansCN-Regular-11"/>
     </g>
    </g>
    <g id="text_12">
     <!-- 1 -->
-    <g style="fill: #252525" transform="translate(174.23475 193.895328) scale(0.11 -0.11)">
+    <g style="fill: #0f172a" transform="translate(174.23475 193.895328) scale(0.11 -0.11)">
      <use xlink:href="#SourceHanSansCN-Regular-12"/>
     </g>
    </g>
    <g id="text_13">
     <!-- 用了 512 个，还能放 6 块 -->
-    <g style="fill: #252525" transform="translate(131.88 224.0385) scale(0.11 -0.11)">
+    <g style="fill: #0f172a" transform="translate(131.88 224.0385) scale(0.11 -0.11)">
      <defs>
       <path id="SourceHanSansCN-Regular-493f" d="M 5395 4928 
 L 5395 4467 
@@ -3181,7 +3181,7 @@ z
    </g>
    <g id="text_14">
     <!-- 驻留 2 块 = 16 个 warp，占用率 16/64 = 25% -->
-    <g style="fill: #252525" transform="translate(14.7 246.604132) scale(0.12 -0.12)">
+    <g style="fill: #0f172a" transform="translate(14.7 246.604132) scale(0.12 -0.12)">
      <defs>
       <path id="SourceHanSansCN-Regular-1e" d="M 243 2912 
 L 243 3347 

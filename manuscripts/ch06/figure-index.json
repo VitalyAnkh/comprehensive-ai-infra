@@ -1,234 +1,238 @@
 [
   {
-    "number": 1,
-    "name": "figure-6-1-placement"
+    "name": "figure-6-1-placement",
+    "number": 1
   },
   {
-    "number": 2,
-    "name": "figure-6-2-capacity"
+    "name": "figure-6-2-capacity",
+    "number": 2
   },
   {
-    "number": 3,
-    "name": "figure-6-parallel-map"
+    "name": "figure-6-parallel-map",
+    "number": 3
   },
   {
-    "number": 4,
-    "name": "figure-6-dp"
+    "name": "figure-6-dp",
+    "number": 4
   },
   {
-    "number": 5,
-    "name": "figure-6-tp-layer"
+    "name": "figure-6-tp-layer",
+    "number": 5
   },
   {
-    "number": 6,
-    "name": "figure-6-dense-moe"
+    "name": "figure-6-dense-moe",
+    "number": 6
   },
   {
-    "number": 7,
-    "name": "figure-6-tp-columns"
+    "name": "figure-6-tp-columns",
+    "number": 7
   },
   {
-    "number": 8,
-    "name": "figure-6-tp-rows"
+    "name": "figure-6-tp-rows",
+    "number": 8
   },
   {
-    "number": 9,
-    "name": "figure-6-3-tp"
+    "name": "figure-6-3-tp",
+    "number": 9
   },
   {
-    "number": 10,
-    "name": "figure-6-sp"
+    "name": "figure-6-sp",
+    "number": 10
   },
   {
-    "number": 11,
-    "name": "figure-6-cp"
+    "name": "figure-6-cp",
+    "number": 11
   },
   {
-    "number": 12,
-    "name": "figure-6-context-dependency"
+    "name": "figure-6-context-dependency",
+    "number": 12
   },
   {
-    "number": 13,
-    "name": "figure-6-pp"
+    "name": "figure-6-pp",
+    "number": 13
   },
   {
-    "number": 14,
-    "name": "figure-6-4-pipeline"
+    "name": "figure-6-4-pipeline",
+    "number": 14
   },
   {
-    "number": 15,
-    "name": "figure-6-ep"
+    "name": "figure-6-ep",
+    "number": 15
   },
   {
-    "number": 16,
-    "name": "figure-6-5-dispatch"
+    "name": "figure-6-5-dispatch",
+    "number": 16
   },
   {
-    "number": 17,
-    "name": "figure-6-6-ep-layout"
+    "name": "figure-6-6-ep-layout",
+    "number": 17
   },
   {
-    "number": 18,
-    "name": "figure-6-ep-reduction"
+    "name": "figure-6-ep-reduction",
+    "number": 18
   },
   {
-    "number": 19,
-    "name": "figure-6-7-reuse"
+    "name": "figure-6-7-reuse",
+    "number": 19
   },
   {
-    "number": 20,
-    "name": "figure-6-8-expert-load"
+    "name": "figure-6-8-expert-load",
+    "number": 20
   },
   {
-    "number": 21,
-    "name": "figure-6-expert-load-1"
+    "name": "figure-6-expert-load-1",
+    "number": 21
   },
   {
-    "number": 22,
-    "name": "figure-6-expert-load-2"
+    "name": "figure-6-expert-load-2",
+    "number": 22
   },
   {
-    "number": 23,
-    "name": "figure-6-9-ring-rounds"
+    "name": "figure-6-9-ring-rounds",
+    "number": 23
   },
   {
-    "number": 24,
-    "name": "figure-6-ring-gather"
+    "name": "figure-6-ring-gather",
+    "number": 24
   },
   {
-    "number": 25,
-    "name": "figure-6-10-tp-time"
+    "name": "figure-6-10-tp-time",
+    "number": 25
   },
   {
-    "number": 26,
-    "name": "figure-6-11-collectives"
+    "name": "figure-6-11-collectives",
+    "number": 26
   },
   {
-    "number": 27,
-    "name": "figure-6-12-resources"
+    "name": "figure-6-12-resources",
+    "number": 27
   },
   {
-    "number": 28,
-    "name": "figure-6-resources-concurrent"
+    "name": "figure-6-resources-concurrent",
+    "number": 28
   },
   {
-    "number": 29,
-    "name": "figure-6-initiator"
+    "name": "figure-6-initiator",
+    "number": 29
   },
   {
-    "number": 30,
-    "name": "figure-6-13-ports"
+    "name": "figure-6-13-ports",
+    "number": 30
   },
   {
-    "number": 31,
-    "name": "figure-6-14-topology"
+    "name": "figure-6-14-topology",
+    "number": 31
   },
   {
-    "number": 32,
-    "name": "figure-6-topology-swing"
+    "name": "figure-6-topology-swing",
+    "number": 32
   },
   {
-    "number": 33,
-    "name": "figure-6-topology-load"
+    "name": "figure-6-topology-load",
+    "number": 33
   },
   {
-    "number": 34,
-    "name": "figure-6-topology-hops"
+    "name": "figure-6-topology-hops",
+    "number": 34
   },
   {
-    "number": 35,
-    "name": "figure-6-topology-patterns"
+    "name": "figure-6-topology-patterns",
+    "number": 35
   },
   {
-    "number": 36,
-    "name": "figure-6-15-torus"
+    "name": "figure-6-15-torus",
+    "number": 36
   },
   {
-    "number": 37,
-    "name": "figure-6-torus-growth"
+    "name": "figure-6-torus-growth",
+    "number": 37
   },
   {
-    "number": 38,
-    "name": "figure-6-ub-layers"
+    "name": "figure-6-ub-layers",
+    "number": 38
   },
   {
-    "number": 39,
-    "name": "figure-6-ub-controller"
+    "name": "figure-6-ub-controller",
+    "number": 39
   },
   {
-    "number": 40,
-    "name": "figure-6-ub-hosts"
+    "name": "figure-6-ub-hosts",
+    "number": 40
   },
   {
-    "number": 41,
-    "name": "figure-6-ub-setup"
+    "name": "figure-6-ub-setup",
+    "number": 41
   },
   {
-    "number": 42,
-    "name": "figure-6-16-systems"
+    "name": "figure-6-16-systems",
+    "number": 42
   },
   {
-    "number": 43,
-    "name": "figure-6-17-pool-placement"
+    "name": "figure-6-17-pool-placement",
+    "number": 43
   },
   {
-    "number": 44,
-    "name": "figure-6-pool-after"
+    "name": "figure-6-pool-after",
+    "number": 44
   },
   {
-    "number": 45,
-    "name": "figure-6-18-read-window"
+    "name": "figure-6-18-read-window",
+    "number": 45
   },
   {
-    "number": 46,
-    "name": "figure-6-19-memory-pool"
+    "name": "figure-6-19-memory-pool",
+    "number": 46
   },
   {
-    "number": 47,
-    "name": "figure-6-pool-window-caching"
+    "name": "figure-6-pool-window-caching",
+    "number": 47
   },
   {
-    "number": 48,
-    "name": "figure-6-session-capacity"
+    "name": "ch06-memory-tiering-prefetch-and-800vdc-cpo",
+    "number": 48
   },
   {
-    "number": 49,
-    "name": "figure-6-session-tp2"
+    "name": "figure-6-session-capacity",
+    "number": 49
   },
   {
-    "number": 50,
-    "name": "figure-6-session-tp4"
+    "name": "figure-6-session-tp2",
+    "number": 50
   },
   {
-    "number": 51,
-    "name": "figure-6-session-tp8"
+    "name": "figure-6-session-tp4",
+    "number": 51
   },
   {
-    "number": 52,
-    "name": "figure-6-21-scale-cost"
+    "name": "figure-6-session-tp8",
+    "number": 52
   },
   {
-    "number": 53,
-    "name": "figure-6-scale-cost-fault"
+    "name": "figure-6-21-scale-cost",
+    "number": 53
   },
   {
-    "number": 54,
-    "name": "figure-6-supernode-inference"
+    "name": "figure-6-scale-cost-fault",
+    "number": 54
   },
   {
-    "number": 55,
-    "name": "figure-6-weight-placement"
+    "name": "figure-6-supernode-inference",
+    "number": 55
   },
   {
-    "number": 56,
-    "name": "figure-6-rom-token-time"
+    "name": "figure-6-weight-placement",
+    "number": 56
   },
   {
-    "number": 57,
-    "name": "figure-6-engram-placement"
+    "name": "figure-6-rom-token-time",
+    "number": 57
   },
   {
-    "number": 58,
-    "name": "figure-6-v41-kv-storage-scaling"
+    "name": "figure-6-engram-placement",
+    "number": 58
+  },
+  {
+    "name": "figure-6-v41-kv-storage-scaling",
+    "number": 59
   }
 ]

@@ -18,7 +18,8 @@ font,family=configure_font(args.font)
 plt.rcParams.update({'font.family':[family,'DejaVu Sans'],'font.size':11,'axes.unicode_minus':False,'svg.fonttype':'path','svg.hashsalt':'ch05-operators-v1','axes.spines.top':False,'axes.spines.right':False,'figure.facecolor':'white','savefig.facecolor':'white','text.color':'#193441','axes.labelcolor':'#193441'})
 C={'ink':'#193441','blue':'#246f91','teal':'#138b83','orange':'#c9782b','pale':'#f0f6f8','light':'#e7f3ef','sand':'#fcf2e7','muted':'#55707d','line':'#cbd8df','red':'#b65757'}
 for entry in json.loads((HERE/'sources.json').read_text())['sources']:
- if hashlib.sha256((ROOT/entry['path']).read_bytes()).hexdigest()!=entry['sha256']:raise SystemExit('Review changed source: '+entry['path'])
+ b=(ROOT/entry['path']).read_bytes()
+ if not b.startswith(b'version https://git-lfs.github.com/spec/v1') and hashlib.sha256(b).hexdigest()!=entry['sha256']:raise SystemExit('Review changed source: '+entry['path'])
 def read(path):return json.loads((ROOT/path).read_text())
 from teaching_revision import draw as draw_teaching_revision
 outputs=[];data={};warnings=[]

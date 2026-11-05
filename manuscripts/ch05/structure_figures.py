@@ -6,7 +6,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from matplotlib.patches import Rectangle, Patch
+from matplotlib.patches import Rectangle, FancyBboxPatch, Patch
 import numpy as np
 from figure_style import COL, STYLE, Exporter, canvas, plot, box, text, arrow
 from figure_style.typography import configure_font
@@ -65,7 +65,11 @@ def draw(here, data=None):
                 hx = x0 + scale * period * i
                 box(a, hx, y + .13, scale * host - .004, .09, str(i), 'orange', 11)
                 ax_ = x0 + scale * (period * i + (host if lag == 0 else lag))
-                box(a, ax_, y, scale * acc - .004, .09, str(i), 'blue', 11)
+                if acc >= 10:
+                    box(a, ax_, y, scale * acc - .004, .09, str(i), 'blue', 11)
+                else:
+                    box(a, ax_, y, scale * acc - .004, .09, '', 'blue', 11)
+                    text(a, ax_ + scale * acc + .004, y + .045, str(i), 11)
         a.plot([x0, .96], [.015, .015], color=COL['line'], lw=.8)
         for t in (0, 40, 80, 120, 160):
             text(a, x0 + scale * t, -.01, f'{t}', 11, ha='center')
@@ -170,6 +174,43 @@ def draw(here, data=None):
         data['warp_pipeline'] = dict(kind='teaching_timeline', copy_us=copy_us, compute_us=compute_us, copies=copies, computes=computes,
                                      full_barrier_us=[d for d, _ in full], empty_barrier_us=[d for d, _ in empty],
                                      completion_us=computes[-1]['start'] + compute_us)
+
+        # 5.5.2 FlashInfer plan/run cross-layer reuse vs. RL Sleep Mode virtual address reservation.
+        f, a = canvas(7.4)
+        a.add_patch(FancyBboxPatch((.02, .51), .96, .46, boxstyle='round,pad=0.003,rounding_size=0.012',
+                                   facecolor='#FAFCFE', edgecolor='#CBD5E1', lw=1.0))
+        text(a, .04, .94, 'A. FlashInfer plan/run 分离与跨层计划复用', 12, weight='bold')
+        box(a, .04, .79, .43, .11, '逐层独立 plan（36 层）\n主机 36×20 = 720 μs\n144 次 H2D · 2.0~2.4 ms', 'orange', 11)
+        box(a, .04, .66, .43, .11, '同构共享 1 次 plan\n主机 1×20 = 20 μs（省 700 μs）\n4 次 H2D · 0.72~0.75 ms', 'green', 11)
+        box(a, .04, .53, .43, .11, '异构模型按族 plan\nMLA + SWA/KDA 分 2 族\n每步 2×20 = 40 μs', 'blue', 11)
+
+        box(a, .51, .79, .20, .11, '1. CPU plan\n序列长+页表\n切分均衡任务', 'blue', 11)
+        box(a, .75, .79, .21, .11, '2. 显存计划表\n单次 H2D 写入\n工作区常驻', 'purple', 11)
+        arrow(a, (.71, .845), (.75, .845), 'control')
+        box(a, .51, .66, .45, .10, '3. GPU run：第 0..35 层注意力\n复读同一计划表（开销降 ~3×）', 'green', 11)
+        arrow(a, (.855, .79), (.855, .76), 'control')
+        box(a, .51, .53, .45, .10, '失效边界：下一步长度+1 或批增减\n必须重跑 plan 刷新页表与切分', 'gray', 11)
+
+        a.add_patch(FancyBboxPatch((.02, .02), .96, .46, boxstyle='round,pad=0.003,rounding_size=0.012',
+                                   facecolor='#FAFCFE', edgecolor='#CBD5E1', lw=1.0))
+        text(a, .04, .45, 'B. RL 训推切换：虚拟地址保留与两级休眠权衡', 12, weight='bold')
+        box(a, .04, .30, .44, .11, 'cuMemAddressReserve 锁地址\nCUDA Graph 指针始终合法', 'blue', 11)
+        box(a, .04, .16, .205, .11, '休眠 Unmap\n释放物理 HBM\n39.26 GiB', 'orange', 11)
+        box(a, .275, .16, .205, .11, '唤醒 Map\n重挂物理 HBM\n原虚拟址恢复', 'green', 11)
+        arrow(a, (.245, .215), (.275, .215), 'line')
+        box(a, .04, .04, .44, .095, '收益：释放 39.26 GiB 供训练\n零重录 100% 保活 CUDA Graph', 'gray', 11)
+
+        box(a, .52, .30, .44, .11, 'Level 1 休眠（卸载至 CPU 内存）\n15.26 GiB 迁出+迁回（25 GB/s）\n双向搬移耗时 ≈ 1.31 s', 'orange', 11)
+        box(a, .52, .16, .44, .11, 'Level 2 休眠（直接丢弃权重/KV）\n省去 CPU 往返备份（0 s 搬移）\n唤醒后训练器原地覆写新权重', 'green', 11)
+        box(a, .52, .04, .44, .095, '工程边界：Level 2 省 1.31 s/轮\n未训 MTP/LoRA 需单独保留', 'purple', 11)
+        out.save(f, 'ch05-flashinfer-plan-run-and-sleep-vaddr')
+        data['flashinfer_and_sleep'] = dict(
+            kind='plan_reuse_and_sleep_vaddr',
+            sources=['case-studies/cache-and-reconfiguration.md', 'case-studies/weight-handoff.md', 'experiments/ch05/05-08/flashinfer-plan/README.md'],
+            qwen3_8b_layers=36, plan_us_per_call=20.0, per_layer_plan_us=720.0,
+            shared_plan_us=20.0, saved_host_plan_us=700.0, hybrid_two_group_plan_us=40.0,
+            weight_gib=15.2564, kv_gib=24.0, level1_roundtrip_s=1.31
+        )
     (here / 'structure-layout-validation.json').write_text(json.dumps(out.checks, ensure_ascii=False, indent=2) + '\n')
     return out.outputs
 

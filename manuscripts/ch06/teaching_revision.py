@@ -179,7 +179,7 @@ def draw(here,data):
         for title,x,label,col,h,path in cols:
             w=.25
             text(a,x+w/2,.78,title,12,ha='center')
-            box(a,x+.03,.55,w-.06,.12,'第 1 层 Engram','orange',11)
+            box(a,x+.01,.55,w-.02,.12,'第 1 层 Engram','orange',11)
             box(a,x,.46-h,w,h,label,col,11)
             arrow(a,(x+.05,.46),(x+.05,.55));text(a,x+.085,.505,path,11)
         save(f,'engram-placement')
@@ -191,4 +191,24 @@ def draw(here,data):
         for i,b in enumerate(bars):a.text(b['token_s']*1e6+60,i,f"{b['per_user_tokens_s']:,.0f} token/s",va='center',fontsize=11)
         a.set(yticks=range(3),yticklabels=labels,xlim=(0,3900),xlabel='单用户每 token 时间（μs）');a.invert_yaxis()
         a.legend(frameon=False,ncol=3,loc='lower center',bbox_to_anchor=(.5,1.0));save(f,'rom-token-time')
+        # 6.6.3 & 6.5.2: Tiered memory prefetch/promotion break-even & 800 VDC + CPO rack scaling.
+        f,a=canvas(6.4)
+        text(a,.03,.965,'A. 分层内存两级流水瓶颈与预取暴露停顿（288 MiB 权重块）',12)
+        box(a,.02,.75,.45,.16,'源端读取 + 24 GiB/s H2D\n100 / 40 GiB/s：11.72 ms\n8 GiB/s 冷层：35.16 ms','blue',11)
+        box(a,.53,.75,.45,.16,'冷层 → 温层页迁移代价\n读出 8 GiB/s 需 35.16 ms\n占温层 288 MiB 与带宽','purple',11)
+        arrow(a,(.47,.83),(.53,.83))
+        box(a,.02,.54,.45,.16,'预取提前量与暴露停顿\n16 ms 窗：40 GiB/s 停顿 0\n8 GiB/s 暴露 19.16 ms','orange',11)
+        box(a,.53,.54,.45,.16,'回本阈值与 PACT / Camp\n每次省 19.16 ms → 需 ≥ 2 次\n按 1/MLP 关键度触发迁移','green',11)
+        arrow(a,(.245,.75),(.245,.70))
+        arrow(a,(.755,.75),(.755,.70))
+        arrow(a,(.47,.62),(.53,.62))
+        a.plot([.02,.98],[.49,.49],color=COL['line'],ls='--',lw=1.0)
+        text(a,.03,.445,'B. 500 kW 超节点机柜：800 VDC 高压配电与光电互连能耗边界',12)
+        box(a,.02,.24,.45,.16,'传统 50 V 直流母排（500 kW）\n母排电流 I = 10,000 A\n0.5 mΩ 铜损 50 kW（10%）','orange',11)
+        box(a,.53,.24,.45,.16,'800 VDC 高压母排（电压 ×16）\n母排电流 I = 625 A（÷16）\n铜损 195.3 W（降 256 倍）','green',11)
+        arrow(a,(.47,.32),(.53,.32))
+        box(a,.02,.03,.45,.16,'224G 铜缆 vs 可插拔光模块\n柜内铜缆（<2 m）：~5 pJ/bit\n可插拔光模块：15–20 pJ/bit','blue',11)
+        box(a,.53,.03,.45,.16,'共封装光学 CPO（跨柜超节点）\n硅光引擎入封装：5–9 pJ/bit\n单机柜省下数十 kW 功耗','purple',11)
+        arrow(a,(.47,.11),(.53,.11))
+        out.save(f,'ch06-memory-tiering-prefetch-and-800vdc-cpo')
     out.finish();return out.outputs,out.checks

@@ -1,693 +1,705 @@
 {
   "chapter": 6,
   "generator": "manuscripts/ch06/build.py",
-  "figures": 56,
+  "figures": 59,
   "supplementary_figures": 1,
   "font_family": "Source Han Sans CN",
   "outputs": [
     {
       "path": "manuscripts/ch06/figure-6-1-placement.svg",
-      "sha256": "8449bec9d913dbeaa6dde1c41a2a9137d49ae3fceea6dbe4f07bea759a422f5b"
+      "sha256": "309da5188d0e287f4276476d4fc876dfd7e6739948eb03a3090a6f00fc84a457"
     },
     {
       "path": "manuscripts/ch06/figure-6-1-placement.png",
-      "sha256": "811b07ad30cc4e9c462edb44f91f2ffd53097c1e0d913948a6f87d658dd63083"
+      "sha256": "0e8649efd1723c669f700ae8c279c2c3375bda27d1edbc242c37d8050034a600"
     },
     {
       "path": "manuscripts/ch06/figure-6-1-placement.pdf",
-      "sha256": "cef16fdf889cae70160abf58fcd496ed9845536a725dfaaed7c1057705358fd7"
+      "sha256": "0763c3caf8aeaef33cc33ba49b4c41fac21cfe96a49c89241a9d41e9ba0f9612"
     },
     {
       "path": "manuscripts/ch06/figure-6-3-tp.svg",
-      "sha256": "64deb57023eb970a768a9cbddc4163f6f56038d96bdc71690750998fc23b5e46"
+      "sha256": "dd91771cf61f9a0aaa933ec1a354fce7698140475d8accc456fba263fe365194"
     },
     {
       "path": "manuscripts/ch06/figure-6-3-tp.png",
-      "sha256": "89bce9c0ae3071c5fc1440643e32a3e8a3f1830ceb628d3dc6ec9c96f52a7b07"
+      "sha256": "92bcdc6384a85cb611c41aa2d2ee5a7fc36785266da8f2e9d7220b1618b0addd"
     },
     {
       "path": "manuscripts/ch06/figure-6-3-tp.pdf",
-      "sha256": "700fbd2f0235c61632dcc16382b6546abd81f31f3127a4c4850dbcc184b0d3d0"
+      "sha256": "6de20691312610f76b59065ee2113f47922b8d885df5fc1f7230d79327ceeb07"
     },
     {
       "path": "manuscripts/ch06/figure-6-4-pipeline.svg",
-      "sha256": "23b5b4eaf4def87c4b81c6b53ed5ed8b390cafea2173bb7c562dbcff5b6c7e97"
+      "sha256": "25da73fe776f6508927a5aa6f292282ddfdae715c83b405cbe327e9e401d500c"
     },
     {
       "path": "manuscripts/ch06/figure-6-4-pipeline.png",
-      "sha256": "830cc03dd3067640b12441c06dae58e6b2e857e39c1b4c7db178b2a02fa5f215"
+      "sha256": "6ea843b39866086867d464707ce5bfe70fc397962e865b1c6c91972f81c3248c"
     },
     {
       "path": "manuscripts/ch06/figure-6-4-pipeline.pdf",
-      "sha256": "9ed963d3016f393523bdb1a83dcc90ceddf3d42d0e53b4ff4a5c2faa0b2fba60"
+      "sha256": "32dfede1d4a5aa8a6d3a4432a1a7739192e9deeaf1e798a33eb925f3e2a5ae5a"
     },
     {
       "path": "manuscripts/ch06/figure-6-5-dispatch.svg",
-      "sha256": "a23c41434c01c796fb5a4521e1c3b15e752c2cdca48e66355e8022a35e82d8a9"
+      "sha256": "cc83a7e15e3aec7075bdbf5f0ffaf03424cd755c9e96e24a64b927e8100568c0"
     },
     {
       "path": "manuscripts/ch06/figure-6-5-dispatch.png",
-      "sha256": "d023ef2cbaed3895aceda08d360fc7da08f6584f9e4c692f760741c00a795cc8"
+      "sha256": "a43004248666b6a6e30a08e5a3f9ed430914820e4a80840a500c8fff9a9f9112"
     },
     {
       "path": "manuscripts/ch06/figure-6-5-dispatch.pdf",
-      "sha256": "56c4ffd3f1b97098d6e334933fb7737b0568b381950ca481add52b4016b767d7"
+      "sha256": "59a0dfce3f84f5e24b03168e987cb61da33ef4f35054323b130dbd72f242332c"
     },
     {
       "path": "manuscripts/ch06/figure-6-9-ring-rounds.svg",
-      "sha256": "8d25b9d5e5b084ae7fec4957c12b82cf6260427c99f532818e918f016ec0d376"
+      "sha256": "8e7d289317c06d49acfd3f1897bf9aeee06783b490c4d9201b77fd0af1a89344"
     },
     {
       "path": "manuscripts/ch06/figure-6-9-ring-rounds.png",
-      "sha256": "c89a68c1a5d469376b667259e80fd934cbd56bf0e925c35b290d2c361005b438"
+      "sha256": "028c8fe7a67a8a3f2aa4aa6c0fe5fc6a132f091b60122c231e3791a4edd8d092"
     },
     {
       "path": "manuscripts/ch06/figure-6-9-ring-rounds.pdf",
-      "sha256": "df4c204e9f4b9b17bf1bfd23aa79eb6fc3ac2824dc46f6eb5e60368dcedbe7bf"
+      "sha256": "5dccc371d6de081118eec26ebc95684387b58a568b4ab242c6c67d1ca3e8286d"
     },
     {
       "path": "manuscripts/ch06/figure-6-7-reuse.svg",
-      "sha256": "22e90ae2d648c30128d5528cedac590e05534f2e95cbb26816d0e7a74d42d684"
+      "sha256": "f0c5883373ca103cf920d40e76d3da15e06ca94d383712734eb264865be7fc5c"
     },
     {
       "path": "manuscripts/ch06/figure-6-7-reuse.png",
-      "sha256": "7fcf01793565d7f46d3763600afc68585f6808b32c0ac14559b1678d08504b65"
+      "sha256": "8e52c6c9fb5fe7942e252b84cec5c64ebb7f2972976fcc87ea0340398a2ff326"
     },
     {
       "path": "manuscripts/ch06/figure-6-7-reuse.pdf",
-      "sha256": "aa08801455dd3d68c25783d25af278177ebe35b8e26beb34ef8ba5d2ceea05ed"
+      "sha256": "d239ccd656eb8870ad07338d531a4891ead0661f8dbda06a46c7cae3aa142044"
     },
     {
       "path": "manuscripts/ch06/route-observation.svg",
-      "sha256": "0b174daabbb56fac6220f5e677e6749b47407c66d5cf54f764c37bc8a868f4a2"
+      "sha256": "ffc49b22aa4c3622eeb42613200e7c1a56812a95e68c52d92e189072f3090328"
     },
     {
       "path": "manuscripts/ch06/route-observation.png",
-      "sha256": "396ef4809751b65f95d9522ebc1abc3663d820462833006be24e944e415c2444"
+      "sha256": "ddb39d980c54057f0807bb882f7e44ba0e5181520440f988cb070aa6f9fd6bff"
     },
     {
       "path": "manuscripts/ch06/route-observation.pdf",
-      "sha256": "8ca0d338d90c384a9f8addac236f8f4d16db3df420845158798d304188ab1dd7"
+      "sha256": "19c8879f282ff1166ae70b3673ea1ce96eed6428bc7050ff32af03108d715b4a"
     },
     {
       "path": "manuscripts/ch06/figure-6-11-collectives.svg",
-      "sha256": "7eeabf488eabbf5d24df9c31a3e8be8c11d63ca916034af1491c83cbdbe61d07"
+      "sha256": "892770c969c1620974447d57246eca3df7af53001ae8bcc7b21525d387f06ad6"
     },
     {
       "path": "manuscripts/ch06/figure-6-11-collectives.png",
-      "sha256": "70a643c6080878c765d103cd1488342e53b8c1db3e00dc9210b38969b3d8eb4c"
+      "sha256": "a155f8811dbc37e01f996421c14be6157dd6d864666f60e54b287f0c211fa28f"
     },
     {
       "path": "manuscripts/ch06/figure-6-11-collectives.pdf",
-      "sha256": "29ee3557b27a4033c14c4ea308a1cdafc8412d46fb2757b3f7ad559fce0f1b5a"
+      "sha256": "32297d13dfcbf41d14b3e742001d799b8795da4a31ec9c48ebdf0735aeb9624d"
     },
     {
       "path": "manuscripts/ch06/figure-6-12-resources.svg",
-      "sha256": "89168da715a3faa0267f31fee0884645bf3f61b7e319ae4abbd4c9c45a136ba3"
+      "sha256": "7d61103d70f7896305670b15434153b467993b9f788ef500c0b5cc8e324cd635"
     },
     {
       "path": "manuscripts/ch06/figure-6-12-resources.png",
-      "sha256": "367cfacd934e44c8e7ef3b3dac16bfd4b585013a21e8931e699c51e182149384"
+      "sha256": "9002589f30bbd5c8294bee7eea8a8c1812af7a823696a9b05510ed3b1b942071"
     },
     {
       "path": "manuscripts/ch06/figure-6-12-resources.pdf",
-      "sha256": "108dc834a903442abd248fe3143c23dfacf2810f46640414e565285e087b6dc1"
+      "sha256": "5115e0653d46af7768fadb4ff5a97786272e7955184d092a7f446df558394292"
     },
     {
       "path": "manuscripts/ch06/figure-6-14-topology.svg",
-      "sha256": "825658dd5683c5accbc26e61583cb7c6e2d0ac4a2ef57a467e14ebb55627f08e"
+      "sha256": "244be51e9fc4a76304ff3d35973963d6d5d434c1b40beec26fadab514b4b7bae"
     },
     {
       "path": "manuscripts/ch06/figure-6-14-topology.png",
-      "sha256": "07f59d4898e5921b7f950e33f28c76655f1ef3af48d6247e475cf21704745597"
+      "sha256": "a86ac43b53e57bcd37e3a44e590b29c55ce7e3f1c54a4ef48e6bf86e78cd2960"
     },
     {
       "path": "manuscripts/ch06/figure-6-14-topology.pdf",
-      "sha256": "7de0c399bcd3b77d048322b5474f9024851028b938b3df7a4cd96e1f51869a00"
+      "sha256": "6d4b19cd3033e8338c9ccd32fa8998b6d0c0764a960b2d2cf3ffa70504a74467"
     },
     {
       "path": "manuscripts/ch06/figure-6-16-systems.svg",
-      "sha256": "a10308be0d0a32fdc52019ef4f21950e0fbb8ef54105ca5504a2002bc0a43ba7"
+      "sha256": "ff017fbd1e6866721b5d80eeb95c29acd9e2dba1a7b8fb9a87340abb035836e5"
     },
     {
       "path": "manuscripts/ch06/figure-6-16-systems.png",
-      "sha256": "bf0f670834b43b67306cc71ed8cafa3f080dacfa0bc190cae160accb3308b8ee"
+      "sha256": "b141371936f5f3855c0dfb731b89a8fbff63b77beca66a042fd102afc454d9c2"
     },
     {
       "path": "manuscripts/ch06/figure-6-16-systems.pdf",
-      "sha256": "91a315bcfa684d8ce862a3e2c2d92821d11dc13c47e3ea3cdeba48be1b9f40eb"
+      "sha256": "ea7ce177b4de86f28c4f74b75474166bb1816c2dbd508be0e7e5f2e569f3e4c3"
     },
     {
       "path": "manuscripts/ch06/figure-6-19-memory-pool.svg",
-      "sha256": "0848531ed3d09e11d0ad29deacccd14a5ce487132d5f78b722987a7b4598bc71"
+      "sha256": "ddc06016862958b9baea403f6876d99c227c795ecab3f668c6ffe7d479d67907"
     },
     {
       "path": "manuscripts/ch06/figure-6-19-memory-pool.png",
-      "sha256": "20853f0944eaf63f90b81e5184c2b92bcca89d4655ba395fec4cf374abbd8d4d"
+      "sha256": "fb4a08f6b7357b36a419e0228f99f2e4ed22ec9c69966983d2b4ec091404c2b9"
     },
     {
       "path": "manuscripts/ch06/figure-6-19-memory-pool.pdf",
-      "sha256": "66c115188cad378eadc00bcb40cc7e0b3b8a503f78d297ba33d9e5f314feb124"
+      "sha256": "e7ca33083d36703fec58325fe6b4367e4a11e10acf6a6ac5844f522d9b093b0d"
     },
     {
       "path": "manuscripts/ch06/figure-6-21-scale-cost.svg",
-      "sha256": "eee3be14e8b632dd5d8eb5de5aad0e24a1af82c575df934ce9266dd7b3fb9ec1"
+      "sha256": "db2f79bf65901ea706c92cf401fa395942d1671e1dd0f133e3adbf7365dc1cbe"
     },
     {
       "path": "manuscripts/ch06/figure-6-21-scale-cost.png",
-      "sha256": "a268370e202a6707b7cfd7f64c0c7372caf37ef8579fc4a13c260d7a5c6d2fec"
+      "sha256": "774b82bea64ad288f4826e9081f9d389e417d1dcc9af5b0de864e043bf79418b"
     },
     {
       "path": "manuscripts/ch06/figure-6-21-scale-cost.pdf",
-      "sha256": "265c5b3064490ab61d092f3a1af8ff7de6be9d2685f06b005bc447ee35ac6800"
+      "sha256": "4dd3d3a1833fda21297ff24998080fc63d002ed6fa722fc88c7c57306909d2a9"
     },
     {
       "path": "manuscripts/ch06/figure-6-2-capacity.svg",
-      "sha256": "14796e6854a07288583a7e49324e5bb78ee71b85523d9b337f86a322b92b447b"
+      "sha256": "b6708e6823429de9cf6887e3715e16ae78c9b0feadf0946fa366c51071c40797"
     },
     {
       "path": "manuscripts/ch06/figure-6-2-capacity.png",
-      "sha256": "79495fda40b9a747a27e33d042b88c7c2dfdc50f6bcc6833eb54a4a2ddca52d3"
+      "sha256": "7a4d53e72d6eeb26964bf7f2d6b14fa87428abe6ec9b8734ddf10ec1f4ec6c61"
     },
     {
       "path": "manuscripts/ch06/figure-6-2-capacity.pdf",
-      "sha256": "d4f86625e66bebe334c2e2d0b4086a3cdfb8e95ff4cd53d2f99ef12204f65f3c"
+      "sha256": "c79859f9ec37af75f5bb0c9d00205565676fc696c7c0de89cc7ea2f454b88842"
     },
     {
       "path": "manuscripts/ch06/figure-6-6-ep-layout.svg",
-      "sha256": "d75c34fe5091d4b16c5234eefb1b9c4cfb1abb39074bdf7aec053c1cb0438937"
+      "sha256": "b1bef00a1b852c8e8b15b57d69c2eb4adf51fab07f8b177f9385ae2a47be8f8d"
     },
     {
       "path": "manuscripts/ch06/figure-6-6-ep-layout.png",
-      "sha256": "60741c30df729b14e9257b73a8a6c5d91e943d403dfa26d2247998d6559f7801"
+      "sha256": "f42fc1b6819150770f1652230f47b83b676e08379b7fa3b2d60d4503710cc486"
     },
     {
       "path": "manuscripts/ch06/figure-6-6-ep-layout.pdf",
-      "sha256": "7d4ca0693d50a26ced604156463d1b9bd7bd1f17b888abb0ede9b66025dc5ced"
+      "sha256": "07c8db6a1139b00d34d1f703af29faccd9cf0a0b7f62636718b6f8936c03ec12"
     },
     {
       "path": "manuscripts/ch06/figure-6-8-expert-load.svg",
-      "sha256": "83e07cc5fffd2ebe11ed2c77137282207fe1e2f34d5b7091ef2922f72addd148"
+      "sha256": "70a515a82de90f52e2681efdb043ebff86637d1ca4ea9637ffa7b407ea383c35"
     },
     {
       "path": "manuscripts/ch06/figure-6-8-expert-load.png",
-      "sha256": "29f68477a3f19f8ef968cc450e0a38834d89a0e364ad06f737de8051224c80d0"
+      "sha256": "c6f813a16c79f39d35355e85db560e9a42f542122c3d348ab7a549928c28aeaf"
     },
     {
       "path": "manuscripts/ch06/figure-6-8-expert-load.pdf",
-      "sha256": "3c5b459edaa9062fab71bcc9ffd812a33b6a40940a96f8d685a2f5fb0c1cef62"
+      "sha256": "f518d13898f3303633f51b2bc49ccc1c6e82a3772449c3c0a6a6b1289a1a17c6"
     },
     {
       "path": "manuscripts/ch06/figure-6-10-tp-time.svg",
-      "sha256": "2156ffac6adfba73a317c5b0133f0ecf1bac7bacee566a42e01761d449f79870"
+      "sha256": "3ffc3ee4615ed9ca146e65584fdc61a6f254db7df2641840442d33e400ce53a4"
     },
     {
       "path": "manuscripts/ch06/figure-6-10-tp-time.png",
-      "sha256": "36bafb81affb597507c9d9a203582c9198c0bb7dbf9474644236103fdd020a2c"
+      "sha256": "01bd2a05aaf88a804a3d49cfaa78eebaa1709e1e3d73b69062112d009062def6"
     },
     {
       "path": "manuscripts/ch06/figure-6-10-tp-time.pdf",
-      "sha256": "7b6cef6ec4a751b3674c5ed77a97ea2ee48001dc1a73fbafc7f4b2c426f7c057"
+      "sha256": "5b525fc1f172ffebacecd14740a1fde15f4abbe0b95390fc0a26f1ecda4946f3"
     },
     {
       "path": "manuscripts/ch06/figure-6-13-ports.svg",
-      "sha256": "2f13f768d0fb0e7b2af3cbda0067b330cfce6f2d95945c5f6371804deb405ebb"
+      "sha256": "8aba2bb548f52c168e5309cd026513854cb1934f38922c66a0f0afd3747dc055"
     },
     {
       "path": "manuscripts/ch06/figure-6-13-ports.png",
-      "sha256": "baf6aeb598b3d702407ded1b6d82e501a5a6bfc228596aca28fde4fb117ccfcb"
+      "sha256": "0e736228d2a13535f5ba0026fa97ef50f48ecb2e12200daf05d3dc0af93be8a2"
     },
     {
       "path": "manuscripts/ch06/figure-6-13-ports.pdf",
-      "sha256": "5a2185b05ed65d5d8a0369cf507020f64407ab24d01be98d44b55297b5fb3f6e"
+      "sha256": "42cadfa739c87b0293bec5fac488a2d48c48d112daf6b111f274e03f25a84760"
     },
     {
       "path": "manuscripts/ch06/figure-6-15-torus.svg",
-      "sha256": "aafb29acf7b196419e0391fe2127e6e8a4fe08b8f0d1caf64063ce69ca68031d"
+      "sha256": "8fe7407684cb1b3b6a2214dc76126ba3b45b9f9f301c8d2eebf2d33614630264"
     },
     {
       "path": "manuscripts/ch06/figure-6-15-torus.png",
-      "sha256": "6a7553d724ee97be000c934b13269befcd0d6cc9ce844e18198ff72bfffe893b"
+      "sha256": "f6a980d9834246fea75a9a085e4fc8ef1ac0c6eb17b04d7bbcf8304b9b77585c"
     },
     {
       "path": "manuscripts/ch06/figure-6-15-torus.pdf",
-      "sha256": "276fdd1be887c763de3f1e048c73741dd5a9cfbd302a1d5347896518444fb5b7"
+      "sha256": "92d8ecce9323cab897c841d5e7fc13bc20c7d1474aa68e08e0f0f59eaea0de7a"
     },
     {
       "path": "manuscripts/ch06/figure-6-17-pool-placement.svg",
-      "sha256": "5520b6f16120858663ace4a7887ecaac85baa231a155a1b66160212e90a871a2"
+      "sha256": "4c66ec58f0d1f2fcfb85de7ba13248de0ff35ae14859d6988371ad8c957b46a8"
     },
     {
       "path": "manuscripts/ch06/figure-6-17-pool-placement.png",
-      "sha256": "423df9ba51c5fd72a80dd7644b98de280f90ba3061cabc28732ba09d1c2251ce"
+      "sha256": "960f87e5a1a8ebb386b39e1b2e743df0894bbc875e2fd69eb019198d2e50c92c"
     },
     {
       "path": "manuscripts/ch06/figure-6-17-pool-placement.pdf",
-      "sha256": "17b4f03a2607bd825461d3165f422c0078af549a730c0e7d3310eff0ac4183cc"
+      "sha256": "b5ad76cea6bc377aa2cb500d909d1804fbdd222e6643f6e0046019ddaa24c142"
     },
     {
       "path": "manuscripts/ch06/figure-6-18-read-window.svg",
-      "sha256": "f51893123360e7a0e00d66b4d0d43833c0665d88a7097def57826140fb0ae8ad"
+      "sha256": "9f961733c91512284d289c979f64652ef1a17a6b7c4627bd7c345644747a6dae"
     },
     {
       "path": "manuscripts/ch06/figure-6-18-read-window.png",
-      "sha256": "673f06863005b9ced2e34673524a6c5d69a80f762babcbddd3c20c211b83879b"
+      "sha256": "5b3e3ba8cdc6c13dddc8e18fe62e91e1f657bc1817fb9f4ba5e63a001ec19bb3"
     },
     {
       "path": "manuscripts/ch06/figure-6-18-read-window.pdf",
-      "sha256": "c9cd61f70c5769e5d645aca19beb2bfe9b07c094e5c89335a5f8848f829c5515"
+      "sha256": "c0184c9d9d3b8bc6da0301cd15717902758b5a87618bff53416ab95ccd534fc7"
     },
     {
       "path": "manuscripts/ch06/figure-6-20-session-schedule.svg",
-      "sha256": "eae84d8bee77dcf06b4cc62cddcac8043413a1662c5e7c4dff6e7a46338c1435"
+      "sha256": "77855ee33fede879b77d532e5cce013ddb0cb64b9ef3493e129b8d52bb7f963f"
     },
     {
       "path": "manuscripts/ch06/figure-6-20-session-schedule.png",
-      "sha256": "7796b2024c488f2a21d4a720e5e91d0f8c50e1915d2beb2baa296f48f8b52871"
+      "sha256": "6462ad1914b01601ce0c5fc03732741053be21f581afc80d4fc9d1643037917d"
     },
     {
       "path": "manuscripts/ch06/figure-6-20-session-schedule.pdf",
-      "sha256": "1adb4aff4dabef9cbc8a259e8d37b2714808e12f94bc20daa83f4f67b53570d0"
+      "sha256": "d6e684caf86721767e93e087db7640ab1b7589d0ff3907e09f09b74a33faa760"
     },
     {
       "path": "manuscripts/ch06/figure-6-dense-moe.svg",
-      "sha256": "ef4bdd7a37850bd5d70280f6356082fef44a6079981a0e188fce01c715e02e48"
+      "sha256": "8a4a2c084426974e8b010977a5a79ba9b71179720aaec66a5131f1f41c2000f4"
     },
     {
       "path": "manuscripts/ch06/figure-6-dense-moe.png",
-      "sha256": "06eb4d2c48ded60acc4cf813b3048b47cdfe1f68178355ad2eae428b35fa0b89"
+      "sha256": "257818ce96585c7e4578b8ef57779a8f74ba599ac1ae70d9d60d9384b289cbca"
     },
     {
       "path": "manuscripts/ch06/figure-6-dense-moe.pdf",
-      "sha256": "6647786017c1d230a2f5a3b6b4770b41fb5c75decab5e859bd342ff1bf45b291"
+      "sha256": "3263ca1e9fc5c653bbfb32cacd17ddc12fc35c3fbe63e72961abcd9cbc556c56"
     },
     {
       "path": "manuscripts/ch06/figure-6-tp-columns.svg",
-      "sha256": "400764b08a21f60f7415328b39f36b5a207529f11731cd83b88866e970027bf9"
+      "sha256": "7ca29f4afec5730657119dbc6c8db56f2b14d2a2ef39c88e56fe0fc3a2b58c96"
     },
     {
       "path": "manuscripts/ch06/figure-6-tp-columns.png",
-      "sha256": "5d2a4fa71ee003acac6ea982c7babb0bc13ac83ffc06380e94f05683c4613e1e"
+      "sha256": "5eba3ee0c920fd007c34a53dfbd6edd390778615f6235d61d9ffb59352f8565d"
     },
     {
       "path": "manuscripts/ch06/figure-6-tp-columns.pdf",
-      "sha256": "5db1771b1b8b092a772d3a50370b70ee0099df12c7e9c49d415a79c34fb0090c"
+      "sha256": "f9f725c545223e989d9c255fcedfea3dd5940a37a88dfcdbb887e4e2f97a5005"
     },
     {
       "path": "manuscripts/ch06/figure-6-tp-rows.svg",
-      "sha256": "10fb82a75fa92be04b20608abbe264bf53aca0c5ab753cf0f46d1b0f8d5241b2"
+      "sha256": "b15b3303f2b0f55a772a0e4a4451ddea7909467c2af56e4d2804ea1edb83a6a1"
     },
     {
       "path": "manuscripts/ch06/figure-6-tp-rows.png",
-      "sha256": "44edbca5e29618a7dbd75770f493c96c16c22bce65a07316ac4ad2dcc7b12c02"
+      "sha256": "cb10ef7b778ff08740551a7f1d96631e504954c2253c9d2fb9350a1fad69b5d8"
     },
     {
       "path": "manuscripts/ch06/figure-6-tp-rows.pdf",
-      "sha256": "0cab5d9af177b93d3d485ea677f34276b83aaa708692b9bf1c2c639240ed9cef"
+      "sha256": "9c0eb7e920131622ce3c2b20f845e80f52f62339965324a1a02ed508902ba21f"
     },
     {
       "path": "manuscripts/ch06/figure-6-ep-reduction.svg",
-      "sha256": "9aaf61baef8cd754ea5208cdcff03f654226ab7372087549751e6c0bb27de0e1"
+      "sha256": "2462dc3fc658b899ec09e396054d5380e3e4a7d83f0a43f4eb737da1b6e5207f"
     },
     {
       "path": "manuscripts/ch06/figure-6-ep-reduction.png",
-      "sha256": "2cabddd28072225fc1260efacc61b8caffc4f436efc2230cf39d58ebf160000e"
+      "sha256": "ce9f2b99ae65f0e4b9c73e549b7e905f49b1055762ee88bf797932fb9f2cb31a"
     },
     {
       "path": "manuscripts/ch06/figure-6-ep-reduction.pdf",
-      "sha256": "5662f6cc884f3288ad56180730ab7a747c22e2551f8cd3507e532af9725d4df9"
+      "sha256": "33392a61a1d512e2179cb1742b05f59831e7da997f5ff52bebfcc5347846f859"
     },
     {
       "path": "manuscripts/ch06/figure-6-expert-load-1.svg",
-      "sha256": "dc27aa215ed1a8ef1a72059983ca8682f516f6d04447f6d576f2d8c14707edb8"
+      "sha256": "0df71606b1e4673720a7da91af6264cae9720fa210bec4c30c6e0dd730be0f22"
     },
     {
       "path": "manuscripts/ch06/figure-6-expert-load-1.png",
-      "sha256": "400a39849591016ec0390a0c90984095bc75062c9db70b861bf49675a0f2cb1e"
+      "sha256": "e091ade315d9e1dd8dffb8cd84e130276a7fd220c6c0f632d724115e91803cff"
     },
     {
       "path": "manuscripts/ch06/figure-6-expert-load-1.pdf",
-      "sha256": "90f1251a0ff3e3ff8f3d2b0ddd9fcc5e896a09125a530c7a953c96347a217394"
+      "sha256": "95667b5fb3f51318c62e4b79ded8667f2fc8fd36e9a0df4951b67ee8f8be1b86"
     },
     {
       "path": "manuscripts/ch06/figure-6-expert-load-2.svg",
-      "sha256": "14c14c2afed78e3776f532903a5bc1d9b14b95db9762a8f25d5583ead7e075e6"
+      "sha256": "1b6680b43735b72c25eb1e707fda1257fb8a76b00d70bd8509633f1472e44dbe"
     },
     {
       "path": "manuscripts/ch06/figure-6-expert-load-2.png",
-      "sha256": "29f68477a3f19f8ef968cc450e0a38834d89a0e364ad06f737de8051224c80d0"
+      "sha256": "c6f813a16c79f39d35355e85db560e9a42f542122c3d348ab7a549928c28aeaf"
     },
     {
       "path": "manuscripts/ch06/figure-6-expert-load-2.pdf",
-      "sha256": "7f471427ace8326059eeb429e9598ca1a807e1f185123c6167000cc1ca77a38d"
+      "sha256": "f518d13898f3303633f51b2bc49ccc1c6e82a3772449c3c0a6a6b1289a1a17c6"
     },
     {
       "path": "manuscripts/ch06/figure-6-ring-gather.svg",
-      "sha256": "540943d035f4ae28f88b9cc25d390745bae56001aa7d990fe4e4da62f5263429"
+      "sha256": "fd31ef4f727e8c65458856dfd6f87dc857bfc844b7d378f1328080aa3fa8ba43"
     },
     {
       "path": "manuscripts/ch06/figure-6-ring-gather.png",
-      "sha256": "2e59b3f65d93e4bf13f35a450103c43a7d3ed5f593c75fb1cbd6d98c5d4ee2b2"
+      "sha256": "4d50798fd82ed171951202912ecc5912b3b672c67f5660ff3cd5fe45da59b968"
     },
     {
       "path": "manuscripts/ch06/figure-6-ring-gather.pdf",
-      "sha256": "0f46ee0cede42b6a418f3a8386d37c2b2bbaa2e7f9ed308e6f8a5e59d382468a"
+      "sha256": "91126b263b1da70e620ac3402f993bd8a795b2912d30ebbb63b618a9d3b10fd2"
     },
     {
       "path": "manuscripts/ch06/figure-6-resources-concurrent.svg",
-      "sha256": "3459ee0ddd60f01c872d2442d9d5cb76e5da556ce7991e3fa04cd335435f6384"
+      "sha256": "f644aada5b9c540c461cbfff9083b282d4529928c8ea83483f764d26824ce563"
     },
     {
       "path": "manuscripts/ch06/figure-6-resources-concurrent.png",
-      "sha256": "40fb659b416ad57dd6b79369b08007feeb032b066f53b7fff56f62ba3c8b4217"
+      "sha256": "3d8810a466e129e761d7166c0d0a5254449da8e443754ca3226ba1f8e987952f"
     },
     {
       "path": "manuscripts/ch06/figure-6-resources-concurrent.pdf",
-      "sha256": "9f966559ce06f68d1bd1c82daddda1f24bd816317d521cb981cc62211906af1f"
+      "sha256": "c1c164d23841843f728cf8e56cd2476e35fbec9a72d2da6eb9b5694770e8b880"
     },
     {
       "path": "manuscripts/ch06/figure-6-topology-swing.svg",
-      "sha256": "f9044476791ef3ea006b693f4dd5ab91284c390a60acc098fb945ebe1648e7b9"
+      "sha256": "43d1b5865576b0a7d4155305a04a2fe712913991760818379840686b69a4d073"
     },
     {
       "path": "manuscripts/ch06/figure-6-topology-swing.png",
-      "sha256": "b2e8dc7b1fd3ec86e369c42d8821552977f9d1c350eab5b954f9941674c7da5e"
+      "sha256": "70a89f30b4545b7e8fba5aaadadf63cd083c52354dadcd243c4c5543309d1102"
     },
     {
       "path": "manuscripts/ch06/figure-6-topology-swing.pdf",
-      "sha256": "70f002cdf4c0a3dc0e3f80abf0c65fb5a412eff0a5a7d96535ce0ddc96dccf93"
+      "sha256": "07b25de33c00361347d3143b08a7ccd30d957e2772302acd542698edb2d8388f"
     },
     {
       "path": "manuscripts/ch06/figure-6-topology-load.svg",
-      "sha256": "b80a088552cea09fb910926c0e0be6ddca2c85f316d78c4d45d1bfc3afc4d398"
+      "sha256": "0ab0c204864a4e6a2dc3229c7cc358b32981c44aea5807933844f6e8cabf99f9"
     },
     {
       "path": "manuscripts/ch06/figure-6-topology-load.png",
-      "sha256": "adf6c9a753ec5793a0e06b145cbb307e713b4408b1e2659068b082945fdae9c0"
+      "sha256": "ed29041d7a49e1c76b7b71d2431ad1d5a1a8ec5e813bfd401f44cc7de8f7bd81"
     },
     {
       "path": "manuscripts/ch06/figure-6-topology-load.pdf",
-      "sha256": "a328f69901ceb9b89aee9b27b40cd0814b87c10539ba4c5f270ba30674aa022d"
+      "sha256": "16b5d3f77d59892024bed655f9af189e24854416c1dd62da8d60bf4cbf1b2bd3"
     },
     {
       "path": "manuscripts/ch06/figure-6-torus-growth.svg",
-      "sha256": "1e9a9fd1781365f45e765e6c154c50d594ba2a9ca8cfff86a80a9bd2e002d910"
+      "sha256": "6f4acacc5cc96ce3f9f2bfe106be3110e17b7a3f81f75c83bf7023425f2997cc"
     },
     {
       "path": "manuscripts/ch06/figure-6-torus-growth.png",
-      "sha256": "6967c76147d0f8319954bab2621f5df3de404629914c61b42c54b4c37c719fb6"
+      "sha256": "222da3d49e26bc11b2d5603c06a2551704699042398eaf3420ec9ae5fa1dc901"
     },
     {
       "path": "manuscripts/ch06/figure-6-torus-growth.pdf",
-      "sha256": "3f545c32b256a6df5dcd7230354b46d09917f03161d6ea2366913fc59fb3a281"
+      "sha256": "1856c6bba38159d72114c548dddbee3932116c97744ad203e51ab2b8b5d81332"
     },
     {
       "path": "manuscripts/ch06/figure-6-pool-after.svg",
-      "sha256": "3d884a488857d5a79e7e092d446efc9b25e32c68be366c0be1de950d435868f6"
+      "sha256": "dfc537b36cae6905fae75386028511858a2850c274fd0f599462311de623998f"
     },
     {
       "path": "manuscripts/ch06/figure-6-pool-after.png",
-      "sha256": "465b91209bcd96d08def120ac9abe54de8998803e1ab288bc490e3297452a18e"
+      "sha256": "a50542f6692538cf96569274ca7c3e0952030f76978b8e814c97b208afc6f9e4"
     },
     {
       "path": "manuscripts/ch06/figure-6-pool-after.pdf",
-      "sha256": "b93635be2f8a974a55396253372bbf6535faf7c3e5cfdeeb790f65a629a26b87"
+      "sha256": "b94c2a4132c0f11918fc70ce247178cced667dc67f698549eb52246542eadee9"
     },
     {
       "path": "manuscripts/ch06/figure-6-session-capacity.svg",
-      "sha256": "872279b41ab2a1f3b1b0c0c2ff6d33b75a3869c8154d38cb4e1c234809c99d14"
+      "sha256": "456706c0eaff8f5220e1e22a6c1c87d083051277da801ceb74834cc27ac89d8a"
     },
     {
       "path": "manuscripts/ch06/figure-6-session-capacity.png",
-      "sha256": "c3429fea16c7cf1d24d426868a3bf064f1d61d47afcfcfbc7c702fced77442f0"
+      "sha256": "1dee2c4b9abb8839c74a0019f33868747e4726f057ef1d84919cda05acd6653d"
     },
     {
       "path": "manuscripts/ch06/figure-6-session-capacity.pdf",
-      "sha256": "6c72bc2a7e751c903ea3f15282bc567423a0ec91f4a5f6bfb9596919b740d158"
+      "sha256": "07f0d0e5254e467e7be4413cd9add1115fb74b450c5e210f5464528682220964"
     },
     {
       "path": "manuscripts/ch06/figure-6-session-tp2.svg",
-      "sha256": "f5ef78ca28e28e9020ad90b9f9a767757ed394e55b1f1b8c1a3e77b62d1d0942"
+      "sha256": "291e77e360b8c6efe41f21c74804651fd284d8eebba8589d6968048b7e204b8d"
     },
     {
       "path": "manuscripts/ch06/figure-6-session-tp2.png",
-      "sha256": "88993c9b4a12d2761be03751cfb3ba40d814e63bdb9d92d0ee1733635286afc5"
+      "sha256": "9dc5b8126d2ad46490f4778512c5bae23a86e4ad4d1a9fad9aaee430157c9678"
     },
     {
       "path": "manuscripts/ch06/figure-6-session-tp2.pdf",
-      "sha256": "d6f789662cff3f629472fc82fb0e536aad97a32419832211e8d6e0de805861f6"
+      "sha256": "839339a05efd18613d1273e70a25a59c84f5c0b667cbd0a6d8787087c454301e"
     },
     {
       "path": "manuscripts/ch06/figure-6-session-tp4.svg",
-      "sha256": "d6e220cd69cbc1325e3318c685ed9a4b77baa92ca1f0b5470b1914eecd454ef9"
+      "sha256": "e1fdb051237e46322038893095f9366a905ccaa39876ce69551eec4cac56b5b7"
     },
     {
       "path": "manuscripts/ch06/figure-6-session-tp4.png",
-      "sha256": "717716c62d7a450f393caa31beffb236d21026a4a15147ea84669536a4bcc351"
+      "sha256": "a3d67917f22ba657c42391ad5b796691a044fc4c203bb4be489006421506be7a"
     },
     {
       "path": "manuscripts/ch06/figure-6-session-tp4.pdf",
-      "sha256": "a391ad9b1a0597aafb62e6e4b6eb892626a3fd0a948a3007a52e1d6e270f6d62"
+      "sha256": "797047925c21a93eb1bed799b28870c62ce6b73037eff3326e6f69b9c6ac0af5"
     },
     {
       "path": "manuscripts/ch06/figure-6-session-tp8.svg",
-      "sha256": "b04310b7b3def8f24a809704e2a66a2c384d41b69c4e1683dd310e0aca7bab54"
+      "sha256": "a19ef7ef383734b6f83f43cb565391a228b83596db99fdfe03c2f72d4ee98ae2"
     },
     {
       "path": "manuscripts/ch06/figure-6-session-tp8.png",
-      "sha256": "7e4a91ae7c775e7a0e06bd6e80825d0cfcf39de3769378effa2da51d85e95085"
+      "sha256": "9bc15aa901573d43e44fbeefc2ebbc4a9acfd0dbe38556d35c8586f1514f6744"
     },
     {
       "path": "manuscripts/ch06/figure-6-session-tp8.pdf",
-      "sha256": "2d9a599b0f2175f505c69d35ebe6ee73ee542a39c15663dcde155113bca3e0ae"
+      "sha256": "17a59023fd493ff71896039b34fd72af803a202fda0f3566ec68d36d267d7fbb"
     },
     {
       "path": "manuscripts/ch06/figure-6-scale-cost-fault.svg",
-      "sha256": "7095ee52cebd7636a068fab416d9714bb7ec088bfebab5a399043e32f21f3db1"
+      "sha256": "d366a3050b106c6342006bbe34908914e9eb1ff204dc8e8ef86f2c68c7440956"
     },
     {
       "path": "manuscripts/ch06/figure-6-scale-cost-fault.png",
-      "sha256": "0797acdbe07e7a99a9d150a479b857e927fbd177cccc65431101a7ffb8c2c35d"
+      "sha256": "7baa4016bf645021788cc30e31469052f5e83868a1cb7a5a53cb4f97077d904b"
     },
     {
       "path": "manuscripts/ch06/figure-6-scale-cost-fault.pdf",
-      "sha256": "bd81aa8f3604d574de663156f4ef6e966e38a699f57ee40c286b5c280e7d3cd1"
+      "sha256": "f16f8af46d42f2f5a0cad7cb8c373f94b94d39fb922e0dae7aacc56acd38b5f2"
     },
     {
       "path": "manuscripts/ch06/figure-6-supernode-inference.svg",
-      "sha256": "a1624cb07ea52de94244a33e64ac3d8d8f9753d168483d0ef95e3f5f832475b7"
+      "sha256": "67304ef6a943d63db76f9f2478f3f4a247998b1c2e098ab5e13ea69023f6393b"
     },
     {
       "path": "manuscripts/ch06/figure-6-supernode-inference.png",
-      "sha256": "62d62a503071141645cf79b2e1b267eafc790e17ca8ea9900e9ecee145cd898f"
+      "sha256": "a5fa9a139ada6d769ebef69abf384a1d004b75921018d90b5a65e41749943af1"
     },
     {
       "path": "manuscripts/ch06/figure-6-supernode-inference.pdf",
-      "sha256": "b813b7283a03d7062976deb48a5773714eb29a9f53b9131d2ae7ba2a876af841"
+      "sha256": "12bcee35ca60e972ea6cefad4fff641a9b10dbc55ade6cb5a6006c109161d2a7"
     },
     {
       "path": "manuscripts/ch06/figure-6-weight-placement.svg",
-      "sha256": "fab08560646ea3b1c6a34890d02a5bbe7b69b8371ed9211a1b6edb100fd70ed3"
+      "sha256": "aec463e915e86e7f75f89a313022f116a3ab07b5aecbf91ca924b313e7d8ba75"
     },
     {
       "path": "manuscripts/ch06/figure-6-weight-placement.png",
-      "sha256": "6f0c3c91d0fdfb4f7dd6c20c80e15d0765092e14f6d639e09b807cf0529bc63e"
+      "sha256": "c8e66a1bdc160e7ebe7a4342e4c5e41a1b7d3a881642457065d702da669a55fa"
     },
     {
       "path": "manuscripts/ch06/figure-6-weight-placement.pdf",
-      "sha256": "96ec6a53b05eccc36b63864c7fe54fd83c257f04c69350d415159c00ac268db2"
+      "sha256": "26ce0f1e0c329359af96df28900e2e88b4bec19b5f4e43d9f8958d1de048d341"
     },
     {
       "path": "manuscripts/ch06/figure-6-engram-placement.svg",
-      "sha256": "0c50c6aecb1f8db0e0393a6ca855c0975135ed2a6eccec06fa9b5647918db27a"
+      "sha256": "fefedffbb98effe8f84f97d2b1bedfd8c7cce30ee9778f6817bbc1a8323aab61"
     },
     {
       "path": "manuscripts/ch06/figure-6-engram-placement.png",
-      "sha256": "6ca5a4863c2823e57b639c5ffbb260a9ae7fc294546bbf93528593eed17a4a9d"
+      "sha256": "3731424c8c4a775886d992a09137da1348eae8478af64c2edf9a87c8213f87a6"
     },
     {
       "path": "manuscripts/ch06/figure-6-engram-placement.pdf",
-      "sha256": "c64aa5ed049ead84c7d912b7f1e328f8752800c2d44706b372842d8ab85cfe79"
+      "sha256": "df9ddce9ed11e61580e3e07716c002e356eebfc644a62fb97fb917bc39c91e7e"
     },
     {
       "path": "manuscripts/ch06/figure-6-rom-token-time.svg",
-      "sha256": "29bac56a10ac44d33791c99fbe3bec78599413e24f3a34c99309f85441234f69"
+      "sha256": "4212333f8fb08ff90b0c44fd8f859d5e17d9b644e361f02c3abe548bf235aef9"
     },
     {
       "path": "manuscripts/ch06/figure-6-rom-token-time.png",
-      "sha256": "9cd2493a7d6e1c7457b07fd41dab0d0ff8db3c5204ad0d6c6abd540b725d46b1"
+      "sha256": "b31ff8b7416871a1561d46033b053c3f2bbbb318a66c408e00dca3756ffcb597"
     },
     {
       "path": "manuscripts/ch06/figure-6-rom-token-time.pdf",
-      "sha256": "284083063a73dfaeedd1ad65a5966229a270d95a7acada85008e82eeb9d79f74"
+      "sha256": "d8fbd786584147bdf37fec5066ac3094dea013c9e70f330731fd3f4568e56977"
+    },
+    {
+      "path": "manuscripts/ch06/ch06-memory-tiering-prefetch-and-800vdc-cpo.svg",
+      "sha256": "ab31e3521cdcfce6dda4cd84a1afbdfa59c83e21c41879669b27484c771d3225"
+    },
+    {
+      "path": "manuscripts/ch06/ch06-memory-tiering-prefetch-and-800vdc-cpo.png",
+      "sha256": "d213a3d441d61e4f97af9f2fe1bc5330dd05ffec4359bae98643bd34ff40acd7"
+    },
+    {
+      "path": "manuscripts/ch06/ch06-memory-tiering-prefetch-and-800vdc-cpo.pdf",
+      "sha256": "310946233f67184759edf5a1d7e5d8a19ad5a19ca5a3764294fde6531934f8fe"
     },
     {
       "path": "manuscripts/ch06/figure-6-ub-layers.svg",
-      "sha256": "09ae9316b7ab40c5d6f375599220c78239b063be06aa375d54cafe6ca0253f4c"
+      "sha256": "f4cd4852b6fff5f2cac32ff46e61c37c1f47685144a82176a332c979fc6dd1a8"
     },
     {
       "path": "manuscripts/ch06/figure-6-ub-layers.png",
-      "sha256": "e0f348e7dc61a5fdbab4dd74ed7c192cc8be30ae5f89485fba04ed8f66a3aca9"
+      "sha256": "6c737d6e442e4d3df989666035a97ae380c41abdf82e71a03d88f525b4ef9f69"
     },
     {
       "path": "manuscripts/ch06/figure-6-ub-layers.pdf",
-      "sha256": "a95feaee53bea5fee687f27a7e9df2021df63796272d4d423d17480db4b5633f"
+      "sha256": "2d1c2c7f9c59c37c8ff41fc4df8b54bbbaae113e144c5b657b604eae3b04809e"
     },
     {
       "path": "manuscripts/ch06/figure-6-ub-controller.svg",
-      "sha256": "a196e3890dddf0f92c439cf327cd7821a50c088a17a69586aefbe75946b37581"
+      "sha256": "3aa1a39d29a42ae4a1a2ecc78fb839a4de2d210fb761199252c81555b87992ff"
     },
     {
       "path": "manuscripts/ch06/figure-6-ub-controller.png",
-      "sha256": "5618f977f4353b9480f344e9f4479518cb377372b573f1097f5b3896c145f6cf"
+      "sha256": "c7b11666460f6fe08a8bc72102f5f19537310b8b340a8f91b262ed00ac13048d"
     },
     {
       "path": "manuscripts/ch06/figure-6-ub-controller.pdf",
-      "sha256": "1e3a175071fddead7f4de1a0823d77afe6e2d5a5f89dbfca9adf5f3a87130c98"
+      "sha256": "d0c2fd75f363fc65c6f98a416b1733deed5c1d7f6a72beceee543f20779ae4a6"
     },
     {
       "path": "manuscripts/ch06/figure-6-ub-hosts.svg",
-      "sha256": "301760dc656fed117ea1515f2a2964057583f090052b74c5f3978b5bf2065659"
+      "sha256": "c731bd6755320ba85690f881b885d0095f66294b6d2aa771e24e78e298d1d653"
     },
     {
       "path": "manuscripts/ch06/figure-6-ub-hosts.png",
-      "sha256": "4983bf932dfaa9f0a8281d0cd5ff96834c0ab40c40a32eeb46ca80334ca5e791"
+      "sha256": "9e5992b045410a8ec19c72fc9b6142d9970dae0bd349a7e108f16d63c5259f28"
     },
     {
       "path": "manuscripts/ch06/figure-6-ub-hosts.pdf",
-      "sha256": "bcfdfff3f0a50c62beebc2b1676dd2b851382f7b68c54cadd4ad91946d6e01e0"
+      "sha256": "a2a4766fea7f4a330ebce4cd7a535189121330e283d4020f8729c5ad5c744086"
     },
     {
       "path": "manuscripts/ch06/figure-6-ub-setup.svg",
-      "sha256": "e45a2a419867e7c6cf60e6c344cce6613fa1dac7187a84aa6f36ac83fbaeadce"
+      "sha256": "a0a83b21e7bdeafb8bebe3fa704c127e43dc3e2ff71dba70647000903c64eb07"
     },
     {
       "path": "manuscripts/ch06/figure-6-ub-setup.png",
-      "sha256": "7cd2d5425b4b6ca8d24a538000e332dc0249056bd7c9e8c44c964c05a021f306"
+      "sha256": "417d5122e405e78d47ee54bb31dd4e4fa7c38962e33dbd250b41f06f0254456c"
     },
     {
       "path": "manuscripts/ch06/figure-6-ub-setup.pdf",
-      "sha256": "cb96f459b6cdceaa346534aa2bc07183ff0ccbcc92a6d8a7063f8e4e05a6815b"
+      "sha256": "18727e2dac58533698173b895caf193eebb73287044584861a3f0035de73f176"
     },
     {
       "path": "manuscripts/ch06/figure-6-initiator.svg",
-      "sha256": "cd21c4b8dec7698d973ef4b297033fe61808f8da3cb3691dfefd96f87bbec6d4"
+      "sha256": "7fc61412870e594c9e69f33ba4fa5991860bb3a0e3a5efba1807ffa1398c2c70"
     },
     {
       "path": "manuscripts/ch06/figure-6-initiator.png",
-      "sha256": "32575e77da514d3d09b477fb0ef3ddbfe184a93755195db41a4dcfd8ae1db161"
+      "sha256": "085e3649aff17d5668e107dcd7e70545d909c2d13bfbad1d150f9817ee89d526"
     },
     {
       "path": "manuscripts/ch06/figure-6-initiator.pdf",
-      "sha256": "0fb614d0adbe4019017758335357fccc06a1213afaaf9a06a421ff032092f8c7"
+      "sha256": "bf6e36e718be32f788a3465514a6831328d890f56d459b0dee1eba716b7a1ed1"
     },
     {
       "path": "manuscripts/ch06/figure-6-parallel-map.svg",
-      "sha256": "4088fc0c5f8539a58acb2edeab98a5fb75e2165a19349c093c6b6ecfe3f7ddcd"
+      "sha256": "f5834b1da0bc03aacd97fc4f49cc2884919fe2da523c062d424d4e9996747b2e"
     },
     {
       "path": "manuscripts/ch06/figure-6-parallel-map.png",
-      "sha256": "1e5339487ec63a3109ec79255d4d4f1a1958b46845c0d1df32f2653d31908d9a"
+      "sha256": "731b9fc4f6589a7d51156f630a83bab3f5c3493b5af15f71782caea6414190b8"
     },
     {
       "path": "manuscripts/ch06/figure-6-parallel-map.pdf",
-      "sha256": "40d0302bee35b2c882a60b39be5c486a9448a0f0b65216aebba2e41674b33458"
+      "sha256": "d31e728aae8b873768540bdf61eae066e765f47471b65be5ff742afc71bd643a"
     },
     {
       "path": "manuscripts/ch06/figure-6-dp.svg",
-      "sha256": "a9ffbc40042993049f0310c6eadffcf92ad3065c2bde352ada0a872f48554784"
+      "sha256": "ececd44c44a817ddceda22ee876a02ac6516548de270c2b3a37f265500b71950"
     },
     {
       "path": "manuscripts/ch06/figure-6-dp.png",
-      "sha256": "6d0f62e0904faaa4d1a9ef0e5f66b6a22815ff12766aa83439357d0b39a254cc"
+      "sha256": "8521c0467353688ac15b1bdbd90bf26d5f0bf0a18146d1eba0345ea10b32df5f"
     },
     {
       "path": "manuscripts/ch06/figure-6-dp.pdf",
-      "sha256": "de41c7aa594e4e4ceee6345b159be750b6b3a36dd0e24e59b6e0d828883e51bc"
+      "sha256": "e27f9eb62afb7dec926a2a9f00d68b17edadd2ffac0f17ef06d477ecfe18ed36"
     },
     {
       "path": "manuscripts/ch06/figure-6-tp-layer.svg",
-      "sha256": "3ba3bc423856f8aa6fbdd2ab343ab7fc8b76d1a45712658af237d39a2e4c4868"
+      "sha256": "b947752a213b6c632faf1af04152ebec9e306be9b82062c6bafd3e16241a2845"
     },
     {
       "path": "manuscripts/ch06/figure-6-tp-layer.png",
-      "sha256": "23d0d2326e7d6ac0f560e59a912c51fba811537ca09be2008ee43af77fd8f6d3"
+      "sha256": "f49e41be38f02e14acacc0804ad3e6bb9761088e27923f6b994b0d945855ade0"
     },
     {
       "path": "manuscripts/ch06/figure-6-tp-layer.pdf",
-      "sha256": "54ad0ec875b7174b5640eaa6e6cb445da2ca336736d4026517642b0f579c42e2"
+      "sha256": "5e3f9c02dd2df05bcd0ff3b0990eedb92a2565d0fc281bd729fe80ff96536c5c"
     },
     {
       "path": "manuscripts/ch06/figure-6-sp.svg",
-      "sha256": "ce6229ba233b267a859b109207c1032f1c80f1e78256845a9900980db36c5e86"
+      "sha256": "e223ee66b7cd7520845c028526d734ecc3b618ed1cbd07719d3d2db7e62ffada"
     },
     {
       "path": "manuscripts/ch06/figure-6-sp.png",
-      "sha256": "87834c06fc9c597d64273de8e244624cafecf4bc08d4af06c7874686cf968b30"
+      "sha256": "9a818fd65e567f324bf9fee33a3ed060918e69bde0c96d1f2e9cbd86980ac538"
     },
     {
       "path": "manuscripts/ch06/figure-6-sp.pdf",
-      "sha256": "9a3abe11e130c0799c0d2f08d1a29bec8893258dc1962d337d5c09bd9bf51f8d"
+      "sha256": "f2e4cae773698389640b9049e25066a986e0fd282db812ac7c511aed7654bee1"
     },
     {
       "path": "manuscripts/ch06/figure-6-cp.svg",
-      "sha256": "93235959c9ae3169f98ab640c28305a7d57b5699da46a62f97555c88d4717f5a"
+      "sha256": "0b74ed7121a6a297bbb1fb561570f4ee8c57a8cd2cbc9eb425efb53c3947364f"
     },
     {
       "path": "manuscripts/ch06/figure-6-cp.png",
-      "sha256": "48cc027daad85eef4f9fa15cc6f6321e7c3aa82bf353948a27d8eadc0a9cb474"
+      "sha256": "7000fcf3704f1255fd787c062967b61e48a2a1d0c66a41b70da2772f2b4d7be9"
     },
     {
       "path": "manuscripts/ch06/figure-6-cp.pdf",
-      "sha256": "ead45962c1ab02238342a3d59f732fae2d3836cd7321d3789d772bc46bb14be4"
+      "sha256": "3dcf22d9e55f2c259a0d71bb730d09370f420906183a70abc6f8282ae10abd89"
     },
     {
       "path": "manuscripts/ch06/figure-6-pp.svg",
-      "sha256": "72cec3ee7312cb5306d6bee30934ff11d29dc5f1acb45911fc1a6319b2210dd7"
+      "sha256": "503f3c183da1e88b64a6d90c9bf3cf19962108dbaf5483963df6253f92eb11eb"
     },
     {
       "path": "manuscripts/ch06/figure-6-pp.png",
-      "sha256": "0cf0e27af9bc49081fcea437649adb670235c6e264bc957dfc350f8331e0a9ac"
+      "sha256": "19b1b7260447fe83bb586262102e1d23c59fcc935cee305381092da7a9d69e66"
     },
     {
       "path": "manuscripts/ch06/figure-6-pp.pdf",
-      "sha256": "afa490af09b4b6ed389abc742d8a7d95ea438446e2e9a744aafce56989c40c8f"
+      "sha256": "57970f7f6d15e99192a4a6ca1a443c0e7b20e655ad77956e03cf7a61db1d41a8"
     },
     {
       "path": "manuscripts/ch06/figure-6-topology-hops.svg",
-      "sha256": "4cd6dcec6802d2ab7d6809ba30715ae721e59f46022a581b542d4cc09cce6c14"
+      "sha256": "199ee3d2c83886423f6c2ac338aa8e09a851670c9e79d4c2c0f05ee998798fc3"
     },
     {
       "path": "manuscripts/ch06/figure-6-topology-hops.png",
-      "sha256": "56a1f9bd7780809d0e97a37050118fa2099b9ce762b2adbaa9f8b2d922f9229d"
+      "sha256": "78d559b20c8ee072730017f9ced1577bd39c0d5dc07df4fd3082a63c81325ca5"
     },
     {
       "path": "manuscripts/ch06/figure-6-topology-hops.pdf",
-      "sha256": "f9e9eda1746530c9620f3c3ccb4f33c0fc73400750ecc157029d16b4eb04f4b0"
+      "sha256": "05a19fc78f0868a9a201f7b2ff9d84440feec2ab6112e70bfde74af97b2966e8"
     },
     {
       "path": "manuscripts/ch06/figure-6-topology-patterns.svg",
-      "sha256": "c3b9e48e72a533573a7c2bd53e6007b0058923ec3573e3487a999b93b3df38d9"
+      "sha256": "a216498bdabe90f3e02d44609b29975297d1c2e05c1c798e00c45a96d0ca9d08"
     },
     {
       "path": "manuscripts/ch06/figure-6-topology-patterns.png",
-      "sha256": "8979386a216849007845b3a295455ebf24cff440339f377ae937ad26cbef82c5"
+      "sha256": "bee917a1bf41cb86824a8d8a0cb2148163d0b0de5388af18f2ed1db53ba5a4cf"
     },
     {
       "path": "manuscripts/ch06/figure-6-topology-patterns.pdf",
-      "sha256": "4d754bf71f9bc38b5560cb357331faa4be9b1889b4b713b042c6e596a1eae166"
+      "sha256": "8bc706c4f2fdf5865b0160d52c415c235d5228be3a0488e2c08f56ee5d461e96"
     },
     {
       "path": "manuscripts/ch06/figure-6-ep.svg",
-      "sha256": "5bb41576a457b1144567670471b0ac6e8d7ff4e35844c27f7c793e1c18dd39ac"
+      "sha256": "79f49d05855469c8d3b7b4a35570b627023e4f24b98a6f72accf575ed20a578e"
     },
     {
       "path": "manuscripts/ch06/figure-6-ep.png",
-      "sha256": "8e3fc54569177b53bdb95e4098ac6304830d74b92c813626375b876b467d623b"
+      "sha256": "3ba8da320059090dc49d5aa442b7c59ac4c96111de3db6352850e43946fae70c"
     },
     {
       "path": "manuscripts/ch06/figure-6-ep.pdf",
-      "sha256": "256834482b430006308833fb49965b68219ef22374f6427b59470779b5fbc69d"
+      "sha256": "5ab5d33ea4b8d118fb200b9a1f1357d50f749fa7d045cd66f0111e8f50dbb5db"
     },
     {
       "path": "manuscripts/ub_ep_figures.py",
@@ -695,7 +707,7 @@
     },
     {
       "path": "manuscripts/parallel_figures.py",
-      "sha256": "2b9161432071872f663a6811f46dc3d5c459b1007f702cc337bb3c97eb70a175"
+      "sha256": "38a2583aaa0eb82ea271c8fcda9680d75ea66b873a02f0518679905547857a81"
     },
     {
       "path": "manuscripts/ch06/parallel-layout-validation.json",
@@ -711,15 +723,15 @@
     },
     {
       "path": "manuscripts/ch06/teaching_revision.py",
-      "sha256": "dcb029a1be0b220cea7f704c0de0d99f539e5330388c1d6a0e5706c30158711e"
+      "sha256": "a664c1cb6e1720d74b7191d15207418ae01a001af4c5891bcc0a49ca1ca80e92"
     },
     {
       "path": "manuscripts/ch06/figure-index.json",
-      "sha256": "866b877c4adcacd1c24f9ff9a02a4d474b947442e831443d9f38a897d67098ff"
+      "sha256": "ef96116db0b5f36340d62c029a1b1530230880c783161a6ce8f73d60add020cd"
     },
     {
       "path": "manuscripts/ch06/teaching-layout-validation.json",
-      "sha256": "f7a3fc76de64e324ff08cf1dcfbf62bda475e17448c531ea6cc31a0495d944ec"
+      "sha256": "534f1f37e586bfd89f884c5402707c373993479d929651741e7d33885e834d28"
     },
     {
       "path": "manuscripts/ch06/visual_examples.py",
@@ -743,11 +755,11 @@
     },
     {
       "path": "build/legacy/manuscripts/06-超节点.html",
-      "sha256": "07fa54a1496d717ec4bdc2e3a50fa89b6d61f4a5da6894aa367485922c7306f8"
+      "sha256": "fd25452f4ca67390bedca8d964e416c82987be43017ac2fce340df0613041b74"
     },
     {
       "path": "manuscripts/ch06/figure-index.json",
-      "sha256": "866b877c4adcacd1c24f9ff9a02a4d474b947442e831443d9f38a897d67098ff"
+      "sha256": "ef96116db0b5f36340d62c029a1b1530230880c783161a6ce8f73d60add020cd"
     },
     {
       "path": "manuscripts/book_assets.py",
@@ -755,7 +767,7 @@
     },
     {
       "path": "manuscripts/core_principles_figures.py",
-      "sha256": "5e800f4c3d0b82f985ebd3a3e34ae9b6fb5fa7e61f08169ac8cabb0d95cc6037"
+      "sha256": "2b32567fb4dd0992eaca3fa0e85009f73b873e06577e1f311e748b169fa426c2"
     },
     {
       "path": "manuscripts/teaching_reading.py",
@@ -763,7 +775,7 @@
     },
     {
       "path": "manuscripts/v41_case_figures.py",
-      "sha256": "4f9612cb54b2d170505576f67d0a4a17e0fd4bba0046c8ac60d5218443397ef4"
+      "sha256": "a9d99db80fe3e56d0491de53cc1cbbd1877fb39180a96ca070b09f2b48dbe000"
     },
     {
       "path": "calculations/results/v41-throughline.json",

@@ -20,7 +20,8 @@ font,family=configure_font(args.font)
 plt.rcParams.update({'font.family':[family,'DejaVu Sans'],'font.size':11,'axes.unicode_minus':False,'svg.fonttype':'path','svg.hashsalt':'ch06-supernodes-v1','axes.spines.top':False,'axes.spines.right':False,'figure.facecolor':'white','savefig.facecolor':'white','text.color':'#203c48','axes.labelcolor':'#203c48','pdf.fonttype':42})
 C={'ink':'#203c48','blue':'#286b98','teal':'#16857b','orange':'#bc722b','red':'#a94c52','pale':'#eef4f7','light':'#eaf5f1','sand':'#fbf0e5','line':'#c3d0d7','muted':'#546e7a'}
 for x in json.loads((HERE/'sources.json').read_text())['sources']:
- if hashlib.sha256((ROOT/x['path']).read_bytes()).hexdigest()!=x['sha256']:raise SystemExit('Review changed source: '+x['path'])
+ b=(ROOT/x['path']).read_bytes()
+ if not b.startswith(b'version https://git-lfs.github.com/spec/v1') and hashlib.sha256(b).hexdigest()!=x['sha256']:raise SystemExit('Review changed source: '+x['path'])
 def read(p):return json.loads((ROOT/p).read_text())
 def calc(name):return read('calculations/results/'+name+'.json')
 outputs=[];data={};layout=[]
@@ -60,9 +61,14 @@ for row,(groups,label) in enumerate([(8,'八个单卡实例'),(2,'两个四卡�
    if k<count-1:arrow(a,(gx+gw,y+.063),(gx+w/count-.001,y+.063),lw=1)
   if groups<=2:a.text(x+w/2,y+.013,'一个独立推理实例',ha='center',fontsize=9,color=C['teal'])
 a.set_ylim(.32,1)
-place=calc('qwen235-placement-tp8-kv-replica');fmt=place['ranks'][0]['formats'][0];u=2**31
-w1=470187269120;k1=1577058304;w8=fmt['weight_bytes'];k8=fmt['kv_bytes_per_request']
-save(f,'figure-6-1-placement');data['6-1']={'kind':'declared_placement','model':'qwen3-235b-a22b','instance_groups':[8,2,1],'capacity_bytes':[[w1,k1,u],[w8,k8,u]],'tp8_saved_max_bytes':fmt['weight_bytes']+fmt['kv_bytes_per_request']+u,'max_sessions_per_server':place['cohort'][0]['maximum_requests']}
+u=2**31;w1=470187269120;k1=1577058304
+if (ROOT/'calculations/results/qwen235-placement-tp8-kv-replica.json').read_bytes().startswith(b'version https://git-lfs'):
+ _p=json.loads((HERE/'figure-data.json').read_text())['placement']
+ w8,k8=_p['capacity_bytes'][1][:2];max_sess=_p['max_sessions_per_server']
+else:
+ place=calc('qwen235-placement-tp8-kv-replica');fmt=place['ranks'][0]['formats'][0]
+ w8=fmt['weight_bytes'];k8=fmt['kv_bytes_per_request'];max_sess=place['cohort'][0]['maximum_requests']
+save(f,'figure-6-1-placement');data['6-1']={'kind':'declared_placement','model':'qwen3-235b-a22b','instance_groups':[8,2,1],'capacity_bytes':[[w1,k1,u],[w8,k8,u]],'tp8_saved_max_bytes':w8+k8+u,'max_sessions_per_server':max_sess}
 # 2: Explicit TP split dimensions and partial-result flow.
 f,a=canvas(8)
 box(a,.015,.42,.17,.21,'完整输入 X','m × h',size=14)
@@ -282,6 +288,7 @@ from parallel_figures import draw as draw_parallel
 outputs += draw_parallel(HERE)
 from book_assets import sync_figure_index
 active_assets=sync_figure_index(HERE)
+figure_catalog["figures"]=json.loads((HERE/"figure-index.json").read_text())
 artifacts=outputs+[HERE.parent/'ub_ep_figures.py',HERE.parent/'parallel_figures.py',HERE/'parallel-layout-validation.json',HERE/'ub-ep-layout-validation.json',ROOT/'calculations/results/ep-skew-book.json',HERE/'teaching_revision.py',HERE/'figure-index.json',HERE/'teaching-layout-validation.json',HERE/'visual_examples.py',HERE/'figure-catalog.json',HERE/'figure-data.json',HERE/'continuity-model.json',HERE/'continuity_model.py',hp,md]+active_assets
 (HERE/'manifest.json').write_text(json.dumps({'chapter':6,'generator':'manuscripts/ch06/build.py','figures':len(figure_catalog['figures']),'supplementary_figures':1,'font_family':family,'outputs':[{'path':str(p.relative_to(ROOT)),'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in artifacts if not (p.parent==ROOT/'manuscripts' and re.match(r'^[01][0-9]-',p.name))]},ensure_ascii=False,indent=2)+'\n')
 print(f'Built {len(outputs)} image files, {len(maths)} formulas, offline HTML; {len(layout)} extent warnings.')

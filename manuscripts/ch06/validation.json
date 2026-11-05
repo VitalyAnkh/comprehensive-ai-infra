@@ -6,7 +6,7 @@
       "passed": true
     },
     {
-      "check": "eleven exercises with core 2, 3, 10",
+      "check": "fifteen exercises with core 2, 3, 10",
       "passed": true
     },
     {
@@ -382,6 +382,22 @@
       "passed": true
     },
     {
+      "check": "no internal figure number: figure-6-pool-window-caching",
+      "passed": true
+    },
+    {
+      "check": "three figure formats: figure-6-pool-window-caching",
+      "passed": true
+    },
+    {
+      "check": "no internal figure number: ch06-memory-tiering-prefetch-and-800vdc-cpo",
+      "passed": true
+    },
+    {
+      "check": "three figure formats: ch06-memory-tiering-prefetch-and-800vdc-cpo",
+      "passed": true
+    },
+    {
       "check": "no internal figure number: figure-6-session-capacity",
       "passed": true
     },
@@ -459,6 +475,14 @@
     },
     {
       "check": "three figure formats: figure-6-engram-placement",
+      "passed": true
+    },
+    {
+      "check": "no internal figure number: figure-6-v41-kv-storage-scaling",
+      "passed": true
+    },
+    {
+      "check": "three figure formats: figure-6-v41-kv-storage-scaling",
       "passed": true
     },
     {

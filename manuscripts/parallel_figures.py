@@ -62,37 +62,37 @@ def draw(here):
         # TP: one layer, attention by heads, FFN by intermediate width; two AllReduces per layer.
         f, a = canvas(5.0)
         panels = [(.95, .58, '注意力子层：按头切分，输出投影产生部分和', 'X\n每卡\n一份',
-                   [('QKV 投影(列)\n头 0–15', '注意力\n头 0–15', '输出投影(行)\n部分和 m×h'), ('QKV 投影(列)\n头 16–31', '注意力\n头 16–31', '输出投影(行)\n部分和 m×h')]),
+                   [('QKV 列投影\n头 0–15', '注意力\n头 0–15', '输出行投影\n部分和 m×h'), ('QKV 列投影\n头 16–31', '注意力\n头 16–31', '输出行投影\n部分和 m×h')]),
                   (.47, .10, 'FFN 子层：按中间维切分，下投影产生部分和', 'X′\n每卡\n一份',
-                   [('上投影(列)\n前半中间维', 'SiLU ⊙ 乘法\n本地', '下投影(行)\n部分和 m×h'), ('上投影(列)\n后半中间维', 'SiLU ⊙ 乘法\n本地', '下投影(行)\n部分和 m×h')])]
+                   [('上投影(列)\n前半中间维', 'SiLU 激活\n本地相乘', '下投影(行)\n部分和 m×h'), ('上投影(列)\n后半中间维', 'SiLU 激活\n本地相乘', '下投影(行)\n部分和 m×h')])]
         for ytitle, ybase, title, inp, rows in panels:
             text(a, .02, ytitle, title, 12)
-            box(a, .02, ybase, .11, .30, inp, 'gray', 11)
-            box(a, .745, ybase, .225, .30, 'AllReduce\n求和后每卡\n得到 m×h', 'orange', 11)
+            box(a, .015, ybase, .10, .30, inp, 'gray', 11)
+            box(a, .765, ybase, .215, .30, 'AllReduce\n求和后每卡\n得到 m×h', 'orange', 11)
             for r, labels in enumerate(rows):
                 y = ybase + .17 - .17 * r; col = 'blue' if r == 0 else 'green'
-                arrow(a, (.13, ybase + .15), (.16, y + .065))
+                arrow(a, (.115, ybase + .15), (.14, y + .065))
                 for j, label in enumerate(labels):
-                    x = .16 + .195 * j; box(a, x, y, .16, .13, label, col, 11)
-                    if j < 2: arrow(a, (x + .16, y + .065), (x + .195, y + .065))
-                arrow(a, (.71, y + .065), (.745, y + .065))
+                    x = .14 + .208 * j; box(a, x, y, .183, .13, label, col, 11)
+                    if j < 2: arrow(a, (x + .183, y + .065), (x + .208, y + .065))
+                arrow(a, (.739, y + .065), (.765, y + .065))
         out.save(f, 'figure-6-tp-layer')
 
         # SP: per-token operators keep sequence shards; linear layers use the TP layout.
         f, a = canvas(3.4)
-        for xc, label in [(.15, '序列分片'), (.53, '全部位置：特征分片、部分和'), (.885, '序列分片')]:
+        for xc, label in [(.134, '序列分片'), (.508, '全部位置：特征分片、部分和'), (.898, '序列分片')]:
             text(a, xc, .93, label, 11, ha='center')
-        for x0, x1 in [(.07, .23), (.35, .69), (.80, .97)]:
+        for x0, x1 in [(.055, .213), (.343, .671), (.821, .97)]:
             a.plot([x0, x1], [.87, .87], color=COL['line'], lw=.8)
-        box(a, .255, .16, .07, .62, 'All\nGather', 'orange', 11)
-        box(a, .715, .16, .07, .62, 'Reduce\nScatter', 'orange', 11)
+        box(a, .225, .16, .105, .62, 'All\nGather', 'orange', 11)
+        box(a, .686, .16, .120, .62, 'Reduce\nScatter', 'orange', 11)
         for r, (y, col, pos) in enumerate([(.56, 'blue', '位置 0–3'), (.16, 'green', '位置 4–7')]):
-            text(a, .0, y + .08, f'卡 {r}', 12)
-            box(a, .07, y, .16, .16, f'LayerNorm\n{pos}', col, 11); arrow(a, (.23, y + .08), (.255, y + .08))
-            arrow(a, (.325, y + .08), (.35, y + .08)); box(a, .35, y, .16, .16, '列并行线性\n位置 0–7', col, 11)
-            arrow(a, (.51, y + .08), (.53, y + .08)); box(a, .53, y, .16, .16, '行并行线性\n部分和', col, 11)
-            arrow(a, (.69, y + .08), (.715, y + .08)); arrow(a, (.785, y + .08), (.80, y + .08))
-            box(a, .80, y, .17, .16, f'残差\n{pos}', col, 11)
+            text(a, -.008, y + .08, f'卡 {r}', 11)
+            box(a, .055, y, .158, .16, f'LayerNorm\n{pos}', col, 11); arrow(a, (.213, y + .08), (.225, y + .08))
+            arrow(a, (.330, y + .08), (.343, y + .08)); box(a, .343, y, .158, .16, '列并行线性\n位置 0–7', col, 11)
+            arrow(a, (.501, y + .08), (.513, y + .08)); box(a, .513, y, .158, .16, '行并行线性\n部分和', col, 11)
+            arrow(a, (.671, y + .08), (.686, y + .08)); arrow(a, (.806, y + .08), (.821, y + .08))
+            box(a, .821, y, .149, .16, f'残差\n{pos}', col, 11)
         out.save(f, 'figure-6-sp')
 
         # CP: one sequence split by position; remote K/V must still reach the queries.
