@@ -185,42 +185,50 @@
   },
   {
     "number": 47,
-    "name": "figure-6-session-capacity"
+    "name": "figure-6-pool-window-caching"
   },
   {
     "number": 48,
-    "name": "figure-6-session-tp2"
+    "name": "figure-6-session-capacity"
   },
   {
     "number": 49,
-    "name": "figure-6-session-tp4"
+    "name": "figure-6-session-tp2"
   },
   {
     "number": 50,
-    "name": "figure-6-session-tp8"
+    "name": "figure-6-session-tp4"
   },
   {
     "number": 51,
-    "name": "figure-6-21-scale-cost"
+    "name": "figure-6-session-tp8"
   },
   {
     "number": 52,
-    "name": "figure-6-scale-cost-fault"
+    "name": "figure-6-21-scale-cost"
   },
   {
     "number": 53,
-    "name": "figure-6-supernode-inference"
+    "name": "figure-6-scale-cost-fault"
   },
   {
     "number": 54,
-    "name": "figure-6-weight-placement"
+    "name": "figure-6-supernode-inference"
   },
   {
     "number": 55,
-    "name": "figure-6-rom-token-time"
+    "name": "figure-6-weight-placement"
   },
   {
     "number": 56,
+    "name": "figure-6-rom-token-time"
+  },
+  {
+    "number": 57,
     "name": "figure-6-engram-placement"
+  },
+  {
+    "number": 58,
+    "name": "figure-6-v41-kv-storage-scaling"
   }
 ]
