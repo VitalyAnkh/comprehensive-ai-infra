@@ -1,187 +1,192 @@
 [
   {
+    "file": "figure-12-image-path.svg",
     "caption": "原图经上行到服务器，服务器收齐后处理，再经下行返回完整成片。实线箭头表示数据与处理顺序；连接已建立，双向传播合计 0.1 s。",
-    "number": 1,
-    "file": "figure-12-image-path.svg"
+    "number": 1
   },
   {
+    "file": "figure-12-1-raw.svg",
     "caption": "压缩和计算加速对任务完成时间的影响随上行速率而变化。本例采用原图 30 MB、成片 5 MB、下行 100 Mbit/s、RTT 0.1 秒，原处理时间 0.3 秒；压缩方案将输入减半并增加 0.15 秒编解码。三种方案的成片质量相同，连接已建立且各阶段串行。",
-    "number": 2,
-    "file": "figure-12-1-raw.svg"
+    "number": 2
   },
   {
+    "file": "figure-12-2-overlap.svg",
     "caption": "整图串行：30 MB 全部上传并传播到服务器后才处理，随后回传 5 MB。上行 20 Mbit/s、下行 100 Mbit/s、单向传播 0.05 s，任务于 12.8 s 完成。",
-    "number": 3,
-    "file": "figure-12-2-overlap.svg"
+    "number": 3
   },
   {
+    "file": "figure-12-overlap-chunks.svg",
     "caption": "三块各上传 4 s，每块到达后独立处理 0.1 s，随后回传 1、2、2 MB。前两块的处理和回传与后续上传重叠，完整成片于 12.36 s 返回。",
-    "number": 4,
-    "file": "figure-12-overlap-chunks.svg"
+    "number": 4
   },
   {
+    "file": "figure-12-audio-clocks.svg",
     "caption": "第一块音频从采集开始计时：20 ms 就绪，32 ms 处理完，33 ms 发完，38 ms 到达；初始缓冲 40 ms 后于 78 ms 播放。圆点标出到达，最后一行是播放设备的时钟。",
-    "number": 5,
-    "file": "figure-12-audio-clocks.svg"
+    "number": 5
   },
   {
+    "file": "figure-12-3-paths.svg",
     "caption": "第三块晚到使后续各块的播放时间都推迟 5 ms。每块长 20 ms，模型处理 12 ms、发送 1 ms；通常传播耗时为 5 ms，第三块传播 50 ms，初始缓冲 40 ms。实线段表示实际播放，浅色轮廓表示原定播放区间，圆点表示到达；所有时间均从开始采集第一块起算。图为上述流水线的计算结果，播放器等待缺块而不丢弃。",
-    "number": 6,
-    "file": "figure-12-3-paths.svg"
+    "number": 6
   },
   {
+    "file": "figure-12-4-buffer.svg",
     "caption": "缓冲量等于初始数据量加累计接收量，再减累计播放量。PCM 播放需要 256 kbit/s，接收只有 130 kbit/s，两条直线的下降速率均为 126 kbit/s。初始缓冲分别包含 60 ms 和 120 ms 音频，约在 0.12 秒和 0.24 秒耗尽；图画到各自第一次耗尽为止。",
-    "number": 7,
-    "file": "figure-12-4-buffer.svg"
+    "number": 7
   },
   {
+    "file": "figure-12-5-agent.svg",
     "caption": "截图 Agent 的一轮执行。箭头表示先后依赖，方框宽度不表示耗时。底部返回箭头要经过操作执行与界面更新，才能取得下一轮截图。",
-    "number": 8,
-    "file": "figure-12-5-agent.svg"
+    "number": 8
   },
   {
+    "file": "figure-12-local-tiers.svg",
     "caption": "三档本地设备读一遍 Qwen3-8B 单请求 8K decode 主要载荷（16.345 GB）的时间下界。手机按四条 x16 LPDDR5X 通道计，合计 84.8 GB/s，BF16 与 q4_0 权重分别成行；M3 Ultra 与 RTX PRO 6000 取自第 4.8.2 节的设备表。柱端标注对应的 token/s 上限。",
-    "number": 9,
-    "file": "figure-12-local-tiers.svg"
+    "number": 9
   },
   {
+    "file": "figure-12-encoder-remote.svg",
     "caption": "远端编码的执行路径。端侧上传 0.8 MB 压缩截图，远端依次完成解码与预处理、视觉编码和特征接入；最终投影与三组 DeepStack 特征均留在服务器内。6.4 Mbit/s 上行的图片发送时间为 1 秒，编码和排队时间另计。",
-    "number": 10,
-    "file": "figure-12-encoder-remote.svg"
+    "number": 10
   },
   {
+    "file": "figure-12-encoder-local.svg",
     "caption": "端侧编码的执行路径。预处理和视觉编码移到终端，跨网络的对象变为最终投影与三组 DeepStack 的完整 BF16 特征，共 8.192 MB；远端接收后仍按相同方式接入语言模型。相同上行的特征发送时间为 10.24 秒，本地编码、序列化和转换时间另计。图中数值采用下文的 Qwen3-VL-4B 固定配置。",
-    "number": 11,
-    "file": "figure-12-encoder-local.svg"
+    "number": 11
   },
   {
+    "file": "figure-12-6-placement.svg",
     "caption": "同一图片的完整视觉特征比压缩图片需要更多传输时间。压缩图片为 0.8 MB；Qwen3-VL-4B 在预处理后 640×640 输入上产生 400 个视觉 token，最终投影及三组 DeepStack 合计 [400,10240] BF16，共 8,192,000 bytes。上行速率为 6.4 Mbit/s，柱长表示发送时间；编码、排队和转换时间另计。两种方案处理同一张图片，完成相同的视觉理解任务。",
-    "number": 12,
-    "file": "figure-12-6-placement.svg"
+    "number": 12
   },
   {
+    "file": "figure-12-cache-restart.svg",
     "caption": "三类缓存内容对应三个恢复计算的起点。EC 省去视觉编码；匹配模型权重、前缀与 token 位置索引的 KV 进一步省去已处理前缀的语言模型计算。容量对应正文固定视觉配置。",
-    "number": 13,
-    "file": "figure-12-cache-restart.svg"
+    "number": 13
   },
   {
+    "file": "figure-12-7-migration.svg",
     "caption": "迁移 64 MiB 状态，链路 80 Mbit/s，迁移后每轮节省 0.4 秒。两条曲线分别取恢复时间 1 秒和 2 秒，净节省为 N×0.4 减去传输和恢复时间。圆点标出首次获益的整数轮数；零线以上表示迁移更快，首次获益分别在第 20、22 轮。",
-    "number": 14,
-    "file": "figure-12-7-migration.svg"
+    "number": 14
   },
   {
+    "file": "figure-12-8-sync.svg",
     "caption": "张量并行的一次注意力输出归约：两卡先分别计算，再交换并求和，取得完整输出后进入前馈。横向箭头表示执行顺序，中间纵向箭头表示两卡通信。",
-    "number": 15,
-    "file": "figure-12-8-sync.svg"
+    "number": 15
   },
   {
+    "file": "figure-12-sync-ffn.svg",
     "caption": "前馈网络也分别计算局部输出，再做两卡归约。完整前馈结果就绪后才能进入下一层，这一结构在 36 层中重复。",
-    "number": 16,
-    "file": "figure-12-sync-ffn.svg"
+    "number": 16
   },
   {
+    "file": "figure-12-9-window.svg",
     "caption": "固定窗口 64 KB，链路 20 Mbit/s，一批数据发送需 25.6 ms。为单独显示停等，图设接收方收齐一批后统一确认，从这批数据全部发出到收到整批确认再需 100 ms；每批完整周期为 125.6 ms。",
-    "number": 17,
-    "file": "figure-12-9-window.svg"
+    "number": 17
   },
   {
+    "file": "figure-12-loss-repair.svg",
     "caption": "同一路径（RTT 0.2 s、容量膝点 333 Mbit/s、丢包率 14%）传送 354,640 bytes 的完成时间，横轴为对数坐标。串行预算是 RTT、模型 30 ms 与发送 8.5 ms 之和，约 238.5 ms；FEC 多发 63 个修复符号（冗余 25.7%）后 99.9% 不需重传；逐轮重传两行是不计窗口收缩与超时的下界；Mathis 上界对应把丢包当作拥塞的 TCP，仅发送就需约 18.3 s。",
-    "number": 18,
-    "file": "figure-12-loss-repair.svg"
+    "number": 18
   },
   {
+    "file": "figure-12-10-transport.svg",
     "caption": "整体有序交付：音频第 3 s 已收齐，却因图片缺口继续等到第 7 s。灰色段表示数据已齐后的等待，圆点表示数据交给应用的时刻。",
-    "number": 19,
-    "file": "figure-12-10-transport.svg"
+    "number": 19
   },
   {
+    "file": "figure-12-transport-per-stream.svg",
     "caption": "逐流有序交付：音频在第 3 s 收齐后立即交付，图片仍于第 7 s 交付。两图中的发送、到达与恢复时刻相同；区别在于不同流之间是否需要相互等待。",
-    "number": 20,
-    "file": "figure-12-transport-per-stream.svg"
+    "number": 20
   },
   {
+    "file": "figure-12-13-queqiao.svg",
     "caption": "新建连接时，354,640 bytes 固定音频的直接路径与 Queqiao 请求中位数分别为 1185.3、301.6 ms。计时从发起请求到收齐结果，输入文件相同，两条路径交替运行。",
-    "number": 21,
-    "file": "figure-12-13-queqiao.svg"
+    "number": 21
   },
   {
+    "file": "figure-12-queqiao-tuned.svg",
     "caption": "保持连接并调优后，同一固定音频的直接路径与 Queqiao 中位数分别为 240.9、236.5 ms。与前图采用相同纵轴，两条路径均接近数据发送、必要往返和处理所需的总时间。",
-    "number": 22,
-    "file": "figure-12-queqiao-tuned.svg"
+    "number": 22
   },
   {
+    "file": "figure-12-experiment-design.svg",
     "caption": "单因素实验方法：保持相同文件、路径和其他设置，每次只改变一个因素，对照中间事件与总完成时间。",
-    "number": 23,
-    "file": "figure-12-experiment-design.svg"
+    "number": 23
   },
   {
+    "file": "figure-12-11-wireless.svg",
     "caption": "报文变短后，固定交换开销仍然存在，因此空口占用时间不会按相同比例缩短。两种成功交换采用相同的 34 μs 接入等待、16 μs SIFS、44 μs MAC ACK，区别只在数据 PPDU：208 μs 或 40 μs。条件为 OFDM54／6、无聚合、无重传的参考模型。",
-    "number": 24,
-    "file": "figure-12-11-wireless.svg"
+    "number": 24
   },
   {
+    "file": "figure-12-cancel-paths.svg",
     "caption": "一次取消同时触发两条路径：本地清空待播音频，远端在控制消息到达后停止生成和发送。虚线表示控制流；本地停止播放与远端资源释放有各自的完成时刻。",
-    "number": 25,
-    "file": "figure-12-cancel-paths.svg"
+    "number": 25
   },
   {
+    "file": "ch12-ufs-flash-streaming-and-vla-chunking.svg",
     "caption": "端侧存储与实时控制的两项边界突破机制。（左）移动端 UFS 4.0 闪存流式加载：将共激活 FFN 神经元的行列向量打包为 64 KiB 连续块并配合 5-Token 滑动窗口缓存，将单步 1.28 GB 稀疏权重的闪存读取耗时从 2 KiB 随机读的 3.20 s 压缩至 0.10 s（10.0 token/s）；（右）具身智能 VLA 端边云双环路协同：云端以 5 Hz（每 200 ms）下发覆盖 500 ms 视野的 25 步动作块，端侧 Orin／Thor 以 50 Hz 消费轨迹并驱动 1000 Hz 实时控制，在 80 ms 基准延迟下提供高达 220 ms 的额外无线抖动容忍窗口（单次总延迟上限 300 ms）。",
-    "number": 26,
-    "file": "ch12-ufs-flash-streaming-and-vla-chunking.svg"
+    "number": 26
   },
   {
+    "file": "figure-12-multipath-independent.svg",
     "caption": "两条独立路径按带宽比例分配输入，分别发送 20 MB 和 10 MB，均需 8 s。任务等两部分都齐备后完成。",
-    "number": 27,
-    "file": "figure-12-multipath-independent.svg"
+    "number": 27
   },
   {
+    "file": "figure-12-12-multipath.svg",
     "caption": "30 MB 图片按 20／10 MB 分到 20／10 Mbit/s 两条独立接入，各需 8 秒。两路再经过同一 24 Mbit/s 出口，全部数据通过该出口至少需 10 秒。箭头表示数据路径，不表示传播距离；容量取恒定值。",
-    "number": 28,
-    "file": "figure-12-12-multipath.svg"
+    "number": 28
   },
   {
+    "file": "figure-12-multipath-failure.svg",
     "caption": "单路径与双路径复制的失败率分解（$p_1=10\\%, p_2=5\\%, q=2\\%$）。双路径复制将接入网同时故障的贡献压低至 0.49%（蓝段），但共享端点自身的故障率 $q=2.00\\%$（橙段）构成了仅靠终端双网无法突破的下界；只有同时将远端端点跨独立故障域冗余部署，总失败率才能进一步降至 0.54%。",
-    "number": 29,
-    "file": "figure-12-multipath-failure.svg"
+    "number": 29
   },
   {
+    "file": "figure-12-14-budgets.svg",
     "caption": "端侧：终端工作 6 s，模型计算 58.0 s，共 64.0 s。三图共用 45 s 期限线和同一横轴，颜色分别汇总二十轮各阶段的耗时。",
-    "number": 30,
-    "file": "figure-12-14-budgets.svg"
+    "number": 30
   },
   {
+    "file": "figure-12-budgets-1.svg",
     "caption": "附近工作站（RTX PRO 6000）：准备 0.27 s，二十轮终端 6 s、模型 2.7 s、传播 0.4 s、上传 1.6 s，共 11.0 s，满足 45 s 期限。虚线表示 45 s 完成期限。",
-    "number": 31,
-    "file": "figure-12-budgets-1.svg"
+    "number": 31
   },
   {
+    "file": "figure-12-budgets-2.svg",
     "caption": "云端（H100 SXM）：准备 0.14 s，二十轮终端 6 s、模型 1.5 s、传播 4 s、上传 20 s，共 31.6 s。计算更快而传输更久，比附近工作站慢约 20.6 s，仍在期限之内。虚线表示 45 s 完成期限。",
-    "number": 32,
-    "file": "figure-12-budgets-2.svg"
+    "number": 32
   },
   {
+    "file": "figure-12-15-deployment.svg",
     "caption": "云路径上行改变完整任务的部署选择。剩余 20 轮每轮上传 0.8 MB，云端准备 0.14 秒，每轮其余工作合计约 0.57 秒，因此总时间为 11.6+128/b 秒；附近工作站为 11.0 秒，期限为 45 秒。本例保持模型、处理时间和其他网络参数不变，忽略排队与故障。约 3.8 Mbit/s 起云方案可满足期限；上行再高，云端也不低于 11.6 秒，始终慢于附近工作站。",
-    "number": 33,
-    "file": "figure-12-15-deployment.svg"
+    "number": 33
   },
   {
+    "file": "figure-12-session-hold.svg",
     "caption": "文本智能体会话在 H100 SXM 上保留 465 MB 状态与无状态重算前缀的等效设备成本对比。保留状态将预填充算力从 0.300 GPU·s 降至 0.061 GPU·s（净省 0.239 GPU·s），但每秒驻留消耗 0.465/80 ≈ 0.0058 GPU·s 显存配额；两线在相邻交互间隔 $t \\approx 41.0\\ \\mathrm{s}$ 处相交。",
-    "number": 34,
-    "file": "figure-12-session-hold.svg"
+    "number": 34
   },
   {
+    "file": "figure-12-16-recovery.svg",
     "caption": "保留前九轮提交记录（绿色），只重做未确认的第十轮（橙色）。云端每轮 1.57 s，恢复连接 1 s，增加 2.57 s，总时间为 34.2 s。此例采用可安全重放的操作；已提交的外部操作则先查询其结果。",
-    "number": 35,
-    "file": "figure-12-16-recovery.svg"
+    "number": 35
   },
   {
+    "file": "figure-12-recovery-all.svg",
     "caption": "丢失十轮进度时，恢复连接后重做十轮，额外 1＋10×1.57≈16.7 s，总任务从 31.6 s 延至 48.3 s，超过 45 s 期限。",
-    "number": 36,
-    "file": "figure-12-recovery-all.svg"
+    "number": 36
   },
   {
+    "file": "figure-12-task-counterfactual.svg",
     "caption": "固定任务轨迹中的加速上限。模型从 8 秒缩短至 0.8 秒，其他串行阶段保持 2 秒；第三行表示模型时间趋近于零的理想下界。",
-    "number": 37,
-    "file": "figure-12-task-counterfactual.svg"
+    "number": 37
+  },
+  {
+    "file": "ch12-m2max-rtxpro6000-cloud-three-tier.svg",
+    "caption": "便携统一内存（M2 Max 96GB @ 400 GB/s）、桌面独立工作站（RTX PRO 6000 96GB GDDR7 @ 1,792 GB/s）与远端云服务在 $4\\ \\mathrm{GiB}$ 权重读取下界（10.74 ms vs. 2.40 ms，比值 $4.48\\times$）、可用模型工作集（共享内存 `recommendedMaxWorkingSetSize` vs. 独占 GDDR7）及多轮广域网传输下的三维部署决策边界。",
+    "number": 38
   }
 ]

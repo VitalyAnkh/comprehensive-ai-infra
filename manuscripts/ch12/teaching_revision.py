@@ -211,6 +211,23 @@ def draw(here,data):
         arrow(a,(.6475,.305),(.67,.305))
         box(a,.035,.055,.93,.135,'端侧 Orin/Thor 快环：50 Hz 轨迹插值（20 ms/步）驱动 1000 Hz 伺服\n单包 700 B；超 300 ms 缓冲耗尽时触发看门狗安全制动','purple',11)
         out.save(f,'ch12-ufs-flash-streaming-and-vla-chunking')
+
+        # Path-B new figure: ch12-m2max-rtxpro6000-cloud-three-tier (Fig 12-38)
+        f,a=canvas(6.4)
+        text(a,.25,.95,'A. 96 GB 统一内存 vs 独立显存',12,ha='center')
+        text(a,.745,.95,'B. 端—边—云三维部署边界',12,ha='center')
+        a.plot([.495,.495],[.03,.97],color=COL['line'],ls='--',lw=1.0)
+
+        box(a,.03,.75,.44,.15,'M2 Max（96 GB 统一内存）：\n400 GB/s，4 GiB 读 10.74 ms\nM2 Pro（200 GB/s）：21.47 ms','blue',11)
+        box(a,.03,.54,.44,.16,'RTX PRO 6000（96GB 显存）：\n1,792 GB/s，4 GiB 读 2.40 ms\n带宽达 M2 Max 的 4.48 倍','green',11)
+        box(a,.03,.31,.44,.18,'统一内存工作集边界：\nCPU/GPU/OS 争抢同一物理池\n受 Metal 安全工作集上限约束','orange',11)
+        box(a,.03,.05,.44,.20,'独立显存边界（600 W）：\nPCIe 5.0 x16 负责初始加载\n96 GB ECC 显存由 GPU 独占','gray',11)
+
+        box(a,.52,.75,.45,.15,'端侧便携（M2 Max 笔记本）：\n断网可用、最高隐私、数十瓦\n适合单流低频交互与外出开发','blue',11)
+        box(a,.52,.54,.45,.16,'附近工作站（RTX PRO 6000）：\n局域网低 RTT + 4.48× 解码带宽\n20 轮截图 11.0 s（快于云端）','green',11)
+        box(a,.52,.31,.45,.18,'远端云集群（H100 / B200）：\n3.35–8.0 TB/s 支撑超长上下文\n受广域网上行与 200 ms RTT 制约','purple',11)
+        box(a,.52,.05,.45,.20,'Ollama 配对评测铁律：\n剥离 load_duration 冷启动\n严防 KV 缓存命中造成虚假加速','orange',11)
+        out.save(f,'ch12-m2max-rtxpro6000-cloud-three-tier')
     data['12-ufs-vla']={'kind':'teaching_bound','sparse_ffn_gb':1.28,'rand_bw_gbps':0.4,'bundle_bw_gbps':3.2,
         'win_reuse':0.75,'step_s':[3.20,0.40,0.10],'vla_horizon_ms':500,'vla_plan_ms':200,'vla_base_ms':80,'vla_jitter_max_ms':220}
     out.finish();return out.outputs,out.checks

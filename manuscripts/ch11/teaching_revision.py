@@ -169,6 +169,23 @@ def draw(here,data):
         box(a,.71,.16,.26,.11,'作业 A 更新\n360–480 s','blue',11)
         box(a,.03,.02,.94,.11,'热切换 5 s → 周期 490 s（≤528 s 达标）\n双作业驻留 400+500+150 = 1050 GiB > 1 TiB 主机上限','orange',11)
         out.save(f,'ch11-sandbox-cxlfork-and-weave-gantt')
+
+        # Path-B new figure: ch11-api-pricing-vs-provider-cost-and-routing (Fig 11-53)
+        f,a=canvas(6.4)
+        text(a,.25,.95,'A. 算力波谷与 Batch API 填谷',12,ha='center')
+        text(a,.745,.95,'B. 双模型缓存路由可行域',12,ha='center')
+        a.plot([.495,.495],[.03,.97],color=COL['line'],ls='--',lw=1.0)
+
+        box(a,.03,.75,.44,.15,'24×7 预留集群刚性折旧：\nB200 长租 6.79 美元/卡时\n夜间在线波谷大量卡时空转','orange',11)
+        box(a,.03,.54,.44,.16,'异步 Batch API（24h 窗口）：\n零售牌价打 5 折（50% 折扣）\n剥离实时 TTFT / TPOT 约束','green',11)
+        box(a,.03,.31,.44,.18,'物理填谷收益（TC-16）：\n夜间拼成最大批次满载运行\n仅付增量电费即可回收折旧','blue',11)
+        box(a,.03,.05,.44,.20,'自建 vs 按量平衡点：\n预留实例需 >78.6% 利用率\n单会话（batch=1）宜用 API','gray',11)
+
+        box(a,.52,.75,.45,.15,'小模型 A vs 旗舰模型 B：\nB 牌价高但思考精炼（100 词）\n通过率 98% vs 80%（门槛 75%）','purple',11)
+        box(a,.52,.54,.45,.16,'成本反超交点 h_cost：\nClaude 牌价：h ≥ 79.52%\nI21 调研基线：h ≥ 84.93%','blue',11)
+        box(a,.52,.31,.45,.18,'叠加 6 s 交付期限门槛：\nB 命中 4 s 达标、未中 12 s\n0.98h ≥ 0.90 => h ≥ 91.84%','green',11)
+        box(a,.52,.05,.45,.20,'两级级联路由（TC-17）：\nE[C] = c_r + c_S + r·c_L(h_L)\n跨模型不可直接共享 KV 块','orange',11)
+        out.save(f,'ch11-api-pricing-vs-provider-cost-and-routing')
     from dsec_figures import draw as draw_dsec
     draw_dsec(out)
     from core_principles_figures import draw as draw_principles
