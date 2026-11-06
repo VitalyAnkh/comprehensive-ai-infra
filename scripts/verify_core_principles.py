@@ -7,7 +7,7 @@ ROOT=Path(__file__).resolve().parents[1];M=ROOT/'manuscripts';R=ROOT/'archive/re
 errors=[];rows=[]
 def check(ok,msg):
  if not ok:errors.append(msg)
-for n in range(1,13):
+for n in range(1,15):
  p=next(M.glob(f'{n:02}-*.md'));s=p.read_text()
  headings=re.findall(r'^## (.+)$',s,re.M)
  check(headings[-1]=='本章小结' and headings.count('本章小结')==1,f'{n}: final summary')
@@ -20,11 +20,12 @@ for n in range(1,13):
  index=json.loads((M/f'ch{n:02}/figure-index.json').read_text())
  got=[r.get('asset') or f'ch{n:02}/'+(r.get('file') or r['name']+'.svg') for r in index]
  check(got==assets,f'{n}: active figure index')
- bp=R/'before'/p.relative_to(ROOT)
- before=(bp if bp.exists() else next((R/'before'/'manuscripts').glob(f'{n:02}-*.md'))).read_text()
- # Removing references must not remove exercises or alter their identifiers (adding new exercises is allowed).
- exercise=lambda x:re.findall(r'^> \*\*(?:练习|实验) (\d+-\d+)',x,re.M)
- check(set(exercise(before))<=set(exercise(s)),f'{n}: preserved exercise identifiers')
+ if n<=12:
+  bp=R/'before'/p.relative_to(ROOT)
+  before=(bp if bp.exists() else next((R/'before'/'manuscripts').glob(f'{n:02}-*.md'))).read_text()
+  # Removing references must not remove exercises or alter their identifiers (adding new exercises is allowed).
+  exercise=lambda x:re.findall(r'^> \*\*(?:练习|实验) (\d+-\d+)',x,re.M)
+  check(set(exercise(before))<=set(exercise(s)),f'{n}: preserved exercise identifiers')
  rows.append(dict(chapter=n,last_section=headings[-1],figures=len(assets),footnotes=len(defined)))
 d=json.loads((ROOT/'calculations/results/core-principles.json').read_text())
 check(d['old_static_capacity']==4 and d['new_static_capacity']==18,'capacity counterfactual')

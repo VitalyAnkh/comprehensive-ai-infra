@@ -29,7 +29,7 @@ def prepare(source, dest, assets, source_ref=None):
     if number == 0:
         text = re.sub(r'^# 前言$', '# 前言 {.unnumbered}', text, flags=re.M)
         text = re.sub(r'^(## .+)$', r'\1 {.unnumbered}', text, flags=re.M)
-    text = re.sub(r'^# 第\s*\d+\s*章\s*(.*)$', rf'# \1 {{#chapter-{number}}}', text, flags=re.M)
+    text = re.sub(r'^# 第\s*\d+\s*章[：:\s]*(.*)$', rf'# \1 {{#chapter-{number}}}', text, flags=re.M)
     text = re.sub(r'<a id="([^"]+)"></a>\s*\n+(#{1,6} [^\n]+)',
                   lambda m: m[2]+' {#'+m[1]+'}', text)
     # Manuscripts repeat image alt text as the following italic caption. Merge them.
@@ -67,7 +67,7 @@ def prepare(source, dest, assets, source_ref=None):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--chapter', type=int, choices=range(1,13), help='Build one chapter with its original chapter number')
+    parser.add_argument('--chapter', type=int, choices=range(1,15), help='Build one chapter with its original chapter number')
     parser.add_argument('--output-dir', type=Path, default=HERE, help='Output directory relative to book/ (default: book/)')
     parser.add_argument('--source-ref', help='Git commit for portable GitHub links in released PDFs')
     args = parser.parse_args()
@@ -76,7 +76,7 @@ def main():
     name = f'AI-Infra-Book-Chapter-{args.chapter:02}' if args.chapter else 'AI-Infra-Book'
     work = HERE / 'build' / name
     work.mkdir(parents=True, exist_ok=True)
-    numbers = [args.chapter] if args.chapter else range(1,13)
+    numbers = [args.chapter] if args.chapter else range(1,15)
     sources = [next(MANUSCRIPTS.glob(f'{n:02}-*.md')) for n in numbers]
     inputs, assets = [], []
     for source in sources:

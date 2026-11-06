@@ -43,12 +43,13 @@ EDITIONS = {
 for name, (site, preface, chapter) in EDITIONS.items():
     if not (site / preface).exists():
         errors.append(f'{name}: missing preface')
-    missing = [n for n in range(1, 13) if not any(site.glob(chapter(n)))]
+    max_ch = 15 if name == '简体中文' else 13
+    missing = [n for n in range(1, max_ch) if not any(site.glob(chapter(n)))]
     if missing:
         errors.append(f'{name}: missing chapters {missing}')
     if not (site / 'search/search_index.json').exists():
         errors.append(f'{name}: missing search index')
 if errors:
     raise SystemExit('\n'.join(errors))
-print(f'PASS: {len(pages)} pages; {len(EDITIONS)} editions with preface, 12 chapters and search index; '
+print(f'PASS: {len(pages)} pages; {len(EDITIONS)} editions with preface, chapters (14 zh / 12 translations) and search index; '
       'internal links and images')

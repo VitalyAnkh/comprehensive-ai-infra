@@ -51,18 +51,21 @@ EDITIONS = {
 
 
 def chapters(edition):
-    """(number, path) for the preface (0) and chapters 1–12."""
+    """(number, path) for the preface (0) and chapters (1–14 for zh, 1–12 for translations)."""
     if edition == 'zh':
         found = [(int(p.name[:2]), p) for p in sorted((ROOT / 'manuscripts').glob('[0-9][0-9]-*.md'))]
-        found = [(n, p) for n, p in found if n <= 12]
+        found = [(n, p) for n, p in found if n <= 14]
+        expected = list(range(15))
     elif edition in ('en', 'zh-tw'):
         home = EDITIONS[edition]['home']
         found = [(0, home / 'introduction.md')] + [(n, home / f'chapter{n:02}.md') for n in range(1, 13)]
+        expected = list(range(13))
     else:
         home = EDITIONS[edition]['home']
         found = [(0, home / 'book' / 'preface.md')] + [(n, home / 'book' / f'chapter{n}.md') for n in range(1, 13)]
-    if [n for n, _ in found] != list(range(13)):
-        raise ValueError(f'Expected the preface and chapters 1–12 for {edition}')
+        expected = list(range(13))
+    if [n for n, _ in found] != expected:
+        raise ValueError(f'Expected the preface and chapters 1–{expected[-1]} for {edition}')
     for _, path in found:
         if not path.is_file():
             raise FileNotFoundError(path)
@@ -73,7 +76,7 @@ def title(path):
     heading = next((line for line in path.read_text(encoding='utf-8').splitlines()
                     if line.startswith('# ')), '# ' + path.stem)
     heading = re.sub(r'\s*\{[^}]*\}\s*$', '', heading)
-    return re.sub(r'^# (第 \d+ 章 |Глава \d+\.\s*)?', '', heading)
+    return re.sub(r'^# (第 \d+ 章[：:\s]*|Глава \d+\.\s*)?', '', heading)
 
 
 def rasterize(pdf):

@@ -1,0 +1,74 @@
+[
+  {
+    "figure_id": "图 14-1",
+    "number": 1,
+    "file": "ch14-codesign-simultaneous-equations.svg",
+    "asset": "ch14/ch14-codesign-simultaneous-equations.svg",
+    "section": "14.1.2",
+    "caption": "模型—系统—硬件协同设计的跨层耦合约束（MXFP4 块粒度、SFU 配比、HBM 容量与超节点半径）及四大定量设计杠杆",
+    "source_refs": [
+      "manuscripts/ch14/figure-data.json"
+    ],
+    "TeachingRole": "建立第 14 章跨层联立方程组与四大协同设计杠杆的总览框架"
+  },
+  {
+    "figure_id": "图 14-2",
+    "number": 2,
+    "file": "ch14-v41-dual-track-context-scaling.svg",
+    "asset": "ch14/ch14-v41-dual-track-context-scaling.svg",
+    "section": "14.2.1",
+    "caption": "算例 14-1：在 8K 至 1M 上下文扩展过程中，DeepSeek V4 Flash 与 V4.1 Flash 的驻留 KV 容量（恒定缩小 3.95x）与单步 Decode 理论读取量（从 1.10x 演进至 2.51x）的双轨分离规律",
+    "source_refs": [
+      "manuscripts/ch14/figure-data.json"
+    ],
+    "TeachingRole": "直观区分驻留显存容量压缩比与单步注意力读取带宽压缩比的不同演进轨迹"
+  },
+  {
+    "figure_id": "图 14-3",
+    "number": 3,
+    "file": "ch14-v41-four-stage-attention-pipeline.svg",
+    "asset": "ch14/ch14-v41-four-stage-attention-pipeline.svg",
+    "section": "14.2.3",
+    "caption": "V4.1 Flash 的四阶段全局注意力执行流水线（Full -> 16,384 候选池 -> Reindex -> Reuse）以及持久化前缀缓存缩减至 1/8（1/2 SWA 免存 × 1/4 CSA2 跨层共享）的正交拆解",
+    "source_refs": [
+      "manuscripts/ch14/figure-data.json"
+    ],
+    "TeachingRole": "剖析 4 个 Owner 层与 36 个 Follower 层如何协同消除重复索引扫描并实现 1/8 持久化缓存"
+  },
+  {
+    "figure_id": "图 14-4",
+    "number": 4,
+    "file": "ch14-digital-worker-v41-vs-k3-cost.svg",
+    "asset": "ch14/ch14-digital-worker-v41-vs-k3-cost.svg",
+    "section": "14.3.2",
+    "caption": "算例 14-2：24×7 数字员工在 200K/1M 上下文下 V4.1 Flash 与 Kimi K3 的跨代 GPU 选卡及 API 成本对比，以及揭示约七成耗时来自逐层固定开销与频繁重建假设的性能归因审计",
+    "source_refs": [
+      "manuscripts/ch14/figure-data.json"
+    ],
+    "TeachingRole": "演示如何在真实工程评估中剥离未优化运行时伪影与模型架构内生差异"
+  },
+  {
+    "figure_id": "图 14-5",
+    "number": 5,
+    "file": "ch14-opentallas-four-resource-and-wafer-hop.svg",
+    "asset": "ch14/ch14-opentallas-four-resource-and-wafer-hop.svg",
+    "section": "14.4.2",
+    "caption": "算例 14-3：OpenTallas 专用 ASIC 单步 124.221 μs（8,050 tok/s）的四资源时间账本（Case B）、晶圆级 15 跳 180 μs 通信直径越界（Case D）以及 2,000 万美元 NRE 的 40 万亿 token 回本边界（Case F）",
+    "source_refs": [
+      "manuscripts/ch14/figure-data.json"
+    ],
+    "TeachingRole": "用严密的四资源时间线与跨芯片跳数下界审计专用推理芯片的物理与商业可行性"
+  },
+  {
+    "figure_id": "图 14-6",
+    "number": 6,
+    "file": "ch14-five-step-diagnostic-decision-tree.svg",
+    "asset": "ch14/ch14-five-step-diagnostic-decision-tree.svg",
+    "section": "14.5.2",
+    "caption": "全书收束：AI 基础设施架构师的五步定量诊断法与跨层反事实协同设计决策树",
+    "source_refs": [
+      "manuscripts/ch14/figure-data.json"
+    ],
+    "TeachingRole": "收束全书十四章知识体系，提供可复用的一线 AI Infra 性能诊断与架构设计闭环"
+  }
+]

@@ -49,6 +49,8 @@
 | 10 | [训练系统](manuscripts/10-训练系统.md) | 如何安排显存、通信和重算，让训练更高效？ |
 | 11 | [资源调度与运行环境](manuscripts/11-资源调度与运行环境.md) | 模型服务和工具环境如何共享资源，减少等待？ |
 | 12 | [端边云协同](manuscripts/12-端边云协同.md) | 任务放在本地、边缘还是云端，如何兼顾效果、延迟和成本？ |
+| 13 | [AI 原生存储系统与数据底座](<manuscripts/13-AI 原生存储系统与数据底座.md>) | 如何消除页缓存拷贝、闪存读写放大与多模态数据供给瓶颈？ |
+| 14 | [模型与系统硬件协同设计](manuscripts/14-模型与系统硬件协同设计.md) | 硬件边界如何反向塑造模型结构，如何用五步定量法闭合全书？ |
 
 ## 适合谁读
 
@@ -117,7 +119,7 @@ python3 book/build_epub.py --edition zh       # EPUB 只需 Pandoc 与 Poppler�
 
 | 目录 | 内容 |
 | --- | --- |
-| [manuscripts/](manuscripts/README.md) | 前言、十二章正文、配图与绘图脚本 |
+| [manuscripts/](manuscripts/README.md) | 前言、十四章正文、配图与绘图脚本 |
 | [experiments/](experiments/README.md) | 按章节组织的实验与运行记录 |
 | [calculations/](calculations/README.md) | 资源计算工具、固定输入与复算结果 |
 | [case-studies/](case-studies/README.md) | 模型、硬件和系统案例分析，按章节索引 |

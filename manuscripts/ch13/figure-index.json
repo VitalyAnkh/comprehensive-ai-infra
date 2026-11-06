@@ -1,0 +1,74 @@
+[
+  {
+    "figure_id": "图 13-1",
+    "number": 1,
+    "file": "ch13-storage-hierarchy-and-access-patterns.svg",
+    "asset": "ch13/ch13-storage-hierarchy-and-access-patterns.svg",
+    "section": "13.1.2",
+    "caption": "AI 存储介质金字塔（L1 HBM 至 L5 对象存储）的延迟、IOPS 与带宽量级，以及四类核心 AI 负载的 I/O 访问瓶颈",
+    "source_refs": [
+      "manuscripts/ch13/figure-data.json"
+    ],
+    "TeachingRole": "建立全章五级存储金字塔与四类 AI I/O 访问特征的定量坐标"
+  },
+  {
+    "figure_id": "图 13-2",
+    "number": 2,
+    "file": "ch13-posix-pagecache-vs-gds-dma.svg",
+    "asset": "ch13/ch13-posix-pagecache-vs-gds-dma.svg",
+    "section": "13.2.2",
+    "caption": "算例 13-1：单机 8 盘 PCIe Gen5 NVMe SSD 加载 140 GB 权重时，传统 POSIX 页缓存双重拷贝（280 GB Root Complex 流量，耗时 2.80 s）与 GPUDirect Storage P2P DMA 零拷贝直通（100 GB/s，耗时 1.40 s）对比",
+    "source_refs": [
+      "manuscripts/ch13/figure-data.json"
+    ],
+    "TeachingRole": "直观揭示 Page Cache 在 PCIe Root Complex 上的流量翻倍效应与 GDS P2P DMA 的旁路机理"
+  },
+  {
+    "figure_id": "图 13-3",
+    "number": 3,
+    "file": "ch13-3fs-craq-architecture.svg",
+    "asset": "ch13/ch13-3fs-craq-architecture.svg",
+    "section": "13.3.3",
+    "caption": "DeepSeek 3FS 的 CRAQ 链式复制协议（链式顺序写与全副本强一致分摊读）及算例 13-2 中 180 节点存储集群实现 6.6 TiB/s 聚合读带宽的网卡—磁盘配比账本",
+    "source_refs": [
+      "manuscripts/ch13/figure-data.json"
+    ],
+    "TeachingRole": "展示 CRAQ 如何将强一致读吞吐线性扩展至全部副本，以及磁盘超配 2.24 倍如何掩盖写放大与 GC"
+  },
+  {
+    "figure_id": "图 13-4",
+    "number": 4,
+    "file": "ch13-kv-layout-read-amplification.svg",
+    "asset": "ch13/ch13-kv-layout-read-amplification.svg",
+    "section": "13.4.2",
+    "caption": "算例 13-3：32 层模型卸载 16-token KV 块时，Layer-major 按层分离布局（触发 4 KiB LBA 读放大 RAF=2.0x 与 800k IOPS 墙，耗时 5.12 ms）与 Block-major 全层打包布局（RAF=1.0x，跑满 12.5 GiB/s，耗时 0.625 ms，提速 8.192x）对比",
+    "source_refs": [
+      "manuscripts/ch13/figure-data.json"
+    ],
+    "TeachingRole": "阐明 NAND Flash 最小读粒度与 IOPS 墙如何决定 KV Cache 的跨层连续打包布局"
+  },
+  {
+    "figure_id": "图 13-5",
+    "number": 5,
+    "file": "ch13-zns-gc-tail-latency.svg",
+    "asset": "ch13/ch13-zns-gc-tail-latency.svg",
+    "section": "13.4.3",
+    "caption": "传统块接口 NVMe SSD 在混写负载下的 FTL 垃圾回收（GC）写放大（WAF=2.5–4.0x）与读尾延迟毛刺，以及 ZNS 分区命名空间 SSD 按会话/检查点生命周期对齐实现 WAF≈1.0x 的机制",
+    "source_refs": [
+      "manuscripts/ch13/figure-data.json"
+    ],
+    "TeachingRole": "解释 SSD P99 尾延迟毛刺与寿命折损的物理根源及 ZNS 顺序追加区的治理方案"
+  },
+  {
+    "figure_id": "图 13-6",
+    "number": 6,
+    "file": "ch13-multimodal-dataloader-pipeline.svg",
+    "asset": "ch13/ch13-multimodal-dataloader-pipeline.svg",
+    "section": "13.5.2",
+    "caption": "多模态训练中 WebDataset 分片打包消除元数据风暴，以及算例 13-4 中每秒 4,096 段 720p 视频（65,536 fps）从主机 CPU 软解码赤字（缺口 160 核）向 DALI + 8×GPU NVDEC 硬件解码卸载的流水线",
+    "source_refs": [
+      "manuscripts/ch13/figure-data.json"
+    ],
+    "TeachingRole": "展示 PB 级多模态训练如何打通存储分片顺序供给与片上 NVDEC 异构解码闭环"
+  }
+]

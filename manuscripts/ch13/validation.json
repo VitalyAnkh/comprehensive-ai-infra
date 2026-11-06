@@ -1,0 +1,146 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "check": "all five sections and twelve subsections match outline",
+      "passed": true
+    },
+    {
+      "check": "last H2 is 本章小结",
+      "passed": true
+    },
+    {
+      "check": "six exercises 13-1 to 13-6 in order",
+      "passed": true
+    },
+    {
+      "check": "six figures in figure-index.json",
+      "passed": true
+    },
+    {
+      "check": "sequential external captions 13-1 to 13-6",
+      "passed": true
+    },
+    {
+      "check": "active illustrations match figure-index.json",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch13-storage-hierarchy-and-access-patterns",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch13-storage-hierarchy-and-access-patterns",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch13-storage-hierarchy-and-access-patterns",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch13-posix-pagecache-vs-gds-dma",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch13-posix-pagecache-vs-gds-dma",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch13-posix-pagecache-vs-gds-dma",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch13-3fs-craq-architecture",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch13-3fs-craq-architecture",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch13-3fs-craq-architecture",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch13-kv-layout-read-amplification",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch13-kv-layout-read-amplification",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch13-kv-layout-read-amplification",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch13-zns-gc-tail-latency",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch13-zns-gc-tail-latency",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch13-zns-gc-tail-latency",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch13-multimodal-dataloader-pipeline",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch13-multimodal-dataloader-pipeline",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch13-multimodal-dataloader-pipeline",
+      "passed": true
+    },
+    {
+      "check": "local links exist",
+      "passed": true
+    },
+    {
+      "check": "all footnotes used and defined once",
+      "passed": true
+    },
+    {
+      "check": "sources.json integrity",
+      "passed": true
+    },
+    {
+      "check": "manifest.json integrity",
+      "passed": true
+    },
+    {
+      "check": "no formula errors",
+      "passed": true
+    },
+    {
+      "check": "book-size figure layout",
+      "passed": true
+    },
+    {
+      "check": "Example 13-1 GDS arithmetic",
+      "passed": true
+    },
+    {
+      "check": "Example 13-2 3FS arithmetic",
+      "passed": true
+    },
+    {
+      "check": "Example 13-3 KV layout arithmetic",
+      "passed": true
+    },
+    {
+      "check": "Example 13-4 multimodal decoding arithmetic",
+      "passed": true
+    },
+    {
+      "check": "zero exclamation marks",
+      "passed": true
+    }
+  ],
+  "missing_links": []
+}
