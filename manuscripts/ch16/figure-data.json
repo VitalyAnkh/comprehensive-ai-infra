@@ -1,0 +1,77 @@
+{
+  "chapter": 16,
+  "title": "机密 AI 计算、可信执行环境与安全沙箱底座",
+  "locked_truths": {
+    "pipellm_asplos25": {
+      "tensor_size_mib": 64,
+      "pipeline_stages": ["H2D", "Decrypt", "Compute", "Encrypt", "D2H"],
+      "triple_buffer_mib": 192,
+      "aes_ctr_otp": "Offline pre-generation of AES-CTR pads overlaps with computation; speculative encryption of likely branches",
+      "caveat": "Extra host copies allow earlier preparation; unused speculative work is not free; paper evaluated single H100 without CPU TDX enabled"
+    },
+    "rubin_tee_io": {
+      "pcie_gen6_bw_gbs": 256,
+      "nvlink6_per_gpu_tbs": 3.6,
+      "nvlink6_rack_tbs": 260,
+      "architecture": "Native hardware line-rate TEE-I/O across PCIe Gen6 and NVLink 6, eliminating CPU bounce buffer double-copy"
+    },
+    "dsec_sandbox_platform": {
+      "cell_nodes": 160,
+      "cell_cpu_cores": 30000,
+      "cell_dram_tb": 250,
+      "daily_sandboxes": 3000000,
+      "peak_concurrent_sandboxes": 380000,
+      "creation_rate_per_sec": 5000,
+      "per_node_creation_rate": 31.3,
+      "low_util_ratio": "90% sandboxes have <= 5% average CPU utilization",
+      "density_per_node": {
+        "containers": 3200,
+        "microvms": 800
+      },
+      "four_backends": [
+        "Pre-warmed FnCall (stateless function execution)",
+        "Containers inside QEMU/libvirt VMs (batch multi-container isolation)",
+        "Firecracker microVM (lightweight hardware virtualization per task)",
+        "Full QEMU VM (Android OS and GPU paravirtualization)"
+      ],
+      "real_escape_failures": [
+        "XFS_IOC_SWAPEXT bypassing access control and corrupting XFS filesystem metadata",
+        "Overwriting /bin/bash inside container",
+        "Recursive grep reading /proc/kpagecgroup triggering host kernel defect",
+        "yes command flooding tens of GBs of container logs",
+        "Internal network port scanning and forging RPCs to chronus Unix/TCP socket",
+        "Fetching reference answers via Go module proxy"
+      ],
+      "memory_dedup": {
+        "virtio_pmem_dax_peak_mem_reduction": -0.402,
+        "struct_page_bytes_per_4k": 64,
+        "struct_page_ratio": "1/64 (1.5625%)",
+        "struct_page_128gb_cost_gb": 2.0,
+        "cpu_peak_increase": "26.5% -> 41.4%",
+        "damon_balloon_order": 9,
+        "damon_balloon_block_mib": 2,
+        "damon_time_integrated_mem_reduction": -0.212
+      },
+      "noisy_neighbor_isolation": {
+        "cfs_default_inflation": 0.452,
+        "sched_idle_only_improvement": 0.034,
+        "sched_idle_plus_core_sched_inflation": 0.173
+      }
+    },
+    "audit_ledger_i19": {
+      "task_rate_per_s": 10,
+      "events_per_task": 20,
+      "event_rate_per_s": 200,
+      "event_size_kib": 2,
+      "arrival_rate_kibs": 400,
+      "outage_duration_s": 120,
+      "backlog_events": 24000,
+      "backlog_kib": 48000,
+      "backlog_mib": 46.875,
+      "ring_buffer_32mib_overflow_s": 81.92,
+      "gross_drain_rate_kibs": 1024,
+      "net_drain_rate_kibs": 624,
+      "recovery_drain_time_s": 76.923
+    }
+  }
+}

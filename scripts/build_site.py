@@ -51,11 +51,11 @@ EDITIONS = {
 
 
 def chapters(edition):
-    """(number, path) for the preface (0) and chapters (1–14 for zh, 1–12 for translations)."""
+    """(number, path) for the preface (0) and chapters (1–16 for zh, 1–12 for translations)."""
     if edition == 'zh':
         found = [(int(p.name[:2]), p) for p in sorted((ROOT / 'manuscripts').glob('[0-9][0-9]-*.md'))]
-        found = [(n, p) for n, p in found if n <= 14]
-        expected = list(range(15))
+        found = [(n, p) for n, p in found if n <= 16]
+        expected = list(range(17))
     elif edition in ('en', 'zh-tw'):
         home = EDITIONS[edition]['home']
         found = [(0, home / 'introduction.md')] + [(n, home / f'chapter{n:02}.md') for n in range(1, 13)]

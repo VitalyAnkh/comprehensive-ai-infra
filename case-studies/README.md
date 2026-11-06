@@ -2,7 +2,7 @@
 
 这里是正文算例背后的展开材料：具体模型、硬件与系统案例的完整推算、来源核对和取舍说明。正文只保留结论与关键推导，脚注链接到对应案例。
 
-下表按引用的章节分组；“引用章节”列出所有链接到该案例的章（全库 73 篇案例已 100% 接入正文第 1～14 章）。
+下表按引用的章节分组；“引用章节”列出所有链接到该案例的章（全库 73 篇案例已 100% 接入正文第 1～16 章）。
 
 ## 第 1 章 · 初识 AI Infra
 
@@ -10,7 +10,7 @@
 | --- | :--: |
 | [主机调度的放置与任务吞吐](host-policy-and-dispatch.md) | 1、11 |
 | [从内核瓶颈到训练产出](kernel-and-fleet-efficiency.md) | 1、4、10 |
-| [LogicFolding：芯片内部的数据移动与能耗](logicfolding-energy.md) | 1、4 |
+| [LogicFolding：芯片内部的数据移动与能耗](logicfolding-energy.md) | 1、4、15 |
 | [可编程网卡：从网络虚拟化到数据访问](programmable-nic.md) | 1、7 |
 
 ## 第 2 章 · 模型架构
@@ -122,8 +122,8 @@
 
 | 案例 | 引用章节 |
 | --- | :--: |
-| [DSec：Agent RL 沙箱平台的资源与状态](dsec-sandbox-platform.md) | 11 |
-| [优化结果与 Agent 执行记录](evaluation-and-agent-records.md) | 11 |
+| [DSec：Agent RL 沙箱平台的资源与状态](dsec-sandbox-platform.md) | 11、13、16 |
+| [优化结果与 Agent 执行记录](evaluation-and-agent-records.md) | 11、16 |
 | [调度、模型路由与云端环境：扩写依据](platform-routing.md) | 11 |
 | [可抢占 rollout 的权重准备与有效产出](preemptible-rollout-and-weight-readiness.md) | 11 |
 | [RL 验证的剩余时间与资源配置](reward-deadlines-and-feedback.md) | 11 |
@@ -143,3 +143,16 @@
 | --- | :--: |
 | [OpenTallas：从不可变权重到系统可行性的案例与习题](opentallas.md) | 4、14 |
 | [一名 24×7 数字员工的 serving 成本](single-agent-serving-cost.md) | 11、14 |
+
+## 第 15 章 · 吉瓦级 AI 数据中心、电力热学与跨地域协同训练
+
+| 案例 | 引用章节 |
+| --- | :--: |
+| [LogicFolding：芯片内部的数据移动与能耗](logicfolding-energy.md) | 1、4、15 |
+
+## 第 16 章 · 机密 AI 计算、可信执行环境与安全沙箱底座
+
+| 案例 | 引用章节 |
+| --- | :--: |
+| [DSec：Agent RL 沙箱平台的资源与状态](dsec-sandbox-platform.md) | 11、13、16 |
+| [优化结果与 Agent 执行记录](evaluation-and-agent-records.md) | 11、16 |

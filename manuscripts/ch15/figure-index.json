@@ -1,0 +1,206 @@
+[
+  {
+    "figure_id": "图 15-1",
+    "number": 1,
+    "file": "ch15-gigawatt-ai-factory-power-chain.svg",
+    "asset": "ch15/ch15-gigawatt-ai-factory-power-chain.svg",
+    "section": "15.1.1",
+    "caption": "吉瓦级 AI 工厂从 220 kV 变电站到机柜 800 VDC 母排与液冷 CDU 的全链路供电及铜损分解（算例 15-1）",
+    "source_refs": [
+      "references/files/specs/nvidia-rubin-system.md",
+      "manuscripts/ch15/figure-data.json"
+    ],
+    "TeachingRole": "建立从高压电网到机柜 800 VDC 直流母排的四级转换链路与铜损缩减 277.8 倍账本"
+  },
+  {
+    "figure_id": "图 15-2",
+    "number": 2,
+    "file": "ch15-physical-vs-economic-feasibility.svg",
+    "asset": "ch15/ch15-physical-vs-economic-feasibility.svg",
+    "section": "15.1.2",
+    "caption": "物理可行域与经济可行域双边界及 P_domain × GB/W 口径错配高估警示图（算例 15-2，D11-08）",
+    "source_refs": [
+      "research/draft11-outline-audit/report.md",
+      "manuscripts/ch15/figure-data.json"
+    ],
+    "TeachingRole": "揭示漏扣 28% 非 GPU 固定功耗与 20% 显存运行余量导致的容量虚胖"
+  },
+  {
+    "figure_id": "图 15-3",
+    "number": 3,
+    "file": "ch15-site-conditions-tco-sensitivity.svg",
+    "asset": "ch15/ch15-site-conditions-tco-sensitivity.svg",
+    "section": "15.1.3",
+    "caption": "站点条件（电价、供电上限、并网延期折旧与散热阈值）作为一等设计输入的 TCO 敏感性矩阵（算例 15-3，D11-09）",
+    "source_refs": [
+      "research/draft11-outline-audit/report.md",
+      "manuscripts/ch15/figure-data.json"
+    ],
+    "TeachingRole": "量化电价差（2.10 亿美元）与并网延期 6 个月（3.33 亿美元折旧）对集群选址的决定性影响"
+  },
+  {
+    "figure_id": "图 15-4",
+    "number": 4,
+    "file": "ch15-synchronous-training-power-swing.svg",
+    "asset": "ch15/ch15-synchronous-training-power-swing.svg",
+    "section": "15.2.1",
+    "caption": "十万卡同步训练在 GEMM 计算期与 AllReduce 通信期周期性切换引发的 85 MW 电网阶跃冲击波形",
+    "source_refs": [
+      "references/files/specs/nvidia-rubin-system.md",
+      "manuscripts/ch15/figure-data.json"
+    ],
+    "TeachingRole": "展示毫秒级同步屏障如何将微观算子切换放大为宏观电网频率冲击"
+  },
+  {
+    "figure_id": "图 15-5",
+    "number": 5,
+    "file": "ch15-rubin-power-smoothing-and-maxlps.svg",
+    "asset": "ch15/ch15-rubin-power-smoothing-and-maxlps.svg",
+    "section": "15.2.2",
+    "caption": "Vera Rubin 机架级储能 SoC 功率平滑（削峰 20%、均功降 10%）与 DSX MaxLPS 同配额 +40% GPU 超配机制",
+    "source_refs": [
+      "references/files/specs/nvidia-rubin-system.md",
+      "references/text/nvidia-rubin-arch.txt"
+    ],
+    "TeachingRole": "解析机架级储能闭环控制与 DSX MaxLPS 如何在固定兆瓦配额下多塞入 40% 算力"
+  },
+  {
+    "figure_id": "图 15-6",
+    "number": 6,
+    "file": "ch15-runtime-staggered-microbatch-power.svg",
+    "asset": "ch15/ch15-runtime-staggered-microbatch-power.svg",
+    "section": "15.2.3",
+    "caption": "运行时软件协同抑峰：流水线微批次错峰注入、斜坡限幅器与空闲期受控保底核时序对比",
+    "source_refs": [
+      "references/files/specs/nvidia-rubin-system.md",
+      "manuscripts/ch15/figure-data.json"
+    ],
+    "TeachingRole": "展示软件调度如何与硬件储能协同平抑集群级 dP/dt 斜率"
+  },
+  {
+    "figure_id": "图 15-7",
+    "number": 7,
+    "file": "ch15-ashrae-w45-cdu-liquid-cooling-loop.svg",
+    "asset": "ch15/ch15-ashrae-w45-cdu-liquid-cooling-loop.svg",
+    "section": "15.3.1",
+    "caption": "ASHRAE TC 9.9 W45（45°C 温水进液）冷板—分集水器—CDU—干冷器无冷机换热回路与流量核算（算例 15-4）",
+    "source_refs": [
+      "references/text/ashrae-liquid-cooling.txt",
+      "references/files/specs/nvidia-rubin-system.md"
+    ],
+    "TeachingRole": "建立风冷物理极限（1,900 CFM/砖）与 132 kW 液冷机柜 Q = m_dot·c_p·ΔT 流量账本"
+  },
+  {
+    "figure_id": "图 15-8",
+    "number": 8,
+    "file": "ch15-logicfolding-power-density-paradox.svg",
+    "asset": "ch15/ch15-logicfolding-power-density-paradox.svg",
+    "section": "15.3.2",
+    "caption": "LogicFolding 降压节能（0.85 V → 0.55 V）与面积缩减更快导致的功率密度反升（0.75/0.60 = 1.25x，算例 15-5）",
+    "source_refs": [
+      "case-studies/logicfolding-energy.md",
+      "manuscripts/ch15/figure-data.json"
+    ],
+    "TeachingRole": "阐明总功耗下降不等于散热变易：投影面积压缩 40% 会将单位面积热流密度推高 25%"
+  },
+  {
+    "figure_id": "图 15-9",
+    "number": 9,
+    "file": "ch15-thermal-throttling-straggler-amplification.svg",
+    "asset": "ch15/ch15-thermal-throttling-straggler-amplification.svg",
+    "section": "15.3.3",
+    "caption": "单颗过热 GPU 触发降频 15% 如何通过同步 AllReduce 屏障拖慢整组 1,024 张卡的有效吞吐",
+    "source_refs": [
+      "research/2026-infra-survey/verify_tapas_reading.py",
+      "manuscripts/ch15/figure-data.json"
+    ],
+    "TeachingRole": "揭示局部冷板微水道堵塞或进液偏温如何经集合通信屏障放大为全局 15% 算力损失"
+  },
+  {
+    "figure_id": "图 15-10",
+    "number": 10,
+    "file": "ch15-tapas-thermal-power-routing-breakeven.svg",
+    "asset": "ch15/ch15-tapas-thermal-power-routing-breakeven.svg",
+    "section": "15.3.3",
+    "caption": "TAPAS（ASPLOS '25）热感知与功率封顶重配置（[102, 86] kW 削峰至 ≤ 100 kW，3.0 s 停顿在 30 请求处回本，算例 15-6）",
+    "source_refs": [
+      "research/2026-infra-survey/verify_tapas_reading.py",
+      "manuscripts/ch15/figure-data.json"
+    ],
+    "TeachingRole": "用受控算例验证功率/温度与延迟双约束下的路由可行集及重配置回本阈值"
+  },
+  {
+    "figure_id": "图 15-11",
+    "number": 11,
+    "file": "ch15-multi-datacenter-dci-optical-latency.svg",
+    "asset": "ch15/ch15-multi-datacenter-dci-optical-latency.svg",
+    "section": "15.4.1",
+    "caption": "跨 1,000 km 广域光网（RTT = 10 ms，BDP = 2.0 GB）的传播延迟与四类并行维度的跨城可迁移性边界",
+    "source_refs": [
+      "manuscripts/ch15/figure-data.json"
+    ],
+    "TeachingRole": "从光纤折射率物理极限推导为何 TP/EP 严禁跨城而 PP/低频 DP 可以跨城"
+  },
+  {
+    "figure_id": "图 15-12",
+    "number": 12,
+    "file": "ch15-cross-dc-pipeline-and-hierarchical-dp.svg",
+    "asset": "ch15/ch15-cross-dc-pipeline-and-hierarchical-dp.svg",
+    "section": "15.4.2",
+    "caption": "跨园区流水线并行（Cross-DC PP）与园区内 NVLink/RoCE + 园区际 DWDM 分层数据并行时序",
+    "source_refs": [
+      "manuscripts/ch15/figure-data.json"
+    ],
+    "TeachingRole": "推导用微批次计算掩盖 10 ms 广域网 RTT 的临界条件与两级规约流量缩减比"
+  },
+  {
+    "figure_id": "图 15-13",
+    "number": 13,
+    "file": "ch15-diloco-inner-outer-optimization.svg",
+    "asset": "ch15/ch15-diloco-inner-outer-optimization.svg",
+    "section": "15.4.3",
+    "caption": "DiLoCo 内循环 H = 500 步独立更新与外循环 Nesterov 伪梯度同步将跨城带宽需求压缩 500 倍的机制（算例 15-7）",
+    "source_refs": [
+      "manuscripts/ch15/figure-data.json"
+    ],
+    "TeachingRole": "剖析外循环伪梯度同步如何换取 500 倍广域网带宽缩减及其额外显存代价"
+  },
+  {
+    "figure_id": "图 15-14",
+    "number": 14,
+    "file": "ch15-streaming-diloco-chunked-sync.svg",
+    "asset": "ch15/ch15-streaming-diloco-chunked-sync.svg",
+    "section": "15.4.3",
+    "caption": "全量阻塞式外循环同步与 Streaming DiLoCo 分片流水重叠同步的广域网链路利用率对比",
+    "source_refs": [
+      "manuscripts/ch15/figure-data.json"
+    ],
+    "TeachingRole": "展示如何将第 H 步的突发全量伪梯度通信摊平至整个内循环窗口以消除 DCI 拥塞"
+  },
+  {
+    "figure_id": "图 15-15",
+    "number": 15,
+    "file": "ch15-single-campus-vs-multi-campus-decision.svg",
+    "asset": "ch15/ch15-single-campus-vs-multi-campus-decision.svg",
+    "section": "15.4.3",
+    "caption": "单园区等待变电站扩容 vs. 多园区跨城协同训练的完成工期与成本交点决策树",
+    "source_refs": [
+      "research/draft11-outline-audit/report.md",
+      "manuscripts/ch15/figure-data.json"
+    ],
+    "TeachingRole": "联合并网延期折旧与广域网专线租金给出单园区与多园区方案的定量切换准则"
+  },
+  {
+    "figure_id": "图 15-16",
+    "number": 16,
+    "file": "ch15-power-thermal-wan-co-design-summary.svg",
+    "asset": "ch15/ch15-power-thermal-wan-co-design-summary.svg",
+    "section": "15.4.3",
+    "caption": "从芯片结温、机柜液冷、变电站功率平滑到跨地域光网的吉瓦级 AI 基础设施全景图",
+    "source_refs": [
+      "references/files/specs/nvidia-rubin-system.md",
+      "manuscripts/ch15/figure-data.json"
+    ],
+    "TeachingRole": "收束第 15 章供电、散热、瞬态功率与跨城光网的四层物理闭环"
+  }
+]

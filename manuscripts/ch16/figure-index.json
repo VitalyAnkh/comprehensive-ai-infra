@@ -1,0 +1,208 @@
+[
+  {
+    "figure_id": "图 16-1",
+    "number": 1,
+    "file": "ch16-confidential-ai-vs-sandbox-threat-model.svg",
+    "asset": "ch16/ch16-confidential-ai-vs-sandbox-threat-model.svg",
+    "section": "16.1.1",
+    "caption": "AI 基础设施的双向信任边界：防宿主机窥探的机密 AI 计算（TEE）vs. 防自主 Agent 逃逸的安全沙箱（microVM）",
+    "source_refs": [
+      "case-studies/dsec-sandbox-platform.md",
+      "manuscripts/ch16/figure-data.json"
+    ],
+    "TeachingRole": "建立机密计算（宿主机不可信）与安全沙箱（工作负载不可信）的正交双向威胁模型"
+  },
+  {
+    "figure_id": "图 16-2",
+    "number": 2,
+    "file": "ch16-cpu-gpu-tee-remote-attestation.svg",
+    "asset": "ch16/ch16-cpu-gpu-tee-remote-attestation.svg",
+    "section": "16.2.1",
+    "caption": "CPU TEE（Intel TDX / AMD SEV-SNP）与 GPU TEE 的联合远程证明四步握手及 HBM 加密显存边界",
+    "source_refs": [
+      "references/text/nvidia-rubin-arch.txt",
+      "manuscripts/ch16/figure-data.json"
+    ],
+    "TeachingRole": "展示硬件信任根如何确保模型解密密钥仅在通过度量核验的可信执行环境内部释放"
+  },
+  {
+    "figure_id": "图 16-3",
+    "number": 3,
+    "file": "ch16-bounce-buffer-vs-rubin-tee-io.svg",
+    "asset": "ch16/ch16-bounce-buffer-vs-rubin-tee-io.svg",
+    "section": "16.2.2",
+    "caption": "传统软件弹跳缓冲双重拷贝加密 vs. Vera Rubin 原生 PCIe Gen6（256 GB/s）与 NVLink 6（3.6 TB/s）硬件内联线速 TEE-I/O（算例 16-1）",
+    "source_refs": [
+      "references/text/nvidia-rubin-arch.txt",
+      "manuscripts/ch16/figure-data.json"
+    ],
+    "TeachingRole": "量化消除主机弹跳缓冲与 CPU AES-GCM 瓶颈后 64 MiB 机密传输 22 倍的延迟压缩"
+  },
+  {
+    "figure_id": "图 16-4",
+    "number": 4,
+    "file": "ch16-pipellm-five-stage-confidential-pipeline.svg",
+    "asset": "ch16/ch16-pipellm-five-stage-confidential-pipeline.svg",
+    "section": "16.3.1",
+    "caption": "PipeLLM（ASPLOS '25）五阶段机密张量卸载流水线（H2D → Decrypt → Compute → Encrypt → D2H）与 192 MiB 三缓冲显存账本（算例 16-2）",
+    "source_refs": [
+      "research/2026-infra-survey/reading-asplos-2025.md",
+      "references/proceedings/ASPLOS/2025/pipellm-reading.json"
+    ],
+    "TeachingRole": "拆解机密卸载中用 3 × 64 MiB = 192 MiB 显存三缓冲换取加解密与传输重叠的流水机制"
+  },
+  {
+    "figure_id": "图 16-5",
+    "number": 5,
+    "file": "ch16-aes-ctr-otp-speculative-encryption.svg",
+    "asset": "ch16/ch16-aes-ctr-otp-speculative-encryption.svg",
+    "section": "16.3.2",
+    "caption": "AES-CTR 一次性掩码（OTP）离线预生成与投机分支预加密的命中收益及未命中带宽惩罚边界（算例 16-3）",
+    "source_refs": [
+      "research/2026-infra-survey/reading-asplos-2025.md",
+      "references/proceedings/ASPLOS/2025/pipellm-reading.json"
+    ],
+    "TeachingRole": "阐明在线异或加速的原理，并指出投机未命中时的额外主机拷贝与总线带宽并非免费"
+  },
+  {
+    "figure_id": "图 16-6",
+    "number": 6,
+    "file": "ch16-agent-container-escape-failure-modes.svg",
+    "asset": "ch16/ch16-agent-container-escape-failure-modes.svg",
+    "section": "16.4.1",
+    "caption": "DeepSeek DSec 生产环境中自主 RL Agent 在共享宿主机内核容器下的三类真实越界与故障案例",
+    "source_refs": [
+      "case-studies/dsec-sandbox-platform.md",
+      "manuscripts/ch16/figure-data.json"
+    ],
+    "TeachingRole": "用 XFS_IOC_SWAPEXT、/proc/kpagecgroup 与 chronus 伪造实证为何裸容器无法隔离强化学习 Agent"
+  },
+  {
+    "figure_id": "图 16-7",
+    "number": 7,
+    "file": "ch16-dsec-firecracker-microvm-architecture.svg",
+    "asset": "ch16/ch16-dsec-firecracker-microvm-architecture.svg",
+    "section": "16.4.1",
+    "caption": "DeepSeek DSec 安全沙箱平台架构：单 Cell 160 节点支撑 38 万并发沙箱与四类隔离后端（FnCall / VM 容器 / Firecracker / QEMU VM）",
+    "source_refs": [
+      "case-studies/dsec-sandbox-platform.md",
+      "manuscripts/ch16/figure-data.json"
+    ],
+    "TeachingRole": "展示工业级百万并发 Agent 沙箱如何按任务形态匹配四类虚拟化后端与高密度超卖"
+  },
+  {
+    "figure_id": "图 16-8",
+    "number": 8,
+    "file": "ch16-virtio-pmem-dax-vs-struct-page-tax.svg",
+    "asset": "ch16/ch16-virtio-pmem-dax-vs-struct-page-tax.svg",
+    "section": "16.4.2",
+    "caption": "virtio-pmem + DAX 消除宿主—客户机双重页缓存（峰值内存 -40.2%）与每 128 GB 设备消耗 2 GB struct page 元数据的权衡（算例 16-4）",
+    "source_refs": [
+      "case-studies/dsec-sandbox-platform.md",
+      "manuscripts/ch16/figure-data.json"
+    ],
+    "TeachingRole": "精确核算 64 B / 4 KiB = 1/64 的 Guest 内核描述符税，解释为何仅对只读镜像层启用 DAX"
+  },
+  {
+    "figure_id": "图 16-9",
+    "number": 9,
+    "file": "ch16-damon-ept-balloon-reclaim.svg",
+    "asset": "ch16/ch16-damon-ept-balloon-reclaim.svg",
+    "section": "16.4.2",
+    "caption": "DAMON 冷页监控与 virtio-balloon 空闲页报告（order-9 = 2 MiB 块）将时间积分内存（GB·s）降低 21.2% 的闭环机制",
+    "source_refs": [
+      "case-studies/dsec-sandbox-platform.md",
+      "manuscripts/ch16/figure-data.json"
+    ],
+    "TeachingRole": "揭示针对大容量可写虚拟磁盘与客户机堆内存的动态冷页回收流水线"
+  },
+  {
+    "figure_id": "图 16-10",
+    "number": 10,
+    "file": "ch16-sched-idle-and-core-scheduling.svg",
+    "asset": "ch16/ch16-sched-idle-and-core-scheduling.svg",
+    "section": "16.4.3",
+    "caption": "延迟敏感（LS）与尽力而为（BE）任务同机混部下，CFS 默认调度（+45.2%）vs. SCHED_IDLE + SMT 核调度（+17.3%）对比（算例 16-5）",
+    "source_refs": [
+      "case-studies/dsec-sandbox-platform.md",
+      "manuscripts/ch16/figure-data.json"
+    ],
+    "TeachingRole": "证明仅调低优先级不足以消除同物理核 SMT 超线程争用，必须开启 prctl(PR_SCHED_CORE)"
+  },
+  {
+    "figure_id": "图 16-11",
+    "number": 11,
+    "file": "ch16-ebpf-cgroup-network-allowlist.svg",
+    "asset": "ch16/ch16-ebpf-cgroup-network-allowlist.svg",
+    "section": "16.4.3",
+    "caption": "AppArmor 本地访问控制与按任务动态更新的 cgroup eBPF 网络白名单流水线",
+    "source_refs": [
+      "case-studies/dsec-sandbox-platform.md",
+      "manuscripts/ch16/figure-data.json"
+    ],
+    "TeachingRole": "展示如何在宿主机内核态阻断沙箱对集群内网的横向扫描与评测作弊连接"
+  },
+  {
+    "figure_id": "图 16-12",
+    "number": 12,
+    "file": "ch16-agent-audit-log-outage-and-drain.svg",
+    "asset": "ch16/ch16-agent-audit-log-outage-and-drain.svg",
+    "section": "16.5.1",
+    "caption": "算例 16-6（I19）：日志后端中断 120 s 积压 46.875 MiB（32 MiB 缓冲于 81.92 s 溢出）及恢复后按 624 KiB/s 净速率在 76.92 s 排空",
+    "source_refs": [
+      "case-studies/evaluation-and-agent-records.md",
+      "manuscripts/ch16/figure-data.json"
+    ],
+    "TeachingRole": "通过排队论净排空方程纠正忽略持续新到达流量的工程误算"
+  },
+  {
+    "figure_id": "图 16-13",
+    "number": 13,
+    "file": "ch16-idempotent-tool-commit-and-replay.svg",
+    "asset": "ch16/ch16-idempotent-tool-commit-and-replay.svg",
+    "section": "16.5.1",
+    "caption": "基于幂等键（Idempotency Key）与两阶段状态日志的工具调用网关：分离结果重传与外部副作用重做（算例 16-7）",
+    "source_refs": [
+      "case-studies/evaluation-and-agent-records.md",
+      "manuscripts/ch16/figure-data.json"
+    ],
+    "TeachingRole": "确保网络抖动或沙箱抢占恢复时绝不触发重复扣款或脏外部写入，并支持离线确定性回放"
+  },
+  {
+    "figure_id": "图 16-14",
+    "number": 14,
+    "file": "ch16-telemetry-sampling-vs-billing-ledger.svg",
+    "asset": "ch16/ch16-telemetry-sampling-vs-billing-ledger.svg",
+    "section": "16.5.1",
+    "caption": "可采样性能诊断 Trace（尾部采样）与不可采样计费/幂等键/RL 轨迹版本准入账本的双通道分流架构",
+    "source_refs": [
+      "case-studies/evaluation-and-agent-records.md",
+      "manuscripts/ch16/figure-data.json"
+    ],
+    "TeachingRole": "划清诊断可观测性与严谨财务/训练证据链的系统边界"
+  },
+  {
+    "figure_id": "图 16-15",
+    "number": 15,
+    "file": "ch16-sixteen-chapter-full-stack-map.svg",
+    "asset": "ch16/ch16-sixteen-chapter-full-stack-map.svg",
+    "section": "16.5.2",
+    "caption": "全书十六章全栈知识坐标系：以“五个第一性追问”贯穿模型、芯片、网络、推理/训练、存储、电热与可信安全",
+    "source_refs": [
+      "manuscripts/ch16/figure-data.json"
+    ],
+    "TeachingRole": "收束全书十六章四大部分的演进脉络与统一分析方法论"
+  },
+  {
+    "figure_id": "图 16-16",
+    "number": 16,
+    "file": "ch16-ai-infra-architect-master-checklist.svg",
+    "asset": "ch16/ch16-ai-infra-architect-master-checklist.svg",
+    "section": "16.5.2",
+    "caption": "AI 基础设施架构师的六维终极核查表（算力、存力、运力、电力热学、可信安全、全生命周期成本）",
+    "source_refs": [
+      "manuscripts/ch16/figure-data.json"
+    ],
+    "TeachingRole": "为读者提供跨层系统评审与容量规划的随身工程指南"
+  }
+]

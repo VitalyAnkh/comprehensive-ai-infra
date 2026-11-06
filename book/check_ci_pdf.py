@@ -26,13 +26,14 @@ def main():
     directory = args.directory
     edition = EDITIONS[args.edition]
     report = json.loads((directory / f"{edition['name']}-build.json").read_text())
-    if report['chapters'] != list(range(1, 13)):
-        raise SystemExit('Expected all 12 chapters')
+    expected_chapters = list(range(1, 17)) if args.edition == 'zh' else list(range(1, 13))
+    if report['chapters'] != expected_chapters:
+        raise SystemExit(f'Expected all {len(expected_chapters)} chapters')
     doc = fitz.open(directory / f"{edition['name']}.pdf")
-    if len(doc) < 12:
+    if len(doc) < len(expected_chapters):
         raise SystemExit('PDF is unexpectedly short')
     chapter_entries = [r for r in doc.get_toc() if r[0] == 1]
-    if len(chapter_entries) < 12:
+    if len(chapter_entries) < len(expected_chapters):
         raise SystemExit('PDF is missing chapter bookmarks')
     text = ''.join(page.get_text() for page in doc)
     if any(needle not in text for needle in edition['expected_text']) or '\ufffd' in text:
@@ -61,7 +62,7 @@ def main():
                   fonts=fonts,
                   layout_warnings=report['warnings'], preview_pages=[p+1 for p in pages])
     (directory / 'pdf-validation.json').write_text(json.dumps(result, ensure_ascii=False, indent=2)+'\n')
-    print(f'PASS: {len(doc)} pages, 12 chapters, readable text, fonts and references')
+    print(f'PASS: {len(doc)} pages, {len(expected_chapters)} chapters, readable text, fonts and references')
 
 
 if __name__ == '__main__':
