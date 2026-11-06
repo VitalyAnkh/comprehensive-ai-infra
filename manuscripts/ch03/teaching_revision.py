@@ -550,6 +550,38 @@ def draw(here, data):
         a.legend(handles, ['原设备 A100（实测）', '原设备 H100（×3.17）', '原设备 H800（×3.17）'], frameon=True, loc='lower right', fontsize=11)
         save(f, '9-gpu-hours')
 
+        # 35. ch03-reasoning-cost-reversal-and-breakeven (Path B Fig 3-35)
+        f, (ax1, ax2) = plt.subplots(2, 1, figsize=(420 / 72, 6.2))
+        f.subplots_adjust(left=0.16, right=0.95, bottom=0.11, top=0.92, hspace=0.48)
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+
+        gamma = np.linspace(1, 24, 200)
+        rel_cost = gamma * (0.10 / 1.60)
+        ax1.plot(gamma, rel_cost, color=BORDER_COL['blue'], lw=2.2, label='单价 ×0.1, 成功率 50%→80%')
+        ax1.axhline(1.0, ls='--', lw=1.3, color='#64748B')
+        ax1.axvline(16.0, ls=':', lw=1.3, color=BORDER_COL['purple'])
+        ax1.scatter([16.0, 20.0], [1.0, 1.25], s=55, color=[BORDER_COL['green'], BORDER_COL['orange']], facecolor=[COL['green'], COL['orange']], linewidth=1.5, zorder=5)
+        ax1.text(16.4, 0.32, '临界膨胀上限 γ = 16×', ha='left', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['purple'])
+        ax1.text(20.0, 1.06, '20× → 1.25×\n(+25% 反升)', ha='center', va='top', fontsize=11, weight='bold', color=TEXT_COL['orange'])
+        ax1.set(xlim=(0, 25), ylim=(0, 1.68), xlabel='单任务 Token 膨胀倍数 γ', ylabel='相对成功任务成本')
+        ax1.set_title('A  长思考 Token 膨胀导致的单任务成本反转 (TC-05)', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(True, linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax1.legend(frameon=True, loc='upper left', fontsize=11)
+
+        q_e8 = np.linspace(0, 8.0, 200)
+        saving_musd = 0.20 * q_e8
+        ax2.plot(q_e8, saving_musd * 100, color=BORDER_COL['green'], lw=2.2, label='累计推理节省 (0.20 美元/百次)')
+        ax2.axhline(100.0, color=BORDER_COL['orange'], lw=2.0, ls='--', label='超训额外投入 (100 万美元)')
+        ax2.axvline(5.0, color='#64748B', lw=1.3, ls=':')
+        ax2.scatter([5.0], [100.0], s=60, color=BORDER_COL['blue'], facecolor=COL['blue'], linewidth=1.6, zorder=5)
+        ax2.text(5.15, 52, '盈亏平衡点 Q* = 5 亿次', ha='left', va='bottom', fontsize=11, weight='bold', color=COL['ink'])
+        ax2.set(xlim=(0, 8.0), ylim=(0, 175), xlabel='累计成功任务量 Q（亿次）', ylabel='成本或节省（万美元）')
+        ax2.set_title('B  超训投入与推理节省的盈亏平衡线 (TC-06)', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(True, linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax2.legend(frameon=True, loc='upper left', fontsize=11)
+        out.save(f, 'ch03-reasoning-cost-reversal-and-breakeven')
+
     from v41_case_figures import draw as draw_v41
     draw_v41(3, out)
     from core_principles_figures import draw as draw_principles

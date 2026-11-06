@@ -427,6 +427,77 @@ def draw(here, data, teaching):
                 a.text(i, v + max(vals) * 0.03, '256 B' if v < 0.001 else f'{v:.1f}', ha='center', fontsize=11, weight='bold', color=COL['ink'])
             save(f, name)
 
+        # 30. ch04-hopper-blackwell-rubin-scaling (Path B Fig 4-46)
+        f, (ax1, ax2) = plt.subplots(2, 1, figsize=(420 / 72, 6.4))
+        f.subplots_adjust(left=0.16, right=0.95, bottom=0.10, top=0.92, hspace=0.46)
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+
+        gens = ['H100 SXM', 'H200 SXM', 'HGX B200', 'Rubin GPU']
+        hbm_bw = [3.35, 4.80, 8.00, 22.00]
+        hbm_cap = [80, 141, 180, 288]
+        x_g = np.arange(len(gens))
+        ax1.bar(x_g, hbm_bw, width=0.46, color=[COL['blue'], COL['teal'], COL['orange'], COL['green']], edgecolor=[BORDER_COL['blue'], BORDER_COL['teal'], BORDER_COL['orange'], BORDER_COL['green']], linewidth=1.2)
+        for xi, bw_v, cap_v in zip(x_g, hbm_bw, hbm_cap):
+            ax1.text(xi, bw_v + 0.6, f'{bw_v:.2f} TB/s\n({cap_v} GB)' if bw_v < 4 else f'{bw_v:.1f} TB/s\n({cap_v} GB)', ha='center', va='bottom', fontsize=11, weight='bold', color=COL['ink'])
+        ax1.set_xticks(x_g, gens)
+        ax1.set_xlim(-0.55, 3.55)
+        ax1.set_ylim(0, 28.5)
+        ax1.set_ylabel('HBM 带宽（TB/s）', fontsize=11)
+        ax1.set_title('A  四代数据中心 GPU 的 HBM 容量与带宽跃迁 (TC-07)', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(axis='y', linestyle=':', alpha=0.5, color='#CBD5E1')
+
+        gens_c = ['H100 (FP8)', 'B200 (FP4)', 'Rubin (NVFP4)']
+        pflops_low = [1.98, 9.0, 50.0]
+        nvlink_tb = [0.9, 1.8, 3.6]
+        x_c = np.arange(len(gens_c))
+        ax2.bar(x_c, pflops_low, width=0.42, color=[COL['blue'], COL['orange'], COL['green']], edgecolor=[BORDER_COL['blue'], BORDER_COL['orange'], BORDER_COL['green']], linewidth=1.2)
+        for xi, pf_v, nv_v in zip(x_c, pflops_low, nvlink_tb):
+            pf_str = f'{pf_v:.2f} PFLOPS' if pf_v < 5 else f'{pf_v:.0f} PFLOPS'
+            ax2.text(xi, pf_v + 1.5, f'{pf_str}\n(NVLink {nv_v} TB/s)', ha='center', va='bottom', fontsize=11, weight='bold', color=COL['ink'])
+        ax2.set_xticks(x_c, gens_c)
+        ax2.set_xlim(-0.55, 2.55)
+        ax2.set_ylim(0, 64)
+        ax2.set_ylabel('低比特算力（PFLOPS）', fontsize=11)
+        ax2.set_title('B  主推低比特算力与双向 NVLink 带宽演进 (TC-08)', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(axis='y', linestyle=':', alpha=0.5, color='#CBD5E1')
+        out.save(f, 'ch04-hopper-blackwell-rubin-scaling')
+
+        # 31. ch04-tpu7x-dual-chiplet-vs-sram-asic (Path B Fig 4-47)
+        f, (ax1, ax2) = plt.subplots(2, 1, figsize=(420 / 72, 6.4))
+        f.subplots_adjust(left=0.22, right=0.95, bottom=0.10, top=0.92, hspace=0.46)
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+
+        tpu_gens = ['TPU v5p', 'TPU v6e (Trillium)', 'TPU7x (Ironwood)']
+        tpu_bf16 = [0.459, 0.918, 2.307]
+        tpu_bw = [2.765, 1.640, 7.380]
+        tpu_hbm = [95, 32, 192]
+        x_t = np.arange(len(tpu_gens))
+        ax1.bar(x_t, tpu_bw, width=0.42, color=[COL['blue'], COL['purple'], COL['green']], edgecolor=[BORDER_COL['blue'], BORDER_COL['purple'], BORDER_COL['green']], linewidth=1.2)
+        for xi, bw_v, cap_v, bf_v in zip(x_t, tpu_bw, tpu_hbm, tpu_bf16):
+            ax1.text(xi, bw_v + 0.25, f'{bw_v:.2f} TB/s ({cap_v} GiB)\nBF16 {bf_v*1000:.0f} TFLOPs', ha='center', va='bottom', fontsize=11, weight='bold', color=COL['ink'])
+        ax1.set_xticks(x_t, tpu_gens)
+        ax1.set_xlim(-0.55, 2.55)
+        ax1.set_ylim(0, 9.8)
+        ax1.set_ylabel('HBM 带宽（TB/s）', fontsize=11)
+        ax1.set_title('A  Google TPU 近三代 HBM 容量、带宽与算力演进', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(axis='y', linestyle=':', alpha=0.5, color='#CBD5E1')
+
+        devs_4g = ['M2 Pro\n(200 GB/s)', 'M2 Max\n(400 GB/s)', 'PRO 6000\n(1.79 TB/s)', 'TPU7x\n(7.38 TB/s)']
+        t_4gib_ms = [21.47, 10.74, 2.40, 0.58]
+        y_d = np.arange(len(devs_4g))
+        ax2.barh(y_d, t_4gib_ms, height=0.52, color=[COL['gray'], COL['blue'], COL['purple'], COL['green']], edgecolor=[BORDER_COL['gray'], BORDER_COL['blue'], BORDER_COL['purple'], BORDER_COL['green']], linewidth=1.2)
+        for yi, tv in zip(y_d, t_4gib_ms):
+            ax2.text(tv + 0.5, yi, f'{tv:.2f} ms', va='center', fontsize=11, weight='bold', color=COL['ink'])
+        ax2.set_yticks(y_d, devs_4g)
+        ax2.invert_yaxis()
+        ax2.set_xlim(0, 27.5)
+        ax2.set_xlabel('读取 4 GiB 常驻权重时间下界（ms）', fontsize=11)
+        ax2.set_title('B  跨平台读取 4 GiB 常驻权重的理想时间下界对比', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(axis='x', linestyle=':', alpha=0.5, color='#CBD5E1')
+        out.save(f, 'ch04-tpu7x-dual-chiplet-vs-sram-asic')
+
     from sync_figures import draw as draw_sync
     data['4-sync'] = draw_sync(out, root)
     from core_principles_figures import draw as draw_principles
