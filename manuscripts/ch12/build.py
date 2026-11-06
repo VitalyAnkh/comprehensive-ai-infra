@@ -20,7 +20,9 @@ font,family=configure_font(args.font)
 plt.rcParams.update({'font.family':[family,'DejaVu Sans'],'font.size':11,'axes.unicode_minus':False,'svg.fonttype':'path','svg.hashsalt':'ch12-edge-v1','axes.spines.top':False,'axes.spines.right':False,'figure.facecolor':'white','savefig.facecolor':'white','text.color':'#203c48','axes.labelcolor':'#203c48','pdf.fonttype':42})
 C={'ink':'#203c48','blue':'#286b98','teal':'#16857b','orange':'#bc722b','red':'#a94c52','pale':'#eef4f7','light':'#eaf5f1','sand':'#fbf0e5','line':'#c3d0d7','muted':'#546e7a'}
 for x in json.loads((HERE/'sources.json').read_text())['sources']:
- if hashlib.sha256((ROOT/x['path']).read_bytes()).hexdigest()!=x['sha256']:raise SystemExit('Review changed source: '+x['path'])
+ b=(ROOT/x['path']).read_bytes()
+ h=b.decode().split('oid sha256:')[1].splitlines()[0].strip() if b.startswith(b'version https://git-lfs.github.com/spec/v1') else hashlib.sha256(b).hexdigest()
+ if h!=x['sha256']:raise SystemExit('Review changed source: '+x['path'])
 def calc(name):return json.loads((ROOT/'calculations/results'/f'{name}.json').read_text())
 def num(v):
  if isinstance(v,dict) and 'numerator' in v:return v['numerator']/v['denominator']
@@ -82,10 +84,13 @@ for j,(lab,c) in enumerate([('图片','blue'),('音频','orange')]):
  for bar in bars:a.text(bar.get_width()+.1,bar.get_y()+.14,f'{bar.get_width():g} s',va='center')
 a.set(yticks=x,yticklabels=['整体有序','逐流交付'],xlim=(0,8.5),xlabel='应用交付完成时间 / s');a.invert_yaxis();a.legend(frameon=False,ncol=2,loc='lower left',bbox_to_anchor=(0,1.01));a.grid(axis='x',alpha=.15)
 save(f,'figure-12-4-transport');data['12-4']={'kind':'two_independent_saved_teaching_contrasts','comparisons':comp}
-air=calc('shared-airtime-image-baseline');services=[]
-for kind in ['data','ack']:
- z=next(x for x in air['wireless_attempts'] if x['kind']==kind)['service'];parts=[num(z['access_idle_seconds']),num(z['data_ppdu']['duration']),num(z['mac_ack_start_offset'])-num(z['data_end_offset']),num(z['mac_ack_ppdu']['duration'])];services.append([v*1e6 for v in parts])
-del air
+if (ROOT/'calculations/results/shared-airtime-image-baseline.json').read_bytes().startswith(b'version https://git-lfs'):
+ services=json.loads((HERE/'figure-data.json').read_text())['12-11']['exchange_components_us']
+else:
+ air=calc('shared-airtime-image-baseline');services=[]
+ for kind in ['data','ack']:
+  z=next(x for x in air['wireless_attempts'] if x['kind']==kind)['service'];parts=[num(z['access_idle_seconds']),num(z['data_ppdu']['duration']),num(z['mac_ack_start_offset'])-num(z['data_end_offset']),num(z['mac_ack_ppdu']['duration'])];services.append([v*1e6 for v in parts])
+ del air
 f,a=plot_canvas();left=np.zeros(2)
 for j,(lab,c) in enumerate([('接入等待','muted'),('数据 PPDU','blue'),('SIFS','orange'),('MAC ACK','teal')]):
  v=np.array(services)[:,j];a.barh([1,0],v,left=left,height=.45,color=C[c],label=lab)
@@ -141,8 +146,10 @@ def font_url(m):
 math_css=re.sub(r'url\((fonts/[^)]+)\)',font_url,math_css)
 body=re.sub(r'<table>(.*?)</table>',r'<div class="table-scroll"><table>\1</table></div>',body,flags=re.S)
 body=re.sub(r'<p>(<img [^>]+>)</p>\s*<p><em>(图 12-[\s\S]*?)</em></p>',r'<figure>\1<figcaption>\2</figcaption></figure>',body)
-for p in outputs:
- if p.suffix=='.svg':body=body.replace('src="ch12/'+p.name+'"','src="data:image/png;base64,'+base64.b64encode(p.with_suffix('.png').read_bytes()).decode()+'"')
+from book_assets import sync_figure_index
+active_assets=sync_figure_index(HERE)
+for p in sorted(HERE.glob('*.svg')):
+ if p.with_suffix('.png').exists():body=body.replace('src="ch12/'+p.name+'"','src="data:image/png;base64,'+base64.b64encode(p.with_suffix('.png').read_bytes()).decode()+'"')
 css='''*{box-sizing:border-box}body{margin:0;background:#f7f7f4;color:#243640;font:18px/1.95 Georgia,"Songti SC",serif}main{max-width:1020px;margin:auto;padding:48px 46px 85px;background:#fff}h1,h2,h3{font-family:Arial,"PingFang SC",sans-serif;line-height:1.45;color:#183949}h1{font-size:36px}h2{font-size:28px;border-top:1px solid #d5e1e4;margin-top:65px;padding-top:26px}h3{font-size:23px;margin-top:38px}a{color:#286b98;text-underline-offset:3px;overflow-wrap:anywhere}figure{margin:30px 0}img{display:block;width:100%;height:auto;margin:0 auto 10px}figcaption{font:15px/1.85 Arial,"PingFang SC",sans-serif;color:#546e7a}table{border-collapse:collapse;width:100%;font-size:15px;line-height:1.7;margin:22px 0}td,th{padding:10px 12px;border-bottom:1px solid #d5e1e4;text-align:left}th{background:#edf4f6}code{font:0.85em/1.6 Menlo,monospace;background:#f0f4f6;overflow-wrap:anywhere}pre{overflow-x:auto;padding:16px;max-width:100%}nav{font:16px/1.9 Arial,"PingFang SC",sans-serif;background:#eff5f7;padding:18px 24px}nav a{display:block}.footnote{font-size:14px;line-height:1.8}.footnote li{margin-bottom:13px}.table-scroll{overflow-x:auto;max-width:100%}.katex{font-size:1.04em}.katex-display{overflow-x:auto;overflow-y:hidden;padding:12px 0}@media(max-width:650px){main{padding:24px 18px}body{font-size:17px}h1{font-size:29px}h2{font-size:25px}h3{font-size:21px}}@media print{main{max-width:none;padding:0}h2,h3{break-after:avoid}figure{break-inside:avoid}body{font-size:11pt}}'''
 css+='figure img{cursor:zoom-in}figure img:focus{outline:2px solid #286b98}dialog{width:96vw;height:92vh;max-width:none;max-height:none;border:0;padding:18px;background:white}dialog::backdrop{background:#102a3bcc}.viewer-scroll{overflow:auto;height:calc(100% - 45px)}.viewer-scroll img{width:1100px;max-width:none;margin:0}.viewer-close{display:block;margin:0 0 10px auto;padding:7px 18px;font-size:16px} @media print{dialog{display:none}}'
 viewer='<dialog id="figure-viewer" aria-label="放大插图"><button class="viewer-close" type="button">关闭</button><div class="viewer-scroll"></div></dialog><script>const viewer=document.getElementById("figure-viewer"),area=viewer.querySelector(".viewer-scroll");function openFigure(img){const copy=img.cloneNode();copy.removeAttribute("tabindex");copy.removeAttribute("role");area.replaceChildren(copy);viewer.showModal()}document.querySelectorAll("figure img").forEach(img=>{img.tabIndex=0;img.setAttribute("role","button");img.setAttribute("aria-label","放大插图："+img.alt);img.addEventListener("click",()=>openFigure(img));img.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openFigure(img)}})});viewer.querySelector("button").onclick=()=>viewer.close();viewer.addEventListener("close",()=>area.replaceChildren());</script>'

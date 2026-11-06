@@ -181,5 +181,19 @@
       1.2385198798798798,
       0.8385198798798799
     ]
+  },
+  "12-13": {
+    "rand_s": 4.0,
+    "bundle_s": 0.5,
+    "speedup": 8.0,
+    "w_max": 4,
+    "reuse_at_w_max": 0.5,
+    "win_s": 0.25,
+    "win_token_per_s": 4.0
+  },
+  "12-14": {
+    "h_min_ms": 600,
+    "k_min": 30,
+    "disconnect_survival_ms": 510
   }
 }

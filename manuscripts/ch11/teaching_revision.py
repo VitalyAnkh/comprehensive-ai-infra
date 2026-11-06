@@ -61,13 +61,13 @@ def draw(here,data):
             start=0
             for j,(v,c,l) in enumerate(zip(row,['blue','orange','green','purple'],['生成','验证','更新','发布'])):a.barh(i,v,left=start,height=.5,color=COL[c],edgecolor=COL['line'],label=l if i==0 else None);start+=v
         a.set(yticks=[0,1],yticklabels=['原配置','生成加速'],xlim=(0,90),ylim=(-.5,2.1),xlabel='迭代时间（s）');a.legend(ncol=4,frameon=False,loc='upper left');save(f,'rl-stages')
-        f,a=canvas(5.0);box(a,.27,.74,.46,.16,'发送端：200 Gbit/s','orange',12)
+        f,a=canvas(5.0);box(a,.27,.76,.46,.16,'发送端：200 Gbit/s','orange',12)
         for i in range(6):
-            x=.04+(i%3)*.32;y=.43-(i//3)*.26;box(a,x,y,.28,.18,f'实例 {i+1}\n16.38 GB／50 Gbit/s','blue',11)
-        arrow(a,(.5,.74),(.5,.66));text(a,.5,.64,'同一出口共传 98.3 GB',11,ha='center')
+            x=.04+(i%3)*.32;y=.41-(i//3)*.26;box(a,x,y,.28,.18,f'实例 {i+1}\n16.38 GB／50 Gbit/s','blue',11)
+        arrow(a,(.5,.76),(.5,.63));text(a,.53,.695,'同一出口共传 98.3 GB',11,ha='left')
         for i in range(3):
-            x=.18+i*.32;arrow(a,(x,.59),(x,.61));arrow(a,(x,.43),(x,.35))
-        a.plot([.18,.82],[.59,.59],color=COL['line'],lw=1);text(a,.5,.05,'单份至少 2.62 s；全部至少 3.93 s',12,ha='center');save(f,'weights')
+            x=.18+i*.32;arrow(a,(x,.63),(x,.59));arrow(a,(x,.41),(x,.33))
+        a.plot([.18,.82],[.63,.63],color=COL['line'],lw=1.3);text(a,.5,.05,'单份至少 2.62 s；全部至少 3.93 s',12,ha='center');save(f,'weights')
         for batch,name in [(False,'5-stages'),(True,'stages-batch')]:
             f,a=plot(3.1,left=.20)
             for i in range(3):a.barh(0,10,left=i*10+(20 if batch else 0),height=.5,color=COL[['blue','green','orange'][i]],edgecolor=COL['line']);a.plot(i*10,1,'o',color='#454545')
@@ -118,6 +118,57 @@ def draw(here,data):
         text(a,.71,.17,'第 2 轮缺失，不能跳到第 3 轮',11,ha='center')
         save(f,'recovery-coverage')
         data['recovery-coverage']={'kind':'teaching','unit':'react_round','trusted_base':0,'local_saved':[1,2,3],'cloud_saved':[1,3],'cloud_gap':[2],'cloud_covered_through':1,'upload_policy':'per-round incremental async; failed upload does not block later uploads'}
+        # Steady schedule timeline and capacity check (Figure 11-51).
+        f,a=plot(3.8,left=.20)
+        for k in range(3):
+            st=k*7
+            a.barh(1,6,left=st,height=.48,color=COL['blue'],edgecolor=COL['line'])
+            a.text(st+3,1,f'第{k+1}轮 6 s',ha='center',va='center',fontsize=11)
+            a.barh(0,2,left=st+4,height=.48,color=COL['green'],edgecolor=COL['line'])
+            a.barh(0,1,left=st+6,height=.48,color=COL['orange'],edgecolor=COL['line'])
+        a.axvline(21,ls='--',color='#207655',lw=1.4);a.axvline(24,ls='--',color='#b63c33',lw=1.4)
+        a.text(20.6,.52,'21 s 完成',ha='right',va='center',fontsize=11,color='#207655')
+        a.text(22.6,.98,'24 s\n期限',ha='center',va='center',fontsize=11,color='#b63c33')
+        a.text(0.4,1.50,'稳态：180/192 槽，33/48 核，180/358 GiB',fontsize=11.5)
+        a.set(yticks=[1,0],yticklabels=['快速模型','准备+工具'],xticks=[0,4,7,11,14,18,21,24],xlim=(0,25.5),ylim=(-.55,1.75),xlabel='单任务时间线（s，绿=准备 2 s，橙=工具 1 s）')
+        save(f,'steady-schedule')
+        # Inter-call waiting gap crossover (Figure 11-52).
+        f,a=plot(3.9,left=.18)
+        g=np.linspace(0,12,241)
+        c_keep=0.9*g
+        c_rebuild=np.full_like(g,1.94)
+        c_pause=np.minimum(0.9*g,8.1)
+        a.plot(g,c_keep,label='始终驻留（2G GiB·s）',color='#267398',lw=2.2)
+        a.plot(g,c_rebuild,label='每轮重建（准备 2 s）',color='#2a7b58',ls='--',lw=2.2)
+        a.plot(g,c_pause,label='暂停恢复（保存 8 s + 恢复 1 s）',color='#ba5b24',ls='-.',lw=2.2)
+        a.axvline(97/45,ls=':',color='#666',lw=1.1);a.axvline(9.0,ls=':',color='#666',lw=1.1)
+        a.plot([97/45,9.0],[1.94,8.1],'o',color='#b63c33',ms=6,zorder=5)
+        a.text(2.4,1.0,'重建交点 G≈2.16 s',fontsize=11)
+        a.text(9.2,6.8,'暂停门槛\nG=9.0 s',fontsize=11,va='center')
+        a.set(xlim=(0,12),ylim=(0,11.8),xlabel='轮间模型等待时长 G（s）',ylabel='单次间隔成本（0.001 美分）')
+        a.legend(frameon=False,loc='upper left',fontsize=11)
+        save(f,'lifecycle-crossover')
+        # Path-A new figure: Sandbox CXLfork memory density & Weave RL job interleaving Gantt.
+        f,a=canvas(6.6)
+        text(a,.03,.95,'A. 沙箱快照共享与按需缺页（100 实例内存与 64 GiB 并发上限）',12)
+        cards=[
+            (.03,'完整复制','200.39 GiB\n上限 31 个','orange'),
+            (.27,'UFFD 缺页','50.39 GiB\n上限 127 个','blue'),
+            (.51,'共享+热页','37.89 GiB\n上限 168 个','purple'),
+            (.75,'CXLfork 脏页','12.89 GiB\n上限 496 个','green'),
+        ]
+        for x,title,sub,col in cards:
+            box(a,x,.70,.22,.20,f'{title}\n{sub}',col,11)
+        box(a,.03,.55,.94,.11,'4 KiB 按需缺页：64 页仅读 256 KiB（0.24 ms）\n2 MiB 大页读放大：读取 128 MiB（512× 放大，125 ms）','gray',11)
+        text(a,.03,.46,'B. Weave 互补 RL 作业交错调度（A: 360/120 s，B: 120/360 s）',12)
+        text(a,.03,.36,'Rollout 池',11)
+        box(a,.18,.31,.51,.11,'作业 A Rollout（0–360 s）','blue',11)
+        box(a,.71,.31,.26,.11,'作业 B Rollout\n360–480 s','green',11)
+        text(a,.03,.21,'训练更新池',11)
+        box(a,.18,.16,.51,.11,'作业 B 上轮更新（0–360 s）','green',11)
+        box(a,.71,.16,.26,.11,'作业 A 更新\n360–480 s','blue',11)
+        box(a,.03,.02,.94,.11,'热切换 5 s → 周期 490 s（≤528 s 达标）\n双作业驻留 400+500+150 = 1050 GiB > 1 TiB 主机上限','orange',11)
+        out.save(f,'ch11-sandbox-cxlfork-and-weave-gantt')
     from dsec_figures import draw as draw_dsec
     draw_dsec(out)
     from core_principles_figures import draw as draw_principles

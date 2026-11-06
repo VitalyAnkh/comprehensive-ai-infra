@@ -1437,5 +1437,21 @@
     "fec_overhead": 0.257,
     "fec_s": 0.2407,
     "relationship": "修复方式决定完成时间"
+  },
+  "12-ufs-vla": {
+    "kind": "teaching_bound",
+    "sparse_ffn_gb": 1.28,
+    "rand_bw_gbps": 0.4,
+    "bundle_bw_gbps": 3.2,
+    "win_reuse": 0.75,
+    "step_s": [
+      3.2,
+      0.4,
+      0.1
+    ],
+    "vla_horizon_ms": 500,
+    "vla_plan_ms": 200,
+    "vla_base_ms": 80,
+    "vla_jitter_max_ms": 220
   }
 }

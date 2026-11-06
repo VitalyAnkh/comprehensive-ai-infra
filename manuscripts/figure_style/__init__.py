@@ -313,6 +313,9 @@ class Exporter:
         for ext in ['svg', 'png', 'pdf']:
             path = self.directory / f'{name}.{ext}'
             fig.savefig(path, dpi=240)
+            if ext == 'svg':
+                txt = path.read_text(encoding='utf-8')
+                path.write_text('\n'.join(line.rstrip() for line in txt.splitlines()) + '\n', encoding='utf-8')
             self.outputs.append(path)
         plt.close(fig)
 

@@ -31,7 +31,10 @@ check('no_katex_errors','class="katex-error"' not in page)
 check('no_authoring_placeholders',not re.search('配图计划|待扩写|TODO|TBD',text))
 # Source and artifact hashes are checked independently of the drawing code.
 for record in json.loads((HERE/'sources.json').read_text())['sources']:
- p=ROOT/record['path'];check('source:'+record['path'],p.exists() and hashlib.sha256(p.read_bytes()).hexdigest()==record['sha256'])
+ p=ROOT/record['path']
+ b=p.read_bytes() if p.exists() else b''
+ h=b.decode().split('oid sha256:')[1].splitlines()[0].strip() if b.startswith(b'version https://git-lfs.github.com/spec/v1') else hashlib.sha256(b).hexdigest()
+ check('source:'+record['path'],p.exists() and h==record['sha256'])
 for record in json.loads((HERE/'manifest.json').read_text())['outputs']:
  p=ROOT/record['path'];check('artifact:'+record['path'],p.exists() and hashlib.sha256(p.read_bytes()).hexdigest()==record['sha256'])
 links=re.findall(r'\]\(([^)]+)\)',text)
@@ -155,6 +158,12 @@ answers['12-8']={'twenty_rounds_times_s':T,'twenty_rounds_energy_J':[cases['twen
 answers['12-9']={'bus_GBps':4*16*10.6/8,'bf16_step_s':(15136819200+1207959552)/84.8e9,'bf16_token_per_s':84.8e9/(15136819200+1207959552),'q4_step_s':(4257230400+1207959552)/84.8e9,'q4_token_per_s':84.8e9/(4257230400+1207959552),'phone_12gb_free_bytes':3392711360,'phone_12gb_8k_requests':2,'phone_12gb_single_context_tokens':3392711360//147456,'power_ceiling_token_per_s':[13.8/.756,13.8/.576]}
 answers['12-10']={'mathis_Mbps':[1448*8/.2/math.sqrt(.14)/1e6,1448*8/.2/math.sqrt(.036)/1e6],'send_only_s':[354640*8/(1448*8/.2/math.sqrt(.14)),354640*8/(1448*8/.2/math.sqrt(.036))],'expected_losses':34.3,'rounds_cdf':'(1-p**n)**245','expected_completion_s':.7559545776801243,'p99_completion_s':1.2385198798798798,'fec_repair':[63,20],'fec_overhead':[63/245,20/245],'fec_completion_s':[.230+(245+63)*1448*8/333e6,.230+(245+20)*1448*8/333e6],'retransmit_p99_s':[1.2385198798798798,.8385198798798799]}
 answers['12-8']['ten_rounds_recovery']={cid:{'times_s':[cases[cid][k]['total_seconds'] for k in ('end','near','cloud')],'energy_J':[cases[cid][k]['energy_joules'] for k in ('end','near','cloud')],'remaining_after_disconnect_s':[None]+[cases[cid][k]['extra_seconds']+2*tiers[k]['round_seconds'] for k in ('near','cloud')],'choice':next(c['lowest_energy_feasible'] for c in edge['cases'] if c['id']==cid)} for cid in ('ten-retain-seven','ten-lose-eight')}
+answers['12-13']={'rand_s':1.60/0.40,'bundle_s':1.60/3.20,'speedup':8.0,'w_max':int(1.50//0.35),'reuse_at_w_max':1-1/math.sqrt(4),'win_s':1.60*(1-0.5)/3.20,'win_token_per_s':3.20/(1.60*0.5)}
+answers['12-14']={'h_min_ms':250+90+260,'k_min':(250+90+260)//20,'disconnect_survival_ms':600-90}
+check('ufs_flash_streaming',close(1.28/0.40,3.20) and close(1.28/3.20,0.40) and close(1.28*(1-0.75)/3.20,0.10))
+check('vla_action_chunking',25*20==500 and 500-80==420 and 500-(200+80)==220)
+check('case_study_links','../case-studies/macbook-rtx-pro6000.md' in text and '../case-studies/queqiao.md' in text)
+check('extended_exercises',re.findall(r'^\*\*拓展练习 (12-\d+)\s',text,re.M)==[f'12-{i}' for i in range(11,15)])
 (HERE/'exercise-check.json').write_text(json.dumps(answers,ensure_ascii=False,indent=2)+'\n')
-report={'passed':not errors,'checks':len(checks),'sections':6,'subsections':len(text_subs),'figures':figure_count,'exercises':10,'sources':len(json.loads((HERE/'sources.json').read_text())['sources']),'local_links':len(links),'chinese_characters':len(re.findall(r'[\u4e00-\u9fff]',text)),'errors':errors}
+report={'passed':not errors,'checks':len(checks),'sections':6,'subsections':len(text_subs),'figures':figure_count,'exercises':14,'sources':len(json.loads((HERE/'sources.json').read_text())['sources']),'local_links':len(links),'chinese_characters':len(re.findall(r'[\u4e00-\u9fff]',text)),'errors':errors}
 (HERE/'validation.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n');print(json.dumps(report,ensure_ascii=False,indent=2));raise SystemExit(bool(errors))

@@ -12,27 +12,32 @@ def draw_encoder_paths(out):
             for x, title in [(.02, '端侧设备'), (.59, '远端服务器')]:
                 box(a, x, .32, .39, .63, '', 'gray')
                 text(a, x + .195, .918, title, 13, ha='center', weight='medium')
-            a.plot([.5, .5], [.34, .95], color=COL['line'], lw=.8, ls=':')
-            text(a, .5, .983, '部署边界：上行 6.4 Mbit/s', 12, ha='center')
-            box(a, .045, .80, .34, .072, '压缩截图  0.8 MB', 'blue', 11)
-            x = .045 if local else .615
-            cx = x + .17
             if not local:
-                box(a, .615, .80, .34, .072, '接收压缩图片', 'blue', 11)
-                arrow(a, (.385, .836), (.615, .836))
+                a.plot([.5, .5], [.34, .85], color=COL['line'], lw=.8, ls=':')
+                a.plot([.5, .5], [.90, .95], color=COL['line'], lw=.8, ls=':')
+            else:
+                a.plot([.5, .5], [.34, .51], color=COL['line'], lw=.8, ls=':')
+                a.plot([.5, .5], [.56, .95], color=COL['line'], lw=.8, ls=':')
+            text(a, .5, .983, '部署边界：上行 6.4 Mbit/s', 12, ha='center')
+            box(a, .0375, .80, .355, .072, '压缩截图  0.8 MB', 'blue', 11)
+            x = .0375 if local else .6075
+            cx = x + .1775
+            if not local:
+                box(a, .6075, .80, .355, .072, '接收压缩图片', 'blue', 11)
+                arrow(a, (.3925, .836), (.6075, .836))
                 text(a, .50, .875, '图片', 11, ha='center')
                 text(a, .215, .68, '上传图片', 12, ha='center')
                 text(a, .215, .61, '0.8 MB ÷ 0.8 MB/s\n= 1.00 s', 11, ha='center')
                 text(a, .215, .45, '视觉计算在远端完成\n特征留在服务器内', 11, ha='center')
-            box(a, x, .684, .34, .076, '解码与预处理\n缩放至 640 × 640', 'blue', 11)
+            box(a, x, .684, .355, .076, '解码与预处理\n缩放至 640 × 640', 'blue', 11)
             arrow(a, (cx, .80), (cx, .76))
-            box(a, x, .562, .34, .080, '视觉编码与图像块合并\n形成 400 个视觉 token', 'green', 11)
+            box(a, x, .562, .355, .080, '视觉编码与图像块合并\n形成 400 个视觉 token', 'green', 11)
             arrow(a, (cx, .684), (cx, .642))
-            box(a, x, .430, .34, .090, '最终投影 + 3 组 DeepStack\n完整 BF16 特征  8.192 MB', 'green', 11)
+            box(a, x, .430, .355, .090, '最终投影 + 3 组 DeepStack\n完整 BF16 特征  8.192 MB', 'green', 11)
             arrow(a, (cx, .562), (cx, .520))
             if local:
-                box(a, .615, .430, .34, .090, '接收并还原四组特征\n形状、精度与模型匹配', 'green', 11)
-                arrow(a, (.385, .475), (.615, .475))
+                box(a, .6075, .430, .355, .090, '接收并还原四组特征\n形状、精度与模型匹配', 'green', 11)
+                arrow(a, (.3925, .475), (.6075, .475))
                 text(a, .5, .536, '完整特征', 11, ha='center')
                 text(a, .785, .77, '上传完整数值特征', 12, ha='center')
                 text(a, .785, .68, '8.192 MB ÷ 0.8 MB/s\n= 10.24 s', 11, ha='center')
@@ -180,4 +185,32 @@ def draw(here,data):
     from core_principles_figures import draw as draw_principles
     draw_principles(12, out)
     draw_local_tiers(out,data);draw_loss_repair(out,data)
+    with plt.rc_context(STYLE):
+        f,a=canvas(6.4)
+        box(a,.02,.52,.96,.44,'','gray')
+        text(a,.50,.92,'A. 移动端 UFS 4.0 闪存捆绑读取（1.28 GB／步）',12,ha='center',weight='medium')
+        ufs_cards=[
+            (.035,'2 KiB 随机读\n400 MB/s · 3.20 s\n0.31 token/s','orange'),
+            (.3525,'64 KiB 块捆绑\n3.2 GB/s · 0.40 s\n2.50 token/s（8×）','blue'),
+            (.67,'捆绑 + 5 步滑窗\n75% 复用 · 0.10 s\n10.0 token/s（32×）','green'),
+        ]
+        for x,lbl,c in ufs_cards:
+            box(a,x,.56,.295,.30,lbl,c,11)
+        arrow(a,(.33,.71),(.3525,.71))
+        arrow(a,(.6475,.71),(.67,.71))
+        box(a,.02,.03,.96,.45,'','gray')
+        text(a,.50,.44,'B. 具身智能 VLA 双环路与动作块容错（K=25 步 · 500 ms）',12,ha='center',weight='medium')
+        vla_cards=[
+            (.035,'云端重规划 5 Hz\n200 ms 发 25 步','blue'),
+            (.3525,'基准传输 80 ms\n余量 420 ms','green'),
+            (.67,'最大抖动 220 ms\n延迟上限 300 ms','orange'),
+        ]
+        for x,lbl,c in vla_cards:
+            box(a,x,.22,.295,.17,lbl,c,11)
+        arrow(a,(.33,.305),(.3525,.305))
+        arrow(a,(.6475,.305),(.67,.305))
+        box(a,.035,.055,.93,.135,'端侧 Orin/Thor 快环：50 Hz 轨迹插值（20 ms/步）驱动 1000 Hz 伺服\n单包 700 B；超 300 ms 缓冲耗尽时触发看门狗安全制动','purple',11)
+        out.save(f,'ch12-ufs-flash-streaming-and-vla-chunking')
+    data['12-ufs-vla']={'kind':'teaching_bound','sparse_ffn_gb':1.28,'rand_bw_gbps':0.4,'bundle_bw_gbps':3.2,
+        'win_reuse':0.75,'step_s':[3.20,0.40,0.10],'vla_horizon_ms':500,'vla_plan_ms':200,'vla_base_ms':80,'vla_jitter_max_ms':220}
     out.finish();return out.outputs,out.checks
