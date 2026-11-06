@@ -109,8 +109,64 @@ def draw(here,data):
             for x1,x2 in zip(xs,xs[1:]):arrow(a,(x1+.20,.5),(x2,.5));text(a,(x1+.20+x2)/2,.71,'1.125 GiB',11,ha='center')
             text(a,.5,.18,'完整写入并通知 D 后，D 再读取' if pooled else 'P 直接将完整状态交给 D',12,ha='center');save(f,name)
         d=data['9-17'];f,a=plot(4.8,bottom=.36)
-        for (key,q),c,label in zip(d['queues'].items(),['#388768','#267398','#a56c28'],['直接 PD','理想分块共置','不分块共置']):a.plot(d['time_s'],q,color=c,label=f'{label} {key} 请求/s')
+        for (key,q),c,label in zip(d['queues'].items(),['#388768','#267398','#a95159'],['直接 PD','理想分块共置','不分块共置']):a.plot(d['time_s'],q,color=c,label=f'{label} {key} 请求/s')
         a.axvline(10,ls='--',color='#777777');a.axvline(60,ls=':',color='#a95159');a.set(xlabel='从启动开始计时（s）',ylabel='积压请求数',xlim=(0,80),ylim=(0,70));a.legend(frameon=False,loc='upper center',bbox_to_anchor=(.42,-.2));save(f,'17-service')
+
+        # Overhauled figure-9-chunked-vs-pd (Fig 9-9)
+        f,a=canvas(5.8)
+        text(a,.04,.94,'① 先算完再生成：长 Prefill 阻塞在途 Decode，单步算力闲置',12)
+        box(a,.04,.69,.38,.17,'长 Prefill 独占 856 ms\n阻塞全部在途 Decode','orange',11)
+        box(a,.45,.69,.24,.17,'访存 55.1 ms\n计算仅 4.2 ms','blue',11)
+        box(a,.72,.69,.24,.17,'访存 55.1 ms\n约 92% 算力空转','gray',11)
+        text(a,.04,.61,'② 分块 Prefill 捎带：在 55.1 ms 访存窗口内顺带算约 488 token',12)
+        box(a,.04,.37,.44,.17,'合并批次 1：访存 55.1 ms\n32 条 Decode + 488 Prefill','green',11)
+        box(a,.52,.37,.44,.17,'合并批次 2：访存 55.1 ms\n填满原本闲置的矩阵算力','green',11)
+        text(a,.04,.29,'③ 严苛延迟下的 PD 分离：两池解耦，各司其职互不阻塞',12)
+        box(a,.04,.05,.36,.17,'P 池（高算力卡）\n专注长输入 Prefill','blue',11)
+        arrow(a,(.40,.135),(.56,.135),'data')
+        text(a,.48,.22,'KV 交接',11,ha='center')
+        box(a,.56,.05,.40,.17,'D 池（高带宽卡）\n稳定 55.1 ms/步生成','green',11)
+        save(f,'chunked-vs-pd')
+
+        # Overhauled figure-9-expert-footprint (Fig 9-17) with proper math italics
+        f,(ax1,ax2)=plt.subplots(1,2,figsize=(420/72,4.1))
+        f.subplots_adjust(left=.12,right=.97,bottom=.22,top=.83,wspace=.42)
+        bars=[0.28125,4.43,4.50]
+        ax1.bar([0,1,2],bars,color=[COL['green'],COL['orange'],COL['blue']],edgecolor=COL['line'],width=.56)
+        for idx_b,val_b in enumerate(bars):
+            ax1.text(idx_b,val_b+.18,f'{val_b:.2f} GiB',ha='center',fontsize=11)
+        ax1.set(xticks=[0,1,2],xticklabels=['8 热点\n(64 行)','均匀路由\n(126 专家)','全触达\n(128 专家)'],ylim=(0,5.4),ylabel='单层权重读取量（GiB）')
+        ax1.set_title('$M=64$（512 次分派）',fontsize=12,pad=8)
+        m_vals=np.arange(1,129)
+        exp_gib=128*(1-(1-8/128)**m_vals)*36/1024
+        ax2.plot(m_vals,exp_gib,color='#267398',lw=2.2)
+        ax2.axhline(4.50,ls='--',color='#a56c28',lw=1.2)
+        for m_pt,dx,dy in [(1,10,.15),(16,10,-.70),(64,-6,-1.25)]:
+            y_pt=128*(1-(1-8/128)**m_pt)*36/1024
+            ax2.scatter([m_pt],[y_pt],color='#a56c28',zorder=3)
+            ax2.annotate(f'$M={m_pt}$\n{y_pt:.2f} GiB',(m_pt,y_pt),xytext=(m_pt+dx,y_pt+dy),fontsize=11)
+        ax2.set(xlabel='Decode 批大小 $M$',ylabel='期望读取权重（GiB）',xlim=(-6,136),ylim=(0,5.4),xticks=[1,32,64,96,128])
+        ax2.set_title('独立路由期望触达体积',fontsize=12,pad=8)
+        save(f,'expert-footprint')
+
+        # New Path-A figure: ch09-pd-a100-h20-vs-af-ktransformers (Fig 9-49)
+        f,a=canvas(5.8)
+        text(a,.04,.95,'异构推理的两种切分：跨池 PD 分离 vs. 单机层内 AF 分离',13)
+        box(a,.03,.76,.45,.13,'阶段级 PD 切分（A100 + H20）\n按请求阶段跨机解耦','blue',11)
+        box(a,.03,.52,.45,.17,'A100 80GB 池（Prefill）\n算力密集：全部 Attention + FFN','blue',11)
+        arrow(a,(.10,.52),(.10,.41),'data')
+        text(a,.285,.465,'单次 1～1.125 GiB KV',11,ha='center')
+        box(a,.03,.24,.45,.17,'H20 96GB 池（Decode）\n带宽密集：并发读取权重与 KV','green',11)
+        box(a,.03,.04,.45,.15,'木桶：$\\min(n_P\\mu_P, n_D\\mu_D, B/V_{KV})$\n按层流水压至 1.34 ms 暴露项','gray',11)
+
+        box(a,.52,.76,.45,.13,'层内 AF 切分（KTransformers）\nRTX 4090 + 双路 Xeon 6454S','orange',11)
+        box(a,.52,.52,.45,.17,'RTX 4090 24GB（GPU 侧）\nAttention + KV + 共享/热点专家','green',11)
+        arrow(a,(.58,.52),(.58,.41),'data')
+        arrow(a,(.91,.41),(.91,.52),'data')
+        text(a,.745,.465,'每步 64～72 次激活',11,ha='center')
+        box(a,.52,.24,.45,.17,'双路 Xeon 1TB DDR5（CPU 侧）\nAMX 就地计算常驻稀疏 MoE 专家','orange',11)
+        box(a,.52,.04,.45,.15,'免搬 36 MiB 权重，达 13.99 tok/s\n受限于启动开销 $\\alpha$ 与 NUMA 带宽','gray',11)
+        out.save(f,'ch09-pd-a100-h20-vs-af-ktransformers')
     from v41_case_figures import draw as draw_v41
     draw_v41(9, out)
     out.finish();return out.outputs,out.checks

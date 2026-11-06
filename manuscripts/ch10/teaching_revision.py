@@ -101,7 +101,7 @@ def draw(here,data):
         for i,key in enumerate(['restore_bytes','staged_bytes']):
             f,a=plot(4.1,bottom=.26);v=np.array(data['10-15'][key])/2**30;a.step(range(4),v,where='post',color='#267398');a.plot(range(4),v,'o',color='#267398');a.axhline(80e9/2**30,ls='--',color='#a56c28',label='H100 SXM 74.5 GiB');a.legend(frameon=False,loc='upper right');a.set(xticks=range(4),xticklabels=['训练\n结束','加载权重\n分配 KV' if i==0 else '只加载\n权重','释放\n训练状态','开始\n生成'],ylabel='显存占用（GiB）',ylim=(0,100));a.text(1,v[1]+4,f'峰值 {v[1]:.1f} GiB',fontsize=12,ha='center');save(f,'15-rl' if i==0 else 'rl-staged')
         f,a=canvas(4.5)
-        for row,(l,c) in enumerate([('μ：实际生成样本的策略','blue'),('πold：本轮优化开始时的策略','orange'),('πθ：本轮更新中的当前策略','green')]):
+        for row,(l,c) in enumerate([('$\\mu$：实际生成样本的策略','blue'),('$\\pi_{\\mathrm{old}}$：本轮优化开始时的策略','orange'),('$\\pi_\\theta$：本轮更新中的当前策略','green')]):
             y=.70-row*.28;box(a,.04,y,.92,.18,l,c)
             if row<2:arrow(a,(.5,y),(.5,y-.10),'control')
         text(a,.5,.04,'对同一前缀与 token 分别记录概率',12,ha='center');save(f,'policy-versions')
@@ -151,6 +151,80 @@ def draw(here,data):
             a.text(xx-.17,dr*100+1.2,f'{dr*100:.1f}',ha='center',fontsize=11);a.text(xx+.17,pa*100+1.2,f'{pa*100:.0f}',ha='center',fontsize=11)
         a.set(xticks=x,xticklabels=['1.0','1.25','1.5','2.0'],xlabel='容量因子 c',ylabel='占比（%）',ylim=(0,58));a.legend(frameon=False,loc='upper left')
         out.save(f,'figure-10-moe-capacity')
+
+        # Overhauled figure-10-critical-batch (Fig 10-7) with clean label offsets
+        f,a=plot(4.4,bottom=.21,top=.86)
+        x_cb=np.arange(5)
+        weak_days=[19.4,15.7,13.8,12.8,12.1]
+        strong_days=[19.4,9.8,5.0,2.6,0.8]
+        a.plot(x_cb,weak_days,'o-',color='#a56c28',lw=2.2,label='弱扩展（每卡微批固定，全局批随卡数放大）')
+        a.plot(x_cb,strong_days,'s-',color='#267398',lw=2.2,label='强扩展（全局批固定 3.15M token，约 $1.57 B_{\\mathrm{noise}}$）')
+        a.axhline(11.9,ls='--',color='#a56c28',lw=1.3)
+        a.text(2.85,9.7,'弱扩展渐近下界 11.9 天（上限 $1.64\\times$）',fontsize=11,color='#a56c28',ha='center')
+        for idx_cb,val_w in enumerate(weak_days):
+            a.text(idx_cb-(0.08 if idx_cb==0 else 0.0),val_w+0.9,f'{val_w:.1f} 天',ha='center',fontsize=11,color='#a56c28')
+        for idx_cb,val_s,dx_s,dy_s in [(1,9.8,-.32,-2.1),(2,5.0,-.28,-2.2),(3,2.6,.0,1.05),(4,0.8,.0,1.05)]:
+            a.text(idx_cb+dx_s,val_s+dy_s,f'{val_s:.1f} 天',ha='center',fontsize=11,color='#267398')
+        a.set(xticks=x_cb,xticklabels=['48 卡\n(3.15M)','96 卡\n(6.29M)','192 卡\n(12.6M)','384 卡\n(25.2M)','1536 卡\n(101M)'],ylabel='纯训练完成时间（天）',xlim=(-.42,4.45),ylim=(-1,28.5))
+        a.set_title('临界批大小约束下弱扩展与强扩展的完成时间对比',fontsize=12,pad=8)
+        a.legend(frameon=False,loc='upper right',fontsize=11)
+        out.save(f,'figure-10-critical-batch')
+
+        # Overhauled figure-10-zero3-timeline (Fig 10-12)
+        f,a=canvas(4.5)
+        text(a,.03,.93,'ZeRO-3 单微批逐层预取与梯度归约重叠（仅首尾词嵌入层通信暴露）',12)
+        text(a,.03,.67,'GPU 计算',11)
+        box(a,.17,.54,.13,.25,'等待\n首层','gray',11)
+        box(a,.31,.54,.26,.25,'前向传播 L0–L35\n(逐层计算)','blue',11)
+        box(a,.58,.54,.26,.25,'反向传播 L35–L0\n(求梯度 dX, dW)','green',11)
+        box(a,.85,.54,.12,.25,'等待\n末层','gray',11)
+        text(a,.03,.36,'集合通信',11)
+        box(a,.17,.24,.13,.24,'首层 AG\n(0.04 s)','orange',11)
+        box(a,.31,.24,.26,.24,'预取后续层 AG\n(单层 ~12 ms 隐藏)','purple',11)
+        box(a,.58,.24,.26,.24,'反向 AG + 梯度 RS\n(与反向计算重叠)','purple',11)
+        box(a,.85,.24,.12,.24,'末层 RS\n(0.04 s)','orange',11)
+        box(a,.17,.03,.80,.16,'每步 385 GB 通信（链路 12.0 s）中 99.3% 被计算掩盖\n仅首尾词嵌入层合计暴露约 0.08 s','gray',11)
+        out.save(f,'figure-10-zero3-timeline')
+
+        # New Path-A figure: ch10-rl-weight-handoff-and-stream-trainer (Fig 10-46)
+        f,(ax1,ax2)=plt.subplots(2,1,figsize=(420/72,5.8))
+        f.subplots_adjust(left=.23,right=.96,bottom=.10,top=.92,hspace=.64)
+        stages_x=[0,1,2,3]
+        restore_gib=[44.0,83.26,43.26,43.26]
+        staged_gib=[44.0,59.26,19.26,43.26]
+        ax1.plot(stages_x,restore_gib,'s--',color='#a95159',lw=2.0,label='全量恢复（83.3 GiB OOM）')
+        ax1.plot(stages_x,staged_gib,'o-',color='#388768',lw=2.2,label='分段唤醒（59.3 GiB）')
+        ax1.axhline(74.5,ls=':',color='#a56c28',lw=1.4,label='H100 上限 74.5 GiB')
+        ax1.text(0.56,86.5,'83.3 GiB (OOM)',ha='center',fontsize=11,color='#a95159')
+        ax1.text(0.58,28.5,'59.3 GiB (省 24 GiB)',ha='center',fontsize=11,color='#388768')
+        ax1.set(xticks=stages_x,xticklabels=['训练结束\n(44.0 GiB)','同步/加载\n推理权重','释放训练\n状态','分配 24 GiB KV\n开始生成'],ylabel='显存 (GiB)',xlim=(-.25,3.35),ylim=(0,126))
+        ax1.set_title('① Qwen3-8B 共置 RL 显存切换：全量恢复 vs. 分段唤醒',fontsize=12,pad=6)
+        ax1.legend(frameon=False,loc='upper right',fontsize=11)
+
+        # Bottom panel: RollPacker Stream Trainer 8-GPU timeline (matching 算例 10-B: t=10s split, 29s/43s/55s vs 40s/60s)
+        ax2.barh(2,40,left=0,height=.48,color=COL['blue'],edgecolor=COL['line'],label='Rollout 采样')
+        ax2.barh(2,20,left=40,height=.48,color=COL['green'],edgecolor=COL['line'],label='梯度累积与更新')
+        ax2.text(60.8,2,'60 s',va='center',fontsize=11)
+
+        ax2.barh(1,10,left=0,height=.48,color=COL['blue'],edgecolor=COL['line'])
+        ax2.barh(1,33,left=10,height=.48,color=COL['orange'],edgecolor=COL['line'],label='长尾续生/流训切换')
+        ax2.barh(1,12,left=43,height=.48,color=COL['green'],edgecolor=COL['line'])
+        ax2.text(55.8,1,'55 s',va='center',fontsize=11,color='#388768')
+
+        ax2.barh(0,10,left=0,height=.48,color=COL['blue'],edgecolor=COL['line'])
+        ax2.barh(0,19,left=10,height=.48,color=COL['green'],edgecolor=COL['line'])
+        ax2.barh(0,14,left=29,height=.48,color=COL['gray'],edgecolor=COL['line'])
+        ax2.barh(0,12,left=43,height=.48,color=COL['green'],edgecolor=COL['line'])
+        ax2.text(55.8,0,'55 s (-8.3%)',va='center',fontsize=11,color='#388768')
+
+        for xv in [10,29,43]:
+            ax2.axvline(xv,ls='--',color='#777777',lw=1.0)
+        ax2.set(yticks=[2,1,0],yticklabels=['朴素共置 (8 卡)','生成组 (4 卡)','流训组 (4 卡)'],xlabel='单轮迭代时间（s）',xlim=(0,68),ylim=(-.55,2.75),xticks=[0,10,20,29,40,43,55,60])
+        ax2.invert_yaxis()
+        ax2.set_ylim(2.65,-1.18)
+        ax2.set_title('② RollPacker 流式训练器（留守单卡 KV 9 GiB ≤ 12 GiB）',fontsize=12,pad=6)
+        ax2.legend(frameon=False,ncol=3,loc='upper center',bbox_to_anchor=(0.46,1.02),columnspacing=0.9,handletextpad=0.4,fontsize=11)
+        out.save(f,'ch10-rl-weight-handoff-and-stream-trainer')
     from core_principles_figures import draw as draw_principles
     draw_principles(10, out)
     out.finish();return out.outputs,out.checks

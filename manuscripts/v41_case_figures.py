@@ -106,7 +106,7 @@ def draw(ch, out):
             card(a, 0.03, 0.04, 0.94, 0.125, '解码器 20 层末尾窗口重放 → 构建解码器局部 SWA → 自回归生成输出', '', 'purple', title_size=11.5)
             out.save(f, 'figure-8-v41-recovery')
         elif ch == 9:
-            f, a = plot(4.1, left=0.25, bottom=0.20)
+            f, a = plot(4.1, left=0.29, bottom=0.20)
             route = data['routing']
             transfer = route['remote_transfer_ms']
             replay = route['remote_replay_ms']

@@ -6,11 +6,11 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-09-11T19:54:57.769701</dc:date>
+    <dc:date>2026-11-06T07:58:25.768652</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
-      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
      </cc:Agent>
     </dc:creator>
    </cc:Work>
@@ -41,17 +41,17 @@ z
     <g id="xtick_1">
      <g id="line2d_1">
       <defs>
-       <path id="m064ad0e628" d="M 0 0 
+       <path id="mb7a929325e" d="M 0 0 
 L 0 3.5 
-" style="stroke: #252525; stroke-width: 0.8"/>
+" style="stroke: #0f172a; stroke-width: 0.8"/>
       </defs>
       <g>
-       <use xlink:href="#m064ad0e628" x="96.927273" y="241.92" style="fill: #252525; stroke: #252525; stroke-width: 0.8"/>
+       <use xlink:href="#mb7a929325e" x="96.927273" y="241.92" style="fill: #0f172a; stroke: #0f172a; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_1">
       <!-- 5 -->
-      <g style="fill: #252525" transform="translate(93.874773 258.6) scale(0.11 -0.11)">
+      <g style="fill: #0f172a" transform="translate(93.874773 258.6) scale(0.11 -0.11)">
        <defs>
         <path id="SourceHanSansCN-Regular-16" d="M 1677 -83 
 Q 1312 -83 1033 6 
@@ -92,12 +92,12 @@ z
     <g id="xtick_2">
      <g id="line2d_2">
       <g>
-       <use xlink:href="#m064ad0e628" x="150.109091" y="241.92" style="fill: #252525; stroke: #252525; stroke-width: 0.8"/>
+       <use xlink:href="#mb7a929325e" x="150.109091" y="241.92" style="fill: #0f172a; stroke: #0f172a; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_2">
       <!-- 10 -->
-      <g style="fill: #252525" transform="translate(144.004091 258.6) scale(0.11 -0.11)">
+      <g style="fill: #0f172a" transform="translate(144.004091 258.6) scale(0.11 -0.11)">
        <defs>
         <path id="SourceHanSansCN-Regular-12" d="M 563 0 
 L 563 486 
@@ -152,12 +152,12 @@ z
     <g id="xtick_3">
      <g id="line2d_3">
       <g>
-       <use xlink:href="#m064ad0e628" x="203.290909" y="241.92" style="fill: #252525; stroke: #252525; stroke-width: 0.8"/>
+       <use xlink:href="#mb7a929325e" x="203.290909" y="241.92" style="fill: #0f172a; stroke: #0f172a; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_3">
       <!-- 15 -->
-      <g style="fill: #252525" transform="translate(197.185909 258.6) scale(0.11 -0.11)">
+      <g style="fill: #0f172a" transform="translate(197.185909 258.6) scale(0.11 -0.11)">
        <use xlink:href="#SourceHanSansCN-Regular-12"/>
        <use xlink:href="#SourceHanSansCN-Regular-16" transform="translate(55.5 0)"/>
       </g>
@@ -166,12 +166,12 @@ z
     <g id="xtick_4">
      <g id="line2d_4">
       <g>
-       <use xlink:href="#m064ad0e628" x="256.472727" y="241.92" style="fill: #252525; stroke: #252525; stroke-width: 0.8"/>
+       <use xlink:href="#mb7a929325e" x="256.472727" y="241.92" style="fill: #0f172a; stroke: #0f172a; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_4">
       <!-- 20 -->
-      <g style="fill: #252525" transform="translate(250.367727 258.6) scale(0.11 -0.11)">
+      <g style="fill: #0f172a" transform="translate(250.367727 258.6) scale(0.11 -0.11)">
        <defs>
         <path id="SourceHanSansCN-Regular-13" d="M 282 0 
 L 282 371 
@@ -208,12 +208,12 @@ z
     <g id="xtick_5">
      <g id="line2d_5">
       <g>
-       <use xlink:href="#m064ad0e628" x="309.654545" y="241.92" style="fill: #252525; stroke: #252525; stroke-width: 0.8"/>
+       <use xlink:href="#mb7a929325e" x="309.654545" y="241.92" style="fill: #0f172a; stroke: #0f172a; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_5">
       <!-- 25 -->
-      <g style="fill: #252525" transform="translate(303.549545 258.6) scale(0.11 -0.11)">
+      <g style="fill: #0f172a" transform="translate(303.549545 258.6) scale(0.11 -0.11)">
        <use xlink:href="#SourceHanSansCN-Regular-13"/>
        <use xlink:href="#SourceHanSansCN-Regular-16" transform="translate(55.5 0)"/>
       </g>
@@ -222,12 +222,12 @@ z
     <g id="xtick_6">
      <g id="line2d_6">
       <g>
-       <use xlink:href="#m064ad0e628" x="362.836364" y="241.92" style="fill: #252525; stroke: #252525; stroke-width: 0.8"/>
+       <use xlink:href="#mb7a929325e" x="362.836364" y="241.92" style="fill: #0f172a; stroke: #0f172a; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_6">
       <!-- 30 -->
-      <g style="fill: #252525" transform="translate(356.731364 258.6) scale(0.11 -0.11)">
+      <g style="fill: #0f172a" transform="translate(356.731364 258.6) scale(0.11 -0.11)">
        <defs>
         <path id="SourceHanSansCN-Regular-14" d="M 1683 -83 
 Q 1318 -83 1040 6 
@@ -275,7 +275,7 @@ z
     </g>
     <g id="text_7">
      <!-- 分片参与者数 -->
-     <g style="fill: #252525" transform="translate(199.2 274.48) scale(0.12 -0.12)">
+     <g style="fill: #0f172a" transform="translate(199.2 274.48) scale(0.12 -0.12)">
       <defs>
        <path id="SourceHanSansCN-Regular-264e" d="M 4864 2957 
 L 4864 2483 
@@ -740,17 +740,17 @@ z
     <g id="ytick_1">
      <g id="line2d_7">
       <defs>
-       <path id="ma78e093aea" d="M 0 0 
+       <path id="mc6f4f9f468" d="M 0 0 
 L -3.5 0 
-" style="stroke: #252525; stroke-width: 0.8"/>
+" style="stroke: #0f172a; stroke-width: 0.8"/>
       </defs>
       <g>
-       <use xlink:href="#ma78e093aea" x="71.4" y="241.92" style="fill: #252525; stroke: #252525; stroke-width: 0.8"/>
+       <use xlink:href="#mc6f4f9f468" x="71.4" y="241.92" style="fill: #0f172a; stroke: #0f172a; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_8">
       <!-- 0 -->
-      <g style="fill: #252525" transform="translate(58.295 246.76) scale(0.11 -0.11)">
+      <g style="fill: #0f172a" transform="translate(58.295 246.76) scale(0.11 -0.11)">
        <use xlink:href="#SourceHanSansCN-Regular-11"/>
       </g>
      </g>
@@ -758,12 +758,12 @@ L -3.5 0
     <g id="ytick_2">
      <g id="line2d_8">
       <g>
-       <use xlink:href="#ma78e093aea" x="71.4" y="194.951489" style="fill: #252525; stroke: #252525; stroke-width: 0.8"/>
+       <use xlink:href="#mc6f4f9f468" x="71.4" y="194.951489" style="fill: #0f172a; stroke: #0f172a; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_9">
       <!-- 10 -->
-      <g style="fill: #252525" transform="translate(52.19 199.791489) scale(0.11 -0.11)">
+      <g style="fill: #0f172a" transform="translate(52.19 199.791489) scale(0.11 -0.11)">
        <use xlink:href="#SourceHanSansCN-Regular-12"/>
        <use xlink:href="#SourceHanSansCN-Regular-11" transform="translate(55.5 0)"/>
       </g>
@@ -772,12 +772,12 @@ L -3.5 0
     <g id="ytick_3">
      <g id="line2d_9">
       <g>
-       <use xlink:href="#ma78e093aea" x="71.4" y="147.982979" style="fill: #252525; stroke: #252525; stroke-width: 0.8"/>
+       <use xlink:href="#mc6f4f9f468" x="71.4" y="147.982979" style="fill: #0f172a; stroke: #0f172a; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_10">
       <!-- 20 -->
-      <g style="fill: #252525" transform="translate(52.19 152.822979) scale(0.11 -0.11)">
+      <g style="fill: #0f172a" transform="translate(52.19 152.822979) scale(0.11 -0.11)">
        <use xlink:href="#SourceHanSansCN-Regular-13"/>
        <use xlink:href="#SourceHanSansCN-Regular-11" transform="translate(55.5 0)"/>
       </g>
@@ -786,12 +786,12 @@ L -3.5 0
     <g id="ytick_4">
      <g id="line2d_10">
       <g>
-       <use xlink:href="#ma78e093aea" x="71.4" y="101.014468" style="fill: #252525; stroke: #252525; stroke-width: 0.8"/>
+       <use xlink:href="#mc6f4f9f468" x="71.4" y="101.014468" style="fill: #0f172a; stroke: #0f172a; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_11">
       <!-- 30 -->
-      <g style="fill: #252525" transform="translate(52.19 105.854468) scale(0.11 -0.11)">
+      <g style="fill: #0f172a" transform="translate(52.19 105.854468) scale(0.11 -0.11)">
        <use xlink:href="#SourceHanSansCN-Regular-14"/>
        <use xlink:href="#SourceHanSansCN-Regular-11" transform="translate(55.5 0)"/>
       </g>
@@ -800,12 +800,12 @@ L -3.5 0
     <g id="ytick_5">
      <g id="line2d_11">
       <g>
-       <use xlink:href="#ma78e093aea" x="71.4" y="54.045957" style="fill: #252525; stroke: #252525; stroke-width: 0.8"/>
+       <use xlink:href="#mc6f4f9f468" x="71.4" y="54.045957" style="fill: #0f172a; stroke: #0f172a; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_12">
       <!-- 40 -->
-      <g style="fill: #252525" transform="translate(52.19 58.885957) scale(0.11 -0.11)">
+      <g style="fill: #0f172a" transform="translate(52.19 58.885957) scale(0.11 -0.11)">
        <defs>
         <path id="SourceHanSansCN-Regular-15" d="M 2176 0 
 L 2176 3200 
@@ -833,7 +833,7 @@ z
     </g>
     <g id="text_13">
      <!-- 每卡显存需求（GiB） -->
-     <g style="fill: #252525" transform="translate(46.75 189.270563) rotate(-90) scale(0.12 -0.12)">
+     <g style="fill: #0f172a" transform="translate(46.75 189.270563) rotate(-90) scale(0.12 -0.12)">
       <defs>
        <path id="SourceHanSansCN-Regular-3ff4" d="M 5005 3648 
 L 5005 3219 
@@ -1472,14 +1472,27 @@ L 399 138.589277
    <g id="patch_3">
     <path d="M 71.4 241.92 
 L 71.4 21.168 
-" style="fill: none; stroke: #454545; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+" style="fill: none; stroke: #64748b; stroke-width: 0.95; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="patch_4">
     <path d="M 71.4 241.92 
 L 399 241.92 
-" style="fill: none; stroke: #454545; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+" style="fill: none; stroke: #64748b; stroke-width: 0.95; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="legend_1">
+    <g id="patch_5">
+     <path d="M 244.128594 79.468 
+L 391.3 79.468 
+Q 393.5 79.468 393.5 77.268 
+L 393.5 28.868 
+Q 393.5 26.668 391.3 26.668 
+L 244.128594 26.668 
+Q 241.928594 26.668 241.928594 28.868 
+L 241.928594 77.268 
+Q 241.928594 79.468 244.128594 79.468 
+z
+" style="fill: #ffffff; opacity: 0.93; stroke: #cbd5e1; stroke-width: 0.8; stroke-linejoin: miter"/>
+    </g>
     <g id="line2d_15">
      <path d="M 246.328594 36.898 
 L 257.328594 36.898 
@@ -1488,7 +1501,7 @@ L 268.328594 36.898
     </g>
     <g id="text_14">
      <!-- 分片＋10 GiB 临时缓冲 -->
-     <g style="fill: #252525" transform="translate(277.128594 40.748) scale(0.11 -0.11)">
+     <g style="fill: #0f172a" transform="translate(277.128594 40.748) scale(0.11 -0.11)">
       <defs>
        <path id="SourceHanSansCN-Regular-7466" d="M 3418 2182 
 L 3418 77 
@@ -1857,7 +1870,7 @@ L 268.328594 53.398
     </g>
     <g id="text_15">
      <!-- 训练状态分片 -->
-     <g style="fill: #252525" transform="translate(277.128594 57.248) scale(0.11 -0.11)">
+     <g style="fill: #0f172a" transform="translate(277.128594 57.248) scale(0.11 -0.11)">
       <defs>
        <path id="SourceHanSansCN-Regular-5fb1" d="M 4550 4877 
 L 4550 314 
@@ -2261,7 +2274,7 @@ L 268.328594 69.898
     </g>
     <g id="text_16">
      <!-- RTX 4090 可用 22 GiB -->
-     <g style="fill: #252525" transform="translate(277.128594 73.748) scale(0.11 -0.11)">
+     <g style="fill: #0f172a" transform="translate(277.128594 73.748) scale(0.11 -0.11)">
       <defs>
        <path id="SourceHanSansCN-Regular-33" d="M 646 0 
 L 646 4691 

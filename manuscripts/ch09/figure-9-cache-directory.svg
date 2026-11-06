@@ -6,11 +6,11 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-09-12T10:48:18.129470</dc:date>
+    <dc:date>2026-11-06T07:49:02.689768</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
-      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
      </cc:Agent>
     </dc:creator>
    </cc:Work>
@@ -30,44 +30,70 @@ z
   </g>
   <g id="axes_1">
    <g id="patch_2">
-    <path d="M 32.6676 137.308896 
-L 160.7844 137.308896 
-Q 163.9092 137.308896 163.9092 135.273312 
-L 163.9092 77.259168 
-Q 163.9092 75.223584 160.7844 75.223584 
-L 32.6676 75.223584 
-Q 29.5428 75.223584 29.5428 77.259168 
-L 29.5428 135.273312 
-Q 29.5428 137.308896 32.6676 137.308896 
+    <path d="M 34.6206 138.581136 
+L 161.175 138.581136 
+Q 165.081 138.581136 165.081 136.036656 
+L 165.081 79.040304 
+Q 165.081 76.495824 161.175 76.495824 
+L 34.6206 76.495824 
+Q 30.7146 76.495824 30.7146 79.040304 
+L 30.7146 136.036656 
+Q 30.7146 138.581136 34.6206 138.581136 
 z
-" clip-path="url(#p87fb6803c8)" style="fill: #f9dec0; stroke: #454545; stroke-width: 0.9; stroke-linejoin: miter"/>
+" clip-path="url(#p87fb6803c8)" style="fill: #0f172a; opacity: 0.065"/>
    </g>
    <g id="patch_3">
-    <path d="M 259.2156 137.308896 
-L 387.3324 137.308896 
-Q 390.4572 137.308896 390.4572 135.273312 
-L 390.4572 77.259168 
-Q 390.4572 75.223584 387.3324 75.223584 
-L 259.2156 75.223584 
-Q 256.0908 75.223584 256.0908 77.259168 
-L 256.0908 135.273312 
-Q 256.0908 137.308896 259.2156 137.308896 
+    <path d="M 33.4488 137.308896 
+L 160.0032 137.308896 
+Q 163.9092 137.308896 163.9092 134.764416 
+L 163.9092 77.768064 
+Q 163.9092 75.223584 160.0032 75.223584 
+L 33.4488 75.223584 
+Q 29.5428 75.223584 29.5428 77.768064 
+L 29.5428 134.764416 
+Q 29.5428 137.308896 33.4488 137.308896 
 z
-" clip-path="url(#p87fb6803c8)" style="fill: #cbe3f3; stroke: #454545; stroke-width: 0.9; stroke-linejoin: miter"/>
+" clip-path="url(#p87fb6803c8)" style="fill: #fde8cc; stroke: #c05621; stroke-width: 1.15; stroke-linejoin: miter"/>
    </g>
    <g id="patch_4">
-    <path d="M 166.129021 106.26624 
-Q 210.000958 106.26624 252.754862 106.26624 
-" clip-path="url(#p87fb6803c8)" style="fill: none; stroke-dasharray: 3.7,1.6; stroke-dashoffset: 0; stroke: #454545; stroke-linecap: round"/>
-    <path d="M 248.354862 104.06624 
-L 252.754862 106.26624 
-L 248.354862 108.46624 
+    <path d="M 261.1686 138.581136 
+L 387.723 138.581136 
+Q 391.629 138.581136 391.629 136.036656 
+L 391.629 79.040304 
+Q 391.629 76.495824 387.723 76.495824 
+L 261.1686 76.495824 
+Q 257.2626 76.495824 257.2626 79.040304 
+L 257.2626 136.036656 
+Q 257.2626 138.581136 261.1686 138.581136 
 z
-" clip-path="url(#p87fb6803c8)" style="fill: #454545; stroke-dasharray: 3.7,1.6; stroke-dashoffset: 0; stroke: #454545; stroke-linecap: round"/>
+" clip-path="url(#p87fb6803c8)" style="fill: #0f172a; opacity: 0.065"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 259.9968 137.308896 
+L 386.5512 137.308896 
+Q 390.4572 137.308896 390.4572 134.764416 
+L 390.4572 77.768064 
+Q 390.4572 75.223584 386.5512 75.223584 
+L 259.9968 75.223584 
+Q 256.0908 75.223584 256.0908 77.768064 
+L 256.0908 134.764416 
+Q 256.0908 137.308896 259.9968 137.308896 
+z
+" clip-path="url(#p87fb6803c8)" style="fill: #dcebfa; stroke: #2b6cb0; stroke-width: 1.15; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 166.129021 106.26624 
+Q 210.000958 106.26624 252.419452 106.26624 
+" clip-path="url(#p87fb6803c8)" style="fill: none; stroke-dasharray: 4.81,2.08; stroke-dashoffset: 0; stroke: #334155; stroke-width: 1.3; stroke-linecap: round"/>
+    <path d="M 247.819452 103.96624 
+L 252.419452 106.26624 
+L 247.819452 108.56624 
+z
+" clip-path="url(#p87fb6803c8)" style="fill: #334155; stroke-dasharray: 4.81,2.08; stroke-dashoffset: 0; stroke: #334155; stroke-width: 1.3; stroke-linecap: round"/>
    </g>
    <g id="text_1">
     <!-- 目录记录 -->
-    <g style="fill: #252525" transform="translate(74.726 102.597568) scale(0.11 -0.11)">
+    <g style="fill: #7c2d12" transform="translate(74.726 102.817568) scale(0.11 -0.11)">
      <defs>
       <path id="SourceHanSansCN-Regular-4b05" d="M 5043 3469 
 L 5043 3008 
@@ -282,7 +308,7 @@ z
      <use xlink:href="#SourceHanSansCN-Regular-3385" transform="translate(300 0)"/>
     </g>
     <!-- 标识 → 存储位置 -->
-    <g style="fill: #252525" transform="translate(55.761313 118.190068) scale(0.11 -0.11)">
+    <g style="fill: #7c2d12" transform="translate(55.761313 117.970068) scale(0.11 -0.11)">
      <defs>
       <path id="SourceHanSansCN-Regular-3c2e" d="M 5773 4890 
 L 5773 4435 
@@ -795,7 +821,7 @@ z
    </g>
    <g id="text_2">
     <!-- KV 数据对象 -->
-    <g style="fill: #252525" transform="translate(293.403844 102.752256) scale(0.11 -0.11)">
+    <g style="fill: #1e3a8a" transform="translate(293.403844 102.972256) scale(0.11 -0.11)">
      <defs>
       <path id="SourceHanSansCN-Regular-2c" d="M 646 0 
 L 646 4691 
@@ -1249,7 +1275,7 @@ z
      <use xlink:href="#SourceHanSansCN-Regular-6065" transform="translate(443.09375 0)"/>
     </g>
     <!-- 实际上下文状态 -->
-    <g style="fill: #252525" transform="translate(284.774 118.184912) scale(0.11 -0.11)">
+    <g style="fill: #1e3a8a" transform="translate(284.774 117.964912) scale(0.11 -0.11)">
      <defs>
       <path id="SourceHanSansCN-Regular-2fd3" d="M 3674 1037 
 Q 4102 877 4528 688 
@@ -1672,7 +1698,7 @@ z
    </g>
    <g id="text_3">
     <!-- 先按目录定位，再确认对象可用并取回 -->
-    <g style="fill: #252525" transform="translate(108 212.48544) scale(0.12 -0.12)">
+    <g style="fill: #0f172a" transform="translate(108 212.48544) scale(0.12 -0.12)">
      <defs>
       <path id="SourceHanSansCN-Regular-2594" d="M 4262 275 
 Q 4262 134 4316 92 

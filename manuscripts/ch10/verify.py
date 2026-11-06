@@ -21,7 +21,7 @@ check([h for h in heads if h in set(expected)]==expected,'outline subsection ali
 check('训练一致性' not in s and '训练一致性' not in page, 'obsolete RL consistency terminology')
 for marker in ['专家路由重放与训推一致性', '前缀分布偏移', 'OPD', '温度缩放', '权重长期不变']:
  check(marker in s and marker in page, 'RL consistency coverage: '+marker)
-check(re.findall(r'^> \*\*习题 (10-\d+)',s,re.M)==[f'10-{i}' for i in range(1,11)],'exercise sequence')
+check(re.findall(r'^> \*\*习题 (10-\d+)',s,re.M)==[f'10-{i}' for i in range(1,15)],'exercise sequence')
 check(re.findall(r'^> \*\*习题 (10-\d+) · 综合设计',s,re.M)==['10-3','10-7','10-10'],'integrative design exercises')
 check(re.findall(r'^\*图 (10-\d+)(?:：|　)',s,re.M)==[f'10-{i}' for i in range(1,figure_count+1)],'external caption sequence')
 check(len(re.findall(r'!\[',s))==figure_count,'active figures')
@@ -190,5 +190,5 @@ cycle=d['rl_async_cycle'];check(cycle['overlapped_period_seconds']==max(cycle['g
 for row in d['task_deadline_breakdown']['rows']:check(math.isclose(sum(row['days']),row['finish_days']),'deadline bars add to finish time')
 figrefs=[int(n) for n in re.findall(r'图 10-(\d+)',s)]
 check(all(1<=n<=figure_count for n in figrefs),'figure references within chapter sequence')
-report={'status':'passed' if not errors else 'failed','sections':6,'subsections':len(heads),'exercises':10,'figures':figure_count,'image_files':sum(Path(r['path']).suffix in ['.svg','.png','.pdf'] for r in manifest['outputs']),'formulas':mathreport['expressions'],'source_files':len(json.loads((HERE/'sources.json').read_text())['sources']),'chinese_characters':len(re.findall(r'[\u4e00-\u9fff]',s)),'errors':errors}
+report={'status':'passed' if not errors else 'failed','sections':6,'subsections':len(heads),'exercises':14,'figures':figure_count,'image_files':sum(Path(r['path']).suffix in ['.svg','.png','.pdf'] for r in manifest['outputs']),'formulas':mathreport['expressions'],'source_files':len(json.loads((HERE/'sources.json').read_text())['sources']),'chinese_characters':len(re.findall(r'[\u4e00-\u9fff]',s)),'errors':errors}
 (HERE/'validation.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n');print(json.dumps(report,ensure_ascii=False,indent=2));raise SystemExit(bool(errors))

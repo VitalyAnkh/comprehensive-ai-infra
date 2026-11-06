@@ -6,11 +6,11 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-09-11T19:54:57.232157</dc:date>
+    <dc:date>2026-11-06T07:58:24.925490</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
-      <dc:title>Matplotlib v3.11.1, https://matplotlib.org/</dc:title>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
      </cc:Agent>
     </dc:creator>
    </cc:Work>
@@ -30,520 +30,559 @@ z
   </g>
   <g id="axes_1">
    <g id="patch_2">
-    <path d="M 32.6676 117.40464 
-L 164.6904 117.40464 
-Q 167.8152 117.40464 167.8152 114.99408 
-L 167.8152 58.34592 
-Q 167.8152 55.93536 164.6904 55.93536 
-L 32.6676 55.93536 
-Q 29.5428 55.93536 29.5428 58.34592 
-L 29.5428 114.99408 
-Q 29.5428 117.40464 32.6676 117.40464 
+    <path d="M 34.6206 118.91124 
+L 165.081 118.91124 
+Q 168.987 118.91124 168.987 115.89804 
+L 168.987 60.45516 
+Q 168.987 57.44196 165.081 57.44196 
+L 34.6206 57.44196 
+Q 30.7146 57.44196 30.7146 60.45516 
+L 30.7146 115.89804 
+Q 30.7146 118.91124 34.6206 118.91124 
 z
-" clip-path="url(#p4065be1f3a)" style="fill: #cbe3f3; stroke: #454545; stroke-width: 0.9; stroke-linejoin: miter"/>
+" clip-path="url(#p4065be1f3a)" style="fill: #0f172a; opacity: 0.065"/>
    </g>
    <g id="patch_3">
-    <path d="M 255.3096 243.95904 
-L 387.3324 243.95904 
-Q 390.4572 243.95904 390.4572 241.54848 
-L 390.4572 184.90032 
-Q 390.4572 182.48976 387.3324 182.48976 
-L 255.3096 182.48976 
-Q 252.1848 182.48976 252.1848 184.90032 
-L 252.1848 241.54848 
-Q 252.1848 243.95904 255.3096 243.95904 
+    <path d="M 33.4488 117.40464 
+L 163.9092 117.40464 
+Q 167.8152 117.40464 167.8152 114.39144 
+L 167.8152 58.94856 
+Q 167.8152 55.93536 163.9092 55.93536 
+L 33.4488 55.93536 
+Q 29.5428 55.93536 29.5428 58.94856 
+L 29.5428 114.39144 
+Q 29.5428 117.40464 33.4488 117.40464 
 z
-" clip-path="url(#p4065be1f3a)" style="fill: #cfe8db; stroke: #454545; stroke-width: 0.9; stroke-linejoin: miter"/>
+" clip-path="url(#p4065be1f3a)" style="fill: #dcebfa; stroke: #2b6cb0; stroke-width: 1.15; stroke-linejoin: miter"/>
    </g>
    <g id="patch_4">
-    <path d="M 255.3096 117.40464 
-L 387.3324 117.40464 
-Q 390.4572 117.40464 390.4572 114.99408 
-L 390.4572 58.34592 
-Q 390.4572 55.93536 387.3324 55.93536 
-L 255.3096 55.93536 
-Q 252.1848 55.93536 252.1848 58.34592 
-L 252.1848 114.99408 
-Q 252.1848 117.40464 255.3096 117.40464 
+    <path d="M 257.2626 245.46564 
+L 387.723 245.46564 
+Q 391.629 245.46564 391.629 242.45244 
+L 391.629 187.00956 
+Q 391.629 183.99636 387.723 183.99636 
+L 257.2626 183.99636 
+Q 253.3566 183.99636 253.3566 187.00956 
+L 253.3566 242.45244 
+Q 253.3566 245.46564 257.2626 245.46564 
 z
-" clip-path="url(#p4065be1f3a)" style="fill: #cbe3f3; stroke: #454545; stroke-width: 0.9; stroke-linejoin: miter"/>
+" clip-path="url(#p4065be1f3a)" style="fill: #0f172a; opacity: 0.065"/>
    </g>
    <g id="patch_5">
-    <path d="M 170.031445 86.67 
-Q 209.999128 86.67 248.848776 86.67 
-" clip-path="url(#p4065be1f3a)" style="fill: none; stroke: #454545; stroke-linecap: round"/>
-    <path d="M 244.448776 84.47 
-L 248.848776 86.67 
-L 244.448776 88.87 
+    <path d="M 256.0908 243.95904 
+L 386.5512 243.95904 
+Q 390.4572 243.95904 390.4572 240.94584 
+L 390.4572 185.50296 
+Q 390.4572 182.48976 386.5512 182.48976 
+L 256.0908 182.48976 
+Q 252.1848 182.48976 252.1848 185.50296 
+L 252.1848 240.94584 
+Q 252.1848 243.95904 256.0908 243.95904 
 z
-" clip-path="url(#p4065be1f3a)" style="fill: #454545; stroke: #454545; stroke-linecap: round"/>
+" clip-path="url(#p4065be1f3a)" style="fill: #d8f1e5; stroke: #2f855a; stroke-width: 1.15; stroke-linejoin: miter"/>
    </g>
    <g id="patch_6">
-    <path d="M 321.321 119.800119 
-Q 321.321 149.945463 321.321 178.972773 
-" clip-path="url(#p4065be1f3a)" style="fill: none; stroke: #454545; stroke-linecap: round"/>
-    <path d="M 323.521 174.572773 
-L 321.321 178.972773 
-L 319.121 174.572773 
+    <path d="M 257.2626 118.91124 
+L 387.723 118.91124 
+Q 391.629 118.91124 391.629 115.89804 
+L 391.629 60.45516 
+Q 391.629 57.44196 387.723 57.44196 
+L 257.2626 57.44196 
+Q 253.3566 57.44196 253.3566 60.45516 
+L 253.3566 115.89804 
+Q 253.3566 118.91124 257.2626 118.91124 
 z
-" clip-path="url(#p4065be1f3a)" style="fill: #454545; stroke: #454545; stroke-linecap: round"/>
+" clip-path="url(#p4065be1f3a)" style="fill: #0f172a; opacity: 0.065"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 256.0908 117.40464 
+L 386.5512 117.40464 
+Q 390.4572 117.40464 390.4572 114.39144 
+L 390.4572 58.94856 
+Q 390.4572 55.93536 386.5512 55.93536 
+L 256.0908 55.93536 
+Q 252.1848 55.93536 252.1848 58.94856 
+L 252.1848 114.39144 
+Q 252.1848 117.40464 256.0908 117.40464 
+z
+" clip-path="url(#p4065be1f3a)" style="fill: #dcebfa; stroke: #2b6cb0; stroke-width: 1.15; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 170.031445 86.67 
+Q 209.999128 86.67 248.513366 86.67 
+" clip-path="url(#p4065be1f3a)" style="fill: none; stroke: #334155; stroke-width: 1.3; stroke-linecap: round"/>
+    <path d="M 243.913366 84.37 
+L 248.513366 86.67 
+L 243.913366 88.97 
+z
+" clip-path="url(#p4065be1f3a)" style="fill: #334155; stroke: #334155; stroke-width: 1.3; stroke-linecap: round"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 321.321 119.800119 
+Q 321.321 149.945463 321.321 178.637363 
+" clip-path="url(#p4065be1f3a)" style="fill: none; stroke: #334155; stroke-width: 1.3; stroke-linecap: round"/>
+    <path d="M 323.621 174.037363 
+L 321.321 178.637363 
+L 319.021 174.037363 
+z
+" clip-path="url(#p4065be1f3a)" style="fill: #334155; stroke: #334155; stroke-width: 1.3; stroke-linecap: round"/>
    </g>
    <g id="text_1">
     <!-- GPU：BF16 -->
-    <g style="fill: #252525" transform="translate(66.506812 82.667813) scale(0.12 -0.12)">
+    <g style="fill: #1e3a8a" transform="translate(65.949938 82.925625) scale(0.12 -0.12)">
      <defs>
-      <path id="SourceHanSansCN-Regular-28" d="M 2490 -83 
-Q 1869 -83 1392 205 
-Q 915 493 643 1037 
-Q 371 1581 371 2342 
-Q 371 2912 531 3363 
-Q 691 3814 982 4128 
-Q 1274 4442 1664 4608 
-Q 2054 4774 2522 4774 
-Q 3014 4774 3340 4595 
-Q 3667 4416 3872 4198 
-L 3552 3834 
-Q 3373 4019 3133 4137 
-Q 2893 4256 2541 4256 
-Q 2067 4256 1715 4025 
-Q 1363 3795 1171 3369 
-Q 979 2944 979 2362 
-Q 979 1766 1161 1334 
-Q 1344 902 1696 668 
-Q 2048 435 2547 435 
-Q 2797 435 3024 508 
-Q 3251 582 3392 710 
-L 3392 1939 
-L 2394 1939 
-L 2394 2432 
-L 3936 2432 
-L 3936 461 
-Q 3706 224 3331 70 
-Q 2957 -83 2490 -83 
+      <path id="SourceHanSansCN-Medium-28" d="M 2547 -90 
+Q 1920 -90 1424 198 
+Q 928 486 643 1030 
+Q 358 1574 358 2349 
+Q 358 2925 528 3379 
+Q 698 3834 995 4150 
+Q 1293 4467 1693 4633 
+Q 2093 4800 2566 4800 
+Q 3066 4800 3408 4621 
+Q 3750 4442 3962 4205 
+L 3565 3750 
+Q 3386 3936 3155 4045 
+Q 2925 4154 2586 4154 
+Q 2150 4154 1820 3936 
+Q 1491 3718 1308 3321 
+Q 1126 2925 1126 2368 
+Q 1126 1811 1299 1404 
+Q 1472 998 1805 780 
+Q 2138 563 2624 563 
+Q 2842 563 3037 624 
+Q 3232 685 3354 794 
+L 3354 1894 
+L 2426 1894 
+L 2426 2509 
+L 4032 2509 
+L 4032 467 
+Q 3795 230 3411 70 
+Q 3027 -90 2547 -90 
 z
 " transform="scale(0.015625)"/>
-      <path id="SourceHanSansCN-Regular-31" d="M 646 0 
-L 646 4691 
-L 1984 4691 
-Q 2509 4691 2905 4560 
-Q 3302 4429 3520 4128 
-Q 3738 3827 3738 3315 
-Q 3738 2822 3520 2502 
-Q 3302 2182 2912 2025 
-Q 2522 1869 2010 1869 
-L 1235 1869 
-L 1235 0 
-L 646 0 
+      <path id="SourceHanSansCN-Medium-31" d="M 621 0 
+L 621 4717 
+L 2048 4717 
+Q 2579 4717 2982 4579 
+Q 3386 4442 3619 4131 
+Q 3853 3821 3853 3283 
+Q 3853 2771 3622 2441 
+Q 3392 2112 2992 1949 
+Q 2592 1786 2074 1786 
+L 1363 1786 
+L 1363 0 
+L 621 0 
 z
-M 1235 2349 
-L 1933 2349 
-Q 2547 2349 2848 2579 
-Q 3149 2810 3149 3315 
-Q 3149 3827 2838 4019 
-Q 2528 4211 1907 4211 
-L 1235 4211 
-L 1235 2349 
-z
-" transform="scale(0.015625)"/>
-      <path id="SourceHanSansCN-Regular-36" d="M 2310 -83 
-Q 1952 -83 1645 19 
-Q 1338 122 1110 355 
-Q 883 589 755 973 
-Q 627 1357 627 1914 
-L 627 4691 
-L 1216 4691 
-L 1216 1894 
-Q 1216 1338 1363 1018 
-Q 1510 698 1756 566 
-Q 2003 435 2310 435 
-Q 2624 435 2873 566 
-Q 3123 698 3273 1018 
-Q 3424 1338 3424 1894 
-L 3424 4691 
-L 3994 4691 
-L 3994 1914 
-Q 3994 1357 3869 973 
-Q 3744 589 3513 355 
-Q 3283 122 2976 19 
-Q 2669 -83 2310 -83 
+M 1363 2387 
+L 2010 2387 
+Q 2566 2387 2841 2604 
+Q 3117 2822 3117 3283 
+Q 3117 3757 2829 3936 
+Q 2541 4115 1978 4115 
+L 1363 4115 
+L 1363 2387 
 z
 " transform="scale(0.015625)"/>
-      <path id="SourceHanSansCN-Regular-7782" d="M 1600 3110 
-Q 1408 3110 1261 3238 
-Q 1114 3366 1114 3584 
-Q 1114 3808 1261 3939 
-Q 1408 4070 1600 4070 
-Q 1792 4070 1939 3939 
-Q 2086 3808 2086 3584 
-Q 2086 3366 1939 3238 
-Q 1792 3110 1600 3110 
-z
-M 1600 -26 
-Q 1408 -26 1261 105 
-Q 1114 237 1114 454 
-Q 1114 672 1261 803 
-Q 1408 934 1600 934 
-Q 1792 934 1939 803 
-Q 2086 672 2086 454 
-Q 2086 237 1939 105 
-Q 1792 -26 1600 -26 
-z
-" transform="scale(0.015625)"/>
-      <path id="SourceHanSansCN-Regular-23" d="M 646 0 
-L 646 4691 
-L 2035 4691 
-Q 2515 4691 2876 4576 
-Q 3238 4461 3443 4211 
-Q 3648 3962 3648 3546 
-Q 3648 3181 3472 2909 
-Q 3296 2637 2963 2528 
-L 2963 2496 
-Q 3398 2419 3657 2144 
-Q 3917 1869 3917 1395 
-Q 3917 928 3689 617 
-Q 3462 307 3062 153 
-Q 2662 0 2138 0 
-L 646 0 
-z
-M 1235 2701 
-L 1933 2701 
-Q 2541 2701 2803 2905 
-Q 3066 3110 3066 3469 
-Q 3066 3885 2787 4054 
-Q 2509 4224 1958 4224 
-L 1235 4224 
-L 1235 2701 
-z
-M 1235 474 
-L 2054 474 
-Q 2656 474 2995 698 
-Q 3334 922 3334 1395 
-Q 3334 1837 3001 2038 
-Q 2669 2240 2054 2240 
-L 1235 2240 
-L 1235 474 
+      <path id="SourceHanSansCN-Medium-36" d="M 2349 -90 
+Q 1958 -90 1635 22 
+Q 1312 134 1081 380 
+Q 851 627 723 1024 
+Q 595 1421 595 1990 
+L 595 4717 
+L 1338 4717 
+L 1338 1939 
+Q 1338 1421 1469 1117 
+Q 1600 813 1827 688 
+Q 2054 563 2349 563 
+Q 2650 563 2880 688 
+Q 3110 813 3244 1117 
+Q 3379 1421 3379 1939 
+L 3379 4717 
+L 4096 4717 
+L 4096 1990 
+Q 4096 1421 3971 1024 
+Q 3846 627 3616 380 
+Q 3386 134 3062 22 
+Q 2739 -90 2349 -90 
 z
 " transform="scale(0.015625)"/>
-      <path id="SourceHanSansCN-Regular-27" d="M 646 0 
-L 646 4691 
-L 3347 4691 
-L 3347 4192 
-L 1235 4192 
-L 1235 2605 
-L 3027 2605 
-L 3027 2106 
-L 1235 2106 
-L 1235 0 
-L 646 0 
+      <path id="SourceHanSansCN-Medium-7782" d="M 1600 3059 
+Q 1382 3059 1222 3209 
+Q 1062 3360 1062 3590 
+Q 1062 3834 1222 3981 
+Q 1382 4128 1600 4128 
+Q 1818 4128 1978 3981 
+Q 2138 3834 2138 3590 
+Q 2138 3360 1978 3209 
+Q 1818 3059 1600 3059 
+z
+M 1600 -38 
+Q 1382 -38 1222 112 
+Q 1062 262 1062 493 
+Q 1062 736 1222 883 
+Q 1382 1030 1600 1030 
+Q 1818 1030 1978 883 
+Q 2138 736 2138 493 
+Q 2138 262 1978 112 
+Q 1818 -38 1600 -38 
 z
 " transform="scale(0.015625)"/>
-      <path id="SourceHanSansCN-Regular-7786" d="M 563 0 
-L 563 486 
-L 1613 486 
-L 1613 3853 
-L 774 3853 
-L 774 4224 
-Q 1088 4282 1321 4365 
-Q 1555 4448 1747 4563 
-L 2195 4563 
-L 2195 486 
-L 3136 486 
-L 3136 0 
-L 563 0 
+      <path id="SourceHanSansCN-Medium-23" d="M 621 0 
+L 621 4717 
+L 2086 4717 
+Q 2566 4717 2940 4601 
+Q 3315 4486 3529 4233 
+Q 3744 3981 3744 3558 
+Q 3744 3194 3571 2918 
+Q 3398 2643 3072 2534 
+L 3072 2502 
+Q 3501 2419 3750 2150 
+Q 4000 1882 4000 1414 
+Q 4000 934 3766 620 
+Q 3533 307 3126 153 
+Q 2720 0 2195 0 
+L 621 0 
+z
+M 1363 2746 
+L 1997 2746 
+Q 2534 2746 2774 2938 
+Q 3014 3130 3014 3456 
+Q 3014 3821 2764 3977 
+Q 2515 4134 2016 4134 
+L 1363 4134 
+L 1363 2746 
+z
+M 1363 582 
+L 2112 582 
+Q 2662 582 2966 787 
+Q 3270 992 3270 1421 
+Q 3270 1818 2972 2000 
+Q 2675 2182 2112 2182 
+L 1363 2182 
+L 1363 582 
 z
 " transform="scale(0.015625)"/>
-      <path id="SourceHanSansCN-Regular-778b" d="M 1920 -83 
-Q 1581 -83 1293 51 
-Q 1005 186 793 461 
-Q 582 736 464 1149 
-Q 346 1562 346 2112 
-Q 346 2797 486 3280 
-Q 627 3763 870 4067 
-Q 1114 4371 1427 4508 
-Q 1741 4646 2080 4646 
-Q 2451 4646 2720 4508 
-Q 2989 4371 3181 4166 
-L 2854 3802 
-Q 2720 3968 2518 4064 
-Q 2317 4160 2106 4160 
-Q 1779 4160 1504 3968 
-Q 1229 3776 1062 3328 
-Q 896 2880 896 2112 
-Q 896 1549 1017 1161 
-Q 1139 774 1366 576 
-Q 1594 378 1914 378 
-Q 2144 378 2326 502 
-Q 2509 627 2614 851 
-Q 2720 1075 2720 1376 
-Q 2720 1677 2624 1894 
-Q 2528 2112 2339 2230 
-Q 2150 2349 1869 2349 
-Q 1645 2349 1382 2201 
-Q 1120 2054 883 1702 
-L 864 2163 
-Q 1011 2355 1190 2496 
-Q 1370 2637 1571 2710 
-Q 1773 2784 1958 2784 
-Q 2355 2784 2649 2627 
-Q 2944 2470 3104 2156 
-Q 3264 1843 3264 1376 
-Q 3264 941 3081 611 
-Q 2899 282 2592 99 
-Q 2285 -83 1920 -83 
+      <path id="SourceHanSansCN-Medium-27" d="M 621 0 
+L 621 4717 
+L 3411 4717 
+L 3411 4090 
+L 1363 4090 
+L 1363 2650 
+L 3110 2650 
+L 3110 2029 
+L 1363 2029 
+L 1363 0 
+L 621 0 
+z
+" transform="scale(0.015625)"/>
+      <path id="SourceHanSansCN-Medium-7786" d="M 544 0 
+L 544 608 
+L 1581 608 
+L 1581 3757 
+L 736 3757 
+L 736 4224 
+Q 1069 4288 1315 4374 
+Q 1562 4461 1766 4582 
+L 2323 4582 
+L 2323 608 
+L 3238 608 
+L 3238 0 
+L 544 0 
+z
+" transform="scale(0.015625)"/>
+      <path id="SourceHanSansCN-Medium-778b" d="M 1965 -90 
+Q 1626 -90 1328 48 
+Q 1030 186 809 461 
+Q 589 736 461 1155 
+Q 333 1574 333 2144 
+Q 333 2822 477 3299 
+Q 621 3776 870 4083 
+Q 1120 4390 1440 4531 
+Q 1760 4672 2112 4672 
+Q 2509 4672 2800 4525 
+Q 3091 4378 3290 4166 
+L 2886 3718 
+Q 2758 3872 2560 3968 
+Q 2362 4064 2144 4064 
+Q 1837 4064 1581 3885 
+Q 1325 3706 1171 3286 
+Q 1018 2867 1018 2144 
+Q 1018 1574 1133 1206 
+Q 1248 838 1459 659 
+Q 1670 480 1952 480 
+Q 2157 480 2323 592 
+Q 2490 704 2589 912 
+Q 2688 1120 2688 1408 
+Q 2688 1690 2595 1885 
+Q 2502 2080 2329 2182 
+Q 2157 2285 1907 2285 
+Q 1702 2285 1462 2150 
+Q 1222 2016 1011 1683 
+L 979 2221 
+Q 1120 2406 1299 2540 
+Q 1478 2675 1673 2748 
+Q 1869 2822 2042 2822 
+Q 2438 2822 2739 2665 
+Q 3040 2509 3206 2195 
+Q 3373 1882 3373 1408 
+Q 3373 954 3177 621 
+Q 2982 288 2665 99 
+Q 2349 -90 1965 -90 
 z
 " transform="scale(0.015625)"/>
      </defs>
-     <use xlink:href="#SourceHanSansCN-Regular-28"/>
-     <use xlink:href="#SourceHanSansCN-Regular-31" transform="translate(68.90625 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-36" transform="translate(132.203125 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-7782" transform="translate(204.296875 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-23" transform="translate(304.296875 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-27" transform="translate(370 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-7786" transform="translate(425.203125 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-778b" transform="translate(480.703125 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-28"/>
+     <use xlink:href="#SourceHanSansCN-Medium-31" transform="translate(70.09375 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-36" transform="translate(134.890625 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-7782" transform="translate(208.1875 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-23" transform="translate(308.1875 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-27" transform="translate(374.890625 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-7786" transform="translate(431.484375 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-778b" transform="translate(488.484375 0)"/>
     </g>
     <!-- 96 MiB -->
-    <g style="fill: #252525" transform="translate(80.21025 99.642188) scale(0.12 -0.12)">
+    <g style="fill: #1e3a8a" transform="translate(79.779 99.49125) scale(0.12 -0.12)">
      <defs>
-      <path id="SourceHanSansCN-Regular-778e" d="M 1466 -83 
-Q 1101 -83 829 54 
-Q 557 192 371 397 
-L 691 762 
-Q 832 595 1033 499 
-Q 1235 403 1446 403 
-Q 1773 403 2048 595 
-Q 2323 787 2489 1238 
-Q 2656 1690 2656 2451 
-Q 2656 3014 2537 3401 
-Q 2419 3789 2188 3990 
-Q 1958 4192 1632 4192 
-Q 1408 4192 1229 4064 
-Q 1050 3936 941 3712 
-Q 832 3488 832 3181 
-Q 832 2886 925 2665 
-Q 1018 2445 1210 2326 
-Q 1402 2208 1683 2208 
-Q 1907 2208 2166 2358 
-Q 2426 2509 2662 2861 
-L 2688 2394 
-Q 2547 2208 2358 2067 
-Q 2170 1926 1974 1852 
-Q 1779 1779 1581 1779 
-Q 1190 1779 896 1936 
-Q 602 2093 442 2406 
-Q 282 2720 282 3181 
-Q 282 3622 467 3952 
-Q 653 4282 957 4464 
-Q 1261 4646 1626 4646 
-Q 1965 4646 2253 4508 
-Q 2541 4371 2752 4096 
-Q 2963 3821 3084 3414 
-Q 3206 3008 3206 2451 
-Q 3206 1766 3062 1283 
-Q 2918 800 2675 496 
-Q 2432 192 2118 54 
-Q 1805 -83 1466 -83 
+      <path id="SourceHanSansCN-Medium-778e" d="M 1536 -90 
+Q 1133 -90 841 60 
+Q 550 211 352 416 
+L 755 877 
+Q 883 717 1084 621 
+Q 1286 525 1498 525 
+Q 1805 525 2061 704 
+Q 2317 883 2470 1305 
+Q 2624 1728 2624 2445 
+Q 2624 3014 2509 3382 
+Q 2394 3750 2186 3926 
+Q 1978 4102 1690 4102 
+Q 1485 4102 1318 3993 
+Q 1152 3885 1056 3680 
+Q 960 3475 960 3181 
+Q 960 2899 1046 2700 
+Q 1133 2502 1309 2400 
+Q 1485 2298 1734 2298 
+Q 1939 2298 2179 2438 
+Q 2419 2579 2630 2906 
+L 2662 2362 
+Q 2528 2176 2345 2041 
+Q 2163 1907 1971 1836 
+Q 1779 1766 1600 1766 
+Q 1203 1766 905 1923 
+Q 608 2080 438 2393 
+Q 269 2707 269 3181 
+Q 269 3635 464 3968 
+Q 659 4301 979 4486 
+Q 1299 4672 1677 4672 
+Q 2016 4672 2313 4537 
+Q 2611 4403 2832 4124 
+Q 3053 3846 3181 3430 
+Q 3309 3014 3309 2445 
+Q 3309 1773 3165 1289 
+Q 3021 806 2768 502 
+Q 2515 198 2198 54 
+Q 1882 -90 1536 -90 
 z
 " transform="scale(0.015625)"/>
-      <path id="SourceHanSansCN-Regular-1" transform="scale(0.015625)"/>
-      <path id="SourceHanSansCN-Regular-2e" d="M 646 0 
-L 646 4691 
-L 1357 4691 
-L 2253 2182 
-Q 2342 1946 2425 1696 
-Q 2509 1446 2592 1203 
-L 2618 1203 
-Q 2707 1446 2787 1696 
-Q 2867 1946 2944 2182 
-L 3840 4691 
-L 4550 4691 
-L 4550 0 
-L 4000 0 
-L 4000 2598 
-Q 4000 2803 4013 3056 
-Q 4026 3309 4045 3568 
-Q 4064 3827 4077 4032 
-L 4051 4032 
-L 3674 2912 
-L 2790 474 
-L 2394 474 
-L 1504 2912 
-L 1126 4032 
-L 1101 4032 
-Q 1126 3827 1142 3568 
-Q 1158 3309 1168 3056 
-Q 1178 2803 1178 2598 
-L 1178 0 
-L 646 0 
+      <path id="SourceHanSansCN-Medium-1" transform="scale(0.015625)"/>
+      <path id="SourceHanSansCN-Medium-2e" d="M 621 0 
+L 621 4717 
+L 1478 4717 
+L 2336 2330 
+Q 2419 2099 2496 1859 
+Q 2573 1619 2650 1382 
+L 2682 1382 
+Q 2765 1619 2838 1859 
+Q 2912 2099 2989 2330 
+L 3834 4717 
+L 4698 4717 
+L 4698 0 
+L 4006 0 
+L 4006 2330 
+Q 4006 2541 4022 2816 
+Q 4038 3091 4060 3366 
+Q 4083 3642 4109 3859 
+L 4077 3859 
+L 3699 2701 
+L 2880 454 
+L 2419 454 
+L 1594 2701 
+L 1216 3859 
+L 1190 3859 
+Q 1216 3642 1238 3366 
+Q 1261 3091 1277 2816 
+Q 1293 2541 1293 2330 
+L 1293 0 
+L 621 0 
 z
 " transform="scale(0.015625)"/>
-      <path id="SourceHanSansCN-Regular-4a" d="M 589 0 
-L 589 3475 
-L 1178 3475 
-L 1178 0 
-L 589 0 
+      <path id="SourceHanSansCN-Medium-4a" d="M 557 0 
+L 557 3526 
+L 1293 3526 
+L 1293 0 
+L 557 0 
 z
-M 877 4192 
-Q 704 4192 595 4297 
-Q 486 4403 486 4582 
-Q 486 4755 595 4857 
-Q 704 4960 877 4960 
-Q 1050 4960 1158 4857 
-Q 1267 4755 1267 4582 
-Q 1267 4403 1158 4297 
-Q 1050 4192 877 4192 
+M 922 4179 
+Q 717 4179 589 4300 
+Q 461 4422 461 4627 
+Q 461 4819 589 4940 
+Q 717 5062 922 5062 
+Q 1120 5062 1248 4940 
+Q 1376 4819 1376 4627 
+Q 1376 4422 1248 4300 
+Q 1120 4179 922 4179 
 z
 " transform="scale(0.015625)"/>
      </defs>
-     <use xlink:href="#SourceHanSansCN-Regular-778e"/>
-     <use xlink:href="#SourceHanSansCN-Regular-778b" transform="translate(55.5 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-1" transform="translate(111 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-2e" transform="translate(133.40625 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-4a" transform="translate(214.609375 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-23" transform="translate(242.109375 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-778e"/>
+     <use xlink:href="#SourceHanSansCN-Medium-778b" transform="translate(57 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-1" transform="translate(114 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-2e" transform="translate(136.5 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-4a" transform="translate(219.5 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-23" transform="translate(248.296875 0)"/>
     </g>
    </g>
    <g id="text_2">
     <!-- CPU：FP32 -->
-    <g style="fill: #252525" transform="translate(289.59975 209.222213) scale(0.12 -0.12)">
+    <g style="fill: #14532d" transform="translate(289.036312 209.480025) scale(0.12 -0.12)">
      <defs>
-      <path id="SourceHanSansCN-Regular-24" d="M 2426 -83 
-Q 1984 -83 1613 80 
-Q 1242 243 960 556 
-Q 678 870 524 1321 
-Q 371 1773 371 2342 
-Q 371 2912 528 3363 
-Q 685 3814 966 4128 
-Q 1248 4442 1625 4608 
-Q 2003 4774 2451 4774 
-Q 2880 4774 3206 4604 
-Q 3533 4435 3738 4198 
-L 3418 3840 
-Q 3232 4038 2992 4147 
-Q 2752 4256 2458 4256 
-Q 2016 4256 1683 4025 
-Q 1350 3795 1164 3369 
-Q 979 2944 979 2362 
-Q 979 1766 1161 1334 
-Q 1344 902 1677 668 
-Q 2010 435 2464 435 
-Q 2790 435 3052 563 
-Q 3315 691 3539 934 
-L 3846 589 
-Q 3565 262 3225 89 
-Q 2886 -83 2426 -83 
+      <path id="SourceHanSansCN-Medium-24" d="M 2477 -90 
+Q 2029 -90 1645 73 
+Q 1261 237 973 550 
+Q 685 864 521 1315 
+Q 358 1766 358 2349 
+Q 358 2925 524 3379 
+Q 691 3834 979 4150 
+Q 1267 4467 1657 4633 
+Q 2048 4800 2496 4800 
+Q 2931 4800 3270 4627 
+Q 3610 4454 3827 4205 
+L 3430 3757 
+Q 3245 3949 3017 4051 
+Q 2790 4154 2509 4154 
+Q 2106 4154 1792 3936 
+Q 1478 3718 1302 3318 
+Q 1126 2918 1126 2368 
+Q 1126 1811 1299 1404 
+Q 1472 998 1785 780 
+Q 2099 563 2522 563 
+Q 2835 563 3081 688 
+Q 3328 813 3533 1030 
+L 3923 589 
+Q 3629 262 3277 86 
+Q 2925 -90 2477 -90 
 z
 " transform="scale(0.015625)"/>
-      <path id="SourceHanSansCN-Regular-7788" d="M 1683 -83 
-Q 1318 -83 1040 6 
-Q 762 96 550 243 
-Q 339 390 186 563 
-L 486 941 
-Q 691 730 969 566 
-Q 1248 403 1645 403 
-Q 1926 403 2140 505 
-Q 2355 608 2476 797 
-Q 2598 986 2598 1242 
-Q 2598 1517 2460 1718 
-Q 2323 1920 2003 2032 
-Q 1683 2144 1139 2144 
-L 1139 2598 
-Q 1626 2598 1907 2710 
-Q 2189 2822 2313 3017 
-Q 2438 3213 2438 3450 
-Q 2438 3782 2227 3977 
-Q 2016 4173 1645 4173 
-Q 1363 4173 1116 4041 
-Q 870 3910 672 3706 
-L 358 4077 
-Q 627 4320 944 4483 
-Q 1261 4646 1664 4646 
-Q 2061 4646 2371 4512 
-Q 2682 4378 2858 4118 
-Q 3034 3859 3034 3494 
-Q 3034 3078 2803 2809 
-Q 2573 2541 2202 2406 
-L 2202 2381 
-Q 2477 2310 2701 2156 
-Q 2925 2003 3059 1769 
-Q 3194 1536 3194 1216 
-Q 3194 806 2989 518 
-Q 2784 230 2445 73 
-Q 2106 -83 1683 -83 
+      <path id="SourceHanSansCN-Medium-7788" d="M 1715 -90 
+Q 1344 -90 1059 0 
+Q 774 90 556 240 
+Q 339 390 179 563 
+L 538 1037 
+Q 749 832 1017 678 
+Q 1286 525 1651 525 
+Q 1920 525 2118 614 
+Q 2317 704 2429 870 
+Q 2541 1037 2541 1267 
+Q 2541 1523 2416 1705 
+Q 2291 1888 1987 1990 
+Q 1683 2093 1152 2093 
+L 1152 2643 
+Q 1619 2643 1884 2748 
+Q 2150 2854 2268 3030 
+Q 2387 3206 2387 3424 
+Q 2387 3731 2195 3907 
+Q 2003 4083 1664 4083 
+Q 1395 4083 1161 3958 
+Q 928 3834 723 3635 
+L 339 4096 
+Q 621 4346 953 4509 
+Q 1286 4672 1690 4672 
+Q 2112 4672 2438 4531 
+Q 2765 4390 2950 4124 
+Q 3136 3859 3136 3482 
+Q 3136 3085 2915 2819 
+Q 2694 2554 2323 2413 
+L 2323 2381 
+Q 2592 2317 2813 2163 
+Q 3034 2010 3162 1776 
+Q 3290 1542 3290 1229 
+Q 3290 813 3075 518 
+Q 2861 224 2502 67 
+Q 2144 -90 1715 -90 
 z
 " transform="scale(0.015625)"/>
-      <path id="SourceHanSansCN-Regular-7787" d="M 282 0 
-L 282 358 
-Q 973 1030 1449 1548 
-Q 1926 2067 2179 2489 
-Q 2432 2912 2432 3283 
-Q 2432 3546 2339 3747 
-Q 2246 3949 2054 4061 
-Q 1862 4173 1568 4173 
-Q 1280 4173 1033 4013 
-Q 787 3853 595 3629 
-L 269 3942 
-Q 550 4262 873 4454 
-Q 1197 4646 1638 4646 
-Q 2061 4646 2365 4480 
-Q 2669 4314 2838 4013 
-Q 3008 3712 3008 3315 
-Q 3008 2874 2758 2432 
-Q 2509 1990 2077 1510 
-Q 1645 1030 1088 461 
-Q 1274 474 1475 490 
-Q 1677 506 1850 506 
-L 3232 506 
-L 3232 0 
+      <path id="SourceHanSansCN-Medium-7787" d="M 282 0 
+L 282 454 
+Q 941 1082 1408 1578 
+Q 1875 2074 2128 2486 
+Q 2381 2899 2381 3251 
+Q 2381 3507 2294 3692 
+Q 2208 3878 2032 3980 
+Q 1856 4083 1587 4083 
+Q 1312 4083 1081 3926 
+Q 851 3770 659 3558 
+L 262 3949 
+Q 557 4288 889 4480 
+Q 1222 4672 1683 4672 
+Q 2112 4672 2432 4499 
+Q 2752 4326 2928 4019 
+Q 3104 3712 3104 3296 
+Q 3104 2861 2864 2432 
+Q 2624 2003 2214 1552 
+Q 1805 1101 1286 582 
+Q 1472 602 1680 618 
+Q 1888 634 2054 634 
+L 3328 634 
+L 3328 0 
 L 282 0 
 z
 " transform="scale(0.015625)"/>
      </defs>
-     <use xlink:href="#SourceHanSansCN-Regular-24"/>
-     <use xlink:href="#SourceHanSansCN-Regular-31" transform="translate(63.796875 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-36" transform="translate(127.09375 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-7782" transform="translate(199.1875 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-27" transform="translate(299.1875 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-31" transform="translate(354.390625 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-7788" transform="translate(417.6875 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-7787" transform="translate(473.1875 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-24"/>
+     <use xlink:href="#SourceHanSansCN-Medium-31" transform="translate(64.59375 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-36" transform="translate(129.390625 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-7782" transform="translate(202.6875 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-27" transform="translate(302.6875 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-31" transform="translate(359.28125 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-7788" transform="translate(424.078125 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-7787" transform="translate(481.078125 0)"/>
     </g>
     <!-- 192 MiB -->
-    <g style="fill: #252525" transform="translate(299.52225 226.196587) scale(0.12 -0.12)">
-     <use xlink:href="#SourceHanSansCN-Regular-7786"/>
-     <use xlink:href="#SourceHanSansCN-Regular-778e" transform="translate(55.5 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-7787" transform="translate(111 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-1" transform="translate(166.5 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-2e" transform="translate(188.90625 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-4a" transform="translate(270.109375 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-23" transform="translate(297.609375 0)"/>
+    <g style="fill: #14532d" transform="translate(299.001 226.04565) scale(0.12 -0.12)">
+     <use xlink:href="#SourceHanSansCN-Medium-7786"/>
+     <use xlink:href="#SourceHanSansCN-Medium-778e" transform="translate(57 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-7787" transform="translate(114 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-1" transform="translate(171 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-2e" transform="translate(193.5 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-4a" transform="translate(276.5 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-23" transform="translate(305.296875 0)"/>
     </g>
    </g>
    <g id="text_3">
     <!-- CPU：BF16 -->
-    <g style="fill: #252525" transform="translate(289.455375 82.667813) scale(0.12 -0.12)">
-     <use xlink:href="#SourceHanSansCN-Regular-24"/>
-     <use xlink:href="#SourceHanSansCN-Regular-31" transform="translate(63.796875 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-36" transform="translate(127.09375 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-7782" transform="translate(199.1875 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-23" transform="translate(299.1875 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-27" transform="translate(364.890625 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-7786" transform="translate(420.09375 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-778b" transform="translate(475.59375 0)"/>
+    <g style="fill: #1e3a8a" transform="translate(288.921937 82.925625) scale(0.12 -0.12)">
+     <use xlink:href="#SourceHanSansCN-Medium-24"/>
+     <use xlink:href="#SourceHanSansCN-Medium-31" transform="translate(64.59375 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-36" transform="translate(129.390625 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-7782" transform="translate(202.6875 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-23" transform="translate(302.6875 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-27" transform="translate(369.390625 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-7786" transform="translate(425.984375 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-778b" transform="translate(482.984375 0)"/>
     </g>
     <!-- 96 MiB -->
-    <g style="fill: #252525" transform="translate(302.85225 99.642188) scale(0.12 -0.12)">
-     <use xlink:href="#SourceHanSansCN-Regular-778e"/>
-     <use xlink:href="#SourceHanSansCN-Regular-778b" transform="translate(55.5 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-1" transform="translate(111 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-2e" transform="translate(133.40625 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-4a" transform="translate(214.609375 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-23" transform="translate(242.109375 0)"/>
+    <g style="fill: #1e3a8a" transform="translate(302.421 99.49125) scale(0.12 -0.12)">
+     <use xlink:href="#SourceHanSansCN-Medium-778e"/>
+     <use xlink:href="#SourceHanSansCN-Medium-778b" transform="translate(57 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-1" transform="translate(114 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-2e" transform="translate(136.5 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-4a" transform="translate(219.5 0)"/>
+     <use xlink:href="#SourceHanSansCN-Medium-23" transform="translate(248.296875 0)"/>
     </g>
    </g>
    <g id="text_4">
     <!-- 链路传 96 MiB -->
-    <g style="fill: #252525" transform="translate(175.337969 160.169928) scale(0.11 -0.11)">
+    <g style="fill: #0f172a" transform="translate(175.337969 160.169928) scale(0.11 -0.11)">
      <defs>
       <path id="SourceHanSansCN-Regular-68fe" d="M 1293 5254 
 Q 1203 4902 1068 4553 
@@ -865,6 +904,7 @@ Q 3302 614 2995 800
 L 3347 1094 
 z
 " transform="scale(0.015625)"/>
+      <path id="SourceHanSansCN-Regular-1" transform="scale(0.015625)"/>
       <path id="SourceHanSansCN-Regular-1a" d="M 1504 -83 
 Q 1120 -83 841 54 
 Q 563 192 371 397 
@@ -946,6 +986,89 @@ Q 2906 301 2602 109
 Q 2298 -83 1926 -83 
 z
 " transform="scale(0.015625)"/>
+      <path id="SourceHanSansCN-Regular-2e" d="M 646 0 
+L 646 4691 
+L 1357 4691 
+L 2253 2182 
+Q 2342 1946 2425 1696 
+Q 2509 1446 2592 1203 
+L 2618 1203 
+Q 2707 1446 2787 1696 
+Q 2867 1946 2944 2182 
+L 3840 4691 
+L 4550 4691 
+L 4550 0 
+L 4000 0 
+L 4000 2598 
+Q 4000 2803 4013 3056 
+Q 4026 3309 4045 3568 
+Q 4064 3827 4077 4032 
+L 4051 4032 
+L 3674 2912 
+L 2790 474 
+L 2394 474 
+L 1504 2912 
+L 1126 4032 
+L 1101 4032 
+Q 1126 3827 1142 3568 
+Q 1158 3309 1168 3056 
+Q 1178 2803 1178 2598 
+L 1178 0 
+L 646 0 
+z
+" transform="scale(0.015625)"/>
+      <path id="SourceHanSansCN-Regular-4a" d="M 589 0 
+L 589 3475 
+L 1178 3475 
+L 1178 0 
+L 589 0 
+z
+M 877 4192 
+Q 704 4192 595 4297 
+Q 486 4403 486 4582 
+Q 486 4755 595 4857 
+Q 704 4960 877 4960 
+Q 1050 4960 1158 4857 
+Q 1267 4755 1267 4582 
+Q 1267 4403 1158 4297 
+Q 1050 4192 877 4192 
+z
+" transform="scale(0.015625)"/>
+      <path id="SourceHanSansCN-Regular-23" d="M 646 0 
+L 646 4691 
+L 2035 4691 
+Q 2515 4691 2876 4576 
+Q 3238 4461 3443 4211 
+Q 3648 3962 3648 3546 
+Q 3648 3181 3472 2909 
+Q 3296 2637 2963 2528 
+L 2963 2496 
+Q 3398 2419 3657 2144 
+Q 3917 1869 3917 1395 
+Q 3917 928 3689 617 
+Q 3462 307 3062 153 
+Q 2662 0 2138 0 
+L 646 0 
+z
+M 1235 2701 
+L 1933 2701 
+Q 2541 2701 2803 2905 
+Q 3066 3110 3066 3469 
+Q 3066 3885 2787 4054 
+Q 2509 4224 1958 4224 
+L 1235 4224 
+L 1235 2701 
+z
+M 1235 474 
+L 2054 474 
+Q 2656 474 2995 698 
+Q 3334 922 3334 1395 
+Q 3334 1837 3001 2038 
+Q 2669 2240 2054 2240 
+L 1235 2240 
+L 1235 474 
+z
+" transform="scale(0.015625)"/>
      </defs>
      <use xlink:href="#SourceHanSansCN-Regular-68fe"/>
      <use xlink:href="#SourceHanSansCN-Regular-61ed" transform="translate(100 0)"/>
@@ -961,7 +1084,7 @@ z
    </g>
    <g id="text_5">
     <!-- 格式转换在 CPU 完成 -->
-    <g style="fill: #252525" transform="translate(153.36 293.126587) scale(0.12 -0.12)">
+    <g style="fill: #0f172a" transform="translate(153.36 293.126587) scale(0.12 -0.12)">
      <defs>
       <path id="SourceHanSansCN-Regular-3c63" d="M 5344 4685 
 L 5344 4269 
@@ -1373,6 +1496,79 @@ L 1715 -486
 L 1235 -486 
 L 1235 2739 
 L 1715 2739 
+z
+" transform="scale(0.015625)"/>
+      <path id="SourceHanSansCN-Regular-24" d="M 2426 -83 
+Q 1984 -83 1613 80 
+Q 1242 243 960 556 
+Q 678 870 524 1321 
+Q 371 1773 371 2342 
+Q 371 2912 528 3363 
+Q 685 3814 966 4128 
+Q 1248 4442 1625 4608 
+Q 2003 4774 2451 4774 
+Q 2880 4774 3206 4604 
+Q 3533 4435 3738 4198 
+L 3418 3840 
+Q 3232 4038 2992 4147 
+Q 2752 4256 2458 4256 
+Q 2016 4256 1683 4025 
+Q 1350 3795 1164 3369 
+Q 979 2944 979 2362 
+Q 979 1766 1161 1334 
+Q 1344 902 1677 668 
+Q 2010 435 2464 435 
+Q 2790 435 3052 563 
+Q 3315 691 3539 934 
+L 3846 589 
+Q 3565 262 3225 89 
+Q 2886 -83 2426 -83 
+z
+" transform="scale(0.015625)"/>
+      <path id="SourceHanSansCN-Regular-31" d="M 646 0 
+L 646 4691 
+L 1984 4691 
+Q 2509 4691 2905 4560 
+Q 3302 4429 3520 4128 
+Q 3738 3827 3738 3315 
+Q 3738 2822 3520 2502 
+Q 3302 2182 2912 2025 
+Q 2522 1869 2010 1869 
+L 1235 1869 
+L 1235 0 
+L 646 0 
+z
+M 1235 2349 
+L 1933 2349 
+Q 2547 2349 2848 2579 
+Q 3149 2810 3149 3315 
+Q 3149 3827 2838 4019 
+Q 2528 4211 1907 4211 
+L 1235 4211 
+L 1235 2349 
+z
+" transform="scale(0.015625)"/>
+      <path id="SourceHanSansCN-Regular-36" d="M 2310 -83 
+Q 1952 -83 1645 19 
+Q 1338 122 1110 355 
+Q 883 589 755 973 
+Q 627 1357 627 1914 
+L 627 4691 
+L 1216 4691 
+L 1216 1894 
+Q 1216 1338 1363 1018 
+Q 1510 698 1756 566 
+Q 2003 435 2310 435 
+Q 2624 435 2873 566 
+Q 3123 698 3273 1018 
+Q 3424 1338 3424 1894 
+L 3424 4691 
+L 3994 4691 
+L 3994 1914 
+Q 3994 1357 3869 973 
+Q 3744 589 3513 355 
+Q 3283 122 2976 19 
+Q 2669 -83 2310 -83 
 z
 " transform="scale(0.015625)"/>
       <path id="SourceHanSansCN-Regular-2fc1" d="M 4934 3494 

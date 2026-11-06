@@ -13,10 +13,10 @@ import sys;sys.path.insert(0,str(HERE.parent))
 from preview_output import preview_path
 md=HERE.parent/'09-分布式推理.md';s=md.read_text();html=preview_path(md).read_text();outline=next(p for p in [ROOT/'outlines/09-分布式推理.md',ROOT/'archive/outlines/09-分布式推理.md'] if p.exists()).read_text()
 check(re.findall(r'^#{2,3} (9\.\d+(?:\.\d+)?) ',s,re.M)==re.findall(r'^#{2,3} (9\.\d+(?:\.\d+)?) ',outline,re.M),'All seven sections and 24 subsection numbers match outline')
-check(re.findall(r'^\*\*9-(\d+)\s',s,re.M)==[str(i) for i in range(1,12)],'Eleven chapter exercises retained')
+check(re.findall(r'^> \*\*练习 9-(\d+)\s*·',s,re.M)==[str(i) for i in range(1,16)],'Fifteen chapter exercises retained')
 index=json.loads((HERE/'figure-index.json').read_text());count=len(index)
-check(re.findall(r'^\*图 (9-\d+)：',s,re.M)==[f'9-{i}' for i in range(1,count+1)],'Sequential external captions')
-check(len(re.findall(r'!\[.*?\]\(ch09/figure-',s))==count,'Active figures included')
+check(re.findall(r'^\*图 (9-\d+)[：　]',s,re.M)==[f'9-{i}' for i in range(1,count+1)],'Sequential external captions')
+check(len(re.findall(r'!\[.*?\]\(ch09/(?:figure-|ch09-)',s))==count,'Active figures included')
 ids=set(re.findall(r'\[\^([^\]]+)\]:',s));uses=set(re.findall(r'\[\^([^\]]+)\](?!:)',s));check(ids==uses,'All citations defined and used')
 for match in re.findall(r'\]\(([^)]+)\)',s):
  parts=urlsplit(match)
@@ -136,5 +136,5 @@ check(round(fig['new-overlap']['pipeline_ms'],3)==.581 and round(fig['new-overla
 
 for record in json.loads((HERE/'manifest.json').read_text())['outputs']:
  p=ROOT/record['path'];check(hashlib.sha256(p.read_bytes()).hexdigest()==record['sha256'],'Artifact hash '+p.name)
-report={'status':'passed' if all(c['passed'] for c in checks) else 'failed','checks':len(checks),'errors':[c['name'] for c in checks if not c['passed']],'sections':7,'subsections':24,'figures':count,'exercises':11,'cjk_characters':sum('\u4e00'<=x<='\u9fff' for x in s),'new_gpu_measurements':False}
+report={'status':'passed' if all(c['passed'] for c in checks) else 'failed','checks':len(checks),'errors':[c['name'] for c in checks if not c['passed']],'sections':7,'subsections':24,'figures':count,'exercises':15,'cjk_characters':sum('\u4e00'<=x<='\u9fff' for x in s),'new_gpu_measurements':False}
 (HERE/'validation.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n');print(json.dumps(report,ensure_ascii=False,indent=2));raise SystemExit(bool(report['errors']))
