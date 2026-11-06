@@ -167,6 +167,26 @@ def draw(here,data):
         box(a,.52,.24,.45,.17,'双路 Xeon 1TB DDR5（CPU 侧）\nAMX 就地计算常驻稀疏 MoE 专家','orange',11)
         box(a,.52,.04,.45,.15,'免搬 36 MiB 权重，达 13.99 tok/s\n受限于启动开销 $\\alpha$ 与 NUMA 带宽','gray',11)
         out.save(f,'ch09-pd-a100-h20-vs-af-ktransformers')
+
+        # New Path-B figure: ch09-tenant-cache-salt-and-ep-fault-radius (Fig 9-50, D11-07 / D14-04)
+        f,a=canvas(6.4)
+        text(a,.25,.95,'A. 多租户 cache_salt 隔离',12,ha='center')
+        text(a,.745,.95,'B. 64 卡单 Rank 故障恢复',12,ha='center')
+        a.plot([.495,.495],[.03,.97],color=COL['line'],ls='--',lw=1.0)
+
+        box(a,.03,.76,.44,.14,'网关注入租户盐值 s_tenant\nh_0 = Hash(s_tenant || T_0)','blue',11)
+        arrow(a,(.135,.76),(.135,.65),'data')
+        arrow(a,(.365,.76),(.365,.65),'data')
+        box(a,.03,.47,.215,.17,'租户 A\nh_0^A->h_1^A\n独立 KV 页','green',11)
+        box(a,.255,.47,.215,.17,'租户 B\nh_0^B->h_1^B\n隔离 KV 页','orange',11)
+        box(a,.03,.24,.44,.17,'阻断 TTFT 侧信道(856/30.9ms)\n防跨租户越权复用与探测','purple',11)
+        box(a,.03,.04,.44,.15,'代价：公共前缀占 K·V_shared\n留存窗口缩窄，命中率下降','gray',11)
+
+        box(a,.52,.76,.45,.14,'独立副本（8 × TP8，64 卡）\n单卡故障半径 12.5%（7 副本续服）','green',11)
+        box(a,.52,.55,.45,.16,'紧耦合大 EP（EP64 All-to-All）\n单卡掉线阻塞全组：爆炸半径 100%','orange',11)
+        box(a,.52,.31,.45,.18,'冗余专家热切换（EP64 -> EP63）\n路由切向热备副本，免冷加载权重\n停机 T_outage 12 s -> 0.8 s','blue',11)
+        box(a,.52,.04,.45,.21,'四阶段恢复与排空时间线：\n检测 -> 重建 -> WAL/KV 重放\n排空 T_drain = λT_out/(μ-λ)','gray',11)
+        out.save(f,'ch09-tenant-cache-salt-and-ep-fault-radius')
     from v41_case_figures import draw as draw_v41
     draw_v41(9, out)
     out.finish();return out.outputs,out.checks

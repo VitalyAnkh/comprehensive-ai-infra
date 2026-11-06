@@ -225,6 +225,40 @@ def draw(here,data):
         ax2.set_title('② RollPacker 流式训练器（留守单卡 KV 9 GiB ≤ 12 GiB）',fontsize=12,pad=6)
         ax2.legend(frameon=False,ncol=3,loc='upper center',bbox_to_anchor=(0.46,1.02),columnspacing=0.9,handletextpad=0.4,fontsize=11)
         out.save(f,'ch10-rl-weight-handoff-and-stream-trainer')
+
+        # New Path-B figure 1: ch10-dualpipe-vs-1f1b-schedule (Fig 10-51, D14-02)
+        f,a=canvas(6.4)
+        text(a,.25,.95,'A. 单向 1F1B 流水线',12,ha='center')
+        text(a,.745,.95,'B. DualPipe 双向流水线',12,ha='center')
+        a.plot([.495,.495],[.03,.97],color=COL['line'],ls='--',lw=1.0)
+
+        box(a,.03,.75,.44,.15,'单向微批注入（Stage 0 -> PP-1）\n首尾气泡：(PP-1)(F+B)','orange',11)
+        box(a,.03,.54,.44,.16,'参数驻留：1× 模型分片\n在途激活上限：PP 份','blue',11)
+        box(a,.03,.31,.44,.18,'单流串行瓶颈：\n跨机 EP All-to-All 难与计算全重叠\n首尾预热与排空暴露明显','gray',11)
+        box(a,.03,.05,.44,.20,'ZB1P（零气泡变体）对比：\n剥离权重梯度 W 填入空隙\n气泡：(PP-1)(F+B-2W)，1× 参数','purple',11)
+
+        box(a,.52,.75,.45,.15,'两端相向注入（Stage 0 <-> PP-1）\n气泡减半：(PP/2-1)(F&B+B-3W)','green',11)
+        box(a,.52,.54,.45,.16,'配对块 F&B 细粒度重叠：\n正向 EP 通信掩盖于反向计算下','blue',11)
+        box(a,.52,.31,.45,.18,'显存交换代价（D14-02）：\n每设备需驻留 2× 参数副本\n在途激活上限增至 PP+1 份','orange',11)
+        box(a,.52,.05,.45,.20,'DualPipeV（V 型折叠变体）：\n单卡承载 2 个对称流水阶段\n设备数从 PP 减半至 PP/2','gray',11)
+        out.save(f,'ch10-dualpipe-vs-1f1b-schedule')
+
+        # New Path-B figure 2: ch10-training-bias-balance-vs-inference-eplb (Fig 10-52, D14-03)
+        f,a=canvas(6.4)
+        text(a,.25,.95,'A. 训练期：无辅助损失动态偏置',12,ha='center')
+        text(a,.745,.95,'B. 推理期：EPLB 物理副本均衡',12,ha='center')
+        a.plot([.495,.495],[.03,.97],color=COL['line'],ls='--',lw=1.0)
+
+        box(a,.03,.75,.44,.15,'路由判据加入动态偏置 b_i：\nTopk(s+b)，过载减γ、欠载加γ','blue',11)
+        box(a,.03,.54,.44,.16,'乘入专家输出的权重保持无偏：\ng\'_it = s_it（不干扰主损失梯度）','green',11)
+        box(a,.03,.31,.44,.18,'改变每个 Token 选中的逻辑专家：\n边缘 Token 改道流向欠载专家\n后续反向更新使专家参数自适应','orange',11)
+        box(a,.03,.05,.44,.20,'辅助机制与资源开销：\n叠加极小系数序列平衡损失 L_Bal\n每专家仅 1 个标量 b_i，零显存','gray',11)
+
+        box(a,.52,.75,.45,.15,'模型权重与偏置 b_i* 已冻结定型：\n严禁在推理期篡改逻辑 Topk 选择','purple',11)
+        box(a,.52,.54,.45,.16,'严格保持数学输出等价：\n每个 Token 命中的逻辑专家不变','green',11)
+        box(a,.52,.31,.45,.18,'物理层冗余复制与重排（EPLB）：\n为热点逻辑专家复制多份物理权重\n均匀分流跨卡 All-to-All 请求','blue',11)
+        box(a,.52,.05,.45,.20,'系统资源代价（如 EP144）：\n需预留冗余专家 HBM（如 32 槽）\n周期性按观测窗口跨网迁移副本','gray',11)
+        out.save(f,'ch10-training-bias-balance-vs-inference-eplb')
     from core_principles_figures import draw as draw_principles
     draw_principles(10, out)
     out.finish();return out.outputs,out.checks

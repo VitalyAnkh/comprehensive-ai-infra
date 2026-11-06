@@ -1,252 +1,262 @@
 [
   {
     "caption": "临界批大小对训练总时间的制约（$B_{\\mathrm{noise}} = 2\\mathrm{M}$ token）。按卡数等比放大全局 batch（弱扩展，橙线）因单步有效进展趋于饱和，总耗时在 11.9 天渐近下限前停滞（从 48 卡扩至 1536 卡最多加速 1.64 倍，总扫描 token 数激增至 1.98T）；固定全局 batch 为 3.15M token（强扩展，蓝线）保持 100B 有效训练目标不变，耗时随卡数增加从 19.4 天近线性降至 0.8 天。",
-    "number": 1,
-    "file": "figure-10-critical-batch.svg"
+    "file": "figure-10-critical-batch.svg",
+    "number": 1
   },
   {
     "caption": "一次训练迭代的数据流转回路：前向传播由输入和当前 BF16 权重算出损失并暂存激活；反向传播读取激活算出参数梯度；Adam 优化器结合梯度、FP32 主权重与一阶/二阶矩历史完成参数更新，再将新主权重下转为下一步的 BF16 工作权重。",
-    "number": 2,
-    "file": "figure-10-update-cycle.svg"
+    "file": "figure-10-update-cycle.svg",
+    "number": 2
   },
   {
     "caption": "Qwen3-8B 的五类常驻训练状态累计容量。横轴以十进制 GB 标示累计体积：单份 BF16 推理权重仅占 16.4 GB，而计入 BF16 梯度、FP32 主权重与两份 FP32 Adam 矩状态后，总常驻容量达 131.1 GB（相当于 8 份 BF16 权重）。",
-    "number": 3,
-    "file": "figure-10-1-state.svg"
+    "file": "figure-10-1-state.svg",
+    "number": 3
   },
   {
     "caption": "矩阵计算效率为 30% 时完成 100B token 训练所需的最小卡数（按全部 30 天用于执行计）。蓝色柱为满足算力需求的最少卡数 $p_{\\mathrm{compute}}$，橙色菱形为装下 131.1 GB 常驻训练状态的最少卡数。",
-    "number": 4,
-    "file": "figure-10-2-budget.svg"
+    "file": "figure-10-2-budget.svg",
+    "number": 4
   },
   {
     "caption": "矩阵计算效率提高到 40% 时同一任务所需的最小卡数。随计算效率提升，各型号的算力卡数下界（蓝柱）同步下降，但仍普遍高于显存容量下界（橙色菱形）。",
-    "number": 5,
-    "file": "figure-10-budget-1.svg"
+    "file": "figure-10-budget-1.svg",
+    "number": 5
   },
   {
     "caption": "矩阵计算效率达到 50% 时所需的最小卡数（图 10-4 至图 10-6 采用完全相同的型号顺序、纵轴刻度与 30 天期限）。",
-    "number": 6,
-    "file": "figure-10-budget-2.svg"
+    "file": "figure-10-budget-2.svg",
+    "number": 6
   },
   {
     "caption": "普通 DP（基线）：每张卡均完整保存 BF16 权重、BF16 梯度、FP32 主权重以及两份 FP32 Adam 矩状态（每参数 16 字节全部重复 $d$ 份）。",
-    "number": 7,
-    "file": "figure-10-zero-0.svg"
+    "file": "figure-10-zero-0.svg",
+    "number": 7
   },
   {
     "caption": "ZeRO-1（优化器状态分片）：将占大头的 FP32 主权重与两份 Adam 矩状态（共 12 字节/参数）按参数切分到各卡，BF16 权重与梯度仍完整保留。",
-    "number": 8,
-    "file": "figure-10-zero-1.svg"
+    "file": "figure-10-zero-1.svg",
+    "number": 8
   },
   {
     "caption": "ZeRO-2（优化器状态 + 梯度分片）：在 ZeRO-1 基础上进一步切分 BF16 梯度；反向算出某层梯度后经 ReduceScatter 直接汇总到负责该分片的卡上，其余卡立即释放该层梯度。",
-    "number": 9,
-    "file": "figure-10-zero-2.svg"
+    "file": "figure-10-zero-2.svg",
+    "number": 9
   },
   {
     "caption": "ZeRO-3（优化器状态 + 梯度 + 权重全分片）：所有五类常驻状态均按 $1/d$ 切分保存；执行任意模块前，各卡通过 AllGather 临时拼齐该模块的完整权重。",
-    "number": 10,
-    "file": "figure-10-zero-3.svg"
+    "file": "figure-10-zero-3.svg",
+    "number": 10
   },
   {
     "caption": "ZeRO-3 / FSDP 中常驻分片与临时完整参数缓冲区的共存关系。平时四张卡各存 1/4 参数分片；执行当前模块时，GPU 0 通过 AllGather 收集其余三片拼入“完整权重缓冲区”（图中四种颜色代表四个分片），用完即释放该临时缓冲区，而底部的常驻分片始终保留。",
-    "number": 11,
-    "file": "figure-10-3-sharding.svg"
+    "file": "figure-10-3-sharding.svg",
+    "number": 11
   },
   {
     "caption": "线性层 $Y=XW$ 的反向传播分叉：一路右乘 $W^{\\mathsf{T}}$ 算出输入梯度 $dX$ 继续向浅层回传；另一路用前向输入激活的转置 $X^{\\mathsf{T}}$ 乘以上游梯度 $dY$ 算出本层参数梯度 $dW$，送往跨卡归约与参数更新。",
-    "number": 12,
-    "file": "figure-10-gradient-branches.svg"
+    "file": "figure-10-gradient-branches.svg",
+    "number": 12
   },
   {
     "caption": "朴素全保留方案：蓝色条为前向保留至反向的 $a$、$u$，橙色条为同样全程保留的门控乘积 $h = a \\odot u$。在 128 token 微批次与 FP32 激活下，单层 $h$ 形状为 $[128, 12288]$，持续占用 6 MiB 显存。",
-    "number": 13,
-    "file": "figure-10-4-recompute.svg"
+    "file": "figure-10-4-recompute.svg",
+    "number": 13
   },
   {
     "caption": "选择性重计算方案：前向仅保留 $a$、$u$，将乘积 $h$ 释放；待下投影反向即将执行前重新执行 $a \\odot u$ 生成 $h$，橙色的 6 MiB 缓冲区仅在该算子执行前后短暂存在（横轴代表算子执行顺序）。",
-    "number": 14,
-    "file": "figure-10-recompute-rebuild.svg"
+    "file": "figure-10-recompute-rebuild.svg",
+    "number": 14
   },
   {
     "caption": "路径一（CPU 侧转换）：先跨越互联链路传输 96 MiB 的 BF16 梯度，再在主机内存内完成向 192 MiB FP32 的转换；GPU 侧无需分配 FP32 转换缓冲。",
-    "number": 15,
-    "file": "figure-10-5-casting.svg"
+    "file": "figure-10-5-casting.svg",
+    "number": 15
   },
   {
     "caption": "路径二（GPU 侧转换）：先利用高带宽 GPU 显存将 96 MiB BF16 转为 192 MiB FP32（转换期间输入与输出共存，GPU 缓冲峰值升至 288 MiB），再跨链路传输 192 MiB 数据。",
-    "number": 16,
-    "file": "figure-10-casting-gpu.svg"
+    "file": "figure-10-casting-gpu.svg",
+    "number": 16
   },
   {
     "caption": "给定 10 GiB 附加激活与缓冲需求时，ZeRO-3 分片卡数 $d$ 与每卡总显存占用（$16N/d + 10\\ \\mathrm{GiB}$）的关系曲线。水平虚线标出 RTX 4090 的 22 GiB 可用显存上限：8 卡方案（25.3 GiB）超出预算，而 16 卡、32 卡与 48 卡方案均稳居安全线以下。",
-    "number": 17,
-    "file": "figure-10-6-candidates.svg"
+    "file": "figure-10-6-candidates.svg",
+    "number": 17
   },
   {
     "caption": "填满排空（Fill–Drain）调度时间线：先连续完成 8 个微批次的前向（蓝色），再集中执行 8 个微批次的反向（橙色），最后执行参数更新（绿色），总耗时 337 ms。",
-    "number": 18,
-    "file": "figure-10-7-pipeline.svg"
+    "file": "figure-10-7-pipeline.svg",
+    "number": 18
   },
   {
     "caption": "1F1B 调度时间线（与图 10-18 采用相同时间刻度）：预热后交替执行前向与反向，因交错通信延迟引入少量中间空隙，总耗时略增至 347 ms。",
-    "number": 19,
-    "file": "figure-10-pipeline-1f1b.svg"
+    "file": "figure-10-pipeline-1f1b.svg",
+    "number": 19
   },
   {
     "caption": "图 10-19 中阶段 3 在 90～100 ms 窗口的局部放大：第 2 个微批次在 93 ms 结束反向，但第 3 个微批次的前向输入迟至 95 ms 才跨界抵达，形成 2 ms 的等待空隙。",
-    "number": 20,
-    "file": "figure-10-pipeline-gap.svg"
+    "file": "figure-10-pipeline-gap.svg",
+    "number": 20
   },
   {
     "caption": "两种调度在四个流水阶段上的激活与收发缓冲显存峰值对比。1F1B 通过及早执行反向释放早期微批次激活，将全流水线最大单阶段峰值从约 2.57 GB（2448 MiB）大幅压低至 0.97 GB（921 MiB）。",
-    "number": 21,
-    "file": "figure-10-pipeline-memory.svg"
+    "file": "figure-10-pipeline-memory.svg",
+    "number": 21
   },
   {
     "caption": "交错式 1F1B（$v=2$）时间线（完成时间 298 ms）：每卡持有两个虚拟层块（无纹块与斜线块），每个计算块耗时减半，使阶段 3 的首个前向从 33 ms 提前至约 20 ms 启动，但跨界传输次数翻倍。",
-    "number": 22,
-    "file": "figure-10-pipeline-interleaved.svg"
+    "file": "figure-10-pipeline-interleaved.svg",
+    "number": 22
   },
   {
     "caption": "零气泡（ZB-H1）时间线（完成时间 283 ms）：将反向拆分为关键路径上的 $dX$（橙色）与可延后的 $dW$（紫色），用延后的 $dW$ 精准填平图 10-19 中的跨界依赖空隙与尾部排空空隙。",
-    "number": 23,
-    "file": "figure-10-pipeline-zero-bubble.svg"
+    "file": "figure-10-pipeline-zero-bubble.svg",
+    "number": 23
   },
   {
     "caption": "DualPipe 双向流水时间线（完成时间 306 ms）：两组微批次从阶段 0 与阶段 3 相向注入（实心块与斜线块），彼此填平对向的预热与排空空隙，代价是每卡需存两份方向参数。",
-    "number": 24,
-    "file": "figure-10-pipeline-dualpipe.svg"
+    "file": "figure-10-pipeline-dualpipe.svg",
+    "number": 24
   },
   {
     "caption": "四种主流流水线调度在 8 个与 16 个微批次下的单步完成时间（左）及 8 个微批次下的最大单阶段激活与缓冲显存峰值（右）。",
-    "number": 25,
-    "file": "figure-10-pipeline-schedules.svg"
+    "file": "figure-10-pipeline-schedules.svg",
+    "number": 25
   },
   {
     "caption": "链路空闲时的理想重叠：梯度就绪后立即启动 3 ms 归约（橙色），在 5 ms 独立反向计算（蓝色）结束前完成，暴露通信等待为 0（虚线标示计算结束时刻）。",
-    "number": 26,
-    "file": "figure-10-8-overlap.svg"
+    "file": "figure-10-8-overlap.svg",
+    "number": 26
   },
   {
     "caption": "共享链路争用导致的通信暴露：链路前 4 ms 被其他通信（灰色）占用，3 ms 归约被迫推迟至 4～7 ms 执行，虚线右侧溢出的 2 ms 直接延长了单步迭代耗时。",
-    "number": 27,
-    "file": "figure-10-overlap-busy.svg"
+    "file": "figure-10-overlap-busy.svg",
+    "number": 27
   },
   {
     "caption": "48 卡方案中 ZeRO-3 逐层通信与计算的重叠时间线。前向与反向内部各层（约 12 ms/层）的参数收集（AllGather）与梯度归约散射（ReduceScatter）全部隐藏在 52.2 s 计算内部（掩盖率 99.3%）；真正无法隐藏、暴露在关键路径上的仅剩整步最开头的首次词嵌入层 AllGather（0.04 s）与最末尾的最后一次词嵌入层 ReduceScatter（0.04 s），合计仅 0.08 s。",
-    "number": 28,
-    "file": "figure-10-zero3-timeline.svg"
+    "file": "figure-10-zero3-timeline.svg",
+    "number": 28
   },
   {
     "caption": "Qwen3-235B-A22B（$E=128, k=8$，$8192$ 个 token，半数专家为 1.5 倍热门）在不同容量因子 $c$ 下的权衡曲线：增大 $c$ 可将 token 丢弃率（橙线）在 $c=1.5$ 处压至 0，但补零无效行占总执行量的比例（蓝线）也随之攀升至 33%～50%。",
-    "number": 29,
-    "file": "figure-10-moe-capacity.svg"
+    "file": "figure-10-moe-capacity.svg",
+    "number": 29
   },
   {
     "caption": "两条等长 4096 token 独立文档打包为 8192 token 时的因果注意力有效配对区域（两个等腰直角三角形，跨文档区域被掩码屏蔽），总有效配对数为 16,781,312。",
-    "number": 30,
-    "file": "figure-10-9-attention-area.svg"
+    "file": "figure-10-9-attention-area.svg",
+    "number": 30
   },
   {
     "caption": "同样 8192 个有效 token 改由一条 7168 长文档与一条 1024 短文档拼接时，长文档大三角形多出的面积远超短文档缩小的面积，总有效配对数激增 56% 至 26,218,496。",
-    "number": 31,
-    "file": "figure-10-attention-unequal.svg"
+    "file": "figure-10-attention-unequal.svg",
+    "number": 31
   },
   {
     "caption": "数据加载器的预取游标与 GPU 训练进度的偏移。GPU 刚完成 batch 100，而数据加载器已将任务派发至 batch 108；中间的 batch 101～108 尚在预取队列或后台处理中（虚线框），故障恢复时必须从 batch 101 续接而非从 109 开始。",
-    "number": 32,
-    "file": "figure-10-10-input-queue.svg"
+    "file": "figure-10-10-input-queue.svg",
+    "number": 32
   },
   {
     "caption": "检查点的跨拓扑弹性重分片（TP4 $\\to$ TP8）。横轴对应原始 $[12288, 4096]$ 矩阵的全局行号（总计 96 MiB BF16 权重）：上方“旧 0～旧 3”为保存时的 4 个 24 MiB 分片，恢复时每个旧分片按全局行范围一分为二，精准映射到下方“0～7”共 8 个 12 MiB 新分片中。",
-    "number": 33,
-    "file": "figure-10-11-resharding.svg"
+    "file": "figure-10-11-resharding.svg",
+    "number": 33
   },
   {
     "caption": "异步检查点两阶段生命周期：前台短暂暂停训练，将一致状态复制到独立内存缓冲后立即恢复 GPU 训练；后台线程将数据写完持久化存储并提交全局元数据后，该快照才正式生效可供故障恢复使用。",
-    "number": 34,
-    "file": "figure-10-checkpoint-commit.svg"
+    "file": "figure-10-checkpoint-commit.svg",
+    "number": 34
   },
   {
     "caption": "7 GB/s 后台写入带宽下的故障回滚：第 20 s 与 40 s 各花 0.5 s 复制到内存缓冲（橙色），随后后台上传 16 s（蓝色）。第 50 s 发生故障时，第 40 s 的快照尚未写完提交（斜线为空心点 56.5 s 前未完成部分），只能回退至第 20 s 快照，重做 30 s 训练。",
-    "number": 35,
-    "file": "figure-10-12-recovery.svg"
+    "file": "figure-10-12-recovery.svg",
+    "number": 35
   },
   {
     "caption": "20 GB/s 后台写入带宽下的故障回滚：每份快照后台上传仅需 5.6 s，两份快照分别于 26.1 s 与 46.1 s 提交生效；第 50 s 故障时可直接恢复至第 40 s 快照，仅需重做 10 s 训练。",
-    "number": 36,
-    "file": "figure-10-recovery-fast.svg"
+    "file": "figure-10-recovery-fast.svg",
+    "number": 36
   },
   {
     "caption": "1024 卡作业（平均 7.9 小时中断一次，单次保存耗时 16.4 s，恢复耗时 120 s）中容错附加成本随保存间隔 $\\tau$ 的变化曲线：蓝线为日常保存开销 $c/\\tau$，橙线为故障丢失重做开销 $\\lambda\\tau/2$，绿线为计入固定恢复开销 $\\lambda r$ 后的总附加比例，最低点出现在约 965 s（16 分钟）处。",
-    "number": 37,
-    "file": "figure-10-13-save-interval.svg"
+    "file": "figure-10-13-save-interval.svg",
+    "number": 37
   },
   {
     "caption": "MiMo-V2.6（Pro 与 Flash）公开 RL 运行日志的中断时间线与费用核算。蓝色为有效推进步骤区间，红色为故障中断丢失区间，三角号标示作业重启，斜线区间为 Flash 因未及时检出底层错误而在第 17 步后回滚作废的两步（约 4 小时）。",
-    "number": 38,
-    "file": "figure-10-mimo-interruptions.svg"
+    "file": "figure-10-mimo-interruptions.svg",
+    "number": 38
   },
   {
     "caption": "RL 三阶段流水线的吞吐瓶颈与反馈回路：生成、验证与学习的处理上限分别为 12、6、8 条轨迹/s，验证后按 $q=75\\%$ 保留合格样本，使进入学习端的有效流量受制于验证瓶颈，仅为 4.5 条/s；上方返回箭头代表学习端更新后的新权重回传刷新生成端。",
-    "number": 39,
-    "file": "figure-10-14-rl-flow.svg"
+    "file": "figure-10-14-rl-flow.svg",
+    "number": 39
   },
   {
     "caption": "错误的共置切换次序：在释放 40 GiB 训练状态前先加载 15.3 GiB 生成权重并提前分配 24 GiB KV 池，使瞬间显存峰值冲高至 83.3 GiB，超出 H100 SXM 的 74.5 GiB 可用容量红线。",
-    "number": 40,
-    "file": "figure-10-15-rl.svg"
+    "file": "figure-10-15-rl.svg",
+    "number": 40
   },
   {
     "caption": "正确的分段切换次序（与图 10-40 共用同一纵轴刻度）：先导出 15.3 GiB 生成权重（短暂达到 59.3 GiB 峰值），随即释放 40 GiB 训练状态，最后再分配 24 GiB KV 池，全程最高显存占用仅 59.3 GiB。",
-    "number": 41,
-    "file": "figure-10-rl-staged.svg"
+    "file": "figure-10-rl-staged.svg",
+    "number": 41
   },
   {
     "caption": "RL 系统中两类不同生命周期的权重通路：上方固定版本模型（如参考模型 $\\pi_{\\mathrm{ref}}$）从只读存储（ROM）重复提供同一权重；下方策略模型（$\\pi_\\theta$）随每步训练持续生成新版本并发布至生成端，KV 状态写入与权重发布走各自独立的数据通道。",
-    "number": 42,
-    "file": "figure-10-weight-update.svg"
+    "file": "figure-10-weight-update.svg",
+    "number": 42
   },
   {
     "caption": "异步与多轮 RL 更新中的三个策略分布：$\\mu$ 为生成端实际产出样本时的行为分布，$\\pi_{\\mathrm{old}}$ 为本轮优化的起点锚点，$\\pi_\\theta$ 为随当前微步更新的实时策略（虚线代表版本演进次序，三者必须针对完全相同的上下文前缀与目标 token 求值）。",
-    "number": 43,
-    "file": "figure-10-policy-versions.svg"
+    "file": "figure-10-policy-versions.svg",
+    "number": 43
   },
   {
     "caption": "同步串行 RL 循环：依次执行生成本批样本（40 s）、学习本批样本（16 s）与权重同步（4 s），单轮周期共 60 s。",
-    "number": 44,
-    "file": "figure-10-16-async-cycle.svg"
+    "file": "figure-10-16-async-cycle.svg",
+    "number": 44
   },
   {
     "caption": "跨批次异步重叠 RL 循环：生成下一批样本（40 s）与学习上一批样本（16 s）在独立资源池上并行重叠，两侧完成后执行阻塞式权重同步（橙色，4 s），稳态周期缩短至 44 s。",
-    "number": 45,
-    "file": "figure-10-async-overlap.svg"
+    "file": "figure-10-async-overlap.svg",
+    "number": 45
   },
   {
     "caption": "RL 训练中的两项关键阶段交接优化。上栏为算例 10-A 的单卡共置分段唤醒次序（H100 80GB，74.5 GiB 可用）：先同步 15.26 GiB 推理权重、立即释放 40 GiB 训练状态、最后分配 24 GiB KV 池，将交接显存峰值从触发 OOM 的 83.26 GiB 压至 59.26 GiB；下栏为算例 10-B 的 RollPacker 流式训练器（Stream Trainer）时间线：第 10 s 时将 8 卡中的 4 卡提前转为训练副本处理前半批已完成轨迹（29 s 算完），待剩余 Rollout 于 43 s 完成后全员 8 卡合流算完后半批（8 s）并更新参数（4 s），使单步周期从串行的 60 s 压缩至 55 s。",
-    "number": 46,
-    "file": "ch10-rl-weight-handoff-and-stream-trainer.svg"
+    "file": "ch10-rl-weight-handoff-and-stream-trainer.svg",
+    "number": 46
   },
   {
     "caption": "MoE 专家路由重放（R3）机制：生成端记录每个 token 在各层选中的离散逻辑专家 ID（如样本 A、token 17、层 3 选中 top-2 专家，虚线传递），训练端直接按该 ID 列表路由 token，同时用当前最新权重计算门控分数、专家输出与梯度（实线数据流）。",
-    "number": 47,
-    "file": "figure-10-17-replay.svg"
+    "file": "figure-10-17-replay.svg",
+    "number": 47
   },
   {
     "caption": "32 卡与 48 卡 RTX 4090 方案的端到端完成时间分解：横条从左至右依次累加基础训练时间（蓝色，已含暴露通信与输入等待）、检查点保存与故障恢复附加时间（橙色窄段）以及 5 天计划性停顿（灰色），竖直虚线标出 30 天交付红线。",
-    "number": 48,
-    "file": "figure-10-18-deadline.svg"
+    "file": "figure-10-18-deadline.svg",
+    "number": 48
   },
   {
     "caption": "阿姆达尔定律下硬件能力变化倍数 $r$ 对相对单步耗时 $T'/T = 1 - f + f/r$ 的影响曲线：某项资源原本占单步暴露时间的比例 $f$ 越小，其性能退化或升级对端到端耗时的影响就越微弱。",
-    "number": 49,
-    "file": "figure-10-19-hardware.svg"
+    "file": "figure-10-19-hardware.svg",
+    "number": 49
   },
   {
     "caption": "固定 90 天净执行期限与 20T token 训练数据量（$F=6ND$）时，不同稠密模型参数规模 $N$ 所需的最小加速卡数边界（实线为 40% MFU，虚线为 50% MFU，水平线标出 16,384 卡规模）。位于对应曲线上方的集群配置可按期完成训练，位于下方则必须提效、加卡或延期。",
-    "number": 50,
-    "file": "figure-10-20-scale.svg"
+    "file": "figure-10-20-scale.svg",
+    "number": 50
+  },
+  {
+    "caption": "1F1B、零气泡（ZB1P）与 DualPipe 双向流水线的气泡压缩机制及显存驻留代价对比（`D14-02`）。上栏对比单向 1F1B 的 $(PP-1)(F+B)$ 首尾气泡与 DualPipe 从两端相向注入微批次将气泡压缩至 $(PP/2-1)(F\\&B+B-3W)$ 的双向对称填充结构；下栏展示配对块 $F\\&B$ 内部如何将正向微批的跨机 EP `All-to-All` 通信掩盖在反向微批的注意力/MLP 计算阴影下，并列出每设备 $2\\times$ 参数副本与 $PP+1$ 份激活驻留的显存交换代价。",
+    "file": "ch10-dualpipe-vs-1f1b-schedule.svg",
+    "number": 51
+  },
+  {
+    "caption": "MoE 模型在训练期与推理期的负载均衡双轨机制对比（`D14-03`）。左栏为训练期无辅助损失动态偏置机制（DeepSeek-V3 §2.1.2）：偏置 $b_i$ 仅加入选择条件 $\\operatorname{Topk}(s_{j,t}+b_j)$ 而不改变门控乘数 $g'_{i,t}=s_{i,t}$，通过改写选中的逻辑专家引导全部专家在梯度更新中均衡演进；右栏为推理期专家并行负载均衡（EPLB）：模型权重与逻辑路由严格冻结不变，仅在物理 GPU 上为热点逻辑专家复制冗余权重副本并分流请求，确保数学输出等价。",
+    "file": "ch10-training-bias-balance-vs-inference-eplb.svg",
+    "number": 52
   }
 ]
