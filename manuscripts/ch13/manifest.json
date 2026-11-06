@@ -2,7 +2,7 @@
   "outputs": [
     {
       "path": "manuscripts/ch13/ch13-3fs-craq-architecture.pdf",
-      "sha256": "204e5519a9d88c6c5b4eb1ca97328ce506ac0be981009bd0e0cbc396088c61c9"
+      "sha256": "d7528c735526c95ee5c78bf18a85b1ac02e1826790a061ffc1ccdcb9bf788886"
     },
     {
       "path": "manuscripts/ch13/ch13-3fs-craq-architecture.png",
@@ -10,11 +10,71 @@
     },
     {
       "path": "manuscripts/ch13/ch13-3fs-craq-architecture.svg",
-      "sha256": "fdf6604c7453656c8d4b4ecaf55ac9e3ce426b51de2de596582a58c23736402f"
+      "sha256": "310645a3a1efd921f183fce7cf4925dd1b5646880f852818f6fb6cbb2d4c03f5"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-cacheblend-non-prefix-kv-fusion.pdf",
+      "sha256": "8351332bb94e1474f82e70f575f5cc95a8e20ec4490b6729f6d8d08cabeb7fe9"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-cacheblend-non-prefix-kv-fusion.png",
+      "sha256": "30b0bc92c01068148d4969f8b723238d4259cc895abda3a132a6e958895ccf05"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-cacheblend-non-prefix-kv-fusion.svg",
+      "sha256": "30f0c23e165a9967768767b18863f8a413a84a56ebf768e805922a07a26365ea"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-dsec-erofs-ondemand-container-boot.pdf",
+      "sha256": "8b6e1fa3d8f185860944cc0629a191c90c32935f29cac062242de5247b746a32"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-dsec-erofs-ondemand-container-boot.png",
+      "sha256": "2f0536d2c10970aa1105fee923070f50863502964e6687a99c619885028013c9"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-dsec-erofs-ondemand-container-boot.svg",
+      "sha256": "0501f5e1e1b04b573af43b29851b8d195e68970fedade620bd9929e2daa5375b"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-faiss-flat-vs-iks-near-storage.pdf",
+      "sha256": "40720b5e8d06af55528963279e4a04c3b6ca95ee27519ff9014bb03fa9296525"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-faiss-flat-vs-iks-near-storage.png",
+      "sha256": "964604dc8a3848e689e1ebbdbf42381b5c490f53e6bab88ce6b33ae4dd5e384b"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-faiss-flat-vs-iks-near-storage.svg",
+      "sha256": "40e429f3411f69eac6b9f144701774e468c0026955d2116d7d7a8dc96d3d7c1e"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-full-stack-ai-data-plane.pdf",
+      "sha256": "2fee667f7dcb345b657c99e36eb328207fdc64908fe44c92b23e7126dd7c9315"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-full-stack-ai-data-plane.png",
+      "sha256": "062ac35620f1b2c1005f87535887e04a7feb55094e14132ad51e05f9aed9eb6b"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-full-stack-ai-data-plane.svg",
+      "sha256": "663fa940745de8cbf5e8a1d0c4ff9636e533ff6493b44b1c692c96fd4d3adfcd"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-hnsw-memory-vs-diskann-ssd-layout.pdf",
+      "sha256": "cc8d10ed503b0b644a069bbfebe90b2d0b38f9d97537737697722949e17fe206"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-hnsw-memory-vs-diskann-ssd-layout.png",
+      "sha256": "054b547970d690acb0cd3d3bb63c8cc73e796d91be0e1e7138182dbaf5e2cc08"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-hnsw-memory-vs-diskann-ssd-layout.svg",
+      "sha256": "2df6feab9ca4ede48c44766001a66761126518e27cb9d89e2f64d13b55232813"
     },
     {
       "path": "manuscripts/ch13/ch13-kv-layout-read-amplification.pdf",
-      "sha256": "6567a8045aef4e8a60dd3f2475ba8b7346656b77cc8d7c081621604d691f1388"
+      "sha256": "324202c615eec1dc9f7aa8943b7f4ef3a8f2485eb9d7973572be5eec7584ea95"
     },
     {
       "path": "manuscripts/ch13/ch13-kv-layout-read-amplification.png",
@@ -22,11 +82,11 @@
     },
     {
       "path": "manuscripts/ch13/ch13-kv-layout-read-amplification.svg",
-      "sha256": "3145f10fb07c7b1a952cba13d09aa0e4a4972b12031c668cb1e55ba9c1a8d6e4"
+      "sha256": "d7d158b343d75dbd599dbd82e8e700ac169b8ab7276ed71597cd1b6867ec9182"
     },
     {
       "path": "manuscripts/ch13/ch13-multimodal-dataloader-pipeline.pdf",
-      "sha256": "94de02d98869d6eff272a710f3a9da4e1e129798d7886c92e0d71dfa1f4d5bf9"
+      "sha256": "78605fb95125564feed5527af8d44026aa9fd57ddf32f934d9323266a9f08dc8"
     },
     {
       "path": "manuscripts/ch13/ch13-multimodal-dataloader-pipeline.png",
@@ -34,11 +94,23 @@
     },
     {
       "path": "manuscripts/ch13/ch13-multimodal-dataloader-pipeline.svg",
-      "sha256": "675511ef9826c51711435b4890fa4990c658f47fba6fa86cddff8daa3b858d27"
+      "sha256": "d3b684a935b989a86b67192105b3c5129d873f271b70bee63e6d1f7a1a77bc59"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-parquet-lance-vs-webdataset-io.pdf",
+      "sha256": "ca775afd95568ff6f860218d4fc3ec6d9d9d8f66e65ead350523f89a9ceca9aa"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-parquet-lance-vs-webdataset-io.png",
+      "sha256": "40516f118f1b7872d4312684b5c98e225433907d3c961ef3bae9836facd1e355"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-parquet-lance-vs-webdataset-io.svg",
+      "sha256": "14c9e9cd0d89e33c372952dcb9f53f24fe7095bc8f0ded6216e16cbaadc391c1"
     },
     {
       "path": "manuscripts/ch13/ch13-posix-pagecache-vs-gds-dma.pdf",
-      "sha256": "bfba1b8dde1381451e6054e09f1ec1cd55fe0ab7d986b01c7c2c470ee09e5897"
+      "sha256": "f10ff1b6a389e1ae8f5d0081e849f9e95aa7b0b8e42dbbbaff89f02e1da42a46"
     },
     {
       "path": "manuscripts/ch13/ch13-posix-pagecache-vs-gds-dma.png",
@@ -46,11 +118,71 @@
     },
     {
       "path": "manuscripts/ch13/ch13-posix-pagecache-vs-gds-dma.svg",
-      "sha256": "c26b5c84c9064832cf16b38b1d41d33e3d76419565487d0c1516ab39db72efda"
+      "sha256": "34436fa248c56ba28f2f784df01c62ba7d4c69eacc671fdce469ea44c5c56a93"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-rag-288-requests-calibration-trap.pdf",
+      "sha256": "73ed77b473a53d3e408124393011543a1282dfcb39ce936bee903dcdf0dc6ca4"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-rag-288-requests-calibration-trap.png",
+      "sha256": "7b73abc80dc2774d6bd199ec86942cb5c34e10028b9173a7f61ad695a214e083"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-rag-288-requests-calibration-trap.svg",
+      "sha256": "5919c4a940d161e4f8cca5a4ffbe2fd2a63d1f3e138a681338702c13d05fe3d2"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-rag-end-to-end-timeline-breakdown.pdf",
+      "sha256": "61e19c54492ad88de49465c47da4bb23bd8465596f9798dd05b32b1e2ed4bcce"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-rag-end-to-end-timeline-breakdown.png",
+      "sha256": "b5a7405b7340c3a16d65ca20ccfef2c41512fc74bba53053aa9a7dafd650d0b8"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-rag-end-to-end-timeline-breakdown.svg",
+      "sha256": "c8bbc53721338e9951236317d61b2c693b51755439d62692b30e1aed02098acb"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-rag-topk-kv-blocks-and-rlimit-gap.pdf",
+      "sha256": "cbec41f0fdf48e428ea3d3688f4aba6ec62dc2b983735724fcbd0183dd08f8a8"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-rag-topk-kv-blocks-and-rlimit-gap.png",
+      "sha256": "395c8aed2b3e66bfebbfa388cbcb44cc2a0c3f3b8a093ed865b1097a186a8121"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-rag-topk-kv-blocks-and-rlimit-gap.svg",
+      "sha256": "9fb6926b8b29bf50d41ac362a0931c43502afd34d766e2fdb890f4a15fb4f909"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-ssd-dwpd-endurance-and-admission.pdf",
+      "sha256": "a437c8b1a4bb02a261956877d47c8fac0985e232a3f3f9b14752bbc1753e4105"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-ssd-dwpd-endurance-and-admission.png",
+      "sha256": "8c8bd8ea8f3e01a2bc65e7c600f9bd285a8a60eabcc40835a71cf0be87c229bf"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-ssd-dwpd-endurance-and-admission.svg",
+      "sha256": "f75a9472906899d2e9e8b4042ca98dffda024b483d348466077d09ce4ce4dbdc"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-storage-diagnosis-workflow.pdf",
+      "sha256": "34e8253b8d84038e7a315c2c32a407891c8be208f3114525e183f783e349afc8"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-storage-diagnosis-workflow.png",
+      "sha256": "79bf39fe8fa58e4338e375b795227777c6f18ee8dbba4b93c6ef1b02a633a67b"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-storage-diagnosis-workflow.svg",
+      "sha256": "be77a4789149a4928991ae9b28f3b264b58c31480980684247ab16338431152d"
     },
     {
       "path": "manuscripts/ch13/ch13-storage-hierarchy-and-access-patterns.pdf",
-      "sha256": "b14d365fd59a1270e80e24f6c75d251b9b0d3ece347e088ef02a3332581cc602"
+      "sha256": "6f48455555e1d43ea82d3cd9b11ec5dd9025fc66ad2c605098dcd4bc338c6945"
     },
     {
       "path": "manuscripts/ch13/ch13-storage-hierarchy-and-access-patterns.png",
@@ -58,11 +190,23 @@
     },
     {
       "path": "manuscripts/ch13/ch13-storage-hierarchy-and-access-patterns.svg",
-      "sha256": "6a214b6211b528620e5a85c793435dc3b20b24074b8be1f3334c53c660ccbe4b"
+      "sha256": "907e6db074d4b9409128c5d76c81d1af316507b186c9853cdc768c37a56c7db4"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-three-tier-kv-cache-hierarchy.pdf",
+      "sha256": "6632df72505a48c1d646199fc5a3e3d44e2bd59620c6ddb2bf0c8e187deb36fe"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-three-tier-kv-cache-hierarchy.png",
+      "sha256": "0f5a622029d99c1387e53ae115fc26ff9ad1748bbc8e886109916cf9d37a85b7"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-three-tier-kv-cache-hierarchy.svg",
+      "sha256": "0cbebbcf15c7ffc42aaa5a9039ad325c6b2380a8d4978d9fcb9c97b2e7e74ee4"
     },
     {
       "path": "manuscripts/ch13/ch13-zns-gc-tail-latency.pdf",
-      "sha256": "299961a7b23eb37b6f2e7af939db01ec4108136dba94e7a8763547486ea9a84e"
+      "sha256": "ee6534314ab4fe333d934206cd9a33ea3f3ef67b05fc332b804dee1d702c35ea"
     },
     {
       "path": "manuscripts/ch13/ch13-zns-gc-tail-latency.png",
@@ -70,23 +214,23 @@
     },
     {
       "path": "manuscripts/ch13/ch13-zns-gc-tail-latency.svg",
-      "sha256": "86d04bf5b026cdf2fc5986e96b6c7fe692577e4e2518877fa7f1ea1e1c4e98af"
+      "sha256": "85dfb08867a108add7feb0eaf3e0666d2b63c03d0fcad9e20d93d59256fe35db"
     },
     {
       "path": "manuscripts/ch13/figure-data.json",
-      "sha256": "08a9fb446b4271bb38b0d5afb10fc3317a317a521b30044bb5f80c3f7ef59dea"
+      "sha256": "9fd6737982c8e7d4aafdf5224ebe9b4d3856a5c4c60c2f281268ca687851da68"
     },
     {
       "path": "manuscripts/ch13/figure-index.json",
-      "sha256": "1cd6c7fdf0f0becc2c0d866981ba3041cd6635e1a0757291ed592b3f11d756d5"
+      "sha256": "1579cf2934df5d7b2acf50b216a7a7a6c3d9b429d7eff4128b91120a045c0c3a"
     },
     {
       "path": "manuscripts/ch13/teaching-layout-validation.json",
-      "sha256": "dafe893c5a4f782c709997e31e592ad3234e24f550c9418093b1a493fc34a9b1"
+      "sha256": "702a148f7da29f5f76ee23717187e62a1266ffb658a8a49c45cb777dd7350d19"
     },
     {
       "path": "manuscripts/ch13/math-validation.json",
-      "sha256": "9dd5a5778411990d9eab59ba4cc4014af907ce22da7d18c6186479a0c9554a4f"
+      "sha256": "cd52cfeb2c4f758f324ea6231702c580dff8ec0d70941c5060650804f1d9c4d1"
     }
   ]
 }

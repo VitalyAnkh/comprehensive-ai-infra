@@ -94,6 +94,71 @@ def build_figure_data() -> dict:
             "nvdec_fps_per_gpu": 9600,
             "nvdec_total_fps": 76800,
             "dali_demux_cpu_cores": 32
+        },
+        "example_13_5_dsec_erofs": {
+            "containers_booted": 8192,
+            "nodes": 10,
+            "full_pull_minutes_gt": 60,
+            "erofs_ondemand_minutes": 35,
+            "full_pull_write_gb_per_node_gt": 1600,
+            "erofs_ondemand_write_gb_per_node": 700,
+            "all_cached_write_gb_per_node": 600,
+            "tar_unpack_minutes": 79,
+            "erofs_mount_minutes": 45
+        },
+        "example_13_6_iks_vector_scan": {
+            "num_vectors": 33554432,
+            "dim": 768,
+            "fp32_gib": 96.0,
+            "fp16_gib": 48.0,
+            "fp16_gb": 51.540,
+            "scan_gflops": 51.540,
+            "ai_batch1_flop_per_byte": 1.0,
+            "ai_batch16_flop_per_byte": 16.0,
+            "host_link_gbps": 64.0,
+            "host_transfer_ms": 805.306,
+            "iks_internal_tbps": 1.0,
+            "iks_scan_ms": 51.540,
+            "shards": 8,
+            "query_broadcast_bytes": 12288,
+            "topk_per_shard": 32,
+            "response_merge_bytes": 3072
+        },
+        "experiment_13_01_rag_pipeline": {
+            "corpus_docs": 1024,
+            "corpus_json_bytes": 466051,
+            "corpus_vectors_npy_bytes": 1572992,
+            "encoder_dim": 384,
+            "encoder_load_s": 1.691928,
+            "doc_encode_s": 11.302180,
+            "query_encode_s": 0.050709,
+            "flat_build_s": 0.000216,
+            "flat_bytes": 1572909,
+            "hnsw_build_s": 0.023254,
+            "hnsw_bytes": 1655730,
+            "total_requests": 288,
+            "strict_pass": 281,
+            "kv_pool_blocks": 910,
+            "kv_pool_bytes": 2146959360,
+            "kv_block_bytes": 2359296,
+            "k4_peak_blocks": 23,
+            "k4_peak_bytes": 54263808,
+            "k16_peak_blocks": 77,
+            "k16_peak_bytes": 181665792,
+            "worker_cuda_peak_bytes": 18582745600,
+            "tagged_rss_peak_bytes": 2233159680
+        },
+        "example_13_7_ssd_dwpd": {
+            "ssd_count": 4,
+            "ssd_capacity_tb": 3.84,
+            "total_ssd_capacity_tb": 15.36,
+            "kv_evict_gbps": 4.0,
+            "host_write_tb_per_day": 345.6,
+            "waf": 1.5,
+            "nand_write_tb_per_day": 518.4,
+            "effective_dwpd": 33.75,
+            "target_dwpd_limit": 3.0,
+            "max_admission_ratio": 0.0889
         }
     }
 
@@ -225,6 +290,258 @@ def fig_13_6_multimodal(ex: Exporter):
     ex.save(fig, 'ch13-multimodal-dataloader-pipeline')
 
 
+def fig_13_7_parquet_lance(ex: Exporter):
+    fig, ax = canvas(3.60)
+    card(ax, 0.02, 0.04, 0.46, 0.92, 'WebDataset / Tar 行式流', color='orange', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '图文/视频/标注按样本捆绑\n顺序流式读取吞吐 >8 GB/s', 'teal', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '缺乏行级偏移索引与列裁剪\n仅读文本列仍须拉取整包图像', 'orange', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '课程学习按长度重排采样时\n随机跨分片读取退化严重', 'orange', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '适合固定顺序全模态遍历', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'Parquet / Lance 列式随机寻址', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '按列独立存储 + 页级统计索引\n支持只读文本/元数据列投影', 'teal', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, 'Lance 定长偏移表 O(1) 寻址\n单次 NVMe I/O 直达目标样本', 'blue', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '支撑课程学习动态长度分桶\n与多阶段混合权重在线调整', 'purple', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '兼顾顺序流与亚毫秒点查', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch13-parquet-lance-vs-webdataset-io')
+
+
+def fig_13_8_dsec_erofs(ex: Exporter):
+    fig, ax = canvas(3.60)
+    card(ax, 0.02, 0.04, 0.46, 0.92, '全量拉取 + Tar 解包（>60 min）', color='orange', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '8,192 容器并发拉取完整镜像\n实际仅访问 4.2%–13.3% 数据', 'orange', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, 'Tar 逐层解压耗时 79 min\n每节点写盘 >1,600 GB（5.5×）', 'orange', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '传统镜像层重建复杂度\nO(m·N) + O(k·N) 随规模爆炸', 'orange', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '10 节点启动 >60 min', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'DSec EROFS 按需挂载（35 min）', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '只读 EROFS 块镜像按需读取\n合并大块 I/O 并驻留本地缓存', 'teal', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '直接挂载耗时 45 min（1.76×）\n每节点写盘 700 GB（省 57%）', 'blue', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, 'overlayfs 运行时动态组合层\n升级重建降至 O(m) + O(k)', 'purple', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '8,192 容器 35 min 就绪', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch13-dsec-erofs-ondemand-container-boot')
+
+
+def fig_13_9_faiss_iks(ex: Exporter):
+    fig, ax = canvas(3.65)
+    card(ax, 0.02, 0.04, 0.46, 0.92, '主机链路搬移（805.3 ms）', color='orange', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, 'N=2^25, d=768 向量库\nFP32 96 GiB · FP16 48 GiB', 'orange', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '单查询内积 51.540 GFLOPs\nbatch=1 强度仅 1 FLOP/B', 'orange', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '经 64 GB/s 主机链路搬移\n48 GiB 供数需 805.306 ms', 'orange', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, 'B=16 合批强度升至 16 FLOP/B', size=11, ha='center', color=BORDER_COL['orange'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, '近存 IKS 8 分片扫描（51.5 ms）', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '存储侧内部聚合带宽 1 TB/s\n本地扫描仅需 51.540 ms', 'teal', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '主机向 8 分片广播查询向量\n8 × 1,536 B = 12,288 B', 'blue', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '各分片返回 k=32 (score, id)\n8 × 32 × 12 B = 3,072 B', 'purple', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '跨链路流量从 48 GiB 降至 15 KiB', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch13-faiss-flat-vs-iks-near-storage')
+
+
+def fig_13_10_hnsw_diskann(ex: Exporter):
+    fig, ax = canvas(3.60)
+    card(ax, 0.02, 0.04, 0.46, 0.92, 'HNSW 全内存分层导航图', color='purple', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '原始 FP32 向量常驻 DRAM\n每向量额外存多层邻接表指针', 'purple', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '零层度数 2M（4B/边）\n图拓扑开销达数十至上百 GiB', 'orange', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '跳表贪心搜索仅几十微秒\n十亿级向量触发 DRAM 容量墙', 'teal', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '高吞吐但内存成本高昂', size=11, ha='center', weight='bold', color=BORDER_COL['purple'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'DiskANN / Vamana 闪存对齐', color='blue', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, 'DRAM 仅驻留轻量 PQ 压缩码\n在内存中快速估算候选距离', 'teal', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '单节点全精度向量 + 邻居 ID\n紧凑打包进同一 4 KiB 扇区', 'blue', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, 'Beam Search 并行发起 SSD 读\n6–10 轮 I/O 完成十亿级检索', 'blue', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '消除跨扇区读放大（RAF=1.0×）', size=11, ha='center', weight='bold', color=BORDER_COL['blue'])
+    ex.save(fig, 'ch13-hnsw-memory-vs-diskann-ssd-layout')
+
+
+def fig_13_11_rag_calibration(ex: Exporter):
+    fig, ax = canvas(3.65)
+    card(ax, 0.02, 0.04, 0.46, 0.92, '预注册校准选 k 陷阱（未通过）', color='orange', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '8 题校准集（Calibration）\nFlat/ef16/ef64 在 k=1 达 8/8', 'orange', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '按最小合格规则选定 k=1\nef4 仅 7/8（漏 q05）被淘汰', 'orange', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '16 题留出集（Held-out）\nk=1 在 q14 失守（15/16）', 'orange', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '严禁事后改 k=4 冒充预选成功', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, '6 个固定配置全通过（24/24）', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '288 请求共 281/288 通过\n7 次失败均输出 UNKNOWN', 'teal', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, 'Flat/ef16/ef64 × k∈{4,16}\n校准 8/8 与留出 16/16 全过', 'blue', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '留出集 E2E 中位数（k=4→16）\nef16：117.1 → 149.9 ms', 'purple', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '检索召回余量决定生成质量下界', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch13-rag-288-requests-calibration-trap')
+
+
+def fig_13_12_rag_kv_blocks(ex: Exporter):
+    fig, ax = canvas(3.65)
+    card(ax, 0.02, 0.04, 0.46, 0.92, 'vLLM 原生 KV 块分配账本', color='blue', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, 'Worker 固定 KV 池：910 块\n共 2.147 GB（2.36 MB/块）', 'blue', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, 'k=4（输入中位 346.5 tok）\n峰值 23 块 = 54.26 MB', 'teal', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, 'k=16（输入中位 1201.5 tok）\n峰值 77 块 = 181.67 MB', 'purple', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, 'k 增 4× 使单请求 KV 块增 3.35×', size=11, ha='center', weight='bold', color=BORDER_COL['blue'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, '多进程资源守卫缺口审计', color='orange', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '原守卫按环境 token 过滤\n仅捕外层进程 RSS 2.23 GB', 'orange', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, 'EngineCore 子进程未继承\n致 raw GPU 采样误报为 0', 'orange', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, 'Worker 内部真实显存峰值\ncuda_peak = 18.583 GB', 'teal', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '须结合会话组与父子 PID 树监控', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+    ex.save(fig, 'ch13-rag-topk-kv-blocks-and-rlimit-gap')
+
+
+def fig_13_13_rag_timeline(ex: Exporter):
+    fig, ax = canvas(3.65)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '在线 RAG 五阶段串行时序分解（CPU 检索 → GPU vLLM）', color='purple')
+    stages = [
+        (0.04, 0.58, 0.17, 0.24, '① 编码\nMiniLM\n~2.1 ms', 'blue'),
+        (0.23, 0.58, 0.17, 0.24, '② 检索\nHNSW 24μs\nFlat 278μs', 'teal'),
+        (0.42, 0.58, 0.18, 0.24, '③ 拼装\nTokenize\n131–1227词', 'purple'),
+        (0.62, 0.58, 0.16, 0.24, '④ Prefill\n23/77 块\n随 k 增长', 'orange'),
+        (0.80, 0.58, 0.16, 0.24, '⑤ Decode\n两词口令\nstop 验收', 'teal'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.21, 0.70), (0.23, 0.70))
+    arrow(ax, (0.40, 0.70), (0.42, 0.70))
+    arrow(ax, (0.60, 0.70), (0.62, 0.70))
+    arrow(ax, (0.78, 0.70), (0.80, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.43, '检索耗时节省 vs. 下游 Prefill 膨胀的协同权衡', color='blue')
+    box(ax, 0.04, 0.15, 0.44, 0.20, '候选 A（精检 k=8，检索 200 ms）\n1,536 tok · KV 216 MiB\nPrefill 110.2 → 总 310.2 ms', 'teal', size=11)
+    box(ax, 0.52, 0.15, 0.44, 0.20, '候选 B（粗检 k=32，检索 20 ms）\n4,608 tok · KV 648 MiB\nPrefill 351.4 → 总 371.4 ms', 'orange', size=11)
+    text(ax, 0.50, 0.08, '200 TFLOP/s 下候选 A 快 61.2 ms；算力 >268.0 TFLOP/s 时翻转', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch13-rag-end-to-end-timeline-breakdown')
+
+
+def fig_13_14_three_tier_kv(ex: Exporter):
+    fig, ax = canvas(3.65)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '跨节点四级 KV 缓存池化阶梯（Mooncake / HiCache）', color='blue')
+    tiers = [
+        (0.04, 0.58, 0.21, 0.24, 'T0: HBM\n3.35–8 TB/s\n热集驻留', 'blue'),
+        (0.28, 0.58, 0.21, 0.24, 'T1: DRAM\n50–64 GB/s\n本机内存', 'teal'),
+        (0.52, 0.58, 0.21, 0.24, 'T2: 远端池\n45–50 GB/s\nRDMA 池化', 'purple'),
+        (0.76, 0.58, 0.20, 0.24, 'T3: 3FS\n12–62 GiB/s\nNVMe 盘池', 'orange'),
+    ]
+    for x, y, w, h, label, role in tiers:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.25, 0.70), (0.28, 0.70))
+    arrow(ax, (0.49, 0.70), (0.52, 0.70))
+    arrow(ax, (0.73, 0.70), (0.76, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.43, '拉取 KV 替代重算 Prefill 的盈亏判据与流水重叠', color='teal')
+    box(ax, 0.04, 0.15, 0.44, 0.20, '带宽充裕判据（线性项对比）\nB_tier > B_crit = b_kv·F/(2P)\n拉取固定项快于重算投影', 'teal', size=11)
+    box(ax, 0.52, 0.15, 0.44, 0.20, '低带宽临界长度 S_crit\nB_tier < B_crit 时需长上下文\n借二次注意力项反超 I/O', 'purple', size=11)
+    text(ax, 0.50, 0.08, '配合第 l 层计算与第 l+1 层异步 DMA 预取重叠，掩盖 80%+ 传输延迟', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch13-three-tier-kv-cache-hierarchy')
+
+
+def fig_13_15_cacheblend(ex: Exporter):
+    fig, ax = canvas(3.60)
+    card(ax, 0.02, 0.04, 0.46, 0.92, '传统前缀缓存 vs. 直接拼接', color='orange', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '严格前缀匹配（Prefix Cache）\n文档顺序变动即致后续失效', 'orange', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '独立预存文档块直接硬拼接\n虽修正 RoPE 相对位置旋转', 'orange', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '但缺失跨文档交叉注意力\n多跳问答准确率严重退化', 'orange', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '无法兼顾任意组合与多跳精度', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'CacheBlend 选择性稀疏重算', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '第 1 层全算定位高偏差词元\n筛出 Top 10%–15% 敏感词', 'teal', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '85%–90% 词元直接复用 KV\n仅 10%–15% 词元增量重算', 'blue', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '重算耗时掩盖 SSD 拉取延迟\n恢复全量 Prefill 多跳精度', 'purple', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, 'TTFT 降 2.2–3.3× 且零精度损失', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch13-cacheblend-non-prefix-kv-fusion')
+
+
+def fig_13_16_ssd_dwpd(ex: Exporter):
+    fig, ax = canvas(3.60)
+    card(ax, 0.02, 0.04, 0.46, 0.92, '无节流全量换出（33.75 DWPD）', color='orange', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '8 卡节点配 4×3.84 TB SSD\n总闪存容量 C = 15.36 TB', 'orange', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '每秒换出 4 GB 新生成 KV\n主机日写 345.6 TB/day', 'orange', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '计入 WAF=1.5 写 518.4 TB\n达 33.75 DWPD（超标 11×）', 'orange', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '不到半年即磨穿 TLC 闪存寿命', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, '准入过滤 + 分层治理（≤3 DWPD）', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, 'Count-Min Sketch 准入过滤\n仅放行命中 ≥2 次的高频块', 'teal', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, 'DRAM 写缓冲吸收短命会话\n结合 ZNS 将 WAF 压回 1.0×', 'blue', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '准入率 α ≤ 8.89%（WAF=1.5）\n或 α ≤ 13.33%（ZNS 1.0）', 'purple', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '守住 3 DWPD 五年服役红线', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch13-ssd-dwpd-endurance-and-admission')
+
+
+def fig_13_17_diagnosis(ex: Exporter):
+    fig, ax = canvas(3.80)
+    card(ax, 0.02, 0.03, 0.96, 0.94, 'AI 存储子系统瓶颈五步定量定位工作流', color='blue')
+    steps = [
+        (0.05, 0.72, 0.42, 0.14, '① 查元数据 IOPS 与打开率\n小文件风暴 → 改 Lance/Tar', 'blue'),
+        (0.53, 0.72, 0.42, 0.14, '② 查 PCIe RC 与 CPU 拷贝\n双趟 2V_data → 改 GDS 直通', 'teal'),
+        (0.53, 0.50, 0.42, 0.15, '③ 查请求粒度 vs 16KiB 页\nRAF > 1 → 改块连续打包', 'purple'),
+        (0.05, 0.50, 0.42, 0.15, '④ 查 P99 毛刺与 DWPD 写放\nGC 阻塞 → ZNS + 准入过滤', 'orange'),
+        (0.05, 0.26, 0.90, 0.16, '⑤ 查主机端计算协同（视频 CPU 解码饥饿 / 向量全扫带宽墙）\n卸载至 GPU 片上 NVDEC 硬件解码器或近存检索模块（IKS / DiskANN）', 'teal'),
+    ]
+    for x, y, w, h, label, role in steps:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.47, 0.79), (0.53, 0.79))
+    arrow(ax, (0.74, 0.72), (0.74, 0.65))
+    arrow(ax, (0.53, 0.575), (0.47, 0.575))
+    arrow(ax, (0.26, 0.50), (0.26, 0.42))
+    box(ax, 0.05, 0.08, 0.90, 0.12, '核心判据：让每次传输对齐闪存物理粒度，让数据零拷贝直达算力单元', 'blue', size=11)
+    ex.save(fig, 'ch13-storage-diagnosis-workflow')
+
+
+def fig_13_18_full_stack(ex: Exporter):
+    fig, ax = canvas(3.80)
+    card(ax, 0.02, 0.50, 0.96, 0.47, 'AI 原生数据底座上层引擎：训练流、检索与多级 KV 池', color='blue')
+    top = [
+        (0.04, 0.69, 0.44, 0.16, '预训练数据湖（Tar / Lance）\n分片顺序流 + NVDEC 硬解码', 'teal'),
+        (0.52, 0.69, 0.44, 0.16, 'RAG 向量库（HNSW / DiskANN）\n近存扫描 IKS + 留出集门控', 'purple'),
+        (0.04, 0.52, 0.44, 0.14, '多级 KV 池（Mooncake 池化）\n块连续打包 + CacheBlend', 'blue'),
+        (0.52, 0.52, 0.44, 0.14, '万级沙箱镜像（DSec EROFS）\n按需块拉取 + overlayfs 层', 'orange'),
+    ]
+    for x, y, w, h, label, role in top:
+        box(ax, x, y, w, h, label, role, size=11)
+
+    card(ax, 0.02, 0.03, 0.96, 0.43, '底层传输协议栈与持久化介质：内核旁路 + 链式复制 + 闪存对齐', color='teal')
+    bot = [
+        (0.04, 0.18, 0.28, 0.17, '零拷贝传输通路\nGDS P2P DMA\nio_uring / USRBIO', 'blue'),
+        (0.36, 0.18, 0.28, 0.17, 'DeepSeek 3FS\nCRAQ 全副本强一致\n磁盘/网卡 2.24× 超配', 'teal'),
+        (0.68, 0.18, 0.28, 0.17, '闪存介质治理\nZNS 顺序追加区\n写准入守住 DWPD', 'purple'),
+    ]
+    for x, y, w, h, label, role in bot:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.265), (0.36, 0.265))
+    arrow(ax, (0.64, 0.265), (0.68, 0.265))
+    text(ax, 0.50, 0.08, '全栈协同：消除元数据风暴、Root Complex 绕行、读放大与 GC 尾延迟', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch13-full-stack-ai-data-plane')
+
+
 def main():
     ex = Exporter(HERE)
     fig_13_1_hierarchy(ex)
@@ -233,6 +550,18 @@ def main():
     fig_13_4_kv_layout(ex)
     fig_13_5_zns_gc(ex)
     fig_13_6_multimodal(ex)
+    fig_13_7_parquet_lance(ex)
+    fig_13_8_dsec_erofs(ex)
+    fig_13_9_faiss_iks(ex)
+    fig_13_10_hnsw_diskann(ex)
+    fig_13_11_rag_calibration(ex)
+    fig_13_12_rag_kv_blocks(ex)
+    fig_13_13_rag_timeline(ex)
+    fig_13_14_three_tier_kv(ex)
+    fig_13_15_cacheblend(ex)
+    fig_13_16_ssd_dwpd(ex)
+    fig_13_17_diagnosis(ex)
+    fig_13_18_full_stack(ex)
     outputs = ex.finish()
 
     fig_data = build_figure_data()
@@ -298,6 +627,126 @@ def main():
             "caption": "多模态训练中 WebDataset 分片打包消除元数据风暴，以及算例 13-4 中每秒 4,096 段 720p 视频（65,536 fps）从主机 CPU 软解码赤字（缺口 160 核）向 DALI + 8×GPU NVDEC 硬件解码卸载的流水线",
             "source_refs": ["manuscripts/ch13/figure-data.json"],
             "TeachingRole": "展示 PB 级多模态训练如何打通存储分片顺序供给与片上 NVDEC 异构解码闭环"
+        },
+        {
+            "figure_id": "图 13-7",
+            "number": 7,
+            "file": "ch13-parquet-lance-vs-webdataset-io.svg",
+            "asset": "ch13/ch13-parquet-lance-vs-webdataset-io.svg",
+            "section": "13.5.3",
+            "caption": "WebDataset 行式顺序流与 Parquet/Lance 列式随机偏移寻址在多模态按列投影与课程学习动态采样下的 I/O 机制对比",
+            "source_refs": ["manuscripts/ch13/figure-data.json"],
+            "TeachingRole": "对比顺序打包格式与现代列式随机寻址格式在多阶段训练中的适用边界"
+        },
+        {
+            "figure_id": "图 13-8",
+            "number": 8,
+            "file": "ch13-dsec-erofs-ondemand-container-boot.svg",
+            "asset": "ch13/ch13-dsec-erofs-ondemand-container-boot.svg",
+            "section": "13.5.3",
+            "caption": "DSec 平台 8,192 个容器并发启动对比：全量拉取解包（>60 min，单节点写盘 >1,600 GB）与 EROFS 按需块读取 + overlayfs 组合层（35 min，写盘 700 GB，重建复杂度 O(m)+O(k)）",
+            "source_refs": ["case-studies/dsec-sandbox-platform.md"],
+            "TeachingRole": "展示大规模评测与训练沙箱如何利用只读块镜像按需读取消除镜像拉取风暴"
+        },
+        {
+            "figure_id": "图 13-9",
+            "number": 9,
+            "file": "ch13-faiss-flat-vs-iks-near-storage.svg",
+            "asset": "ch13/ch13-faiss-flat-vs-iks-near-storage.svg",
+            "section": "13.6.1",
+            "caption": "2^25×768 向量表（FP16 48 GiB）经 64 GB/s 主机链路搬移（805.306 ms）与 8 分片近存 IKS 内部 1 TB/s 扫描（51.540 ms，查询广播 12,288 B、结果归并 3,072 B）对比",
+            "source_refs": ["case-studies/retrieval-and-generation.md"],
+            "TeachingRole": "用 1 FLOP/B 的极低算术强度解释为何向量扫描应当下沉至近存侧执行"
+        },
+        {
+            "figure_id": "图 13-10",
+            "number": 10,
+            "file": "ch13-hnsw-memory-vs-diskann-ssd-layout.svg",
+            "asset": "ch13/ch13-hnsw-memory-vs-diskann-ssd-layout.svg",
+            "section": "13.6.1",
+            "caption": "HNSW 全内存分层导航图的邻接指针内存膨胀，以及 DiskANN 将 PQ 压缩向量驻留 DRAM、全精度向量与邻居表紧凑对齐 4 KiB NVMe 扇区的混合检索架构",
+            "source_refs": ["case-studies/retrieval-and-generation.md"],
+            "TeachingRole": "阐明十亿级向量索引如何通过扇区耦合布局突破 DRAM 容量墙与 SSD 读放大墙"
+        },
+        {
+            "figure_id": "图 13-11",
+            "number": 11,
+            "file": "ch13-rag-288-requests-calibration-trap.svg",
+            "asset": "ch13/ch13-rag-288-requests-calibration-trap.svg",
+            "section": "13.6.2",
+            "caption": "实验 13-01（288 请求 Faiss + Qwen3-8B RAG 管线）：校准集（8 题）预选 k=1 在留出集（16 题）因 q14 跌至 15/16 的失守机制，以及 6 个固定 k=4/16 配置单元 24/24 全通过的实测对比",
+            "source_refs": ["experiments/ch13/13-01/retrieval-generation/README.md"],
+            "TeachingRole": "通过真实负结果揭示小样本校准选择最小 k 的泛化风险与预注册评测纪律"
+        },
+        {
+            "figure_id": "图 13-12",
+            "number": 12,
+            "file": "ch13-rag-topk-kv-blocks-and-rlimit-gap.svg",
+            "asset": "ch13/ch13-rag-topk-kv-blocks-and-rlimit-gap.svg",
+            "section": "13.6.2",
+            "caption": "实验 13-01 中检索 k=4 与 k=16 对 vLLM 910 块 KV 池的真实占用（23 块 vs. 77 块）及环境变量守卫漏检 EngineCore 子进程（CUDA 分配器峰值 18.58 GB）的边界审计",
+            "source_refs": ["experiments/ch13/13-01/retrieval-generation/README.md"],
+            "TeachingRole": "连接上游检索 top-k 参数与下游推理引擎物理 KV 块分配及多进程资源监控边界"
+        },
+        {
+            "figure_id": "图 13-13",
+            "number": 13,
+            "file": "ch13-rag-end-to-end-timeline-breakdown.svg",
+            "asset": "ch13/ch13-rag-end-to-end-timeline-breakdown.svg",
+            "section": "13.6.2",
+            "caption": "RAG 请求端到端五阶段关键路径分解，以及算例 13-5 中精检少文档（k=8，检索 200 ms + Prefill 110.2 ms）与粗检多文档（k=32，检索 20 ms + Prefill 351.4 ms）的翻转边界",
+            "source_refs": ["case-studies/retrieval-and-generation.md"],
+            "TeachingRole": "证明不能孤立优化检索延迟，而必须在同质量下最小化检索加 Prefill 的联合关键路径"
+        },
+        {
+            "figure_id": "图 13-14",
+            "number": 14,
+            "file": "ch13-three-tier-kv-cache-hierarchy.svg",
+            "asset": "ch13/ch13-three-tier-kv-cache-hierarchy.svg",
+            "section": "13.7.1",
+            "caption": "HBM—主机 DRAM—RDMA 远端内存—NVMe SSD 四级 KV 缓存池（Mooncake / LMCache / HiCache）的带宽阶梯与拉取替代重算的临界条件",
+            "source_refs": ["manuscripts/ch13/figure-data.json"],
+            "TeachingRole": "建立跨层级 KV 缓存拉取耗时与重算 Prefill 耗时的定量比较框架"
+        },
+        {
+            "figure_id": "图 13-15",
+            "number": 15,
+            "file": "ch13-cacheblend-non-prefix-kv-fusion.svg",
+            "asset": "ch13/ch13-cacheblend-non-prefix-kv-fusion.svg",
+            "section": "13.7.1",
+            "caption": "RAG 多文档任意顺序拼接下的非前缀 KV 复用：直接拼接缺失交叉注意力 vs. CacheBlend 仅对 10%–15% 高偏差词元执行稀疏重算并与 SSD 拉取流水重叠",
+            "source_refs": ["manuscripts/ch13/figure-data.json"],
+            "TeachingRole": "展示如何突破严格前缀匹配限制，将存储池 KV 复用推广至模块化 RAG 文档块"
+        },
+        {
+            "figure_id": "图 13-16",
+            "number": 16,
+            "file": "ch13-ssd-dwpd-endurance-and-admission.svg",
+            "asset": "ch13/ch13-ssd-dwpd-endurance-and-admission.svg",
+            "section": "13.7.2",
+            "caption": "算例 13-7：8 卡节点持续以 4 GB/s 换出 KV 状态时高达 33.75 DWPD 的闪存寿命超限风险，以及通过写准入过滤器（α≤8.89%）与 ZNS 分区将寿命拉回 ≤3 DWPD 安全线的机制",
+            "source_refs": ["manuscripts/ch13/figure-data.json"],
+            "TeachingRole": "揭示高频 KV 换出对企业级 SSD 擦写寿命的毁灭性冲击及准入节流设计准则"
+        },
+        {
+            "figure_id": "图 13-17",
+            "number": 17,
+            "file": "ch13-storage-diagnosis-workflow.svg",
+            "asset": "ch13/ch13-storage-diagnosis-workflow.svg",
+            "section": "13.7.2",
+            "caption": "AI 存储子系统性能与寿命瓶颈的五步定量诊断工作流",
+            "source_refs": ["manuscripts/ch13/figure-data.json"],
+            "TeachingRole": "为系统工程师提供从元数据、PCIe 拓扑、闪存粒度、GC 毛刺到异构解码的排障闭环"
+        },
+        {
+            "figure_id": "图 13-18",
+            "number": 18,
+            "file": "ch13-full-stack-ai-data-plane.svg",
+            "asset": "ch13/ch13-full-stack-ai-data-plane.svg",
+            "section": "13.7.2",
+            "caption": "贯穿预训练数据湖、RAG 向量知识库、多级 KV 缓存池与万级容器镜像的 AI 原生数据底座全景架构图",
+            "source_refs": ["manuscripts/ch13/figure-data.json"],
+            "TeachingRole": "收束第 13 章全章知识体系，呈现计算—网络—存储深度融合的现代 AI 数据平面"
         }
     ]
     (HERE / 'figure-index.json').write_text(json.dumps(fig_index, ensure_ascii=False, indent=2) + '\n')

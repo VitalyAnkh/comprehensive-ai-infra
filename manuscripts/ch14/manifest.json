@@ -1,8 +1,32 @@
 {
   "outputs": [
     {
+      "path": "manuscripts/ch14/ch14-2023-2026-cost-reduction-telescoping.pdf",
+      "sha256": "97303cbcefd4f73a362329898f7f10e4be5424716615479afdfe7731725db5f9"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-2023-2026-cost-reduction-telescoping.png",
+      "sha256": "1decf8ddf11df368cb09767be64c51ac6abf7a453bd9ffdebdaa7743fd9ffc2e"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-2023-2026-cost-reduction-telescoping.svg",
+      "sha256": "1d2a21f02e8c730096f36097b0111225aaec00927074ad9190bef4216c2cc604"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-beyond-chinchilla-lifecycle-compute-allocation.pdf",
+      "sha256": "24b25879cea9ccb1a67d4e9e49815a39901a7900c3ece118b71dc48432d20ae3"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-beyond-chinchilla-lifecycle-compute-allocation.png",
+      "sha256": "07d5b4591bf21f5c17320b6dfe3a26f88db1abec7e8474ffe7c1fe5211e26f11"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-beyond-chinchilla-lifecycle-compute-allocation.svg",
+      "sha256": "cbd11b3a120bb9977d69a57021030f00a2b7d41a3ea30db74ab50083c4d2df2a"
+    },
+    {
       "path": "manuscripts/ch14/ch14-codesign-simultaneous-equations.pdf",
-      "sha256": "b9c9c35826e9dbaf4c33d23d398c49ef8b90e5670bd5260c736ba15a509b3453"
+      "sha256": "96ab7b5f80832d83cd278436b894906967b1347336709b35f2ea2f2b1e471a42"
     },
     {
       "path": "manuscripts/ch14/ch14-codesign-simultaneous-equations.png",
@@ -10,11 +34,47 @@
     },
     {
       "path": "manuscripts/ch14/ch14-codesign-simultaneous-equations.svg",
-      "sha256": "e4d21f7f82a15e0c27e8e069f88f6167918a3bbd78080dac0495a122dc06ce06"
+      "sha256": "a5eac5784fcbca3684c3d6d4d567d7b049830d1632a36814854f8b0882d4a9cd"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-datacenter-vs-consumer-gpu-crossover.pdf",
+      "sha256": "d3ee3e0f59e62709b3c953774be39d49cbec0aa650663635e32e3911ce6ad570"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-datacenter-vs-consumer-gpu-crossover.png",
+      "sha256": "1070144287277d86b985a8a6b92606d0c19accb3e29b144723d6f290a157f774"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-datacenter-vs-consumer-gpu-crossover.svg",
+      "sha256": "ce0f63c7f684e7594eb7f9f083a09421dbae3cab265fcc13f0b8813bd66e4cff"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-design-review-3candidate-kv-audit.pdf",
+      "sha256": "e771ac422ea0f0f54fd8bf26583da11161b4d395d6dc77fafea0a1b7a65ff862"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-design-review-3candidate-kv-audit.png",
+      "sha256": "234b87606b53ce02f792111e6333601695a4c12fd4ccc35d2a6afeae0ccee220"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-design-review-3candidate-kv-audit.svg",
+      "sha256": "63d0111ab3da03880970a3fefbbe37c25392b9f857a5768867f6fed6afd72508"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-dflash-block-diffusion-role-reversal.pdf",
+      "sha256": "5c8526a168294426a6e1253714d0522e0709a0b49ec4615632600fe07e41c4b5"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-dflash-block-diffusion-role-reversal.png",
+      "sha256": "1d0a1b8f926f0187d28df2e07e9b84abb349fbcb3c05c0da94ae4a684fd5f892"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-dflash-block-diffusion-role-reversal.svg",
+      "sha256": "678a9ff2e6c2b53ce003a7a77423f0957287735b52b33d9cdd7a71b138c21aba"
     },
     {
       "path": "manuscripts/ch14/ch14-digital-worker-v41-vs-k3-cost.pdf",
-      "sha256": "dc867b3eded9477bc0940a7b96f81f74d5f8b5c5f258583af470a3e24e6a263a"
+      "sha256": "9f1b8257016ba72cbe8a4055476aed2e92277c8e08151bfe76c04b2becbc1ecd"
     },
     {
       "path": "manuscripts/ch14/ch14-digital-worker-v41-vs-k3-cost.png",
@@ -22,11 +82,47 @@
     },
     {
       "path": "manuscripts/ch14/ch14-digital-worker-v41-vs-k3-cost.svg",
-      "sha256": "45ace7fa4116d38e2fe037cc31268509a9349c81b01474261439766acccae1fd"
+      "sha256": "de80a67ef24dc3b5ec820080050f59c52a0a6f932c0c1cc7118cd2e3251db2e7"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-dual-track-book-throughline-summary.pdf",
+      "sha256": "24506e466e9b94866a80a280960779121b165e63115aab5107d6ad4445887cf5"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-dual-track-book-throughline-summary.png",
+      "sha256": "9a644580d102ff39888ce38fe7ac2a6b05476fad119628b9ee181313e864479d"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-dual-track-book-throughline-summary.svg",
+      "sha256": "2d5ae18a6dd6c5aaa6fb1be1a7f4aa41e625145bf8ec61828b326cccabedb965"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-exp13-07-commit-buffer-idempotence.pdf",
+      "sha256": "9723ad0de981b57a0206a2df4cf7b283ce0b9bafe5724ea1fcd6b2f5df339b7b"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-exp13-07-commit-buffer-idempotence.png",
+      "sha256": "0a28fdac1de0ec29490ec22a8516d742b5be5aaea63d80443de9c715a7847cd7"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-exp13-07-commit-buffer-idempotence.svg",
+      "sha256": "b8ca9f9c0cdf33eecc9047a6a48d5a68e40db6e75ed22bb66c72fd11fb60743a"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-exp13-07-k96-counterexample-and-k192-ratios.pdf",
+      "sha256": "bbe1e8229675b1117fa53694a6d32ccafdf09d74bae8f8724d874246b6f909c4"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-exp13-07-k96-counterexample-and-k192-ratios.png",
+      "sha256": "a8b5d1cea82b6cb0d2f372497dd91c617e099e8372a6ef10402d7211815c8524"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-exp13-07-k96-counterexample-and-k192-ratios.svg",
+      "sha256": "cfe75f1e1777c1799d2bd4a8484613bb8a8b65e9e350f58308baead9cad526da"
     },
     {
       "path": "manuscripts/ch14/ch14-five-step-diagnostic-decision-tree.pdf",
-      "sha256": "295be62e1fc990406a99169b49898a4a33d2c177d293d7fddf6b570d83d9c77d"
+      "sha256": "a0b929cbd02811bda587a15fb9af5565734e96a5aa7482d43c05cf0f8cf7a905"
     },
     {
       "path": "manuscripts/ch14/ch14-five-step-diagnostic-decision-tree.png",
@@ -34,11 +130,35 @@
     },
     {
       "path": "manuscripts/ch14/ch14-five-step-diagnostic-decision-tree.svg",
-      "sha256": "b23247918fccbbcc82dec5e269f0833aca65fb6412c44350e32c24c6e54563fd"
+      "sha256": "9779b172c3fc4b8a911b27970df3b3c84ba4057cd8b157389ced9beeae255380"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-four-dimensional-codesign-closed-loop.pdf",
+      "sha256": "14804a81adb7586a31fab78f2ef6a9d43bf5c36233be501eac2df8fa18c3191a"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-four-dimensional-codesign-closed-loop.png",
+      "sha256": "9b44280a9f0faf21390ac486cda61ed1fccb92d38eaf4014ef57de65af5257d7"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-four-dimensional-codesign-closed-loop.svg",
+      "sha256": "9f9bf7918fc80846bc8979bf28704d374d611218217c51aab603eaa7e959ed35"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-four-double-counting-traps-matrix.pdf",
+      "sha256": "9819e7c0fda64b2a715657f8ebde0dfad1c3bfccfecd1942848fd1f4f72276f8"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-four-double-counting-traps-matrix.png",
+      "sha256": "330ec3d6b8ee2cf78319d3af76cac1df5776c55bcd61e97fc2cd100ccf597cf8"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-four-double-counting-traps-matrix.svg",
+      "sha256": "a21b6054799b94d3ccdb79105e2b8d53cba4f2b76f4c225ec1741de28c6e8d2d"
     },
     {
       "path": "manuscripts/ch14/ch14-opentallas-four-resource-and-wafer-hop.pdf",
-      "sha256": "091f5d62a138cdd20fa6f7dda31448f8e438327e0fb2f29c6a1702e4e09f16a6"
+      "sha256": "4a7c39e7fca726032f684a03ad893c1b28b5a6f2f3e7ff19a024833828ae6eeb"
     },
     {
       "path": "manuscripts/ch14/ch14-opentallas-four-resource-and-wafer-hop.png",
@@ -46,11 +166,35 @@
     },
     {
       "path": "manuscripts/ch14/ch14-opentallas-four-resource-and-wafer-hop.svg",
-      "sha256": "2bdfff737b46690b68e57a2cfc16c6e6ff324d282157d833c96be3891fc98809"
+      "sha256": "8de2a7e6185e81ca688ba9860885ce3856ee08e82812ac4d70c21b54d4e7a265"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-preregistered-prediction-lifecycle.pdf",
+      "sha256": "721be00d814f62a6123352024bea02ebde508768c2e4e0e186d30f2b098bff40"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-preregistered-prediction-lifecycle.png",
+      "sha256": "91b57d44fb8861def6f7f91910b6796ca990d1d0bb64fb1d38bc426e4aaad53d"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-preregistered-prediction-lifecycle.svg",
+      "sha256": "fe7017bb79da531dc19efb807414b45c0cbe4bcc9feb8079c087174b677ae1a7"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-rubin-v41-codesign-mapping-matrix.pdf",
+      "sha256": "5e228c6ee524597f08a7170fb0861336d57f8f08560428a4f7dd1aac4ac8cc54"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-rubin-v41-codesign-mapping-matrix.png",
+      "sha256": "6c6a726e55b6e759145448c30634c0870bf9652c7ef6fa2e4dc0d13dc36be131"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-rubin-v41-codesign-mapping-matrix.svg",
+      "sha256": "35f0bc395984f03023bb6c8d0081676a15aa4393ed1c7092b9c25529df49a8e8"
     },
     {
       "path": "manuscripts/ch14/ch14-v41-dual-track-context-scaling.pdf",
-      "sha256": "ca3d17f07d94aa544766396df0fa48c407c74990145f1e97d8ae51f93baa47a0"
+      "sha256": "4d62af57d5f749bed8e9cab5ee460fdc09501b427791bf6876284eebb5583243"
     },
     {
       "path": "manuscripts/ch14/ch14-v41-dual-track-context-scaling.png",
@@ -58,11 +202,11 @@
     },
     {
       "path": "manuscripts/ch14/ch14-v41-dual-track-context-scaling.svg",
-      "sha256": "fe7d6e97667491ea3dee144f342a62e2134f92e2dad5d3b7fa09b76993e0fc93"
+      "sha256": "774a0b065fe60cfd02955a49bb939256888af49ed90242b8144a6fef4f5b8caf"
     },
     {
       "path": "manuscripts/ch14/ch14-v41-four-stage-attention-pipeline.pdf",
-      "sha256": "3c9c5d77db9fd3b3580466aae539c8b32a8ff7a43c698a064fa49e2bbec477d9"
+      "sha256": "61d351a1958a387ebe4cc4883c7e2c70a78e7dfbc582023cb2d784de109e2e55"
     },
     {
       "path": "manuscripts/ch14/ch14-v41-four-stage-attention-pipeline.png",
@@ -70,23 +214,23 @@
     },
     {
       "path": "manuscripts/ch14/ch14-v41-four-stage-attention-pipeline.svg",
-      "sha256": "f3d9f0a85fd426eab0cc920e4ff401b1cfffcd70a324b0c40506a5b5a46eb18d"
+      "sha256": "e2db396356d8882995bdde3133a5daf539dbd9332528db09f0ae085d0dd1457c"
     },
     {
       "path": "manuscripts/ch14/figure-data.json",
-      "sha256": "79d4afc1b0f628513b12a148f4a3d7523b2859b8d1f45f0207aa871c763043e1"
+      "sha256": "f942e8f920833b1f797cababc76d8241a6fa97fb30dc0f2fb43fc41123b4c336"
     },
     {
       "path": "manuscripts/ch14/figure-index.json",
-      "sha256": "fdb913136b738f350b7f46810d7257e1a00d28e2e7e49f14d4ff87a27919f634"
+      "sha256": "7f5a38f260eb9cc728bc7ea2ffe0fb7f25d109633d92741256e78aadd77b6731"
     },
     {
       "path": "manuscripts/ch14/teaching-layout-validation.json",
-      "sha256": "ce81608a6cca2e426c804de7057075a9bcbe889691252518513b484726143d13"
+      "sha256": "c7ad796b9fa949bc06d6940a109721116e96b122483e94e79d1ab47905ed60f5"
     },
     {
       "path": "manuscripts/ch14/math-validation.json",
-      "sha256": "d15fa81e9036e101cb6d3ed19d4f33d316cdfe59be77552e269571eb95cba752"
+      "sha256": "5e9740ebd7c82b3080d5f02be8105438ea6bbb089ad1f97cc5bca8dfbef92122"
     }
   ]
 }

@@ -70,5 +70,150 @@
       "manuscripts/ch14/figure-data.json"
     ],
     "TeachingRole": "收束全书十四章知识体系，提供可复用的一线 AI Infra 性能诊断与架构设计闭环"
+  },
+  {
+    "figure_id": "图 14-7",
+    "number": 7,
+    "file": "ch14-dflash-block-diffusion-role-reversal.svg",
+    "asset": "ch14/ch14-dflash-block-diffusion-role-reversal.svg",
+    "section": "14.5.3",
+    "caption": "DFlash 块扩散草稿（16-token 并行去噪）与自回归验证的角色反转架构及接受长度增益",
+    "source_refs": [
+      "research/token-cost-2023-2026/report.md"
+    ],
+    "TeachingRole": "展示如何用双向扩散块并行生成替代串行自回归草稿以对齐 Tensor Core 算力"
+  },
+  {
+    "figure_id": "图 14-8",
+    "number": 8,
+    "file": "ch14-beyond-chinchilla-lifecycle-compute-allocation.svg",
+    "asset": "ch14/ch14-beyond-chinchilla-lifecycle-compute-allocation.svg",
+    "section": "14.5.3",
+    "caption": "算例 14-4a：推理感知的生命周期总计算最小化（Beyond-Chinchilla 3.3 个月能力密度翻倍与超配训练回本点）",
+    "source_refs": [
+      "research/token-cost-2023-2026/report.md"
+    ],
+    "TeachingRole": "对比仅优化预训练成本的 Chinchilla 最优与纳入服务期推理需求的全生命周期最优"
+  },
+  {
+    "figure_id": "图 14-9",
+    "number": 9,
+    "file": "ch14-design-review-3candidate-kv-audit.svg",
+    "asset": "ch14/ch14-design-review-3candidate-kv-audit.svg",
+    "section": "14.6.1",
+    "caption": "实验 13-01（design-review）：Qwen3-8B 三种 KV 表示候选在 32 请求上的质量门控与 12.88 GB 固定池真相",
+    "source_refs": [
+      "experiments/ch13/13-01/design-review/README.md"
+    ],
+    "TeachingRole": "揭示 vLLM 固定预分配 KV 池机制与物理可行/经济可行双边界的真实门控纪律"
+  },
+  {
+    "figure_id": "图 14-10",
+    "number": 10,
+    "file": "ch14-datacenter-vs-consumer-gpu-crossover.svg",
+    "asset": "ch14/ch14-datacenter-vs-consumer-gpu-crossover.svg",
+    "section": "14.6.2",
+    "caption": "算例 14-6：数据中心卡（H100/B200）与工作站/消费级卡（RTX PRO 6000 / 4090）的四场景翻转边界",
+    "source_refs": [
+      "research/draft14-15-outline-audit/snapshots/13-架构协同设计.md"
+    ],
+    "TeachingRole": "定量标定不同并发、通信敏感度与站点供电条件下跨市场 GPU 的性价比交点"
+  },
+  {
+    "figure_id": "图 14-11",
+    "number": 11,
+    "file": "ch14-preregistered-prediction-lifecycle.svg",
+    "asset": "ch14/ch14-preregistered-prediction-lifecycle.svg",
+    "section": "14.7.1",
+    "caption": "可证伪系统科学：预注册预测协议的 10 项必填字段与不可篡改状态机（D11-SP04）",
+    "source_refs": [
+      "research/draft11-outline-audit/report.md",
+      "experiments/ch13/13-07/prediction.json"
+    ],
+    "TeachingRole": "建立面向 AI 系统性能工程的预注册预测、SHA-256 冻结与诚实证伪闭环"
+  },
+  {
+    "figure_id": "图 14-12",
+    "number": 12,
+    "file": "ch14-exp13-07-k96-counterexample-and-k192-ratios.svg",
+    "asset": "ch14/ch14-exp13-07-k96-counterexample-and-k192-ratios.svg",
+    "section": "14.7.2",
+    "caption": "实验 13-07：K96 保留前缀反慢反例（1.1017x）与 K192 预注册 10 对中位数（0.6931 < 0.70）范围外证伪",
+    "source_refs": [
+      "experiments/ch13/13-07/README.md"
+    ],
+    "TeachingRole": "复盘真实系统实验中为何保留前缀在 K96 反慢而在 K192 超预期变快导致区间失配"
+  },
+  {
+    "figure_id": "图 14-13",
+    "number": 13,
+    "file": "ch14-exp13-07-commit-buffer-idempotence.svg",
+    "asset": "ch14/ch14-exp13-07-commit-buffer-idempotence.svg",
+    "section": "14.7.2",
+    "caption": "实验 13-07：30 路径全通过下 7,500 唯一提交位置与 1,920 次重复投递幂等拦截的机制解剖",
+    "source_refs": [
+      "experiments/ch13/13-07/README.md"
+    ],
+    "TeachingRole": "解剖抢占恢复流式推理中的采样与提交分离架构及操作系统长尾停顿放大效应"
+  },
+  {
+    "figure_id": "图 14-14",
+    "number": 14,
+    "file": "ch14-four-double-counting-traps-matrix.svg",
+    "asset": "ch14/ch14-four-double-counting-traps-matrix.svg",
+    "section": "14.8.1",
+    "caption": "跨层协同收益归因的四大重复计数陷阱（Double-Counting Traps）与正交消融实验纪律（TC-18）",
+    "source_refs": [
+      "research/token-cost-2023-2026/report.md"
+    ],
+    "TeachingRole": "防止读者将相互耦合的容量、精度、系统基准与推测倍率错误连乘"
+  },
+  {
+    "figure_id": "图 14-15",
+    "number": 15,
+    "file": "ch14-2023-2026-cost-reduction-telescoping.svg",
+    "asset": "ch14/ch14-2023-2026-cost-reduction-telescoping.svg",
+    "section": "14.8.2",
+    "caption": "2023–2026 固定能力门槛下百倍（208x–375x）价格下降的顺序连乘（Telescoping）与 25.1x 读取下界拆解",
+    "source_refs": [
+      "research/token-cost-2023-2026/report.md"
+    ],
+    "TeachingRole": "用公开价格序列与可复算权重读取下界收束全书的同等能力降本主线"
+  },
+  {
+    "figure_id": "图 14-16",
+    "number": 16,
+    "file": "ch14-dual-track-book-throughline-summary.svg",
+    "asset": "ch14/ch14-dual-track-book-throughline-summary.svg",
+    "section": "14.8.2",
+    "caption": "全书双主线（Qwen3-8B Dense 与 DeepSeek-V3/V4.1 MoE）跨章逐步修正推算全景图（D11-SP01）",
+    "source_refs": [
+      "research/draft11-outline-audit/report.md"
+    ],
+    "TeachingRole": "串联第 2 章至第 14 章的两条核心模型推算轨道，展现约束逐章具体化的演进脉络"
+  },
+  {
+    "figure_id": "图 14-17",
+    "number": 17,
+    "file": "ch14-rubin-v41-codesign-mapping-matrix.svg",
+    "asset": "ch14/ch14-rubin-v41-codesign-mapping-matrix.svg",
+    "section": "14.8.2",
+    "caption": "下一代 Vera Rubin NVL72（50 PFLOPS NVFP4 / 22 TB/s HBM4 / 3.6 TB/s NVLink 6）与 V4.1/K3 协同映射矩阵",
+    "source_refs": [
+      "references/files/specs/nvidia-rubin-system.md"
+    ],
+    "TeachingRole": "展望 Rubin 世代硬件参数如何继续强化跨层状态压缩、微缩量化与块扩散草稿"
+  },
+  {
+    "figure_id": "图 14-18",
+    "number": 18,
+    "file": "ch14-four-dimensional-codesign-closed-loop.svg",
+    "asset": "ch14/ch14-four-dimensional-codesign-closed-loop.svg",
+    "section": "14.8.2",
+    "caption": "全书总结：从算法结构、运行时调度、硅片微架构到吉瓦级能源站点的四维协同设计闭环",
+    "source_refs": [
+      "manuscripts/ch14/figure-data.json"
+    ],
+    "TeachingRole": "完成第 1–14 章技术闭环并自然引出第 15–16 章的吉瓦级能源与机密计算底座"
   }
 ]

@@ -70,5 +70,149 @@
       "manuscripts/ch13/figure-data.json"
     ],
     "TeachingRole": "展示 PB 级多模态训练如何打通存储分片顺序供给与片上 NVDEC 异构解码闭环"
+  },
+  {
+    "figure_id": "图 13-7",
+    "number": 7,
+    "file": "ch13-parquet-lance-vs-webdataset-io.svg",
+    "asset": "ch13/ch13-parquet-lance-vs-webdataset-io.svg",
+    "section": "13.5.3",
+    "caption": "WebDataset 行式顺序流与 Parquet/Lance 列式随机偏移寻址在多模态按列投影与课程学习动态采样下的 I/O 机制对比",
+    "source_refs": [
+      "manuscripts/ch13/figure-data.json"
+    ],
+    "TeachingRole": "对比顺序打包格式与现代列式随机寻址格式在多阶段训练中的适用边界"
+  },
+  {
+    "figure_id": "图 13-8",
+    "number": 8,
+    "file": "ch13-dsec-erofs-ondemand-container-boot.svg",
+    "asset": "ch13/ch13-dsec-erofs-ondemand-container-boot.svg",
+    "section": "13.5.3",
+    "caption": "DSec 平台 8,192 个容器并发启动对比：全量拉取解包（>60 min，单节点写盘 >1,600 GB）与 EROFS 按需块读取 + overlayfs 组合层（35 min，写盘 700 GB，重建复杂度 O(m)+O(k)）",
+    "source_refs": [
+      "case-studies/dsec-sandbox-platform.md"
+    ],
+    "TeachingRole": "展示大规模评测与训练沙箱如何利用只读块镜像按需读取消除镜像拉取风暴"
+  },
+  {
+    "figure_id": "图 13-9",
+    "number": 9,
+    "file": "ch13-faiss-flat-vs-iks-near-storage.svg",
+    "asset": "ch13/ch13-faiss-flat-vs-iks-near-storage.svg",
+    "section": "13.6.1",
+    "caption": "2^25×768 向量表（FP16 48 GiB）经 64 GB/s 主机链路搬移（805.306 ms）与 8 分片近存 IKS 内部 1 TB/s 扫描（51.540 ms，查询广播 12,288 B、结果归并 3,072 B）对比",
+    "source_refs": [
+      "case-studies/retrieval-and-generation.md"
+    ],
+    "TeachingRole": "用 1 FLOP/B 的极低算术强度解释为何向量扫描应当下沉至近存侧执行"
+  },
+  {
+    "figure_id": "图 13-10",
+    "number": 10,
+    "file": "ch13-hnsw-memory-vs-diskann-ssd-layout.svg",
+    "asset": "ch13/ch13-hnsw-memory-vs-diskann-ssd-layout.svg",
+    "section": "13.6.1",
+    "caption": "HNSW 全内存分层导航图的邻接指针内存膨胀，以及 DiskANN 将 PQ 压缩向量驻留 DRAM、全精度向量与邻居表紧凑对齐 4 KiB NVMe 扇区的混合检索架构",
+    "source_refs": [
+      "case-studies/retrieval-and-generation.md"
+    ],
+    "TeachingRole": "阐明十亿级向量索引如何通过扇区耦合布局突破 DRAM 容量墙与 SSD 读放大墙"
+  },
+  {
+    "figure_id": "图 13-11",
+    "number": 11,
+    "file": "ch13-rag-288-requests-calibration-trap.svg",
+    "asset": "ch13/ch13-rag-288-requests-calibration-trap.svg",
+    "section": "13.6.2",
+    "caption": "实验 13-01（288 请求 Faiss + Qwen3-8B RAG 管线）：校准集（8 题）预选 k=1 在留出集（16 题）因 q14 跌至 15/16 的失守机制，以及 6 个固定 k=4/16 配置单元 24/24 全通过的实测对比",
+    "source_refs": [
+      "experiments/ch13/13-01/retrieval-generation/README.md"
+    ],
+    "TeachingRole": "通过真实负结果揭示小样本校准选择最小 k 的泛化风险与预注册评测纪律"
+  },
+  {
+    "figure_id": "图 13-12",
+    "number": 12,
+    "file": "ch13-rag-topk-kv-blocks-and-rlimit-gap.svg",
+    "asset": "ch13/ch13-rag-topk-kv-blocks-and-rlimit-gap.svg",
+    "section": "13.6.2",
+    "caption": "实验 13-01 中检索 k=4 与 k=16 对 vLLM 910 块 KV 池的真实占用（23 块 vs. 77 块）及环境变量守卫漏检 EngineCore 子进程（CUDA 分配器峰值 18.58 GB）的边界审计",
+    "source_refs": [
+      "experiments/ch13/13-01/retrieval-generation/README.md"
+    ],
+    "TeachingRole": "连接上游检索 top-k 参数与下游推理引擎物理 KV 块分配及多进程资源监控边界"
+  },
+  {
+    "figure_id": "图 13-13",
+    "number": 13,
+    "file": "ch13-rag-end-to-end-timeline-breakdown.svg",
+    "asset": "ch13/ch13-rag-end-to-end-timeline-breakdown.svg",
+    "section": "13.6.2",
+    "caption": "RAG 请求端到端五阶段关键路径分解，以及算例 13-5 中精检少文档（k=8，检索 200 ms + Prefill 110.2 ms）与粗检多文档（k=32，检索 20 ms + Prefill 351.4 ms）的翻转边界",
+    "source_refs": [
+      "case-studies/retrieval-and-generation.md"
+    ],
+    "TeachingRole": "证明不能孤立优化检索延迟，而必须在同质量下最小化检索加 Prefill 的联合关键路径"
+  },
+  {
+    "figure_id": "图 13-14",
+    "number": 14,
+    "file": "ch13-three-tier-kv-cache-hierarchy.svg",
+    "asset": "ch13/ch13-three-tier-kv-cache-hierarchy.svg",
+    "section": "13.7.1",
+    "caption": "HBM—主机 DRAM—RDMA 远端内存—NVMe SSD 四级 KV 缓存池（Mooncake / LMCache / HiCache）的带宽阶梯与拉取替代重算的临界条件",
+    "source_refs": [
+      "manuscripts/ch13/figure-data.json"
+    ],
+    "TeachingRole": "建立跨层级 KV 缓存拉取耗时与重算 Prefill 耗时的定量比较框架"
+  },
+  {
+    "figure_id": "图 13-15",
+    "number": 15,
+    "file": "ch13-cacheblend-non-prefix-kv-fusion.svg",
+    "asset": "ch13/ch13-cacheblend-non-prefix-kv-fusion.svg",
+    "section": "13.7.1",
+    "caption": "RAG 多文档任意顺序拼接下的非前缀 KV 复用：直接拼接缺失交叉注意力 vs. CacheBlend 仅对 10%–15% 高偏差词元执行稀疏重算并与 SSD 拉取流水重叠",
+    "source_refs": [
+      "manuscripts/ch13/figure-data.json"
+    ],
+    "TeachingRole": "展示如何突破严格前缀匹配限制，将存储池 KV 复用推广至模块化 RAG 文档块"
+  },
+  {
+    "figure_id": "图 13-16",
+    "number": 16,
+    "file": "ch13-ssd-dwpd-endurance-and-admission.svg",
+    "asset": "ch13/ch13-ssd-dwpd-endurance-and-admission.svg",
+    "section": "13.7.2",
+    "caption": "算例 13-7：8 卡节点持续以 4 GB/s 换出 KV 状态时高达 33.75 DWPD 的闪存寿命超限风险，以及通过写准入过滤器（α≤8.89%）与 ZNS 分区将寿命拉回 ≤3 DWPD 安全线的机制",
+    "source_refs": [
+      "manuscripts/ch13/figure-data.json"
+    ],
+    "TeachingRole": "揭示高频 KV 换出对企业级 SSD 擦写寿命的毁灭性冲击及准入节流设计准则"
+  },
+  {
+    "figure_id": "图 13-17",
+    "number": 17,
+    "file": "ch13-storage-diagnosis-workflow.svg",
+    "asset": "ch13/ch13-storage-diagnosis-workflow.svg",
+    "section": "13.7.2",
+    "caption": "AI 存储子系统性能与寿命瓶颈的五步定量诊断工作流",
+    "source_refs": [
+      "manuscripts/ch13/figure-data.json"
+    ],
+    "TeachingRole": "为系统工程师提供从元数据、PCIe 拓扑、闪存粒度、GC 毛刺到异构解码的排障闭环"
+  },
+  {
+    "figure_id": "图 13-18",
+    "number": 18,
+    "file": "ch13-full-stack-ai-data-plane.svg",
+    "asset": "ch13/ch13-full-stack-ai-data-plane.svg",
+    "section": "13.7.2",
+    "caption": "贯穿预训练数据湖、RAG 向量知识库、多级 KV 缓存池与万级容器镜像的 AI 原生数据底座全景架构图",
+    "source_refs": [
+      "manuscripts/ch13/figure-data.json"
+    ],
+    "TeachingRole": "收束第 13 章全章知识体系，呈现计算—网络—存储深度融合的现代 AI 数据平面"
   }
 ]
