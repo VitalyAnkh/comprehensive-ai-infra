@@ -352,6 +352,70 @@ def draw(here, data):
         box(a, 0.05, 0.08, 0.90, 0.095, '适用场景：大模型张量并行（TP）与专家并行（EP）高速通信', 'orange', size=11)
         out.save(f, 'figure-1-design-ub')
 
+        # 20. ch01-cloud-vs-ai-datacenter-and-patterns (Path B Fig 1-21)
+        f, a = canvas(6.6)
+        card(a, 0.02, 0.52, 0.96, 0.45, 'A  传统通用云 vs. AI 数据中心：六维架构重心迁移（D11-01）', '', 'blue', title_size=11.5)
+        rows_a = [
+            (0.755, '传统云：OS/进程接口\n一机切分多租户实例', 'AI 工厂：上下文/模型接口\n多卡聚合单一实例', 'blue', 'green'),
+            (0.645, '传统云：异步 RPC 流量\n局部无状态副本容错', 'AI 工厂：高频集合通信\n全局同步屏障扩散', 'gray', 'orange'),
+            (0.535, '传统云：资源超分复用\n看重 CPU/内存分配率', 'AI 工厂：齐步协同调度\n看重 SLO 产出与 MPG', 'purple', 'teal'),
+        ]
+        for y_row, left_lbl, right_lbl, c_l, c_r in rows_a:
+            box(a, 0.045, y_row, 0.43, 0.092, left_lbl, c_l, size=11)
+            box(a, 0.525, y_row, 0.43, 0.092, right_lbl, c_r, size=11)
+            arrow(a, (0.475, y_row + 0.046), (0.525, y_row + 0.046), color=BORDER_COL['blue'])
+
+        card(a, 0.02, 0.03, 0.96, 0.46, 'B  经典计算机系统六大设计模式在 LLM 系统中的映射（D11-03）', '', 'green', title_size=11.5)
+        patterns = [
+            (0.045, 0.255, '1 分层与缓存', '页缓存 → 前缀 KV\n与三级状态池', 'blue'),
+            (0.355, 0.255, '2 重算换搬运', '重物化 → 检查点\n与 FA 在线重算', 'orange'),
+            (0.665, 0.255, '3 旁路零拷贝', '内核旁路 → RDMA\n与 GDS 直通', 'teal'),
+            (0.045, 0.055, '4 重叠与流水', '双缓冲 → 算子流水\n与通信重叠', 'green'),
+            (0.355, 0.055, '5 批量与分摊', '批量 I/O → 连续批\n分摊权重读取', 'purple'),
+            (0.665, 0.055, '6 解耦与池化', '存算分离 → PD/AF\n与集中 KV 池', 'gray'),
+        ]
+        for px, py, ptitle, pbody, pcol in patterns:
+            card(a, px, py, 0.29, 0.17, ptitle, pbody, pcol, title_size=11, body_size=11)
+        out.save(f, 'ch01-cloud-vs-ai-datacenter-and-patterns')
+
+        # 21. ch01-token-cost-telescoping-chain (Path B Fig 1-22)
+        f, (ax1, ax2) = plt.subplots(1, 2, figsize=(420 / 72, 4.0))
+        f.subplots_adjust(left=0.25, right=0.96, bottom=0.20, top=0.86, wspace=0.68)
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+
+        benchmarks = ['MMLU ≥ 64.8', 'MMLU ≥ 68.0', 'MMLU ≥ 86.0', 'GPQA ≥ 33.0', 'HumanEval ≥ 67']
+        ratios_ep = [286, 29, 208, 313, 375]
+        cols_ep = [COL['blue'], COL['gray'], COL['green'], COL['teal'], COL['orange']]
+        edges_ep = [BORDER_COL['blue'], BORDER_COL['gray'], BORDER_COL['green'], BORDER_COL['teal'], BORDER_COL['orange']]
+        y_ep = np.arange(len(benchmarks))
+        ax1.barh(y_ep, ratios_ep, height=0.56, color=cols_ep, edgecolor=edges_ep, linewidth=1.2)
+        for i, r_val in enumerate(ratios_ep):
+            ax1.text(r_val + 12, i, f'{r_val}×', va='center', fontsize=11, weight='bold', color=COL['ink'])
+        ax1.set_yticks(y_ep, benchmarks)
+        ax1.invert_yaxis()
+        ax1.set_xlim(0, 560)
+        ax1.set_xlabel('价格下降倍数（×）', fontsize=11)
+        ax1.set_title('A  固定能力价格降幅', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(axis='x', linestyle=':', alpha=0.5, color='#CBD5E1')
+
+        steps_s = ['S0: 70B 1B', 'S1: 8B 1B', 'S2: 8B 0.5B', 'S3: H200']
+        ms_vals = [20.90, 2.39, 1.19, 0.83]
+        cols_s = [COL['orange'], COL['blue'], COL['green'], COL['teal']]
+        edges_s = [BORDER_COL['orange'], BORDER_COL['blue'], BORDER_COL['green'], BORDER_COL['teal']]
+        y_s = np.arange(len(steps_s))
+        ax2.barh(y_s, ms_vals, height=0.54, color=cols_s, edgecolor=edges_s, linewidth=1.2)
+        for i, v_ms in enumerate(ms_vals):
+            ax2.text(v_ms + 0.8, i, f'{v_ms:.2f} ms', va='center', fontsize=11, weight='bold', color=COL['ink'])
+        ax2.axvline(1.0, color='#B91C1C', ls='--', lw=1.3)
+        ax2.set_yticks(y_s, steps_s)
+        ax2.invert_yaxis()
+        ax2.set_xlim(0, 33.0)
+        ax2.set_xlabel('权重读取下界（ms）', fontsize=11)
+        ax2.set_title('B  下界折叠 (25.1×)', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(axis='x', linestyle=':', alpha=0.5, color='#CBD5E1')
+        out.save(f, 'ch01-token-cost-telescoping-chain')
+
     from core_principles_figures import draw as draw_principles
     draw_principles(1, out)
     return out.finish()

@@ -486,6 +486,51 @@ def draw(here, data):
             theme='blue',
         )
 
+        # 36. ch02-capability-density-and-kv-pareto (Path B Fig 2-40)
+        f, (ax1, ax2) = plt.subplots(1, 2, figsize=(420 / 72, 4.3))
+        f.subplots_adjust(left=0.14, right=0.96, bottom=0.22, top=0.85, wspace=0.50)
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+
+        models_cd = ['Llama2\n70B', 'Llama3\n8B', 'Gemma2\n9B']
+        weights_gb = [140.0, 16.0, 18.5]
+        mmlu_scores = [69.7, 66.6, 71.3]
+        x_cd = np.array([0.0, 1.35, 2.75])
+        bars_cd = ax1.bar(x_cd, weights_gb, width=0.56, color=[COL['orange'], COL['blue'], COL['green']], edgecolor=[BORDER_COL['orange'], BORDER_COL['blue'], BORDER_COL['green']], linewidth=1.2)
+        for xi, w_val, m_val in zip(x_cd, weights_gb, mmlu_scores):
+            w_str = f'{w_val:.0f} GB' if w_val in (140.0, 16.0) else f'{w_val:.1f} GB'
+            ax1.text(xi, w_val + 4.5, f'{w_str}\n({m_val})', ha='center', va='bottom', fontsize=11, weight='bold', color=COL['ink'])
+        ax1.set_xticks(x_cd, models_cd)
+        ax1.set_xlim(-0.68, 3.45)
+        ax1.set_ylim(0, 185)
+        ax1.set_ylabel('BF16 权重（GB，括号为 MMLU）', fontsize=11)
+        ax1.set_title('A  能力密度与权重压缩', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(axis='y', linestyle=':', alpha=0.5, color='#CBD5E1')
+
+        # Panel B: 1M context State Capacity (GiB) vs Attention+Index Compute (GFLOPs)
+        pts_1m = [
+            ('V4.1', 3.138, 25.23, 'green', (7, -8)),
+            ('V4', 6.735, 113.80, 'teal', (-24, 10)),
+            ('Qwen3.6', 20.060, 171.80, 'purple', (6, -15)),
+            ('K3', 27.423, 5257.04, 'orange', (-12, -16)),
+            ('Qwen3-8B', 144.000, 618.48, 'blue', (-48, 11)),
+        ]
+        pareto_x = [3.138, 6.735, 20.060, 144.000]
+        pareto_y = [25.23, 113.80, 171.80, 618.48]
+        ax2.plot(pareto_x, pareto_y, ls='--', lw=1.3, color='#64748B', zorder=2)
+        for name_m, sx, sy, col_m, (dx, dy) in pts_1m:
+            ax2.scatter([sx], [sy], s=60, color=BORDER_COL[col_m], facecolor=COL[col_m], linewidth=1.6, zorder=4)
+            ax2.annotate(name_m, (sx, sy), xytext=(dx, dy), textcoords='offset points', fontsize=11, weight='bold', color=COL['ink'])
+        ax2.set_xscale('log')
+        ax2.set_yscale('log')
+        ax2.set_xlim(1.8, 380)
+        ax2.set_ylim(12, 12000)
+        ax2.set_xlabel('1M 状态容量（GiB）', fontsize=11)
+        ax2.set_ylabel('1M 注意力运算（GFLOPs）', fontsize=11)
+        ax2.set_title('B  1M 状态—算力前沿', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(True, which='major', linestyle=':', alpha=0.5, color='#CBD5E1')
+        out.save(f, 'ch02-capability-density-and-kv-pareto')
+
     from core_principles_figures import draw as draw_principles
     draw_principles(2, out)
     from v41_case_figures import draw as draw_v41

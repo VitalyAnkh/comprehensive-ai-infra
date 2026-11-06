@@ -1,82 +1,90 @@
 [
   {
-    "asset": "ch01/figure-1-programmability.svg",
-    "figure": "1-1"
+    "figure": "1-1",
+    "asset": "ch01/figure-1-programmability.svg"
   },
   {
-    "asset": "ch01/figure-1-1-panorama.svg",
-    "figure": "1-2"
+    "figure": "1-2",
+    "asset": "ch01/figure-1-1-panorama.svg"
   },
   {
-    "asset": "ch01/figure-1-2-request.svg",
-    "figure": "1-3"
+    "figure": "1-3",
+    "asset": "ch01/figure-1-2-request.svg"
   },
   {
-    "asset": "ch01/figure-1-weight-lifetime.svg",
-    "figure": "1-4"
+    "figure": "1-4",
+    "asset": "ch01/figure-1-weight-lifetime.svg"
   },
   {
-    "asset": "ch01/figure-1-3-datacenter.svg",
-    "figure": "1-5"
+    "figure": "1-5",
+    "asset": "ch01/figure-1-3-datacenter.svg"
   },
   {
-    "asset": "ch01/figure-1-4-numbers.svg",
-    "figure": "1-6"
+    "figure": "1-6",
+    "asset": "ch01/figure-1-4-numbers.svg"
   },
   {
-    "asset": "ch01/figure-1-amdahl-coding.svg",
-    "figure": "1-7"
+    "figure": "1-7",
+    "asset": "ch01/figure-1-amdahl-coding.svg"
   },
   {
-    "asset": "ch01/figure-1-capacity-path.svg",
-    "figure": "1-8"
+    "figure": "1-8",
+    "asset": "ch01/figure-1-capacity-path.svg"
   },
   {
-    "asset": "ch01/figure-1-read-path.svg",
-    "figure": "1-9"
+    "figure": "1-9",
+    "asset": "ch01/figure-1-read-path.svg"
   },
   {
-    "asset": "ch01/figure-1-5-budget.svg",
-    "figure": "1-10"
+    "figure": "1-10",
+    "asset": "ch01/figure-1-5-budget.svg"
   },
   {
-    "asset": "ch01/figure-1-batch-reuse.svg",
-    "figure": "1-11"
+    "figure": "1-11",
+    "asset": "ch01/figure-1-batch-reuse.svg"
   },
   {
-    "asset": "ch01/figure-1-batch-transition.svg",
-    "figure": "1-12"
+    "figure": "1-12",
+    "asset": "ch01/figure-1-batch-transition.svg"
   },
   {
-    "asset": "ch01/figure-1-batch-throughput.svg",
-    "figure": "1-13"
+    "figure": "1-13",
+    "asset": "ch01/figure-1-batch-throughput.svg"
   },
   {
-    "asset": "ch01/figure-1-measured-throughput.svg",
-    "figure": "1-14"
+    "figure": "1-14",
+    "asset": "ch01/figure-1-measured-throughput.svg"
   },
   {
-    "asset": "ch01/figure-1-measured-tpot.svg",
-    "figure": "1-15"
+    "figure": "1-15",
+    "asset": "ch01/figure-1-measured-tpot.svg"
   },
   {
-    "asset": "ch01/figure-1-step-breakdown.svg",
-    "figure": "1-16"
+    "figure": "1-16",
+    "asset": "ch01/figure-1-step-breakdown.svg"
   },
   {
-    "asset": "ch01/figure-1-design-tpu.svg",
-    "figure": "1-17"
+    "figure": "1-17",
+    "asset": "ch01/figure-1-design-tpu.svg"
   },
   {
-    "asset": "ch01/figure-1-design-smartnic.svg",
-    "figure": "1-18"
+    "figure": "1-18",
+    "asset": "ch01/figure-1-design-smartnic.svg"
   },
   {
-    "asset": "ch01/ch01-fleet-goodput-and-smartnic-offload.svg",
-    "figure": "1-19"
+    "figure": "1-19",
+    "asset": "ch01/ch01-fleet-goodput-and-smartnic-offload.svg"
   },
   {
-    "asset": "ch01/figure-1-design-ub.svg",
-    "figure": "1-20"
+    "figure": "1-20",
+    "asset": "ch01/figure-1-design-ub.svg"
+  },
+  {
+    "figure": "1-21",
+    "asset": "ch01/ch01-cloud-vs-ai-datacenter-and-patterns.svg"
+  },
+  {
+    "figure": "1-22",
+    "asset": "ch01/ch01-token-cost-telescoping-chain.svg"
   }
 ]
