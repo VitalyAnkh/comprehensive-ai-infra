@@ -171,6 +171,42 @@ def draw(here,data):
         box(a,.32,.04,.44,.12,'Prefill 0.5 s + Decode 5.0 s','orange',11)
         box(a,.78,.04,.20,.12,'5.5 s\n(+22.2%)','orange',11)
         out.save(f,'ch08-xgrammar-overlap-and-kv-compression-reversal')
+        # Path-B new 420pt 2-panel figure: Goodput under dual SLOs vs U-shaped unit cost curve (Fig 8-40, TC-11~13)
+        f,axs=plt.subplots(2,1,figsize=(420/72,6.5))
+        f.subplots_adjust(left=.16,right=.95,bottom=.09,top=.86,hspace=.56)
+        f.text(.03,.95,'A. 并发批大小 B 对原始吞吐与双重 SLO 有效吞吐（Goodput）的背离',fontsize=12,weight='bold',color=COL['ink'])
+        f.text(.03,.46,'B. 单位合格 Token 成本 C_good(B) 的 U 型曲线与最优工作点 B*',fontsize=12,weight='bold',color=COL['ink'])
+        bs=np.array([1,4,8,16,32,48,64,80,96,128],dtype=float)
+        raw_tps=4800.0*bs/(bs+24.0)
+        slo_pass=1.0/(1.0+np.exp((bs-64.0)/6.0))
+        good_tps=raw_tps*slo_pass
+        ax0,ax1=axs
+        ax0.plot(bs,raw_tps,marker='o',lw=2.0,color='#267398',label='原始吞吐 Y_raw(B)')
+        ax0.plot(bs,good_tps,marker='s',lw=2.0,color='#388768',label='有效吞吐 Y_good(B)')
+        ax0.axvline(48,ls='--',color='#a54b43',lw=1.3)
+        ax0.annotate(f'最优批大小 B* = 48\n(Goodput 峰值 {good_tps[5]:,.0f} tok/s)',xy=(48,good_tps[5]),xytext=(64,2800),
+                     arrowprops=dict(arrowstyle='->',color='#a54b43',lw=1.1),fontsize=11,color='#a54b43')
+        ax0.set_ylabel('吞吐率（tok/s）',fontsize=11)
+        ax0.set_xlim(0,134);ax0.set_ylim(0,4500)
+        ax0.spines['top'].set_visible(False);ax0.spines['right'].set_visible(False)
+        ax0.grid(axis='y',ls=':',alpha=.4)
+        ax0.legend(frameon=False,loc='lower left',bbox_to_anchor=(0.0,1.01),ncol=2,fontsize=11)
+        # Panel B: unit cost ($ / 1M tokens) assuming cluster cost $2.40 / hour = $0.000667 / s -> $666.7 / (tps) per 1M tok
+        cost_raw=666.7/raw_tps
+        cost_good=np.minimum(666.7/np.maximum(good_tps,80.0),3.2)
+        ax1.plot(bs,cost_raw,marker='o',ls='--',lw=1.8,color='#267398',label='名义单 Token 成本')
+        ax1.plot(bs,cost_good,marker='s',lw=2.0,color='#a56c28',label='合格 Token 成本 C_good(B)')
+        ax1.axvline(48,ls='--',color='#a54b43',lw=1.3)
+        ax1.scatter([48],[cost_good[5]],color='#a54b43',s=45,zorder=5)
+        ax1.annotate(f'最低合格成本 B*=48\n({cost_good[5]:.2f} USD/M tok)',xy=(48,cost_good[5]),xytext=(4,1.75),
+                     arrowprops=dict(arrowstyle='->',color='#a54b43',lw=1.1),fontsize=11,color='#a54b43')
+        ax1.set_xlabel('并发运行批大小 B（序列数）',fontsize=11)
+        ax1.set_ylabel('成本（USD/百万tok）',fontsize=11)
+        ax1.set_xlim(0,134);ax1.set_ylim(0,3.4)
+        ax1.spines['top'].set_visible(False);ax1.spines['right'].set_visible(False)
+        ax1.grid(axis='y',ls=':',alpha=.4)
+        ax1.legend(frameon=False,loc='lower left',bbox_to_anchor=(0.0,1.01),ncol=2,fontsize=11)
+        out.save(f,'ch08-goodput-slo-vs-batch-cost')
     from core_principles_figures import draw as draw_principles
     draw_principles(8, out)
     from v41_case_figures import draw as draw_v41
