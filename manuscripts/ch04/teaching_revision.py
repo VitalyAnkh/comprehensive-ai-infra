@@ -498,6 +498,57 @@ def draw(here, data, teaching):
         ax2.grid(axis='x', linestyle=':', alpha=0.5, color='#CBD5E1')
         out.save(f, 'ch04-tpu7x-dual-chiplet-vs-sram-asic')
 
+        # 32. ch04-nvfp4-vs-mxfp4-microscaling-layout (Path D Fig 4-48)
+        f, a = canvas(4.7)
+        text(a, 0.50, 0.945, '微缩放低精度格式：OCP MXFP4 vs. NVIDIA NVFP4', 12.5, ha='center', weight='bold')
+        card(a, 0.04, 0.53, 0.44, 0.34, 'OCP MXFP4 (4.25 bits)', [
+            '32 个 FP4 (E2M1) = 16 B',
+            '共享 1 个 E8M0 缩放 = 1 B',
+            '有效位宽: 4 + 8/32 = 4.25b',
+            '2 的幂次移位对齐，硬件极简',
+        ], 'blue', body_size=11)
+        card(a, 0.52, 0.53, 0.44, 0.34, 'NVIDIA NVFP4 (4.50 bits)', [
+            '16 个 FP4 (E2M1) = 8 B',
+            '共享 1 个 E4M3 缩放 = 1 B',
+            '外加张量级 FP32 二级缩放',
+            '有效位宽: 4.50b，信噪比更高',
+        ], 'orange', body_size=11)
+        box(a, 0.04, 0.28, 0.28, 0.16, 'HBM 紧凑块读取\n(17B/32 或 9B/16)', 'teal', 11, weight='bold')
+        box(a, 0.36, 0.28, 0.28, 0.16, 'Tensor Core 前端\n硬件解包与块缩放', 'purple', 11, weight='bold')
+        box(a, 0.68, 0.28, 0.28, 0.16, 'FP32 累加器合并\n+ 二级缩放输出', 'green', 11, weight='bold')
+        arrow(a, (0.322, 0.36), (0.356, 0.36), 'teal')
+        arrow(a, (0.642, 0.36), (0.676, 0.36), 'purple')
+        box(a, 0.04, 0.05, 0.92, 0.16,
+            '70B 权重: BF16 140 GB → NVFP4 39.38 GB → MXFP4 37.19 GB\n'
+            '671B 权重: BF16 1,342 GB → NVFP4 377.44 GB → MXFP4 356.47 GB',
+            'gray', 11, weight='bold')
+        out.save(f, 'ch04-nvfp4-vs-mxfp4-microscaling-layout')
+
+        # 33. ch04-ascend950-davinci-and-trainium-sbuf (Path D Fig 4-49)
+        f, a = canvas(4.8)
+        text(a, 0.50, 0.945, '昇腾 950 第三代达芬奇架构 vs. AWS Trainium2/3 片上存储', 12.5, ha='center', weight='bold')
+        card(a, 0.04, 0.44, 0.44, 0.43, '昇腾 950 AI Core (Table 4-2)', [
+            'L1 Buffer: 512 KB | UB: 512 KB',
+            'L0A: 64 KB | L0B: 64 KB',
+            'L0C 矩阵累加器: 256 KB',
+            '全芯片 L2: 128 MB (512B 行)',
+            'CV 直连 + BufferID + NDDMA',
+        ], 'orange', body_size=11)
+        card(a, 0.52, 0.44, 0.44, 0.43, 'Trainium2 / 3 NeuronCore', [
+            'Trn2 (v3): 28 MiB SBUF/核',
+            'Trn3 (v4): 32 MiB SBUF/核',
+            '每核独立 2 MiB PSUM 累加存',
+            '全芯片 224 / 256 MiB SBUF',
+            'NKI 显式 DMA，零硬件标签税',
+        ], 'blue', body_size=11)
+        box(a, 0.04, 0.22, 0.44, 0.15, '950DT: 144GB HiZQ (4 TB/s)\nMXFP4 2.0 / HiF8 1.0 PFLOPS', 'green', 11, weight='bold')
+        box(a, 0.52, 0.22, 0.44, 0.15, 'Trn3: 144GiB HBM3e (4.9 TB/s)\nMXFP8/4 2.52 PFLOPS (8核)', 'teal', 11, weight='bold')
+        box(a, 0.04, 0.04, 0.92, 0.13,
+            '昇腾 950: 多级专用缓冲 (L1/L0/UB) + BufferID 细粒度流水\n'
+            'Trainium2/3: 每核 28–32 MiB 软件管理 SBUF 驻留大块状态',
+            'gray', 11, weight='bold')
+        out.save(f, 'ch04-ascend950-davinci-and-trainium-sbuf')
+
     from sync_figures import draw as draw_sync
     data['4-sync'] = draw_sync(out, root)
     from core_principles_figures import draw as draw_principles

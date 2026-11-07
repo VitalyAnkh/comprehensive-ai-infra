@@ -1,12 +1,12 @@
 {
   "chapter": 3,
   "generator": "manuscripts/ch03/build.py",
-  "figures": 35,
+  "figures": 37,
   "font_family": "Source Han Sans CN",
   "outputs": [
     {
       "path": "manuscripts/ch03/figure-3-1-stages.svg",
-      "sha256": "304dd701f1417a6789f47bafcb03d078d4ce9a461f29a45b96d9af036cc6f9c5"
+      "sha256": "bf543111c0d1af943ac2192bab6fe7c789db125d37c3d66d0b057ec2ed16877c"
     },
     {
       "path": "manuscripts/ch03/figure-3-1-stages.png",
@@ -14,7 +14,7 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-2-workload-budget.svg",
-      "sha256": "935cfee1b458a4ac006fa9a1e36f6ad6a8c900f9b962f9a785aa27425bd3fe4f"
+      "sha256": "4a42da8bd78f0c7bb2ee31af71607f73738d33b77464ac6afe30714cef231c20"
     },
     {
       "path": "manuscripts/ch03/figure-3-2-workload-budget.png",
@@ -22,7 +22,7 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-3-agent.svg",
-      "sha256": "415a6e28faac47a62586662c711bcded5764d4e2d068fed787e5114b2dde20b8"
+      "sha256": "95f9c5c0da3f38207a1751466978dd7dd98e39000916d78e41a62a97c3187a5b"
     },
     {
       "path": "manuscripts/ch03/figure-3-3-agent.png",
@@ -30,7 +30,7 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-4-realtime.svg",
-      "sha256": "feaedf3e98ee6cd951091e8c95c4ad81f7d519fbfe085dcb9c96cbb14bca6e8b"
+      "sha256": "8875699e32bab8075f22131e45de1b80b431804fbd4c2eb5048063bac7312a2d"
     },
     {
       "path": "manuscripts/ch03/figure-3-4-realtime.png",
@@ -38,7 +38,7 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-5-training.svg",
-      "sha256": "056b187feb5aaa3c6fa10488cdc5dbc99bbfae72c4f68fe22f33319e36bd4919"
+      "sha256": "4d3cbc0ec20bf1d86ad48e19d49bd9f692c0783db0489c556bc4ee970c20227d"
     },
     {
       "path": "manuscripts/ch03/figure-3-5-training.png",
@@ -46,7 +46,7 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-6-rl.svg",
-      "sha256": "b4097dc58c02a5825f04b3986d8f57e3ba80c69e868e400cc9660abad290a14c"
+      "sha256": "4ab7b0729315a3309f9fc503380f3ac0c91cf0a5ea319ec7298c2310d1592079"
     },
     {
       "path": "manuscripts/ch03/figure-3-6-rl.png",
@@ -54,7 +54,7 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-7-scaling.svg",
-      "sha256": "9703fb5fdb8ee32d03ae98da0f1d51e4c1ff832fd1656dc6d0c05e4b067409e5"
+      "sha256": "14c12d984cd0e961ae04b76fa10952fded3d71b86aa9904ed13cd4124817540e"
     },
     {
       "path": "manuscripts/ch03/figure-3-7-scaling.png",
@@ -62,7 +62,7 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-8-history.svg",
-      "sha256": "f6abd977582ab6ea6dd1be558c767741442e1be4d7f5948a53b61dd7f8c021ac"
+      "sha256": "0c0292e45499e595c7bc686dc9c649bdfcb59ca23b5f19b6129a73d3408f3bc7"
     },
     {
       "path": "manuscripts/ch03/figure-3-8-history.png",
@@ -70,7 +70,7 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-9-gpu-hours.svg",
-      "sha256": "397ede1e2bfd87f950ebcd045362ebefff5bafc97c733414c63ff1df85689c16"
+      "sha256": "86a66f61b2212ddfe9007afdb04b8b827380607547530e808b88a288052e6d58"
     },
     {
       "path": "manuscripts/ch03/figure-3-9-gpu-hours.png",
@@ -78,7 +78,7 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-success-cost.svg",
-      "sha256": "412a2928f59e99b15112cf14035b2c7b8fc7c9531c26c7f35b3f2d89932e4146"
+      "sha256": "4eecbd9219554f85c49eca92e2a1889e271262663651dca471e21958a71eb80a"
     },
     {
       "path": "manuscripts/ch03/figure-3-success-cost.png",
@@ -86,7 +86,7 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-vision-shapes.svg",
-      "sha256": "97e12c16cb53a16ce49d9d78e4c9d85ae5408e205ba6352493eb268a4f9e5421"
+      "sha256": "2d987530c4c4ef673f4112614230a8d1dcf3f2c84a4e72b04072b2e2d3dd2aac"
     },
     {
       "path": "manuscripts/ch03/figure-3-vision-shapes.png",
@@ -94,7 +94,7 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-tool-dependency.svg",
-      "sha256": "45a895181086be3a7b6b696634b7c6329cf4f0138c53962b27644d1275ddae4c"
+      "sha256": "44042a338e9a644d20251c9f93f21da18ccdcedd2e6e843d8ffd05a363ff2097"
     },
     {
       "path": "manuscripts/ch03/figure-3-tool-dependency.png",
@@ -102,11 +102,11 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-1-stages.pdf",
-      "sha256": "08fcd723c93d150e6f3f32386e0db605aed5a8e3c1a7247a8d2fd39ec8bee2c8"
+      "sha256": "cf344f9082f95918b528ccaa3ebc8853005a3c6e61b19110887b7b3a1d102695"
     },
     {
       "path": "manuscripts/ch03/figure-3-request-clocks.svg",
-      "sha256": "f5b2992d04fd84807c45bec09c1d2161c3c59aef792187701afe8e6c09bc268e"
+      "sha256": "9251a4b540898d5077c4fe03b5bcbe91838f9c309997646309e2142bb54a24c4"
     },
     {
       "path": "manuscripts/ch03/figure-3-request-clocks.png",
@@ -114,11 +114,11 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-request-clocks.pdf",
-      "sha256": "72fe2282777b0c25852c4a5bd24564fe326112877fb2d87a6c7e7a0186c9daf8"
+      "sha256": "a934982d3d935e9d8ed485458886f133edf83e8b6eced2f7b699ff63ce421838"
     },
     {
       "path": "manuscripts/ch03/figure-3-state-time-area.svg",
-      "sha256": "50e3a0047dfa05eedede6cd0acf226de9d4a5412638375d17af5ddb814aeb0ce"
+      "sha256": "74ebefbdcc9f130d3aac6da33aab064dae0af4e9520a19599c6adc773099f5e4"
     },
     {
       "path": "manuscripts/ch03/figure-3-state-time-area.png",
@@ -126,15 +126,15 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-state-time-area.pdf",
-      "sha256": "7ee2e43ef46960e0faf5df9c8cdba2beb43c2880af51d1670dda16253e1aec9b"
+      "sha256": "523a6e31f2a8f103a905e5e0685c252076e83232fa76aca578d7e427a8ef886c"
     },
     {
       "path": "manuscripts/ch03/figure-3-2-workload-budget.pdf",
-      "sha256": "34fc7add571fee79d812e1ac2457328ed2800a9eb6bd34509678988e81c25ef5"
+      "sha256": "72cf1e12de4e9ad32eac7bddb5b86356da9cbc425d385a3061402032387ee11f"
     },
     {
       "path": "manuscripts/ch03/figure-3-stage-demand.svg",
-      "sha256": "9e83ed846bfa433803603df837856143530e41511ec334e355ada2f599352ab7"
+      "sha256": "9734751c22d6f9276603d0ad478a0afff84b33f34fe3f20621a277d11a9e245f"
     },
     {
       "path": "manuscripts/ch03/figure-3-stage-demand.png",
@@ -142,11 +142,11 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-stage-demand.pdf",
-      "sha256": "2ad13b464aeacf92386d6e45d9dba1c9a0a75e4b83aeef636bff3403ccc7849a"
+      "sha256": "e0c73d6c0ea3e6d660f4c76d8e5752f658f786449f538c579ab0f49f10833990"
     },
     {
       "path": "manuscripts/ch03/figure-3-queue-mechanism.svg",
-      "sha256": "0e7971ebefa1c03244cc98e8c760c4d25907c43aeaafe42b3e9e00b7d4258505"
+      "sha256": "6926ac05d910b69b45be2a252f4a46863aaf06024aee1643ea35412071dd705c"
     },
     {
       "path": "manuscripts/ch03/figure-3-queue-mechanism.png",
@@ -154,11 +154,11 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-queue-mechanism.pdf",
-      "sha256": "a61afa2d830ac70c82304837a0074315a87c7dcad83f4dd2ec81961e7c38a9aa"
+      "sha256": "cc20bd3a64f3f2c53ed643d94c4056fd4a4467cf12515c07abf81d204b57a6c2"
     },
     {
       "path": "manuscripts/ch03/figure-3-queue-backlog.svg",
-      "sha256": "28849b800ba5e036bb39d9be3d77032419f64d1032b5536fbadf7a926b3f74ae"
+      "sha256": "804d4c26203e1c4cca151164633b96de24becd3169cb3392ed3129d703f03beb"
     },
     {
       "path": "manuscripts/ch03/figure-3-queue-backlog.png",
@@ -166,11 +166,11 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-queue-backlog.pdf",
-      "sha256": "8547520cd4f5a086bf9e3f9f99dc235114dc5814859359a7f5a63a5a07d28d6d"
+      "sha256": "4a2dc1dcaac7a553ff02c0175ec9ee726bc2042d2ed17efd4e1acc15d9e450c6"
     },
     {
       "path": "manuscripts/ch03/figure-3-arrival-measured.svg",
-      "sha256": "ff16c3307dc983c7c574e79cedead99d61fa5fbd2519510abc2a316a4e243b14"
+      "sha256": "8fc510e0a541473e1dc8d085fb19171e3de0b0ceeb5bfdf9cfce2c76d6f2f6a3"
     },
     {
       "path": "manuscripts/ch03/figure-3-arrival-measured.png",
@@ -178,11 +178,11 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-arrival-measured.pdf",
-      "sha256": "bea1da52b748fece7a186b9f7ffafcaa1d769808cb55142563c44786bfd71771"
+      "sha256": "43b8cbe7a1fa21627648788185b785ddafbb716239c7f0bcb0e0f876420a5a79"
     },
     {
       "path": "manuscripts/ch03/figure-3-agent-prefix-cache.svg",
-      "sha256": "9946cc8d7ac52977f4e48cf0f0cc097e198992af3d4c45a978509537c0e1af9e"
+      "sha256": "2f4d568e7d5e6d813b188bd00d5eb9ebfcb6b85948316fe07572f335f0e2551c"
     },
     {
       "path": "manuscripts/ch03/figure-3-agent-prefix-cache.png",
@@ -190,23 +190,23 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-agent-prefix-cache.pdf",
-      "sha256": "0215d524a9893c5254d83f76735ab6441199ec4c37a8a81b2a27b0481185991f"
+      "sha256": "29b9b45be174feb78d90f68ddbb6fcd4b8df4a72eda9ac058d21396e59954994"
     },
     {
       "path": "manuscripts/ch03/figure-3-success-cost.pdf",
-      "sha256": "56b16411313169621b653447569e5256d0ba00048d22eaadbfebc931a8c677f5"
+      "sha256": "e1e8bfb77f6047e1eab185d3645b3d7bc103be57816469f44141264e8a2330ad"
     },
     {
       "path": "manuscripts/ch03/figure-3-3-agent.pdf",
-      "sha256": "2f505e0a37db75142e31acfd5a230b90cfdf5d40013ebd25ac7985c7c8a5479d"
+      "sha256": "2f3001a386d2bb5dd366c917d80a82fcc048a6fce7fbb673bb980acb382fa2ce"
     },
     {
       "path": "manuscripts/ch03/figure-3-tool-dependency.pdf",
-      "sha256": "b263dfcb2f90a20e5f338aed494ec602997e9a18d6bde3e1d760191668ca0c98"
+      "sha256": "5385311f79bb8c962be5563805524590b76e41130174b33cf8df810fce8b80b0"
     },
     {
       "path": "manuscripts/ch03/figure-3-tool-parallel.svg",
-      "sha256": "8b134596a8392f7d7fa07af3c74d13bfce5be3e84d7a4dafc5d1351e5bf07a82"
+      "sha256": "469fae9f6c24adf8474e323d5eab34636ddab3ba6c732cee93fbcae8e3bb4391"
     },
     {
       "path": "manuscripts/ch03/figure-3-tool-parallel.png",
@@ -214,11 +214,11 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-tool-parallel.pdf",
-      "sha256": "0f22f96e19ac3603dc981f0677e9b7a3b79b806eb8e9b0c189932abb61c19e86"
+      "sha256": "c187b582b426ac4238bad6be29c45ec746df6daa28766c7585c53b80e61289ab"
     },
     {
       "path": "manuscripts/ch03/figure-3-branch-state.svg",
-      "sha256": "e32e350d4cf7d8705a25c77d5c17a962056aacb3eb1c34339018503a2de52815"
+      "sha256": "76d79551016d3c9fb8cd146a96bd0f2dbf4cf2c5b21bf2eee2278b871648b94d"
     },
     {
       "path": "manuscripts/ch03/figure-3-branch-state.png",
@@ -226,11 +226,11 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-branch-state.pdf",
-      "sha256": "af52d4ae2d7871461eeba4fe4bc0c80ae9e9e6f2ccba91912b167933e1f8d2e4"
+      "sha256": "2a9f3c5baf084c807800ce64f45361577a1cbdc29387852444b9ac45e49f8a3d"
     },
     {
       "path": "manuscripts/ch03/figure-3-decision-request.svg",
-      "sha256": "87c811e442198d359959ad6fb743e9d71d86fa41e34b8e0351ddfcb3202f1b46"
+      "sha256": "0dfa5344fb2f7697939018506a50dec9f6ba5c56b2db02583e22cb3ddb4ffec8"
     },
     {
       "path": "manuscripts/ch03/figure-3-decision-request.png",
@@ -238,15 +238,15 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-decision-request.pdf",
-      "sha256": "afd3d0684296203deaa2fd4cca5a2974ec7d95d999e765ad34ba62bb5752e604"
+      "sha256": "701e6c48ec9dae53a36ea1300ef5df963f3bef09c30c8f59ff1b56bb3b77f7b9"
     },
     {
       "path": "manuscripts/ch03/figure-3-vision-shapes.pdf",
-      "sha256": "d15002de5b276d5259921285c79deae91eb81e83a1f8e2c420ddaaac93a21aa2"
+      "sha256": "1df6bc09f4f67fea703038d692b79f22bed97835b15ec275a1b5aa05acaf239d"
     },
     {
       "path": "manuscripts/ch03/figure-3-vision-state.svg",
-      "sha256": "45c5500beb9ac30a9717218db635831d4dae10d5f3ba42d8da26f0bd55212f2b"
+      "sha256": "302647a4d8b637e24925f198b2f6fc2fe05bf9461570592518f63b39cad81c8f"
     },
     {
       "path": "manuscripts/ch03/figure-3-vision-state.png",
@@ -254,15 +254,15 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-vision-state.pdf",
-      "sha256": "c94607d5ca7d7740f129f843e85881f618db939a41570408d3053734c8a0ab64"
+      "sha256": "62fc029875273186161d47023321f1568a68775ac4ac2973abf3238013b4c6b0"
     },
     {
       "path": "manuscripts/ch03/figure-3-4-realtime.pdf",
-      "sha256": "4bad9bd4eacdbd25a08ed1c55fe6eee0e01d4f19f9ebe3a7123dcfbc4739aa8b"
+      "sha256": "512454767db6e1a16d828531863d8fd4173cde2a51bf16cf256965ab93aa01e6"
     },
     {
       "path": "manuscripts/ch03/figure-3-audio-timing.svg",
-      "sha256": "42e1dfce02ab65f659d3ffe017a5a6f17cea97d2d3a23696218a26872a30cb5f"
+      "sha256": "d88b4d24684c51987a6c32373e8cdf37bda61d381b4cb3808e6b075d6a35487a"
     },
     {
       "path": "manuscripts/ch03/figure-3-audio-timing.png",
@@ -270,11 +270,11 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-audio-timing.pdf",
-      "sha256": "bf4d3f9a8b7a7763bcd13040ecb2008be12c269d57deb80fd8ad859f9150a56c"
+      "sha256": "541012c1bbc56e3ba1dea8511d6d3ead75157bc19bfa3766e96cf66b03d0747b"
     },
     {
       "path": "manuscripts/ch03/figure-3-audio-interrupt.svg",
-      "sha256": "93118a7c48411550795fb3aac67f34e473cc2cc68a7a7e76715350c1063e2d70"
+      "sha256": "94ddb0ca3f4e71d70bc19102e2563e3f5a72db70c701e674caf15bfce3e87236"
     },
     {
       "path": "manuscripts/ch03/figure-3-audio-interrupt.png",
@@ -282,11 +282,11 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-audio-interrupt.pdf",
-      "sha256": "23b1297bc84ca81021e9bd4f9bc9287b3b88f4bbe0503743c0766f65b8f3fb59"
+      "sha256": "646ceeb7c2d1bce5cff3fc1c70fd0c357684df4caa972d62c4160e9ed542b055"
     },
     {
       "path": "manuscripts/ch03/ch03-rag-prefill-tradeoff-and-vla-loop.svg",
-      "sha256": "e87c8f0bd8879b6ddcd80d834ed7ee963b10b515b452ff3352f491d01185aca8"
+      "sha256": "9737de6fb4aaac6df50b9c263fc70361b05bb6bca3664ac188d000b2344b6d1d"
     },
     {
       "path": "manuscripts/ch03/ch03-rag-prefill-tradeoff-and-vla-loop.png",
@@ -294,11 +294,11 @@
     },
     {
       "path": "manuscripts/ch03/ch03-rag-prefill-tradeoff-and-vla-loop.pdf",
-      "sha256": "84a16e129bff2783cc3d03a407da0648ce54782976c1fc2a494949a0762c3c39"
+      "sha256": "dc907fbd9e32cf4d27c46a1ef938f3bd14c178d0a7966388a2f71677c4739847"
     },
     {
       "path": "manuscripts/ch03/figure-3-activation-lifetime.svg",
-      "sha256": "d48d6e6bd8f3058e2bb796f7ff1d93018be93b728b606db52786951b7a737baa"
+      "sha256": "4187a73d2092617b9af3fac2037ab2a89de5d5f7760bab9349f994a05abe823e"
     },
     {
       "path": "manuscripts/ch03/figure-3-activation-lifetime.png",
@@ -306,15 +306,15 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-activation-lifetime.pdf",
-      "sha256": "b3af809d52265103e74853a03b7e1a00ddb6c40f258e6a69dc74d67c2e811823"
+      "sha256": "00393da3a43f524e3a8a312965c156f9a98bdd93aa99e1844b1118ab35b4ac68"
     },
     {
       "path": "manuscripts/ch03/figure-3-5-training.pdf",
-      "sha256": "732b9294450939d78e82a7fff62d67c6aa74a6a9dd9e0d8dda76fa6e1ad7f494"
+      "sha256": "b7b40080f878859be5cd95ecdc30d286d6a7937edb80a2945e74b6b7841d68de"
     },
     {
       "path": "manuscripts/ch03/figure-3-training-flops.svg",
-      "sha256": "155490043b39eed9c7d26169d0aa301c25e5226eca84b4b9681fa424b2c402bb"
+      "sha256": "d0f029cf876662786d5ae9d92ac703f0b3e9c8151d971870b4b7d24de5144cfd"
     },
     {
       "path": "manuscripts/ch03/figure-3-training-flops.png",
@@ -322,11 +322,11 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-training-flops.pdf",
-      "sha256": "1c12fe772165b97ee43950c16e5ce59423c21ed59a92dce4e719a755c9d0dbf5"
+      "sha256": "22f6df67085e20e262d6fde7321e3f0441e0727df3a1bf2ee2602eb8116f70ee"
     },
     {
       "path": "manuscripts/ch03/figure-3-training-states.svg",
-      "sha256": "3644bde09824abc8eb115acb198d6042f91e4e16612cdc07539bc6031e0bc1e3"
+      "sha256": "28ddb7c11c9a7898328c3b240e7d615ad4330910793bc7063fa487378b0285d0"
     },
     {
       "path": "manuscripts/ch03/figure-3-training-states.png",
@@ -334,11 +334,11 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-training-states.pdf",
-      "sha256": "31b6296cce6bffedf88dc0ee543698a7beb6765befe8b718b9fe2537e2293a65"
+      "sha256": "494a58353749d180840326b48ae49d90a8dc5ad1cc0e71cd981dad0f0215f7d7"
     },
     {
       "path": "manuscripts/ch03/figure-3-training-breakdown.svg",
-      "sha256": "ed94250ffea32afe057023d6f5b75ff7f716a88b0e5479289a2132602f3e1a42"
+      "sha256": "624ee2aac441ae0074b2de804fc15a42dce91360b2ee8b8202c9b8a53d8e6561"
     },
     {
       "path": "manuscripts/ch03/figure-3-training-breakdown.png",
@@ -346,15 +346,15 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-training-breakdown.pdf",
-      "sha256": "70c4f648c97e2ae5a9e5649f6754ccf3b9da159475894e04b9b3f73510f95ec3"
+      "sha256": "40487a0e596ef1d74cc85a34f4eb7ab32e05fe8188bbfc390b1ac2e160816cb4"
     },
     {
       "path": "manuscripts/ch03/figure-3-6-rl.pdf",
-      "sha256": "2ef232cbb316cca73669ae1b8bc6a2e6704aa6b3ae95e215fce720858e472e0d"
+      "sha256": "159d5ddbe94983d4c8dba5989d241fa7d09042d132698647b5123fec249c379a"
     },
     {
       "path": "manuscripts/ch03/figure-3-rl-stage-work.svg",
-      "sha256": "49960c8b948a716ad68f7546da0444433a7d46103ada4afe880690ccc4531ebb"
+      "sha256": "0e882fe2c99fb371e14700460eaaecc01b18a88f29149315e22fdce82d1cc4fc"
     },
     {
       "path": "manuscripts/ch03/figure-3-rl-stage-work.png",
@@ -362,15 +362,15 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-rl-stage-work.pdf",
-      "sha256": "b8c3997744ef2e42234b7550a7afb687fd053c6df1be17ad81bcbceeedf04e79"
+      "sha256": "4ea292ae9f5ae57ad6e02615eed4f9ea13faf08cf7394bf63a351f3a473548cc"
     },
     {
       "path": "manuscripts/ch03/figure-3-7-scaling.pdf",
-      "sha256": "d400f3afdfda7bee1f1dd3bfe6fd51317e0ad910062f2054576cca3b69cb7232"
+      "sha256": "edc49a06ff90278707f7c154da5de867afcd18eb15833af6245918bb5d3eb9b7"
     },
     {
       "path": "manuscripts/ch03/figure-3-scaling-residual.svg",
-      "sha256": "f4a8811d77d21d3b23058132ca578d5db3203690601ebaaf8e641ee6b18cedcd"
+      "sha256": "e13b6b60ac5476e6133f1c3930975347b5fd4ee452cad258865338d51f572f3d"
     },
     {
       "path": "manuscripts/ch03/figure-3-scaling-residual.png",
@@ -378,11 +378,11 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-scaling-residual.pdf",
-      "sha256": "7f4bbef53418b118d275ded9cfc9e39d91c3584675e639ea6ce21f6a68c39477"
+      "sha256": "9b95481edcbc877cf8082e2c6d834a3e767f0e38668f604090f7cc168444a2dd"
     },
     {
       "path": "manuscripts/ch03/figure-3-lifecycle-cost.svg",
-      "sha256": "5b2f0f868a3b465ae1e370d90c4c1f584e1139b33240abd480f539fcf86e07f7"
+      "sha256": "7c2fcf2989a6a348edd9b3a165223f588132fb95b5e4ecfaed5b2d4ebe3b6bfc"
     },
     {
       "path": "manuscripts/ch03/figure-3-lifecycle-cost.png",
@@ -390,19 +390,19 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-lifecycle-cost.pdf",
-      "sha256": "642ef300ea6dee91cdf8bc71966aa2a67cffcbc674672425bf5a083469f5b775"
+      "sha256": "b889d1de581f8ce86ca3e1ad23903f0f358b058d70010f5c325b9e6b6d11dbbf"
     },
     {
       "path": "manuscripts/ch03/figure-3-8-history.pdf",
-      "sha256": "ed77db6f2e427cc08d71827e7153656a0cf6271766aecb1252cac64f017f6623"
+      "sha256": "fefa1869c996d0e7ef1dd02f3509372385af2d1543e22c0abe8e8a201ca46431"
     },
     {
       "path": "manuscripts/ch03/figure-3-9-gpu-hours.pdf",
-      "sha256": "b975aa69f69df4c41c9e249b653a6395d10c1cb792f1482677bebe7b4e1f029b"
+      "sha256": "75fbd0a23c6855f220dc7f29f7c44d84a157ae0914eaae146541c8492fe935e9"
     },
     {
       "path": "manuscripts/ch03/ch03-reasoning-cost-reversal-and-breakeven.svg",
-      "sha256": "7994d5896bb3967404d2b19eb1dd023de5444a5e9c4ede850beaa26502d4beae"
+      "sha256": "3561ccab2a5a17b2c05fdebaf7fff38290b6861dfa3486e743680bdf9387ffa3"
     },
     {
       "path": "manuscripts/ch03/ch03-reasoning-cost-reversal-and-breakeven.png",
@@ -410,11 +410,35 @@
     },
     {
       "path": "manuscripts/ch03/ch03-reasoning-cost-reversal-and-breakeven.pdf",
-      "sha256": "51a13d8bb5128e9159e8a857fd02afa8c9b983d9c7c35f558b314bad9c4a137c"
+      "sha256": "c147f54c8fb7f6ba01ad11419f52331ca02963b347b7b34732c4b9060afd981d"
+    },
+    {
+      "path": "manuscripts/ch03/ch03-servegen-bursty-and-bimodal-workload.svg",
+      "sha256": "59ae5bcc33a781712ba13bc13a48c6b72d3a7ec8f317146cd2b5b8be222e3a60"
+    },
+    {
+      "path": "manuscripts/ch03/ch03-servegen-bursty-and-bimodal-workload.png",
+      "sha256": "56f6d688fd1a2fbb53aa2027e1bfd95ebcade2c495ac7d4b350061708c4dde6c"
+    },
+    {
+      "path": "manuscripts/ch03/ch03-servegen-bursty-and-bimodal-workload.pdf",
+      "sha256": "5070a26c0471450620c965702acbdfc86b3984026bd94ea3b269512a8b81921c"
+    },
+    {
+      "path": "manuscripts/ch03/ch03-osworld-computer-use-agent-timeline.svg",
+      "sha256": "a879335aa1e0e6e9e0151a38af8984009880f51b8353e1063bcf42cbab8b8574"
+    },
+    {
+      "path": "manuscripts/ch03/ch03-osworld-computer-use-agent-timeline.png",
+      "sha256": "fc05648f76a5c645b2c5159b3c36b1bd932d2672bf068bff22c5319f0a35bda3"
+    },
+    {
+      "path": "manuscripts/ch03/ch03-osworld-computer-use-agent-timeline.pdf",
+      "sha256": "969d26b1b2ecd4af57f4e439559172af64793aa7425ed6b3f89964a29622fe8e"
     },
     {
       "path": "manuscripts/ch03/figure-3-v41-ced.svg",
-      "sha256": "243546fb3535b08e91c85d9c6d9a86068be1d60f82e563f2bce4d9332f82a56e"
+      "sha256": "64f1f3fa420e6be73f9afce353988531492b4229d0314c1484af723ca72d7b3c"
     },
     {
       "path": "manuscripts/ch03/figure-3-v41-ced.png",
@@ -422,7 +446,7 @@
     },
     {
       "path": "manuscripts/ch03/figure-3-v41-ced.pdf",
-      "sha256": "344d3ec5250929c71c11879a2600e65279eb3627c2cd81bab57f2e9654cc4569"
+      "sha256": "4d31324fa5553d8fe5e1bc6bd94f713caec09c0cf77e79c63dee29a3e1d96c13"
     },
     {
       "path": "manuscripts/ch03/figure-data.json",
@@ -430,11 +454,11 @@
     },
     {
       "path": "build/legacy/manuscripts/03-推理与训练负载.html",
-      "sha256": "d7e83ae525c73bdb50f4d01c1d40c5b07ab7b62fe64d54254e25497327e86fe5"
+      "sha256": "4d92070235a27508e1f7fc33240e44c3d9651b3dcc070c0f55a8a7e4dfb5c833"
     },
     {
       "path": "manuscripts/ch03/figure-index.json",
-      "sha256": "a6384610dbb272d4be9ca907022d981d346fe7e640ec752c395cea431218fb0e"
+      "sha256": "bd1fb0f801e289b9e41eab3f08f752ef2e3bc2c7a92d415b9edeaa8b59515b44"
     },
     {
       "path": "manuscripts/book_assets.py",

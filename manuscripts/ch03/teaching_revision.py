@@ -582,6 +582,88 @@ def draw(here, data):
         ax2.legend(frameon=True, loc='upper left', fontsize=11)
         out.save(f, 'ch03-reasoning-cost-reversal-and-breakeven')
 
+        # 36. ch03-servegen-bursty-and-bimodal-workload (Path D Fig 3-36)
+        f, (ax1, ax2) = plt.subplots(2, 1, figsize=(420 / 72, 6.4))
+        f.subplots_adjust(left=0.16, right=0.95, bottom=0.10, top=0.92, hspace=0.48)
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+
+        rho = np.linspace(0.10, 0.88, 160)
+        lq_poisson = (rho ** 2 / (1.0 - rho)) * ((1.0 + 1.0) / 2.0)
+        lq_servegen = (rho ** 2 / (1.0 - rho)) * ((4.0 + 1.0) / 2.0)
+        ax1.plot(rho * 100, lq_poisson, color=BORDER_COL['blue'], lw=2.2, ls='--', label='泊松到达 (CV_a² = 1.0, NAIVE 预测 12 实例)')
+        ax1.plot(rho * 100, lq_servegen, color=BORDER_COL['orange'], lw=2.4, label='ServeGen 突发到达 (CV_a² = 4.0, 实测 24 实例)')
+        ax1.scatter([80.0, 80.0], [3.20, 8.00], s=55, color=[BORDER_COL['blue'], BORDER_COL['orange']], facecolor=[COL['blue'], COL['orange']], linewidth=1.5, zorder=5)
+        ax1.annotate('ρ = 80%: 队列 3.2 → 8.0\n(2.5× 队列膨胀)', xy=(80.0, 8.0), xytext=(38.0, 8.5),
+                     arrowprops=dict(arrowstyle='->', color=BORDER_COL['orange'], lw=1.2),
+                     fontsize=11, weight='bold', color=TEXT_COL['orange'])
+        ax1.set(xlim=(10, 90), ylim=(0, 22.0), xlabel='系统平均利用率 ρ（%）', ylabel='平均排队请求数 L_q')
+        ax1.set_title('A  ServeGen 重尾突发 (CV_a²=4.0) 引发的 2.5× 队列膨胀', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(True, linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax1.legend(frameon=True, loc='upper left', fontsize=11)
+
+        out_bins = ['短答模式\n(128–512)', '常规生成\n(512–2K)', '深度推理模式\n(4K–16K)', '极端长尾\n(>16K)']
+        share_pct = [42.0, 23.0, 28.0, 7.0]
+        kv_weight = [8.0, 14.0, 52.0, 26.0]
+        x_b = np.arange(len(out_bins))
+        w_b = 0.34
+        ax2.bar(x_b - w_b / 2, share_pct, width=w_b, color=COL['blue'], edgecolor=BORDER_COL['blue'], linewidth=1.2, label='请求数量占比 (%)')
+        ax2.bar(x_b + w_b / 2, kv_weight, width=w_b, color=COL['purple'], edgecolor=BORDER_COL['purple'], linewidth=1.2, label='TokenScale 词元/KV 负载占比 (%)')
+        for xi, s_v, k_v in zip(x_b, share_pct, kv_weight):
+            ax2.text(xi - w_b / 2, s_v + 1.5, f'{s_v:.0f}%', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['blue'])
+            ax2.text(xi + w_b / 2, k_v + 1.5, f'{k_v:.0f}%', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['purple'])
+        ax2.set_xticks(x_b, out_bins)
+        ax2.set_xlim(-0.6, 3.6)
+        ax2.set_ylim(0, 82)
+        ax2.set_ylabel('占总流量比例（%）', fontsize=11)
+        ax2.set_title('B  双峰重尾输出分布与 TokenScale 滑窗词元速度权重对比', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(axis='y', linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax2.legend(frameon=True, loc='upper left', fontsize=11)
+        out.save(f, 'ch03-servegen-bursty-and-bimodal-workload')
+
+        # 37. ch03-osworld-computer-use-agent-timeline (Path D Fig 3-37)
+        f, (ax1, ax2) = plt.subplots(2, 1, figsize=(420 / 72, 6.4))
+        f.subplots_adjust(left=0.22, right=0.95, bottom=0.10, top=0.92, hspace=0.48)
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+
+        modes = ['朴素 Agent\n(18 步冗余)', '动作晶化+滑窗\n(10 步紧凑)']
+        t_env = np.array([10.1, 4.2])
+        t_vis = np.array([5.6, 2.4])
+        t_llm = np.array([12.2, 4.8])
+        t_act = np.array([8.1, 3.8])
+        y_m = np.arange(len(modes))
+        ax1.barh(y_m, t_env, height=0.42, color=COL['gray'], edgecolor=BORDER_COL['gray'], linewidth=1.2, label='截图+DOM解析')
+        ax1.barh(y_m, t_vis, left=t_env, height=0.42, color=COL['teal'], edgecolor=BORDER_COL['teal'], linewidth=1.2, label='高分视觉编码')
+        ax1.barh(y_m, t_llm, left=t_env + t_vis, height=0.42, color=COL['blue'], edgecolor=BORDER_COL['blue'], linewidth=1.2, label='LLM 预填充+解码')
+        ax1.barh(y_m, t_act, left=t_env + t_vis + t_llm, height=0.42, color=COL['orange'], edgecolor=BORDER_COL['orange'], linewidth=1.2, label='GUI 动作执行等待')
+        totals = t_env + t_vis + t_llm + t_act
+        for yi, tot in zip(y_m, totals):
+            ax1.text(tot + 0.6, yi, f'{tot:.1f} s', va='center', fontsize=11, weight='bold', color=COL['ink'])
+        ax1.set_yticks(y_m, modes)
+        ax1.invert_yaxis()
+        ax1.set_ylim(2.25, -0.45)
+        ax1.set_xlim(0, 43)
+        ax1.set_xlabel('单次桌面任务端到端总耗时（s）', fontsize=11)
+        ax1.set_title('A  Computer-Use 视觉 Agent 耗时分解 (OSWorld-Human)', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(axis='x', linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax1.legend(frameon=True, loc='lower right', ncol=2, fontsize=11)
+
+        steps_k = np.arange(1, 16)
+        s_img = 1.2  # 1,200 visual tokens per screenshot in K tokens
+        s_txt = 0.08
+        cum_full = np.cumsum(steps_k * s_img + steps_k * s_txt)
+        win_w = 3
+        per_step_win = np.minimum(steps_k, win_w) * s_img + steps_k * s_txt
+        cum_win = np.cumsum(per_step_win)
+        ax2.plot(steps_k, cum_full, color=BORDER_COL['orange'], lw=2.3, marker='o', ms=4.5, label='全量保留历史截图 (O(K²) 增长: 153.6K)')
+        ax2.plot(steps_k, cum_win, color=BORDER_COL['green'], lw=2.3, marker='s', ms=4.5, label='滑窗保留近 3 帧截图 + 动作摘要 (58.8K, -61.7%)')
+        ax2.set(xlim=(1, 15.5), ylim=(0, 195), xlabel='多轮 GUI 交互步数 K', ylabel='累计输入 Token 数（千）')
+        ax2.set_title('B  多轮历史截图累积的二次方膨胀与滑窗截断收益', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(True, linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax2.legend(frameon=True, loc='upper left', fontsize=11)
+        out.save(f, 'ch03-osworld-computer-use-agent-timeline')
+
     from v41_case_figures import draw as draw_v41
     draw_v41(3, out)
     from core_principles_figures import draw as draw_principles
