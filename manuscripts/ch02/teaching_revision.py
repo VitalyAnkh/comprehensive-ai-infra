@@ -531,6 +531,81 @@ def draw(here, data):
         ax2.grid(True, which='major', linestyle=':', alpha=0.5, color='#CBD5E1')
         out.save(f, 'ch02-capability-density-and-kv-pareto')
 
+        # 37. ch02-deepseek-nsa-vs-moba-block-alignment (Path D Fig 2-41)
+        f, a = canvas(6.6)
+        card(a, 0.02, 0.50, 0.96, 0.47, 'A  原生稀疏注意力（NSA vs. MoBA）：硬件分块对齐', '', 'blue', title_size=11.5)
+        card(
+            a, 0.045, 0.70, 0.43, 0.19,
+            'DeepSeek NSA 三分支',
+            '1 压缩分支：粗粒度块摘要\n2 选择分支：选重要历史块\n3 滑动窗口：保留局部连续',
+            'blue', title_size=11, body_size=11
+        )
+        card(
+            a, 0.525, 0.70, 0.43, 0.19,
+            'Kimi MoBA 无参数块路由',
+            '按 64/128 token 整块切分\n块均值内积完成 Top-k 路由\n零额外可训练门控参数开销',
+            'teal', title_size=11, body_size=11
+        )
+        box(
+            a, 0.045, 0.53, 0.91, 0.135,
+            '分块对齐红利：64 词元分块契合 Tensor Core 块并供 GQA 共享',
+            'green', size=11
+        )
+
+        card(a, 0.02, 0.03, 0.96, 0.44, 'B  ECHO（OSDI \'26）：复用压缩分支得分的跨层无损预取', '', 'purple', title_size=11.5)
+        steps_echo = [
+            (0.045, '1 压缩打分', '第 l 层算块得分\n识别下层热点块', 'orange'),
+            (0.355, '2 异步预取', 'PCIe 提前搬运\n与第 l 层重叠', 'purple'),
+            (0.665, '3 无损计算', '抵达 l+1 层 HBM\n零精度损失计算', 'green'),
+        ]
+        for ex_x, ex_t, ex_b, ex_c in steps_echo:
+            card(a, ex_x, 0.175, 0.29, 0.21, ex_t, ex_b, ex_c, title_size=11, body_size=11)
+        arrow(a, (0.335, 0.28), (0.355, 0.28), color=BORDER_COL['orange'])
+        arrow(a, (0.645, 0.28), (0.665, 0.28), color=BORDER_COL['purple'])
+        box(
+            a, 0.045, 0.05, 0.91, 0.095,
+            '解耦机制：压缩摘要常驻 HBM 充当索引，原始 KV 块按需无损调入',
+            'gray', size=11
+        )
+        out.save(f, 'ch02-deepseek-nsa-vs-moba-block-alignment')
+
+        # 38. ch02-hybrid-deltanet-marconi-state-checkpoint (Path D Fig 2-42)
+        f, (ax1, ax2) = plt.subplots(1, 2, figsize=(420 / 72, 4.1))
+        f.subplots_adjust(left=0.22, right=0.96, bottom=0.20, top=0.85, wspace=0.62)
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+
+        ckpt_labels = ['8K MLA 缓存', '间隔 4096 (2份)', '间隔 1024 (8份)', '间隔 256 (32份)']
+        ckpt_mib = [216.0, 107.1, 428.6, 1714.2]
+        cols_ck = [COL['blue'], COL['green'], COL['teal'], COL['orange']]
+        edges_ck = [BORDER_COL['blue'], BORDER_COL['green'], BORDER_COL['teal'], BORDER_COL['orange']]
+        y_ck = np.arange(len(ckpt_labels))
+        ax1.barh(y_ck, ckpt_mib, height=0.54, color=cols_ck, edgecolor=edges_ck, linewidth=1.2)
+        for yi, val_m in enumerate(ckpt_mib):
+            ax1.text(val_m + 45, yi, f'{val_m:.0f}' if val_m >= 200 else f'{val_m:.1f}', va='center', fontsize=11, weight='bold', color=COL['ink'])
+        ax1.set_yticks(y_ck, ckpt_labels)
+        ax1.invert_yaxis()
+        ax1.set_xlim(0, 2450)
+        ax1.set_xlabel('单卡状态（MiB，TP=8）', fontsize=11)
+        ax1.set_title('A  8K 前缀快照开销', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(axis='x', linestyle=':', alpha=0.5, color='#CBD5E1')
+
+        stages_rb = ['MLA 匹配长', 'KDA 快照点', '回滚重放窗']
+        tokens_rb = [10752, 8192, 2560]
+        cols_rb = [COL['blue'], COL['green'], COL['orange']]
+        edges_rb = [BORDER_COL['blue'], BORDER_COL['green'], BORDER_COL['orange']]
+        y_rb = np.arange(len(stages_rb))
+        ax2.barh(y_rb, tokens_rb, height=0.50, color=cols_rb, edgecolor=edges_rb, linewidth=1.2)
+        for yi, tok_v in enumerate(tokens_rb):
+            ax2.text(tok_v + 300, yi, f'{tok_v}', va='center', fontsize=11, weight='bold', color=COL['ink'])
+        ax2.set_yticks(y_rb, stages_rb)
+        ax2.invert_yaxis()
+        ax2.set_xlim(0, 15800)
+        ax2.set_xlabel('词元位置 / 数量（tokens）', fontsize=11)
+        ax2.set_title('B  前缀回滚与重放', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(axis='x', linestyle=':', alpha=0.5, color='#CBD5E1')
+        out.save(f, 'ch02-hybrid-deltanet-marconi-state-checkpoint')
+
     from core_principles_figures import draw as draw_principles
     draw_principles(2, out)
     from v41_case_figures import draw as draw_v41

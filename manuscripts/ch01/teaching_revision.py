@@ -416,6 +416,76 @@ def draw(here, data):
         ax2.grid(axis='x', linestyle=':', alpha=0.5, color='#CBD5E1')
         out.save(f, 'ch01-token-cost-telescoping-chain')
 
+        # 22. ch01-host-dispatch-ghost-wave-zoc (Path D Fig 1-23)
+        f, a = canvas(6.9)
+        card(a, 0.02, 0.51, 0.96, 0.46, 'A  主机调度旁路（ghOSt）：切换税与本地派发', '', 'blue', title_size=11.5)
+        card(
+            a, 0.045, 0.675, 0.43, 0.20,
+            '传统跨代理往返切换',
+            '切换耗时 3.32~4.04 μs\n4 μs 任务加两次 1 μs 等待\n延迟 +50% · 吞吐 -33.3%',
+            'orange', title_size=11, body_size=11
+        )
+        card(
+            a, 0.525, 0.675, 0.43, 0.20,
+            'ghOSt 本地调度 (9ca0a1f)',
+            '目标核本地派发仅 426 ns\nOpen → commit → succeeded\n状态字屏障消除抢占竞态',
+            'green', title_size=11, body_size=11
+        )
+        arrow(a, (0.475, 0.775), (0.525, 0.775), color=BORDER_COL['green'])
+        box(
+            a, 0.045, 0.535, 0.91, 0.115,
+            '微秒级控制面定律：1~10 μs 算子下发受限于内核切换税\n本地直接派发与三阶段原子屏障可将调度开销压缩近十倍',
+            'gray', size=11
+        )
+
+        card(a, 0.02, 0.03, 0.96, 0.46, 'B  策略卸载（Wave）与虚拟智能网卡（ZOC）', '', 'green', title_size=11.5)
+        card(
+            a, 0.045, 0.21, 0.43, 0.20,
+            'Wave 策略卸载 (ASPLOS \'26)',
+            '16 核 Arm 卸载内存页策略\nAgent 内存 600 → 720 GiB\n32 核满载，瓶颈转入 CPU',
+            'purple', title_size=11, body_size=11
+        )
+        card(
+            a, 0.525, 0.21, 0.43, 0.20,
+            'ZOC 虚拟网卡 (NSDI \'26)',
+            '复用主机空闲核 + 服务 VM\n接管虚拟交换慢路径与策略\n随负载弹性扩缩，零定制硬件',
+            'teal', title_size=11, body_size=11
+        )
+        box(
+            a, 0.045, 0.055, 0.91, 0.12,
+            '卸载判据：释放主存/核心的净增益须大于跨总线单核降幅 d',
+            'blue', size=11
+        )
+        out.save(f, 'ch01-host-dispatch-ghost-wave-zoc')
+
+        # 23. ch01-xprof-profinfer-critical-path (Path D Fig 1-24)
+        f, a = canvas(6.4)
+        card(a, 0.02, 0.49, 0.96, 0.48, 'A  全栈时间线与跨层关键路径有向无环图（DAG）', '', 'blue', title_size=11.5)
+        lanes = [
+            (0.79, 'L1 主机调度流', 'Python API → 连续批编排 → 算子下发', 'blue'),
+            (0.65, 'L2 GPU 计算流', 'CUPTI 追踪 · Prefill/Decode 算子执行', 'orange'),
+            (0.51, 'L3 网卡通信流', 'RDMA 队列 · AllReduce/All-to-All 传输', 'green'),
+        ]
+        for y_l, l_title, l_body, l_col in lanes:
+            box(a, 0.045, y_l, 0.26, 0.105, l_title, l_col, size=11, weight='bold')
+            box(a, 0.335, y_l, 0.62, 0.105, l_body, 'gray', size=11)
+            arrow(a, (0.305, y_l + 0.052), (0.335, y_l + 0.052), color=BORDER_COL[l_col])
+
+        card(a, 0.02, 0.03, 0.96, 0.43, 'B  三类剖析器协同定位关键路径暴露量', '', 'purple', title_size=11.5)
+        profilers = [
+            (0.045, 'XProf', '统一全局时间轴\nRoofline 瓶颈归因', 'blue'),
+            (0.355, 'ProfInfer', 'eBPF 无侵入追踪\n捕获缺页与锁争用', 'teal'),
+            (0.665, 'StriaTrace', '锚定跨卡同步屏障\n逆向定位慢节点流', 'orange'),
+        ]
+        for px, ptitle, pbody, pcol in profilers:
+            card(a, px, 0.175, 0.29, 0.205, ptitle, pbody, pcol, title_size=11, body_size=11)
+        box(
+            a, 0.045, 0.05, 0.91, 0.095,
+            '关键路径判据：仅优化最长路径上的非重叠暴露段才能降低端到端延迟',
+            'green', size=11
+        )
+        out.save(f, 'ch01-xprof-profinfer-critical-path')
+
     from core_principles_figures import draw as draw_principles
     draw_principles(1, out)
     return out.finish()
