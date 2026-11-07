@@ -60,9 +60,9 @@ HOMES = {'zh': HERE, 'en': BOOK_EN, 'zh-tw': BOOK_ZH_TW, 'ru': BOOK_RU / 'book'}
 
 
 def sources(edition):
-    """(number, path) for the preface (0) and chapters (1-16 for zh, 1-12 for translations)."""
+    """(number, path) for the preface (0) and chapters (1-20 for zh, 1-12 for translations)."""
     if edition == 'zh':
-        return [(n, next(MANUSCRIPTS.glob(f'{n:02}-*.md'))) for n in range(17)]
+        return [(n, next(MANUSCRIPTS.glob(f'{n:02}-*.md'))) for n in range(21)]
     home = HOMES[edition]
     if edition == 'ru':
         return [(0, home / 'preface.md')] + [(n, home / f'chapter{n}.md') for n in range(1, 13)]
@@ -76,7 +76,7 @@ def prepared_name(edition, number):
 
 def chapter_anchors():
     """Map each Chinese manuscript file name to its chapter anchor."""
-    return {p.name: f'chapter-{int(p.name[:2])}' for p in MANUSCRIPTS.glob('[01][0-9]-*.md')}
+    return {p.name: f'chapter-{int(p.name[:2])}' for p in MANUSCRIPTS.glob('[0-9][0-9]-*.md')}
 
 
 def rasterize(pdf, cache):
@@ -87,8 +87,20 @@ def rasterize(pdf, cache):
     digest = hashlib.sha256(data).hexdigest()[:16]
     png = cache / f'{pdf.stem}-{digest}.png'
     if not png.exists():
-        subprocess.run(['pdftoppm', '-png', '-singlefile', '-scale-to-x', str(FIGURE_WIDTH),
-                        '-scale-to-y', '-1', str(pdf), str(png.with_suffix(''))], check=True)
+        if shutil.which('pdftoppm'):
+            subprocess.run(['pdftoppm', '-png', '-singlefile', '-scale-to-x', str(FIGURE_WIDTH),
+                            '-scale-to-y', '-1', str(pdf), str(png.with_suffix(''))], check=True)
+        elif shutil.which('sips'):
+            subprocess.run(['sips', '-s', 'format', 'png', '--resampleWidth', str(FIGURE_WIDTH),
+                            str(pdf), '--out', str(png)],
+                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+        else:
+            import fitz
+            doc = fitz.open(pdf)
+            page = doc[0]
+            scale = FIGURE_WIDTH / page.rect.width
+            page.get_pixmap(matrix=fitz.Matrix(scale, scale), alpha=False).save(png)
+            doc.close()
     return png
 
 

@@ -1,0 +1,56 @@
+{
+  "chapter": 19,
+  "title": "具身智能（VLA）、实时控制与大规模物理仿真底座",
+  "embodied_latency_and_dual_loop": {
+    "source": "experiments/ch19/19-01/run.py & VLALagBench",
+    "arm_velocity_m_s": 0.50,
+    "contact_tolerance_mm": 5.0,
+    "max_safe_latency_ms": 10.0,
+    "blind_drift_200ms_mm": 100.0,
+    "dynamic_grasp_success_curve": {
+      "10ms": 0.88,
+      "50ms": 0.78,
+      "100ms": 0.56,
+      "150ms": 0.34,
+      "200ms": 0.18
+    },
+    "system2_vlm": {
+      "params_b": 7.0,
+      "freq_hz": 2.0,
+      "period_ms": 500.0
+    },
+    "system1_flow_matching": {
+      "params_m": 150.0,
+      "freq_hz": 100.0,
+      "period_ms": 10.0,
+      "ode_steps": 6,
+      "wcet_ms": 4.2
+    }
+  },
+  "gpu_native_physics_simulation_4096": {
+    "source": "experiments/ch19/19-01/run.py (Isaac Lab / MuJoCo Warp / Genesis)",
+    "num_envs": 4096,
+    "pcie_roundtrip_bandwidth_gb_s": 43.39,
+    "hbm_budget_mib": {
+      "physics_state_and_contacts": 2048.0,
+      "bvh_and_scene_assets": 4096.0,
+      "camera_framebuffers": 3600.0,
+      "policy_and_rollout_buffer": 16384.0,
+      "total_mib": 26128.0,
+      "total_gib": 25.52
+    },
+    "sm_partition_132": {
+      "physics_sms": 44,
+      "renderer_sms": 48,
+      "policy_sms": 40
+    }
+  },
+  "edge_shadow_mode_and_sim2real": {
+    "source": "experiments/ch19/19-01/run.py",
+    "raw_sensor_rate_mb_s": 180.0,
+    "raw_daily_tb_per_robot": 2.592,
+    "trigger_rate_pct": 0.5,
+    "triage_daily_gb_per_robot": 12.96,
+    "bandwidth_reduction_x": 200.0
+  }
+}

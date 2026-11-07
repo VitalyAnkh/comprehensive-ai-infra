@@ -1,0 +1,58 @@
+{
+  "chapter": 20,
+  "title": "十万卡集群可靠性工程、静默数据损坏（SDC）防御与基准评测科学",
+  "cluster_reliability_100k": {
+    "source": "Meta Llama 3 405B (16,384 H100, 54d) & MLSys '26 #33",
+    "llama3_16k_gpus": 16384,
+    "llama3_days": 54,
+    "llama3_interruptions": 419,
+    "hardware_failure_share_pct": 78.0,
+    "mtbf_16k_hours": 3.09,
+    "mtbf_100k_minutes": 30.41,
+    "young_daly_ettr": {
+      "mtbf_s": 1800.0,
+      "traditional_disk_ckpt_s": 180.0,
+      "traditional_restart_rec_s": 300.0,
+      "opt_tau_disk_s": 805.0,
+      "ettr_disk_pct": 63.22,
+      "in_memory_ckpt_s": 5.0,
+      "trainmover_rec_s": 5.0,
+      "opt_tau_fast_s": 134.16,
+      "ettr_fast_pct": 92.34
+    },
+    "hot_spare_pool_poisson": {
+      "failure_rate_per_hour": 2.0,
+      "mttr_repair_hours": 12.0,
+      "mean_in_repair_nodes": 24.0,
+      "min_spares_for_99_9_pct": 40
+    }
+  },
+  "sdc_defense_and_opguard": {
+    "source": "Safeguarding LLM Training at Scale (OSDI '26 #71) & OpGuard (OSDI '26 #72)",
+    "production_validation_gpu_hours": 35000000,
+    "abft_gemm_4096_overhead_pct": 0.0732,
+    "microbatch_rerun_ms": 50.0,
+    "checkpoint_rollback_hours": 2.0
+  },
+  "straggler_and_benchmark_science": {
+    "source": "case-studies/collective-paths-and-diagnosis.md & case-studies/optimization-evaluation-and-deployment.md & Blink (OSDI '26 #23)",
+    "collective_arrival_skew_ms": [0.0, 0.0, 0.0, 2.0],
+    "exchange_window_ms": 0.4,
+    "double_bw_savings_ms": 0.2,
+    "skew_fix_savings_ms": 2.0,
+    "flashinfer_bench_paradox": {
+      "baseline_us": [100.0, 100.0],
+      "candidate_a_us": [10.0, 200.0],
+      "candidate_b_us": [50.0, 50.0],
+      "cand_a_mean_speedup": 5.25,
+      "cand_a_equal_freq_us": 210.0,
+      "cand_b_equal_freq_us": 100.0,
+      "crossover_p": 0.7895
+    },
+    "abba_drift_cancellation": {
+      "drift_us": [0.0, 10.0, 20.0, 30.0],
+      "aabb_means_us": [105.0, 115.0],
+      "abba_means_us": [115.0, 105.0]
+    }
+  }
+}

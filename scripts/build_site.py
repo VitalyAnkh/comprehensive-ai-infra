@@ -51,11 +51,11 @@ EDITIONS = {
 
 
 def chapters(edition):
-    """(number, path) for the preface (0) and chapters (1–16 for zh, 1–12 for translations)."""
+    """(number, path) for the preface (0) and chapters (1–20 for zh, 1–12 for translations)."""
     if edition == 'zh':
         found = [(int(p.name[:2]), p) for p in sorted((ROOT / 'manuscripts').glob('[0-9][0-9]-*.md'))]
-        found = [(n, p) for n, p in found if n <= 16]
-        expected = list(range(17))
+        found = [(n, p) for n, p in found if n <= 20]
+        expected = list(range(21))
     elif edition in ('en', 'zh-tw'):
         home = EDITIONS[edition]['home']
         found = [(0, home / 'introduction.md')] + [(n, home / f'chapter{n:02}.md') for n in range(1, 13)]
@@ -87,8 +87,20 @@ def rasterize(pdf):
     png = FIGURE_CACHE / f'{pdf.stem}-{hashlib.sha256(data).hexdigest()[:16]}.png'
     if not png.exists():
         FIGURE_CACHE.mkdir(parents=True, exist_ok=True)
-        subprocess.run(['pdftoppm', '-png', '-singlefile', '-scale-to-x', str(FIGURE_WIDTH),
-                        '-scale-to-y', '-1', str(pdf), str(png.with_suffix(''))], check=True)
+        if shutil.which('pdftoppm'):
+            subprocess.run(['pdftoppm', '-png', '-singlefile', '-scale-to-x', str(FIGURE_WIDTH),
+                            '-scale-to-y', '-1', str(pdf), str(png.with_suffix(''))], check=True)
+        elif shutil.which('sips'):
+            subprocess.run(['sips', '-s', 'format', 'png', '--resampleWidth', str(FIGURE_WIDTH),
+                            str(pdf), '--out', str(png)],
+                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
+        else:
+            import fitz
+            doc = fitz.open(pdf)
+            page = doc[0]
+            scale = FIGURE_WIDTH / page.rect.width
+            page.get_pixmap(matrix=fitz.Matrix(scale, scale), alpha=False).save(png)
+            doc.close()
     return png
 
 

@@ -1,0 +1,236 @@
+[
+  {
+    "figure_id": "图 20-1",
+    "number": 1,
+    "file": "ch20-cluster-mtbf-scaling-and-llama3-failures.svg",
+    "asset": "ch20/ch20-cluster-mtbf-scaling-and-llama3-failures.svg",
+    "section": "20.1.1",
+    "caption": "集群规模从 1K 扩至 100K 卡时 MTBF_cluster 跌至 30.41 分钟的反比规律及 Meta 16,384 卡 419 次中断分类账本（算例 20-1）",
+    "source_refs": [
+      "experiments/ch20/20-01/run.py",
+      "manuscripts/ch20/figure-data.json"
+    ],
+    "TeachingRole": "展示十万卡规模下硬件故障从偶发异常演变为每半小时必至的稳态过程",
+    "figure": "20-1",
+    "name": "ch20-cluster-mtbf-scaling-and-llama3-failures"
+  },
+  {
+    "figure_id": "图 20-2",
+    "number": 2,
+    "file": "ch20-hot-spare-pool-queuing-dimensioning.svg",
+    "asset": "ch20/ch20-hot-spare-pool-queuing-dimensioning.svg",
+    "section": "20.1.2",
+    "caption": "基于泊松修复队列模型（λ=2/h, MTTR=12h）的热备节点池（Hot-Spare Pool S_min=40）配置与可用性曲线（算例 20-2）",
+    "source_refs": [
+      "experiments/ch20/20-01/run.py",
+      "research/2026-infra-survey/reading-mlsys-2026.md"
+    ],
+    "TeachingRole": "推导以 99.9% 概率保证万卡训练不降级所需的最小热备节点数",
+    "figure": "20-2",
+    "name": "ch20-hot-spare-pool-queuing-dimensioning"
+  },
+  {
+    "figure_id": "图 20-3",
+    "number": 3,
+    "file": "ch20-sdc-bitflip-allreduce-contamination.svg",
+    "asset": "ch20/ch20-sdc-bitflip-allreduce-contamination.svg",
+    "section": "20.2.1",
+    "caption": "单颗 GPU Tensor Core 静默比特翻转（SDC）如何逃过 HBM ECC 并通过一次 AllReduce 瞬间污染万卡权重",
+    "source_refs": [
+      "research/2026-infra-survey/reading-osdi-2026.md",
+      "manuscripts/ch20/figure-data.json"
+    ],
+    "TeachingRole": "剖析无 ECC 保护的数据通路翻转如何被硬件赋予合法校验码并传染全集群",
+    "figure": "20-3",
+    "name": "ch20-sdc-bitflip-allreduce-contamination"
+  },
+  {
+    "figure_id": "图 20-4",
+    "number": 4,
+    "file": "ch20-abft-checksum-matrix-multiplication.svg",
+    "asset": "ch20/ch20-abft-checksum-matrix-multiplication.svg",
+    "section": "20.2.2",
+    "caption": "基于代数不变量（ABFT 行列校验和）以 0.0732%（<0.5%）算力开销在线拦截并定位矩阵乘硬件错误（算例 20-3）",
+    "source_refs": [
+      "experiments/ch20/20-01/run.py",
+      "manuscripts/ch20/figure-data.json"
+    ],
+    "TeachingRole": "证明利用线性结合律可将 O(N^3) 矩阵乘校验降维至 O(N^2) 外围向量内积",
+    "figure": "20-4",
+    "name": "ch20-abft-checksum-matrix-multiplication"
+  },
+  {
+    "figure_id": "图 20-5",
+    "number": 5,
+    "file": "ch20-safeguarding-sdc-and-opguard-bitwise-debug.svg",
+    "asset": "ch20/ch20-safeguarding-sdc-and-opguard-bitwise-debug.svg",
+    "section": "20.2.2",
+    "caption": "3,500 万 GPU 小时在线 SDC 感知隔离（Safeguarding LLM Training OSDI '26）与控制良性非确定性的位级对齐定位（OpGuard OSDI '26）",
+    "source_refs": [
+      "research/2026-infra-survey/reading-osdi-2026.md"
+    ],
+    "TeachingRole": "结合 AllReduce 前统计拦截与确定性重放解决浮点非确定性掩盖 SDC 的难题",
+    "figure": "20-5",
+    "name": "ch20-safeguarding-sdc-and-opguard-bitwise-debug"
+  },
+  {
+    "figure_id": "图 20-6",
+    "number": 6,
+    "file": "ch20-microbatch-rerun-vs-checkpoint-rollback.svg",
+    "asset": "ch20/ch20-microbatch-rerun-vs-checkpoint-rollback.svg",
+    "section": "20.2.2",
+    "caption": "检测到异常后原地重跑当前微批次（耗时 50 ms）区分瞬态软错误与永久硬件故障 vs. 盲目回滚数小时全局检查点",
+    "source_refs": [
+      "research/2026-infra-survey/reading-osdi-2026.md",
+      "manuscripts/ch20/figure-data.json"
+    ],
+    "TeachingRole": "展示在优化器更新前拦截异常并重算微批次如何避免回滚数小时进度",
+    "figure": "20-6",
+    "name": "ch20-microbatch-rerun-vs-checkpoint-rollback"
+  },
+  {
+    "figure_id": "图 20-7",
+    "number": 7,
+    "file": "ch20-trainmover-subsecond-hot-migration.svg",
+    "asset": "ch20/ch20-trainmover-subsecond-hot-migration.svg",
+    "section": "20.3.1",
+    "caption": "传统全局销毁重启（torchrun 耗时 300 s）vs. TrainMover（OSDI '26）利用预热备用进程与 RDMA 重映射实现秒级无重启接管",
+    "source_refs": [
+      "research/2026-infra-survey/reading-osdi-2026.md",
+      "experiments/ch20/20-01/run.py"
+    ],
+    "TeachingRole": "解析虚拟通信域局部重连如何消除九万九千张健康卡的陪葬重启开销",
+    "figure": "20-7",
+    "name": "ch20-trainmover-subsecond-hot-migration"
+  },
+  {
+    "figure_id": "图 20-8",
+    "number": 8,
+    "file": "ch20-nccl-flight-recorder-straggler-blame.svg",
+    "asset": "ch20/ch20-nccl-flight-recorder-straggler-blame.svg",
+    "section": "20.3.2",
+    "caption": "利用 NCCL Flight Recorder 与集合通信到达时间偏斜矩阵（Arrival Skew，算例 20-4）从全网阻塞假象中揪出唯一根因慢节点",
+    "source_refs": [
+      "case-studies/collective-paths-and-diagnosis.md",
+      "experiments/ch20/20-01/run.py"
+    ],
+    "TeachingRole": "证明同步集合通信中升级带宽仅省 0.2 ms、而消除 2.0 ms 入队偏斜才是正解",
+    "figure": "20-8",
+    "name": "ch20-nccl-flight-recorder-straggler-blame"
+  },
+  {
+    "figure_id": "图 20-9",
+    "number": 9,
+    "file": "ch20-optical-ber-fec-gray-failure-detection.svg",
+    "asset": "ch20/ch20-optical-ber-fec-gray-failure-detection.svg",
+    "section": "20.3.2",
+    "caption": "光模块劣化引发 FEC 纠错重传（灰故障 Gray Failure）导致通信有效带宽周期性塌陷的特征识别",
+    "source_refs": [
+      "manuscripts/ch20/figure-data.json"
+    ],
+    "TeachingRole": "通过监控 Pre-FEC 误码率与高阶纠错符号桶在链路彻底断连前主动隔离灰故障",
+    "figure": "20-9",
+    "name": "ch20-optical-ber-fec-gray-failure-detection"
+  },
+  {
+    "figure_id": "图 20-10",
+    "number": 10,
+    "file": "ch20-five-benchmark-gaming-traps.svg",
+    "asset": "ch20/ch20-five-benchmark-gaming-traps.svg",
+    "section": "20.4.1",
+    "caption": "AI 系统跑分中的五大失真陷阱与算术平均加速比悖论（候选 A 5.25x 反慢于候选 B 2.0x，算例 20-5）",
+    "source_refs": [
+      "case-studies/optimization-evaluation-and-deployment.md",
+      "experiments/ch20/20-01/run.py"
+    ],
+    "TeachingRole": "复算加速比平均悖论（p*=15/19）与 AABB/ABBA 线性时漂抵消实验",
+    "figure": "20-10",
+    "name": "ch20-five-benchmark-gaming-traps"
+  },
+  {
+    "figure_id": "图 20-11",
+    "number": 11,
+    "file": "ch20-flashinfer-bench-cceval-and-blink-profiling.svg",
+    "asset": "ch20/ch20-flashinfer-bench-cceval-and-blink-profiling.svg",
+    "section": "20.4.2",
+    "caption": "FlashInfer-Bench（算子基准）、CCEval（集合通信基准）、DriftBench（负载漂移）与 Blink（OSDI '26 消除采样失真）的四维评测体系",
+    "source_refs": [
+      "research/2026-infra-survey/reading-osdi-2026.md",
+      "research/2026-infra-survey/reading-mlsys-2026.md"
+    ],
+    "TeachingRole": "建立从无偏硬件剖析（Blink）到影子流量质量门禁的工业级评测标准",
+    "figure": "20-11",
+    "name": "ch20-flashinfer-bench-cceval-and-blink-profiling"
+  },
+  {
+    "figure_id": "图 20-12",
+    "number": 12,
+    "file": "ch20-effective-training-time-ratio-ettr-model.svg",
+    "asset": "ch20/ch20-effective-training-time-ratio-ettr-model.svg",
+    "section": "20.1.1",
+    "caption": "十万卡集群有效训练时间比（ETTR）对检查点周期 τ_ckpt、恢复时间 T_rec 与故障率 λ 的响应对比（63.22% vs. 92.34%）",
+    "source_refs": [
+      "experiments/ch20/20-01/run.py",
+      "manuscripts/ch20/figure-data.json"
+    ],
+    "TeachingRole": "量化展示内存检查点与秒级热恢复如何为十万卡集群挽回 29.12% 的有效算力",
+    "figure": "20-12",
+    "name": "ch20-effective-training-time-ratio-ettr-model"
+  },
+  {
+    "figure_id": "图 20-13",
+    "number": 13,
+    "file": "ch20-automated-burn-in-fleet-health-pipeline.svg",
+    "asset": "ch20/ch20-automated-burn-in-fleet-health-pipeline.svg",
+    "section": "20.3.1",
+    "caption": "新节点入网与故障修复后的自动化烤机（Burn-in：满载热压测 + 确定性 SDC 校验 + 光链路裕量扫描）准入流水线",
+    "source_refs": [
+      "manuscripts/ch20/figure-data.json"
+    ],
+    "TeachingRole": "设计闭环机队健康状态机防止维修后带病节点重新污染在役训练集群",
+    "figure": "20-13",
+    "name": "ch20-automated-burn-in-fleet-health-pipeline"
+  },
+  {
+    "figure_id": "图 20-14",
+    "number": 14,
+    "file": "ch20-twenty-chapter-dual-track-master-ledger.svg",
+    "asset": "ch20/ch20-twenty-chapter-dual-track-master-ledger.svg",
+    "section": "20.5.1",
+    "caption": "全书 20 章双轨贯穿案例（Qwen3-8B Dense 轨与 DeepSeek V4.1 / MoE 轨）从第 1 章到第 20 章的完整工程参数演进总表",
+    "source_refs": [
+      "manuscripts/ch20/figure-data.json"
+    ],
+    "TeachingRole": "横向串联全书二十章双轨模型在算力、显存、通信、能耗、安全与容错维度的定量参数",
+    "figure": "20-14",
+    "name": "ch20-twenty-chapter-dual-track-master-ledger"
+  },
+  {
+    "figure_id": "图 20-15",
+    "number": 15,
+    "file": "ch20-twenty-chapter-architecture-knowledge-graph.svg",
+    "asset": "ch20/ch20-twenty-chapter-architecture-knowledge-graph.svg",
+    "section": "20.5.1",
+    "caption": "全书 20 章“模型与负载 → 芯片与系统 → 推理、训练与六大前沿底座”的知识体系全景图",
+    "source_refs": [
+      "manuscripts/ch20/figure-data.json"
+    ],
+    "TeachingRole": "建立自顶向下算法负载与自底向上物理定律双向耦合的全书知识坐标系",
+    "figure": "20-15",
+    "name": "ch20-twenty-chapter-architecture-knowledge-graph"
+  },
+  {
+    "figure_id": "图 20-16",
+    "number": 16,
+    "file": "ch20-ten-first-principles-of-ai-infra.svg",
+    "asset": "ch20/ch20-ten-first-principles-of-ai-infra.svg",
+    "section": "20.5.2",
+    "caption": "AI 基础设施架构师的十条第一性原理终极法则总结图",
+    "source_refs": [
+      "manuscripts/ch20/figure-data.json"
+    ],
+    "TeachingRole": "提炼贯穿全书二十章的十条第一性原理与定量工程铁律",
+    "figure": "20-16",
+    "name": "ch20-ten-first-principles-of-ai-infra"
+  }
+]

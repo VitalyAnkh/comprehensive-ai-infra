@@ -2,7 +2,7 @@
 
 这里是正文算例背后的展开材料：具体模型、硬件与系统案例的完整推算、来源核对和取舍说明。正文只保留结论与关键推导，脚注链接到对应案例。
 
-下表按引用的章节分组；“引用章节”列出所有链接到该案例的章（全库 73 篇案例已 100% 接入正文第 1～16 章）。
+下表按引用的章节分组；“引用章节”列出所有链接到该案例的章（全库 73 篇案例已 100% 接入正文第 1～20 章）。
 
 ## 第 1 章 · 初识 AI Infra
 
@@ -154,5 +154,43 @@
 
 | 案例 | 引用章节 |
 | --- | :--: |
-| [DSec：Agent RL 沙箱平台的资源与状态](dsec-sandbox-platform.md) | 11、13、16 |
-| [优化结果与 Agent 执行记录](evaluation-and-agent-records.md) | 11、16 |
+| [DSec：Agent RL 沙箱平台的资源与状态](dsec-sandbox-platform.md) | 11、13、16、18 |
+| [优化结果与 Agent 执行记录](evaluation-and-agent-records.md) | 11、16、20 |
+
+## 第 17 章 · 原生多模态、视频生成（DiT）与世界模型计算系统
+
+| 案例 | 引用章节 |
+| --- | :--: |
+| [理解之外：Omni、语音、图像与视频生成](generative-multimodal-models.md) | 2、3、17 |
+| [多模态输入的字节、状态与阶段放置](multimodal-stage-placement.md) | 3、12、17 |
+
+## 第 18 章 · 大规模后训练、强化学习（RLVR）与合成数据系统
+
+| 案例 | 引用章节 |
+| --- | :--: |
+| [RL 阶段切换与权重分发](weight-handoff.md) | 5、10、18 |
+| [历史草稿、验证产出与 RL 供给](history-drafts-and-rollout.md) | 8、18 |
+| [MiMo-V2.6 两次 RL 运行的中断与恢复](mimo-v26-rl-interruptions.md) | 10、18 |
+| [RL 作业的交错执行与故障恢复](rl-scheduling-and-recovery.md) | 10、11、18 |
+| [RL 中的状态、版本与可复现性](rl-state-and-reproducibility.md) | 10、18 |
+| [RL 长尾、样本选择与流式训练](rollout-tail-and-sampling.md) | 10、11、18 |
+| [可抢占 rollout 的权重准备与有效产出](preemptible-rollout-and-weight-readiness.md) | 11、18 |
+| [RL 验证的剩余时间与资源配置](reward-deadlines-and-feedback.md) | 11、18 |
+| [DSec：Agent RL 沙箱平台的资源与状态](dsec-sandbox-platform.md) | 11、13、16、18 |
+
+## 第 19 章 · 具身智能（VLA）、实时控制与大规模物理仿真底座
+
+| 案例 | 引用章节 |
+| --- | :--: |
+| [多模态输入的字节、状态与阶段放置](multimodal-stage-placement.md) | 3、12、17、19 |
+| [MacBook 与 RTX PRO 6000：从存储组织到本地推理](macbook-rtx-pro6000.md) | 4、5、12、19 |
+
+## 第 20 章 · 十万卡集群可靠性工程、静默数据损坏（SDC）防御与基准评测科学
+
+| 案例 | 引用章节 |
+| --- | :--: |
+| [从性能反馈到推理、训练优化](execution-feedback.md) | 5、20 |
+| [自动优化的成绩与部署收益](optimization-evaluation-and-deployment.md) | 5、20 |
+| [集合通信的实际路径与等待来源](collective-paths-and-diagnosis.md) | 6、7、10、20 |
+| [配置预测接近时，应该补测什么](profile-and-plan-ranking.md) | 6、10、20 |
+| [优化结果与 Agent 执行记录](evaluation-and-agent-records.md) | 11、16、20 |

@@ -1,0 +1,24 @@
+{
+  "sources": [
+    {
+      "path": "manuscripts/ch19/build.py",
+      "sha256": "cf9f3ff979fb70232273615f828d1bbb1e365c7e8d552f72ff122bf968f48c9d"
+    },
+    {
+      "path": "manuscripts/ch19/figure-data.json",
+      "sha256": "440526b92e91976dc651d95fdbaf1892c08c9ff986438941c026dc95d14d13c0"
+    },
+    {
+      "path": "manuscripts/ch19/figure-index.json",
+      "sha256": "c99032340f8ac657dbc62df8912f11ce739a7f06ab3a6219ed834af34a3265e3"
+    },
+    {
+      "path": "experiments/ch19/19-01/run.py",
+      "sha256": "74beda44019327a6398bd45cba8670050f2b28a3ab0bd53b8f6cba5249f93610"
+    },
+    {
+      "path": "manuscripts/19-具身智能（VLA）、实时控制与大规模物理仿真底座.md",
+      "sha256": "d0afbca008cdf14ceef5bab24c838db7b2e59804e62c854f7c2d059825faff4a"
+    }
+  ]
+}

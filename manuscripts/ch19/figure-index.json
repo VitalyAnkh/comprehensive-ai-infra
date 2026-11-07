@@ -1,0 +1,232 @@
+[
+  {
+    "figure_id": "图 19-1",
+    "number": 1,
+    "file": "ch19-cloud-llm-slo-vs-embodied-hard-realtime.svg",
+    "asset": "ch19/ch19-cloud-llm-slo-vs-embodied-hard-realtime.svg",
+    "section": "19.1.1",
+    "caption": "云端对话软实时 SLO 与物理世界闭环控制硬实时截止期（盲飞位移 Δx = v·Δt_inf，算例 19-1）对比",
+    "source_refs": [
+      "experiments/ch19/19-01/run.py",
+      "manuscripts/ch19/figure-data.json"
+    ],
+    "TeachingRole": "建立时间延迟向物理空间碰撞误差转化的第一性原理公式",
+    "figure": "19-1",
+    "name": "ch19-cloud-llm-slo-vs-embodied-hard-realtime"
+  },
+  {
+    "figure_id": "图 19-2",
+    "number": 2,
+    "file": "ch19-vlalagbench-latency-vs-dynamic-grasp-success.svg",
+    "asset": "ch19/ch19-vlalagbench-latency-vs-dynamic-grasp-success.svg",
+    "section": "19.1.2",
+    "caption": "VLALagBench 实证规律：静态操作 vs. 动态操作随推理延迟 Δt_inf 增大的成功率退化曲线",
+    "source_refs": [
+      "experiments/ch19/19-01/run.py",
+      "manuscripts/ch19/figure-data.json"
+    ],
+    "TeachingRole": "揭示观测过时（Observation Staleness）导致 100 ms 以上动态抓取成功率崩塌的机理",
+    "figure": "19-2",
+    "name": "ch19-vlalagbench-latency-vs-dynamic-grasp-success"
+  },
+  {
+    "figure_id": "图 19-3",
+    "number": 3,
+    "file": "ch19-action-chunking-and-temporal-ensembling.svg",
+    "asset": "ch19/ch19-action-chunking-and-temporal-ensembling.svg",
+    "section": "19.1.3",
+    "caption": "动作块预测（Action Chunking H 步）与滑动窗口指数加权时间集成（Temporal Ensembling）时序图",
+    "source_refs": [
+      "manuscripts/ch19/figure-data.json"
+    ],
+    "TeachingRole": "剖析动作块长度在抑制高频抖动与引入开环盲区之间的工程权衡",
+    "figure": "19-3",
+    "name": "ch19-action-chunking-and-temporal-ensembling"
+  },
+  {
+    "figure_id": "图 19-4",
+    "number": 4,
+    "file": "ch19-system2-vlm-system1-flow-matching-dual-loop.svg",
+    "asset": "ch19/ch19-system2-vlm-system1-flow-matching-dual-loop.svg",
+    "section": "19.2.1",
+    "caption": "System 2（2 Hz 多模态 VLM 慢思考）+ System 1（100 Hz Flow-Matching 动作头快反射）双频异步架构",
+    "source_refs": [
+      "experiments/ch19/19-01/run.py",
+      "manuscripts/ch19/figure-data.json"
+    ],
+    "TeachingRole": "展示 50:1 双频异步协同如何兼顾大模型语义泛化与 10 ms 硬实时闭环控制",
+    "figure": "19-4",
+    "name": "ch19-system2-vlm-system1-flow-matching-dual-loop"
+  },
+  {
+    "figure_id": "图 19-5",
+    "number": 5,
+    "file": "ch19-jetson-thor-mig-rtos-deterministic-isolation.svg",
+    "asset": "ch19/ch19-jetson-thor-mig-rtos-deterministic-isolation.svg",
+    "section": "19.2.2",
+    "caption": "NVIDIA Jetson Thor / Drive Thor 上利用 GPU MIG 分区与无锁共享内存隔离 System 2 干扰的 WCET 保障",
+    "source_refs": [
+      "experiments/ch19/19-01/run.py"
+    ],
+    "TeachingRole": "解析硬件级缓存/带宽隔离与 PREEMPT_RT 核绑定如何锁定 WCET ≤ 4.2 ms",
+    "figure": "19-5",
+    "name": "ch19-jetson-thor-mig-rtos-deterministic-isolation"
+  },
+  {
+    "figure_id": "图 19-6",
+    "number": 6,
+    "file": "ch19-flow-matching-ode-steps-vs-control-jitter.svg",
+    "asset": "ch19/ch19-flow-matching-ode-steps-vs-control-jitter.svg",
+    "section": "19.2.1",
+    "caption": "动作生成头中 DDPM 多步采样 vs. Flow-Matching 少步确定性 ODE 积分的周期稳定性对比",
+    "source_refs": [
+      "experiments/ch19/19-01/run.py"
+    ],
+    "TeachingRole": "说明最优传输直线流匹配与静态 CUDA Graph 如何消除扩散采样抖动",
+    "figure": "19-6",
+    "name": "ch19-flow-matching-ode-steps-vs-control-jitter"
+  },
+  {
+    "figure_id": "图 19-7",
+    "number": 7,
+    "file": "ch19-cpu-sim-pcie-bottleneck-vs-gpu-native-sim.svg",
+    "asset": "ch19/ch19-cpu-sim-pcie-bottleneck-vs-gpu-native-sim.svg",
+    "section": "19.3.1",
+    "caption": "传统 CPU 物理仿真 + PCIe 往返（43.39 GB/s 瓶颈）vs. GPU 原生万级并行仿真的数据零搬移闭环",
+    "source_refs": [
+      "experiments/ch19/19-01/run.py",
+      "manuscripts/ch19/figure-data.json"
+    ],
+    "TeachingRole": "定量证明 4,096 环境跨 PCIe 传输观测必撞带宽墙，必须全驻留 GPU 显存",
+    "figure": "19-7",
+    "name": "ch19-cpu-sim-pcie-bottleneck-vs-gpu-native-sim"
+  },
+  {
+    "figure_id": "图 19-8",
+    "number": 8,
+    "file": "ch19-physics-renderer-policy-three-way-sm-budget.svg",
+    "asset": "ch19/ch19-physics-renderer-policy-three-way-sm-budget.svg",
+    "section": "19.3.2",
+    "caption": "单张 GPU 内刚体接触求解器、批量光线追踪渲染器与 VLA 策略网络的三方显存（25.52 GiB）与 SM 分配",
+    "source_refs": [
+      "experiments/ch19/19-01/run.py",
+      "manuscripts/ch19/figure-data.json"
+    ],
+    "TeachingRole": "核算 4,096 并行环境在 HBM 与 132 个 SM（CUDA/RT/Tensor Core）上的协同账本",
+    "figure": "19-8",
+    "name": "ch19-physics-renderer-policy-three-way-sm-budget"
+  },
+  {
+    "figure_id": "图 19-9",
+    "number": 9,
+    "file": "ch19-contact-divergence-warp-inefficiency.svg",
+    "asset": "ch19/ch19-contact-divergence-warp-inefficiency.svg",
+    "section": "19.3.2",
+    "caption": "4,096 个并行仿真环境中稀疏多点碰撞导致的 SIMT Warp 分支发散与流式紧缩重排序",
+    "source_refs": [
+      "manuscripts/ch19/figure-data.json"
+    ],
+    "TeachingRole": "展示按活跃接触对流式紧缩（Stream Compaction）如何解决 GPU 物理求解分支发散",
+    "figure": "19-9",
+    "name": "ch19-contact-divergence-warp-inefficiency"
+  },
+  {
+    "figure_id": "图 19-10",
+    "number": 10,
+    "file": "ch19-multi-camera-tiled-rendering-zero-copy-tensor.svg",
+    "asset": "ch19/ch19-multi-camera-tiled-rendering-zero-copy-tensor.svg",
+    "section": "19.3.1",
+    "caption": "多环境相机画布拼接渲染（Tiled Rendering）直接映射为 PyTorch 张量避免逐环境小 Kernel 启动",
+    "source_refs": [
+      "manuscripts/ch19/figure-data.json"
+    ],
+    "TeachingRole": "通过单次大画布光追与 DLPack 零拷贝映射消除 8,192 次微调用开销",
+    "figure": "19-10",
+    "name": "ch19-multi-camera-tiled-rendering-zero-copy-tensor"
+  },
+  {
+    "figure_id": "图 19-11",
+    "number": 11,
+    "file": "ch19-multi-sensor-ptp-hardware-trigger-alignment.svg",
+    "asset": "ch19/ch19-multi-sensor-ptp-hardware-trigger-alignment.svg",
+    "section": "19.4.1",
+    "caption": "多目相机曝光、激光雷达扫描、IMU 与关节力矩传感器的微秒级硬件 PTP 时间戳对齐",
+    "source_refs": [
+      "manuscripts/ch19/figure-data.json"
+    ],
+    "TeachingRole": "对比软件接收时间戳抖动与硬件曝光触发 + SE(3) 插值对齐的精度差异",
+    "figure": "19-11",
+    "name": "ch19-multi-sensor-ptp-hardware-trigger-alignment"
+  },
+  {
+    "figure_id": "图 19-12",
+    "number": 12,
+    "file": "ch19-shadow-mode-disagreement-edge-trigger.svg",
+    "asset": "ch19/ch19-shadow-mode-disagreement-edge-trigger.svg",
+    "section": "19.4.2",
+    "caption": "真机影子模式（Shadow Mode）：利用策略动作分歧度触发 0.5% 难例切片回传（省带宽 200 倍，算例 19-5）",
+    "source_refs": [
+      "experiments/ch19/19-01/run.py",
+      "manuscripts/ch19/figure-data.json"
+    ],
+    "TeachingRole": "核算机载环形黑匣子与边缘难例触发将单机日传数据从 2.592 TB 压至 12.96 GB",
+    "figure": "19-12",
+    "name": "ch19-shadow-mode-disagreement-edge-trigger"
+  },
+  {
+    "figure_id": "图 19-13",
+    "number": 13,
+    "file": "ch19-3dgs-neural-reconstruction-sim2real-loop.svg",
+    "asset": "ch19/ch19-3dgs-neural-reconstruction-sim2real-loop.svg",
+    "section": "19.4.2",
+    "caption": "利用真机难例日志构建 3D 高斯泼溅（3DGS）可微数字孪生场景并用于闭环重仿真的完整流水线",
+    "source_refs": [
+      "manuscripts/ch19/figure-data.json"
+    ],
+    "TeachingRole": "结合 3DGS 新视角合成与物理碰撞网格实现照片级反事实闭环重仿真",
+    "figure": "19-13",
+    "name": "ch19-3dgs-neural-reconstruction-sim2real-loop"
+  },
+  {
+    "figure_id": "图 19-14",
+    "number": 14,
+    "file": "ch19-onboard-vs-mec-edge-offload-safety-fallback.svg",
+    "asset": "ch19/ch19-onboard-vs-mec-edge-offload-safety-fallback.svg",
+    "section": "19.2.2",
+    "caption": "机载端侧计算与局域 5G/Wi-Fi 7 边缘卸载的抖动边界及本地控制屏障安全护盾（CBF）",
+    "source_refs": [
+      "manuscripts/ch19/figure-data.json"
+    ],
+    "TeachingRole": "确立仅卸载慢速语义规划、端侧保留高频闭环与 1,000 Hz 安全护盾的容错边界",
+    "figure": "19-14",
+    "name": "ch19-onboard-vs-mec-edge-offload-safety-fallback"
+  },
+  {
+    "figure_id": "图 19-15",
+    "number": 15,
+    "file": "ch19-vla-early-exit-and-token-pruning-wcet.svg",
+    "asset": "ch19/ch19-vla-early-exit-and-token-pruning-wcet.svg",
+    "section": "19.2.2",
+    "caption": "面向硬实时截止期的多视角视觉词元固定配额剪枝（VLA-Pruner）与层早退机制",
+    "source_refs": [
+      "manuscripts/ch19/figure-data.json"
+    ],
+    "TeachingRole": "说明为何必须采用固定 Top-K 词元配额才能保持静态张量形状与 CUDA Graph 兼容性",
+    "figure": "19-15",
+    "name": "ch19-vla-early-exit-and-token-pruning-wcet"
+  },
+  {
+    "figure_id": "图 19-16",
+    "number": 16,
+    "file": "ch19-embodied-ai-full-stack-infrastructure-map.svg",
+    "asset": "ch19/ch19-embodied-ai-full-stack-infrastructure-map.svg",
+    "section": "19.4.2",
+    "caption": "具身智能从万级 GPU 物理仿真、双频实时机载推理到车队影子数据飞轮的全栈基础设施总图",
+    "source_refs": [
+      "experiments/ch19/19-01/run.py"
+    ],
+    "TeachingRole": "收束第 19 章硬实时控制、GPU 原生仿真与 Sim-to-Real 数据闭环的工程总账本",
+    "figure": "19-16",
+    "name": "ch19-embodied-ai-full-stack-infrastructure-map"
+  }
+]
