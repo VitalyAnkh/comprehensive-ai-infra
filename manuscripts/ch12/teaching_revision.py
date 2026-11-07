@@ -228,6 +228,42 @@ def draw(here,data):
         box(a,.52,.31,.45,.18,'远端云集群（H100 / B200）：\n3.35–8.0 TB/s 支撑超长上下文\n受广域网上行与 200 ms RTT 制约','purple',11)
         box(a,.52,.05,.45,.20,'Ollama 配对评测铁律：\n剥离 load_duration 冷启动\n严防 KV 缓存命中造成虚假加速','orange',11)
         out.save(f,'ch12-m2max-rtxpro6000-cloud-three-tier')
+
+        # Path-D new figure 1: ch12-npu-static-chunked-graph-and-flexsp (Fig 12-39)
+        f,a=canvas(6.4)
+        text(a,.25,.95,'A. NPU 静态分块图与填充开销',12,ha='center')
+        text(a,.745,.95,'B. FlexSP 变长序列与通信',12,ha='center')
+        a.plot([.495,.495],[.03,.97],color=COL['line'],ls='--',lw=1.0)
+
+        box(a,.03,.76,.44,.14,'Hexagon NPU / ExecuTorch：\n算子图须按固定块长 B 编译','blue',11)
+        box(a,.03,.53,.44,.17,'填充浪费：L_p=513 按 B=256\n切 3 块实算 768 词元 (+49.7%)','orange',11)
+        box(a,.03,.30,.44,.17,'细粒度 B=128：切为 5 块\n实算 640 词元（多算 127 个）','green',11)
+        box(a,.03,.04,.44,.20,'llm.npu / MLLM 异构协同：\nNPU 跑 INT8 块，CPU 跑补偿','gray',11)
+
+        box(a,.52,.76,.45,.14,'同为 8192 词元的不同分箱：\n[4096,4096] vs [7168,1024]','blue',11)
+        box(a,.52,.53,.45,.17,'因果注意力对数差 1.56×~2.0×\n长文档配更高 SP 度数降显存','purple',11)
+        box(a,.52,.30,.45,.17,'Ulysses GQA 陷阱 (Qwen3)：\n先扩 KV 使载荷 12 增至 24KiB','orange',11)
+        box(a,.52,.04,.45,.20,'梯度归约：按有效词元加权\n(token_mean 2.75 vs 均值 2.0)','green',11)
+        out.save(f,'ch12-npu-static-chunked-graph-and-flexsp')
+
+        # Path-D new figure 2: ch12-mobile-thermal-throttling-and-mlx-mtp (Fig 12-40)
+        f,a=canvas(6.4)
+        text(a,.25,.95,'A. 手机散热墙与热降频相变',12,ha='center')
+        text(a,.745,.95,'B. Apple MLX 与 MTP 投机',12,ha='center')
+        a.plot([.495,.495],[.03,.97],color=COL['line'],ls='--',lw=1.0)
+
+        box(a,.03,.76,.44,.14,'瞬时冲刺 (0~t_th)：18 W 跑满\n84.8 GB/s 带宽 (15.5 token/s)','blue',11)
+        arrow(a,(.25,.76),(.25,.67),'data')
+        box(a,.03,.50,.44,.16,'触温上限触发 DVFS 降频：\n稳态功率墙降至 8.5~13.8 W','orange',11)
+        arrow(a,(.25,.50),(.25,.41),'data')
+        box(a,.03,.24,.44,.16,'LPDDR5X 与 SoC 频率下调：\n持续吞吐跌落 30%~45%','purple',11)
+        box(a,.03,.04,.44,.15,'评测铁律：禁冷启动短测冒充\n须测 10 分钟热平衡吞吐与能耗','gray',11)
+
+        box(a,.52,.76,.45,.14,'Ollama v0.31 集成 MLX：\nUMA 统一内存零拷贝直驱 GPU','blue',11)
+        box(a,.52,.53,.45,.17,'多词元预测 (MTP) 投机收益：\n单步验 γ+1 词元，权重读 1 次','green',11)
+        box(a,.52,.30,.45,.17,'算术强度跃升：接受率 α=0.8\n期望产 2.44 词元，提速 2.1×','purple',11)
+        box(a,.52,.04,.45,.20,'端侧能效红利：摊薄词元访存\n翻转能耗，推迟热降频相变','orange',11)
+        out.save(f,'ch12-mobile-thermal-throttling-and-mlx-mtp')
     data['12-ufs-vla']={'kind':'teaching_bound','sparse_ffn_gb':1.28,'rand_bw_gbps':0.4,'bundle_bw_gbps':3.2,
         'win_reuse':0.75,'step_s':[3.20,0.40,0.10],'vla_horizon_ms':500,'vla_plan_ms':200,'vla_base_ms':80,'vla_jitter_max_ms':220}
     out.finish();return out.outputs,out.checks

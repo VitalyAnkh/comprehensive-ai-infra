@@ -186,6 +186,42 @@ def draw(here,data):
         box(a,.52,.31,.45,.18,'叠加 6 s 交付期限门槛：\nB 命中 4 s 达标、未中 12 s\n0.98h ≥ 0.90 => h ≥ 91.84%','green',11)
         box(a,.52,.05,.45,.20,'两级级联路由（TC-17）：\nE[C] = c_r + c_S + r·c_L(h_L)\n跨模型不可直接共享 KV 块','orange',11)
         out.save(f,'ch11-api-pricing-vs-provider-cost-and-routing')
+
+        # Path-D new figure 1: ch11-serverless-coldstart-and-hydraserve (Fig 11-54)
+        f,a=canvas(6.4)
+        text(a,.25,.95,'A. Breaking the Ice 冷启动瀑布',12,ha='center')
+        text(a,.745,.95,'B. HydraServe 跨机临时 PP',12,ha='center')
+        a.plot([.495,.495],[.03,.97],color=COL['line'],ls='--',lw=1.0)
+
+        box(a,.03,.76,.44,.14,'① 容器与进程初始化 (1.5-3.0 s)\nCUDA 上下文与通信环建立','gray',11)
+        arrow(a,(.25,.76),(.25,.67),'data')
+        box(a,.03,.50,.44,.16,'② 权重拉取与加载 (16-671 GB)\n受限磁盘/网卡带宽，占大头','orange',11)
+        arrow(a,(.25,.50),(.25,.41),'data')
+        box(a,.03,.24,.44,.16,'③ KV 分配与 ④ CUDA Graph\n遍历多档 Batch 编译 (5-15 s)','purple',11)
+        box(a,.03,.04,.44,.15,'⑤ 预热与注册；TPU 集群实测\nMPG = SG×RG×PG = 33.33%','blue',11)
+
+        box(a,.52,.76,.45,.14,'冷启动显存赤字：671 GB 权重\n单机空闲 HBM 仅 120 GB','orange',11)
+        box(a,.52,.53,.45,.17,'HydraServe (NSDI 26) 临时 PP：\n拼合 6 节点各 120 GB 空闲碎片','blue',11)
+        box(a,.52,.30,.45,.17,'经 100G/400G RDMA 传层间激活\n立即可接流，边服务边预热','green',11)
+        box(a,.52,.04,.45,.20,'FaaScale (MLSys 26) 弹性扩缩：\n消除冷启动断流，掩盖整机拉起','gray',11)
+        out.save(f,'ch11-serverless-coldstart-and-hydraserve')
+
+        # Path-D new figure 2: ch11-weave-rlboost-interleaving-and-spot (Fig 11-55)
+        f,a=canvas(6.4)
+        text(a,.25,.95,'A. Weave 多作业 CPU-GPU 交错',12,ha='center')
+        text(a,.745,.95,'B. RLBoost 抢占实例弹性卸载',12,ha='center')
+        a.plot([.495,.495],[.03,.97],color=COL['line'],ls='--',lw=1.0)
+
+        box(a,.03,.76,.44,.14,'互补 RL 作业共享同一对资源池\nRollout 与训练阶段反相交错','blue',11)
+        box(a,.03,.53,.44,.17,'休眠阶段状态卸载至主机 DRAM\n热切换仅 5 s（冷加载 45 s）','green',11)
+        box(a,.03,.30,.44,.17,'周期下界与内存容量红线：\n双作业驻留须核验 1 TiB 上限','orange',11)
+        box(a,.03,.04,.44,.20,'OSDI 26 实测：消除双池空置\n大幅提升多租户集群有效产出','gray',11)
+
+        box(a,.52,.76,.45,.14,'主组 8×H100 ($83.79/h) + 6 组\n2×H100 Spot 实例 ($5.32/h)','purple',11)
+        box(a,.52,.53,.45,.17,'新实例轮内即时拉取权重参战\n共享 200G 出口下界 3.93 s','blue',11)
+        box(a,.52,.30,.45,.17,'抢占迁移：保留已生成输出前缀\n换实例重做 Prefill（组内截齐）','orange',11)
+        box(a,.52,.04,.45,.20,'成本盈亏门槛：费率 1.381×\n实测吞吐 1.5-2.0×，省 22-37%','green',11)
+        out.save(f,'ch11-weave-rlboost-interleaving-and-spot')
     from dsec_figures import draw as draw_dsec
     draw_dsec(out)
     from core_principles_figures import draw as draw_principles
