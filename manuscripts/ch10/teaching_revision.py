@@ -259,6 +259,42 @@ def draw(here,data):
         box(a,.52,.31,.45,.18,'物理层冗余复制与重排（EPLB）：\n为热点逻辑专家复制多份物理权重\n均匀分流跨卡 All-to-All 请求','blue',11)
         box(a,.52,.05,.45,.20,'系统资源代价（如 EP144）：\n需预留冗余专家 HBM（如 32 槽）\n周期性按观测窗口跨网迁移副本','gray',11)
         out.save(f,'ch10-training-bias-balance-vs-inference-eplb')
+
+        # New Path-D figure 1: ch10-sglang-weight-update-six-stage-boundary (Fig 10-53)
+        f,a=canvas(6.4)
+        text(a,.25,.95,'A. SGLang 热更新六阶段职责边界',12,ha='center')
+        text(a,.745,.95,'B. [成功,成功,失败,成功] 失败边界',12,ha='center')
+        a.plot([.495,.495],[.03,.97],color=COL['line'],ls='--',lw=1.0)
+
+        box(a,.03,.76,.44,.14,'① 请求进入与 ② 暂停生成\n读锁放行；is_pause 挂起/撤回','blue',11)
+        arrow(a,(.25,.76),(.25,.67),'data')
+        box(a,.03,.50,.44,.16,'③ 提交更新与 ④ 汇总 all(success)\n磁盘/张量写锁，IPC/分布式无锁','orange',11)
+        arrow(a,(.25,.50),(.25,.41),'data')
+        box(a,.03,.24,.44,.16,'⑤ 发布管理信息（仅全成功生效）\n更新 model_path 并递增版本号','green',11)
+        box(a,.03,.04,.44,.15,'⑥ 恢复生成（不查前序成败）\ncontinue_generation 须显式调用','gray',11)
+
+        box(a,.52,.76,.45,.14,'四分片返回 [T, T, F, T]：\nall(success)=False，拒发新版本号','purple',11)
+        box(a,.52,.53,.45,.17,'就地修改 (load_weights) 无回滚：\n分片 1/2/4 新权重，分片 3 半成品','orange',11)
+        box(a,.52,.30,.45,.17,'投机解码 (EAGLE) 非原子更新：\ntarget 成功而 draft 失败致失配','orange',11)
+        box(a,.52,.04,.45,.20,'恢复正道：禁直接恢复生成\n须统一下发重载旧权重并清空 KV','green',11)
+        out.save(f,'ch10-sglang-weight-update-six-stage-boundary')
+
+        # New Path-D figure 2: ch10-bytecheckpoint-resharding-and-checkmate (Fig 10-54)
+        f,a=canvas(6.4)
+        text(a,.25,.95,'A. ByteCheckpoint 异步与重分片',12,ha='center')
+        text(a,.745,.95,'B. Checkmate 无盘内存对等恢复',12,ha='center')
+        a.plot([.495,.495],[.03,.97],color=COL['line'],ls='--',lw=1.0)
+
+        box(a,.03,.76,.44,.14,'进程级 Stager + 计划缓存 (2.14)\nstaging 后即恢复训练 (0.59 s)','blue',11)
+        box(a,.03,.53,.44,.17,'1856 卡 H200 Llama3-70B 实测：\n后台落盘 436 s -> 67 s (6.5×)','green',11)
+        box(a,.03,.30,.44,.17,'2400 -> 4800 卡重分片：\nGPU 62.10 s；全状态 401.21 s','orange',11)
+        box(a,.03,.04,.44,.20,'木桶瓶颈：CPU Dataloader 长尾\n需异步双缓冲与流式游标解耦','gray',11)
+
+        box(a,.52,.76,.45,.14,'远端 PFS 带宽瓶颈：\n万卡并发写数 TB 易触发严重拥塞','orange',11)
+        box(a,.52,.53,.45,.17,'Checkmate (NSDI 26) 内存冗余：\n经 RDMA 镜像至邻近健康节点','blue',11)
+        box(a,.52,.30,.45,.17,'单节点故障恢复路径：\n备用节点从对等端内存拉取状态','green',11)
+        box(a,.52,.04,.45,.20,'结合张量重计算消除磁盘往返：\n恢复耗时较传统 PFS 缩短十倍','purple',11)
+        out.save(f,'ch10-bytecheckpoint-resharding-and-checkmate')
     from core_principles_figures import draw as draw_principles
     draw_principles(10, out)
     out.finish();return out.outputs,out.checks

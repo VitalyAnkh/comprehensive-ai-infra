@@ -1,202 +1,210 @@
 [
   {
-    "number": 1,
-    "name": "figure-9-1-organization"
+    "name": "figure-9-1-organization",
+    "number": 1
   },
   {
-    "number": 2,
-    "name": "figure-9-organization-1"
+    "name": "figure-9-organization-1",
+    "number": 2
   },
   {
-    "number": 3,
-    "name": "figure-9-organization-2"
+    "name": "figure-9-organization-2",
+    "number": 3
   },
   {
-    "number": 4,
-    "name": "figure-9-organization-3"
+    "name": "figure-9-organization-3",
+    "number": 4
   },
   {
-    "number": 5,
-    "name": "figure-9-2-state"
+    "name": "figure-9-2-state",
+    "number": 5
   },
   {
-    "number": 6,
-    "name": "figure-9-kv-residency"
+    "name": "figure-9-kv-residency",
+    "number": 6
   },
   {
-    "number": 7,
-    "name": "figure-9-kv-publish"
+    "name": "figure-9-kv-publish",
+    "number": 7
   },
   {
-    "number": 8,
-    "name": "figure-9-kv-release"
+    "name": "figure-9-kv-release",
+    "number": 8
   },
   {
-    "number": 9,
-    "name": "figure-9-chunked-vs-pd"
+    "name": "figure-9-chunked-vs-pd",
+    "number": 9
   },
   {
-    "number": 10,
-    "name": "figure-9-pd-layout"
+    "name": "figure-9-pd-layout",
+    "number": 10
   },
   {
-    "number": 11,
-    "name": "figure-9-3-pd"
+    "name": "figure-9-3-pd",
+    "number": 11
   },
   {
-    "number": 12,
-    "name": "figure-9-4-allocation"
+    "name": "figure-9-4-allocation",
+    "number": 12
   },
   {
-    "number": 13,
-    "name": "figure-9-5-local"
+    "name": "figure-9-5-local",
+    "number": 13
   },
   {
-    "number": 14,
-    "name": "figure-9-local-cpu"
+    "name": "figure-9-local-cpu",
+    "number": 14
   },
   {
-    "number": 15,
-    "name": "figure-9-6-reuse"
+    "name": "figure-9-6-reuse",
+    "number": 15
   },
   {
-    "number": 16,
-    "name": "figure-9-cpu-bottleneck"
+    "name": "figure-9-cpu-bottleneck",
+    "number": 16
   },
   {
-    "number": 17,
-    "name": "figure-9-expert-footprint"
+    "name": "figure-9-expert-footprint",
+    "number": 17
   },
   {
-    "number": 18,
-    "name": "figure-9-ep-layer"
+    "name": "figure-9-ep-layer",
+    "number": 18
   },
   {
-    "number": 19,
-    "name": "figure-9-af-pingpong"
+    "name": "figure-9-af-pingpong",
+    "number": 19
   },
   {
-    "number": 20,
-    "name": "figure-9-mla-handoff"
+    "name": "figure-9-mla-handoff",
+    "number": 20
   },
   {
-    "number": 21,
-    "name": "figure-9-9-balance"
+    "name": "figure-9-9-balance",
+    "number": 21
   },
   {
-    "number": 22,
-    "name": "figure-9-balance-hotspot"
+    "name": "figure-9-balance-hotspot",
+    "number": 22
   },
   {
-    "number": 23,
-    "name": "figure-9-ep-scale-cards"
+    "name": "figure-9-ep-scale-cards",
+    "number": 23
   },
   {
-    "number": 24,
-    "name": "figure-9-ep-scale-sweep"
+    "name": "figure-9-ep-scale-sweep",
+    "number": 24
   },
   {
-    "number": 25,
-    "name": "figure-9-ep-skew"
+    "name": "figure-9-ep-skew",
+    "number": 25
   },
   {
-    "number": 26,
-    "name": "figure-9-10-experts"
+    "name": "figure-9-10-experts",
+    "number": 26
   },
   {
-    "number": 27,
-    "name": "figure-9-11-overlap"
+    "name": "figure-9-11-overlap",
+    "number": 27
   },
   {
-    "number": 28,
-    "name": "figure-9-overlap-pipeline"
+    "name": "figure-9-overlap-pipeline",
+    "number": 28
   },
   {
-    "number": 29,
-    "name": "figure-9-ep-tail"
+    "name": "figure-9-ep-tail",
+    "number": 29
   },
   {
-    "number": 30,
-    "name": "figure-9-cache-directory"
+    "name": "figure-9-cache-directory",
+    "number": 30
   },
   {
-    "number": 31,
-    "name": "figure-9-kv-tiers"
+    "name": "figure-9-kv-tiers",
+    "number": 31
   },
   {
-    "number": 32,
-    "name": "figure-9-kv-capacity"
+    "name": "figure-9-kv-capacity",
+    "number": 32
   },
   {
-    "number": 33,
-    "name": "figure-9-kv-hit"
+    "name": "figure-9-kv-hit",
+    "number": 33
   },
   {
-    "number": 34,
-    "name": "figure-9-kv-load-serial"
+    "name": "figure-9-kv-load-serial",
+    "number": 34
   },
   {
-    "number": 35,
-    "name": "figure-9-kv-load-layerwise"
+    "name": "figure-9-kv-load-layerwise",
+    "number": 35
   },
   {
-    "number": 36,
-    "name": "figure-9-kv-load-preload"
+    "name": "figure-9-kv-load-preload",
+    "number": 36
   },
   {
-    "number": 37,
-    "name": "figure-9-kv-prefetch"
+    "name": "figure-9-kv-prefetch",
+    "number": 37
   },
   {
-    "number": 38,
-    "name": "figure-9-12-cache"
+    "name": "figure-9-12-cache",
+    "number": 38
   },
   {
-    "number": 39,
-    "name": "figure-9-13-route"
+    "name": "figure-9-13-route",
+    "number": 39
   },
   {
-    "number": 40,
-    "name": "figure-9-route-1"
+    "name": "figure-9-route-1",
+    "number": 40
   },
   {
-    "number": 41,
-    "name": "figure-9-route-2"
+    "name": "figure-9-route-2",
+    "number": 41
   },
   {
-    "number": 42,
-    "name": "figure-9-route-3"
+    "name": "figure-9-route-3",
+    "number": 42
   },
   {
-    "number": 43,
-    "name": "figure-9-v41-routing"
+    "name": "figure-9-v41-routing",
+    "number": 43
   },
   {
-    "number": 44,
-    "name": "figure-9-17-service"
+    "name": "figure-9-17-service",
+    "number": 44
   },
   {
-    "number": 45,
-    "name": "figure-9-14-migration"
+    "name": "figure-9-14-migration",
+    "number": 45
   },
   {
-    "number": 46,
-    "name": "figure-9-15-recovery"
+    "name": "figure-9-15-recovery",
+    "number": 46
   },
   {
-    "number": 47,
-    "name": "figure-9-16-composition"
+    "name": "figure-9-16-composition",
+    "number": 47
   },
   {
-    "number": 48,
-    "name": "figure-9-composition-pool"
+    "name": "figure-9-composition-pool",
+    "number": 48
   },
   {
-    "number": 49,
-    "name": "ch09-pd-a100-h20-vs-af-ktransformers"
+    "name": "ch09-pd-a100-h20-vs-af-ktransformers",
+    "number": 49
   },
   {
-    "number": 50,
-    "name": "ch09-tenant-cache-salt-and-ep-fault-radius"
+    "name": "ch09-tenant-cache-salt-and-ep-fault-radius",
+    "number": 50
+  },
+  {
+    "name": "ch09-deepep-asymmetric-forwarding-and-bgda",
+    "number": 51
+  },
+  {
+    "name": "ch09-mooncake-kv-centric-and-early-rejection",
+    "number": 52
   }
 ]

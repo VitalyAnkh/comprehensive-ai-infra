@@ -187,6 +187,44 @@ def draw(here,data):
         box(a,.52,.31,.45,.18,'冗余专家热切换（EP64 -> EP63）\n路由切向热备副本，免冷加载权重\n停机 T_outage 12 s -> 0.8 s','blue',11)
         box(a,.52,.04,.45,.21,'四阶段恢复与排空时间线：\n检测 -> 重建 -> WAL/KV 重放\n排空 T_drain = λT_out/(μ-λ)','gray',11)
         out.save(f,'ch09-tenant-cache-salt-and-ep-fault-radius')
+
+        # New Path-D figure 1: ch09-deepep-asymmetric-forwarding-and-bgda (Fig 9-51)
+        f,a=canvas(6.4)
+        text(a,.25,.95,'A. 高吞吐：RDMA->NVLink 转发',12,ha='center')
+        text(a,.745,.95,'B. 低延迟：IBGDA 与 0-SM 轮询',12,ha='center')
+        a.plot([.495,.495],[.03,.97],color=COL['line'],ls='--',lw=1.0)
+
+        box(a,.03,.75,.44,.15,'源节点 GPU i：跨机专家 Token\n先经 RDMA 发往对等 GPU i','blue',11)
+        arrow(a,(.25,.75),(.25,.66),'data')
+        box(a,.03,.49,.44,.16,'目标机 GPU i：经机内 NVLink\n二次转发至本机专家 GPU j','green',11)
+        box(a,.03,.27,.44,.17,'跨机 QP 扇出缩减 G=8 倍\n消除多卡争抢网卡与队头阻塞','orange',11)
+        box(a,.03,.05,.44,.17,'DeepEP V2（SM90/SM100）：\nCX7 8×2 达 90/81 GB/s (12 SM)','gray',11)
+
+        box(a,.52,.75,.45,.15,'GPU 线程直驱网卡门铃 (IBGDA)\n绕过 CPU 代理，单跳直达目标卡','blue',11)
+        arrow(a,(.745,.75),(.745,.66),'data')
+        box(a,.52,.49,.45,.16,'接收钩子 (Hook) 后台轮询完成\n零 SM 占用，让出算力给 MLA','green',11)
+        box(a,.52,.27,.45,.17,'V2 ElasticBuffer + NCCL Gin：\n峰值 1.3×，SM 压降 4× (4-6 SM)','purple',11)
+        box(a,.52,.05,.45,.17,'SwiftEP 整形 + cached_handle：\n消除微突发排队与解码期同步','gray',11)
+        out.save(f,'ch09-deepep-asymmetric-forwarding-and-bgda')
+
+        # New Path-D figure 2: ch09-mooncake-kv-centric-and-early-rejection (Fig 9-52)
+        f,a=canvas(6.4)
+        text(a,.25,.95,'A. Mooncake KV 中心解耦池',12,ha='center')
+        text(a,.745,.95,'B. 预测性早期拒绝机制',12,ha='center')
+        a.plot([.495,.495],[.03,.97],color=COL['line'],ls='--',lw=1.0)
+
+        box(a,.03,.75,.44,.15,'Conductor 全局调度器：\n维护全局块哈希目录与水位','blue',11)
+        arrow(a,(.25,.75),(.25,.66),'data')
+        box(a,.03,.49,.44,.16,'多级 KV 池 (HBM+DRAM+NVMe)\nRDMA 异步存取与前缀路由','green',11)
+        box(a,.03,.27,.44,.17,'vLLM 0.24 / Dynamo 1.3 边界：\n仅 HBM 发事件，防混合脏读','orange',11)
+        box(a,.03,.05,.44,.17,'长上下文吞吐提升最高 525%\nSLO 下承载力显著优于共置','gray',11)
+
+        box(a,.52,.75,.45,.15,'朴素准入陷阱：仅看 P 池空闲\n盲目接纳并耗费算力跑 Prefill','orange',11)
+        arrow(a,(.745,.75),(.745,.66),'data')
+        box(a,.52,.49,.45,.16,'交接至 D 池触发未来 KV 耗尽：\n在途生成增长致 OOM 驱逐重算','purple',11)
+        box(a,.52,.27,.45,.17,'Mooncake 预测性准入判据：\n预估未来窗 [t, t+T] 的 KV 水位','green',11)
+        box(a,.52,.05,.45,.17,'超上限 M_D_max 则 P 前拒绝\n或延后准入，零无效 Prefill','blue',11)
+        out.save(f,'ch09-mooncake-kv-centric-and-early-rejection')
     from v41_case_figures import draw as draw_v41
     draw_v41(9, out)
     out.finish();return out.outputs,out.checks
