@@ -1,0 +1,33 @@
+{
+  "experiment_id": "18-01",
+  "ppo_vs_grpo_32b": {
+    "ppo_total_state_gb": 1152,
+    "grpo_total_state_gb": 576,
+    "grpo_state_saving_pct": 50.0
+  },
+  "weave_and_robustrl": {
+    "weave_cycle_s": 480,
+    "weave_peak_h20": 216,
+    "weave_peak_h800": 152,
+    "robustrl_full_redo_s": 790,
+    "robustrl_preserve_rollout_s": 490,
+    "robustrl_saved_s": 300
+  },
+  "rollpacker": {
+    "target_responses": 1024,
+    "speculative_responses": 1600,
+    "speculative_headroom_pct": 56.25,
+    "long_prob_single_draw": 0.5,
+    "long_prob_two_slot_first": 0.25,
+    "serial_step_s": 60,
+    "stream_trainer_step_s": 55,
+    "per_microbatch_avg": 2.0,
+    "true_token_weighted_avg": 2.5
+  },
+  "distrs": {
+    "unconditional_mean_s": 10.9,
+    "naive_remaining_at_10s": 0.9,
+    "conditional_remaining_at_10s": 90.0,
+    "sunk_work_tokens": 216000
+  }
+}

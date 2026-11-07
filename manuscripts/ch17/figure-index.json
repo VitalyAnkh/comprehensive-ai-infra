@@ -1,0 +1,264 @@
+[
+  {
+    "figure_id": "图 17-1",
+    "number": 1,
+    "file": "ch17-1d-llm-vs-3d-spatiotemporal-dit-tokens.svg",
+    "asset": "ch17/ch17-1d-llm-vs-3d-spatiotemporal-dit-tokens.svg",
+    "section": "17.1.1",
+    "caption": "一维文本 Token 序列与 3D 视频扩散模型（T×H×W 潜空间分块，489,600 Tokens）的规模与算术强度对比",
+    "source_refs": [
+      "manuscripts/ch17/figure-data.json",
+      "experiments/ch17/17-01/run.py"
+    ],
+    "TeachingRole": "对比 1D LLM 自回归访存受限与 3D DiT 489,600 时空词元双向注意力算力墙",
+    "figure": "17-1",
+    "name": "ch17-1d-llm-vs-3d-spatiotemporal-dit-tokens"
+  },
+  {
+    "figure_id": "图 17-2",
+    "number": 2,
+    "file": "ch17-anyres-navit-dynamic-image-tiling.svg",
+    "asset": "ch17/ch17-anyres-navit-dynamic-image-tiling.svg",
+    "section": "17.1.1",
+    "caption": "AnyRes 动态高分辨率切片、NaViT 序列打包与 Qwen3-VL-4B DeepStack 特征（7.8125 MiB EC → 56.25 MiB KV，7.2x 放大）演化（算例 17-1）",
+    "source_refs": [
+      "case-studies/multimodal-stage-placement.md",
+      "experiments/ch17/17-01/run.py"
+    ],
+    "TeachingRole": "复算 Qwen3-VL-4B 单图 400 词元从 7.8125 MiB 编码特征膨胀为 56.25 MiB KV 缓存的 7.2 倍比值",
+    "figure": "17-2",
+    "name": "ch17-anyres-navit-dynamic-image-tiling"
+  },
+  {
+    "figure_id": "图 17-3",
+    "number": 3,
+    "file": "ch17-3d-causal-vae-memory-spike-and-tiling.svg",
+    "asset": "ch17/ch17-3d-causal-vae-memory-spike-and-tiling.svg",
+    "section": "17.1.3",
+    "caption": "3D 因果 VAE 解码阶段的特征图显存洪峰（突破 80 GB）与带重叠 Halo 的时空分块（Spatial-Temporal Tiling）解码（算例 17-3）",
+    "source_refs": [
+      "manuscripts/ch17/figure-data.json",
+      "experiments/ch17/17-01/run.py"
+    ],
+    "TeachingRole": "揭示视频去噪尾端 3D VAE 118.65 GiB 特征图洪峰及带 Halo 时空分块的百倍显存压缩",
+    "figure": "17-3",
+    "name": "ch17-3d-causal-vae-memory-spike-and-tiling"
+  },
+  {
+    "figure_id": "图 17-4",
+    "number": 4,
+    "file": "ch17-tp-vs-ulysses-vs-ring-attention-comm.svg",
+    "asset": "ch17/ch17-tp-vs-ulysses-vs-ring-attention-comm.svg",
+    "section": "17.2.2",
+    "caption": "张量并行（TP）、DeepSpeed-Ulysses（每层 4Nd/P，P ≤ n_head）与 Ring Attention（单步 2Nd/P、全环 2(P-1)Nd/P ≈ 2Nd，无头数限制）对比（算例 17-4）",
+    "source_refs": [
+      "manuscripts/ch17/figure-data.json",
+      "experiments/ch17/17-01/run.py"
+    ],
+    "TeachingRole": "精确对比 Ulysses 与 Ring Attention 的单步/全环通信公式及注意力头数上限约束",
+    "figure": "17-4",
+    "name": "ch17-tp-vs-ulysses-vs-ring-attention-comm"
+  },
+  {
+    "figure_id": "图 17-5",
+    "number": 5,
+    "file": "ch17-2d-usp-hybrid-ulysses-ring-topology.svg",
+    "asset": "ch17/ch17-2d-usp-hybrid-ulysses-ring-topology.svg",
+    "section": "17.2.3",
+    "caption": "2D 统一序列并行（USP）：节点内 NVLink 跑 Ulysses All-to-All + 跨节点 RoCE 跑 Ring Attention P2P 重叠流水",
+    "source_refs": [
+      "manuscripts/ch17/figure-data.json",
+      "experiments/ch17/17-01/run.py"
+    ],
+    "TeachingRole": "证明 8×8 2D-USP 可将跨节点 RDMA 流量从 7,530.47 MiB 压缩 9.0 倍至 836.72 MiB",
+    "figure": "17-5",
+    "name": "ch17-2d-usp-hybrid-ulysses-ring-topology"
+  },
+  {
+    "figure_id": "图 17-6",
+    "number": 6,
+    "file": "ch17-dbsp-dual-balanced-sequence-parallelism.svg",
+    "asset": "ch17/ch17-dbsp-dual-balanced-sequence-parallelism.svg",
+    "section": "17.2.3",
+    "caption": "db-SP（MLSys '26）面向变长多模态与因果掩码的双均衡序列切分",
+    "source_refs": [
+      "research/2026-infra-survey/reading-mlsys-2026.md"
+    ],
+    "TeachingRole": "解析模态内折返配对与跨样本重排如何消除因果/双向混合掩码导致的算力倾斜",
+    "figure": "17-6",
+    "name": "ch17-dbsp-dual-balanced-sequence-parallelism"
+  },
+  {
+    "figure_id": "图 17-7",
+    "number": 7,
+    "file": "ch17-distrifusion-displaced-patch-parallelism.svg",
+    "asset": "ch17/ch17-distrifusion-displaced-patch-parallelism.svg",
+    "section": "17.3.1",
+    "caption": "DistriFusion 异步位移 Patch 并行——利用第 t-1 步陈旧激活掩盖第 t 步跨卡通信",
+    "source_refs": [
+      "manuscripts/ch17/figure-data.json"
+    ],
+    "TeachingRole": "利用相邻扩散步激活缓变性将跨卡 KV 传输彻底移出当前步关键路径",
+    "figure": "17-7",
+    "name": "ch17-distrifusion-displaced-patch-parallelism"
+  },
+  {
+    "figure_id": "图 17-8",
+    "number": 8,
+    "file": "ch17-pipefusion-step-patch-2d-pipeline.svg",
+    "asset": "ch17/ch17-pipefusion-step-patch-2d-pipeline.svg",
+    "section": "17.3.1",
+    "caption": "PipeFusion 将空间分块与去噪时间步交错流水化的气泡消除时序图",
+    "source_refs": [
+      "manuscripts/ch17/figure-data.json"
+    ],
+    "TeachingRole": "展示空间分块与时间步二维交错流水如何将 50 次流水线排空气泡压缩为 1 次",
+    "figure": "17-8",
+    "name": "ch17-pipefusion-step-patch-2d-pipeline"
+  },
+  {
+    "figure_id": "图 17-9",
+    "number": 9,
+    "file": "ch17-teacache-timestep-residual-reuse.svg",
+    "asset": "ch17/ch17-teacache-timestep-residual-reuse.svg",
+    "section": "17.3.2",
+    "caption": "TeaCache / AdaCache 基于时间步特征差分的自适应跳步复用与质量—延迟帕累托曲线（算例 17-5）",
+    "source_refs": [
+      "manuscripts/ch17/figure-data.json",
+      "experiments/ch17/17-01/run.py"
+    ],
+    "TeachingRole": "量化免训练时间步残差复用跳过 28/50 步实现的 2.12x 端到端视频生成加速",
+    "figure": "17-9",
+    "name": "ch17-teacache-timestep-residual-reuse"
+  },
+  {
+    "figure_id": "图 17-10",
+    "number": 10,
+    "file": "ch17-sageattention3-fp4-quantized-attention.svg",
+    "asset": "ch17/ch17-sageattention3-fp4-quantized-attention.svg",
+    "section": "17.3.2",
+    "caption": "SageAttention 平滑均值抑制离群值与 FP8/FP4 块量化注意力的硬件加速路径",
+    "source_refs": [
+      "manuscripts/ch17/figure-data.json"
+    ],
+    "TeachingRole": "阐明减去 K 通道序列均值如何消除离群偏置并释放 FP8/FP4 Tensor Core 吞吐",
+    "figure": "17-10",
+    "name": "ch17-sageattention3-fp4-quantized-attention"
+  },
+  {
+    "figure_id": "图 17-11",
+    "number": 11,
+    "file": "ch17-interactive-world-model-rolling-kv-30fps.svg",
+    "asset": "ch17/ch17-interactive-world-model-rolling-kv-30fps.svg",
+    "section": "17.3.3",
+    "caption": "交互式世界模型（StreamDiffusionV2 / CausVid）的因果少步蒸馏与 <33.3 ms 滚动 KV 帧生成流水线",
+    "source_refs": [
+      "manuscripts/ch17/figure-data.json"
+    ],
+    "TeachingRole": "剖析块因果扩散、1–4 步蒸馏、滚动 KV 缓存与步间流式拼批如何达成 30 FPS 实时交互",
+    "figure": "17-11",
+    "name": "ch17-interactive-world-model-rolling-kv-30fps"
+  },
+  {
+    "figure_id": "图 17-12",
+    "number": 12,
+    "file": "ch17-epdg-four-stage-disaggregated-serving.svg",
+    "asset": "ch17/ch17-epdg-four-stage-disaggregated-serving.svg",
+    "section": "17.4.1",
+    "caption": "从 TriInfer（MLSys '26）混合 EPD 解耦到 vLLM-Omni 原生全模态 E-P-D-G 四阶段异构池化架构（算例 17-6）",
+    "source_refs": [
+      "case-studies/multimodal-stage-placement.md",
+      "research/2026-infra-survey/reading-mlsys-2026.md"
+    ],
+    "TeachingRole": "建立 Encode、Prefill、Decode、Generate 四池分离与 TriInfer 动态放置准则",
+    "figure": "17-12",
+    "name": "ch17-epdg-four-stage-disaggregated-serving"
+  },
+  {
+    "figure_id": "图 17-13",
+    "number": 13,
+    "file": "ch17-vit-embedding-cache-vs-llm-kv-cache.svg",
+    "asset": "ch17/ch17-vit-embedding-cache-vs-llm-kv-cache.svg",
+    "section": "17.4.2",
+    "caption": "多轮多模态对话中缓存原始图片、缓存 ViT 视觉特征（7.8125 MiB）与缓存 LLM 全层 KV（56.25 MiB）的体积与重算延迟折中",
+    "source_refs": [
+      "case-studies/multimodal-stage-placement.md",
+      "experiments/ch17/17-01/run.py"
+    ],
+    "TeachingRole": "证明在多轮对话温冷层缓存 EC 而非 KV 可节省 86.1% 内存并消除 ViT 重算",
+    "figure": "17-13",
+    "name": "ch17-vit-embedding-cache-vs-llm-kv-cache"
+  },
+  {
+    "figure_id": "图 17-14",
+    "number": 14,
+    "file": "ch17-audio-video-text-interleaved-batching.svg",
+    "asset": "ch17/ch17-audio-video-text-interleaved-batching.svg",
+    "section": "17.4.2",
+    "caption": "图文音交错流（Omni-modal）中模态专属编码器微批聚合与主干对齐调度",
+    "source_refs": [
+      "case-studies/multimodal-stage-placement.md"
+    ],
+    "TeachingRole": "解决图文音混合批次中重型模态编码阻塞纯文本快路径的异构气泡难题",
+    "figure": "17-14",
+    "name": "ch17-audio-video-text-interleaved-batching"
+  },
+  {
+    "figure_id": "图 17-15",
+    "number": 15,
+    "file": "ch17-multimodal-dataloader-gpu-decode-nvjpeg.svg",
+    "asset": "ch17/ch17-multimodal-dataloader-gpu-decode-nvjpeg.svg",
+    "section": "17.1.3",
+    "caption": "多模态预训练中 CPU 解码饥饿瓶颈与 DALI / nvJPEG / NVDEC 硬件视频解码卸载流水线",
+    "source_refs": [
+      "manuscripts/ch17/figure-data.json"
+    ],
+    "TeachingRole": "阐明为何必须在 PCIe 下游利用 GPU NVDEC/nvJPEG 硬解码消除 CPU 与总线瓶颈",
+    "figure": "17-15",
+    "name": "ch17-multimodal-dataloader-gpu-decode-nvjpeg"
+  },
+  {
+    "figure_id": "图 17-16",
+    "number": 16,
+    "file": "ch17-dit-cfg-classifier-free-guidance-parallel.svg",
+    "asset": "ch17/ch17-dit-cfg-classifier-free-guidance-parallel.svg",
+    "section": "17.2.3",
+    "caption": "分类器自由引导（CFG 双分支）与条件/无条件批量合并及尾部蒸馏对比",
+    "source_refs": [
+      "manuscripts/ch17/figure-data.json"
+    ],
+    "TeachingRole": "解析 CFG-Parallel 跨组单次通信优势及后段去噪关停无条件分支的算力节省",
+    "figure": "17-16",
+    "name": "ch17-dit-cfg-classifier-free-guidance-parallel"
+  },
+  {
+    "figure_id": "图 17-17",
+    "number": 17,
+    "file": "ch17-video-dit-end-to-end-latency-breakdown.svg",
+    "asset": "ch17/ch17-video-dit-end-to-end-latency-breakdown.svg",
+    "section": "17.3.2",
+    "caption": "1080p 视频生成从文本编码、50 步 DiT 去噪到 3D VAE 解码的端到端延迟与显存水位全貌",
+    "source_refs": [
+      "manuscripts/ch17/figure-data.json",
+      "experiments/ch17/17-01/run.py"
+    ],
+    "TeachingRole": "建立时间瓶颈在 DiT 去噪（94% 耗时）而显存尖峰在 3D VAE 解码（118 GiB）的正交视图",
+    "figure": "17-17",
+    "name": "ch17-video-dit-end-to-end-latency-breakdown"
+  },
+  {
+    "figure_id": "图 17-18",
+    "number": 18,
+    "file": "ch17-multimodal-world-model-infra-synthesis.svg",
+    "asset": "ch17/ch17-multimodal-world-model-infra-synthesis.svg",
+    "section": "17.4.2",
+    "caption": "多模态与世界模型基础设施的算法—并行—缓存—解耦四维总架构图",
+    "source_refs": [
+      "case-studies/multimodal-stage-placement.md",
+      "experiments/ch17/17-01/run.py"
+    ],
+    "TeachingRole": "收束第 17 章三维潜空间、2D-USP、时间步复用与 E-P-D-G 四池解耦的工程总账本",
+    "figure": "17-18",
+    "name": "ch17-multimodal-world-model-infra-synthesis"
+  }
+]

@@ -1,0 +1,262 @@
+[
+  {
+    "figure_id": "图 18-1",
+    "number": 1,
+    "file": "ch18-ppo-four-model-vs-grpo-memory-ledger.svg",
+    "asset": "ch18/ch18-ppo-four-model-vs-grpo-memory-ledger.svg",
+    "section": "18.1.1",
+    "caption": "PPO 四模型（Actor/Critic/Ref/RM）与 GRPO/DAPO（消去 Critic + 组采样 G 条轨迹）的显存与计算量对比（算例 18-1）",
+    "source_refs": [
+      "manuscripts/ch18/figure-data.json",
+      "experiments/ch18/18-01/run.py"
+    ],
+    "TeachingRole": "量化 32B 模型下 PPO 1,152 GB（36Ψ）与 GRPO 576 GB（18Ψ）的 50% 状态显存削减",
+    "figure": "18-1",
+    "name": "ch18-ppo-four-model-vs-grpo-memory-ledger"
+  },
+  {
+    "figure_id": "图 18-2",
+    "number": 2,
+    "file": "ch18-rlvr-iteration-timeline-rollout-dominance.svg",
+    "asset": "ch18/ch18-rlvr-iteration-timeline-rollout-dominance.svg",
+    "section": "18.1.2",
+    "caption": "RLVR 单步训练时间线分解——为何自回归 Rollout 占据 70%–90% 墙钟时间且算术强度极低",
+    "source_refs": [
+      "manuscripts/ch18/figure-data.json"
+    ],
+    "TeachingRole": "从 Decode 访存带宽受限与 Prefill/Backward 算力密集的反差解释 Rollout 主导现象",
+    "figure": "18-2",
+    "name": "ch18-rlvr-iteration-timeline-rollout-dominance"
+  },
+  {
+    "figure_id": "图 18-3",
+    "number": 3,
+    "file": "ch18-verl-3d-hybrid-engine-zero-redundancy-reshard.svg",
+    "asset": "ch18/ch18-verl-3d-hybrid-engine-zero-redundancy-reshard.svg",
+    "section": "18.2.1",
+    "caption": "veRL（HybridFlow）3D-HybridEngine 训练态（ZeRO+TP+PP）与生成态（微张量并行）的零冗余内存重分片机制",
+    "source_refs": [
+      "manuscripts/ch18/figure-data.json"
+    ],
+    "TeachingRole": "解析子网格微分组 AllGather 如何消除训练态与推理态的并行拓扑冲突",
+    "figure": "18-3",
+    "name": "ch18-verl-3d-hybrid-engine-zero-redundancy-reshard"
+  },
+  {
+    "figure_id": "图 18-4",
+    "number": 4,
+    "file": "ch18-colocated-vs-disaggregated-rl-architecture.svg",
+    "asset": "ch18/ch18-colocated-vs-disaggregated-rl-architecture.svg",
+    "section": "18.2.2",
+    "caption": "训推共置（veRL）与物理训推分离及互补错峰池化（Weave OSDI '26，算例 18-3）对比",
+    "source_refs": [
+      "case-studies/rl-scheduling-and-recovery.md",
+      "experiments/ch18/18-01/run.py"
+    ],
+    "TeachingRole": "复算 Weave 互补作业（360/120 s 与 120/360 s）共享 216 H20 与 152 H800 的削峰收益",
+    "figure": "18-4",
+    "name": "ch18-colocated-vs-disaggregated-rl-architecture"
+  },
+  {
+    "figure_id": "图 18-5",
+    "number": 5,
+    "file": "ch18-long-cot-power-law-straggler-bubble.svg",
+    "asset": "ch18/ch18-long-cot-power-law-straggler-bubble.svg",
+    "section": "18.3.1",
+    "caption": "长思维链（Long-CoT）输出长度幂律分布引发的同步 Rollout 尾部巨大 GPU 空泡",
+    "source_refs": [
+      "case-studies/rollout-tail-and-sampling.md"
+    ],
+    "TeachingRole": "揭示 5% 超长推理轨迹如何通过同步屏障迫使 90% 已完成 GPU 空转等待",
+    "figure": "18-5",
+    "name": "ch18-long-cot-power-law-straggler-bubble"
+  },
+  {
+    "figure_id": "图 18-6",
+    "number": 6,
+    "file": "ch18-rollpacker-tail-migration-and-cp-scaling.svg",
+    "asset": "ch18/ch18-rollpacker-tail-migration-and-cp-scaling.svg",
+    "section": "18.3.2",
+    "caption": "RollPacker（NSDI '26）尾部存活请求紧缩迁移、双槽位长度偏差（1/2 → 1/4）与微批均值平均（2.0）vs. 全局总词元归一化（2.5）对比（算例 18-5 & 18-6）",
+    "source_refs": [
+      "case-studies/rollout-tail-and-sampling.md",
+      "experiments/ch18/18-01/run.py"
+    ],
+    "TeachingRole": "严格证明不均等微批下按微批均值平均会产生 2.0 vs 2.5 的梯度偏置",
+    "figure": "18-6",
+    "name": "ch18-rollpacker-tail-migration-and-cp-scaling"
+  },
+  {
+    "figure_id": "图 18-7",
+    "number": 7,
+    "file": "ch18-seer-divided-and-conquered-speculative-rollout.svg",
+    "asset": "ch18/ch18-seer-divided-and-conquered-speculative-rollout.svg",
+    "section": "18.3.2",
+    "caption": "Seer（OSDI '26）分段征服长尾 Rollout 与组内共享前缀投机解码加速",
+    "source_refs": [
+      "research/2026-infra-survey/reading-osdi-2026.md",
+      "case-studies/rollout-tail-and-sampling.md"
+    ],
+    "TeachingRole": "展示如何利用同组已完成短轨迹构建免模型草稿树加速剩余长尾轨迹",
+    "figure": "18-7",
+    "name": "ch18-seer-divided-and-conquered-speculative-rollout"
+  },
+  {
+    "figure_id": "图 18-8",
+    "number": 8,
+    "file": "ch18-staleness-bounded-partial-rollout-pipeline.svg",
+    "asset": "ch18/ch18-staleness-bounded-partial-rollout-pipeline.svg",
+    "section": "18.3.3",
+    "caption": "同步屏障 Rollout vs. 陈旧度有界（τ ≤ τ_max）异步部分采样（Partial Rollout）的流水线吞吐跃升",
+    "source_refs": [
+      "case-studies/rollout-tail-and-sampling.md"
+    ],
+    "TeachingRole": "允许未完长轨迹保留 KV 跨训练步续生，将集群有效利用率推高至 >88%",
+    "figure": "18-8",
+    "name": "ch18-staleness-bounded-partial-rollout-pipeline"
+  },
+  {
+    "figure_id": "图 18-9",
+    "number": 9,
+    "file": "ch18-off-policy-importance-sampling-clipping.svg",
+    "asset": "ch18/ch18-off-policy-importance-sampling-clipping.svg",
+    "section": "18.3.3",
+    "caption": "异步 RL 中策略版本偏移 Δv = τ 下的重要性采样比率波动与逐词元真实行为概率记录准则",
+    "source_refs": [
+      "case-studies/rollout-tail-and-sampling.md"
+    ],
+    "TeachingRole": "阐明跨版本拼接轨迹必须随词元流持久化生成当下的真实 logprob",
+    "figure": "18-9",
+    "name": "ch18-off-policy-importance-sampling-clipping"
+  },
+  {
+    "figure_id": "图 18-10",
+    "number": 10,
+    "file": "ch18-robustrl-role-based-fault-isolation.svg",
+    "asset": "ch18/ch18-robustrl-role-based-fault-isolation.svg",
+    "section": "18.3.3",
+    "caption": "RobustRL（OSDI '26）区分无状态 Rollout 故障与有状态 Learner 故障的非对称容错（790 s vs. 490 s，净省 300 s，算例 18-7）",
+    "source_refs": [
+      "case-studies/rl-scheduling-and-recovery.md",
+      "experiments/ch18/18-01/run.py"
+    ],
+    "TeachingRole": "复算保留已完成 Rollout 轨迹将训练侧故障恢复耗时从 790 s 压至 490 s 的锁定账本",
+    "figure": "18-10",
+    "name": "ch18-robustrl-role-based-fault-isolation"
+  },
+  {
+    "figure_id": "图 18-11",
+    "number": 11,
+    "file": "ch18-distrs-disaggregated-reward-sandbox-streaming.svg",
+    "asset": "ch18/ch18-distrs-disaggregated-reward-sandbox-streaming.svg",
+    "section": "18.4.1",
+    "caption": "DistRS（NSDI '26）将沙箱验证与长尾生成流式重叠及基于条件剩余时间 E[S-e | S>e]（90 s vs. 0.9 s）与 216,000 词元阈值的超期裁剪（算例 18-8）",
+    "source_refs": [
+      "case-studies/reward-deadlines-and-feedback.md",
+      "experiments/ch18/18-01/run.py"
+    ],
+    "TeachingRole": "证明重尾验证分布下朴素剩余时间估计（0.9 s）与真实条件期望（90.0 s）的百倍误差",
+    "figure": "18-11",
+    "name": "ch18-distrs-disaggregated-reward-sandbox-streaming"
+  },
+  {
+    "figure_id": "图 18-12",
+    "number": 12,
+    "file": "ch18-test-time-scaling-prm-tree-search-cow-kv.svg",
+    "asset": "ch18/ch18-test-time-scaling-prm-tree-search-cow-kv.svg",
+    "section": "18.4.2",
+    "caption": "推理时扩展（Best-of-N / PRM 树搜索）利用 PagedAttention 写时复制（CoW）共享父节点 KV 缓存",
+    "source_refs": [
+      "manuscripts/ch18/figure-data.json"
+    ],
+    "TeachingRole": "解析页表引用计数 CoW 与树注意力如何消除树状搜索的物理拷贝与显存膨胀",
+    "figure": "18-12",
+    "name": "ch18-test-time-scaling-prm-tree-search-cow-kv"
+  },
+  {
+    "figure_id": "图 18-13",
+    "number": 13,
+    "file": "ch18-speculative-tot-reward-barrier-bypass.svg",
+    "asset": "ch18/ch18-speculative-tot-reward-barrier-bypass.svg",
+    "section": "18.4.2",
+    "caption": "Breaking the Reward Barrier（OSDI '26）在等待 PRM 评分期间投机性预展开高置信分支的时序对比",
+    "source_refs": [
+      "research/2026-infra-survey/reading-osdi-2026.md",
+      "case-studies/reward-deadlines-and-feedback.md"
+    ],
+    "TeachingRole": "通过超前投机展开子节点将重型 PRM 评分延迟隐藏在树搜索关键路径之外",
+    "figure": "18-13",
+    "name": "ch18-speculative-tot-reward-barrier-bypass"
+  },
+  {
+    "figure_id": "图 18-14",
+    "number": 14,
+    "file": "ch18-multi-turn-tool-env-rl-state-suspension.svg",
+    "asset": "ch18/ch18-multi-turn-tool-env-rl-state-suspension.svg",
+    "section": "18.4.1",
+    "caption": "多轮工具调用 / SWE-bench 强化学习中等待外部环境返回时的 KV 换出挂起与高并发复用",
+    "source_refs": [
+      "case-studies/rl-scheduling-and-recovery.md"
+    ],
+    "TeachingRole": "消除慢速外部沙箱执行期间巨量 KV 缓存死占 HBM 导致的算力饥饿",
+    "figure": "18-14",
+    "name": "ch18-multi-turn-tool-env-rl-state-suspension"
+  },
+  {
+    "figure_id": "图 18-15",
+    "number": 15,
+    "file": "ch18-hetrl-heterogeneous-inference-training-matching.svg",
+    "asset": "ch18/ch18-hetrl-heterogeneous-inference-training-matching.svg",
+    "section": "18.2.2",
+    "caption": "HetRL 在带宽型推理卡与算力型训练卡之间的最优配比曲线",
+    "source_refs": [
+      "case-studies/rl-scheduling-and-recovery.md"
+    ],
+    "TeachingRole": "建立按生成吞吐与训练吞吐匹配异构卡数的定量公式",
+    "figure": "18-15",
+    "name": "ch18-hetrl-heterogeneous-inference-training-matching"
+  },
+  {
+    "figure_id": "图 18-16",
+    "number": 16,
+    "file": "ch18-dapo-dynamic-sampling-zero-variance-filter.svg",
+    "asset": "ch18/ch18-dapo-dynamic-sampling-zero-variance-filter.svg",
+    "section": "18.3.2",
+    "caption": "DAPO 动态过滤全对（r=1）与全错（r=0）零梯度提示词及 RollPacker 1,600 选 1,024 投机池",
+    "source_refs": [
+      "case-studies/rollout-tail-and-sampling.md",
+      "experiments/ch18/18-01/run.py"
+    ],
+    "TeachingRole": "结合 +56.25% 投机超采池与在线零方差过滤确保训练微批 100% 满载有效梯度",
+    "figure": "18-16",
+    "name": "ch18-dapo-dynamic-sampling-zero-variance-filter"
+  },
+  {
+    "figure_id": "图 18-17",
+    "number": 17,
+    "file": "ch18-rl-post-training-throughput-roofline.svg",
+    "asset": "ch18/ch18-rl-post-training-throughput-roofline.svg",
+    "section": "18.3.3",
+    "caption": "大规模 RLVR 系统从朴素同步共置到异步分池+尾部拼箱的四阶有效吞吐跃迁瀑布图",
+    "source_refs": [
+      "case-studies/rollout-tail-and-sampling.md"
+    ],
+    "TeachingRole": "汇总零冗余重分片、尾部拼箱投机与异步部分采样的阶梯收益及无偏性条件",
+    "figure": "18-17",
+    "name": "ch18-rl-post-training-throughput-roofline"
+  },
+  {
+    "figure_id": "图 18-18",
+    "number": 18,
+    "file": "ch18-rlvr-and-test-time-compute-closed-loop.svg",
+    "asset": "ch18/ch18-rlvr-and-test-time-compute-closed-loop.svg",
+    "section": "18.4.2",
+    "caption": "测试时搜索合成高价值轨迹 → 沙箱验证 → 异步 RLVR 更新 → 蒸馏回直觉模型的自我演进总账本",
+    "source_refs": [
+      "experiments/ch18/18-01/run.py"
+    ],
+    "TeachingRole": "收束第 18 章 RLVR 显存账本、训推池化、长尾治理与推理时搜索的工程总图",
+    "figure": "18-18",
+    "name": "ch18-rlvr-and-test-time-compute-closed-loop"
+  }
+]

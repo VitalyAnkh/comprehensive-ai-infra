@@ -1,0 +1,47 @@
+{
+  "chapter": 17,
+  "title": "多模态、视频生成（DiT）与世界模型基础设施",
+  "qwen3_vl_4b": {
+    "image_resolution": "640x640",
+    "patch_size": 16,
+    "spatial_merge": "2x2",
+    "visual_tokens": 400,
+    "final_projection_bytes": 2048000,
+    "deepstack_blocks": [5, 11, 17],
+    "ec_tensor_shape": [400, 10240],
+    "ec_bytes": 8192000,
+    "ec_mib": 7.8125,
+    "llm_layers": 36,
+    "kv_heads": 8,
+    "head_dim": 128,
+    "kv_bytes_per_token": 147456,
+    "kv_bytes_400_tokens": 58982400,
+    "kv_mib": 56.25,
+    "kv_to_ec_expansion_ratio": 7.2
+  },
+  "video_dit_3d": {
+    "duration_s": 10,
+    "fps": 24,
+    "raw_frames": 240,
+    "resolution": "1920x1080",
+    "vae_compression": "4x8x8",
+    "patchify": "1x2x2",
+    "token_grid": [60, 68, 120],
+    "total_spatiotemporal_tokens": 489600,
+    "denoising_steps": [20, 50]
+  },
+  "sequence_parallelism_64_gpus": {
+    "hidden_dim": 4096,
+    "dtype_bytes": 2,
+    "ulysses_per_layer_mib": 239.0625,
+    "ring_per_step_mib": 119.53125,
+    "ring_63_steps_mib": 7530.46875,
+    "usp_8x8_inter_node_mib": 836.71875,
+    "inter_node_traffic_reduction": 9.0
+  },
+  "interactive_world_model": {
+    "target_fps": 30,
+    "frame_budget_ms": 33.3,
+    "causal_distilled_steps": [1, 4]
+  }
+}

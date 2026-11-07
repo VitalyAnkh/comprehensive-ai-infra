@@ -1,0 +1,20 @@
+{
+  "sources": [
+    {
+      "path": "manuscripts/ch17/build.py",
+      "sha256": "ff9f4a5e40deed309fdd58ae77c5bd55744adba063a145cd8f0e9f252d373483"
+    },
+    {
+      "path": "manuscripts/ch17/figure-data.json",
+      "sha256": "8b2b73d0b858ca2e81780ef37084df72aad867fb5e5035c32514693782b9ebf4"
+    },
+    {
+      "path": "manuscripts/ch17/figure-index.json",
+      "sha256": "ced4c9f7c9a78562f9ff62eb58c94fe82e186050a131f00027d7cdcc249ae805"
+    },
+    {
+      "path": "manuscripts/17-多模态、视频生成（DiT）与世界模型基础设施.md",
+      "sha256": "a9917e0a4c52b9a8c0cd9316a88956f1b9c8625a9908052edbcc850ab0964db1"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "sources": [
+    {
+      "path": "manuscripts/ch18/build.py",
+      "sha256": "d85865fdc410e97156351546078338e15e2648c795c54e06221c46718a8df4b8"
+    },
+    {
+      "path": "manuscripts/ch18/figure-data.json",
+      "sha256": "cd5224cf905cfe3acbcda6f9e330d4611e070447787a53bf5914d98cba75d254"
+    },
+    {
+      "path": "manuscripts/ch18/figure-index.json",
+      "sha256": "68e4c14fa2c5d21674ecd3c03d99c285e6c5a79c8739f97c82dee427e5316dc1"
+    },
+    {
+      "path": "manuscripts/18-大规模后训练（RLVR）、异步强化学习与推理时扩展系统.md",
+      "sha256": "922d0c8b32c30ff3bed5b5c4c1986e2a242dfeae43cbcc21455cc97bcc72fd2a"
+    }
+  ]
+}
