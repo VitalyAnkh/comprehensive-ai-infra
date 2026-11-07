@@ -211,6 +211,58 @@ def draw(here, data=None):
             shared_plan_us=20.0, saved_host_plan_us=700.0, hybrid_two_group_plan_us=40.0,
             weight_gib=15.2564, kv_gib=24.0, level1_roundtrip_s=1.31
         )
+
+        # 5.3.3 & 5.6.3 Fig 5-45: FlashAttention-4 Blackwell B200 cycle ledger & TMEM ping-pong pipeline.
+        f, a = canvas(7.4)
+        a.add_patch(FancyBboxPatch((.02, .51), .96, .46, boxstyle='round,pad=0.003,rounding_size=0.012',
+                                   facecolor='#FAFCFE', edgecolor='#CBD5E1', lw=1.0))
+        text(a, .04, .94, 'A. Blackwell B200（128×128 块）周期账本与 SFU 瓶颈', 11.5, weight='bold')
+        box(a, .04, .79, .44, .11, 'Tensor Core（tcgen05）\nQK^T 512 + PV 512 = 1,024c\n8,192 FLOP/cycle/SM', 'blue', 11)
+        box(a, .04, .66, .44, .11, 'Shared Memory（SMEM）\nK/V 读取 128 B/c/SM\n单块稳态耗时 = 768 周期', 'gray', 11)
+        box(a, .04, .53, .44, .11, 'SFU 指数（MUFU.EX2）\n朴素 16,384 次 = 1,024c\n与矩阵核 1:1 暴露空泡', 'orange', 11)
+
+        box(a, .52, .79, .44, .11, 'Hopper H100（FA-3）\n矩阵 2,048c > SFU 1,024c\n天然掩盖 Softmax', 'gray', 11)
+        box(a, .52, .66, .44, .11, 'FA-4 多项式模拟 exp2\nFMA 分担 75% 指数计算\nSFU 1,024c → 256c', 'green', 11)
+        arrow(a, (.48, .585), (.52, .715), 'control')
+        box(a, .52, .53, .44, .11, '条件重缩放（阈值 τ）\n跳过非必要输出重缩放\n达 71% 峰值（1.6 PF）', 'purple', 11)
+
+        a.add_patch(FancyBboxPatch((.02, .02), .96, .46, boxstyle='round,pad=0.003,rounding_size=0.012',
+                                   facecolor='#FAFCFE', edgecolor='#CBD5E1', lw=1.0))
+        text(a, .04, .45, 'B. 256 KB TMEM 双缓冲与双 Warp-Group 乒乓流水', 11.5, weight='bold')
+        box(a, .04, .31, .44, .10, 'TMEM 槽 0（128 KB）\n驻留块 j 分数 S_j 与 O_j', 'blue', 11)
+        box(a, .52, .31, .44, .10, 'TMEM 槽 1（128 KB）\n驻留块 j+1 分数与累加器', 'purple', 11)
+        box(a, .04, .17, .29, .11, '1. TMA+UMMA\nHBM→SMEM\n发射 mma', 'orange', 11)
+        box(a, .355, .17, .29, .11, '2. WG-0\n模拟 exp2\n处理槽 0', 'green', 11)
+        box(a, .67, .17, .29, .11, '3. WG-1\n乒乓槽 1\n与 PV 重叠', 'green', 11)
+        arrow(a, (.33, .225), (.355, .225), 'control')
+        arrow(a, (.645, .225), (.67, .225), 'control')
+        box(a, .04, .04, .92, .095, '净收益：累加器驻留 TMEM 免除寄存器争用\n256 周期 SFU+FMA 隐藏于 1,024 周期矩阵乘内', 'gray', 11)
+        out.save(f, 'ch05-flashattention4-blackwell-sfu-pipeline')
+
+        # 5.3.3 & 5.5.2 Fig 5-46: DeepGEMM fine-grained FP8 JIT & GraCE compiler-assisted whole-graph capture.
+        f, a = canvas(7.4)
+        a.add_patch(FancyBboxPatch((.02, .51), .96, .46, boxstyle='round,pad=0.003,rounding_size=0.012',
+                                   facecolor='#FAFCFE', edgecolor='#CBD5E1', lw=1.0))
+        text(a, .04, .94, 'A. DeepGEMM 细粒度 FP8 两级累加与运行时 JIT', 11.5, weight='bold')
+        box(a, .04, .78, .28, .12, '细粒度 FP8\n激活 1×128\n权重 128×128', 'blue', 11)
+        box(a, .36, .78, .28, .12, '1. 矩阵核\nK_b=128 步\n免尾数截断', 'orange', 11)
+        box(a, .68, .78, .28, .12, '2. CUDA 核\nFP32 累加\n每块恢复精度', 'green', 11)
+        arrow(a, (.32, .84), (.36, .84))
+        arrow(a, (.64, .84), (.68, .84))
+        box(a, .04, .65, .44, .10, 'JIT 特化（~300 行模板）\n动态 M 编码为立即数常量', 'purple', 11)
+        box(a, .52, .65, .44, .10, '尾块展开+TMA 多播择优\n省体积，提速 1.3x–2.7x', 'green', 11)
+        box(a, .04, .53, .92, .09, '块级原语：ThunderKittens 2.0（16×16）与 TileLang\n将双缓冲与两级累加浓缩至数十行可移植代码', 'gray', 11)
+
+        a.add_patch(FancyBboxPatch((.02, .02), .96, .46, boxstyle='round,pad=0.003,rounding_size=0.012',
+                                   facecolor='#FAFCFE', edgecolor='#CBD5E1', lw=1.0))
+        text(a, .04, .45, 'B. GraCE（ASPLOS \'26）跨分支整图捕获与权衡', 11.5, weight='bold')
+        box(a, .04, .30, .44, .11, '传统分段图（Graph Break）\n动态分支回退主机 CPU\n暴露数十 μs 发射空泡', 'orange', 11)
+        box(a, .52, .30, .44, .11, 'GraCE 编译器重写（谓词）\n分支转 GPU 条件节点\n跨分支拼接端到端整图', 'green', 11)
+        arrow(a, (.48, .355), (.52, .355))
+        box(a, .04, .16, .44, .11, '运行时净收益\n消除子图间主机发射空泡\n小批量与 Agent 尾延迟收敛', 'blue', 11)
+        box(a, .52, .16, .44, .11, '显式工程代价（实测）\n图编译构建耗时 +66%\n静态并集使峰值显存 +20%', 'purple', 11)
+        box(a, .04, .04, .92, .09, '准则：显存充裕、延迟敏感的解码开启整图合并\n显存受限或形状跳变的预填充用分段图+计划复用', 'gray', 11)
+        out.save(f, 'ch05-deepgemm-fp8-jit-and-grace-graph')
     (here / 'structure-layout-validation.json').write_text(json.dumps(out.checks, ensure_ascii=False, indent=2) + '\n')
     return out.outputs
 
