@@ -1,0 +1,79 @@
+{
+  "telescoping_waterfall": {
+    "states_exact_ms": {
+      "S0": 20.895522,
+      "S1": 2.38806,
+      "S2": 1.19403,
+      "S3": 0.833333
+    },
+    "states_display_ms": {
+      "S0": 20.9,
+      "S1": 2.39,
+      "S2": 1.19,
+      "S3": 0.83
+    },
+    "conditional_ratios": [
+      8.75,
+      2.0,
+      1.432836
+    ],
+    "telescoping_product": 25.074627,
+    "direct_ratio": 25.074627,
+    "rounded_display_ratio": 25.1807,
+    "host_overhead_sweep": [
+      {
+        "host_overhead_ms": 0.0,
+        "e2e_speedup": 25.0746
+      },
+      {
+        "host_overhead_ms": 0.25,
+        "e2e_speedup": 19.5189
+      },
+      {
+        "host_overhead_ms": 0.5,
+        "e2e_speedup": 16.0466
+      },
+      {
+        "host_overhead_ms": 1.0,
+        "e2e_speedup": 11.943
+      }
+    ]
+  },
+  "farskip_collective": {
+    "m=0": {
+      "overlap_window_ms": 0.3,
+      "exposed_per_covered_layer_ms": 0.8,
+      "total_exposed_comm_ms": 48.0,
+      "total_forward_ms": 120.0,
+      "speedup_vs_m0": 1.0
+    },
+    "m=1": {
+      "overlap_window_ms": 1.5,
+      "exposed_per_covered_layer_ms": 0.0,
+      "total_exposed_comm_ms": 0.8,
+      "total_forward_ms": 72.8,
+      "speedup_vs_m0": 1.6484
+    },
+    "m=2": {
+      "overlap_window_ms": 2.7,
+      "exposed_per_covered_layer_ms": 0.0,
+      "total_exposed_comm_ms": 0.8,
+      "total_forward_ms": 72.8,
+      "speedup_vs_m0": 1.6484
+    }
+  },
+  "gqa_tp_replication": {
+    "n_kv=8": {
+      "replication_factor": 1,
+      "logical_kv_gib": 16.0,
+      "per_gpu_physical_gib": 2.0,
+      "cluster_8gpu_physical_gib": 16.0
+    },
+    "n_kv=2": {
+      "replication_factor": 4,
+      "logical_kv_gib": 4.0,
+      "per_gpu_physical_gib": 2.0,
+      "cluster_8gpu_physical_gib": 16.0
+    }
+  }
+}

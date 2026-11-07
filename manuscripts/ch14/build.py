@@ -447,7 +447,7 @@ def fig_14_16_dual_track_book(ex: Exporter):
     card(ax, 0.02, 0.04, 0.46, 0.92, '轨道 A：Qwen3-8B Dense', color='blue', title_size=11)
     box(ax, 0.04, 0.66, 0.42, 0.16, '第 2–5 章：144 KiB/tok\nRoofline 拐点与 FA 内核', 'blue', size=11)
     box(ax, 0.04, 0.43, 0.42, 0.16, '第 8–12 章：分页 KV 池\n双卡调度、端侧与抢占恢复', 'teal', size=11)
-    box(ax, 0.04, 0.20, 0.42, 0.16, '第 13–14 章：RAG 23/77 块\nFP8 复审与 K192 证伪闭环', 'purple', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '第 13–14 章：RAG 23/77 块\nFP8 复审与 K192 预注册证伪', 'purple', size=11)
     arrow(ax, (0.25, 0.66), (0.25, 0.59))
     arrow(ax, (0.25, 0.43), (0.25, 0.36))
     text(ax, 0.25, 0.10, '小而密模型的单卡/端云压榨', size=11, ha='center', weight='bold', color=BORDER_COL['blue'])
@@ -486,7 +486,7 @@ def fig_14_17_rubin_v41(ex: Exporter):
 
 def fig_14_18_four_dim_loop(ex: Exporter):
     fig, ax = canvas(3.80)
-    card(ax, 0.02, 0.50, 0.96, 0.47, 'AI 基础设施四维协同设计闭环（Four-Dimensional Loop）', color='blue')
+    card(ax, 0.02, 0.50, 0.96, 0.47, 'AI 基础设施四维协同设计循环（Four-Dimensional Loop）', color='blue')
     dims = [
         (0.04, 0.69, 0.44, 0.16, '第一维：模型结构（Ch02–03）\nCSA2 · KDA · RoPE-post', 'blue'),
         (0.52, 0.69, 0.44, 0.16, '第二维：运行时（Ch05, 08–11）\nFlashMLA · 图重放 · PD 分离', 'teal'),
@@ -501,6 +501,126 @@ def fig_14_18_four_dim_loop(ex: Exporter):
     box(ax, 0.52, 0.15, 0.44, 0.20, '向外筑牢可信防线（第 16 章）\n万亿权重与百万 KV 驻云端\nGPU TEE 与安全沙箱成刚需', 'purple', size=11)
     text(ax, 0.50, 0.08, '全书通式：用可复算的物理账本与可证伪的实验纪律驾驭智能基础设施', size=11, ha='center', weight='bold', color=COL['ink'])
     ex.save(fig, 'ch14-four-dimensional-codesign-closed-loop')
+
+
+def fig_14_19_chakra(ex: Exporter):
+    fig, ax = canvas(3.65)
+    card(ax, 0.02, 0.04, 0.46, 0.92, 'MLCommons Chakra 执行轨迹图', color='blue', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '计算节点 + 通信节点 + 数据边\n构建跨流有向无环图 ETG', 'blue', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '解耦训练框架与网络仿真器\n支持拓扑扫描与瓶颈推演', 'teal', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '关键局限：静态轨迹不反映\n运行时融合与动态路由变化', 'orange', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '流片与建群前的标准轨迹底座', size=11, ha='center', weight='bold', color=BORDER_COL['blue'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'Phantora 与 Charon 细粒度仿真', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, 'NSDI 26 Phantora：截获框架\n算子与通信调用，免重写代码', 'teal', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, 'MLSys 26 Charon：细粒度模拟\n对比不同 TP/PP/EP 训推配置', 'blue', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '审计铁律：单卡拦截≠万卡验证\n须先过容量与关键路径下界', 'purple', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '模拟器是假设生成器而非真值本身', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch14-chakra-execution-trace-graph-simulation')
+
+
+def fig_14_20_neusight(ex: Exporter):
+    fig, ax = canvas(3.65)
+    card(ax, 0.02, 0.04, 0.46, 0.92, 'NeuSight 瓦片级预测与适用边界', color='purple', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, 'ASPLOS 25：算子拆为输出 Tile\n估算波数并在 Roofline 校准', 'purple', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '源码 6945927d：依赖旧卡近邻\n查表与 cu121 固定特征', 'orange', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '单 microbatch 互斥并行分支\n不可盲目外推 FP8 融合内核', 'orange', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '校准须包含真实 Tile 与库版本', size=11, ha='center', weight='bold', color=BORDER_COL['purple'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, '算例：总误差为 0 的归因陷阱', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '两串行阶段：预测 [8, 2] ms\n实测 [6, 4] ms（总长 10 ms）', 'teal', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '整段误差 0%，但逐段误差达\n33.3% 与 50%（二段翻倍）', 'orange', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '若将阶段一提速减半：\n预测总长 6 ms vs 实测 7 ms', 'blue', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '严禁仅用端到端总和验证预测器', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch14-neusight-tile-roofline-calibration')
+
+
+def fig_14_21_farskip(ex: Exporter):
+    fig, ax = canvas(3.65)
+    card(ax, 0.02, 0.04, 0.46, 0.92, '标准 MoE 逐层阻塞通信', color='orange', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '第 l 层专家计算完成后\n第 l+1 层立即依赖其输出', 'orange', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '跨节点 All-to-All Combine\n直接暴露在关键路径上', 'orange', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '当 T_comm > T_shared 时\nTensor Core 陷入通信停顿', 'orange', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '受制于逐层串行数据依赖边', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'FarSkip 跨层跳步通信解耦', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, 'MLSys 26：重构残差连接图\n第 l 层输出延至 l+2 层消费', 'teal', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '第 l+1 层仅依赖本地激活\n整层 T_layer 全额掩盖通信', 'blue', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '工程边界：改变前向计算图\n须经重训练或蒸馏对齐精度', 'purple', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '用模型结构换取一整层通信窗', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch14-farskip-collective-delayed-dependency')
+
+
+def fig_14_22_moe_granularity(ex: Exporter):
+    fig, ax = canvas(3.65)
+    card(ax, 0.02, 0.04, 0.46, 0.92, '专家细粒度切分 G 的算法收益', color='blue', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '固定激活参数切细专家 G 倍\nTop-2 大专家 → Top-8 细专家', 'blue', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '组合表达空间呈指数级扩展\n降低同等算力下训练困惑度', 'teal', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '配合 1–2 个常驻共享专家\n吸收高频通用语法与梯度', 'purple', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, 'DeepSeekMoE / Qwen3-MoE 路线', size=11, ha='center', weight='bold', color=BORDER_COL['blue'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, '网络小包通信税与分块拐点', color='orange', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '代价一：All-to-All 扇出乘 G\n单包缩为 1/G，触发小包延迟', 'orange', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '代价二：每专家 Token 数缩减\n跌破 Tensor Core M=64 下界', 'orange', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '协同拐点：节点分组受限路由\n限制跨机跳数 + 守住分块下界', 'teal', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '专家粒度 G 须与网络基数联立', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+    ex.save(fig, 'ch14-moe-granularity-vs-network-radix-co-design')
+
+
+def fig_14_23_kv_head_tp(ex: Exporter):
+    fig, ax = canvas(3.65)
+    card(ax, 0.02, 0.04, 0.46, 0.92, 'GQA 无冗余并行区（TP≤n_kv）', color='teal', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '设模型 n_q=32、n_kv=8\nTP≤8 时每卡分整数个 KV 头', 'teal', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '每卡 KV 体积随 1/TP 递减\n全组总 KV 容量等于单卡基准', 'blue', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '单步 Decode 读取量除以 TP\n算力与访存按卡数线性扩展', 'purple', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, 'n_kv=8 匹配 8 卡 NVLink 节点', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, '激进压缩触发复制税（TP>n_kv）', color='orange', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '若 n_kv=2 却按 TP=8 部署\n每 KV 头被迫复制 R=8/2=4 份', 'orange', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '总 KV 显存膨胀 4 倍抵消收益\n或改走跨卡交换引入额外通信', 'orange', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '协同法则：n_kv 取 TP 约数\n或采用 MLA 潜向量 + DP 注意力', 'teal', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '架构超参数锁死部署并行上限', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+    ex.save(fig, 'ch14-kv-head-ratio-vs-tensor-parallel-limit')
+
+
+def fig_14_24_codesign_loop(ex: Exporter):
+    fig, ax = canvas(3.80)
+    card(ax, 0.02, 0.03, 0.96, 0.94, '从流片前架构探索到生产集群预注册证伪的完整协同工程飞轮', color='blue')
+    steps = [
+        (0.04, 0.68, 0.44, 0.18, '① 第一性原理四资源下界筛选\n核算计算 / HBM / 网络 / SSD\n直接淘汰违反物理守恒候选', 'blue'),
+        (0.52, 0.68, 0.44, 0.18, '② 瓦片级与轨迹图细粒度仿真\nNeuSight 校准 + Chakra ETG\nPhantora / Charon 预估重叠', 'teal'),
+        (0.52, 0.44, 0.44, 0.18, '③ 算法—系统—硬件联立改造\nCSA2 压 KV · FarSkip 掩通信\nDFlash 块扩散对齐矩阵单元', 'purple'),
+        (0.04, 0.44, 0.44, 0.18, '④ 预注册预测与留出集门控实验\n实验 14-01（K192 R=0.693141）\n实验 14-02（条件比率瀑布）', 'orange'),
+        (0.04, 0.20, 0.92, 0.18, '⑤ 全生命周期 TCO 与代际半衰期反馈（Beyond-Chinchilla + NRE 摊销）\n将线上实测阶段归因（如 70% 主机固定开销）反馈至下一代芯片定义', 'teal'),
+    ]
+    for x, y, w, h, label, role in steps:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.48, 0.77), (0.52, 0.77))
+    arrow(ax, (0.74, 0.68), (0.74, 0.62))
+    arrow(ax, (0.52, 0.53), (0.48, 0.53))
+    arrow(ax, (0.26, 0.44), (0.26, 0.38))
+    box(ax, 0.04, 0.06, 0.92, 0.10, '第 14 章定理：唯有经受住逐阶段归因与预注册证伪的协同设计才具价值', 'blue', size=11)
+    ex.save(fig, 'ch14-codesign-pre-silicon-to-production-loop')
 
 
 def main():
@@ -523,6 +643,12 @@ def main():
     fig_14_16_dual_track_book(ex)
     fig_14_17_rubin_v41(ex)
     fig_14_18_four_dim_loop(ex)
+    fig_14_19_chakra(ex)
+    fig_14_20_neusight(ex)
+    fig_14_21_farskip(ex)
+    fig_14_22_moe_granularity(ex)
+    fig_14_23_kv_head_tp(ex)
+    fig_14_24_codesign_loop(ex)
     outputs = ex.finish()
 
     fig_data = build_figure_data()
@@ -587,7 +713,7 @@ def main():
             "section": "14.5.2",
             "caption": "全书收束：AI 基础设施架构师的五步定量诊断法与跨层反事实协同设计决策树",
             "source_refs": ["manuscripts/ch14/figure-data.json"],
-            "TeachingRole": "收束全书十四章知识体系，提供可复用的一线 AI Infra 性能诊断与架构设计闭环"
+            "TeachingRole": "收束全书十四章知识体系，提供可复用的一线 AI Infra 性能诊断与架构设计方法"
         },
         {
             "figure_id": "图 14-7",
@@ -637,7 +763,7 @@ def main():
             "section": "14.7.1",
             "caption": "可证伪系统科学：预注册预测协议的 10 项必填字段与不可篡改状态机（D11-SP04）",
             "source_refs": ["research/draft11-outline-audit/report.md", "experiments/ch13/13-07/prediction.json"],
-            "TeachingRole": "建立面向 AI 系统性能工程的预注册预测、SHA-256 冻结与诚实证伪闭环"
+            "TeachingRole": "建立面向 AI 系统性能工程的预注册预测、SHA-256 冻结与诚实证伪全流程"
         },
         {
             "figure_id": "图 14-12",
@@ -705,9 +831,69 @@ def main():
             "file": "ch14-four-dimensional-codesign-closed-loop.svg",
             "asset": "ch14/ch14-four-dimensional-codesign-closed-loop.svg",
             "section": "14.8.2",
-            "caption": "全书总结：从算法结构、运行时调度、硅片微架构到吉瓦级能源站点的四维协同设计闭环",
+            "caption": "全书总结：从算法结构、运行时调度、硅片微架构到吉瓦级能源站点的四维协同设计循环",
             "source_refs": ["manuscripts/ch14/figure-data.json"],
-            "TeachingRole": "完成第 1–14 章技术闭环并自然引出第 15–16 章的吉瓦级能源与机密计算底座"
+            "TeachingRole": "完成第 1–14 章技术收束并自然引出第 15–16 章的吉瓦级能源与机密计算底座"
+        },
+        {
+            "figure_id": "图 14-19",
+            "number": 19,
+            "file": "ch14-chakra-execution-trace-graph-simulation.svg",
+            "asset": "ch14/ch14-chakra-execution-trace-graph-simulation.svg",
+            "section": "14.9.1",
+            "caption": "MLCommons Chakra 计算—通信依赖执行轨迹图（ETG）与 Phantora（NSDI '26）、Charon（MLSys '26）集群级细粒度模拟框架及适用边界对比",
+            "source_refs": ["research/2026-infra-survey/reading-nsdi-2026.md", "research/2026-infra-survey/reading-mlsys-2026.md"],
+            "TeachingRole": "建立从静态算子图向耦合计算—通信依赖轨迹图演进的仿真方法论，并明确单卡拦截模拟不能替代解析下界与真实集群验证"
+        },
+        {
+            "figure_id": "图 14-20",
+            "number": 20,
+            "file": "ch14-neusight-tile-roofline-calibration.svg",
+            "asset": "ch14/ch14-neusight-tile-roofline-calibration.svg",
+            "section": "14.9.1",
+            "caption": "NeuSight（ASPLOS '25，源码 6945927d）瓦片级 Roofline 利用率校准架构，以及展示“整段总误差为 0% 但逐段误差达 33.3%/50%”的阶段归因陷阱算例",
+            "source_refs": ["references/framework-history/2026-09-09/neusight-calibration/NOTES.md", "references/framework-history/2026-09-09/neusight-calibration/arithmetic.json"],
+            "TeachingRole": "揭示瓦片级性能预测器对历史数据库与软件栈版本的依赖，并证明必须核对逐阶段误差而非仅看端到端总和"
+        },
+        {
+            "figure_id": "图 14-21",
+            "number": 21,
+            "file": "ch14-farskip-collective-delayed-dependency.svg",
+            "asset": "ch14/ch14-farskip-collective-delayed-dependency.svg",
+            "section": "14.9.2",
+            "caption": "标准 MoE 逐层阻塞式 All-to-All 通信与 FarSkip-Collective（MLSys '26）通过跨层残差跳步将专家输出延后至第 l+2 层消费、从而用整层计算时间 T_layer 掩盖通信的对比",
+            "source_refs": ["research/2026-infra-survey/reading-mlsys-2026.md"],
+            "TeachingRole": "演示如何通过修改模型层间依赖图打破集合通信的串行阻塞，并强调其对重训练/知识蒸馏的精度对齐要求"
+        },
+        {
+            "figure_id": "图 14-22",
+            "number": 22,
+            "file": "ch14-moe-granularity-vs-network-radix-co-design.svg",
+            "asset": "ch14/ch14-moe-granularity-vs-network-radix-co-design.svg",
+            "section": "14.9.2",
+            "caption": "MoE 专家细粒度切分倍数 G 的组合表达收益与 All-to-All 小包扇出膨胀、Tensor Core 最小分组块 M_tile=64 限制的跨层帕累托拐点",
+            "source_refs": ["manuscripts/ch14/figure-data.json"],
+            "TeachingRole": "推导专家切分粒度 G 与超节点网络基数、矩阵乘瓦片尺寸联立求解的定量边界"
+        },
+        {
+            "figure_id": "图 14-23",
+            "number": 23,
+            "file": "ch14-kv-head-ratio-vs-tensor-parallel-limit.svg",
+            "asset": "ch14/ch14-kv-head-ratio-vs-tensor-parallel-limit.svg",
+            "section": "14.9.2",
+            "caption": "GQA 查询头与 KV 头数量配比在无冗余张量并行区（TP ≤ n_kv）与过激进压缩导致 KV 头复制膨胀区（TP > n_kv）的硬约束对比",
+            "source_refs": ["manuscripts/ch14/figure-data.json"],
+            "TeachingRole": "说明模型注意力头超参数如何直接决定推理部署时的最大无冗余张量并行度"
+        },
+        {
+            "figure_id": "图 14-24",
+            "number": 24,
+            "file": "ch14-codesign-pre-silicon-to-production-loop.svg",
+            "asset": "ch14/ch14-codesign-pre-silicon-to-production-loop.svg",
+            "section": "14.9.2",
+            "caption": "从四资源下界筛选、Chakra/NeuSight 细粒度仿真、算法—系统—硬件联立改造到预注册证伪实验（实验 14-01 / 14-02）与全生命周期 TCO 摊销的协同工程飞轮",
+            "source_refs": ["manuscripts/ch14/figure-data.json"],
+            "TeachingRole": "收束第 14 章全章协同设计方法论，串联流片前探索与生产集群实测验证"
         }
     ]
     (HERE / 'figure-index.json').write_text(json.dumps(fig_index, ensure_ascii=False, indent=2) + '\n')

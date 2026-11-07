@@ -69,7 +69,7 @@
     "source_refs": [
       "manuscripts/ch13/figure-data.json"
     ],
-    "TeachingRole": "展示 PB 级多模态训练如何打通存储分片顺序供给与片上 NVDEC 异构解码闭环"
+    "TeachingRole": "展示 PB 级多模态训练如何贯通存储分片顺序供给与片上 NVDEC 异构解码全流程"
   },
   {
     "figure_id": "图 13-7",
@@ -201,7 +201,7 @@
     "source_refs": [
       "manuscripts/ch13/figure-data.json"
     ],
-    "TeachingRole": "为系统工程师提供从元数据、PCIe 拓扑、闪存粒度、GC 毛刺到异构解码的排障闭环"
+    "TeachingRole": "为系统工程师提供从元数据、PCIe 拓扑、闪存粒度、GC 毛刺到异构解码的排障流程"
   },
   {
     "figure_id": "图 13-18",
@@ -214,5 +214,78 @@
       "manuscripts/ch13/figure-data.json"
     ],
     "TeachingRole": "收束第 13 章全章知识体系，呈现计算—网络—存储深度融合的现代 AI 数据平面"
+  },
+  {
+    "figure_id": "图 13-19",
+    "number": 19,
+    "file": "ch13-falconfs-server-side-path-resolution.svg",
+    "asset": "ch13/ch13-falconfs-server-side-path-resolution.svg",
+    "section": "13.8.1",
+    "caption": "传统 POSIX 逐跳目录解析（D=6 时每次打开触发 6–7 次 RPC）与 FalconFS（NSDI '26）服务端复合路径解析及混合哈希无锁目录布局对比",
+    "source_refs": [
+      "research/2026-infra-survey/reading-nsdi-2026.md"
+    ],
+    "TeachingRole": "展示如何将路径解析下推至服务端以消除十亿级多模态小文件训练中的元数据网络往返放大"
+  },
+  {
+    "figure_id": "图 13-20",
+    "number": 20,
+    "file": "ch13-multimodal-tar-webdataset-vs-lance-random.svg",
+    "asset": "ch13/ch13-multimodal-tar-webdataset-vs-lance-random.svg",
+    "section": "13.8.1",
+    "caption": "静态顺序 Shuffle（WebDataset Tar 连续分片 / FalconFS）与课程学习及在线难例重采样（Lance O(1) 偏移点查 + Umap 页映射）的磁盘寻道与读放大对比",
+    "source_refs": [
+      "manuscripts/ch13/figure-data.json"
+    ],
+    "TeachingRole": "阐明训练数据访问模式从静态顺序遍历转向动态按长度/奖励抽样时的存储格式选型边界"
+  },
+  {
+    "figure_id": "图 13-21",
+    "number": 21,
+    "file": "ch13-distvs-helmsman-disaggregated-vector-search.svg",
+    "asset": "ch13/ch13-distvs-helmsman-disaggregated-vector-search.svg",
+    "section": "13.8.2",
+    "caption": "DistVS（NSDI '26）计算—内存解耦三级精度筛选（本地 DRAM 粗筛 → 远端内存精筛 → SSD 全精度重排）与 Helmsman（OSDI '26）大规模倒排聚类闪存 ANNS 架构对比",
+    "source_refs": [
+      "research/2026-infra-survey/reading-nsdi-2026.md",
+      "research/2026-infra-survey/reading-osdi-2026.md"
+    ],
+    "TeachingRole": "对比超大规模向量检索跨越 DRAM、CXL/远端内存与 NVMe SSD 时的多级筛选与连续块布局，并明确区分有损向量召回与无损 KV 分层"
+  },
+  {
+    "figure_id": "图 13-22",
+    "number": 22,
+    "file": "ch13-copilotio-gds-vs-cpu-assisted-io.svg",
+    "asset": "ch13/ch13-copilotio-gds-vs-cpu-assisted-io.svg",
+    "section": "13.8.3",
+    "caption": "大块连续裸张量 GPUDirect Storage（GDS）直通与细粒度/需解压场景下 CoPilotIO（OSDI '26）利用主机 CPU 协处理轮询释放 GPU SM 算力的架构对比",
+    "source_refs": [
+      "research/2026-infra-survey/reading-osdi-2026.md"
+    ],
+    "TeachingRole": "揭示纯 GPU 发起细粒度 I/O 时的寄存器与 SM 争用退化，建立按 I/O 粒度与计算耦合度划分 GDS 与 CPU 协处理的边界"
+  },
+  {
+    "figure_id": "图 13-23",
+    "number": 23,
+    "file": "ch13-umap-moonbright-mmap-and-gpu-page-table.svg",
+    "asset": "ch13/ch13-umap-moonbright-mmap-and-gpu-page-table.svg",
+    "section": "13.8.3",
+    "caption": "Umap（OSDI '26）分布式文件系统页粒度矩阵 mmap 按需预取免除容器 OOM 与 MoonBright（OSDI '26）设备端 GPU 页表物化及延迟 TLB 同步协同架构",
+    "source_refs": [
+      "research/2026-infra-survey/reading-osdi-2026.md"
+    ],
+    "TeachingRole": "剖析主机侧 DFS 内存映射与设备侧 GPU 页表虚拟化如何消除双重缓冲拷贝与页表同步停顿"
+  },
+  {
+    "figure_id": "图 13-24",
+    "number": 24,
+    "file": "ch13-ai-storage-bandwidth-latency-iops-cube.svg",
+    "asset": "ch13/ch13-ai-storage-bandwidth-latency-iops-cube.svg",
+    "section": "13.8.3",
+    "caption": "AI 原生存储底座全场景（检查点、十亿小文件、多级 KV、十亿向量 ANNS、细粒度协同 I/O）在带宽—延迟—IOPS 三维空间的映射总览",
+    "source_refs": [
+      "manuscripts/ch13/figure-data.json"
+    ],
+    "TeachingRole": "总结第 13 章全部存储负载特征与对应系统原语的工程选型总表"
   }
 ]

@@ -542,6 +542,127 @@ def fig_13_18_full_stack(ex: Exporter):
     ex.save(fig, 'ch13-full-stack-ai-data-plane')
 
 
+def fig_13_19_falconfs(ex: Exporter):
+    fig, ax = canvas(3.65)
+    card(ax, 0.02, 0.04, 0.46, 0.92, '传统 POSIX 逐跳解析（6 次 RPC）', color='orange', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '客户端逐级 lookup(D=6)\n每打开 1 文件发 6–7 次 RPC', 'orange', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '客户端 dentry 缓存命中低\n海量随机小文件冲垮目录锁', 'orange', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '百万文件需 600 万次往返\n千卡 DataLoader 空转等待', 'orange', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '小文件打开吞吐受限于 RTT', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'FalconFS 服务端复合路径解析', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '路径解析下推至 MDS 服务端\n精简缓存 + 单次复合请求', 'teal', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '目录混合哈希 + 并发无锁\n消除热点父目录写锁争用', 'blue', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '网络往返从 O(D) 压至 O(1)\n十亿小文件吞吐提升数倍', 'purple', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, 'NSDI 26：化解小文件元数据墙', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch13-falconfs-server-side-path-resolution')
+
+
+def fig_13_20_distvs_helmsman(ex: Exporter):
+    fig, ax = canvas(3.65)
+    card(ax, 0.02, 0.04, 0.46, 0.92, 'DistVS 计算—内存解耦多级筛选', color='blue', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '第一级（计算节点 DRAM）\n低比特粗量化码过滤 90%', 'blue', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '第二级（CXL / RDMA 内存池）\n中等精度单边拉取精筛', 'teal', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '第三级（NVMe 全精度块）\n仅对 Top-M 发起异步点查', 'purple', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '注意：有损召回层级≠无损 KV', size=11, ha='center', weight='bold', color=BORDER_COL['blue'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'Helmsman 大规模聚类闪存 ANNS', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, 'OSDI 26：聚类重返闪存检索\n质心驻 DRAM，簇存 SSD', 'teal', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '摒弃跨页跳读：同簇连续排布\n随机小读化为对齐顺序块读', 'blue', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '严守 Recall@k 门槛前提下\n大幅削减单机 DRAM 容量税', 'purple', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '十亿级 RAG 知识库高性价比底座', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch13-distvs-helmsman-disaggregated-vector-search')
+
+
+def fig_13_21_copilotio(ex: Exporter):
+    fig, ax = canvas(3.65)
+    card(ax, 0.02, 0.04, 0.46, 0.92, '纯 GPU 直通 I/O 的算力争用陷阱', color='orange', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '大块裸张量（≥256 KiB）\nGDS P2P DMA 跑满 PCIe', 'teal', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '细粒度随机读 / 解压反序列化\nGPU 轮询队列耗尽寄存器', 'orange', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, 'I/O 控制流侵占 SM 槽位\n导致主干 GEMM 算子降速', 'orange', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, 'GPU 擅长矩阵算力而非中断轮询', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'CoPilotIO：CPU 协处理释放 SM', color='blue', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, 'OSDI 26：GPU 仅写轻量门铃\n立即切回执行高密矩阵计算', 'blue', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '空闲 CPU 核接管队列轮询\n完成小块合并与解压校验', 'teal', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '就绪后经锁页缓冲 DMA 入卡\n100% 归还 SM 给核心算子', 'purple', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '按 I/O 粒度与解压需求动态选路', size=11, ha='center', weight='bold', color=BORDER_COL['blue'])
+    ex.save(fig, 'ch13-copilotio-gds-vs-cpu-assisted-io')
+
+
+def fig_13_22_umap_moonbright(ex: Exporter):
+    fig, ax = canvas(3.65)
+    card(ax, 0.02, 0.04, 0.46, 0.92, 'Umap 分布式 mmap 矩阵访问', color='teal', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '传统 DFS 直接 mmap 大矩阵\n页缓存膨胀易触发容器 OOM', 'orange', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, 'OSDI 26 Umap：感知矩阵步长\n批量预取 + 定向页缓存回收', 'teal', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '消除用户态双重缓冲拷贝\n严控容器 RSS 水位免误杀', 'blue', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '主机虚拟内存与远端存储对齐', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'MoonBright 显存页表虚拟化', color='purple', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '传统 VMM 映射慢：CPU 改页表\n叠加全卡 TLB 刷空停顿', 'orange', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, 'OSDI 26 MoonBright：设备端\n物化页表 + 新地址免刷 TLB', 'purple', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '配合 kvcached 虚实地址解耦\n多模型弹性共享物理显存池', 'blue', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '贯通主机—设备统一虚拟页表底座', size=11, ha='center', weight='bold', color=BORDER_COL['purple'])
+    ex.save(fig, 'ch13-umap-moonbright-mmap-and-gpu-page-table')
+
+
+def fig_13_23_tar_vs_lance_seek(ex: Exporter):
+    fig, ax = canvas(3.65)
+    card(ax, 0.02, 0.50, 0.96, 0.46, 'A. 静态顺序 Shuffle：WebDataset Tar 分片与 FalconFS 小文件对比', color='blue')
+    top = [
+        (0.04, 0.58, 0.28, 0.24, '离散小文件直读\n深目录 6 次 RPC\nFalconFS 压至 1 次', 'orange'),
+        (0.36, 0.58, 0.28, 0.24, 'WebDataset Tar\n1–2 GB 连续打包\n顺序吞吐 >8 GB/s', 'teal'),
+        (0.68, 0.58, 0.28, 0.24, '适用边界：\n预训练静态洗牌\n整包全模态遍历', 'blue'),
+    ]
+    for x, y, w, h, label, role in top:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.36, 0.70))
+    arrow(ax, (0.64, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.43, 'B. 课程学习与在线难例重采样：Lance 列式随机点查 + Umap 按需映射', color='teal')
+    bot = [
+        (0.04, 0.16, 0.44, 0.20, 'Tar 分片按长度/奖励重采样时\n为取 1 条样本被迫读穿整块\n随机读放大高达数十倍', 'orange'),
+        (0.52, 0.16, 0.44, 0.20, 'Lance O(1) 偏移表 + Umap 映射\n仅拉取命中样本与目标模态列\n单次 NVMe 点查 <200 μs', 'teal'),
+    ]
+    for x, y, w, h, label, role in bot:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.48, 0.26), (0.52, 0.26))
+    text(ax, 0.50, 0.08, '数据湖演进：顺序吞吐靠连续分片，动态采样靠列式索引与页级映射', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch13-multimodal-tar-webdataset-vs-lance-random')
+
+
+def fig_13_24_storage_cube(ex: Exporter):
+    fig, ax = canvas(3.80)
+    card(ax, 0.02, 0.03, 0.96, 0.94, 'AI 原生存储底座三维需求矩阵（带宽 · 延迟 · IOPS）与代表系统映射', color='blue')
+    cells = [
+        (0.04, 0.68, 0.44, 0.18, '① 训练检查点 & 预训练顺序流\n诉求：聚合带宽（6.6 TiB/s）\n方案：3FS CRAQ + GDS + Tar', 'blue'),
+        (0.52, 0.68, 0.44, 0.18, '② 十亿小文件 & 万级容器启动\n诉求：元数据 OPS 与去重\n方案：FalconFS + DSec EROFS', 'teal'),
+        (0.04, 0.44, 0.44, 0.18, '③ 多级 KV 缓存卸载与热恢复\n诉求：亚毫秒 P99 与写寿命\n方案：64KiB 块 + ZNS + 写准入', 'purple'),
+        (0.52, 0.44, 0.44, 0.18, '④ 十亿级向量 ANNS（RAG 库）\n诉求：高并发点查 + 召回率\n方案：DistVS / Helmsman / IKS', 'orange'),
+        (0.04, 0.20, 0.92, 0.18, '⑤ 细粒度压缩 I/O 协同与统一虚拟内存页表（计算—存储边界消融）\n方案：CoPilotIO 协处理 + Umap 页映射 + MoonBright / kvcached', 'teal'),
+    ]
+    for x, y, w, h, label, role in cells:
+        box(ax, x, y, w, h, label, role, size=11)
+    box(ax, 0.04, 0.06, 0.92, 0.10, '第 13 章法则：脱离访问粒度、擦写物理与质量门控的存储必遇瓶颈', 'blue', size=11)
+    ex.save(fig, 'ch13-ai-storage-bandwidth-latency-iops-cube')
+
+
 def main():
     ex = Exporter(HERE)
     fig_13_1_hierarchy(ex)
@@ -562,6 +683,12 @@ def main():
     fig_13_16_ssd_dwpd(ex)
     fig_13_17_diagnosis(ex)
     fig_13_18_full_stack(ex)
+    fig_13_19_falconfs(ex)
+    fig_13_20_distvs_helmsman(ex)
+    fig_13_21_copilotio(ex)
+    fig_13_22_umap_moonbright(ex)
+    fig_13_23_tar_vs_lance_seek(ex)
+    fig_13_24_storage_cube(ex)
     outputs = ex.finish()
 
     fig_data = build_figure_data()
@@ -626,7 +753,7 @@ def main():
             "section": "13.5.2",
             "caption": "多模态训练中 WebDataset 分片打包消除元数据风暴，以及算例 13-4 中每秒 4,096 段 720p 视频（65,536 fps）从主机 CPU 软解码赤字（缺口 160 核）向 DALI + 8×GPU NVDEC 硬件解码卸载的流水线",
             "source_refs": ["manuscripts/ch13/figure-data.json"],
-            "TeachingRole": "展示 PB 级多模态训练如何打通存储分片顺序供给与片上 NVDEC 异构解码闭环"
+            "TeachingRole": "展示 PB 级多模态训练如何贯通存储分片顺序供给与片上 NVDEC 异构解码全流程"
         },
         {
             "figure_id": "图 13-7",
@@ -736,7 +863,7 @@ def main():
             "section": "13.7.2",
             "caption": "AI 存储子系统性能与寿命瓶颈的五步定量诊断工作流",
             "source_refs": ["manuscripts/ch13/figure-data.json"],
-            "TeachingRole": "为系统工程师提供从元数据、PCIe 拓扑、闪存粒度、GC 毛刺到异构解码的排障闭环"
+            "TeachingRole": "为系统工程师提供从元数据、PCIe 拓扑、闪存粒度、GC 毛刺到异构解码的排障流程"
         },
         {
             "figure_id": "图 13-18",
@@ -747,6 +874,66 @@ def main():
             "caption": "贯穿预训练数据湖、RAG 向量知识库、多级 KV 缓存池与万级容器镜像的 AI 原生数据底座全景架构图",
             "source_refs": ["manuscripts/ch13/figure-data.json"],
             "TeachingRole": "收束第 13 章全章知识体系，呈现计算—网络—存储深度融合的现代 AI 数据平面"
+        },
+        {
+            "figure_id": "图 13-19",
+            "number": 19,
+            "file": "ch13-falconfs-server-side-path-resolution.svg",
+            "asset": "ch13/ch13-falconfs-server-side-path-resolution.svg",
+            "section": "13.8.1",
+            "caption": "传统 POSIX 逐跳目录解析（D=6 时每次打开触发 6–7 次 RPC）与 FalconFS（NSDI '26）服务端复合路径解析及混合哈希无锁目录布局对比",
+            "source_refs": ["research/2026-infra-survey/reading-nsdi-2026.md"],
+            "TeachingRole": "展示如何将路径解析下推至服务端以消除十亿级多模态小文件训练中的元数据网络往返放大"
+        },
+        {
+            "figure_id": "图 13-20",
+            "number": 20,
+            "file": "ch13-multimodal-tar-webdataset-vs-lance-random.svg",
+            "asset": "ch13/ch13-multimodal-tar-webdataset-vs-lance-random.svg",
+            "section": "13.8.1",
+            "caption": "静态顺序 Shuffle（WebDataset Tar 连续分片 / FalconFS）与课程学习及在线难例重采样（Lance O(1) 偏移点查 + Umap 页映射）的磁盘寻道与读放大对比",
+            "source_refs": ["manuscripts/ch13/figure-data.json"],
+            "TeachingRole": "阐明训练数据访问模式从静态顺序遍历转向动态按长度/奖励抽样时的存储格式选型边界"
+        },
+        {
+            "figure_id": "图 13-21",
+            "number": 21,
+            "file": "ch13-distvs-helmsman-disaggregated-vector-search.svg",
+            "asset": "ch13/ch13-distvs-helmsman-disaggregated-vector-search.svg",
+            "section": "13.8.2",
+            "caption": "DistVS（NSDI '26）计算—内存解耦三级精度筛选（本地 DRAM 粗筛 → 远端内存精筛 → SSD 全精度重排）与 Helmsman（OSDI '26）大规模倒排聚类闪存 ANNS 架构对比",
+            "source_refs": ["research/2026-infra-survey/reading-nsdi-2026.md", "research/2026-infra-survey/reading-osdi-2026.md"],
+            "TeachingRole": "对比超大规模向量检索跨越 DRAM、CXL/远端内存与 NVMe SSD 时的多级筛选与连续块布局，并明确区分有损向量召回与无损 KV 分层"
+        },
+        {
+            "figure_id": "图 13-22",
+            "number": 22,
+            "file": "ch13-copilotio-gds-vs-cpu-assisted-io.svg",
+            "asset": "ch13/ch13-copilotio-gds-vs-cpu-assisted-io.svg",
+            "section": "13.8.3",
+            "caption": "大块连续裸张量 GPUDirect Storage（GDS）直通与细粒度/需解压场景下 CoPilotIO（OSDI '26）利用主机 CPU 协处理轮询释放 GPU SM 算力的架构对比",
+            "source_refs": ["research/2026-infra-survey/reading-osdi-2026.md"],
+            "TeachingRole": "揭示纯 GPU 发起细粒度 I/O 时的寄存器与 SM 争用退化，建立按 I/O 粒度与计算耦合度划分 GDS 与 CPU 协处理的边界"
+        },
+        {
+            "figure_id": "图 13-23",
+            "number": 23,
+            "file": "ch13-umap-moonbright-mmap-and-gpu-page-table.svg",
+            "asset": "ch13/ch13-umap-moonbright-mmap-and-gpu-page-table.svg",
+            "section": "13.8.3",
+            "caption": "Umap（OSDI '26）分布式文件系统页粒度矩阵 mmap 按需预取免除容器 OOM 与 MoonBright（OSDI '26）设备端 GPU 页表物化及延迟 TLB 同步协同架构",
+            "source_refs": ["research/2026-infra-survey/reading-osdi-2026.md"],
+            "TeachingRole": "剖析主机侧 DFS 内存映射与设备侧 GPU 页表虚拟化如何消除双重缓冲拷贝与页表同步停顿"
+        },
+        {
+            "figure_id": "图 13-24",
+            "number": 24,
+            "file": "ch13-ai-storage-bandwidth-latency-iops-cube.svg",
+            "asset": "ch13/ch13-ai-storage-bandwidth-latency-iops-cube.svg",
+            "section": "13.8.3",
+            "caption": "AI 原生存储底座全场景（检查点、十亿小文件、多级 KV、十亿向量 ANNS、细粒度协同 I/O）在带宽—延迟—IOPS 三维空间的映射总览",
+            "source_refs": ["manuscripts/ch13/figure-data.json"],
+            "TeachingRole": "总结第 13 章全部存储负载特征与对应系统原语的工程选型总表"
         }
     ]
     (HERE / 'figure-index.json').write_text(json.dumps(fig_index, ensure_ascii=False, indent=2) + '\n')

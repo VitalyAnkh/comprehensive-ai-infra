@@ -106,5 +106,41 @@
     "width_pt": 420.0,
     "min_label_pt": 11.0,
     "text_extent_warnings": []
+  },
+  {
+    "figure": "ch14-chakra-execution-trace-graph-simulation",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch14-neusight-tile-roofline-calibration",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch14-farskip-collective-delayed-dependency",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch14-moe-granularity-vs-network-radix-co-design",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch14-kv-head-ratio-vs-tensor-parallel-limit",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch14-codesign-pre-silicon-to-production-loop",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
   }
 ]

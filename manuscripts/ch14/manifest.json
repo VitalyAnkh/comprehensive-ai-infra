@@ -2,7 +2,7 @@
   "outputs": [
     {
       "path": "manuscripts/ch14/ch14-2023-2026-cost-reduction-telescoping.pdf",
-      "sha256": "97303cbcefd4f73a362329898f7f10e4be5424716615479afdfe7731725db5f9"
+      "sha256": "33ef44a4703405dcbc58de6c4b7176b7736419d8c26aa8382d493027bfc55773"
     },
     {
       "path": "manuscripts/ch14/ch14-2023-2026-cost-reduction-telescoping.png",
@@ -10,11 +10,11 @@
     },
     {
       "path": "manuscripts/ch14/ch14-2023-2026-cost-reduction-telescoping.svg",
-      "sha256": "1d2a21f02e8c730096f36097b0111225aaec00927074ad9190bef4216c2cc604"
+      "sha256": "a0b32972acb81e37064b5d06961dd73c98d523adb43c1a19fbefdfc35eeda318"
     },
     {
       "path": "manuscripts/ch14/ch14-beyond-chinchilla-lifecycle-compute-allocation.pdf",
-      "sha256": "24b25879cea9ccb1a67d4e9e49815a39901a7900c3ece118b71dc48432d20ae3"
+      "sha256": "2b1f11c137923ccb9cabe86cbd754fa08cd10b42cff64703c42e9e339ece04ec"
     },
     {
       "path": "manuscripts/ch14/ch14-beyond-chinchilla-lifecycle-compute-allocation.png",
@@ -22,11 +22,35 @@
     },
     {
       "path": "manuscripts/ch14/ch14-beyond-chinchilla-lifecycle-compute-allocation.svg",
-      "sha256": "cbd11b3a120bb9977d69a57021030f00a2b7d41a3ea30db74ab50083c4d2df2a"
+      "sha256": "27f48e75b6051941b485dbc5351b564b45b75f3cdbee1254e5eb315a0bcf0726"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-chakra-execution-trace-graph-simulation.pdf",
+      "sha256": "53af2c6ff66cf6cf6c2d729ac0dab8cc7dc7bb6ab9579f1360302a6290fc54d0"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-chakra-execution-trace-graph-simulation.png",
+      "sha256": "8aa7903a788441a05036bc407c2b9cd8f6c1935115a6c982bbc78c3dd9e6d831"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-chakra-execution-trace-graph-simulation.svg",
+      "sha256": "e5382326fa09a5f76cb151fd43afccea5fdfa79567c23bdeaffbc0cfaefabf58"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-codesign-pre-silicon-to-production-loop.pdf",
+      "sha256": "d932501d10811783cba4fb35588520d7e06b7b06c9ffdada6904034a722d5678"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-codesign-pre-silicon-to-production-loop.png",
+      "sha256": "e67bc0f2bcbe0d7494e9c315a3d54779fb1641434eb4c4b13709ebbe01ec4fe5"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-codesign-pre-silicon-to-production-loop.svg",
+      "sha256": "15761e0074fb30190f7974f9fc02604e4dddbf21c2975ee50ba630a8d0935751"
     },
     {
       "path": "manuscripts/ch14/ch14-codesign-simultaneous-equations.pdf",
-      "sha256": "96ab7b5f80832d83cd278436b894906967b1347336709b35f2ea2f2b1e471a42"
+      "sha256": "c77eac57b429e3d2c4f3394cf070d4874879aca94439781772ed505350f0b575"
     },
     {
       "path": "manuscripts/ch14/ch14-codesign-simultaneous-equations.png",
@@ -34,11 +58,11 @@
     },
     {
       "path": "manuscripts/ch14/ch14-codesign-simultaneous-equations.svg",
-      "sha256": "a5eac5784fcbca3684c3d6d4d567d7b049830d1632a36814854f8b0882d4a9cd"
+      "sha256": "50c6d238252a7596cde130e86203240c01e4fbc7d6211005e06ce5b50a896492"
     },
     {
       "path": "manuscripts/ch14/ch14-datacenter-vs-consumer-gpu-crossover.pdf",
-      "sha256": "d3ee3e0f59e62709b3c953774be39d49cbec0aa650663635e32e3911ce6ad570"
+      "sha256": "e6ba95de0938f1c8533990f27331c03cf04d4c8fe6d52ce34caac39abb725a93"
     },
     {
       "path": "manuscripts/ch14/ch14-datacenter-vs-consumer-gpu-crossover.png",
@@ -46,11 +70,11 @@
     },
     {
       "path": "manuscripts/ch14/ch14-datacenter-vs-consumer-gpu-crossover.svg",
-      "sha256": "ce0f63c7f684e7594eb7f9f083a09421dbae3cab265fcc13f0b8813bd66e4cff"
+      "sha256": "29fefbb5edfd3ba894c898c638c0d93b812d4800c17b52f0c2d2834766c11609"
     },
     {
       "path": "manuscripts/ch14/ch14-design-review-3candidate-kv-audit.pdf",
-      "sha256": "e771ac422ea0f0f54fd8bf26583da11161b4d395d6dc77fafea0a1b7a65ff862"
+      "sha256": "6c9cb482aa1ee2571f6862913f086e5d3a8dc406fc2cf9d3eeac4a12505ddbe4"
     },
     {
       "path": "manuscripts/ch14/ch14-design-review-3candidate-kv-audit.png",
@@ -58,11 +82,11 @@
     },
     {
       "path": "manuscripts/ch14/ch14-design-review-3candidate-kv-audit.svg",
-      "sha256": "63d0111ab3da03880970a3fefbbe37c25392b9f857a5768867f6fed6afd72508"
+      "sha256": "a14d3c9142c7ba098e5b38b5bf95fde39d1cc62863810444c9ce40dc60a61af1"
     },
     {
       "path": "manuscripts/ch14/ch14-dflash-block-diffusion-role-reversal.pdf",
-      "sha256": "5c8526a168294426a6e1253714d0522e0709a0b49ec4615632600fe07e41c4b5"
+      "sha256": "d823fc62841c2627fcc00632a285d4eb2cbd78b919c1d956f9b005e8aab6eba1"
     },
     {
       "path": "manuscripts/ch14/ch14-dflash-block-diffusion-role-reversal.png",
@@ -70,11 +94,11 @@
     },
     {
       "path": "manuscripts/ch14/ch14-dflash-block-diffusion-role-reversal.svg",
-      "sha256": "678a9ff2e6c2b53ce003a7a77423f0957287735b52b33d9cdd7a71b138c21aba"
+      "sha256": "63e5676a90bf4ffd96ae4edbc8cd627f2ca3e29eca035820a0b3dc7c44ca2ace"
     },
     {
       "path": "manuscripts/ch14/ch14-digital-worker-v41-vs-k3-cost.pdf",
-      "sha256": "9f1b8257016ba72cbe8a4055476aed2e92277c8e08151bfe76c04b2becbc1ecd"
+      "sha256": "00ba3b9ced69f7a10a9fdc930b338bda681a9c7e3300ce25e188c3cd1cd9a602"
     },
     {
       "path": "manuscripts/ch14/ch14-digital-worker-v41-vs-k3-cost.png",
@@ -82,23 +106,23 @@
     },
     {
       "path": "manuscripts/ch14/ch14-digital-worker-v41-vs-k3-cost.svg",
-      "sha256": "de80a67ef24dc3b5ec820080050f59c52a0a6f932c0c1cc7118cd2e3251db2e7"
+      "sha256": "f13db4ff9899f1a9de4cb90dd7bc8e4b645fe4549597733db066050752fdbba4"
     },
     {
       "path": "manuscripts/ch14/ch14-dual-track-book-throughline-summary.pdf",
-      "sha256": "24506e466e9b94866a80a280960779121b165e63115aab5107d6ad4445887cf5"
+      "sha256": "5833b7b30708a06f06a439b07169bf1281af4a8c9ee8eba56cc123de8f684e0d"
     },
     {
       "path": "manuscripts/ch14/ch14-dual-track-book-throughline-summary.png",
-      "sha256": "9a644580d102ff39888ce38fe7ac2a6b05476fad119628b9ee181313e864479d"
+      "sha256": "ce90c13d127116f37647712d61f6a1efba4740fefc067555341368ee92787fc9"
     },
     {
       "path": "manuscripts/ch14/ch14-dual-track-book-throughline-summary.svg",
-      "sha256": "2d5ae18a6dd6c5aaa6fb1be1a7f4aa41e625145bf8ec61828b326cccabedb965"
+      "sha256": "235216d4e5c5a5660da61cdb92c5190432fac59f650480abd99c21f1cf10d2fe"
     },
     {
       "path": "manuscripts/ch14/ch14-exp13-07-commit-buffer-idempotence.pdf",
-      "sha256": "9723ad0de981b57a0206a2df4cf7b283ce0b9bafe5724ea1fcd6b2f5df339b7b"
+      "sha256": "d382d681be18ddb603bac24670f4d4afe7fce5b8907c5710f7cacd7767b99031"
     },
     {
       "path": "manuscripts/ch14/ch14-exp13-07-commit-buffer-idempotence.png",
@@ -106,11 +130,11 @@
     },
     {
       "path": "manuscripts/ch14/ch14-exp13-07-commit-buffer-idempotence.svg",
-      "sha256": "b8ca9f9c0cdf33eecc9047a6a48d5a68e40db6e75ed22bb66c72fd11fb60743a"
+      "sha256": "4d86794230163565229b1cec11233649a051b2b2572703b114b784fffe734e25"
     },
     {
       "path": "manuscripts/ch14/ch14-exp13-07-k96-counterexample-and-k192-ratios.pdf",
-      "sha256": "bbe1e8229675b1117fa53694a6d32ccafdf09d74bae8f8724d874246b6f909c4"
+      "sha256": "c00cea7acfd41feeeda774f1373e3312a1fb60fd6fa9bb92bd31dde1b63ea028"
     },
     {
       "path": "manuscripts/ch14/ch14-exp13-07-k96-counterexample-and-k192-ratios.png",
@@ -118,11 +142,23 @@
     },
     {
       "path": "manuscripts/ch14/ch14-exp13-07-k96-counterexample-and-k192-ratios.svg",
-      "sha256": "cfe75f1e1777c1799d2bd4a8484613bb8a8b65e9e350f58308baead9cad526da"
+      "sha256": "42880a40a1c97885db5852b23b592ba6ab4beb05052029d4fcf073285d0f19c3"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-farskip-collective-delayed-dependency.pdf",
+      "sha256": "c73e7dd89af08fe9a78207527be3b02ff780c6b80fc939586a9b29fb5b75b36e"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-farskip-collective-delayed-dependency.png",
+      "sha256": "b3263988cbc75709739f2f1518cfbbee5601bf13e271183d39dceb5cbea8767c"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-farskip-collective-delayed-dependency.svg",
+      "sha256": "6a7de56e9720a1babd63f6c29990afccba289e3445a87a17d28c2bc493c74f52"
     },
     {
       "path": "manuscripts/ch14/ch14-five-step-diagnostic-decision-tree.pdf",
-      "sha256": "a0b929cbd02811bda587a15fb9af5565734e96a5aa7482d43c05cf0f8cf7a905"
+      "sha256": "5d63396488fdb97caa68307107f88efecb9b88325f9036d2cf0e206a3b14e6d9"
     },
     {
       "path": "manuscripts/ch14/ch14-five-step-diagnostic-decision-tree.png",
@@ -130,23 +166,23 @@
     },
     {
       "path": "manuscripts/ch14/ch14-five-step-diagnostic-decision-tree.svg",
-      "sha256": "9779b172c3fc4b8a911b27970df3b3c84ba4057cd8b157389ced9beeae255380"
+      "sha256": "fd13312f6ceeb24d8c47212d6eedd2f1d5f718d5c78b0bf6522bd94d050d9f33"
     },
     {
       "path": "manuscripts/ch14/ch14-four-dimensional-codesign-closed-loop.pdf",
-      "sha256": "14804a81adb7586a31fab78f2ef6a9d43bf5c36233be501eac2df8fa18c3191a"
+      "sha256": "1cf75922eda79895d4b1fa29f8a05e3729bc19d8e5b07dad0d790f3f3eaa57f2"
     },
     {
       "path": "manuscripts/ch14/ch14-four-dimensional-codesign-closed-loop.png",
-      "sha256": "9b44280a9f0faf21390ac486cda61ed1fccb92d38eaf4014ef57de65af5257d7"
+      "sha256": "0e744d512290e6ecd47b69c71d8afdf8e9ac7542b0204a115c2f2b71540a2996"
     },
     {
       "path": "manuscripts/ch14/ch14-four-dimensional-codesign-closed-loop.svg",
-      "sha256": "9f9bf7918fc80846bc8979bf28704d374d611218217c51aab603eaa7e959ed35"
+      "sha256": "2e5960e26e7fe7311efead5a93d5a867665d5984f35fe429a064dda99ce2f177"
     },
     {
       "path": "manuscripts/ch14/ch14-four-double-counting-traps-matrix.pdf",
-      "sha256": "9819e7c0fda64b2a715657f8ebde0dfad1c3bfccfecd1942848fd1f4f72276f8"
+      "sha256": "a306b9fc425c465b24d2df25c79c2d37df49b80f4ff6637211f45d300222fc6c"
     },
     {
       "path": "manuscripts/ch14/ch14-four-double-counting-traps-matrix.png",
@@ -154,11 +190,47 @@
     },
     {
       "path": "manuscripts/ch14/ch14-four-double-counting-traps-matrix.svg",
-      "sha256": "a21b6054799b94d3ccdb79105e2b8d53cba4f2b76f4c225ec1741de28c6e8d2d"
+      "sha256": "ca29866136606c792c7a42c8c04a1863edfe23bf66dbf31c4b8b2e284f53a5fc"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-kv-head-ratio-vs-tensor-parallel-limit.pdf",
+      "sha256": "343c7a9a3a28cab57193a596a343be83a8dbe6307e11cf9025ec32348ebdb30f"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-kv-head-ratio-vs-tensor-parallel-limit.png",
+      "sha256": "31432d0be57fed70d2386ac3813eed2d26a159c59d26e78511bfdd817ca03603"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-kv-head-ratio-vs-tensor-parallel-limit.svg",
+      "sha256": "69009aed5d68bff9280f01d717012e060287534954205b4b31828a97dee66057"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-moe-granularity-vs-network-radix-co-design.pdf",
+      "sha256": "23cd433ec60dbde7fae185f1e2ee3608a20282488c7d2b2ef5a64a15faa56c00"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-moe-granularity-vs-network-radix-co-design.png",
+      "sha256": "e18e8a14bbf26b2bdfb7a8606254a4a21b5a11a74327dce975996e4174fb5d80"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-moe-granularity-vs-network-radix-co-design.svg",
+      "sha256": "e06b694c743505f164d479a0850dad94aac0930a4682837c3d0c7ea1647a1e76"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-neusight-tile-roofline-calibration.pdf",
+      "sha256": "c3ac93cdedd4c5e53cd249c26f922d11f87dca9b0f82c4ae09a2be3ee062786f"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-neusight-tile-roofline-calibration.png",
+      "sha256": "ef3cbf912341a18322591e8a81e6e11f67de056d7709f649b1a7df92452ffe7b"
+    },
+    {
+      "path": "manuscripts/ch14/ch14-neusight-tile-roofline-calibration.svg",
+      "sha256": "9de24cb0a13af36c08e7483c8aef52591a16d0d46546e37d4e00d52f85e0c83e"
     },
     {
       "path": "manuscripts/ch14/ch14-opentallas-four-resource-and-wafer-hop.pdf",
-      "sha256": "4a7c39e7fca726032f684a03ad893c1b28b5a6f2f3e7ff19a024833828ae6eeb"
+      "sha256": "eb82f7792d8a1701e8ccd1ae63acac8507cc2755c5516504441831c75b327007"
     },
     {
       "path": "manuscripts/ch14/ch14-opentallas-four-resource-and-wafer-hop.png",
@@ -166,11 +238,11 @@
     },
     {
       "path": "manuscripts/ch14/ch14-opentallas-four-resource-and-wafer-hop.svg",
-      "sha256": "8de2a7e6185e81ca688ba9860885ce3856ee08e82812ac4d70c21b54d4e7a265"
+      "sha256": "5ec1db4e3785e127f3c6c3ff126bb98491c6723a043657273b6ab01c69ed64b8"
     },
     {
       "path": "manuscripts/ch14/ch14-preregistered-prediction-lifecycle.pdf",
-      "sha256": "721be00d814f62a6123352024bea02ebde508768c2e4e0e186d30f2b098bff40"
+      "sha256": "49c400930d0160c5801b657155f3c2dbc1c17e2957b749e64c414eeb98684a4b"
     },
     {
       "path": "manuscripts/ch14/ch14-preregistered-prediction-lifecycle.png",
@@ -178,11 +250,11 @@
     },
     {
       "path": "manuscripts/ch14/ch14-preregistered-prediction-lifecycle.svg",
-      "sha256": "fe7017bb79da531dc19efb807414b45c0cbe4bcc9feb8079c087174b677ae1a7"
+      "sha256": "1345c0184f0405aa497a21323893a729daa41a148955c0a8c4ddfa822bb6e603"
     },
     {
       "path": "manuscripts/ch14/ch14-rubin-v41-codesign-mapping-matrix.pdf",
-      "sha256": "5e228c6ee524597f08a7170fb0861336d57f8f08560428a4f7dd1aac4ac8cc54"
+      "sha256": "d0fa3f5f569747cabfd0a21a4b77261a87eac58c5ec8e8367d095e7f966c349c"
     },
     {
       "path": "manuscripts/ch14/ch14-rubin-v41-codesign-mapping-matrix.png",
@@ -190,11 +262,11 @@
     },
     {
       "path": "manuscripts/ch14/ch14-rubin-v41-codesign-mapping-matrix.svg",
-      "sha256": "35f0bc395984f03023bb6c8d0081676a15aa4393ed1c7092b9c25529df49a8e8"
+      "sha256": "a394f3db33e0204b87b440f2fdbe6a0f94cc113e079d512e0a6722a7ae0f3145"
     },
     {
       "path": "manuscripts/ch14/ch14-v41-dual-track-context-scaling.pdf",
-      "sha256": "4d62af57d5f749bed8e9cab5ee460fdc09501b427791bf6876284eebb5583243"
+      "sha256": "d21e2afdc7d10870e0ccf6069fa57babb3c3cd197009b2a324985cd563bb9364"
     },
     {
       "path": "manuscripts/ch14/ch14-v41-dual-track-context-scaling.png",
@@ -202,11 +274,11 @@
     },
     {
       "path": "manuscripts/ch14/ch14-v41-dual-track-context-scaling.svg",
-      "sha256": "774a0b065fe60cfd02955a49bb939256888af49ed90242b8144a6fef4f5b8caf"
+      "sha256": "80020d8c7611f1db10213148f8d47f2749ab50efb87aa3c503cd98c92fdc0d78"
     },
     {
       "path": "manuscripts/ch14/ch14-v41-four-stage-attention-pipeline.pdf",
-      "sha256": "61d351a1958a387ebe4cc4883c7e2c70a78e7dfbc582023cb2d784de109e2e55"
+      "sha256": "3378c615abcd5651df1f6a992a09394e787cfe27f8360cea373fbe33d74181c5"
     },
     {
       "path": "manuscripts/ch14/ch14-v41-four-stage-attention-pipeline.png",
@@ -214,7 +286,7 @@
     },
     {
       "path": "manuscripts/ch14/ch14-v41-four-stage-attention-pipeline.svg",
-      "sha256": "e2db396356d8882995bdde3133a5daf539dbd9332528db09f0ae085d0dd1457c"
+      "sha256": "cf0381736800dae11bed5f9f1b30afc436960fdfabc364b325f1c7fef6d7cf30"
     },
     {
       "path": "manuscripts/ch14/figure-data.json",
@@ -222,15 +294,15 @@
     },
     {
       "path": "manuscripts/ch14/figure-index.json",
-      "sha256": "7f5a38f260eb9cc728bc7ea2ffe0fb7f25d109633d92741256e78aadd77b6731"
+      "sha256": "e7c7c2d2bfd67cd6761f6c55b8f507a267b2d778c94693fc582c40e74de6d082"
     },
     {
       "path": "manuscripts/ch14/teaching-layout-validation.json",
-      "sha256": "c7ad796b9fa949bc06d6940a109721116e96b122483e94e79d1ab47905ed60f5"
+      "sha256": "a7e373e58ba26a26f8b7f59b3b86cf4137c80172ea4cadc861c133185418cf78"
     },
     {
       "path": "manuscripts/ch14/math-validation.json",
-      "sha256": "5e9740ebd7c82b3080d5f02be8105438ea6bbb089ad1f97cc5bca8dfbef92122"
+      "sha256": "f7319821cdadca575871e79f6b3614381b922e2f54e8f6c85add3c3bc50af313"
     }
   ]
 }
