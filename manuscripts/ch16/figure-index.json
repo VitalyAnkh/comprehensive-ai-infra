@@ -109,7 +109,7 @@
     "file": "ch16-damon-ept-balloon-reclaim.svg",
     "asset": "ch16/ch16-damon-ept-balloon-reclaim.svg",
     "section": "16.4.2",
-    "caption": "DAMON 冷页监控与 virtio-balloon 空闲页报告（order-9 = 2 MiB 块）将时间积分内存（GB·s）降低 21.2% 的闭环机制",
+    "caption": "DAMON 冷页监控与 virtio-balloon 空闲页报告（order-9 = 2 MiB 块）将时间积分内存（GB·s）降低 21.2% 的联动机制",
     "source_refs": [
       "case-studies/dsec-sandbox-platform.md",
       "manuscripts/ch16/figure-data.json"
@@ -204,5 +204,79 @@
       "manuscripts/ch16/figure-data.json"
     ],
     "TeachingRole": "为读者提供跨层系统评审与容量规划的随身工程指南"
+  },
+  {
+    "figure_id": "图 16-17",
+    "number": 17,
+    "file": "ch16-moe-routing-traffic-side-channel-and-padding.svg",
+    "asset": "ch16/ch16-moe-routing-traffic-side-channel-and-padding.svg",
+    "section": "16.6.1",
+    "caption": "密文状态下 MoE All-to-All 专家负载偏斜泄露提示词特征 vs. 恒定桶大小哑元填充（Dummy Padding）防御",
+    "source_refs": [
+      "experiments/ch16/16-01/run.py"
+    ],
+    "TeachingRole": "揭示即使开启 TEE-I/O 载荷加密，专家路由包计数仍构成侧信道，并量化 (1+α) 哑元填充带宽税"
+  },
+  {
+    "figure_id": "图 16-18",
+    "number": 18,
+    "file": "ch16-verifiable-inference-tee-zkml-opml-triangle.svg",
+    "asset": "ch16/ch16-verifiable-inference-tee-zkml-opml-triangle.svg",
+    "section": "16.6.2",
+    "caption": "可验证推理三路线（硬件 TEE 证明、密码学 zkML、乐观抽检欺诈证明 OPML）在证明开销、信任假设与模型规模上的对比",
+    "source_refs": [
+      "experiments/ch16/16-01/run.py"
+    ],
+    "TeachingRole": "对比 TEE 签名（<5% 开销）、zkML（10³–10⁵x 膨胀）与 OPML 乐观抽检的适用边界"
+  },
+  {
+    "figure_id": "图 16-19",
+    "number": 19,
+    "file": "ch16-optimistic-verification-slashing-game.svg",
+    "asset": "ch16/ch16-optimistic-verification-slashing-game.svg",
+    "section": "16.6.2",
+    "caption": "乐观抽检可验证推理（OPML）的博弈树：抽检概率 p、造假收益 Δc 与质押罚没金 S_slash 的诚实边界曲线",
+    "source_refs": [
+      "experiments/ch16/16-01/run.py"
+    ],
+    "TeachingRole": "导出激励相容条件 p·S_slash > (1-p)·Δc，证明高额质押金可将验证抽检率压至 10⁻⁵ 量级"
+  },
+  {
+    "figure_id": "图 16-20",
+    "number": 20,
+    "file": "ch16-janus-nested-virtualization-fast-path.svg",
+    "asset": "ch16/ch16-janus-nested-virtualization-fast-path.svg",
+    "section": "16.6.3",
+    "caption": "传统二级页表嵌套虚拟化（N_guest × N_host 查表放大）vs. JANUS（OSDI '26）扁平化安全沙箱隔离",
+    "source_refs": [
+      "research/2026-infra-survey/reading-osdi-2026.md"
+    ],
+    "TeachingRole": "解析公有云虚拟机内部运行轻量微虚机时的二维 EPT 页表税与 JANUS 跨世界扁平化机制"
+  },
+  {
+    "figure_id": "图 16-21",
+    "number": 21,
+    "file": "ch16-blowfish-elastic-sandbox-memory-pool.svg",
+    "asset": "ch16/ch16-blowfish-elastic-sandbox-memory-pool.svg",
+    "section": "16.6.3",
+    "caption": "Blowfish（OSDI '26 #50）在解耦内存池上的高密微虚拟机弹性气球回收与 Prism（OSDI '26 #5）跨模型显存协调机制",
+    "source_refs": [
+      "research/2026-infra-survey/reading-osdi-2026.md",
+      "experiments/ch16/16-02/run.py"
+    ],
+    "TeachingRole": "将 CPU 侧跨虚机解耦内存弹性气球（Blowfish）与 GPU 侧跨模型显存气球（Prism）纳入统一池化视图"
+  },
+  {
+    "figure_id": "图 16-22",
+    "number": 22,
+    "file": "ch16-trusted-ai-infrastructure-defense-in-depth.svg",
+    "asset": "ch16/ch16-trusted-ai-infrastructure-defense-in-depth.svg",
+    "section": "16.6.3",
+    "caption": "可信 AI 基础设施纵深防御全景（硬件 TEE-I/O + 流量填充 + 远程证明/抽检 + Firecracker 微虚机 + 幂等审计账本）",
+    "source_refs": [
+      "experiments/ch16/16-01/run.py",
+      "experiments/ch16/16-02/run.py"
+    ],
+    "TeachingRole": "收束第 16 章硬件机密底座、侧信道与可验证层、高密微虚机沙箱与可恢复审计账本的四层纵深防御"
   }
 ]

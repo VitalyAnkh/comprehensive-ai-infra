@@ -62,7 +62,7 @@
       "references/files/specs/nvidia-rubin-system.md",
       "references/text/nvidia-rubin-arch.txt"
     ],
-    "TeachingRole": "解析机架级储能闭环控制与 DSX MaxLPS 如何在固定兆瓦配额下多塞入 40% 算力"
+    "TeachingRole": "解析机架级储能反馈控制与 DSX MaxLPS 如何在固定兆瓦配额下多塞入 40% 算力"
   },
   {
     "figure_id": "图 15-6",
@@ -195,12 +195,89 @@
     "number": 16,
     "file": "ch15-power-thermal-wan-co-design-summary.svg",
     "asset": "ch15/ch15-power-thermal-wan-co-design-summary.svg",
-    "section": "15.4.3",
+    "section": "15.5.2",
     "caption": "从芯片结温、机柜液冷、变电站功率平滑到跨地域光网的吉瓦级 AI 基础设施全景图",
     "source_refs": [
       "references/files/specs/nvidia-rubin-system.md",
       "manuscripts/ch15/figure-data.json"
     ],
-    "TeachingRole": "收束第 15 章供电、散热、瞬态功率与跨城光网的四层物理闭环"
+    "TeachingRole": "收束第 15 章供电、散热、瞬态功率与跨城光网的四层物理协同体系"
+  },
+  {
+    "figure_id": "图 15-17",
+    "number": 17,
+    "file": "ch15-single-phase-vs-two-phase-microfluidics.svg",
+    "asset": "ch15/ch15-single-phase-vs-two-phase-microfluidics.svg",
+    "section": "15.6.1",
+    "caption": "单相冷板、两相相变浸没/冷板与硅背面微通道直冷的热阻网络（R_TIM, R_conv）与千瓦级芯片结温边界",
+    "source_refs": [
+      "references/text/ashrae-liquid-cooling.txt",
+      "experiments/ch15/15-01/run.py"
+    ],
+    "TeachingRole": "对比显热、汽化潜热与硅背面微流道消除 R_TIM=0.02 °C/W 带来的 +40 °C 进液温度提升"
+  },
+  {
+    "figure_id": "图 15-18",
+    "number": 18,
+    "file": "ch15-campus-bess-peak-shaving-and-arbitrage.svg",
+    "asset": "ch15/ch15-campus-bess-peak-shaving-and-arbitrage.svg",
+    "section": "15.6.2",
+    "caption": "百兆瓦级园区储能（BESS）在 50 ms 训练脉冲平滑、日内峰谷电价套利与电网掉电备电中的三重能量流",
+    "source_refs": [
+      "references/files/specs/nvidia-rubin-system.md",
+      "experiments/ch15/15-02/run.py"
+    ],
+    "TeachingRole": "量化 100 MWh 园区储能在毫秒平抑、分钟调频与小时峰谷套利中的年收益与投资回收期"
+  },
+  {
+    "figure_id": "图 15-19",
+    "number": 19,
+    "file": "ch15-kareus-dynamic-static-energy-consolidation.svg",
+    "asset": "ch15/ch15-kareus-dynamic-static-energy-consolidation.svg",
+    "section": "15.6.3",
+    "caption": "Kareus（OSDI '26）动静态能耗分解：低负载下全卡浅度降频的高静态漏电税 vs. 负载紧缩合并 + 空闲卡深度休眠",
+    "source_refs": [
+      "research/2026-infra-survey/reading-osdi-2026.md",
+      "experiments/ch15/15-02/run.py"
+    ],
+    "TeachingRole": "证明在 40% 负载下紧缩合并休眠可将单卡等效功耗从 388 W 压至 280–289 W"
+  },
+  {
+    "figure_id": "图 15-20",
+    "number": 20,
+    "file": "ch15-dips-wan-backbone-parameter-sync.svg",
+    "asset": "ch15/ch15-dips-wan-backbone-parameter-sync.svg",
+    "section": "15.6.3",
+    "caption": "Di-PS（NSDI '26）跨地域训练的广域网链路段带宽调度与层间异步梯度传输重叠",
+    "source_refs": [
+      "research/2026-infra-survey/reading-nsdi-2026.md",
+      "experiments/ch15/15-02/run.py"
+    ],
+    "TeachingRole": "展示异构跨集群训练如何通过异步参数服务器与伪梯度阻尼容忍百毫秒级 WAN RTT"
+  },
+  {
+    "figure_id": "图 15-21",
+    "number": 21,
+    "file": "ch15-embodied-carbon-vs-operational-carbon-lifecycle.svg",
+    "asset": "ch15/ch15-embodied-carbon-vs-operational-carbon-lifecycle.svg",
+    "section": "15.6.3",
+    "caption": "AI 数据中心 3–5 年生命周期内隐含碳（Embodied Carbon：晶圆制造与基建）与运行碳（Operational Carbon：发电结构）的权衡曲线",
+    "source_refs": [
+      "manuscripts/ch15/figure-data.json"
+    ],
+    "TeachingRole": "阐明先进制程晶圆隐含碳与电网碳强度 CI(t) 在园区全生命周期中的权衡"
+  },
+  {
+    "figure_id": "图 15-22",
+    "number": 22,
+    "file": "ch15-gigawatt-campus-master-engineering-ledger.svg",
+    "asset": "ch15/ch15-gigawatt-campus-master-engineering-ledger.svg",
+    "section": "15.6.3",
+    "caption": "吉瓦级 AI 园区从电网并网、储能平滑、微通道液冷到跨城光网协同的完整工程总账本",
+    "source_refs": [
+      "experiments/ch15/15-01/run.py",
+      "experiments/ch15/15-02/run.py"
+    ],
+    "TeachingRole": "汇总结温、液冷、储能套利、动静态能耗与跨城协同训练的工程总账本"
   }
 ]

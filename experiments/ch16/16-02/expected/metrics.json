@@ -1,0 +1,27 @@
+{
+  "experiment_id": "16-02",
+  "dsec_and_dax": {
+    "cell_nodes": 160,
+    "peak_sandboxes": 380000,
+    "peak_create_per_s": 5000,
+    "avg_sandboxes_per_node": 2375,
+    "struct_page_ratio": 0.015625,
+    "n_vms_ex16_13": 800,
+    "ro_image_gb": 64.0,
+    "hot_subset_per_vm_gb": 4.0,
+    "naive_full_duplication_saved_gb": 51136.0,
+    "guest_struct_page_per_vm_gb": 1.0,
+    "total_guest_struct_page_gb": 800.0,
+    "ro_no_dax_total_gb": 3264.0,
+    "ro_with_dax_total_gb": 864.0,
+    "net_host_ram_saved_gb": 2400.0
+  },
+  "i19_audit_drain": {
+    "r_in_kibs": 400,
+    "backlog_kib": 48000.0,
+    "backlog_mib": 46.875,
+    "t_overflow_32m_s": 81.92,
+    "r_net_kibs": 624,
+    "t_drain_s": 76.9231
+  }
+}

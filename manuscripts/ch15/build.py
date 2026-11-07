@@ -115,7 +115,7 @@ def fig_15_4_power_swing(ex: Exporter):
 def fig_15_5_rubin_smoothing(ex: Exporter):
     fig, ax = canvas(3.65)
     card(ax, 0.02, 0.04, 0.46, 0.92, 'Rubin 机架智能功率平滑', color='teal', title_size=11)
-    box(ax, 0.04, 0.66, 0.42, 0.16, '电源架内置储能单元\n按荷电状态 SoC 闭环控制', 'teal', size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '电源架内置储能单元\n按荷电状态 SoC 反馈控制', 'teal', size=11)
     box(ax, 0.04, 0.43, 0.42, 0.16, '高峰放电 · 通信低谷充电\n削平约 20% 的 50 ms 脉冲', 'blue', size=11)
     box(ax, 0.04, 0.20, 0.42, 0.16, '消除防尖峰预留裕量浪费\n降低约 10% 机架平均功耗', 'purple', size=11)
     arrow(ax, (0.25, 0.66), (0.25, 0.59))
@@ -322,12 +322,12 @@ def fig_15_15_decision_tree(ex: Exporter):
 
 def fig_15_16_summary(ex: Exporter):
     fig, ax = canvas(4.10)
-    card(ax, 0.02, 0.03, 0.96, 0.94, '吉瓦级 AI 基础设施全景：结温—液冷—电网平滑—广域光网闭环', color='teal')
+    card(ax, 0.02, 0.03, 0.96, 0.94, '吉瓦级 AI 基础设施全景：结温—液冷—电网平滑—广域光网协同', color='teal')
     layers = [
         (0.05, 0.66, 0.42, 0.20, '① 硅片热流层（mm² 尺度）\nLogicFolding 1.25x 密度悖论\n控热阻防热节流木桶效应', 'orange'),
         (0.53, 0.66, 0.42, 0.20, '② 机柜液冷母排层（m 尺度）\n800 VDC 母排降铜损 278x\nASHRAE W45 温水免冷机', 'teal'),
-        (0.05, 0.37, 0.42, 0.20, '③ 园区变电储能层（km 尺度）\nRubin 削平 20% 峰值脉冲\nDSX MaxLPS 超配 +40% 卡', 'blue'),
-        (0.53, 0.37, 0.42, 0.20, '④ 跨城光网层（千公里尺度）\nTAPAS 路由 30 请求回本\nDiLoCo 压缩跨城带宽 500x', 'purple'),
+        (0.53, 0.37, 0.42, 0.20, '③ 园区变电储能层（km 尺度）\nRubin 削平 20% 峰值脉冲\nDSX MaxLPS 超配 +40% 卡', 'blue'),
+        (0.05, 0.37, 0.42, 0.20, '④ 跨城光网层（千公里尺度）\nTAPAS 路由 30 请求回本\nDiLoCo 压缩跨城带宽 500x', 'purple'),
     ]
     for x, y, w, h, label, role in layers:
         box(ax, x, y, w, h, label, role, size=11)
@@ -337,6 +337,127 @@ def fig_15_16_summary(ex: Exporter):
     arrow(ax, (0.26, 0.57), (0.26, 0.66))
     box(ax, 0.05, 0.08, 0.90, 0.21, '吉瓦时代恒等式：Token/s/MW = (单瓦有效算力 ÷ 每词元算力) ÷ PUE\n供电拓扑、液冷热学与广域光网已内化为 AI 体系结构的一等公民', 'blue', size=11)
     ex.save(fig, 'ch15-power-thermal-wan-co-design-summary')
+
+
+def fig_15_17_microfluidics(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '单相冷板、两相相变冷却与硅背面微通道直冷的热阻对比', color='blue')
+    modes = [
+        (0.04, 0.58, 0.28, 0.24, '① 单相水冷板\n显热温升受限\n含 R_TIM 界面', 'orange'),
+        (0.36, 0.58, 0.28, 0.24, '② 两相沸腾冷\n汽化潜热恒温\n仍受 R_TIM 限', 'blue'),
+        (0.68, 0.58, 0.28, 0.24, '③ 硅背微流道\n蚀刻晶圆背面\n消除 R_TIM 层', 'teal'),
+    ]
+    for x, y, w, h, label, role in modes:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.36, 0.70))
+    arrow(ax, (0.64, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '2,000 W 芯片消除 R_TIM=0.02 °C/W 的进水温度红利', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '传统冷板（R_TIM=0.02 °C/W）\n仅界面层即产生 40 °C 温差\n2 kW 下最高进水压至 21 °C', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '硅背面微通道直冷（R_TIM=0）\n消除 40 °C 界面温差瓶颈\n允许进液温度提升 +40.0 °C', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '当芯片迈向 2–3 kW 时，消除 R_TIM 是维持 W45 免冷机散热的关键', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch15-single-phase-vs-two-phase-microfluidics')
+
+
+def fig_15_18_campus_bess(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '百兆瓦时园区储能（100 MWh BESS）的三重时间尺度调度', color='teal')
+    tiers = [
+        (0.04, 0.58, 0.28, 0.24, '① 毫秒级平抑\n削平 50 ms 方波\n抑制功率斜率', 'teal'),
+        (0.36, 0.58, 0.28, 0.24, '② 分钟级调频\n电网一次调频\n虚拟转动惯量', 'blue'),
+        (0.68, 0.58, 0.28, 0.24, '③ 小时级套利\n谷电 0.04 充入\n峰电 0.12 放出', 'purple'),
+    ]
+    for x, y, w, h, label, role in tiers:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.36, 0.70))
+    arrow(ax, (0.64, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '100 MWh 储能系统峰谷套利与调频收益账本（练习 15-13）', color='blue')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '日内一充一放（η_rt = 88%）\n有效放电 88 MWh · 价差 0.08\n年峰谷套利 239–257 万美元', 'teal', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '叠加调频与需量削峰（+350 万）\n综合年收益 589–607 万美元\n静态投资回收期缩至 3.6–3.7 年', 'blue', size=11)
+    text(ax, 0.50, 0.06, '将单用途备电 UPS 升级为跨时间尺度复用的收益型电网资产', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch15-campus-bess-peak-shaving-and-arbitrage')
+
+
+def fig_15_19_kareus_energy(ex: Exporter):
+    fig, ax = canvas(3.75)
+    card(ax, 0.02, 0.04, 0.46, 0.92, '均匀分摊（高静态漏电）', color='orange', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '集群负载率 u = 40% 时\n所有 GPU 均保持唤醒态', 'orange', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '单卡静态漏电 P_s = 180 W\n动态功耗 0.4×520 = 208 W', 'orange', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '单卡总功耗 = 388 W\n静态漏电占比达 46.4%', 'orange', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '浅度降频难消静态漏电', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'Kareus 动静态能耗合并', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, 'Kareus（OSDI 26 #63）\n频率调控与实例紧缩合并', 'teal', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '40% 活跃卡满载（700 W）\n60% 空闲卡休眠（15 W）', 'blue', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '等效单卡均功降至 289 W\n整群节电 25.5%–27.8%', 'purple', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '压缩活跃卡数扑灭漏电', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch15-kareus-dynamic-static-energy-consolidation')
+
+
+def fig_15_20_dips_wan(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, 'Di-PS（NSDI 26 #21）异构跨集群异步参数服务器训练', color='blue')
+    stages = [
+        (0.04, 0.58, 0.28, 0.24, '① 异构算力园\n不同代 NPU/GPU\n按算力定步频', 'blue'),
+        (0.36, 0.58, 0.28, 0.24, '② 分片参数服\n算完第 l 层后\n异步推广域网', 'teal'),
+        (0.68, 0.58, 0.28, 0.24, '③ 陈旧度阻尼\n伪梯度加修正\n防慢卡拖收敛', 'purple'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.36, 0.70))
+    arrow(ax, (0.64, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '同步跨城 AllReduce vs. Di-PS 层间流式参数服务吞吐', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '同步跨城集合通信（木桶受限）\n最快园区须等最慢园区与 RTT\n异构代差使快集群闲置 >30%', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, 'Di-PS 异步分片推送 + 阻尼对齐\n通信与前反向计算全时段重叠\n百毫秒 WAN 下保持 >90% 效率', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '解耦异构园区的硬件步调，用算法阻尼吸收广域网抖动', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch15-dips-wan-backbone-parameter-sync')
+
+
+def fig_15_21_carbon_lifecycle(ex: Exporter):
+    fig, ax = canvas(3.75)
+    card(ax, 0.02, 0.04, 0.46, 0.92, '隐含碳（Embodied）', color='purple', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '3nm/2nm 极紫外光刻晶圆\nCoWoS 封装与 HBM4 制造', 'purple', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '变电站·液冷管网·储能柜\n混凝土与铜母排基建碳排', 'blue', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '通电前已一次性锁定支出\n需靠高利用率满载摊薄', 'orange', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '闲置等待推高单词元隐含碳', size=11, ha='center', weight='bold', color=BORDER_COL['purple'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, '运行碳（Operational）', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '取决于电网碳强度 CI(t)\n煤电 ~800 vs 水核风 <50', 'teal', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '3 年满载耗电约 26.3 亿度\n火电区运行碳占比 > 75%', 'orange', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '绿电直供 + BESS 错峰消纳\n跨园区追逐风光富余电力', 'teal', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '绿电区隐含碳与运行碳并重', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch15-embodied-carbon-vs-operational-carbon-lifecycle')
+
+
+def fig_15_22_master_ledger(ex: Exporter):
+    fig, ax = canvas(4.15)
+    card(ax, 0.02, 0.03, 0.96, 0.94, '吉瓦级 AI 算力园区工程总账本（从并网到跨洲协同）', color='blue')
+    grid = [
+        (0.05, 0.66, 0.42, 0.20, '① 供电与母排（15.1–2）\n800 VDC 母排降铜损 278x\nRubin 平滑 +40% 超配', 'blue'),
+        (0.53, 0.66, 0.42, 0.20, '② 热学与微流道（15.3/6）\nW45 温水免冷机 PUE≤1.08\n硅背面微流道消除 R_TIM', 'teal'),
+        (0.53, 0.37, 0.42, 0.20, '③ 储能与能效（15.6.2–3）\n100 MWh BESS 峰谷套利\nKareus 合并休眠省电 25%', 'purple'),
+        (0.05, 0.37, 0.42, 0.20, '④ 跨地域训练（15.4 & 6）\nStreaming DiLoCo 零暴露\nDi-PS 异步容忍百毫秒 WAN', 'orange'),
+    ]
+    for x, y, w, h, label, role in grid:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.47, 0.76), (0.53, 0.76))
+    arrow(ax, (0.74, 0.66), (0.74, 0.57))
+    arrow(ax, (0.53, 0.47), (0.47, 0.47))
+    arrow(ax, (0.26, 0.57), (0.26, 0.66))
+    box(ax, 0.05, 0.08, 0.90, 0.21, '实验验证：ch15/15-01（微通道热阻·LogicFolding·TAPAS）\n与 ch15/15-02（DiLoCo·Kareus·100 MWh BESS 峰谷套利）', 'teal', size=11)
+    ex.save(fig, 'ch15-gigawatt-campus-master-engineering-ledger')
 
 
 def main():
@@ -357,6 +478,12 @@ def main():
     fig_15_14_streaming_diloco(ex)
     fig_15_15_decision_tree(ex)
     fig_15_16_summary(ex)
+    fig_15_17_microfluidics(ex)
+    fig_15_18_campus_bess(ex)
+    fig_15_19_kareus_energy(ex)
+    fig_15_20_dips_wan(ex)
+    fig_15_21_carbon_lifecycle(ex)
+    fig_15_22_master_ledger(ex)
     outputs = ex.finish()
 
     fig_index = [
@@ -408,7 +535,7 @@ def main():
             "section": "15.2.2",
             "caption": "Vera Rubin 机架级储能 SoC 功率平滑（削峰 20%、均功降 10%）与 DSX MaxLPS 同配额 +40% GPU 超配机制",
             "source_refs": ["references/files/specs/nvidia-rubin-system.md", "references/text/nvidia-rubin-arch.txt"],
-            "TeachingRole": "解析机架级储能闭环控制与 DSX MaxLPS 如何在固定兆瓦配额下多塞入 40% 算力"
+            "TeachingRole": "解析机架级储能反馈控制与 DSX MaxLPS 如何在固定兆瓦配额下多塞入 40% 算力"
         },
         {
             "figure_id": "图 15-6",
@@ -515,10 +642,70 @@ def main():
             "number": 16,
             "file": "ch15-power-thermal-wan-co-design-summary.svg",
             "asset": "ch15/ch15-power-thermal-wan-co-design-summary.svg",
-            "section": "15.4.3",
+            "section": "15.5.2",
             "caption": "从芯片结温、机柜液冷、变电站功率平滑到跨地域光网的吉瓦级 AI 基础设施全景图",
             "source_refs": ["references/files/specs/nvidia-rubin-system.md", "manuscripts/ch15/figure-data.json"],
-            "TeachingRole": "收束第 15 章供电、散热、瞬态功率与跨城光网的四层物理闭环"
+            "TeachingRole": "收束第 15 章供电、散热、瞬态功率与跨城光网的四层物理协同体系"
+        },
+        {
+            "figure_id": "图 15-17",
+            "number": 17,
+            "file": "ch15-single-phase-vs-two-phase-microfluidics.svg",
+            "asset": "ch15/ch15-single-phase-vs-two-phase-microfluidics.svg",
+            "section": "15.6.1",
+            "caption": "单相冷板、两相相变浸没/冷板与硅背面微通道直冷的热阻网络（R_TIM, R_conv）与千瓦级芯片结温边界",
+            "source_refs": ["references/text/ashrae-liquid-cooling.txt", "experiments/ch15/15-01/run.py"],
+            "TeachingRole": "对比显热、汽化潜热与硅背面微流道消除 R_TIM=0.02 °C/W 带来的 +40 °C 进液温度提升"
+        },
+        {
+            "figure_id": "图 15-18",
+            "number": 18,
+            "file": "ch15-campus-bess-peak-shaving-and-arbitrage.svg",
+            "asset": "ch15/ch15-campus-bess-peak-shaving-and-arbitrage.svg",
+            "section": "15.6.2",
+            "caption": "百兆瓦级园区储能（BESS）在 50 ms 训练脉冲平滑、日内峰谷电价套利与电网掉电备电中的三重能量流",
+            "source_refs": ["references/files/specs/nvidia-rubin-system.md", "experiments/ch15/15-02/run.py"],
+            "TeachingRole": "量化 100 MWh 园区储能在毫秒平抑、分钟调频与小时峰谷套利中的年收益与投资回收期"
+        },
+        {
+            "figure_id": "图 15-19",
+            "number": 19,
+            "file": "ch15-kareus-dynamic-static-energy-consolidation.svg",
+            "asset": "ch15/ch15-kareus-dynamic-static-energy-consolidation.svg",
+            "section": "15.6.3",
+            "caption": "Kareus（OSDI '26）动静态能耗分解：低负载下全卡浅度降频的高静态漏电税 vs. 负载紧缩合并 + 空闲卡深度休眠",
+            "source_refs": ["research/2026-infra-survey/reading-osdi-2026.md", "experiments/ch15/15-02/run.py"],
+            "TeachingRole": "证明在 40% 负载下紧缩合并休眠可将单卡等效功耗从 388 W 压至 280–289 W"
+        },
+        {
+            "figure_id": "图 15-20",
+            "number": 20,
+            "file": "ch15-dips-wan-backbone-parameter-sync.svg",
+            "asset": "ch15/ch15-dips-wan-backbone-parameter-sync.svg",
+            "section": "15.6.3",
+            "caption": "Di-PS（NSDI '26）跨地域训练的广域网链路段带宽调度与层间异步梯度传输重叠",
+            "source_refs": ["research/2026-infra-survey/reading-nsdi-2026.md", "experiments/ch15/15-02/run.py"],
+            "TeachingRole": "展示异构跨集群训练如何通过异步参数服务器与伪梯度阻尼容忍百毫秒级 WAN RTT"
+        },
+        {
+            "figure_id": "图 15-21",
+            "number": 21,
+            "file": "ch15-embodied-carbon-vs-operational-carbon-lifecycle.svg",
+            "asset": "ch15/ch15-embodied-carbon-vs-operational-carbon-lifecycle.svg",
+            "section": "15.6.3",
+            "caption": "AI 数据中心 3–5 年生命周期内隐含碳（Embodied Carbon：晶圆制造与基建）与运行碳（Operational Carbon：发电结构）的权衡曲线",
+            "source_refs": ["manuscripts/ch15/figure-data.json"],
+            "TeachingRole": "阐明先进制程晶圆隐含碳与电网碳强度 CI(t) 在园区全生命周期中的权衡"
+        },
+        {
+            "figure_id": "图 15-22",
+            "number": 22,
+            "file": "ch15-gigawatt-campus-master-engineering-ledger.svg",
+            "asset": "ch15/ch15-gigawatt-campus-master-engineering-ledger.svg",
+            "section": "15.6.3",
+            "caption": "吉瓦级 AI 园区从电网并网、储能平滑、微通道液冷到跨城光网协同的完整工程总账本",
+            "source_refs": ["experiments/ch15/15-01/run.py", "experiments/ch15/15-02/run.py"],
+            "TeachingRole": "汇总结温、液冷、储能套利、动静态能耗与跨城协同训练的工程总账本"
         }
     ]
     (HERE / 'figure-index.json').write_text(json.dumps(fig_index, ensure_ascii=False, indent=2) + '\n')

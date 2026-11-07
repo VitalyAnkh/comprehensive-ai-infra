@@ -1,0 +1,23 @@
+{
+  "experiment_id": "16-01",
+  "pipellm": {
+    "t_serial_ms": 138.0,
+    "t_pipe_ms": 62.0,
+    "speedup_ratio": 2.2258,
+    "triple_buffer_mib": 192,
+    "speculative_p_breakeven": 0.4
+  },
+  "moe_traffic_padding": {
+    "ep_ranks": 16,
+    "alpha_hot": 0.35,
+    "baseline_total_tokens": 6400,
+    "padded_total_tokens": 8640,
+    "bandwidth_tax_ratio": 0.35
+  },
+  "opml_slashing_game": {
+    "delta_c_usd": 0.005,
+    "slash_usd": 1000.0,
+    "p_min_exact": 5e-06,
+    "p_min_approx": 5e-06
+  }
+}

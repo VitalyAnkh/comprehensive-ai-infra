@@ -2,7 +2,7 @@
   "outputs": [
     {
       "path": "manuscripts/ch15/ch15-ashrae-w45-cdu-liquid-cooling-loop.pdf",
-      "sha256": "c2cf339da504eddc517b12061cc3d4fa4ccea87397a8d71ccdece9654b4c95b1"
+      "sha256": "03483e6c58e5c06e009da1ae6a9edb2302f4ed4a96386e27a33a6b0dd1d0d767"
     },
     {
       "path": "manuscripts/ch15/ch15-ashrae-w45-cdu-liquid-cooling-loop.png",
@@ -10,11 +10,23 @@
     },
     {
       "path": "manuscripts/ch15/ch15-ashrae-w45-cdu-liquid-cooling-loop.svg",
-      "sha256": "3f485fac97c973fd2cb7c47ce759f612945fa28728ee6a9a24dbe320f3d34f2c"
+      "sha256": "6a119ac8ef8c6a502297bdc68c9ab7dace9135ab05c5dc81cbe253480771e776"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-campus-bess-peak-shaving-and-arbitrage.pdf",
+      "sha256": "d3b0f1f065f60435c708aa6911ebc14bc10acbbb6a50889b91b6ed520f20a6a6"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-campus-bess-peak-shaving-and-arbitrage.png",
+      "sha256": "819d4c1273fe9e83876ddfdc0b79e66d569dd93a74b340c7823f7826b68a7178"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-campus-bess-peak-shaving-and-arbitrage.svg",
+      "sha256": "72972e4815e0a47c9a2ee8f4a5d618b62ad38eb017d015c4b88451ea8f87a691"
     },
     {
       "path": "manuscripts/ch15/ch15-cross-dc-pipeline-and-hierarchical-dp.pdf",
-      "sha256": "ba82782107fb913b30dae638442a5beba7d444fcac3e51e9ddb9fa0e8082675d"
+      "sha256": "404aa5f3d55976c5367e3e226c100168a7f75765a2c00369abf6e56adc96d765"
     },
     {
       "path": "manuscripts/ch15/ch15-cross-dc-pipeline-and-hierarchical-dp.png",
@@ -22,11 +34,11 @@
     },
     {
       "path": "manuscripts/ch15/ch15-cross-dc-pipeline-and-hierarchical-dp.svg",
-      "sha256": "30ac0e30f97478b3fab85c9780fb9d7ac02afbc0a6ef0da0d8f52c6fd35fea8b"
+      "sha256": "47e0c3dabe3f1c6a0206c19871aa2040d9e2c3dc8c33358c12f82149e2dad425"
     },
     {
       "path": "manuscripts/ch15/ch15-diloco-inner-outer-optimization.pdf",
-      "sha256": "407f8c7cff26c9fd42963d8dbccec62e0ed8d52f9f9b08114d20cb9c49b3df15"
+      "sha256": "eb7d3da10e984deb2482478c203c7db4fbd9095bdd1f5354b03b2371aa1b829a"
     },
     {
       "path": "manuscripts/ch15/ch15-diloco-inner-outer-optimization.png",
@@ -34,11 +46,35 @@
     },
     {
       "path": "manuscripts/ch15/ch15-diloco-inner-outer-optimization.svg",
-      "sha256": "41c13fb8931e03b42b65a2f03098f797090170bd3c7128dd2fd2ef6f24092fd0"
+      "sha256": "a5bc40c898b6a4006db9dbf75d79d7ee0dd19ba5d6af9651392a878729d5913c"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-dips-wan-backbone-parameter-sync.pdf",
+      "sha256": "0f012fc75c1fac912452a15d3026c5f92170780ab552f8c44e98561196c14e43"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-dips-wan-backbone-parameter-sync.png",
+      "sha256": "8ba6155b5a3bfd01790848f77d52eaa90cfab43149e1b469f136e863d5b7c8ca"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-dips-wan-backbone-parameter-sync.svg",
+      "sha256": "3b191bb29d0f821f4fe1e7d3ead5f8696620a4a0b41bb9c7378fd152de0f5f08"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-embodied-carbon-vs-operational-carbon-lifecycle.pdf",
+      "sha256": "afb14353eedc2b68c10006ce02e02d6753a57eccd73ecfaced99296790b6e0d9"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-embodied-carbon-vs-operational-carbon-lifecycle.png",
+      "sha256": "8be4b22479214fa0b370ec58323cc7f33658f376172f2b601020334d61fccfba"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-embodied-carbon-vs-operational-carbon-lifecycle.svg",
+      "sha256": "e3574d6cb2dc4211a80ace3b8519c871543ebb22e5a5508fcba196866dc6bfa5"
     },
     {
       "path": "manuscripts/ch15/ch15-gigawatt-ai-factory-power-chain.pdf",
-      "sha256": "b9adcfbeec9b0fdbf60a2e4a81dbf76cc7e09355ee702e80e8d6e42e091fc3d6"
+      "sha256": "a51ab06354f2c1c4543efaef854e55b5b910e9836f75de076cd0d3aa30e36c8e"
     },
     {
       "path": "manuscripts/ch15/ch15-gigawatt-ai-factory-power-chain.png",
@@ -46,11 +82,35 @@
     },
     {
       "path": "manuscripts/ch15/ch15-gigawatt-ai-factory-power-chain.svg",
-      "sha256": "b3388e71802355ba09ee0824ee219f092b9ba907174bd688b31dac9d3a2889d7"
+      "sha256": "91eab3dcb78ab3945c058367704254a4c8dc8ec261c0af40e7b2bd4bb6636bbd"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-gigawatt-campus-master-engineering-ledger.pdf",
+      "sha256": "3282f49ba74f35b1e5022585f5002dc235b425e1e1741b705ddade06daa106f4"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-gigawatt-campus-master-engineering-ledger.png",
+      "sha256": "db5ccb3c9e3a67374ad72b766c657986bc4944881b2bd3a81a841b5ed142009d"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-gigawatt-campus-master-engineering-ledger.svg",
+      "sha256": "8c729b6f8c8cedc4f4e81f8a015a82266a2c714467690b8dc92cdf81c055319f"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-kareus-dynamic-static-energy-consolidation.pdf",
+      "sha256": "c7a78df5686fb678208c946614e0d14e4facacb65bb933b35a43f1076601f3a9"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-kareus-dynamic-static-energy-consolidation.png",
+      "sha256": "34c20663511948f07968e5b47ea00adcff58918ea0560289fe9bb50cbdb5c8e5"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-kareus-dynamic-static-energy-consolidation.svg",
+      "sha256": "42b931fb9e8caf5433c7c411660f02eeb565284bb9c8997d4d54a950b0fbad0f"
     },
     {
       "path": "manuscripts/ch15/ch15-logicfolding-power-density-paradox.pdf",
-      "sha256": "9943a2472ffb8ae852cf3d3d02cb16b2564e144f5cef8ebe3fce4e629da55c29"
+      "sha256": "038e6de10e0c243801c731c0351f9238ecd9b36e92bd1549a3328e0fc430095e"
     },
     {
       "path": "manuscripts/ch15/ch15-logicfolding-power-density-paradox.png",
@@ -58,11 +118,11 @@
     },
     {
       "path": "manuscripts/ch15/ch15-logicfolding-power-density-paradox.svg",
-      "sha256": "e9c290fdbf770554d7923d17e4a3880ea69b7a1bac1e3a7a29c05dca12dbfcd3"
+      "sha256": "ed7563c00eef3125fcb30c86d20fa0f2697285c140ca83e4c1859ac8b9c135fc"
     },
     {
       "path": "manuscripts/ch15/ch15-multi-datacenter-dci-optical-latency.pdf",
-      "sha256": "68c9ab0db289cc01fcd59c5ce3f1b385d3ae99d603f22efbb32466ed45c014ff"
+      "sha256": "b1e3ece371705bf522996f9c6dedb90d29d2591d7741d97746d9b431c0fdaa10"
     },
     {
       "path": "manuscripts/ch15/ch15-multi-datacenter-dci-optical-latency.png",
@@ -70,11 +130,11 @@
     },
     {
       "path": "manuscripts/ch15/ch15-multi-datacenter-dci-optical-latency.svg",
-      "sha256": "b6cc9ccbe1b22a92aa55c7db06157b9365a6fc10087964e7e854247f67286e1f"
+      "sha256": "58fdbecb3f319f0658bb0890c21a376edc904417af0fb202fc5873e58bef3036"
     },
     {
       "path": "manuscripts/ch15/ch15-physical-vs-economic-feasibility.pdf",
-      "sha256": "92da9ae645766cedf15d4c60602ecf2556f4de7b55ea81480a324eb38db32a6f"
+      "sha256": "40e58b2c0dfed88c3cba23cc9704b4162dd8b7b3c33892c08dd40cab2f85409e"
     },
     {
       "path": "manuscripts/ch15/ch15-physical-vs-economic-feasibility.png",
@@ -82,35 +142,35 @@
     },
     {
       "path": "manuscripts/ch15/ch15-physical-vs-economic-feasibility.svg",
-      "sha256": "557709232d9697194fffe5e5bd3b434ab749e526b572ce52797e144bf8cef56f"
+      "sha256": "df4659db960b7043b5a19b446056d903386fcaa6a7e435f0edda844364c209aa"
     },
     {
       "path": "manuscripts/ch15/ch15-power-thermal-wan-co-design-summary.pdf",
-      "sha256": "08180f4ee2a74268b76c23b28c8b507bc0d08647cb4bf20ca65fdb5b00c59a91"
+      "sha256": "1ae4dd1744f5e2f2f3b46a2250375deb3424658a6ee3a925b53ef4abeda4fba9"
     },
     {
       "path": "manuscripts/ch15/ch15-power-thermal-wan-co-design-summary.png",
-      "sha256": "4141941a40e64569a392ce5045013a00317c3e17cd812837c9b060c0126792f7"
+      "sha256": "8befd230b9cc725c98a55d662e332ff1df68c4e63dfbf18ec2b65a30f8f6a35d"
     },
     {
       "path": "manuscripts/ch15/ch15-power-thermal-wan-co-design-summary.svg",
-      "sha256": "c19442ad761664e68909b18265877648f496dff660a3a19249f363c948fb3c59"
+      "sha256": "de3a029a60557d7b63218db630a36de5d3f5c4ef581712ad38179992cf96482b"
     },
     {
       "path": "manuscripts/ch15/ch15-rubin-power-smoothing-and-maxlps.pdf",
-      "sha256": "a751e58ff78d896f1a2a1aaa9251bec64d191d11672950283a5cd064d0635158"
+      "sha256": "cf4566660cecd29b25611df1b65d2a3950156292534ecce8f81b32e529f63240"
     },
     {
       "path": "manuscripts/ch15/ch15-rubin-power-smoothing-and-maxlps.png",
-      "sha256": "76dfc62b8a483e19bc081154de53c0e82647eb447c9c30362d19fcc45ecc3009"
+      "sha256": "4c9aa1769c95aee022dc280f71449e24c649b4db45c60269609d461a4db38e3c"
     },
     {
       "path": "manuscripts/ch15/ch15-rubin-power-smoothing-and-maxlps.svg",
-      "sha256": "09fa472a85183e3a3497f157dc0f53e9ddf6315d27dc130079c9c95f5eeab8f4"
+      "sha256": "33189128e54637ac4ddf8e55f938e8920294149bd11661fdef15c26aedd5d889"
     },
     {
       "path": "manuscripts/ch15/ch15-runtime-staggered-microbatch-power.pdf",
-      "sha256": "1aaf406a8026201c2aa244d15e4a3dbae0ccec93c93148171c952488462e91bc"
+      "sha256": "55092b8f89116c494c99f7da9dd6369ef278328af0ec4cdf22f6325be347af4f"
     },
     {
       "path": "manuscripts/ch15/ch15-runtime-staggered-microbatch-power.png",
@@ -118,11 +178,11 @@
     },
     {
       "path": "manuscripts/ch15/ch15-runtime-staggered-microbatch-power.svg",
-      "sha256": "9f75e0891aad839e3d6408f6808340b25aaf302a6ec031b64cbbd7587f52a8b7"
+      "sha256": "98988e0c3cce1cd7f42dfd6fd6de0702fcc38b3d3c1cd6bce51dd15569e4d123"
     },
     {
       "path": "manuscripts/ch15/ch15-single-campus-vs-multi-campus-decision.pdf",
-      "sha256": "6c232e64a1e25bf08047afc66e6f07b0519b104ecc0f9ad799a0541a55ba50d5"
+      "sha256": "ac78fadb9573f6bb94479fb3c2c45e4ac0ed40d8f54f3df2de2a49a838d552df"
     },
     {
       "path": "manuscripts/ch15/ch15-single-campus-vs-multi-campus-decision.png",
@@ -130,11 +190,23 @@
     },
     {
       "path": "manuscripts/ch15/ch15-single-campus-vs-multi-campus-decision.svg",
-      "sha256": "d19eb2fdb3750d600f549169fa6755999a3519d6123167e7ce37dab44264e7ad"
+      "sha256": "eece985415a01448ed84b2963a640d7d46dc327375ab0ed9cc6b17e6f01ca7a6"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-single-phase-vs-two-phase-microfluidics.pdf",
+      "sha256": "9f4abf37105c964c883c8c9ce7e5acead893342116863144b0b811bab6754f54"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-single-phase-vs-two-phase-microfluidics.png",
+      "sha256": "788cf13c47f1a5f2b18fe7fec5ccc830499469cab4177b108fa3f2a986a6ecbd"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-single-phase-vs-two-phase-microfluidics.svg",
+      "sha256": "ff4752a7478492c8b319dd6c5495326a68ba6acaab17a488b4e3cff8d40cf939"
     },
     {
       "path": "manuscripts/ch15/ch15-site-conditions-tco-sensitivity.pdf",
-      "sha256": "3e4a8311e660b2515f92b15559973bda7366a5bd78d3f171167aadfdde0f31fe"
+      "sha256": "a061e195a6679a1a736aeec20402e017e944f0da2fdb20765ba9191d358b9f6e"
     },
     {
       "path": "manuscripts/ch15/ch15-site-conditions-tco-sensitivity.png",
@@ -142,11 +214,11 @@
     },
     {
       "path": "manuscripts/ch15/ch15-site-conditions-tco-sensitivity.svg",
-      "sha256": "6c36c69801080cb05e192134c444291d1c896df03aa4c0e26ebefaa4a30b503d"
+      "sha256": "f6996ed0e00e272c82de3dee9b471aa6b46cb7d89baa392208d539233cc309f5"
     },
     {
       "path": "manuscripts/ch15/ch15-streaming-diloco-chunked-sync.pdf",
-      "sha256": "33f6f7df63e423cab76a25e82532180da64c5bd62ff3af8cfaaf99937e566035"
+      "sha256": "ac53d912f38a0c18ef953941550a7b07506b36807eeab3085a7a8f1f0ba478df"
     },
     {
       "path": "manuscripts/ch15/ch15-streaming-diloco-chunked-sync.png",
@@ -154,11 +226,11 @@
     },
     {
       "path": "manuscripts/ch15/ch15-streaming-diloco-chunked-sync.svg",
-      "sha256": "9f330536a6c1b7addc11e98efe428e987b34a0d469ef84c4c3011e4ebf69e7ca"
+      "sha256": "1304f9cc88c0fe558782debdec59c975b33a40c91aac8d6d18a184f5ae5522ec"
     },
     {
       "path": "manuscripts/ch15/ch15-synchronous-training-power-swing.pdf",
-      "sha256": "4a08ac0f567f85381930e2972cdf62c20c7980fa40e08525d23bc53da59740b1"
+      "sha256": "87d87cc8cccac3296f774de1745d816cec4e97361b7c947484eb66a1d7651d1c"
     },
     {
       "path": "manuscripts/ch15/ch15-synchronous-training-power-swing.png",
@@ -166,11 +238,11 @@
     },
     {
       "path": "manuscripts/ch15/ch15-synchronous-training-power-swing.svg",
-      "sha256": "f76a0539042cac635b994f6015fc2bbe8f93b9a4a16751cb24da1620cb983132"
+      "sha256": "4948b53b5a757e4593e29d1936f591b36e9cda7fb78978f0c01ee57c4b9e28da"
     },
     {
       "path": "manuscripts/ch15/ch15-tapas-thermal-power-routing-breakeven.pdf",
-      "sha256": "d76d589ac7761f480b04365767d651e5fa029933f307f682425e83c82b4d123c"
+      "sha256": "734e8a8e837f35ea4ab38fd972b30507a8843a2bcb22aceb41fa7fa66692e332"
     },
     {
       "path": "manuscripts/ch15/ch15-tapas-thermal-power-routing-breakeven.png",
@@ -178,11 +250,11 @@
     },
     {
       "path": "manuscripts/ch15/ch15-tapas-thermal-power-routing-breakeven.svg",
-      "sha256": "d06c58eaa856b9a953a2fac547bb0c55d2dabdcf2fa980d6bc30669de1ceec10"
+      "sha256": "ae8ba5fd058b2b1ee947c2b4ac24598f30e4c92d17ecc156c8896c3dd4b03bf6"
     },
     {
       "path": "manuscripts/ch15/ch15-thermal-throttling-straggler-amplification.pdf",
-      "sha256": "f9811a982baaf0aae4f9ff3bc48ee4cbf8e3bb6e4cdaa6aa0df75fc8e76f84c3"
+      "sha256": "81cb592ba59eea488fdb6c80b1e2ac4a487d88ebef0b42bfe8ceb0bd382a1e40"
     },
     {
       "path": "manuscripts/ch15/ch15-thermal-throttling-straggler-amplification.png",
@@ -190,7 +262,7 @@
     },
     {
       "path": "manuscripts/ch15/ch15-thermal-throttling-straggler-amplification.svg",
-      "sha256": "efe4c8ec20bf44bc732fe791eaa4a5e303adafe30af9fb778e4f95276afb36e4"
+      "sha256": "8568f2bec4a2774440225cbc95f05f12274dc20287080af1645be4bcb62ea13f"
     },
     {
       "path": "manuscripts/ch15/figure-data.json",
@@ -198,15 +270,15 @@
     },
     {
       "path": "manuscripts/ch15/figure-index.json",
-      "sha256": "58fb33d0e47a98d61a0ecafa6a9b767bc797e5a60028e7378a3212da59072f93"
+      "sha256": "65397f57a594a528e1fc697e616eb911e00c1f64dcbb85e8e0be81094d84c7ca"
     },
     {
       "path": "manuscripts/ch15/teaching-layout-validation.json",
-      "sha256": "253ba6a436c089fe9c20b2292ca83e593f5b8f9a4e108c6e59a190ca494c8c89"
+      "sha256": "e39f118f3ad9ee9ce0242a1ad35ae40da4416d264c4df9eb993ec33246d47bb2"
     },
     {
       "path": "manuscripts/ch15/math-validation.json",
-      "sha256": "4687a3dd8c53de8023ee0b794267855bbcd8eb0827291ea3e9714574cb0b95c4"
+      "sha256": "34203c9d68027dca897aef8cbdcf935f01bca1561b70e1ed008f8d103ad67ca7"
     }
   ]
 }

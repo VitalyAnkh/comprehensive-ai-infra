@@ -1,0 +1,26 @@
+{
+  "experiment_id": "15-01",
+  "logicfolding": {
+    "voltage_sq_ratio": 0.4187,
+    "power_ratio": 0.75,
+    "area_ratio": 0.6,
+    "power_density_ratio": 1.25
+  },
+  "tapas": {
+    "feasible_rows": [
+      1
+    ],
+    "admitted_rows": [],
+    "breakeven_requests": 30,
+    "thermal_margin_c": 5.7,
+    "n_min_tokens": 13
+  },
+  "microfluidics_2kw": {
+    "p_chip_w": 2000.0,
+    "r_tim_cw": 0.02,
+    "t_in_max_coldplate_c": 21.0,
+    "t_in_max_elim_tim_only_c": 61.0,
+    "delta_t_in_from_tim_c": 40.0,
+    "t_in_max_microfluidics_c": 69.0
+  }
+}

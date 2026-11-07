@@ -191,7 +191,7 @@ def fig_16_8_pmem_dax(ex: Exporter):
 
 def fig_16_9_damon_balloon(ex: Exporter):
     fig, ax = canvas(3.75)
-    card(ax, 0.02, 0.52, 0.96, 0.44, '可写磁盘与堆内存回收：DAMON + virtio-balloon 闭环', color='blue')
+    card(ax, 0.02, 0.52, 0.96, 0.44, '可写磁盘与堆内存回收：DAMON + virtio-balloon 联动', color='blue')
     d_steps = [
         (0.04, 0.60, 0.21, 0.22, '① 采样监控\nDAMON 追踪\n页访问热度', 'blue'),
         (0.28, 0.60, 0.21, 0.22, '② 识别冷页\n超时未访页\n标为可回收', 'teal'),
@@ -356,6 +356,125 @@ def fig_16_16_master_checklist(ex: Exporter):
     ex.save(fig, 'ch16-ai-infra-architect-master-checklist')
 
 
+def fig_16_17_moe_padding(ex: Exporter):
+    fig, ax = canvas(3.80)
+    card(ax, 0.02, 0.04, 0.46, 0.92, '密文下 MoE 流量侧信道', color='orange', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '即便启用 TEE-I/O 载荷加密\n攻击者仍观测跨节点包计数', 'orange', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '代码/医疗/金融提示词触发\n特定 EP Rank 流量偏斜', 'orange', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '结合投机解码步长波动指纹\n反推用户敏感领域与提示词', 'purple', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '加密隐藏内容未藏流量形状', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, '恒定速率哑元填充防御', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '为各 EP Rank 设统一桶深\nC_pad = μ · (1 + α) 槽位', 'teal', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '不足槽位注入加密哑元词元\n跨节点 All-to-All 字节恒定', 'blue', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '练习 16-11：当 α = 0.35 时\n付 35% 带宽税换零偏斜泄露', 'purple', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '以受控带宽税抹平侧信道特征', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch16-moe-routing-traffic-side-channel-and-padding')
+
+
+def fig_16_18_verifiable_triangle(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '可验证推理（Verifiable Inference）三路线对比', color='blue')
+    routes = [
+        (0.04, 0.58, 0.28, 0.24, '① 硬件 TEE 证明\n开销 < 5% 极低\n依芯片硬件信任根', 'teal'),
+        (0.36, 0.58, 0.28, 0.24, '② 密码学 zkML\n数学无条件可验证\n算力放大千至十万倍', 'purple'),
+        (0.68, 0.58, 0.28, 0.24, '③ 乐观抽检 OPML\n仅抽检 p 比例复算\n质押罚没博弈保障', 'blue'),
+    ]
+    for x, y, w, h, label, role in routes:
+        box(ax, x, y, w, h, label, role, size=11)
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '防止云端 API 偷换降级模型（如 70B 换 8B）的分层选型', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '千亿大模型高吞吐在线服务\n采用 GPU TEE 签名激活摘要\n叠加 OPML 低比例随机抽检', 'teal', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '高敏金融风控与局部审计裁决\n对争议层或轻量判别器用 zkML\n生成零知识简洁非交互证明', 'blue', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '日常流量走 TEE + OPML 抽检，争议仲裁触发确定性复算证明', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch16-verifiable-inference-tee-zkml-opml-triangle')
+
+
+def fig_16_19_opml_slashing(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '乐观可验证推理（OPML）的博弈树与纳什均衡条件', color='blue')
+    nodes = [
+        (0.04, 0.58, 0.28, 0.24, '① 偷换模型收益\n每次省算力 Δc\n未抽中率 1 - p', 'orange'),
+        (0.36, 0.58, 0.28, 0.24, '② 随机抽检复算\n抽检率 p 触发\n确定性重放比对', 'blue'),
+        (0.68, 0.58, 0.28, 0.24, '③ 欺诈证明罚没\n一旦检出不一致\n罚没押金 S_slash', 'purple'),
+    ]
+    for x, y, w, h, label, role in nodes:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.36, 0.70))
+    arrow(ax, (0.64, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '练习 16-12：Δc=0.005 美元、S_slash=1,000 美元诚实边界', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '激励相容不等式（诚实占优）\np · S_slash > (1 - p) · Δc\n导出 p_min = Δc / (S + Δc)', 'teal', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '代入 Δc=0.005, S=1,000 美元\np_min ≈ 0.0005%（5×10^-6）\n万分之几抽检即可杜绝作弊', 'blue', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '高额质押金将验证开销压缩五个数量级，前提是算子确定性可复现', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch16-optimistic-verification-slashing-game')
+
+
+def fig_16_20_janus_nested(ex: Exporter):
+    fig, ax = canvas(3.75)
+    card(ax, 0.02, 0.04, 0.46, 0.92, '传统嵌套虚拟化（页表税）', color='orange', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '公有云租户 L1 VM 内部\n再起 L2 沙箱微虚拟机', 'orange', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '三维嵌套扩展页表（EPT 嵌套）\nTLB 缺失最坏触发 124 次访存', 'orange', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, 'VM-Exit 陷 L0 再转 L1\n系统调用与 I/O 延迟翻倍', 'orange', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '双重页表吞噬沙箱吞吐', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'JANUS（OSDI 26）协同虚拟化', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '跨世界协同（Cross-World）\n将 L2 沙箱提为 L0 同级域', 'teal', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '扁平化单级 EPT 硬件页表\n回落至 24 次访存消除放大', 'blue', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '安全委托通道连 L1 管理面\n兼得租户封装与裸机性能', 'purple', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '公有云 VM 内微虚机逼近原生', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch16-janus-nested-virtualization-fast-path')
+
+
+def fig_16_21_blowfish_prism(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.04, 0.46, 0.92, 'Blowfish（OSDI 26）内存池', color='blue', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '面向主机 + CXL 解耦内存池\n跨数百个高密沙箱微虚拟机', 'blue', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '区分真空闲页与冷可回收页\n优先调度本地 DRAM 热页', 'teal', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '突发唤醒亚毫秒级按需回填\n消除传统气球回收长尾卡顿', 'purple', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, 'CPU 沙箱：跨虚机弹性内存池', size=11, ha='center', weight='bold', color=BORDER_COL['blue'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'Prism（OSDI 26）显存气球', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '面向同卡共置的多模型实例\n打破静态显存预留分区墙', 'teal', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, 'GPU 虚拟显存气球动态伸缩\n低谷模型归还物理 HBM 页', 'blue', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '突发模型零拷贝借空闲显存\n支撑多模型 KV 时间复用', 'purple', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, 'GPU 推理：跨模型显存气球', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch16-blowfish-elastic-sandbox-memory-pool')
+
+
+def fig_16_22_defense_in_depth(ex: Exporter):
+    fig, ax = canvas(4.15)
+    card(ax, 0.02, 0.03, 0.96, 0.94, '可信 AI 基础设施纵深防御全景（Defense-in-Depth）', color='teal')
+    layers = [
+        (0.05, 0.66, 0.42, 0.20, '① 硬件机密底座（16.2–3）\nCPU+GPU 双 TEE 远程证明\nRubin TEE-I/O 与 PipeLLM', 'blue'),
+        (0.53, 0.66, 0.42, 0.20, '② 侧信道与验证（16.6.1–2）\nMoE 恒定桶深哑元填充防御\nTEE 签名 + OPML 抽检罚没', 'teal'),
+        (0.53, 0.37, 0.42, 0.20, '③ 高密微虚机（16.4 & 6.3）\nFirecracker + JANUS 旁路\npmem+DAX · Blowfish/Prism', 'purple'),
+        (0.05, 0.37, 0.42, 0.20, '④ 零信任与审计（16.4–5）\nSCHED_IDLE + 核调度去噪\neBPF 白名单 · 幂等网关排空', 'orange'),
+    ]
+    for x, y, w, h, label, role in layers:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.47, 0.76), (0.53, 0.76))
+    arrow(ax, (0.74, 0.66), (0.74, 0.57))
+    arrow(ax, (0.53, 0.47), (0.47, 0.47))
+    arrow(ax, (0.26, 0.57), (0.26, 0.66))
+    box(ax, 0.05, 0.08, 0.90, 0.21, '实验验证：ch16/16-01（PipeLLM·MoE 填充·OPML 博弈）\n与 ch16/16-02（DSec 38 万沙箱·DAX 元数据税·I19 排空）', 'blue', size=11)
+    ex.save(fig, 'ch16-trusted-ai-infrastructure-defense-in-depth')
+
+
 def main():
     ex = Exporter(HERE)
     fig_16_1_threat_model(ex)
@@ -374,6 +493,12 @@ def main():
     fig_16_14_telemetry_vs_ledger(ex)
     fig_16_15_full_stack_map(ex)
     fig_16_16_master_checklist(ex)
+    fig_16_17_moe_padding(ex)
+    fig_16_18_verifiable_triangle(ex)
+    fig_16_19_opml_slashing(ex)
+    fig_16_20_janus_nested(ex)
+    fig_16_21_blowfish_prism(ex)
+    fig_16_22_defense_in_depth(ex)
     outputs = ex.finish()
 
     fig_index = [
@@ -463,7 +588,7 @@ def main():
             "file": "ch16-damon-ept-balloon-reclaim.svg",
             "asset": "ch16/ch16-damon-ept-balloon-reclaim.svg",
             "section": "16.4.2",
-            "caption": "DAMON 冷页监控与 virtio-balloon 空闲页报告（order-9 = 2 MiB 块）将时间积分内存（GB·s）降低 21.2% 的闭环机制",
+            "caption": "DAMON 冷页监控与 virtio-balloon 空闲页报告（order-9 = 2 MiB 块）将时间积分内存（GB·s）降低 21.2% 的联动机制",
             "source_refs": ["case-studies/dsec-sandbox-platform.md", "manuscripts/ch16/figure-data.json"],
             "TeachingRole": "揭示针对大容量可写虚拟磁盘与客户机堆内存的动态冷页回收流水线"
         },
@@ -536,6 +661,66 @@ def main():
             "caption": "AI 基础设施架构师的六维终极核查表（算力、存力、运力、电力热学、可信安全、全生命周期成本）",
             "source_refs": ["manuscripts/ch16/figure-data.json"],
             "TeachingRole": "为读者提供跨层系统评审与容量规划的随身工程指南"
+        },
+        {
+            "figure_id": "图 16-17",
+            "number": 17,
+            "file": "ch16-moe-routing-traffic-side-channel-and-padding.svg",
+            "asset": "ch16/ch16-moe-routing-traffic-side-channel-and-padding.svg",
+            "section": "16.6.1",
+            "caption": "密文状态下 MoE All-to-All 专家负载偏斜泄露提示词特征 vs. 恒定桶大小哑元填充（Dummy Padding）防御",
+            "source_refs": ["experiments/ch16/16-01/run.py"],
+            "TeachingRole": "揭示即使开启 TEE-I/O 载荷加密，专家路由包计数仍构成侧信道，并量化 (1+α) 哑元填充带宽税"
+        },
+        {
+            "figure_id": "图 16-18",
+            "number": 18,
+            "file": "ch16-verifiable-inference-tee-zkml-opml-triangle.svg",
+            "asset": "ch16/ch16-verifiable-inference-tee-zkml-opml-triangle.svg",
+            "section": "16.6.2",
+            "caption": "可验证推理三路线（硬件 TEE 证明、密码学 zkML、乐观抽检欺诈证明 OPML）在证明开销、信任假设与模型规模上的对比",
+            "source_refs": ["experiments/ch16/16-01/run.py"],
+            "TeachingRole": "对比 TEE 签名（<5% 开销）、zkML（10³–10⁵x 膨胀）与 OPML 乐观抽检的适用边界"
+        },
+        {
+            "figure_id": "图 16-19",
+            "number": 19,
+            "file": "ch16-optimistic-verification-slashing-game.svg",
+            "asset": "ch16/ch16-optimistic-verification-slashing-game.svg",
+            "section": "16.6.2",
+            "caption": "乐观抽检可验证推理（OPML）的博弈树：抽检概率 p、造假收益 Δc 与质押罚没金 S_slash 的诚实边界曲线",
+            "source_refs": ["experiments/ch16/16-01/run.py"],
+            "TeachingRole": "导出激励相容条件 p·S_slash > (1-p)·Δc，证明高额质押金可将验证抽检率压至 10⁻⁵ 量级"
+        },
+        {
+            "figure_id": "图 16-20",
+            "number": 20,
+            "file": "ch16-janus-nested-virtualization-fast-path.svg",
+            "asset": "ch16/ch16-janus-nested-virtualization-fast-path.svg",
+            "section": "16.6.3",
+            "caption": "传统二级页表嵌套虚拟化（N_guest × N_host 查表放大）vs. JANUS（OSDI '26）扁平化安全沙箱隔离",
+            "source_refs": ["research/2026-infra-survey/reading-osdi-2026.md"],
+            "TeachingRole": "解析公有云虚拟机内部运行轻量微虚机时的二维 EPT 页表税与 JANUS 跨世界扁平化机制"
+        },
+        {
+            "figure_id": "图 16-21",
+            "number": 21,
+            "file": "ch16-blowfish-elastic-sandbox-memory-pool.svg",
+            "asset": "ch16/ch16-blowfish-elastic-sandbox-memory-pool.svg",
+            "section": "16.6.3",
+            "caption": "Blowfish（OSDI '26 #50）在解耦内存池上的高密微虚拟机弹性气球回收与 Prism（OSDI '26 #5）跨模型显存协调机制",
+            "source_refs": ["research/2026-infra-survey/reading-osdi-2026.md", "experiments/ch16/16-02/run.py"],
+            "TeachingRole": "将 CPU 侧跨虚机解耦内存弹性气球（Blowfish）与 GPU 侧跨模型显存气球（Prism）纳入统一池化视图"
+        },
+        {
+            "figure_id": "图 16-22",
+            "number": 22,
+            "file": "ch16-trusted-ai-infrastructure-defense-in-depth.svg",
+            "asset": "ch16/ch16-trusted-ai-infrastructure-defense-in-depth.svg",
+            "section": "16.6.3",
+            "caption": "可信 AI 基础设施纵深防御全景（硬件 TEE-I/O + 流量填充 + 远程证明/抽检 + Firecracker 微虚机 + 幂等审计账本）",
+            "source_refs": ["experiments/ch16/16-01/run.py", "experiments/ch16/16-02/run.py"],
+            "TeachingRole": "收束第 16 章硬件机密底座、侧信道与可验证层、高密微虚机沙箱与可恢复审计账本的四层纵深防御"
         }
     ]
     (HERE / 'figure-index.json').write_text(json.dumps(fig_index, ensure_ascii=False, indent=2) + '\n')

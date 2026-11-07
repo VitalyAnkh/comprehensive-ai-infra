@@ -1,0 +1,24 @@
+{
+  "experiment_id": "15-02",
+  "diloco_wan": {
+    "bw_h1_gbps": 1600.0,
+    "bw_diloco_avg_gbps": 3.2,
+    "blocking_stall_s": 320.0,
+    "shard_interval_s": 40.0,
+    "shard_tx_s": 12.8,
+    "streaming_exposed_stall_s": 0.0
+  },
+  "kareus_power": {
+    "p_uniform_per_gpu_w": 388.0,
+    "p_consolidated_zero_sleep_w": 280.0,
+    "p_consolidated_15w_sleep_w": 289.0,
+    "saving_pct_zero_sleep": 27.84,
+    "saving_pct_15w_sleep": 25.52
+  },
+  "bess_100mwh": {
+    "daily_rev_spread_usd": 7040.0,
+    "annual_rev_spread_usd": 2569600.0,
+    "daily_rev_exact_usd": 6560.0,
+    "annual_rev_exact_usd": 2394400.0
+  }
+}
