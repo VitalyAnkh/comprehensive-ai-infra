@@ -2,7 +2,7 @@
 
 这里是正文算例背后的展开材料：具体模型、硬件与系统案例的完整推算、来源核对和取舍说明。正文只保留结论与关键推导，脚注链接到对应案例。
 
-下表按引用的章节分组；“引用章节”列出所有链接到该案例的章（全库 73 篇案例已 100% 接入正文第 1～20 章）。
+下表按引用的章节分组；“引用章节”列出所有链接到该案例的章（全库 73 篇案例已 100% 接入正文第 1～24 章）。
 
 ## 第 1 章 · 初识 AI Infra
 
@@ -194,3 +194,33 @@
 | [集合通信的实际路径与等待来源](collective-paths-and-diagnosis.md) | 6、7、10、20 |
 | [配置预测接近时，应该补测什么](profile-and-plan-ranking.md) | 6、10、20 |
 | [优化结果与 Agent 执行记录](evaluation-and-agent-records.md) | 11、16、20 |
+
+## 第 21 章 · 自主智能体基础设施（Agentic Infra）、Computer Use 沙箱与分层 KV 记忆底座
+
+| 案例 | 引用章节 |
+| --- | :--: |
+| [KV 缓存的取回、共享与路由](cache-tiers-and-routing.md) | 9、21 |
+| [DSec：Agent RL 沙箱平台的资源与状态](dsec-sandbox-platform.md) | 11、13、16、18、21 |
+| [快照恢复、首次访问与环境容量](snapshot-residency-and-first-use.md) | 11、21 |
+| [一名 24×7 数字员工的 serving 成本](single-agent-serving-cost.md) | 11、14、21 |
+
+## 第 22 章 · 全双工实时语音（Full-Duplex Speech）、神经音频编解码与原生全模态流式底座
+
+| 案例 | 引用章节 |
+| --- | :--: |
+| [理解之外：Omni、语音、图像与视频生成](generative-multimodal-models.md) | 2、3、17、22 |
+| [Queqiao 语音传输案例](queqiao.md) | 3、12、22 |
+
+## 第 23 章 · 百亿亿次 Token 数据工程、GPU 加速模糊去重与合成数据工厂底座
+
+| 案例 | 引用章节 |
+| --- | :--: |
+| [检索与生成的协同预算](retrieval-and-generation.md) | 3、23 |
+| [历史草稿、验证产出与 RL 供给](history-drafts-and-rollout.md) | 8、18、23 |
+
+## 第 24 章 · 科学智能（AI for Science）基础设施：生物大分子、百万碱基基因组与物理场网格系统
+
+| 案例 | 引用章节 |
+| --- | :--: |
+| [注意力分块：容量、重读与计算安排](attention-tiles-and-io.md) | 5、24 |
+| [矩阵形状、通信分块与执行条件](mesh-shape-and-slicing.md) | 6、24 |

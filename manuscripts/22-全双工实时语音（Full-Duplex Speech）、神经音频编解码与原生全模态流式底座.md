@@ -449,27 +449,6 @@ $$T_{\mathrm{tick}}^{\mathrm{naive}} = T_{\mathrm{audio\_base}} + T_{\mathrm{vis
 $$T_{\mathrm{tick}}^{\mathrm{interleaved}} = T_{\mathrm{audio\_base}} + \frac{T_{\mathrm{vis\_full}}}{K_{\mathrm{split}}} = 11.5\ \mathrm{ms} + 9.0\ \mathrm{ms} = \mathbf{20.5\ \mathrm{ms}} \ll 80.0\ \mathrm{ms} \tag{22.10}$$
 如式 (22.10) 与图 22-9 所示，交错微块预填充将单节拍峰值耗时从越界的 `83.5 ms` 压降至平滑的 **`20.5 ms`（降低 $4.07\times$）**，留出高达 `59.5 ms` 的安全裕量，实现了**零音频断流（Zero Audio Underrun）**的丝滑全模态交互。
 
-![等时硬节拍（Isochronous 80 ms Tick）下多路并发全双工会话的槽位对齐批处理与超时降级策略](ch22/ch22-dynamic-batching-under-strict-80ms-isochronous-tick.svg)
-*图 22-11　等时硬节拍（Isochronous 80 ms Tick）下多路并发全双工会话的槽位对齐批处理与超时降级策略*
-
-在多用户并发服务中，推理引擎进一步采用**等时硬节拍槽位对齐批处理（Isochronous Slot-Aligned Batching，图 22-11）**：将到达时间分布在 $[0, 80)\ \mathrm{ms}$ 内的多路在线语音会话对齐到微批相位槽位上同步前向。同时，在对话控制面显式建模**倾听（Listening）、附和（Backchanneling）、抢话重叠（Overlap）与主动静音（Active Silence）四态随机状态机**（图 22-12），并协同端侧超低功耗唤醒/AEC 芯片与云端全双工大模型完成毫秒级会话热接管（图 22-13）[^ch22-8]：
-
-1. **区分“善意附和（Backchannel）”与“真实打断（True Barge-in）”的双门限状态转移（图 22-12）**：
-   - 在自然全双工对话中，当助手正在长篇讲解时，用户常会随口发出短促的“嗯哼”“对”“明白”（持续时长通常 `< 320 ms`，即 $1\text{–}4$ 个音频帧，且内心独白解码出的语义不包含疑问词或否定祈使词）；
-   - 若系统一检测到用户麦克风有声就立刻中止播报并回滚 KV 缓存，助手就会频繁被用户的点头附和噎住。因此，全双工状态机定义了**软静音观测窗口（Soft-Attenuation Window，$2\text{–}3$ 帧）**：当检测到重叠语音（Overlap）起始时，服务端先将下行音量平滑衰减 $6\ \mathrm{dB}$ 并继续生成；
-   - 若用户语音在 $3$ 帧（`240 ms`）内结束且语义分类为附和词，则立即恢复原音量继续播报；反之，若连续第 $4$ 帧（`320 ms`）用户仍在持续发声或内心独白首词预测为转折/提问词，状态机立即跃迁至**抢话夺权态（Barge-in Yield）**，触发 22.3.2 节的 RTP 播放游标对齐 KV 回滚。
-
-![全双工对话中的四态交互（倾听、附和 Backchannel、抢话重叠 Overlap、主动静音）概率控制](ch22/ch22-duplex-turn-taking-backchannel-and-overlap-state-machine.svg)
-*图 22-12　全双工对话中的四态交互（倾听、附和 Backchannel、抢话重叠 Overlap、主动静音）概率控制*
-
-2. **端侧超低功耗唤醒/AEC 预处理与云端全双工会话热接管（Edge-to-Cloud Handover，图 22-13）**：
-   - 移动设备或智能眼镜不可能全天 24 小时维持高功耗的 WebRTC 双向蜂窝流与云端 GPU 常驻槽位；
-   - 在待机态下，端侧 NPU/DSP 仅以 `< 5 mW` 功耗运行微型唤醒词检测器（Wake-Word Engine）并维护一个时长 $1.6\ \mathrm{s}$（$20$ 帧）的环形预录音频缓冲区（Pre-Roll Ring Buffer）；
-   - 一旦检测到唤醒词或视线注视触发，端侧在建立 WebRTC 连接的同时，将唤醒词前 $400\ \mathrm{ms}$ 至当前时刻的预录 RVQ 特征一次性突发上传，由云端全双工主干执行一次快速的 `Chunked Prefill` 追平实时时钟，随后无缝切入 $80.0\ \mathrm{ms}$ 等时全双工流式状态。
-
-![端侧超低功耗唤醒/AEC 预处理与云端全双工大模型会话热接管协同架构](ch22/ch22-edge-vad-aec-wake-word-and-cloud-duplex-handover.svg)
-*图 22-13　端侧超低功耗唤醒/AEC 预处理与云端全双工大模型会话热接管协同架构*
-
 表 22-3 对照了三种音视频多模态混合预填充调度范式在 $80.0\ \mathrm{ms}$ 等时节拍下的延迟表现。
 
 *表 22-3　1 FPS 实时相机流（256 视觉词元/秒）与 12.5 Hz 全双工音频流混合调度的三种预填充范式对比*
@@ -501,6 +480,28 @@ $$T_{\mathrm{tick}}^{\mathrm{interleaved}} = T_{\mathrm{audio\_base}} + \frac{T_
    - **滑动窗口内（最近 $125$ 帧音频 + 最近 $10$ 帧视频）**：完整保留全部 $17$ 个音频/文本词元槽位与 $10 \times 256 = 2,560$ 个近期视觉词元；
    - **滑动窗口外（早于 $10\ \mathrm{s}$ 的历史帧）**：一旦某帧滑出 $10\ \mathrm{s}$ 窗口，后台内存回收线程立即将其 $14$ 个声学残差码本（$q_2\dots q_8$）与过期原始视频 Patch 的 KV 槽位从 PagedAttention 块表中原地剥离回收，**仅永久保留每帧 $3$ 个语义与文本锚点词元**：
      $$L_{\mathrm{audio}}^{\mathrm{retained}} = N_{\mathrm{frames}} \cdot N_{\mathrm{anchor}} + N_{\mathrm{win}} \cdot N_{\mathrm{res}} = 45,000 \times 3 + 125 \times 14 = 135,000 + 1,750 = \mathbf{136,750\ \text{tokens}} \tag{22.11}$$
+
+在多用户并发长时服务中，推理引擎进一步采用**等时硬节拍槽位对齐批处理（Isochronous Slot-Aligned Batching，图 22-11）**：将到达时间分布在 $[0, 80)\ \mathrm{ms}$ 内的多路在线语音会话对齐到微批相位槽位上同步前向。同时，在对话控制面显式建模**倾听（Listening）、附和（Backchanneling）、抢话重叠（Overlap）与主动静音（Active Silence）四态随机状态机**（图 22-12），并协同端侧超低功耗唤醒/AEC 芯片与云端全双工大模型完成毫秒级会话热接管（图 22-13）[^ch22-8]：
+
+![等时硬节拍（Isochronous 80 ms Tick）下多路并发全双工会话的槽位对齐批处理与超时降级策略](ch22/ch22-dynamic-batching-under-strict-80ms-isochronous-tick.svg)
+*图 22-11　等时硬节拍（Isochronous 80 ms Tick）下多路并发全双工会话的槽位对齐批处理与超时降级策略*
+
+1. **区分“善意附和（Backchannel）”与“真实打断（True Barge-in）”的双门限状态转移（图 22-12）**：
+   - 在自然全双工对话中，当助手正在长篇讲解时，用户常会随口发出短促的“嗯哼”“对”“明白”（持续时长通常 `< 320 ms`，即 $1\text{–}4$ 个音频帧，且内心独白解码出的语义不包含疑问词或否定祈使词）；
+   - 若系统一检测到用户麦克风有声就立刻中止播报并回滚 KV 缓存，助手就会频繁被用户的点头附和噎住。因此，全双工状态机定义了**软静音观测窗口（Soft-Attenuation Window，$2\text{–}3$ 帧）**：当检测到重叠语音（Overlap）起始时，服务端先将下行音量平滑衰减 $6\ \mathrm{dB}$ 并继续生成；
+   - 若用户语音在 $3$ 帧（`240 ms`）内结束且语义分类为附和词，则立即恢复原音量继续播报；反之，若连续第 $4$ 帧（`320 ms`）用户仍在持续发声或内心独白首词预测为转折/提问词，状态机立即跃迁至**抢话夺权态（Barge-in Yield）**，触发 22.3.2 节的 RTP 播放游标对齐 KV 回滚。
+
+![全双工对话中的四态交互（倾听、附和 Backchannel、抢话重叠 Overlap、主动静音）概率控制](ch22/ch22-duplex-turn-taking-backchannel-and-overlap-state-machine.svg)
+*图 22-12　全双工对话中的四态交互（倾听、附和 Backchannel、抢话重叠 Overlap、主动静音）概率控制*
+
+2. **端侧超低功耗唤醒/AEC 预处理与云端全双工会话热接管（Edge-to-Cloud Handover，图 22-13）**：
+   - 移动设备或智能眼镜不可能全天 24 小时维持高功耗的 WebRTC 双向蜂窝流与云端 GPU 常驻槽位；
+   - 在待机态下，端侧 NPU/DSP 仅以 `< 5 mW` 功耗运行微型唤醒词检测器（Wake-Word Engine）并维护一个时长 $1.6\ \mathrm{s}$（$20$ 帧）的环形预录音频缓冲区（Pre-Roll Ring Buffer）；
+   - 一旦检测到唤醒词或视线注视触发，端侧在建立 WebRTC 连接的同时，将唤醒词前 $400\ \mathrm{ms}$ 至当前时刻的预录 RVQ 特征一次性突发上传，由云端全双工主干执行一次快速的 `Chunked Prefill` 追平实时时钟，随后无缝切入 $80.0\ \mathrm{ms}$ 等时全双工流式状态。
+
+![端侧超低功耗唤醒/AEC 预处理与云端全双工大模型会话热接管协同架构](ch22/ch22-edge-vad-aec-wake-word-and-cloud-duplex-handover.svg)
+*图 22-13　端侧超低功耗唤醒/AEC 预处理与云端全双工大模型会话热接管协同架构*
+
    - 同时，对于零样本音色克隆与说话人身份保持，系统将参考音频提取出的固定长度说话人声纹特征常驻锁定在独立的 **Speaker Conditioning KV Cache** 中（图 22-14），支持跨会话共享与密码学水印防伪鉴权。
 
 ![零样本音色克隆与情感控制中说话人参考声纹特征（Speaker Conditioning KV）的跨会话共享与安全防伪鉴权](ch22/ch22-voice-cloning-zero-shot-speaker-embedding-cache.svg)

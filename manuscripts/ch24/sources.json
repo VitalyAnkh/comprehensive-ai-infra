@@ -1,0 +1,28 @@
+{
+  "sources": [
+    {
+      "path": "manuscripts/ch24/build.py",
+      "sha256": "640dac00de3def94ce37ead29d1d3ec84deda0f6d768a2de85254819bef37d31"
+    },
+    {
+      "path": "manuscripts/ch24/figure-data.json",
+      "sha256": "4f2eadb07398d286107e7292eba43cc990a5c0ea06f9ac36b62a3fe232dfaf69"
+    },
+    {
+      "path": "manuscripts/ch24/figure-index.json",
+      "sha256": "829e826cb0ed199ef99708fbc55dcaec14bfc97481b63b8e9c8694b3dedfab45"
+    },
+    {
+      "path": "experiments/ch24/24-01/run.py",
+      "sha256": "b4765b2bbeae494178e15d0d4cee4654ecd03ec93dc71c36731b1e1b2731f518"
+    },
+    {
+      "path": "experiments/ch24/24-02/run.py",
+      "sha256": "4f193e22b10e73ab9848137cf3f73e81d4309490648fa3ecb02e7dd6bb9611c0"
+    },
+    {
+      "path": "manuscripts/24-科学智能（AI for Science）基础设施：生物大分子、百万碱基基因组与物理场网格系统.md",
+      "sha256": "339ccd018116dd69a5c3e68cc9598fe209cc7f26d1feba39c53d8af1c5939880"
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "chapter": 24,
+  "title": "科学智能（AI for Science）基础设施：生物大分子、百万碱基基因组与物理场网格系统",
+  "msa_and_disaggregation": {
+    "cpu_msa_sec": 2700.0,
+    "gpu_msa_sec": 1.2,
+    "msa_speedup_x": 2250.0,
+    "stage2_pairformer_diffusion_sec": 48.0,
+    "colocated_total_sec": 2748.0,
+    "colocated_gpu_idle_pct": 98.25,
+    "disaggregated_total_sec": 49.2,
+    "disaggregated_gpu_util_pct": 97.56,
+    "end_to_end_speedup_x": 55.85
+  },
+  "pairformer_triangle_attention": {
+    "n_res": 4096,
+    "c_z": 128,
+    "heads": 4,
+    "bytes_per_elem": 2,
+    "pair_rep_gib": 4.0,
+    "naive_cubic_logits_gib": 512.0,
+    "chunk_size": 64,
+    "chunked_1gpu_workspace_gib": 1.0,
+    "dap_gpus": 4,
+    "dap_per_gpu_pair_gib": 1.0,
+    "dap_per_gpu_workspace_gib": 0.25,
+    "workspace_reduction_x": 2048.0,
+    "dap_all_to_all_ms": 2.85,
+    "triangle_compute_ms": 34.5,
+    "comm_compute_ratio_pct": 8.26
+  },
+  "evo2_genomic_long_context": {
+    "seq_len_bp": 1048576,
+    "d_model": 8192,
+    "quadratic_attn_tflops_per_layer": 36028.8,
+    "flash_fft_conv_gflops_per_layer": 1735.17,
+    "sequence_mixer_flop_reduction_x": 20763.8,
+    "end_to_end_layer_speedup_x": 28.5
+  },
+  "sfno_weather_halo": {
+    "grid_lat": 3600,
+    "grid_lon": 7200,
+    "gpus": 64,
+    "local_lat": 450,
+    "local_lon": 900,
+    "halo_width": 4,
+    "channels": 128,
+    "halo_cells_per_gpu": 10800,
+    "halo_bytes_mb": 5.53,
+    "halo_comm_ms": 0.18,
+    "interior_compute_ms": 14.2,
+    "comm_to_compute_ratio_pct": 1.27,
+    "exposed_halo_ms": 0.0
+  },
+  "grand_encyclopedia_synthesis": {
+    "total_chapters": 24,
+    "total_parts": 4,
+    "total_figures": 835,
+    "total_exercises": 384,
+    "total_experiment_suites": 135
+  }
+}

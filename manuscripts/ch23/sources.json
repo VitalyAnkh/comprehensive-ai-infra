@@ -1,0 +1,28 @@
+{
+  "sources": [
+    {
+      "path": "manuscripts/ch23/build.py",
+      "sha256": "2772aa3e7e4e07b432d62e91603a8a05df091b9956e01f527e948070681a3e0f"
+    },
+    {
+      "path": "manuscripts/ch23/figure-data.json",
+      "sha256": "df6f1c628e03bd66cf96400ea3e5eb9fee92feaf4d53746650802c401bb17bbd"
+    },
+    {
+      "path": "manuscripts/ch23/figure-index.json",
+      "sha256": "d65e2aa1ffb2972eb2b974196eb55e2ba28b6f02e973174fda4f0b9900cd9de7"
+    },
+    {
+      "path": "experiments/ch23/23-01/run.py",
+      "sha256": "5682da1b06e5cc5db12840a6fc73a27992cdd4b702622cce22f8775112cd159f"
+    },
+    {
+      "path": "experiments/ch23/23-02/run.py",
+      "sha256": "9ef690586561886bd2f5852914de441019d1f6bee4c0d3a3af5982ca30b145d4"
+    },
+    {
+      "path": "manuscripts/23-百亿亿次 Token 数据工程、GPU 加速模糊去重与合成数据工厂底座.md",
+      "sha256": "d150f5dc58ea7abc7bd3f2fbe77f430fad28e38b3ab74539278c124072022b77"
+    }
+  ]
+}

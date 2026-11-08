@@ -1,0 +1,236 @@
+[
+  {
+    "figure_id": "图 24-1",
+    "number": 1,
+    "file": "ch24-llm-1d-tokens-vs-ai4science-four-structural-domains.svg",
+    "asset": "ch24/ch24-llm-1d-tokens-vs-ai4science-four-structural-domains.svg",
+    "section": "24.1.1",
+    "caption": "一维文本 Token 与四大科学智能领域（生物大分子 2D 对表示、基因组 1M 核苷酸序列、地球球面 PDE 网格、三维原子截断半径图）的计算图与复杂度对比",
+    "source_refs": [
+      "manuscripts/ch24/figure-data.json"
+    ],
+    "TeachingRole": "揭示科学基础模型参数量适中但高阶几何激活张量呈二次/三次方爆炸且伴随严重异构 I/O 失配的共性特征",
+    "figure": "24-1",
+    "name": "ch24-llm-1d-tokens-vs-ai4science-four-structural-domains"
+  },
+  {
+    "figure_id": "图 24-2",
+    "number": 2,
+    "file": "ch24-alphafold3-boltz1-two-stage-disaggregated-pipeline.svg",
+    "asset": "ch24/ch24-alphafold3-boltz1-two-stage-disaggregated-pipeline.svg",
+    "section": "24.2.1",
+    "caption": "生物大分子预测两阶段异构解耦架构：Stage 1（MMseqs2-GPU 序列检索池，1.20 s）与 Stage 2（Pairformer + 扩散生成池，48.0 s）独立扩缩容实现 55.85 倍端到端提速（算例 24-1）",
+    "source_refs": [
+      "experiments/ch24/24-01/run.py",
+      "manuscripts/ch24/figure-data.json"
+    ],
+    "TeachingRole": "解决传统同机串行部署中 45 分钟 CPU MSA 搜索导致 H100/B200 空转 98.25% 的资源错配难题",
+    "figure": "24-2",
+    "name": "ch24-alphafold3-boltz1-two-stage-disaggregated-pipeline"
+  },
+  {
+    "figure_id": "图 24-3",
+    "number": 3,
+    "file": "ch24-mmseqs2-gpu-kmer-prefilter-and-smith-waterman.svg",
+    "asset": "ch24/ch24-mmseqs2-gpu-kmer-prefilter-and-smith-waterman.svg",
+    "section": "24.2.1",
+    "caption": "MMseqs2-GPU 利用片上共享内存 k-mer 查表与硬件 DPX 动态规划指令将 MSA 搜索从 2,700 秒压降至 1.20 秒（2,250.0 倍加速）的核内流水（算例 24-1）",
+    "source_refs": [
+      "experiments/ch24/24-01/run.py",
+      "manuscripts/ch24/figure-data.json"
+    ],
+    "TeachingRole": "拆解片上 SRAM 预过滤与 Hopper/Blackwell 原生 DPX 动态规划指令在序列同源检索中的硬件加速机理",
+    "figure": "24-3",
+    "name": "ch24-mmseqs2-gpu-kmer-prefilter-and-smith-waterman"
+  },
+  {
+    "figure_id": "图 24-4",
+    "number": 4,
+    "file": "ch24-pairformer-triangle-multiplication-and-attention-o-n3.svg",
+    "asset": "ch24/ch24-pairformer-triangle-multiplication-and-attention-o-n3.svg",
+    "section": "24.2.2",
+    "caption": "AlphaFold 3 / Boltz-1 Pairformer 中残基对表示 Z_ij（4.00 GiB）的三角乘法更新与 O(N_res^3) 三角自注意力（朴素物化达 512.00 GiB）几何依赖图（算例 24-2）",
+    "source_refs": [
+      "experiments/ch24/24-01/run.py",
+      "manuscripts/ch24/figure-data.json"
+    ],
+    "TeachingRole": "阐明三维空间三角不等式约束如何导致 N_res=4,096 时单层激活张量突破 512 GiB 物理显存上限",
+    "figure": "24-4",
+    "name": "ch24-pairformer-triangle-multiplication-and-attention-o-n3"
+  },
+  {
+    "figure_id": "图 24-5",
+    "number": 5,
+    "file": "ch24-chunked-triangle-attention-and-dynamic-axial-parallelism.svg",
+    "asset": "ch24/ch24-chunked-triangle-attention-and-dynamic-axial-parallelism.svg",
+    "section": "24.2.2",
+    "caption": "分块三角注意力核融合（B=64 压至 1.00 GiB）与 4 卡动态轴向并行（DAP 行列正交切分 + All-to-All 转置，工作区压至 0.25 GiB，缩减 2,048 倍）（算例 24-2）",
+    "source_refs": [
+      "experiments/ch24/24-01/run.py",
+      "manuscripts/ch24/figure-data.json"
+    ],
+    "TeachingRole": "通过内核级在线 Softmax 融合与正交轴向切分彻底攻克万残基生物复合物的显存墙",
+    "figure": "24-5",
+    "name": "ch24-chunked-triangle-attention-and-dynamic-axial-parallelism"
+  },
+  {
+    "figure_id": "图 24-6",
+    "number": 6,
+    "file": "ch24-all-atom-diffusion-module-multi-sample-batching.svg",
+    "asset": "ch24/ch24-all-atom-diffusion-module-multi-sample-batching.svg",
+    "section": "24.2.2",
+    "caption": "全原子三维坐标扩散模块（All-Atom Diffusion）在共享同一躯干 Pairformer 特征下并行生成 K=16 个候选构象的算术强度倍增",
+    "source_refs": [
+      "manuscripts/ch24/figure-data.json"
+    ],
+    "TeachingRole": "利用一躯干对多扩散头的非对称批处理将结构去噪推入 Tensor Core 计算饱和区",
+    "figure": "24-6",
+    "name": "ch24-all-atom-diffusion-module-multi-sample-batching"
+  },
+  {
+    "figure_id": "图 24-7",
+    "number": 7,
+    "file": "ch24-evo2-stripedhyena2-multi-scale-hyena-attention-backbone.svg",
+    "asset": "ch24/ch24-evo2-stripedhyena2-multi-scale-hyena-attention-backbone.svg",
+    "section": "24.3.1",
+    "caption": "百万碱基基因组模型（Evo 2 40B）的 StripedHyena 2（短/中/长三级门控卷积 + 稀疏旋转注意力）混合主干架构（算例 24-3）",
+    "source_refs": [
+      "experiments/ch24/24-02/run.py",
+      "manuscripts/ch24/figure-data.json"
+    ],
+    "TeachingRole": "解释单核苷酸分辨率（L=1,048,576 bp）下为何必须用亚二次长卷积替代 36,028.8 TFLOPs 的二次自注意力",
+    "figure": "24-7",
+    "name": "ch24-evo2-stripedhyena2-multi-scale-hyena-attention-backbone"
+  },
+  {
+    "figure_id": "图 24-8",
+    "number": 8,
+    "file": "ch24-flashfftconv-monarch-decomposition-tensor-core.svg",
+    "asset": "ch24/ch24-flashfftconv-monarch-decomposition-tensor-core.svg",
+    "section": "24.3.2",
+    "caption": "FlashFFTConv 利用 Monarch 矩阵分解将长序列快速傅里叶变换（FFT）映射为 Tensor Core 矩阵乘并驻留 SRAM（单层提速 28.5 倍）（算例 24-3）",
+    "source_refs": [
+      "experiments/ch24/24-02/run.py",
+      "manuscripts/ch24/figure-data.json"
+    ],
+    "TeachingRole": "揭示如何通过二维矩阵重排与 Monarch 分解将访存受限的 FFT 转化为片上高密矩阵乘流水",
+    "figure": "24-8",
+    "name": "ch24-flashfftconv-monarch-decomposition-tensor-core"
+  },
+  {
+    "figure_id": "图 24-9",
+    "number": 9,
+    "file": "ch24-sfno-spherical-harmonics-and-2d-grid-decomposition.svg",
+    "asset": "ch24/ch24-sfno-spherical-harmonics-and-2d-grid-decomposition.svg",
+    "section": "24.4.1",
+    "caption": "全球气象大模型（FourCastNet 3 / Aurora）的球面傅里叶神经算子（SFNO）与 64 卡（8x8）经纬度二维空间域切分（算例 24-4）",
+    "source_refs": [
+      "experiments/ch24/24-02/run.py",
+      "manuscripts/ch24/figure-data.json"
+    ],
+    "TeachingRole": "在 3,600x7,200 全球高分网格上实现极区无畸变球谐变换与最小周长二维分块",
+    "figure": "24-9",
+    "name": "ch24-sfno-spherical-harmonics-and-2d-grid-decomposition"
+  },
+  {
+    "figure_id": "图 24-10",
+    "number": 10,
+    "file": "ch24-spatial-domain-halo-exchange-computation-overlap.svg",
+    "asset": "ch24/ch24-spatial-domain-halo-exchange-computation-overlap.svg",
+    "section": "24.4.1",
+    "caption": "物理网格并行中内部格点计算（14.20 ms）与边界幽灵区光环交换（Halo Exchange，5.53 MB / 0.18 ms，占比 1.27%）的双流完全掩盖时序（算例 24-4）",
+    "source_refs": [
+      "experiments/ch24/24-02/run.py",
+      "manuscripts/ch24/figure-data.json"
+    ],
+    "TeachingRole": "证明表面积/体积比定律下优先计算边界壳层可使跨卡 Halo 通信暴露延迟归零",
+    "figure": "24-10",
+    "name": "ch24-spatial-domain-halo-exchange-computation-overlap"
+  },
+  {
+    "figure_id": "图 24-11",
+    "number": 11,
+    "file": "ch24-era5-petabyte-zarr-gds-direct-streaming-dataloader.svg",
+    "asset": "ch24/ch24-era5-petabyte-zarr-gds-direct-streaming-dataloader.svg",
+    "section": "24.4.1",
+    "caption": "面向 PB 级多维气象场（ERA5 Zarr/HDF5 分块存储）的 GPUDirect Storage 零拷贝按需切片与 nvCOMP 硬件解压流水线",
+    "source_refs": [
+      "manuscripts/ch24/figure-data.json"
+    ],
+    "TeachingRole": "消除高分辨率科学场训练中的 CPU 页缓存拷贝与单线程解压瓶颈",
+    "figure": "24-11",
+    "name": "ch24-era5-petabyte-zarr-gds-direct-streaming-dataloader"
+  },
+  {
+    "figure_id": "图 24-12",
+    "number": 12,
+    "file": "ch24-mace-equivariant-message-passing-and-verlet-neighbor-list.svg",
+    "asset": "ch24/ch24-mace-equivariant-message-passing-and-verlet-neighbor-list.svg",
+    "section": "24.4.2",
+    "caption": "等变神经原子势函数（MACE）在亿级原子分子动力学中的三维空间块分解、动态 Verlet 皮肤缓冲邻居表与球谐核融合",
+    "source_refs": [
+      "manuscripts/ch24/figure-data.json"
+    ],
+    "TeachingRole": "攻克分子动力学百万飞秒顺序步长下的微秒级单步启动与邻居重构开销",
+    "figure": "24-12",
+    "name": "ch24-mace-equivariant-message-passing-and-verlet-neighbor-list"
+  },
+  {
+    "figure_id": "图 24-13",
+    "number": 13,
+    "file": "ch24-ai-in-the-loop-hybrid-hpc-pde-solver-and-surrogate.svg",
+    "asset": "ch24/ch24-ai-in-the-loop-hybrid-hpc-pde-solver-and-surrogate.svg",
+    "section": "24.4.2",
+    "caption": "传统 HPC 偏微分方程求解器与 AI 神经代理模型（Neural Surrogate）在同一个超算作业内经 DLPack/IPC 零拷贝原位耦合的混合仿真架构",
+    "source_refs": [
+      "manuscripts/ch24/figure-data.json"
+    ],
+    "TeachingRole": "结合数值求解器的严格物理守恒律与深度学习代理模型在亚网格微观过程上的千倍加速",
+    "figure": "24-13",
+    "name": "ch24-ai-in-the-loop-hybrid-hpc-pde-solver-and-surrogate"
+  },
+  {
+    "figure_id": "图 24-14",
+    "number": 14,
+    "file": "ch24-autonomous-wet-lab-active-learning-closed-loop.svg",
+    "asset": "ch24/ch24-autonomous-wet-lab-active-learning-closed-loop.svg",
+    "section": "24.4.2",
+    "caption": "AI4Science 闭环发现工厂：生成式分子/材料设计（MatterGen/Boltz-1）-> 多级物理仿真筛选 -> 自动化机器人湿实验验证 -> 主动学习回流",
+    "source_refs": [
+      "manuscripts/ch24/figure-data.json"
+    ],
+    "TeachingRole": "构建从数字生成仿真到真实物理实验室机器人验证的主动学习飞轮",
+    "figure": "24-14",
+    "name": "ch24-autonomous-wet-lab-active-learning-closed-loop"
+  },
+  {
+    "figure_id": "图 24-15",
+    "number": 15,
+    "file": "ch24-twenty-four-chapter-encyclopedia-knowledge-atlas.svg",
+    "asset": "ch24/ch24-twenty-four-chapter-encyclopedia-knowledge-atlas.svg",
+    "section": "24.5.1",
+    "caption": "全书 24 章四大部分（基础与硬件篇、训推系统篇、智能体与模态底座篇、数据/科学/机队工程篇）百科全书知识全景图（算例 24-5）",
+    "source_refs": [
+      "experiments/ch24/24-02/run.py",
+      "manuscripts/ch24/figure-data.json"
+    ],
+    "TeachingRole": "宏观鸟瞰全书 24 章、835 幅配图、384 道习题与 135 个可运行实验的系统工程坐标系",
+    "figure": "24-15",
+    "name": "ch24-twenty-four-chapter-encyclopedia-knowledge-atlas"
+  },
+  {
+    "figure_id": "图 24-16",
+    "number": 16,
+    "file": "ch24-unified-laws-across-all-24-chapters-synthesis.svg",
+    "asset": "ch24/ch24-unified-laws-across-all-24-chapters-synthesis.svg",
+    "section": "24.5.2",
+    "caption": "贯穿全书 24 章的统一物理底座——从单个矩阵乘法的算术强度，到驾驭语言、全模态、机器人与科学发现的四大智能计算铁律",
+    "source_refs": [
+      "experiments/ch24/24-02/run.py",
+      "manuscripts/ch24/figure-data.json"
+    ],
+    "TeachingRole": "以算术强度、状态局部性、通信掩盖与北极星可验证有效产出收束全书二十四章主线",
+    "figure": "24-16",
+    "name": "ch24-unified-laws-across-all-24-chapters-synthesis"
+  }
+]

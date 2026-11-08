@@ -1,0 +1,236 @@
+[
+  {
+    "figure_id": "图 23-1",
+    "number": 1,
+    "file": "ch23-100pb-commoncrawl-to-15t-tokens-curation-funnel.svg",
+    "asset": "ch23/ch23-100pb-commoncrawl-to-15t-tokens-curation-funnel.svg",
+    "section": "23.1.1",
+    "caption": "从 100 PB CommonCrawl 原始 WARC 归档经七级提纯漏斗产出 15.0T 精品词元的体积与算力瀑布（算例 23-1）",
+    "source_refs": [
+      "experiments/ch23/23-01/run.py",
+      "manuscripts/ch23/figure-data.json"
+    ],
+    "TeachingRole": "展示百 PB 级原始网页经正文抽取、启发式过滤、去重、分级与去污仅留存 2.40% 的全链路账本",
+    "figure": "23-1",
+    "name": "ch23-100pb-commoncrawl-to-15t-tokens-curation-funnel"
+  },
+  {
+    "figure_id": "图 23-2",
+    "number": 2,
+    "file": "ch23-minhash-lsh-band-row-s-curve-probability.svg",
+    "asset": "ch23/ch23-minhash-lsh-band-row-s-curve-probability.svg",
+    "section": "23.2.1",
+    "caption": "MinHash LSH 局部敏感哈希在 (b=16, r=8) 分桶配置下的 S 型碰撞概率曲线 P(s) = 1 - (1 - s^r)^b（算例 23-2）",
+    "source_refs": [
+      "experiments/ch23/23-01/run.py",
+      "manuscripts/ch23/figure-data.json"
+    ],
+    "TeachingRole": "推导阈值拐点 s* = 0.7071 以及 s=0.80 捕获率 94.70%、s=0.50 误碰率 6.07% 的概率边界",
+    "figure": "23-2",
+    "name": "ch23-minhash-lsh-band-row-s-curve-probability"
+  },
+  {
+    "figure_id": "图 23-3",
+    "number": 3,
+    "file": "ch23-distributed-minhash-shuffle-and-gpu-union-find.svg",
+    "asset": "ch23/ch23-distributed-minhash-shuffle-and-gpu-union-find.svg",
+    "section": "23.2.2",
+    "caption": "50 亿篇文档模糊去重的分布式流水线：Shingle 哈希、按 Band 洗牌与 GPU 连通分量（Large-Star/Small-Star）聚簇（算例 23-3）",
+    "source_refs": [
+      "experiments/ch23/23-01/run.py",
+      "manuscripts/ch23/figure-data.json"
+    ],
+    "TeachingRole": "揭示 2.56 TB 签名跨卡洗牌与分布式图连通分量求解传递性重复簇的系统机理",
+    "figure": "23-3",
+    "name": "ch23-distributed-minhash-shuffle-and-gpu-union-find"
+  },
+  {
+    "figure_id": "图 23-4",
+    "number": 4,
+    "file": "ch23-cpu-datatrove-vs-gpu-nemo-curator-throughput.svg",
+    "asset": "ch23/ch23-cpu-datatrove-vs-gpu-nemo-curator-throughput.svg",
+    "section": "23.2.2",
+    "caption": "CPU 集群（DataTrove）与 GPU 加速流水线（NeMo Curator + cuDF + cuGraph）在百 TB 语料去重中的耗时（80.0x 加速）与 TCO（降 4.50x）对比（算例 23-3）",
+    "source_refs": [
+      "experiments/ch23/23-01/run.py",
+      "manuscripts/ch23/figure-data.json"
+    ],
+    "TeachingRole": "对比 4,096 核 CPU 跑 148 小时与 64 卡 H100 跑 1.85 小时的吞吐与成本账本",
+    "figure": "23-4",
+    "name": "ch23-cpu-datatrove-vs-gpu-nemo-curator-throughput"
+  },
+  {
+    "figure_id": "图 23-5",
+    "number": 5,
+    "file": "ch23-document-fuzzy-dedup-vs-suffix-array-substring-dedup.svg",
+    "asset": "ch23/ch23-document-fuzzy-dedup-vs-suffix-array-substring-dedup.svg",
+    "section": "23.2.2",
+    "caption": "文档级 MinHash 模糊去重与基于后缀数组（Suffix Array）的 50 词元级精确重复模板/导航栏剥离协同",
+    "source_refs": [
+      "manuscripts/ch23/figure-data.json"
+    ],
+    "TeachingRole": "阐明宏观整篇模糊去重与微观后缀数组子串切除的互补分工",
+    "figure": "23-5",
+    "name": "ch23-document-fuzzy-dedup-vs-suffix-array-substring-dedup"
+  },
+  {
+    "figure_id": "图 23-6",
+    "number": 6,
+    "file": "ch23-llm-rubric-distillation-to-fasttext-bert-classifier.svg",
+    "asset": "ch23/ch23-llm-rubric-distillation-to-fasttext-bert-classifier.svg",
+    "section": "23.3.1",
+    "caption": "用 70B 教师模型标注 500 万样本蒸馏 110M 轻量级质量分类器（FineWeb-Edu / DCLM）实现 55.82 倍算力节省的三级漏斗（算例 23-4）",
+    "source_refs": [
+      "experiments/ch23/23-02/run.py",
+      "manuscripts/ch23/figure-data.json"
+    ],
+    "TeachingRole": "证明教师精标种子与轻量分类器全量推理相比直接用大模型打分节省 98.21% 算力",
+    "figure": "23-6",
+    "name": "ch23-llm-rubric-distillation-to-fasttext-bert-classifier"
+  },
+  {
+    "figure_id": "图 23-7",
+    "number": 7,
+    "file": "ch23-nemotron-cc-classifier-ensembling-and-rephrasing.svg",
+    "asset": "ch23/ch23-nemotron-cc-classifier-ensembling-and-rephrasing.svg",
+    "section": "23.3.1",
+    "caption": "Nemotron-CC 范式：多分类器集成打分分桶与对高知识价值但表述残缺网页的合成改写抢救（Synthetic Rephrasing）",
+    "source_refs": [
+      "manuscripts/ch23/figure-data.json"
+    ],
+    "TeachingRole": "通过多分类器集成与百科风格合成改写突破激进过滤带来的独特词元枯竭墙",
+    "figure": "23-7",
+    "name": "ch23-nemotron-cc-classifier-ensembling-and-rephrasing"
+  },
+  {
+    "figure_id": "图 23-8",
+    "number": 8,
+    "file": "ch23-benchmark-decontamination-ngram-and-embedding-hybrid.svg",
+    "asset": "ch23/ch23-benchmark-decontamination-ngram-and-embedding-hybrid.svg",
+    "section": "23.3.2",
+    "caption": "防止评测集刷榜失真的双层去污管线（13-gram 子串匹配 + 稠密语义向量近邻剔除防止同义改写与跨语言污染）",
+    "source_refs": [
+      "manuscripts/ch23/figure-data.json"
+    ],
+    "TeachingRole": "构建字面 n-gram 自动机与稠密向量检索结合的评测基准防泄漏防线",
+    "figure": "23-8",
+    "name": "ch23-benchmark-decontamination-ngram-and-embedding-hybrid"
+  },
+  {
+    "figure_id": "图 23-9",
+    "number": 9,
+    "file": "ch23-doremi-regmix-domain-weight-optimization.svg",
+    "asset": "ch23/ch23-doremi-regmix-domain-weight-optimization.svg",
+    "section": "23.3.2",
+    "caption": "基于小型代理模型（Proxy Model）的领域配比寻优（DoReMi / RegMix）与三阶段预训练动态退火曲线",
+    "source_refs": [
+      "manuscripts/ch23/figure-data.json"
+    ],
+    "TeachingRole": "展示如何用小模型网格搜索最优领域配比并在预训练末段执行高纯度数据极速退火",
+    "figure": "23-9",
+    "name": "ch23-doremi-regmix-domain-weight-optimization"
+  },
+  {
+    "figure_id": "图 23-10",
+    "number": 10,
+    "file": "ch23-online-serving-vs-offline-synthetic-factory-roofline.svg",
+    "asset": "ch23/ch23-online-serving-vs-offline-synthetic-factory-roofline.svg",
+    "section": "23.4.1",
+    "caption": "在线低延迟服务（B=32，MFU 11.2%）与离线合成数据工厂（B=2,048，MFU 58.4%，吞吐升 7.20 倍、成本降 13.16 倍）的 Roofline 跃迁（算例 23-5）",
+    "source_refs": [
+      "experiments/ch23/23-02/run.py",
+      "manuscripts/ch23/figure-data.json"
+    ],
+    "TeachingRole": "阐明卸下实时延迟枷锁后通过超大批量将自回归解码推入 Tensor Core 计算饱和区的经济学",
+    "figure": "23-10",
+    "name": "ch23-online-serving-vs-offline-synthetic-factory-roofline"
+  },
+  {
+    "figure_id": "图 23-11",
+    "number": 11,
+    "file": "ch23-synthetic-data-generator-verifier-rejection-funnel.svg",
+    "asset": "ch23/ch23-synthetic-data-generator-verifier-rejection-funnel.svg",
+    "section": "23.4.2",
+    "caption": "推理与代码合成数据工厂的“多样化种子 -> 高温批量采样 -> 沙箱测试验证（31.25%）-> 自纠重写（综合良率 58.75%）”闭环账本（算例 23-5）",
+    "source_refs": [
+      "experiments/ch23/23-02/run.py",
+      "manuscripts/ch23/figure-data.json"
+    ],
+    "TeachingRole": "利用外部确定性沙箱验证器与错误轨迹重写防止模型自噬并将验证词元成本锁定在 0.075 美元/M",
+    "figure": "23-11",
+    "name": "ch23-synthetic-data-generator-verifier-rejection-funnel"
+  },
+  {
+    "figure_id": "图 23-12",
+    "number": 12,
+    "file": "ch23-slack-capacity-harvesting-for-synthetic-generation.svg",
+    "asset": "ch23/ch23-slack-capacity-harvesting-for-synthetic-generation.svg",
+    "section": "23.4.1",
+    "caption": "利用在线推理集群昼夜波谷与训练维护空窗自动拉起离线合成数据作业的零边际硬件成本收割架构",
+    "source_refs": [
+      "experiments/ch23/23-02/run.py",
+      "manuscripts/ch23/figure-data.json"
+    ],
+    "TeachingRole": "通过毫秒级抢占式波谷算力收割将离线合成 GPU 小时单价再压降 45%",
+    "figure": "23-12",
+    "name": "ch23-slack-capacity-harvesting-for-synthetic-generation"
+  },
+  {
+    "figure_id": "图 23-13",
+    "number": 13,
+    "file": "ch23-pdf-scientific-ocr-layout-math-extraction-pipeline.svg",
+    "asset": "ch23/ch23-pdf-scientific-ocr-layout-math-extraction-pipeline.svg",
+    "section": "23.1.1",
+    "caption": "高质量学术论文与教材 PDF 语料的版面分析、公式 LaTeX 还原与多模态图文交错提取流水线",
+    "source_refs": [
+      "manuscripts/ch23/figure-data.json"
+    ],
+    "TeachingRole": "解决传统 PDF 文本提取破坏分栏与数学公式的难题，解锁高阶 STEM 专业文献",
+    "figure": "23-13",
+    "name": "ch23-pdf-scientific-ocr-layout-math-extraction-pipeline"
+  },
+  {
+    "figure_id": "图 23-14",
+    "number": 14,
+    "file": "ch23-tokenized-dataset-mmap-shuffling-and-sequence-packing.svg",
+    "asset": "ch23/ch23-tokenized-dataset-mmap-shuffling-and-sequence-packing.svg",
+    "section": "23.3.2",
+    "caption": "万亿词元二进制索引（.bin/.idx mmap）的确定性全局伪随机洗牌与最佳适应序列打包（Best-Fit Packing）零填充损耗",
+    "source_refs": [
+      "manuscripts/ch23/figure-data.json"
+    ],
+    "TeachingRole": "通过 Feistel 块级置换与最佳适应无截断打包消除长文档腰斩与跨文档注意力串扰",
+    "figure": "23-14",
+    "name": "ch23-tokenized-dataset-mmap-shuffling-and-sequence-packing"
+  },
+  {
+    "figure_id": "图 23-15",
+    "number": 15,
+    "file": "ch23-data-lineage-copyright-optout-and-audit-ledger.svg",
+    "asset": "ch23/ch23-data-lineage-copyright-optout-and-audit-ledger.svg",
+    "section": "23.3.2",
+    "caption": "面向合规与可追溯性的语料血缘账本（Data Provenance）、版权退订剔除与训练批次精确回溯索引",
+    "source_refs": [
+      "manuscripts/ch23/figure-data.json"
+    ],
+    "TeachingRole": "建立从每个训练 Batch 反向追溯至原始网页 SHA-256 与许可证标签的密码学审计链路",
+    "figure": "23-15",
+    "name": "ch23-data-lineage-copyright-optout-and-audit-ledger"
+  },
+  {
+    "figure_id": "图 23-16",
+    "number": 16,
+    "file": "ch23-exascale-data-and-synthetic-factory-master-architecture.svg",
+    "asset": "ch23/ch23-exascale-data-and-synthetic-factory-master-architecture.svg",
+    "section": "23.4.2",
+    "caption": "百亿亿次 Token 数据工程与合成数据工厂从原始爬虫、GPU 去重到闭环合成退火的全栈总图",
+    "source_refs": [
+      "experiments/ch23/23-01/run.py",
+      "experiments/ch23/23-02/run.py",
+      "manuscripts/ch23/figure-data.json"
+    ],
+    "TeachingRole": "收束第 23 章七级提纯漏斗、GPU 连通分量去重、分类器蒸馏与合成数据工厂的完整体系",
+    "figure": "23-16",
+    "name": "ch23-exascale-data-and-synthetic-factory-master-architecture"
+  }
+]

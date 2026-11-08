@@ -67,7 +67,7 @@ def prepare(source, dest, assets, source_ref=None):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--chapter', type=int, choices=range(1,21), help='Build one chapter with its original chapter number')
+    parser.add_argument('--chapter', type=int, choices=range(1,25), help='Build one chapter with its original chapter number')
     parser.add_argument('--output-dir', type=Path, default=HERE, help='Output directory relative to book/ (default: book/)')
     parser.add_argument('--source-ref', help='Git commit for portable GitHub links in released PDFs')
     args = parser.parse_args()
@@ -76,7 +76,7 @@ def main():
     name = f'AI-Infra-Book-Chapter-{args.chapter:02}' if args.chapter else 'AI-Infra-Book'
     work = HERE / 'build' / name
     work.mkdir(parents=True, exist_ok=True)
-    numbers = [args.chapter] if args.chapter else range(1,21)
+    numbers = [args.chapter] if args.chapter else range(1,25)
     sources = [next(MANUSCRIPTS.glob(f'{n:02}-*.md')) for n in numbers]
     inputs, assets = [], []
     for source in sources:

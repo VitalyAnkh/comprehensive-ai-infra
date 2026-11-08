@@ -7,7 +7,7 @@ ROOT=Path(__file__).resolve().parents[1];M=ROOT/'manuscripts';R=ROOT/'archive/re
 errors=[];rows=[]
 def check(ok,msg):
  if not ok:errors.append(msg)
-for n in range(1,21):
+for n in range(1,25):
  p=next(M.glob(f'{n:02}-*.md'));s=p.read_text()
  headings=re.findall(r'^## (.+)$',s,re.M)
  check(headings[-1]=='本章小结' and headings.count('本章小结')==1,f'{n}: final summary')

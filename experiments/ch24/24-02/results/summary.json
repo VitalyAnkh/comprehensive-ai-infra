@@ -1,0 +1,31 @@
+{
+  "experiment_id": "24-02",
+  "evo2_flashfftconv_1m": {
+    "seq_len_l": 1048576,
+    "hidden_dim_d": 8192,
+    "quadratic_attn_tflops": 36028.8,
+    "flash_fft_conv_gflops": 1735.17,
+    "seq_mixer_flop_reduction_x": 20763.8,
+    "end_to_end_layer_speedup_x": 28.5
+  },
+  "sfno_2d_halo_overlap": {
+    "sub_lat": 450,
+    "sub_lon": 900,
+    "halo_perimeter_cells": 10800,
+    "halo_volume_mb": 5.53,
+    "interior_compute_ms": 14.2,
+    "halo_transfer_ms": 0.18,
+    "comm_to_comp_ratio_pct": 1.27,
+    "exposed_halo_ms": 0.0
+  },
+  "grand_encyclopedia_ledger": {
+    "total_chapters": 24,
+    "total_parts": 4,
+    "total_chapter_figures": 835,
+    "total_production_code_blocks": 113,
+    "total_worked_examples": 152,
+    "total_exercise_blocks": 384,
+    "total_unique_exercise_ids": 383,
+    "total_experiment_suites": 135
+  }
+}

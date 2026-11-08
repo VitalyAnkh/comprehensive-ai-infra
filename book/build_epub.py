@@ -60,9 +60,9 @@ HOMES = {'zh': HERE, 'en': BOOK_EN, 'zh-tw': BOOK_ZH_TW, 'ru': BOOK_RU / 'book'}
 
 
 def sources(edition):
-    """(number, path) for the preface (0) and chapters (1-20 for zh, 1-12 for translations)."""
+    """(number, path) for the preface (0) and chapters (1-24 for zh, 1-12 for translations)."""
     if edition == 'zh':
-        return [(n, next(MANUSCRIPTS.glob(f'{n:02}-*.md'))) for n in range(21)]
+        return [(n, next(MANUSCRIPTS.glob(f'{n:02}-*.md'))) for n in range(25)]
     home = HOMES[edition]
     if edition == 'ru':
         return [(0, home / 'preface.md')] + [(n, home / f'chapter{n}.md') for n in range(1, 13)]
