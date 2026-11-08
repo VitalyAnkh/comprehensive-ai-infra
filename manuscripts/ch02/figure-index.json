@@ -166,5 +166,13 @@
   {
     "asset": "ch02/ch02-hybrid-deltanet-marconi-state-checkpoint.svg",
     "figure": "2-42"
+  },
+  {
+    "asset": "ch02/ch02-autoregressive-vs-block-diffusion-llm-roofline.svg",
+    "figure": "2-43"
+  },
+  {
+    "asset": "ch02/ch02-byte-latent-transformer-entropy-dynamic-patching.svg",
+    "figure": "2-44"
   }
 ]

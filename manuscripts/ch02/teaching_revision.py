@@ -606,6 +606,82 @@ def draw(here, data):
         ax2.grid(axis='x', linestyle=':', alpha=0.5, color='#CBD5E1')
         out.save(f, 'ch02-hybrid-deltanet-marconi-state-checkpoint')
 
+        # 39. ch02-autoregressive-vs-block-diffusion-llm-roofline (Path E3 Fig 2-43)
+        f, (ax1, ax2) = plt.subplots(1, 2, figsize=(420 / 72, 4.1))
+        f.subplots_adjust(left=0.22, right=0.96, bottom=0.20, top=0.85, wspace=0.74)
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+
+        ai_labels = ['AR 解码 (B=1)', 'AR 解码 (B=8)', 'dLLM (块宽 64)', 'dLLM (块宽 256)']
+        ai_vals = [1.0, 8.0, 64.0, 256.0]
+        cols_ai = [COL['orange'], COL['blue'], COL['teal'], COL['green']]
+        edges_ai = [BORDER_COL['orange'], BORDER_COL['blue'], BORDER_COL['teal'], BORDER_COL['green']]
+        y_ai = np.arange(len(ai_labels))
+        ax1.barh(y_ai, ai_vals, height=0.54, color=cols_ai, edgecolor=edges_ai, linewidth=1.2)
+        for yi, val_a in enumerate(ai_vals):
+            ax1.text(val_a + 10, yi, f'{val_a:.0f}', va='center', fontsize=11, weight='bold', color=COL['ink'])
+        ax1.axvline(295.2, color='#B91C1C', ls='--', lw=1.3)
+        ax1.set_yticks(y_ai, ai_labels)
+        ax1.invert_yaxis()
+        ax1.set_xlim(0, 410)
+        ax1.set_xlabel('算术强度（FLOPs/Byte）', fontsize=11)
+        ax1.set_title('A  算术强度跃迁', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(axis='x', linestyle=':', alpha=0.5, color='#CBD5E1')
+
+        lat_labels = ['AR 逐词 (256)', '全双向 (32步)', '块扩散 (64步)', '块扩散 (32步)']
+        lat_ms = [1251.7, 1221.1, 312.9, 156.5]
+        cols_lt = [COL['orange'], COL['purple'], COL['blue'], COL['green']]
+        edges_lt = [BORDER_COL['orange'], BORDER_COL['purple'], BORDER_COL['blue'], BORDER_COL['green']]
+        y_lt = np.arange(len(lat_labels))
+        ax2.barh(y_lt, lat_ms, height=0.54, color=cols_lt, edgecolor=edges_lt, linewidth=1.2)
+        for yi, v_ms in enumerate(lat_ms):
+            ax2.text(v_ms + 35, yi, f'{v_ms:.1f}', va='center', fontsize=11, weight='bold', color=COL['ink'])
+        ax2.set_yticks(y_lt, lat_labels)
+        ax2.invert_yaxis()
+        ax2.set_xlim(0, 1920)
+        ax2.set_xlabel('256 词元延迟（ms）', fontsize=11)
+        ax2.set_title('B  分块扩散延迟反超', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(axis='x', linestyle=':', alpha=0.5, color='#CBD5E1')
+        out.save(f, 'ch02-autoregressive-vs-block-diffusion-llm-roofline')
+
+        # 40. ch02-byte-latent-transformer-entropy-dynamic-patching (Path E3 Fig 2-44)
+        f, a = canvas(6.4)
+        card(a, 0.02, 0.49, 0.96, 0.48, 'A  字节潜空间 Transformer（BLT）：条件熵动态分块', '', 'blue', title_size=11.5)
+        blt_stages = [
+            (0.045, '1 局部字节编码', '跨字节交叉注意\n免除大词表查找', 'blue'),
+            (0.355, '2 熵阈值切块', '超阈值处切边界\n常见词干合长块', 'orange'),
+            (0.665, '3 全局潜空间层', '按块执行变换\n算力缩减 g_B 倍', 'green'),
+        ]
+        for bx, btitle, bbody, bcol in blt_stages:
+            card(a, bx, 0.64, 0.29, 0.21, btitle, bbody, bcol, title_size=11, body_size=11)
+        arrow(a, (0.335, 0.745), (0.355, 0.745), color=BORDER_COL['orange'])
+        arrow(a, (0.645, 0.745), (0.665, 0.745), color=BORDER_COL['green'])
+        box(
+            a, 0.045, 0.51, 0.91, 0.095,
+            '自适应算力分配：低熵片段合并省算力，高熵突变处按字节精细推理',
+            'gray', size=11
+        )
+
+        card(a, 0.02, 0.03, 0.96, 0.43, 'B  变长 Patch 对算子分块与多语言服务的影响', '', 'purple', title_size=11.5)
+        card(
+            a, 0.045, 0.175, 0.43, 0.205,
+            'Ragged 变长算子',
+            '同批块数随文本熵波动\n需变长偏移注意力内核',
+            'purple', title_size=11, body_size=11
+        )
+        card(
+            a, 0.525, 0.175, 0.43, 0.205,
+            '消除词表头与多语言膨胀',
+            '省去大词表输出头带宽\n多语言与二进制压缩一致',
+            'teal', title_size=11, body_size=11
+        )
+        box(
+            a, 0.045, 0.05, 0.91, 0.095,
+            '主干计算缩减：全局层运算量降至字节基线的 1/g_B（块长 4.5~8.0）',
+            'blue', size=11
+        )
+        out.save(f, 'ch02-byte-latent-transformer-entropy-dynamic-patching')
+
     from core_principles_figures import draw as draw_principles
     draw_principles(2, out)
     from v41_case_figures import draw as draw_v41

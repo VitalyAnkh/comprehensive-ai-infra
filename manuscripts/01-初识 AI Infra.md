@@ -28,7 +28,7 @@
 
 **从传统通用云到 AI 数据中心（AI 工厂）：六个维度的架构重心迁移。** 当主要应用接口从操作系统进程上移到模型与上下文之后，整座数据中心的设计目标也随之改写。在传统云计算数据中心里，成千上万个彼此独立的微服务、数据库与批处理程序共享底层硬件，系统的核心矛盾是如何将单台物理服务器安全地切分给多个租户；而在围绕大模型构建的 AI 数据中心里，成百上千张加速卡往往必须协同执行同一个模型的前向或反向计算，系统的核心矛盾转向了如何将跨机、跨柜的硬件资源紧密聚合成一台逻辑上的“巨型计算机”。表 1-1 从六个核心维度归纳了这一架构重心的迁移（配套视觉对比见本章末图 1-21 的 A 面板）[^cloud-ai-d11]：
 
-**表 1-1　传统通用云数据中心与 AI 数据中心的六维对比**
+*表 1-1　传统通用云数据中心与 AI 数据中心的六维对比*
 
 | 比较维度 | 传统云中的典型组织方式 | AI 工作负载带来的重心变化 | 工程适用边界与注意事项 |
 | --- | --- | --- | --- |
@@ -67,7 +67,7 @@
 
 顺着这六层自上而下看，一个业务任务被逐级拆解为具体的算子运算与数据读写；自下而上看，加速卡的显存容量、峰值算力与各级带宽，直接决定了系统能装下多大的模型、能同时服务多少并发请求，以及能以多快的速度给出响应。为了防止在后续阅读中把各层看成孤立的黑盒，表 1-2 提炼了贯穿全书的**四条跨层耦合主线**——每当上层改变一项设计选择，都会穿过层间接口直接改写下层的资源账单[^cloud-ai-d11]：
 
-**表 1-2　贯穿技术栈的四条核心跨层耦合主线**
+*表 1-2　贯穿技术栈的四条核心跨层耦合主线*
 
 | 跨层耦合主线 | 上下层隐藏的信息如何改变系统代价 | 本书展开与承接章节 |
 | --- | --- | --- |
@@ -136,7 +136,9 @@
 
 下表完整列出了原演讲幻灯片中的 12 项操作及其耗时。为了便于直观对比，所有时间统一换算为 **ns**（纳秒，十亿分之一秒）：$1\ \mu\mathrm{s}$（微秒）等于 $1000\ \mathrm{ns}$，$1\ \mathrm{ms}$（毫秒）等于 $1000\ \mu\mathrm{s}$。在数据量单位中，$1\ \mathrm{byte}$（字节）等于 $8\ \mathrm{bit}$（比特）；网络速率常用的 $\mathrm{bit/s}$ 表示每秒传输的比特数，$\mathrm{Gbit/s}$ 中的 $\mathrm{G}$ 代表十亿（$10^9$）。容量单位中，十进制的 $\mathrm{KB}$、$\mathrm{MB}$、$\mathrm{GB}$、$\mathrm{TB}$ 分别代表 $10^3$、$10^6$、$10^9$、$10^{12}$ 字节；二进制的 $\mathrm{KiB}$、$\mathrm{MiB}$、$\mathrm{GiB}$ 则分别代表 $2^{10}$、$2^{20}$、$2^{30}$ 字节。虽然表中的具体数值反映的是 2009 年前后的硬件水平，但不同层级操作之间的数量级差距，至今依然具有启发意义。
 
-在阅读表格前，先简单解释几个底层概念：缓存（cache）用于就近保存处理器近期可能反复访问的数据，其中一级缓存（L1）比二级缓存（L2）容量更小、距离计算核心更近；分支预测是处理器对条件跳转指令走向的提前猜测，一旦猜错就得清空流水线重新执行；线程是操作系统调度执行的最小单元，当多个线程需要访问同一份共享数据时，往往要通过互斥锁（mutex）来保证安全；磁盘寻道是指机械硬盘移动磁头定位到目标磁道的机械过程；而 Zippy 则是 Google 内部广泛使用的快速数据压缩库（后开源为 Snappy）。这 12 项操作横跨了计算、同步、存储与网络，耗时跨度超过八个数量级：
+在阅读表格前，先简单解释几个底层概念：缓存（cache）用于就近保存处理器近期可能反复访问的数据，其中一级缓存（L1）比二级缓存（L2）容量更小、距离计算核心更近；分支预测是处理器对条件跳转指令走向的提前猜测，一旦猜错就得清空流水线重新执行；线程是操作系统调度执行的最小单元，当多个线程需要访问同一份共享数据时，往往要通过互斥锁（mutex）来保证安全；磁盘寻道是指机械硬盘移动磁头定位到目标磁道的机械过程；而 Zippy 则是 Google 内部广泛使用的快速数据压缩库（后开源为 Snappy）。这 12 项操作横跨了计算、同步、存储与网络，耗时跨度超过八个数量级（表 1-3）：
+
+*表 1-3　Jeff Dean 2009 年演讲中的 12 项代表性计算机系统操作耗时基准*
 
 | 操作                    |      时间（ns） |
 | --------------------- | ----------: |
@@ -208,7 +210,9 @@ $$
 
 不妨看一款真实的工业界加速卡：NVIDIA H100 SXM（其中 SXM 指服务器主板上的高功率插座形态）。在数值表示上，**BF16** 是每个数值占 16 位（2 字节）的脑浮点格式，**FP32** 是每个数值占 32 位（4 字节）的单精度浮点格式；现代 GPU 的矩阵计算单元通常读入 BF16 格式的乘数，在内部用精度更高的 FP32 格式累加乘积。一张 H100 SXM 配备了 $80\ \mathrm{GB}$ 显存，HBM 显存带宽高达 $3.35\ \mathrm{TB/s}$，在 BF16 输入、FP32 累加的稠密矩阵运算下，峰值算力约为 $989.4\ \mathrm{TFLOP/s}$。[^h100]
 
-把 H100 SXM 与上一代数据中心主力卡 NVIDIA A100 80GB SXM、以及消费级旗舰卡 GeForce RTX 4090 放在一起对比，就得到了一张实用的 GPU 资源速查表。这三款芯片分别代表了 Hopper、Ampere 和 Ada Lovelace 三代架构。表中显存容量采用厂商标称的十进制 $\mathrm{GB}$，带宽采用十进制 $\mathrm{TB/s}$，矩阵算力统一取 BF16 输入、FP32 累加的稠密峰值。最后一行给出了按峰值带宽从显存连续读取 $1\ \mathrm{GB}$ 数据所需的最短时间（由 $1\ \mathrm{GB}$ 除以显存带宽算出）。[^gpu-numbers]
+把 H100 SXM 与上一代数据中心主力卡 NVIDIA A100 80GB SXM、以及消费级旗舰卡 GeForce RTX 4090 放在一起对比，就得到了一张实用的 GPU 资源速查表（表 1-4）。这三款芯片分别代表了 Hopper、Ampere 和 Ada Lovelace 三代架构。表中显存容量采用厂商标称的十进制 $\mathrm{GB}$，带宽采用十进制 $\mathrm{TB/s}$，矩阵算力统一取 BF16 输入、FP32 累加的稠密峰值。最后一行给出了按峰值带宽从显存连续读取 $1\ \mathrm{GB}$ 数据所需的最短时间（由 $1\ \mathrm{GB}$ 除以显存带宽算出）。[^gpu-numbers]
+
+*表 1-4　三代代表性 GPU（RTX 4090、A100 80GB SXM、H100 SXM）的显存容量、带宽与稠密算力速查*
 
 | 资源或操作 | RTX 4090 | A100 80GB SXM | H100 SXM |
 | --- | ---: | ---: | ---: |
@@ -263,7 +267,9 @@ $$
 
 ### 1.3.1 生成一个 token，先检查什么
 
-**例题 1-1：70B 模型的单步生成如何逼近 10 ms 目标？** 给定一张 H100 SXM，能否让上一节的 DeepSeek-R1-Distill-Llama-70B 在 $10\ \mathrm{ms}$ 内生成一个新 token？我们先按每个参数占 1 字节的量化存储来算，再依次比较算力翻倍、显存带宽翻倍以及多请求批内复用权重的效果。
+> **算例 1-1（例题 1-1：70B 模型的单步生成如何逼近 10 ms 目标）**
+>
+> 给定一张 H100 SXM，能否让上一节的 DeepSeek-R1-Distill-Llama-70B 在 $10\ \mathrm{ms}$ 内生成一个新 token？我们先按每个参数占 1 字节的量化存储来算，再依次比较算力翻倍、显存带宽翻倍以及多请求批内复用权重的效果。
 
 **解：先检查显存容量，再核算每步的运算量与数据读取量。**
 
@@ -418,16 +424,18 @@ $$
 2. **运行时有效产出**（Runtime Goodput，$\mathrm{RG}=G/A$）：在已交付给作业的齐步就绪时间 $A$ 中，只有最终被持久化保存、真正推动模型参数向前演进的有效训练时间才计入 $G$。读取数据卡顿、保存与加载检查点、被高优任务抢占后的重启开销，以及因机器故障回滚而白跑的训练步，都会使 $G < A$。
 3. **程序有效产出**（Program Goodput，$\mathrm{PG}=I/G$）：在真正产生有效训练进展的时间 $G$ 内，模型的实际推进速度与同一硬件上**理想参考实现**（采用最优并行切分、高效融合算子与通信重叠的基准程序）推进同样进度所需的最短时间 $I$ 之比。单卡算子未跑满峰值、多卡通信未与计算完全重叠，都会反映在 $\mathrm{PG}$ 的折扣上。
 
-**算例 1-A：百卡训练池的机队全栈效率（MPG）漏斗核算。** 为了直观理解三层损耗的相乘效应，我们构造一个简化的教学算例（注：以下数字为展示三层乘法口径而设定的教学算例，并非 Google 生产集群的原始监控读数）。设某同构训练池共有 100 张加速卡，连续观测 1 小时（$3600\ \mathrm{s}$），则机队总可用容量为 $C = 100\times 3600 = 360{,}000\ \mathrm{GPU\cdot s}$。在观测期内：
-- 集群监控显示单卡处于“已分配”状态的累计时长达 $350{,}000\ \mathrm{GPU\cdot s}$（表观单卡分配率高达 $350{,}000/360{,}000\approx 97.22\%$）；但由于多卡作业在齐步调度时需要等待同批其余节点就绪，真正凑齐并进入作业执行的齐步就绪时长仅为 $A = 300{,}000\ \mathrm{GPU\cdot s}$，因此调度有效产出为 $\mathrm{SG} = A/C = 300{,}000/360{,}000 \approx 83.33\%$。
-- 在这 $300{,}000\ \mathrm{GPU\cdot s}$ 的运行过程中，扣除周期性写检查点、一次节点掉线引发的重启以及回滚重算所消耗的 $60{,}000\ \mathrm{GPU\cdot s}$ 后，真正沉淀为有效训练进度的时长为 $G = 240{,}000\ \mathrm{GPU\cdot s}$，因此运行时有效产出为 $\mathrm{RG} = G/A = 240{,}000/300{,}000 = 80.0\%$。
-- 在有效推进的 $240{,}000\ \mathrm{GPU\cdot s}$ 中，受算子访存开销与跨卡集合通信暴露的影响，完成同样训练步数若换用理想参考实现仅需 $I = 120{,}000\ \mathrm{GPU\cdot s}$，即程序有效产出为 $\mathrm{PG} = I/G = 120{,}000/240{,}000 = 50.0\%$。
-
-将三项指标相乘，该训练池的全栈机队效率为：
-
-$$
-\mathrm{MPG} = \mathrm{SG}\times\mathrm{RG}\times\mathrm{PG} = \frac{5}{6}\times 0.80\times 0.50 = \frac{1}{3} \approx 33.33\%.
-$$
+> **算例 1-2（算例 1-A：百卡训练池的机队全栈效率 MPG 漏斗核算）**
+>
+> 为了直观理解三层损耗的相乘效应，我们构造一个简化的教学算例（注：以下数字为展示三层乘法口径而设定的教学算例，并非 Google 生产集群的原始监控读数）。设某同构训练池共有 100 张加速卡，连续观测 1 小时（$3600\ \mathrm{s}$），则机队总可用容量为 $C = 100\times 3600 = 360{,}000\ \mathrm{GPU\cdot s}$。在观测期内：
+> - 集群监控显示单卡处于“已分配”状态的累计时长达 $350{,}000\ \mathrm{GPU\cdot s}$（表观单卡分配率高达 $350{,}000/360{,}000\approx 97.22\%$）；但由于多卡作业在齐步调度时需要等待同批其余节点就绪，真正凑齐并进入作业执行的齐步就绪时长仅为 $A = 300{,}000\ \mathrm{GPU\cdot s}$，因此调度有效产出为 $\mathrm{SG} = A/C = 300{,}000/360{,}000 \approx 83.33\%$。
+> - 在这 $300{,}000\ \mathrm{GPU\cdot s}$ 的运行过程中，扣除周期性写检查点、一次节点掉线引发的重启以及回滚重算所消耗的 $60{,}000\ \mathrm{GPU\cdot s}$ 后，真正沉淀为有效训练进度的时长为 $G = 240{,}000\ \mathrm{GPU\cdot s}$，因此运行时有效产出为 $\mathrm{RG} = G/A = 240{,}000/300{,}000 = 80.0\%$。
+> - 在有效推进的 $240{,}000\ \mathrm{GPU\cdot s}$ 中，受算子访存开销与跨卡集合通信暴露的影响，完成同样训练步数若换用理想参考实现仅需 $I = 120{,}000\ \mathrm{GPU\cdot s}$，即程序有效产出为 $\mathrm{PG} = I/G = 120{,}000/240{,}000 = 50.0\%$。
+>
+> 将三项指标相乘，该训练池的全栈机队效率为：
+>
+> $$
+> \mathrm{MPG} = \mathrm{SG}\times\mathrm{RG}\times\mathrm{PG} = \frac{5}{6}\times 0.80\times 0.50 = \frac{1}{3} \approx 33.33\%.
+> $$
 
 这个算例揭示了一个常被忽视的工程真相：哪怕集群管理员看到的单卡分配率高达 $97.22\%$，且算法工程师测出的作业内部运行效率（$\mathrm{PG}=50\%$）也算中规中矩，经过“齐步调度等待（打八三折）$\to$ 故障回滚与检查点（再打八折）$\to$ 算子与通信效率（再打五折）”的三级漏斗连乘后，整座机房仍有三分之二的硬件潜力在途中流失了。这也解释了为什么本书不仅要在第 4—9 章讨论单卡算子、分布式并行与高速网络（提升 $\mathrm{PG}$），还必须在第 10—11 章与第 13 章专门研究集群容错、齐步调度与高性能检查点存储（提升 $\mathrm{SG}$ 与 $\mathrm{RG}$）。
 
@@ -468,9 +476,9 @@ $$
 
 做这类纸笔估算时，有一个极易检验的**显存整卡扫描基准时间**：一张 H100 SXM 配备 $80\ \mathrm{GB}$ 显存、带宽为 $3.35\ \mathrm{TB/s}$，按峰值带宽把整张卡的显存从头到尾完整读一遍，最短耗时恰好是 $80\ \mathrm{GB} / (3350\ \mathrm{GB/s}) \approx 23.88\ \mathrm{ms}$。任何占满大半张 H100 显存的模型，单步读取整份权重的时间都必然落在 $20\ \mathrm{ms}$ 量级；只有把单步必须触碰的数据量压缩到几 GB 以内，单步访存下界才可能跨进 $1\ \mathrm{ms}$ 门槛。同时必须警惕**四层收益简单相乘谬误**：不能把算法缩容、低比特量化、注意力稀疏化与推理引擎优化在各自独立基准上测得的加速倍数直接连乘，因为根据 Amdahl 定律与式（1.3.2）的 $\max(F/\Pi, R/\beta)$ 关系，前一项优化一旦改变了主要耗时项的占比或触发了访存向计算的瓶颈翻转，后一项优化作用在端到端时间上的边际收益就会随之收敛。
 
-**经典计算机系统六大设计模式在 LLM 基础设施中的重现（D11-03）。** 纵观从单卡算子到万卡机房的优化手段，大模型系统并非建立在空白之上，而是将经典计算机体系结构与操作系统沉淀数十年的六大核心设计模式，重新映射到了高带宽显存与超节点互联的新比例下（表 1-3）。[^cloud-ai-d11]
+**经典计算机系统六大设计模式在 LLM 基础设施中的重现（D11-03）。** 纵观从单卡算子到万卡机房的优化手段，大模型系统并非建立在空白之上，而是将经典计算机体系结构与操作系统沉淀数十年的六大核心设计模式，重新映射到了高带宽显存与超节点互联的新比例下（表 1-5）。[^cloud-ai-d11]
 
-**表 1-3　经典计算机系统六大设计模式在大模型基础设施中的对应机制与物理收益（D11-03）**
+*表 1-5　经典计算机系统六大设计模式在大模型基础设施中的对应机制与物理收益（D11-03，原表 1-3）*
 
 | 模式编号与名称 | 经典计算机系统原型 | LLM 基础设施中的对应机制 | 改变的核心物理量与对应章节 |
 | --- | --- | --- | --- |
@@ -529,20 +537,22 @@ Azure 最终给出的解法是“控制面与数据面分离”：让宿主机 C
 
 **从数据面卸载到主机管理策略卸载：跨 PCIe 通信延迟的收益边界。** 既然可编程网卡上配备了多颗通用 Arm 核心与专用加速引擎，一个很自然的延伸设想是：除了卸载“本来就要流经网卡”的网络数据包，能不能把原本运行在主机 CPU 上的操作系统管理策略——如线程调度、处理器调频（DVFS）和内存页面冷热迁移——也一并卸载到智能网卡上运行，从而把主机上负责管理调度的 CPU 核也腾出来留给业务负载？发表于 ASPLOS 2026 的 Wave 系统深入评测了这一方向，并揭示了一条关键的架构权衡：网络包卸载之所以顺理成章，是因为数据包本来就在网卡上；而主机管理策略做决策时所依赖的内核状态（如就绪队列、线程运行统计与页表访问位）原本驻留在**主机内存**中。一旦把管理策略搬到智能网卡上，网卡上的代理程序每次做调度决策都必须跨越缓慢的 PCIe 总线去读取主机内存状态并下发控制指令，从而拉长工作线程等待调度决策的时间。[^wave-policy]
 
-**算例 1-B：32 核主机将管理策略卸载至 SmartNIC 的吞吐翻转边界。** 我们可以用一个简单的定量模型把“腾出主机 CPU 核的收益”与“跨 PCIe 通信导致的工作核减速”放在一起算清。设一台双路服务器共有 32 颗主机 CPU 核心：在传统主机侧管理模式下，有 2 颗核心专门运行实时调度与资源管理策略，其余 30 颗核心全速执行业务工作线程（设每颗工作核的基准归一化吞吐为 $1$，则整机总吞吐为 $30$）。若将管理策略卸载到 SmartNIC 的板载 Arm 核上，主机侧全部 32 颗核心都能用来跑业务工作线程，但受跨 PCIe 读取内核状态与跨总线派发任务的延迟影响，每颗工作核的有效吞吐下降了比例 $d$（$0 \le d < 1$）。此时卸载后的整机相对吞吐倍数为：
-
-$$
-\eta(d) = \frac{32(1-d)}{30}.
-$$
-
-要让策略卸载获得净收益，必须满足 $\eta(d) > 1$，由此解出临界减速比例：
-
-$$
-d < 1 - \frac{30}{32} = \frac{2}{32} = 6.25\%.
-$$
-
-- 当软件通过流水线预取将跨 PCIe 通信造成的单核吞吐折损控制在 $d = 2\%$ 时，卸载后的总吞吐倍数为 $\eta(0.02) = 32\times 0.98 / 30 \approx 1.0453$，整机获得 **$+4.53\%$** 的净吞吐提升；
-- 反之，若每次调度决策都同步暴露 PCIe 往返延迟，使单核吞吐折损达到 $d = 8\%$，则总吞吐倍数为 $\eta(0.08) = 32\times 0.92 / 30 \approx 0.9813$，整机吞吐反而比不卸载时倒退了 **$-1.87\%$**。
+> **算例 1-3（算例 1-B：32 核主机将管理策略卸载至 SmartNIC 的吞吐翻转边界）**
+>
+> 我们可以用一个简单的定量模型把“腾出主机 CPU 核的收益”与“跨 PCIe 通信导致的工作核减速”放在一起算清。设一台双路服务器共有 32 颗主机 CPU 核心：在传统主机侧管理模式下，有 2 颗核心专门运行实时调度与资源管理策略，其余 30 颗核心全速执行业务工作线程（设每颗工作核的基准归一化吞吐为 $1$，则整机总吞吐为 $30$）。若将管理策略卸载到 SmartNIC 的板载 Arm 核上，主机侧全部 32 颗核心都能用来跑业务工作线程，但受跨 PCIe 读取内核状态与跨总线派发任务的延迟影响，每颗工作核的有效吞吐下降了比例 $d$（$0 \le d < 1$）。此时卸载后的整机相对吞吐倍数为：
+>
+> $$
+> \eta(d) = \frac{32(1-d)}{30}.
+> $$
+>
+> 要让策略卸载获得净收益，必须满足 $\eta(d) > 1$，由此解出临界减速比例：
+>
+> $$
+> d < 1 - \frac{30}{32} = \frac{2}{32} = 6.25\%.
+> $$
+>
+> - 当软件通过流水线预取将跨 PCIe 通信造成的单核吞吐折损控制在 $d = 2\%$ 时，卸载后的总吞吐倍数为 $\eta(0.02) = 32\times 0.98 / 30 \approx 1.0453$，整机获得 **$+4.53\%$** 的净吞吐提升；
+> - 反之，若每次调度决策都同步暴露 PCIe 往返延迟，使单核吞吐折损达到 $d = 8\%$，则总吞吐倍数为 $\eta(0.08) = 32\times 0.92 / 30 \approx 0.9813$，整机吞吐反而比不卸载时倒退了 **$-1.87\%$**。
 
 Wave 在 16 核机器上对 RocksDB 数据库做 FIFO 线程调度卸载的实测结果，精准印证了这一翻转规律：当工作负载仅使用 15 颗核心（即主机原本就不缺核）时，把调度器搬到网卡上反而因为跨 PCIe 延迟使吞吐下降了 $1.1\%$；只有当负载扩展到利用起卸载腾出的第 16 颗主机核心时，整机吞吐才获得了 $+4.6\%$ 的净增长。为了把单核折损 $d$ 压低到临界线以内，Wave 引入了主机状态预取（prefetching）：当单次跨 PCIe 读取耗时为 $0.75\ \mu\mathrm{s}$ 时，若两次调度决策之间的计算重叠窗口达到 $1\ \mu\mathrm{s}$，提前发起的异步读取就能被完全隐藏（暴露延迟为 $0$）；但若决策间隔缩短到只有 $0.2\ \mu\mathrm{s}$，即便开启预取也依然会在关键路径上暴露出 $0.75 - 0.2 = 0.55\ \mu\mathrm{s}$ 的等待开销。
 
@@ -572,7 +582,9 @@ Wave 在 16 核机器上对 RocksDB 数据库做 FIFO 线程调度卸载的实�
 
 ### 1.4.4 变化的逐级传递
 
-有趣的是，前面三个案例中的新架构一旦落地部署，往往又会打破原有的系统平衡，催生出下一轮工程挑战：当微软把 FPGA 智能网卡铺满 Azure 数据中心后，云平台就必须建立一整套固件灰度升级、硬件故障隔离与回滚机制[^azure]；当统一互联把几十上百颗加速器织成一台超节点大机器后，每一次全局同步需要等待的参与者变多了，任何一个器件抖动或失效波及的范围也随之扩大。在快速发展的大模型基础设施中，这种“解决旧瓶颈、暴露新矛盾”的连锁反应一直在顺着技术栈逐级传导。下表按本书后续章节的脉络，梳理了每一次关键比例变化是如何推翻旧有系统假设的：
+有趣的是，前面三个案例中的新架构一旦落地部署，往往又会打破原有的系统平衡，催生出下一轮工程挑战：当微软把 FPGA 智能网卡铺满 Azure 数据中心后，云平台就必须建立一整套固件灰度升级、硬件故障隔离与回滚机制[^azure]；当统一互联把几十上百颗加速器织成一台超节点大机器后，每一次全局同步需要等待的参与者变多了，任何一个器件抖动或失效波及的范围也随之扩大。在快速发展的大模型基础设施中，这种“解决旧瓶颈、暴露新矛盾”的连锁反应一直在顺着技术栈逐级传导。表 1-6 按本书后续二十四章的脉络，梳理了每一次关键比例变化是如何推翻旧有系统假设的：
+
+*表 1-6　关键资源比例或工作负载变化如何推翻传统系统假设（覆盖全书第 4—24 章）*
 
 | 关键比例或负载的变化 | 被推翻的传统假设 | 对应章节 |
 | --- | --- | --- |
@@ -592,6 +604,10 @@ Wave 在 16 核机器上对 RocksDB 数据库做 FIFO 线程调度卸载的实�
 | 大规模后训练（RLVR）、异步强化学习与推理时扩展在同一作业内交织长尾 Rollout 生成、环境奖励验证与策略更新 | 训练作业与推理服务是两套完全正交的系统，模型权重一旦部署便长期静态只读 | 第 18 章 |
 | 具身智能（VLA）端侧控制器受 $10\text{—}50\ \mathrm{ms}$ 硬实时安全截断约束，云端需高并发运行数万个 GPU 物理仿真环境 | 推理延迟只需满足人类阅读的平均流式速率，训练数据均来自离线静态语料库 | 第 19 章 |
 | 十万卡集群的平均无故障时间（MTBF）缩短至数十分钟，且静默数据损坏（SDC）与评测投毒直接威胁训练收敛与选型公正 | 硬件指令执行天然 100% 比特精确，单机跑分即可直接外推万卡生产集群的真实表现 | 第 20 章 |
+| 自主智能体（Agentic AI）单次任务持续数十轮、前缀缓存复用率超 $90\%$，且在毫秒级内分支克隆成千上万个微虚拟机沙箱 | 每次推理请求都是一次性的无状态问答（Read-Once KV），工具调用只是偶发的轻量外部 HTTP 请求 | 第 21 章 |
+| 全双工实时语音（Full-Duplex Speech）以 $80\ \mathrm{ms}$ 音频帧率同步推进“倾听流”与“说话流”，随时响应用户打断并回滚状态 | 语音交互可以先由 ASR 转成完整文本、交给 LLM 生成后再交由 TTS 朗读，且生成过程不可被中途打断 | 第 22 章 |
+| 百亿亿次 Token（$10\text{—}100\ \mathrm{T}$）语料清洗、全集模糊去重与合成数据工厂消耗的算力逼近预训练本身 | 数据预处理只是训练前由少量通用 CPU 节点跑一遍的廉价离线脚本，与 GPU 高速互联无关 | 第 23 章 |
+| 科学智能（AI4Science）包含 $\mathcal{O}(N_{\mathrm{res}}^3)$ 三角注意力、百万碱基基因组序列与跨节点三维球面调和变换（SHT） | 所有 AI 工作负载的计算复杂度都随序列长度呈线性或二次增长，且算子仅由标准矩阵乘法构成 | 第 24 章 |
 
 不过，与传统的通用操作系统和公有云平台相比，AI 基础设施在应对这些挑战时握有一项得天独厚的优势：**它的核心工作负载种类高度集中，而且计算图与数据流向在运行前往往是已知的。** 传统操作系统和云平台必须面对五花八门、事先完全未知的用户程序，因此只能依靠严格的抽象分层、保守的边界隔离和统计复用来保障通用性；而 AI 系统围绕着少数几种主流模型架构和确定的前向/反向执行流程构建，完全可以提前摸清第 1.1.1 节所说的计算与数据依赖，从而大胆打破传统的软件层边界做跨层协同优化。例如，第 11 章将介绍的强化学习沙箱平台，就能直接接收训练框架提前下发的抢占与阶段切换信号，在训练进入权重更新阶段时主动暂停并换出相应的容器沙箱。
 
@@ -608,9 +624,92 @@ $$
 2. **ProfInfer（MLSys 2026）**：针对边缘与数据中心 LLM 推理服务设计的基于 **eBPF**（扩展伯克利包过滤器）的细粒度无侵入剖析器，无需修改模型代码即可同时挂载内核态探针（追踪缺页中断、互斥锁争用、调度器唤醒延迟与虚拟内存抖动）与用户态运行时符号，精准定位为何 GPU 算子流之间会出现微秒至毫秒级的主机侧断流空泡；[^xprof-profinfer]
 3. **StriaTrace（OSDI 2026）**：面向大规模在线分布式 LLM 推理服务的高效追踪与诊断框架，通过仅在跨卡集合通信屏障与关键跨流同步点处埋设轻量级探针、并结合异常延迟触发机制（辅以分布式训练侧的 EROICA / FLARE 慢节点归因），在极低常驻开销下从海量并发流中逆向回溯出拖慢尾延迟的**慢节点（Straggler）关键路径流**。[^xprof-profinfer]
 
-**贯穿全书的双主线基准模型递进账本（D11-SP01）。** 为了让读者在跨越二十个章节时始终拥有一把前后一致的定量标尺，本书采用**双轨基准模型（Dual-Track Throughline）**贯穿始终：一条是代表单卡/单机工作站尺度的稠密模型 **Qwen3-8B**（81.9 亿总参数，BF16 权重 $16.38\ \mathrm{GB}$），另一条是代表超节点与大规模集群尺度的稀疏混合专家（MoE）模型 **DeepSeek V4.1 Flash / Qwen3-235B-A22B**（其中 V4.1 Flash 含 $551.57\mathrm{B}$ 主干参数与 $196.93\mathrm{B}$ Engram 参数，单 token 仅激活约 $16.1\mathrm{B}$ 主干矩阵参数；Qwen3-235B-A22B 总参数约 $235.1\mathrm{B}$，单 token 仅激活约 $22.2\mathrm{B}$ 参数）。在本章（第 1 章）中，我们故意使用最简化的线性估算公式 $M_W = b_W N$ 与 $F \approx 2BN$ 来建立数量级直觉；而在后续各章中，我们将把被这一简化公式暂时隐去的真实系统代价——从注意力 KV 状态、算子分块与尾块效应，到跨卡集合通信、排队调度、多级存储、机房供电、机密计算，再到多模态视频生成（DiT）与世界模型、大规模后训练（RLVR）与推理时扩展、具身智能（VLA）与大规模物理仿真以及十万卡集群可靠性与基准评测科学——逐章补齐到同一张总账单上（表 1-4）。[^cloud-ai-d11]
+为了把上述跨层 DAG 的“最长路径定位”与“非关键分支优化陷阱”转化为可直接运行的工程工具，下面的 Python 代码实现了面向主机调度流（Host）、GPU 计算流（Compute）与网卡通信流（NIC）的**跨层关键路径与松弛度（Slack）求解器**。对任意有向边 $e=(u,v)$，代码通过正向拓扑递推算出最早开始时间 $\mathrm{ES}(u)$，再通过逆向递推算出最晚允许完成时间 $\mathrm{LF}(v)$，从而给出每条边的松弛度 $\mathrm{Slack}(e) = \mathrm{LF}(v) - \mathrm{ES}(u) - w(e)$——凡是 $\mathrm{Slack}(e) > 0$ 的非关键分支，在未耗尽其松弛度窗口前，局部提速对端到端步耗时 $T_{\mathrm{step}}$ 的收益严格为零：
 
-**表 1-4　贯穿全书二十章的双轨基准模型（Qwen3-8B 稠密主线与 DeepSeek V4.1 / Qwen3-235B 稀疏 MoE 主线）递进核算总览（D11-SP01）**
+```python
+from dataclasses import dataclass
+from typing import Dict, List, Tuple
+
+@dataclass(frozen=True)
+class DagEdge:
+    src: str
+    dst: str
+    stream: str      # "Host", "GPU", "NIC", or "Sync"
+    label: str
+    duration_us: float
+
+def solve_critical_path_and_slack(edges: List[DagEdge], start: str, end: str) -> Dict[str, object]:
+    """求解跨层(Host -> GPU -> NIC)执行图的端到端关键路径与各边松弛度(Slack)."""
+    nodes = sorted({e.src for e in edges} | {e.dst for e in edges})
+    adj: Dict[str, List[DagEdge]] = {n: [] for n in nodes}
+    indeg: Dict[str, int] = {n: 0 for n in nodes}
+    for e in edges:
+        adj[e.src].append(e)
+        indeg[e.dst] += 1
+
+    # 1. Kahn 拓扑排序与正向最早发生时间 ES(node)
+    topo: List[str] = []
+    queue = [n for n in nodes if indeg[n] == 0]
+    while queue:
+        u = queue.pop(0)
+        topo.append(u)
+        for e in adj[u]:
+            indeg[e.dst] -= 1
+            if indeg[e.dst] == 0:
+                queue.append(e.dst)
+
+    es: Dict[str, float] = {n: 0.0 for n in nodes}
+    parent_edge: Dict[str, DagEdge] = {}
+    for u in topo:
+        for e in adj[u]:
+            cand = es[u] + e.duration_us
+            if cand > es[e.dst]:
+                es[e.dst] = cand
+                parent_edge[e.dst] = e
+
+    # 2. 逆向最晚允许时间 LF(node) 与每条边的松弛度 Slack(e)
+    total_us = es[end]
+    lf: Dict[str, float] = {n: total_us for n in nodes}
+    for u in reversed(topo):
+        if adj[u]:
+            lf[u] = min(lf[e.dst] - e.duration_us for e in adj[u])
+
+    edge_report = []
+    for e in edges:
+        slack = round(lf[e.dst] - es[e.src] - e.duration_us, 3)
+        edge_report.append((e.label, e.stream, e.duration_us, slack, slack == 0.0))
+
+    # 回溯关键路径
+    crit_path: List[str] = []
+    cur = end
+    while cur != start and cur in parent_edge:
+        pe = parent_edge[cur]
+        crit_path.append(f"{pe.label}({pe.duration_us:.0f}us)")
+        cur = pe.src
+    crit_path.reverse()
+    return {"total_us": total_us, "critical_path": crit_path, "edges": edge_report}
+
+if __name__ == "__main__":
+    # 对应练习 1-12 的双缓冲解码微步 DAG：Host 下发(120us)与前一层/当前层前半段(260us)并行
+    micro_step_dag = [
+        DagEdge("S0", "G_overlap", "GPU", "Attn_Overlap_Chunk", 260.0),
+        DagEdge("S0", "H_ready", "Host", "Host_Launch_Prep", 120.0),
+        DagEdge("H_ready", "G_overlap", "Sync", "cudaLaunchKernel", 0.0),
+        DagEdge("G_overlap", "G_attn_done", "GPU", "Attn_Tail", 90.0),
+        DagEdge("G_overlap", "N_comm_done", "NIC", "AllToAll_RDMA_410us", 410.0),
+        DagEdge("G_attn_done", "Barrier", "GPU", "FFN_Pre_Overlap", 0.0),
+        DagEdge("N_comm_done", "Barrier", "Sync", "ProfInfer_Straggler_Wait", 90.0),
+        DagEdge("Barrier", "S_end", "GPU", "MoE_FFN_Compute", 480.0),
+    ]
+    res = solve_critical_path_and_slack(micro_step_dag, "S0", "S_end")
+    print(f"微步端到端耗时 T_step = {res['total_us']:.1f} us | 关键路径: {' -> '.join(res['critical_path'])}")
+    for label, stream, dur, slack, is_crit in res["edges"]:
+        print(f"  [{stream:4s}] {label:26s}: 耗时={dur:5.1f} us, 松弛度 Slack={slack:5.1f} us, 关键边={is_crit}")
+```
+
+**贯穿全书的双主线基准模型递进账本（D11-SP01）。** 为了让读者在跨越二十四个章节时始终拥有一把前后一致的定量标尺，本书采用**双轨基准模型（Dual-Track Throughline）**贯穿始终：一条是代表单卡/单机工作站尺度的稠密模型 **Qwen3-8B**（81.9 亿总参数，BF16 权重 $16.38\ \mathrm{GB}$），另一条是代表超节点与大规模集群尺度的稀疏混合专家（MoE）模型 **DeepSeek V4.1 Flash / Qwen3-235B-A22B**（其中 V4.1 Flash 含 $551.57\mathrm{B}$ 主干参数与 $196.93\mathrm{B}$ Engram 参数，单 token 仅激活约 $16.1\mathrm{B}$ 主干矩阵参数；Qwen3-235B-A22B 总参数约 $235.1\mathrm{B}$，单 token 仅激活约 $22.2\mathrm{B}$ 参数）。在本章（第 1 章）中，我们故意使用最简化的线性估算公式 $M_W = b_W N$ 与 $F \approx 2BN$ 来建立数量级直觉；而在后续各章中，我们将把被这一简化公式暂时隐去的真实系统代价——从注意力 KV 状态、算子分块与尾块效应，到跨卡集合通信、排队调度、多级存储、机房供电、机密计算，再到多模态视频生成（DiT）与世界模型、大规模后训练（RLVR）与推理时扩展、具身智能（VLA）与大规模物理仿真、十万卡集群可靠性与基准评测科学，以及自主智能体基础设施、全双工实时语音、百亿亿次数据工程与科学智能（AI4Science）——逐章补齐到同一张总账单上（表 1-7）。[^cloud-ai-d11]
+
+*表 1-7　贯穿全书二十四章的双轨基准模型（Qwen3-8B 稠密主线与 DeepSeek V4.1 / Qwen3-235B 稀疏 MoE 主线）递进核算总览（D11-SP01，原表 1-4）*
 
 | 章节阶段 | 稠密主线（Qwen3-8B，单卡/单机尺度）递进核算项 | 稀疏 MoE 主线（DeepSeek V4.1 Flash / Qwen3-235B）递进核算项 | 本阶段引入的关键修正项与约束 |
 | --- | --- | --- | --- |
@@ -620,7 +719,8 @@ $$
 | **第 8—10 章（推理与训练系统）** | PagedAttention 零外部碎片、连续批处理与 Goodput $Y_{\mathrm{good}}$ 约束下的最优并发数 | Prefill/Decode（PD）分离、大 EP 容错热备、DualPipe 双向流水线与无辅助损失动态路由偏置 | 将吞吐目标修正为满足 P99 TTFT/TPOT 约束的有效吞吐 $Y_{\mathrm{good}}$，计入训练检查点与故障回滚（$\mathrm{RG}$） |
 | **第 11—14 章（集群、存储与协同设计）** | 端侧 M2 Max 与工作站 RTX PRO 6000 选型、RAG 向量检索与三级 KV 缓存换入换出 | 智能路由（小模型分流大模型）、万卡检查点写放大与硬件微缩放/互联协同寻优 | 在全生命周期内联立训练摊销、多级存储 I/O、硬件彩票与 2023—2026 年单位 token 成本归因 |
 | **第 15—16 章（能源底座与机密安全）** | 单请求能耗（$\mathrm{J/token}$）、GPU TEE 显存硬件加解密与 PCIe 弹跳缓冲区带宽折损 | 吉瓦级园区液冷 $\mathrm{PUE}$、万卡同步功率斜率（$\mathrm{MW/s}$）平抑、跨机柜 NVLink 硬件加密与远程证明 | 将系统边界扩展至电网瓦特转化效率与零信任硬件可信执行环境（TEE）的端到端安全税 |
-| **第 17—20 章（前沿工作负载与十万卡工程）** | 3D 视频块（Patch）序列打包、GRPO 组内多采样前缀共享、端侧 VLA 动作块实时推理与单卡 SDC 算子校验 | 多模态编码—DiT—VAE 三阶段解耦、万卡异步 RLVR 在线权重同步、GPU 物理仿真器集群吞吐与十万卡 $\mathrm{MPG}$ 可靠性工程 | 将单次前向/反向账单扩展至“多模态世界生成—强化学习自演进—具身物理交互—十万卡机队治理”全生命周期 |
+| **第 17—20 章（多模态、强化学习、具身与可靠性）** | 3D 视频块（Patch）序列打包、GRPO 组内多采样前缀共享、端侧 VLA 动作块实时推理与单卡 SDC 算子校验 | 多模态编码—DiT—VAE 三阶段解耦、万卡异步 RLVR 在线权重同步、GPU 物理仿真器集群吞吐与十万卡 $\mathrm{MPG}$ 可靠性工程 | 将单次前向/反向账单扩展至“多模态世界生成—强化学习自演进—具身物理交互—十万卡机队治理” |
+| **第 21—24 章（智能体、全双工语音、数据工厂与科学计算）** | 多轮 Agent 沙箱 CoW 快照与分层 KV 复用、$80\ \mathrm{ms}$ 双工语音帧编解码、小模型质量分类过滤与蛋白质 $\mathcal{O}(N_{\mathrm{res}}^3)$ 三角注意力分块 | 百万并发微虚拟机沙箱调度、原生全模态实时双流推理、万亿 Token GPU 加速 MinHash-LSH 去重与百万碱基/球面气象混合并行 | 完成从“Token 制造厂”到“自主行动、实时交互、合成数据自举与科学发现”的二十四章全栈大满贯收束 |
 
 从早期的语音搜索推理，到公有云高速网络，再到如今大模型的多卡超节点，业务需求与硬件底层比例的每一次剧变，都决定了系统架构师下一步必须优先攻克哪个瓶颈，也一次次重划了硬件、系统软件与互联网络之间的职责边界。图 1-21 至图 1-24 将本章补充的传统云与 AI 数据中心六维范式转变、经典计算机系统六大设计模式映射、固定能力阈值下的 API 价格降幅与单步权重读取下界折叠链（$25.1\times$）、主机调度旁路与虚拟智能网卡演进（ghOSt / Wave / ZOC），以及跨层关键路径剖析有向无环图（XProf / ProfInfer / StriaTrace）汇总在同一组视图中。回看本章开篇的六层全景图，所有这些架构演进本质上都在做同一件事——**重新组织计算与数据搬移**。由此，我们确立了贯穿全书的三条分析主线：用**资源比例的变化**解释为什么旧设计会失效、为什么需要新架构；用**数据搬移的路径与代价**说明新设计究竟改变了什么；最后用第 1.3.4 节的**硬件物理极限**去检验系统优化到底做到了什么水平。整本书的核心思想，最终凝聚为一句话：**数据搬移塑造了 AI Infra 的架构。**
 
@@ -639,6 +739,188 @@ $$
 ![全栈时间线与跨层关键路径剖析有向无环图（XProf / ProfInfer / StriaTrace）。上半部分展示主机调度流、GPU 计算流与网卡通信流构成的三层依赖 DAG；下半部分展示 XProf、ProfInfer（eBPF）与 StriaTrace 如何协同定位关键路径上的非重叠暴露瓶颈。](ch01/ch01-xprof-profinfer-critical-path.svg)
 
 *图 1-24　上：跨越主机调度流（$t_{\mathrm{host}}$）、GPU 计算流（$t_{\mathrm{comp}}$）与 RDMA 网卡通信流（$t_{\mathrm{comm}}$）的全栈关键路径有向无环图（Critical Path DAG）。下：XProf（跨层统一时钟与 Roofline）、ProfInfer（eBPF 内核/运行时无侵入探针）与 StriaTrace（分布式关键同步点回溯）的协同归因分工。*
+
+### 1.4.5 2026–2027 全栈范式跃迁：从 Token 制造厂走向自主智能体（Agentic）、全双工语音、数据炼金术与科学发现底座
+
+在 2023—2025 年的大模型建设早期，AI 数据中心的核心职责常被形象地比作“Token 制造厂”——用户提交一段提示词，推理引擎完成一次预填充与逐词解码，请求随即宣告结束，KV 缓存在返回结果后立即销毁（即**单次读写 Read-Once KV**）。然而进入 2026—2027 年，AI 基础设施承载的主力负载正在发生深刻的范式分野。要看清全书第 21—24 章新增的四大战略疆域为何需要截然不同的底层架构，只需将本章建立的**五维第一性原理（算力 $\Pi$、访存带宽 $\beta$ 与容量 $M_{\mathrm{cap}}$、跨节点二分通信带宽 $\beta_{\mathrm{net}}$、能量转化效率 $\mathrm{J/token}$、以及集群可靠性 $\mathrm{MTBF}$）**投影到五类典型工作负载范式上：
+
+1. **范式一：单轮自回归对话（Single-Turn Autoregressive Chat，第 8—9 章）**。单请求解码算术强度极低（$\mathcal{I}_{\mathrm{decode}} \approx 2B/b_W \sim 1\text{—}32\ \mathrm{FLOPs/Byte}$），远低于现代加速器 $\mathcal{I}_{\mathrm{ridge}} = \Pi/\beta \approx 150\text{—}300\ \mathrm{FLOPs/Byte}$ 的屋顶线拐点，系统严格受限于 **HBM 显存带宽**；上下文状态生命周期仅持续数秒，请求结束后即回收。
+2. **范式二：多轮自主智能体与沙箱分支（Multi-Turn Agentic & Computer Use Infra，第 21 章）**。一个软件工程或科研智能体任务往往持续数十至数百轮“思考 $\to$ 调用微虚拟机沙箱工具 $\to$ 观察环境反馈”，会话驻留时长跨越数分钟乃至数小时。其系统特征呈现三大突变：（1）**写一次读百次（Write-Once-Read-Many）**：相邻轮次间超过 $90\%$ 的历史上下文完全相同，算术强度从约 $5\ \mathrm{FLOPs/Byte}$ 迁移至 $10\text{—}80\ \mathrm{FLOPs/Byte}$ 的长前缀增量预填充；（2）**暂停期状态海啸**：在等待代码编译或网页渲染的数秒至数十秒工具执行窗口内，若将数百 MiB 的 KV 缓存留在 HBM 中会导致显存迅速枯竭，若直接丢弃又会引发下一轮昂贵的重算，迫使系统构建 **GPU HBM $\leftrightarrow$ 主机 CXL DRAM $\leftrightarrow$ 本地 NVMe/RDMA 池**的三级语义缓存；（3）**树状分支克隆**：当智能体采用树搜索（Tree-of-Thoughts）并行探索 $K$ 条修复路径时，底层不仅要以引用计数零拷贝共享 KV 前缀页，还必须通过写时复制（Copy-on-Write）在毫秒级内分支克隆出 $K$ 个独立的容器/微虚拟机文件与内存沙箱。
+3. **范式三：全双工实时语音与原生全模态流（Full-Duplex Speech & Omni-Streaming，第 22 章）**。以 Moshi、GPT-4o Realtime 为代表的双工语音底座彻底抛弃了“语音识别（ASR）$\to$ 文本 LLM $\to$ 语音合成（TTS）”的串行级联流水线，改以 **$12.5\ \mathrm{Hz}$（每帧 $80\ \mathrm{ms}$）** 的固定物理节拍同时推进“用户倾听流”与“模型说话流”。由于每一步必须在硬实时帧预算内并行解算语义主干与声学残差向量量化（RVQ）深度头，其算术强度集中在 $15\text{—}60\ \mathrm{FLOPs/Byte}$，而主瓶颈则从单纯的吞吐转向**极致的抖动控制（$\mathrm{P99\ TPOT} < 40\ \mathrm{ms}$）与用户随时打断（Barge-in）时的毫秒级 KV 状态指针回滚**。
+4. **范式四：百亿亿次语料洗选与合成数据工厂（Exascale Data & Synthetic Factory，第 23 章）**。当高质量人类自然文本趋于枯竭，模型能力的持续跃迁越来越依赖离线大规模“生成—验证—过滤”合成数据流水线（消耗算力可达预训练本身的 $0.5\text{—}2\times$）。与在线服务不同，离线合成数据生成**完全免疫于首字延迟（TTFT）与逐词间隔（TPOT）约束**，可以通过超大微批次（如 $B=512\text{—}2048$）与高密度前缀共享将算术强度推高至 $\mathcal{I} \approx 200\text{—}600\ \mathrm{FLOPs/Byte}$，彻底越过 $\mathcal{I}_{\mathrm{ridge}}$ 进入 **Tensor Core 算力与供电瓦特数受限区**；与此同时，十万亿 Token 语料的 GPU 加速 MinHash-LSH 模糊去重则在集群内引发了百 TB 级的全交换（All-to-All）桶洗牌网络风暴。
+5. **范式五：科学智能（AI for Science：生物大分子、基因组与物理场网格，第 24 章）**。在 AlphaFold 3 生物大分子折叠、Evo 2 百万碱基基因组建模与 FourCastNet 球面气象推演中，计算图结构突破了一维因果序列的范畴：蛋白质对表示（Pair Representation）上的**三角乘法更新与三角自注意力**具有 $\mathcal{O}(N_{\mathrm{res}}^3)$ 的三次方计算复杂度与 $\mathcal{O}(N_{\mathrm{res}}^2)$ 的显存占用，算术强度高达 $150\text{—}500\ \mathrm{FLOPs/Byte}$，但在长序列下极易触发单卡 HBM 容量溢出；而全球高分辨率气象场的球面调和变换（SHT）与三维快速傅里叶变换（3D FFT）则受制于跨节点二维铅笔分解（Pencil Decomposition）的二分网络带宽。
+
+下面的 Python 代码实现了贯穿全书的**五维第一性原理统一核算器**，能够针对给定硬件规格与工作负载参数，一键算出 Roofline 算术强度与算力/访存下界、基于 Little 定律（$L = \lambda W$）的并发在途状态显存需求、跨节点集合通信暴露比例，以及基于 Young-Daly 公式的集群有效训练时间比（ETTR）：
+
+```python
+import math
+from dataclasses import dataclass
+from typing import Dict
+
+@dataclass(frozen=True)
+class FiveDimHardwareSpec:
+    name: str
+    peak_tflops: float          # 矩阵峰值算力 П (TFLOP/s)
+    hbm_bw_GBps: float          # 显存带宽 β (GB/s)
+    hbm_cap_GB: float           # 单卡显存容量 M_cap (GB)
+    net_bw_GBps: float          # 节点间单卡有效通信带宽 β_net (GB/s)
+    node_power_kW: float        # 单卡分摊机柜满载功耗 (kW, 含 PUE)
+    cluster_mtbf_hours: float   # 集群级平均无故障时间 MTBF (小时)
+    ckpt_write_sec: float       # 单次异步/同步检查点耗时 C (秒)
+    recovery_sec: float         # 故障重启与回滚恢复固定开销 R (秒)
+
+def evaluate_five_dim_first_principles(
+    hw: FiveDimHardwareSpec,
+    flops_per_step_G: float,
+    hbm_bytes_per_step_GB: float,
+    comm_bytes_per_step_GB: float,
+    overlap_ratio: float,
+    arrival_rate_req_s: float,
+    hold_time_s: float,
+    kv_per_req_GB: float,
+    static_weight_GB: float,
+) -> Dict[str, float]:
+    """统一核算算力、访存、通信、能耗与集群可靠性五维第一性原理指标."""
+    # 1. 算力与访存维 (Roofline)
+    ridge_ai = (hw.peak_tflops * 1e3) / hw.hbm_bw_GBps
+    workload_ai = flops_per_step_G / max(hbm_bytes_per_step_GB, 1e-9)
+    t_comp_ms = flops_per_step_G / hw.peak_tflops
+    t_mem_ms = (hbm_bytes_per_step_GB / hw.hbm_bw_GBps) * 1e3
+    t_local_ms = max(t_comp_ms, t_mem_ms)
+
+    # 2. 通信维 (计算通信重叠后的暴露时间)
+    t_comm_raw_ms = (comm_bytes_per_step_GB / max(hw.net_bw_GBps, 1e-9)) * 1e3
+    t_comm_exposed_ms = max(0.0, t_comm_raw_ms - overlap_ratio * t_local_ms)
+    t_step_ms = t_local_ms + t_comm_exposed_ms
+
+    # 3. 状态容量维 (Little 定律: 在途并发请求数 L = λ * W)
+    concurrent_reqs = arrival_rate_req_s * hold_time_s
+    total_mem_needed_GB = static_weight_GB + concurrent_reqs * kv_per_req_GB
+
+    # 4. 能耗维 (每步焦耳能耗 J = Power * T_step)
+    energy_per_step_J = (hw.node_power_kW * 1e3) * (t_step_ms * 1e-3)
+
+    # 5. 可靠性维 (Young-Daly 最优检查点间隔与有效时间比 ETTR)
+    mtbf_sec = hw.cluster_mtbf_hours * 3600.0
+    tau_opt_sec = math.sqrt(2.0 * hw.ckpt_write_sec * mtbf_sec)
+    ettr = max(
+        0.0,
+        1.0 - math.sqrt((2.0 * hw.ckpt_write_sec) / mtbf_sec) - (hw.recovery_sec / mtbf_sec),
+    )
+
+    return {
+        "ridge_ai": round(ridge_ai, 1),
+        "workload_ai": round(workload_ai, 1),
+        "t_local_ms": round(t_local_ms, 2),
+        "t_comm_exposed_ms": round(t_comm_exposed_ms, 2),
+        "t_step_ms": round(t_step_ms, 2),
+        "concurrent_reqs": round(concurrent_reqs, 1),
+        "total_mem_GB": round(total_mem_needed_GB, 2),
+        "fits_single_gpu": float(total_mem_needed_GB <= hw.hbm_cap_GB),
+        "energy_J": round(energy_per_step_J, 2),
+        "tau_opt_min": round(tau_opt_sec / 60.0, 1),
+        "ettr_pct": round(ettr * 100.0, 2),
+    }
+
+if __name__ == "__main__":
+    h100 = FiveDimHardwareSpec(
+        name="H100-SXM", peak_tflops=989.4, hbm_bw_GBps=3350.0, hbm_cap_GB=80.0,
+        net_bw_GBps=50.0, node_power_kW=1.05, cluster_mtbf_hours=6.0,
+        ckpt_write_sec=18.0, recovery_sec=120.0,
+    )
+    # 对比单轮对话 (hold=4s) 与多轮 Agent 长驻会话 (hold=180s, 等待沙箱工具)
+    chat = evaluate_five_dim_first_principles(h100, 140.0, 70.0, 0.05, 0.8, 2.0, 4.0, 0.30, 73.73)
+    agent = evaluate_five_dim_first_principles(h100, 2240.0, 74.8, 0.15, 0.8, 2.0, 180.0, 0.30, 73.73)
+    print("单轮对话五维账单:", chat)
+    print("多轮Agent五维账单:", agent)
+```
+
+图 1-25 直观展示了上述五大 AI 负载范式在算术强度、状态驻留时长与尾延迟约束上的三维分野：
+
+![五大 AI 负载范式在算术强度、状态驻留时长与系统瓶颈上的三维分布。上半部分对比自回归对话、多轮 Agent 沙箱、全双工实时语音、离线合成数据工厂与 AI4Science 科学计算的算术强度与主瓶颈迁移；下半部分归纳算术强度、状态驻留时长与尾延迟敏感度构成的三维特征空间。](ch01/ch01-five-workload-paradigms-arithmetic-intensity.svg)
+
+*图 1-25　五大 AI 负载范式（自回归对话、多轮 Agent 沙箱、全双工实时语音、离线合成数据工厂与 AI4Science 科学计算）的算术强度分布与主导硬件瓶颈转移（对应第 8—9 章及第 21—24 章）。*
+
+**AI 工厂全栈北极星指标体系（North-Star End-to-End Efficiency Chain）。** 当视野从单次前向推理扩展到涵盖集群调度、容错训练、在线服务 SLO 与智能体任务闭环的整座 AI 工厂时，我们必须警惕一个常见的工程统计陷阱：**重复扣除检查点与故障回滚损耗**。回顾第 1.3.4 节式（1.3.3）定义的机队全栈效率 $\mathrm{MPG}_{\mathrm{fleet}} = \mathrm{SG}_{\mathrm{sched}} \times \mathrm{RG}_{\mathrm{runtime}} \times \mathrm{PG}_{\mathrm{kernel}}$：其中的运行时有效产出因子 $\mathrm{RG}_{\mathrm{runtime}} = G/A$，其物理定义恰恰就是在齐步就绪时间 $A$ 中扣除周期性写检查点、故障重启与回滚重算后真正推进模型参数演进的**集群有效训练时间比（Effective Training Time Ratio，即 $\mathrm{ETTR}_{\mathrm{cluster}} \equiv \mathrm{RG}_{\mathrm{runtime}}$）**。如果在算出 $\mathrm{MPG}_{\mathrm{fleet}}$ 之后又在外面额外乘一次 $\mathrm{ETTR}_{\mathrm{cluster}}$，就会把同一笔检查点与回滚损耗平方扣除。因此，从机房铭牌峰值算力一直到应用层交付“经过验证的正确任务结果”，严格无重复计数的**端到端全栈北极星效率链**应当写为：
+
+$$
+\mathrm{Efficiency}_{\mathrm{E2E}} = \underbrace{\left(\mathrm{SG}_{\mathrm{sched}} \times \mathrm{ETTR}_{\mathrm{cluster}} \times \mathrm{PG}_{\mathrm{kernel}}\right)}_{\mathrm{MPG}_{\mathrm{fleet}}} \times \frac{\mathrm{Goodput}_{\mathrm{SLO}}}{\mathrm{Throughput}_{\mathrm{raw}}} \times P(\text{Task Verified}).
+$$
+
+上式由五个正交的物理与系统因子连乘而成，每一项都精准对应全书一个核心技术模块：
+1. **齐步调度效率 $\mathrm{SG}_{\mathrm{sched}}$**（第 11、20 章）：衡量集群调度器消除拓扑碎片与齐步等待（Gang-Scheduling Wait）的能力；
+2. **集群容错有效时间比 $\mathrm{ETTR}_{\mathrm{cluster}} \equiv \mathrm{RG}_{\mathrm{runtime}}$**（第 10、13、20 章）：衡量高频异步检查点、在网故障隔离与热备接管将故障损失压低到最小的能力；
+3. **程序与算子有效产出 $\mathrm{PG}_{\mathrm{kernel}}$**（第 4—7 章）：衡量算子分块（FlashAttention / TileLang / MPK）与计算通信重叠（DualPipe / DeepEP）逼近硬件物理极限的程度；
+4. **服务层 SLO 达标吞吐比 $\mathrm{Goodput}_{\mathrm{SLO}} / \mathrm{Throughput}_{\mathrm{raw}}$**（第 3、8、9、22 章）：在产出的全部原始 Token 中，剔除因排队拥塞或长尾抖动而违背首字延迟（TTFT）与逐词间隔（TPOT）服务等级目标（SLO）的无效超时响应；
+5. **应用层任务验证通过率 $P(\text{Task Verified})$**（第 18、21、23 章）：在满足延迟 SLO 的生成轨迹中，最终通过编译器单元测试、形式化验证器（Lean 4）或奖励模型核验的任务占比。
+
+> **算例 1-4（五大 AI 负载范式算术强度与全栈北极星效率链 $\mathrm{Efficiency}_{\mathrm{E2E}}$ 核算）**
+>
+> 考察一座拥有 $1{,}000\ \mathrm{PFLOPS}$ 铭牌峰值算力的 AI 工厂，运行多轮代码修复智能体（Coding Agent）服务：
+> 1. **第一级（机队层 $\mathrm{MPG}_{\mathrm{fleet}}$）**：参照算例 1-2，设齐步调度有效比 $\mathrm{SG}_{\mathrm{sched}} = 83.33\%$（$5/6$），包含检查点与故障回滚的集群有效时间比 $\mathrm{ETTR}_{\mathrm{cluster}} = \mathrm{RG}_{\mathrm{runtime}} = 80.0\%$，算子与通信程序有效比 $\mathrm{PG}_{\mathrm{kernel}} = 50.0\%$，则机队层有效产出率为 $\mathrm{MPG}_{\mathrm{fleet}} = \frac{5}{6}\times 0.80\times 0.50 = \mathbf{33.33\%}$，对应有效算力基座为 $333.3\ \mathrm{PFLOPS}$。
+> 2. **第二级（服务层 SLO 达标率）**：在在线多轮突发流量下，设原始产出吞吐中有 $78.0\%$ 的请求同时满足 $\mathrm{TTFT} \le 1.0\ \mathrm{s}$ 与 $\mathrm{TPOT} \le 25\ \mathrm{ms}$ 的交互 SLO（即 $\mathrm{Goodput}_{\mathrm{SLO}} / \mathrm{Throughput}_{\mathrm{raw}} = 0.78$），则折算到满足 SLO 的有效效率进一步降至 $33.33\% \times 0.78 = \mathbf{26.00\%}$（对应 $260.0\ \mathrm{PFLOPS}$）。
+> 3. **第三级（应用层任务验证良率）**：在满足延迟 SLO 的智能体轨迹中，最终生成补丁一次性通过沙箱单元测试的比例为 $P(\text{Task Verified}) = 65.0\%$。由此得到端到端全栈北极星效率为：
+>
+> $$
+> \mathrm{Efficiency}_{\mathrm{E2E}} = 33.33\% \times 78.0\% \times 65.0\% = \mathbf{16.90\%}.
+> $$
+>
+> **木桶短板诊断**：由于 $\mathrm{Efficiency}_{\mathrm{E2E}} = \prod_{k=1}^5 \eta_k$ 是纯乘积关系，任意因子 $\eta_k$ 绝对提升 $\Delta \eta_k$ 带来的端到端相对收益严格等于 $\Delta \eta_k / \eta_k$。在当前参数（$\mathrm{SG}=0.833,\ \mathrm{ETTR}=0.80,\ \mathrm{PG}=0.50,\ \mathrm{SLO}=0.78,\ P_{\mathrm{ver}}=0.65$）下，将数值最低的 $\mathrm{PG}_{\mathrm{kernel}}$ 从 $0.50$ 提升 $10$ 个百分点至 $0.60$，可使全栈效率直接增长 $+0.10/0.50 = \mathbf{+20.0\%}$（从 $16.90\%$ 升至 $20.28\% \approx \mathbf{20.3\%}$），收益远高于将 $\mathrm{SG}_{\mathrm{sched}}$ 从 $0.833$ 提升 $10$ 个百分点（仅 $+12.0\%$）；而若对全部五个环节同步实施 $+10$ 个百分点的全栈协同优化（即 $\frac{14}{15}\times 0.90\times 0.60\times 0.88\times 0.75$），端到端任务效率将翻倍跃升至 **$33.26\% \approx 33.3\%$**。
+
+下面的 Python 代码实现了**全栈北极星效率链敏感度与木桶短板定位器**，自动校验五因子无重复计数乘积，并按“每提升 10 个百分点带来的端到端相对增益”对五个技术栈层级做优先级排序：
+
+```python
+from typing import Dict, List, Tuple
+
+def analyze_north_star_efficiency_chain(
+    sg_sched: float,
+    ettr_cluster: float,
+    pg_kernel: float,
+    slo_goodput_ratio: float,
+    task_verified_prob: float,
+    delta_abs: float = 0.10,
+) -> Dict[str, object]:
+    """核算全栈北极星效率链并按 +10% 绝对提升的端到端相对收益排序木桶短板."""
+    mpg_fleet = sg_sched * ettr_cluster * pg_kernel
+    slo_stage = mpg_fleet * slo_goodput_ratio
+    e2e_eff = slo_stage * task_verified_prob
+
+    factors: List[Tuple[str, float, str]] = [
+        ("SG_sched (调度齐步率)", sg_sched, "第11/20章: 拓扑感知齐步调度"),
+        ("ETTR_cluster (容错有效比)", ettr_cluster, "第10/13/20章: 异步检查点与热备接管"),
+        ("PG_kernel (算子/通信效率)", pg_kernel, "第4-7章: FlashAttention/MPK/DualPipe"),
+        ("SLO_Goodput (达标吞吐比)", slo_goodput_ratio, "第8-9/22章: PD分离与前缀缓存调度"),
+        ("P_Verified (任务验证良率)", task_verified_prob, "第18/21/23章: RLVR后训练与沙箱验证"),
+    ]
+
+    sensitivities = []
+    for name, val, chapter_ref in factors:
+        capped_new = min(1.0, val + delta_abs)
+        rel_gain_pct = ((capped_new - val) / val) * 100.0
+        new_e2e_pct = e2e_eff * (capped_new / val) * 100.0
+        sensitivities.append((name, round(val * 100.0, 2), round(rel_gain_pct, 2), round(new_e2e_pct, 2), chapter_ref))
+
+    # 按相对增益从高到低排序（即数值越小的短板优先级越高）
+    sensitivities.sort(key=lambda x: x[2], reverse=True)
+    return {
+        "mpg_fleet_pct": round(mpg_fleet * 100.0, 2),
+        "slo_stage_pct": round(slo_stage * 100.0, 2),
+        "e2e_eff_pct": round(e2e_eff * 100.0, 2),
+        "ranked_bottlenecks": sensitivities,
+    }
+
+if __name__ == "__main__":
+    report = analyze_north_star_efficiency_chain(5.0 / 6.0, 0.80, 0.50, 0.78, 0.65)
+    print(f"MPG_fleet = {report['mpg_fleet_pct']}% -> SLO达标后 = {report['slo_stage_pct']}% -> E2E北极星效率 = {report['e2e_eff_pct']}%")
+    for name, cur_pct, gain_pct, new_e2e, ch_ref in report["ranked_bottlenecks"]:
+        print(f"  {name:28s}: 当前={cur_pct:5.1f}% | +10pt相对增益=+{gain_pct:5.1f}% (E2E->{new_e2e:5.2f}%) | {ch_ref}")
+```
+
+图 1-26 将算例 1-4 的五级效率折损瀑布图与全栈协同倍增效应并置展示，为后续二十三章的局部技术深入提供了一张随时可以对表的全局坐标图：
+
+![AI 工厂全栈北极星效率链瀑布图与全栈协同倍增效应。左图展示从铭牌峰值算力（100.0%）经调度与容错后（66.7%）、机队算子 MPG（33.3%）、服务 SLO 达标（26.0%）到验证任务净产率（16.9%）的阶梯衰减；右图对比当前基线（16.9%）、单点提升算子 PG 10 个百分点（20.3%）与全栈五级各提升 10 个百分点协同（33.3%）的端到端效率。](ch01/ch01-north-star-efficiency-waterfall-chain.svg)
+
+*图 1-26　AI 工厂全栈北极星效率链（$\mathrm{Efficiency}_{\mathrm{E2E}} = \mathrm{MPG}_{\mathrm{fleet}} \times \frac{\mathrm{Goodput}_{\mathrm{SLO}}}{\mathrm{Throughput}_{\mathrm{raw}}} \times P(\text{Task Verified})$，其中 $\mathrm{ETTR}_{\mathrm{cluster}} \equiv \mathrm{RG}_{\mathrm{runtime}}$ 无重复计数）。左：算例 1-4 的五级折损瀑布（$100.0\% \to 66.7\% \to 33.3\% \to 26.0\% \to 16.9\%$）；右：单点提算子 $\mathrm{PG}$ 与全栈五级协同的倍增效应对比。*
 
 > **练习 1-6〔延伸〕：从流量特征、网络税与容量边界评估架构演进**
 >
@@ -679,9 +961,42 @@ $$
 > 1. 请写出该微步在关键路径上的暴露通信时间 $t_{\mathrm{comm,exposed}}$，并根据第 1.4.4 节的关键路径公式计算该微步的端到端耗时 $T_{\mathrm{step}}$。
 > 2. 现工程师提出两项优化方案：**方案一**将主机侧 Python 算子编排重写为 C++，使 $t_{\mathrm{host}}$ 从 $120\ \mu\mathrm{s}$ 大幅缩短 $50\%$ 至 $60\ \mu\mathrm{s}$；**方案二**根据 StriaTrace 与 ProfInfer 的联合追踪消除了远端卡的内核页回收抖动（$t_{\mathrm{straggler}} \to 0$），并将 All-to-All 通信耗时 $t_{\mathrm{comm}}$ 缩短 $20\%$（重叠窗口 $t_{\mathrm{overlap}} = 260\ \mu\mathrm{s}$ 不变）。请分别计算两项方案落地后的端到端微步耗时 $T_{\mathrm{step}}$ 与实际加速比，解释为什么方案一实现了 $2\times$ 的局部提速却对端到端延迟毫无帮助。
 
+> **练习 1-13〔延伸〕：五大 AI 负载范式下的系统主瓶颈迁移与北极星效率链核算**
+>
+> 1. **Little 定律下的多轮 Agent 状态海啸**：参照第 1.4.5 节的五维第一性原理统一核算器，设某推理实例服务 70B 8 比特量化模型（静态权重加工作区共占 $75.88\ \mathrm{GB}$），单条请求平均占用 KV 缓存 $0.30\ \mathrm{GB}$，新会话到达率为 $\lambda = 2.0\ \mathrm{req/s}$。在传统**单轮对话**模式下，单次请求平均驻留时长为 $W_{\mathrm{chat}} = 4.0\ \mathrm{s}$；而在**多轮代码智能体（Coding Agent）**模式下，因中间穿插多次耗时数秒至数十秒的微虚拟机编译测试，单次会话平均驻留时长延长至 $W_{\mathrm{agent}} = 180.0\ \mathrm{s}$。请根据 Little 定律 $L = \lambda W$ 分别计算两种模式下同时驻留系统的平均在途会话数 $L$ 与所需的总 KV 缓存容量，判断一张 $80\ \mathrm{GB}$ 显存的 H100 SXM 能否直接容纳，并说明为什么第 21 章必须引入 GPU HBM $\leftrightarrow$ 主机 CXL DRAM $\leftrightarrow$ NVMe SSD 三级分层 KV 卸载。
+> 2. **北极星效率链无重复计数核算**：沿用算例 1-4 的 $1{,}000\ \mathrm{PFLOPS}$ AI 工厂基线（$\mathrm{SG}_{\mathrm{sched}} = 5/6 \approx 83.33\%$，$\mathrm{ETTR}_{\mathrm{cluster}} \equiv \mathrm{RG}_{\mathrm{runtime}} = 80.0\%$，$\mathrm{PG}_{\mathrm{kernel}} = 50.0\%$，服务层 $\mathrm{Goodput}_{\mathrm{SLO}}/\mathrm{Throughput}_{\mathrm{raw}} = 78.0\%$，任务验证良率 $P(\text{Task Verified}) = 65.0\%$，基线 $\mathrm{Efficiency}_{\mathrm{E2E}} = 16.90\%$）。若工程团队通过第 5 章的持久化大内核（`MPK`）将 $\mathrm{PG}_{\mathrm{kernel}}$ 提升至 $62.5\%$，并通过第 18、21 章的强化学习后训练与沙箱工具语法约束将 $P(\text{Task Verified})$ 提升至 $76.0\%$，请计算改造后的 $\mathrm{MPG}_{\mathrm{fleet}}$ 与端到端效率 $\mathrm{Efficiency}_{\mathrm{E2E}}$，并指出若错误地将 $\mathrm{ETTR}_{\mathrm{cluster}} = 80.0\%$ 在 $\mathrm{MPG}_{\mathrm{fleet}}$ 之外重复再乘一次，会造成多少个百分点的效率低估偏差。
+
+> **练习 1-14〔延伸〕：结合 `experiments/ch01/` 验证跨层关键路径 Slack 松弛度与硬件局部升级的阿姆达尔收益上限**
+>
+> 1. 运行或对照第 1.4.4 节的 `solve_critical_path_and_slack` 脚本与 [`experiments/ch01/`](file:///Users/quan.zheng/projects/dev/ai/ai-infra-book/experiments/ch01) 实验套件：在练习 1-12 的双缓冲解码微步 DAG 中，计算主机侧算子下发边 `Host_Launch_Prep`（$120\ \mu\mathrm{s}$）和 GPU 注意力尾部边 `Attn_Tail`（$90\ \mu\mathrm{s}$）各自的松弛度 $\mathrm{Slack}(e)$（单位：$\mu\mathrm{s}$）。若将 All-to-All 通信边 `AllToAll_RDMA_410us` 的耗时从 $410\ \mu\mathrm{s}$ 持续压缩至 $100\ \mu\mathrm{s}$（假设慢节点等待已清零），请找出关键路径从“网卡通信分支”切换回“GPU 注意力计算分支”的临界通信耗时 $t_{\mathrm{comm}}^*$。
+> 2. 结合 [`experiments/ch01/01-03/verify.py`](file:///Users/quan.zheng/projects/dev/ai/ai-infra-book/experiments/ch01/01-03/verify.py) 与 [`experiments/ch01/01-04/verify.py`](file:///Users/quan.zheng/projects/dev/ai/ai-infra-book/experiments/ch01/01-04/verify.py)，验证在单步端到端耗时由“纯权重读取 $T_{\mathrm{read}}$ + 暴露通信 $T_{\mathrm{comm,exp}}$ + 固定主机/采样开销 $T_{\mathrm{fixed}}$”组成时，为什么仅将显存带宽提升 $2\times$ 带来的实际加速比严格受限于阿姆达尔定律公式 $\mathrm{Speedup} = 1 / [(1 - f_{\mathrm{mem}}) + f_{\mathrm{mem}}/2]$。
+
+为便于读者自检本章 14 道练习的纸笔推演结果，表 1-8 汇总了各题的核心锁定输入与目标校验值：
+
+*表 1-8　第 1 章核心与延伸练习（练习 1-1 至 1-14）关键锁定参数与参考核算目标速查*
+
+| 练习编号与属性 | 核心锁定输入参数 | 关键参考核算结果与工程判据 |
+| --- | --- | --- |
+| **练习 1-1〔延伸〕** | 回答长度 $100 \to 1000$ tokens，单实例 $\to$ 双实例 | 静态权重仅启动加载 1 次；单步权重读取与 KV 追加随生成步数放大 $10\times$；双实例权重显存翻倍 |
+| **练习 1-2〔核心〕** | 70B BF16 $141.11\ \mathrm{GB}$ / 8-bit $73.73\ \mathrm{GB}$，H100 $80\ \mathrm{GB}$（预留 $5\ \mathrm{GB}$） | 单卡仅 8-bit 可行（$78.73 \le 80\ \mathrm{GB}$）；两卡均分两种精度均可行；$400\ \mathrm{Gbit/s} = 50\ \mathrm{GB/s}$，传 $1\ \mathrm{GB}$ 需 $20\ \mathrm{ms}$ |
+| **练习 1-3〔核心〕** | 有效带宽 $0.7\times 3.35 = 2.345\ \mathrm{TB/s}$，有效算力 $0.5\times 989.4 = 494.7\ \mathrm{TFLOP/s}$ | 权重读取下界 $29.85\ \mathrm{ms} > 10\ \mathrm{ms}$（4-bit 减半为 $14.93\ \mathrm{ms}$ 仍超标）；有效拐点 $B_* \approx 105.5$ |
+| **练习 1-4〔核心〕** | Qwen3-8B 四档并发（$B=1,4,16,64$），$2048$ 输入 / $256$ 输出 | $B=64$ 总吞吐提升约 $31\times$，TPOT 从 $26.5\ \mathrm{ms}$ 增至 $40.5\ \mathrm{ms}$；偏差源于独占 KV 读取与注意力随 $B$ 累加 |
+| **练习 1-5〔延伸〕** | 解码读权重 $15.14\ \mathrm{GB}$ + KV $0.302\ \mathrm{GB}$，带宽 $1.792\ \mathrm{TB/s}$，算力 $503.8\ \mathrm{TFLOP/s}$ | 物理下界 $8.62\ \mathrm{ms}$；三阶段 MBU 依次为 $32.5\%\to 71.2\%\to 80.5\%$；仅优化算子端到端仅省 $2.08\ \mathrm{ms}$（$1.085\times$） |
+| **练习 1-6〔延伸〕** | $400\ \mathrm{Gbit/s}$ 最小帧 $595.2\ \mathrm{Mpps}$；671B MoE + $120\ \mathrm{GB}$ 状态 | 纯软件处理需 $20\text{—}40$ 颗 CPU 核；671B BF16 需 $\ge 19$ 卡、8-bit 需 $\ge 10$ 卡，均突破单机 8 卡边界 |
+| **练习 1-7〔延伸〕** | 百卡池 $C=360{,}000\ \mathrm{GPU\cdot s}$，基线 $\mathrm{MPG}=33.33\%$ | 方案甲 $\mathrm{MPG}=40.0\%$；方案乙 $\mathrm{SG}=91.67\%,\ \mathrm{RG}=90.0\%,\ \mathrm{MPG}=41.25\%$；同时落地 $\mathrm{MPG}=49.5\%$（$I=178{,}200$） |
+| **练习 1-8〔延伸〕** | $N=64$ 核、管理占 $m=4$ 核；跨 PCIe 读 $0.75\ \mu\mathrm{s}$ | 临界折损 $d^* = 4/64 = 6.25\%$；$d=3\%$ 净增 $+3.47\%$，$d=9\%$ 倒退 $-2.93\%$；重叠 $0.2\ \mu\mathrm{s}$ 暴露 $0.55\ \mu\mathrm{s}$ |
+| **练习 1-9〔延伸〕** | $S_0\to S_3$ 折叠链（$20.90\to 2.39\to 1.19\to 0.83\ \mathrm{ms}$），固定开销 $1.67\ \mathrm{ms}$ | 纯权重下界折叠 $25.1\times$；计入固定 $1.67\ \mathrm{ms}$ 后总耗时从 $22.57\ \mathrm{ms}$ 降至 $2.50\ \mathrm{ms}$，实际加速比为 $9.03\times$ |
+| **练习 1-10〔延伸〕** | 指数分布极值 $H_5 \approx 2.283,\ H_{64} \approx 4.744$；机柜功率 $12\to 132\ \mathrm{kW}$，$\Delta T=15\ \mathrm{K}$ | 64 卡同步屏障期望抖动放大 $4.74\times$；风冷需风量从 $0.66\ \mathrm{m^3/s}$ 暴增至 $7.30\ \mathrm{m^3/s}$，迫使切换液冷 |
+| **练习 1-11〔核心〕** | $t_{\mathrm{work}}=4\ \mu\mathrm{s}$，远程 $3.6\ \mu\mathrm{s}+2\times 1\ \mu\mathrm{s}$ vs. 本地 $0.426\ \mu\mathrm{s}$；Agent 内存 $600\to 720\ \mathrm{GiB}$ | 端到端 $9.6\ \mu\mathrm{s}$（有效率 $41.7\%$）降至 $4.426\ \mu\mathrm{s}$（$90.4\%$）；Agent 并发上限从 $400$（受限于内存）升至 $458$（受限于 CPU） |
+| **练习 1-12〔延伸〕** | $t_{\mathrm{attn}}=350,\ t_{\mathrm{ffn}}=480,\ t_{\mathrm{comm}}=410$（重叠 $260$），慢节点 $90\ \mu\mathrm{s}$ | 暴露通信 $150\ \mu\mathrm{s}$，基线 $T_{\mathrm{step}}=1070\ \mu\mathrm{s}$；方案一加速 $1.00\times$（非关键路径），方案二降至 $898\ \mu\mathrm{s}$（$1.19\times$） |
+| **练习 1-13〔延伸〕** | $\lambda=2\ \mathrm{req/s}$，驻留 $4\ \mathrm{s}$ vs. $180\ \mathrm{s}$；北极星五因子提升（$\mathrm{PG}\to 62.5\%,\ P_{\mathrm{ver}}\to 76\%$） | 在途会话 $8\to 360$，KV 需求 $2.4\ \mathrm{GB}\to 108\ \mathrm{GB}$（单卡溢出）；改造后 $\mathrm{MPG}=41.67\%,\ \mathrm{Efficiency}_{\mathrm{E2E}}=24.70\%$ |
+| **练习 1-14〔延伸〕** | 微步 DAG 松弛度求解与阿姆达尔带宽翻倍上限 | `Host_Launch_Prep` 松弛度 $140\ \mu\mathrm{s}$，`Attn_Tail` 松弛度 $150\ \mu\mathrm{s}$（含慢节点）；临界通信耗时 $t_{\mathrm{comm}}^* = 350\ \mu\mathrm{s}$ |
+
 ## 本章数字速查
 
-下表汇总了第 1.3.3 节实测所用的 **Qwen3-8B** 模型在单请求（$B=1$）下的核心资源数字。其中，**prefill** 阶段一次性处理全部输入 token 并产出首个输出 token；**decode** 阶段则每步送入 1 个新生成的 token，结合显存中已保存的 KV 缓存继续生成下一个 token。表中数据统一按 BF16 精度的权重、激活值与 KV 缓存计算；prefill 阶段的输入长度设为 2048 个 token，decode 阶段则考察在已有 2048 个历史上下文 token 的基础上往前生成一步。[^model-numbers]
+表 1-9 汇总了第 1.3.3 节实测所用的 **Qwen3-8B** 模型在单请求（$B=1$）下的核心资源数字。其中，**prefill** 阶段一次性处理全部输入 token 并产出首个输出 token；**decode** 阶段则每步送入 1 个新生成的 token，结合显存中已保存的 KV 缓存继续生成下一个 token。表中数据统一按 BF16 精度的权重、激活值与 KV 缓存计算；prefill 阶段的输入长度设为 2048 个 token，decode 阶段则考察在已有 2048 个历史上下文 token 的基础上往前生成一步。[^model-numbers]
+
+*表 1-9　Qwen3-8B 单请求（B=1，2048 上下文）prefill 与 decode 核心资源数字速查*
 
 | 模型需求 | 数值 | 估算用途与说明 |
 | --- | ---: | --- |
@@ -697,9 +1012,9 @@ $$
 
 这组定量数据清晰地揭示了大模型推理两个阶段的本质差异：prefill 阶段一次性处理成百上千个输入 token，矩阵运算量极大，主要考验芯片的峰值算力；而单请求 decode 阶段每次只处理 1 个新 token，算力消耗很小，却依然要把庞大的模型权重和历史 KV 缓存从显存重读一遍，主要受制于显存带宽。因此，提升矩阵算力、扩充显存带宽与增大 batch 批内复用，分别应对的是截然不同的耗时瓶颈。
 
-**全书纸笔估算的参数、公式适用条件与单位制核对表（D11-SP03）。** 为了避免在跨章节定量计算中发生十进制/二进制单位混淆、比特/字节漏除 8 或忽视公式隐含前提，表 1-5 汇总了本书纸笔估算统一遵循的五条核对准则。
+**全书纸笔估算的参数、公式适用条件与单位制核对表（D11-SP03）。** 为了避免在跨章节定量计算中发生十进制/二进制单位混淆、比特/字节漏除 8 或忽视公式隐含前提，表 1-10 汇总了本书纸笔估算统一遵循的五条核对准则。
 
-**表 1-5　全书定量估算的参数符号、公式适用前提与单位制统一核对准则（D11-SP03）**
+*表 1-10　全书定量估算的参数符号、公式适用前提与单位制统一核对准则（D11-SP03，原表 1-5）*
 
 | 核对维度 | 标准符号与换算关系 | 适用前提与常见陷阱防范 | 典型基准校验值 |
 | --- | --- | --- | --- |
@@ -777,4 +1092,4 @@ $$
 
 在定量分析任何一个 AI 系统时，都可以遵循固定的三步法：第一步用容量约束检查数据能否装下，第二步用浮点运算量和数据读写量分别除以算力与带宽算出理论时间下界，第三步结合执行依赖分析流水线重叠与等待。由硬件峰值算出的时间下界代表了不可逾越的物理极限，理论下界与实测耗时之比就是硬件利用率（MFU 与 MBU）；当实测表现远低于物理极限时，原因要么是纸面模型漏算了必做的工作，要么是软件系统引入了可以消除的额外开销。在本章的 70B 解码算例中，权重读取耗时是矩阵计算耗时的约 148 倍，系统处于典型的访存受限状态，因此提升显存带宽、量化压缩权重和通过批处理复用权重，才是缩短分摊耗时的有效手段。需要牢记的是，批内复用虽然能大幅推高系统总吞吐率，但单个用户感受到的响应延迟依然包含排队等待与整批执行的时间。
 
-本章的核心练习为练习 1-2、1-3、1-4 和 1-11，分别训练显存容量核算与多卡分配、硬件参数与 batch size 变化下的时间下界推演、用实测数据检验理论模型的科学方法，以及微秒级主机调度旁路（ghOSt）与智能网卡内存策略卸载（Wave）的边界核算；延伸练习 1-5 至 1-10 及 1-12 则进一步结合 Amdahl 定律、实测耗时拆解、机队全栈效率（$\mathrm{MPG}=\mathrm{SG}\times\mathrm{RG}\times\mathrm{PG}$）三级漏斗、可编程网卡卸载与超节点互联的比例边界、单步权重读取时间下界折叠链（$S_0\to S_3$）、传统云与 AI 数据中心的尾延迟耦合和功率密度切换，以及跨层关键路径有向无环图（XProf / ProfInfer / StriaTrace）的暴露瓶颈归因，训练从单卡到吉瓦级园区的系统瓶颈排查与架构演进评估。下一章我们将深入真实的 Transformer 模型内部，把本章粗略近似的 $2N$ 运算量与权重读取量拆解到每一层具体的矩阵尺寸、注意力机制与状态大小上；随后在第 3—12 章逐层展开工作负载、AI 加速器、GPU 算子、超节点与分布式并行、数据中心网络、推理与训练系统、集群调度及端边云推理，在第 13—16 章推进 AI 原生存储底座、模型—硬件协同设计、吉瓦级 AI 数据中心能源热学与机密 AI 计算，并最终在第 17—20 章完成多模态与视频生成（DiT）世界模型、大规模后训练（RLVR）与推理时扩展、具身智能（VLA）与大规模物理仿真以及十万卡集群可靠性与基准评测科学的二十章全栈架构收束。
+本章的核心练习为练习 1-2、1-3、1-4 和 1-11，分别训练显存容量核算与多卡分配、硬件参数与 batch size 变化下的时间下界推演、用实测数据检验理论模型的科学方法，以及微秒级主机调度旁路（ghOSt）与智能网卡内存策略卸载（Wave）的边界核算；延伸练习 1-5 至 1-10 及 1-12—1-14 则进一步结合 Amdahl 定律、实测耗时拆解、机队全栈效率（$\mathrm{MPG}=\mathrm{SG}\times\mathrm{RG}\times\mathrm{PG}$）三级漏斗、可编程网卡卸载与超节点互联的比例边界、单步权重读取时间下界折叠链（$S_0\to S_3$）、传统云与 AI 数据中心的尾延迟耦合和功率密度切换、跨层关键路径有向无环图（XProf / ProfInfer / StriaTrace）的暴露瓶颈归因，以及五大 AI 负载范式与全栈北极星效率链（$\mathrm{Efficiency}_{\mathrm{E2E}}$），训练从单卡到吉瓦级园区的系统瓶颈排查与架构演进评估。下一章我们将深入真实的 Transformer 与块扩散/字节潜空间模型内部，把本章粗略近似的 $2N$ 运算量与权重读取量拆解到每一层具体的矩阵尺寸、注意力机制与状态大小上；随后在第 3—12 章逐层展开工作负载、AI 加速器、GPU 算子、超节点与分布式并行、数据中心网络、推理与训练系统、集群调度及端边云推理，在第 13—18 章推进 AI 原生存储底座、模型—硬件协同设计、吉瓦级 AI 数据中心能源热学、机密 AI 计算、原生多模态与视频世界模型（DiT）以及大规模后训练（RLVR）与推理时扩展，并最终在第 19—24 章完成具身智能（VLA）与大规模物理仿真、十万卡集群可靠性与基准评测科学、自主智能体基础设施（Agentic Infra）、全双工实时语音、百亿亿次数据工程与合成数据工厂以及科学智能（AI for Science）的二十四章全栈大满贯收束。

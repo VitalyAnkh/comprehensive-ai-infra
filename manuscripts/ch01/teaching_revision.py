@@ -486,6 +486,81 @@ def draw(here, data):
         )
         out.save(f, 'ch01-xprof-profinfer-critical-path')
 
+        # 24. ch01-five-workload-paradigms-arithmetic-intensity (Path E3 Fig 1-25)
+        f, a = canvas(6.8)
+        card(a, 0.02, 0.49, 0.96, 0.48, 'A  五大 AI 负载范式的算术强度与主瓶颈迁移', '', 'blue', title_size=11.5)
+        paradigms_top = [
+            (0.045, '1 单轮对话', '状态单次读取\n受限 HBM 带宽', 'blue'),
+            (0.355, '2 自主智能体', '90% 前缀复用\n受限状态池容量', 'purple'),
+            (0.665, '3 全双工语音', '12.5 Hz 双流\n80 ms 硬实时墙', 'orange'),
+        ]
+        for px, ptitle, pbody, pcol in paradigms_top:
+            card(a, px, 0.68, 0.29, 0.20, ptitle, pbody, pcol, title_size=11, body_size=11)
+        card(
+            a, 0.045, 0.51, 0.43, 0.145,
+            '4 合成数据工厂 (Ch23)',
+            '无首字约束 · 追求吞吐/美元',
+            'green', title_size=11, body_size=11
+        )
+        card(
+            a, 0.525, 0.51, 0.43, 0.145,
+            '5 科学智能 AI4S (Ch24)',
+            '三角注意力与长序列通信',
+            'teal', title_size=11, body_size=11
+        )
+
+        card(a, 0.02, 0.03, 0.96, 0.43, 'B  三维特征空间：算术强度 · 状态驻留 · 尾延迟', '', 'purple', title_size=11.5)
+        dims_3d = [
+            (0.045, '算术强度 I', '单步解码 ~1\n合成批 >200', 'blue'),
+            (0.355, '状态驻留时长', '单轮毫秒即释\n智能体跨小时', 'purple'),
+            (0.665, '尾延迟敏感度', '语音 <80 ms\n合成容忍分钟', 'orange'),
+        ]
+        for dx, dtitle, dbody, dcol in dims_3d:
+            card(a, dx, 0.175, 0.29, 0.205, dtitle, dbody, dcol, title_size=11, body_size=11)
+        box(
+            a, 0.045, 0.05, 0.91, 0.095,
+            '范式转移：主瓶颈从显存带宽转向状态池容量、微秒抖动与跨卡通信',
+            'green', size=11
+        )
+        out.save(f, 'ch01-five-workload-paradigms-arithmetic-intensity')
+
+        # 25. ch01-north-star-efficiency-waterfall-chain (Path E3 Fig 1-26)
+        f, (ax1, ax2) = plt.subplots(1, 2, figsize=(420 / 72, 4.1))
+        f.subplots_adjust(left=0.22, right=0.96, bottom=0.20, top=0.85, wspace=0.64)
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+
+        wf_stages = ['铭牌峰值算力', '调度与容错后', '机队算子 MPG', '服务 SLO 达标', '验证任务净产率']
+        wf_vals = [100.0, 66.7, 33.3, 26.0, 16.9]
+        cols_wf = [COL['gray'], COL['blue'], COL['teal'], COL['orange'], COL['green']]
+        edges_wf = [BORDER_COL['gray'], BORDER_COL['blue'], BORDER_COL['teal'], BORDER_COL['orange'], BORDER_COL['green']]
+        y_wf = np.arange(len(wf_stages))
+        ax1.barh(y_wf, wf_vals, height=0.55, color=cols_wf, edgecolor=edges_wf, linewidth=1.2)
+        for i, v_w in enumerate(wf_vals):
+            ax1.text(v_w + 3.0, i, f'{v_w:.1f}%', va='center', fontsize=11, weight='bold', color=COL['ink'])
+        ax1.set_yticks(y_wf, wf_stages)
+        ax1.invert_yaxis()
+        ax1.set_xlim(0, 138.0)
+        ax1.set_xlabel('剩余有效算力比例（%）', fontsize=11)
+        ax1.set_title('A  北极星效率瀑布', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(axis='x', linestyle=':', alpha=0.5, color='#CBD5E1')
+
+        opt_modes = ['当前基线', '单提算子 PG', '全栈五级协同']
+        opt_vals = [16.9, 20.3, 33.3]
+        cols_op = [COL['orange'], COL['blue'], COL['green']]
+        edges_op = [BORDER_COL['orange'], BORDER_COL['blue'], BORDER_COL['green']]
+        y_op = np.arange(len(opt_modes))
+        ax2.barh(y_op, opt_vals, height=0.50, color=cols_op, edgecolor=edges_op, linewidth=1.2)
+        for i, v_o in enumerate(opt_vals):
+            ax2.text(v_o + 1.5, i, f'{v_o:.1f}%', va='center', fontsize=11, weight='bold', color=COL['ink'])
+        ax2.set_yticks(y_op, opt_modes)
+        ax2.invert_yaxis()
+        ax2.set_xlim(0, 50.0)
+        ax2.set_xlabel('端到端任务效率（%）', fontsize=11)
+        ax2.set_title('B  全栈协同倍增效应', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(axis='x', linestyle=':', alpha=0.5, color='#CBD5E1')
+        out.save(f, 'ch01-north-star-efficiency-waterfall-chain')
+
     from core_principles_figures import draw as draw_principles
     draw_principles(1, out)
     return out.finish()
