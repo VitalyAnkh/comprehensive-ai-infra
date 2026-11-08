@@ -1,13 +1,29 @@
 {
-  "status": "passed",
+  "status": "failed",
   "chapter": 4,
   "sections": 7,
   "subsections": 24,
   "exercises": 7,
   "worked_examples": 3,
-  "figures": 42,
-  "math_expressions": 289,
-  "chinese_characters": 36743,
-  "checks": 1056,
-  "errors": []
+  "figures": 51,
+  "math_expressions": 2327,
+  "chinese_characters": 85721,
+  "checks": 1109,
+  "errors": [
+    "exercise identities",
+    "core selection",
+    "Figure index matches reading order",
+    "missing local link ch04/ch04-hbm4-base-die-architecture.svg",
+    "missing local link ch04/ch04-sram-asic-vs-hbm-gpu-tco.svg",
+    "hash calculations/results/storage-generation-qwen8-235.json",
+    "hash calculations/sources/hardware/nvidia-rtx-blackwell-whitepaper.pdf",
+    "hash references/files/specs/ascend-950-official.pdf",
+    "hash references/files/specs/nvidia-a100.pdf",
+    "hash references/files/specs/nvidia-h100.pdf",
+    "hash references/proceedings/MICRO/2024/paper-011.pdf",
+    "hash references/proceedings/MLSys/2026/papers/mlsys2026-ae8b0b5838ba510daff1198474e7b984.pdf",
+    "browser rendering",
+    "browser rendering",
+    "book-size figure typography"
+  ]
 }

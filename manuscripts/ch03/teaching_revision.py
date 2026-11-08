@@ -664,6 +664,118 @@ def draw(here, data):
         ax2.legend(frameon=True, loc='upper left', fontsize=11)
         out.save(f, 'ch03-osworld-computer-use-agent-timeline')
 
+        # 38. ch03-inference-time-scaling-optimal-model-size-shift (Path E3 Fig 3-38)
+        f, (ax1, ax2) = plt.subplots(2, 1, figsize=(420 / 72, 6.5))
+        f.subplots_adjust(left=0.16, right=0.95, bottom=0.10, top=0.92, hspace=0.50)
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+
+        n_grid = np.linspace(4.5, 64.0, 300)
+        # Smooth convex iso-loss lifecycle cost curves with exact analytical minima at 32.0B, 16.2B, and 8.0B
+        c_tot_pre = 0.52 * ((n_grid / 32.0) ** 1.15 + (32.0 / n_grid) ** 1.15)
+        c_tot_chat = 0.78 * ((n_grid / 16.2) ** 1.15 + (16.2 / n_grid) ** 1.15)
+        c_tot_cot = 1.10 * ((n_grid / 8.0) ** 1.15 + (8.0 / n_grid) ** 1.15)
+
+        ax1.plot(n_grid, c_tot_pre, color=BORDER_COL['gray'], lw=2.0, ls='--', label='仅计预训练 (N*=32.0B, D=2.5T)')
+        ax1.plot(n_grid, c_tot_chat, color=BORDER_COL['blue'], lw=2.2, label='常规短答 G=512 (N*≈16.2B, D/N≈310)')
+        ax1.plot(n_grid, c_tot_cot, color=BORDER_COL['orange'], lw=2.4, label='长思维链 G=8,192–16,384 (N*=8.0B, D=36T)')
+
+        idx_pre = int(np.argmin(c_tot_pre))
+        idx_chat = int(np.argmin(c_tot_chat))
+        idx_cot = int(np.argmin(c_tot_cot))
+        ax1.scatter([n_grid[idx_pre], n_grid[idx_chat], n_grid[idx_cot]],
+                    [c_tot_pre[idx_pre], c_tot_chat[idx_chat], c_tot_cot[idx_cot]],
+                    s=58, color=[BORDER_COL['gray'], BORDER_COL['blue'], BORDER_COL['orange']],
+                    facecolor=[COL['gray'], COL['blue'], COL['orange']], linewidth=1.6, zorder=5)
+        ax1.annotate('最优尺寸左移:\n32.0B → 16.2B → 8.0B',
+                     xy=(n_grid[idx_cot], c_tot_cot[idx_cot]), xytext=(22.0, 3.20),
+                     arrowprops=dict(arrowstyle='->', color=BORDER_COL['orange'], lw=1.3),
+                     fontsize=11, weight='bold', color=TEXT_COL['orange'])
+        ax1.set(xlim=(4, 64), ylim=(0.6, 6.2), xlabel='部署模型参数规模 N（十亿 / B）', ylabel='等损失归一化全生命周期成本')
+        ax1.set_title('A  等损失约束下推理时思维链扩展驱动最优模型尺寸 N* 左移', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(True, linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax1.legend(frameon=True, loc='upper right', fontsize=11)
+
+        q_e8 = np.linspace(0, 180.0, 260)  # 单位：亿次请求 (10^8)
+        # 32B(2.5T) vs 8B(36T): ΔC_train = 0.875952 百万 H100 小时 (87.60 万 H100 小时)
+        # k=2, G=8192 (16,384 生成): Q* = 14.94 亿次; k=1, G=8192: Q* = 28.21 亿次; G=512: Q* = 169.3 亿次
+        delta_train_mh = 0.875952
+        save_par_mh = q_e8 * (delta_train_mh / 14.940)
+        save_cot_mh = q_e8 * (delta_train_mh / 28.209)
+        save_chat_mh = q_e8 * (delta_train_mh / 169.255)
+        ax2.axhline(delta_train_mh, color=BORDER_COL['purple'], lw=2.0, ls='--', label='8B(36T) 超训增量 (87.60万 H100时)')
+        ax2.plot(q_e8, save_par_mh, color=BORDER_COL['teal'], lw=2.3, label='长思考+2路采样 (k·G=16,384)')
+        ax2.plot(q_e8, save_cot_mh, color=BORDER_COL['green'], lw=2.3, label='单流长思考 (G=8,192) 节省')
+        ax2.plot(q_e8, save_chat_mh, color=BORDER_COL['blue'], lw=2.2, label='常规短答 (G=512) 节省')
+        ax2.scatter([14.94, 28.21, 169.26], [delta_train_mh, delta_train_mh, delta_train_mh], s=58,
+                    color=[BORDER_COL['teal'], BORDER_COL['green'], BORDER_COL['blue']],
+                    facecolor=[COL['teal'], COL['green'], COL['blue']], linewidth=1.6, zorder=5)
+        ax2.annotate('Q* = 14.94 / 28.21 亿次\n(长思考回本提速 6.0×–11.3×)',
+                     xy=(28.21, delta_train_mh), xytext=(48.0, 0.52),
+                     arrowprops=dict(arrowstyle='->', color=BORDER_COL['green'], lw=1.3),
+                     fontsize=11, weight='bold', color=TEXT_COL['green'])
+        ax2.annotate('G=512 回本点\nQ* = 169.3 亿次',
+                     xy=(169.26, delta_train_mh), xytext=(105.0, 0.22),
+                     arrowprops=dict(arrowstyle='->', color=BORDER_COL['blue'], lw=1.3),
+                     fontsize=11, weight='bold', color=TEXT_COL['blue'])
+        ax2.set(xlim=(0, 180), ylim=(0, 1.95), xlabel='累计服务请求量 Q（亿次）', ylabel='训练增量与推理节省（百万 H100 时）')
+        ax2.set_title('B  8B(36T) 与 32B(2.5T) 在短答及长思考下的回本交点', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(True, linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax2.legend(frameon=True, loc='upper left', fontsize=11)
+        out.save(f, 'ch03-inference-time-scaling-optimal-model-size-shift')
+
+        # 39. ch03-multi-agent-fanout-tail-amplification-barrier (Path E3 Fig 3-39)
+        f, (ax1, ax2) = plt.subplots(2, 1, figsize=(420 / 72, 6.5))
+        f.subplots_adjust(left=0.16, right=0.95, bottom=0.10, top=0.92, hspace=0.50)
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+
+        b_labels = ['B=1', 'B=2', 'B=4', 'B=8', 'B=16', 'B=32']
+        x_b = np.arange(len(b_labels))
+        mean_hard = [1.50, 1.90, 2.37, 2.87, 3.41, 3.95]
+        p95_hard = [3.10, 3.64, 4.19, 4.74, 5.30, 5.85]
+        p99_hard = [4.38, 4.94, 5.50, 6.05, 6.61, 7.16]
+        mean_quorum = [0.97, 1.17, 1.46, 1.84, 2.34, 2.89]
+
+        ax1.plot(x_b, p99_hard, color=BORDER_COL['purple'], lw=2.1, marker='^', ms=5.0, label='硬屏障 P99')
+        ax1.plot(x_b, p95_hard, color=BORDER_COL['orange'], lw=2.3, marker='s', ms=5.2, label='硬屏障 P95')
+        ax1.plot(x_b, mean_hard, color=BORDER_COL['blue'], lw=2.2, marker='o', ms=5.0, label='硬屏障均值 E[T]')
+        ax1.plot(x_b, mean_quorum, color=BORDER_COL['green'], lw=2.2, ls='--', marker='d', ms=5.0, label='定额早停均值')
+        for xi, v95, vm in zip(x_b, p95_hard, mean_hard):
+            ax1.text(xi, v95 + 0.24, f'{v95:.2f}s', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['orange'])
+            ax1.text(xi, vm + 0.22, f'{vm:.2f}s', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['blue'])
+        ax1.set_xticks(x_b, b_labels)
+        ax1.set_xlim(-0.35, 5.35)
+        ax1.set_ylim(0.3, 9.2)
+        ax1.set_xlabel('单阶段并发子智能体扇出度 B_fan', fontsize=11)
+        ax1.set_ylabel('单阶段屏障耗时（s）', fontsize=11)
+        ax1.set_title('A  并发扇出度 B_fan 对顺序统计量均值、P95 与 P99 延迟的放大', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(True, linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax1.legend(frameon=True, loc='upper left', ncol=2, fontsize=11, columnspacing=1.0)
+
+        d_stages = np.array([1, 2, 3, 4])
+        p95_b1 = d_stages * 3.0966
+        p95_b4 = d_stages * 4.1879
+        p95_b16 = d_stages * 5.2960
+        quorum_b16 = d_stages * 2.3370
+        ax2.plot(d_stages, p95_b16, color=BORDER_COL['orange'], lw=2.4, marker='s', ms=5.5, label='B=16 硬屏障 P95')
+        ax2.plot(d_stages, p95_b4, color=BORDER_COL['teal'], lw=2.2, marker='^', ms=5.2, label='B=4 硬屏障 P95')
+        ax2.plot(d_stages, p95_b1, color=BORDER_COL['blue'], lw=2.2, ls='--', marker='o', ms=5.0, label='B=1 串行 P95')
+        ax2.plot(d_stages, quorum_b16, color=BORDER_COL['green'], lw=2.2, ls='-.', marker='d', ms=5.0, label='16-of-18 早停')
+        ax2.scatter([3, 3, 3], [7.01, 9.29, 15.89], s=55,
+                    color=[BORDER_COL['green'], BORDER_COL['blue'], BORDER_COL['orange']],
+                    facecolor=[COL['green'], COL['blue'], COL['orange']], linewidth=1.5, zorder=5)
+        ax2.annotate('D=3 阶段串联:\n9.29s → 15.89s\n早停收敛至 7.01s',
+                     xy=(3, 15.89), xytext=(2.25, 18.2),
+                     arrowprops=dict(arrowstyle='->', color=BORDER_COL['orange'], lw=1.3),
+                     fontsize=11, weight='bold', color=TEXT_COL['orange'])
+        ax2.set_xticks(d_stages, ['D=1 阶段', 'D=2 阶段', 'D=3 阶段', 'D=4 阶段'])
+        ax2.set(xlim=(0.8, 4.2), ylim=(1.5, 25.5), xlabel='多阶段串行扇出—汇聚深度 D_stage', ylabel='端到端累计延迟（s）')
+        ax2.set_title('B  多阶段扇出—汇聚工作流 (D_stage = 1..4) 的端到端尾延迟累积', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(True, linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax2.legend(frameon=True, loc='upper left', fontsize=11)
+        out.save(f, 'ch03-multi-agent-fanout-tail-amplification-barrier')
+
     from v41_case_figures import draw as draw_v41
     draw_v41(3, out)
     from core_principles_figures import draw as draw_principles

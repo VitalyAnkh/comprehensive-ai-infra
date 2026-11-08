@@ -549,6 +549,78 @@ def draw(here, data, teaching):
             'gray', 11, weight='bold')
         out.save(f, 'ch04-ascend950-davinci-and-trainium-sbuf')
 
+        # 34. ch04-hbm4-2048bit-logic-base-die-and-vera-rubin (Path E3 Fig 4-50)
+        f, a = canvas(5.2)
+        text(a, 0.50, 0.95, 'HBM3e (1024-bit) → HBM4 (2048-bit) 与 Vera Rubin 架构', 12.2, ha='center', weight='bold')
+        card(a, 0.04, 0.52, 0.44, 0.37, 'HBM3e (B200: 192 GB)', [
+            '单堆位宽: 1024-bit (16 通道)',
+            'Base Die: DRAM 无源直通',
+            '8 堆总带宽: 8.0 TB/s',
+            'FP8/4 嵴点: 562.5 / 1,125',
+        ], 'blue', body_size=11)
+        card(a, 0.52, 0.52, 0.44, 0.37, 'HBM4 (Rubin: 288 GB)', [
+            '单堆位宽: 2048-bit (32 通道)',
+            'Base Die: TSMC 逻辑工艺',
+            '8 堆总带宽: 22.0 TB/s (2.75×)',
+            'FP8/4 嵴点: 1,591 / 2,273',
+        ], 'orange', body_size=11)
+        box(a, 0.04, 0.27, 0.28, 0.17, 'Vera CPU (88 核)\n1.5TB LPDDR5X', 'teal', 11, weight='bold')
+        box(a, 0.36, 0.27, 0.28, 0.17, 'NVLink-C2C\n双向 1.8 TB/s', 'purple', 11, weight='bold')
+        box(a, 0.68, 0.27, 0.28, 0.17, 'Rubin GPU\n50 PFLOPS NVFP4', 'green', 11, weight='bold')
+        arrow(a, (0.322, 0.355), (0.356, 0.355), 'teal')
+        arrow(a, (0.642, 0.355), (0.676, 0.355), 'purple')
+        box(a, 0.04, 0.05, 0.92, 0.15,
+            '235B-A22B (NVFP4 激活 12.38 GB): B200 1.55 ms → Rubin 0.56 ms\n'
+            'VR200 NVL72: 72 GPU | 3.6 EFLOPS NVFP4 | 1.58 PB/s HBM4',
+            'gray', 11, weight='bold')
+        out.save(f, 'ch04-hbm4-2048bit-logic-base-die-and-vera-rubin')
+
+        # 35. ch04-sram-asic-vs-hbm-gpu-heterogeneous-pd-serving (Path E3 Fig 4-51)
+        f, (ax1, ax2) = plt.subplots(2, 1, figsize=(420 / 72, 6.6))
+        f.subplots_adjust(left=0.16, right=0.95, bottom=0.10, top=0.92, hspace=0.52)
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+
+        chips = [
+            ('HGX B200 (HBM3e)', 192.0, 8.0, 'blue', (0.72, 0.65), 'right'),
+            ('Rubin GPU (HBM4)', 288.0, 22.0, 'teal', (0.72, 1.25), 'right'),
+            ('Groq LPU (SRAM)', 0.23, 80.0, 'orange', (1.35, 0.55), 'left'),
+            ('d-Matrix Corsair', 2.0, 150.0, 'purple', (1.35, 1.35), 'left'),
+            ('Cerebras WSE-3', 44.0, 21000.0, 'green', (0.72, 0.58), 'right'),
+        ]
+        for label, cap_gb, bw_tbs, col, (fx, fy), ha_align in chips:
+            ax1.scatter([cap_gb], [bw_tbs], s=70, facecolor=COL[col], edgecolor=BORDER_COL[col], linewidth=1.6, zorder=5)
+            ax1.text(cap_gb * fx, bw_tbs * fy, f'{label}\n({cap_gb:g} GB, {bw_tbs:g} TB/s)',
+                     ha=ha_align, va='center', fontsize=11, weight='bold', color=TEXT_COL[col])
+        ax1.set_xscale('log')
+        ax1.set_yscale('log')
+        ax1.set(xlim=(0.12, 850.0), ylim=(2.5, 68000.0),
+                xlabel='单芯片/单晶圆高速存储容量（GB，对数坐标）',
+                ylabel='片内/显存带宽（TB/s）')
+        ax1.set_title('A  HBM GPU 与纯 SRAM 推理 ASIC 的容量—带宽帕累托边界', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(True, linestyle=':', alpha=0.5, color='#CBD5E1')
+
+        # Exact numbers locked to 算例 4-5 & 实验 4-18 (120 req/s, Lin=4096, Lout=512, 61,440 tok/s)
+        configs = [
+            '同构 HBM GPU\n(TPOT≤2.5ms, 15台)',
+            '异构 GPU+SRAM\n(3 GPU + 4 SRAM)',
+            '同构 HBM GPU\n(TPOT≤10ms, 5台)',
+        ]
+        cost_per_m = [1.63, 0.98, 0.54]
+        sub_labels = ['360美元/h (B=16)', '216美元/h (省40%)', '120美元/h (B=496)']
+        x_c = np.arange(len(configs))
+        cols_c = ['orange', 'green', 'blue']
+        for xi, cv, sl, c_name in zip(x_c, cost_per_m, sub_labels, cols_c):
+            ax2.bar(xi, cv, width=0.44, color=COL[c_name], edgecolor=BORDER_COL[c_name], linewidth=1.3)
+            ax2.text(xi, cv + 0.06, f'{cv:.2f} 美元/M\n{sl}', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL[c_name])
+        ax2.set_xticks(x_c, configs)
+        ax2.set_xlim(-0.55, 2.55)
+        ax2.set_ylim(0, 2.25)
+        ax2.set_ylabel('成本（美元/M tokens）', fontsize=11)
+        ax2.set_title('B  算例 4-5：120 req/s 下同构与异构 PD 分离成本对比', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(axis='y', linestyle=':', alpha=0.5, color='#CBD5E1')
+        out.save(f, 'ch04-sram-asic-vs-hbm-gpu-heterogeneous-pd-serving')
+
     from sync_figures import draw as draw_sync
     data['4-sync'] = draw_sync(out, root)
     from core_principles_figures import draw as draw_principles
