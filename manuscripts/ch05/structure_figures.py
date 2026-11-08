@@ -263,6 +263,56 @@ def draw(here, data=None):
         box(a, .52, .16, .44, .11, '显式工程代价（实测）\n图编译构建耗时 +66%\n静态并集使峰值显存 +20%', 'purple', 11)
         box(a, .04, .04, .92, .09, '准则：显存充裕、延迟敏感的解码开启整图合并\n显存受限或形状跳变的预填充用分段图+计划复用', 'gray', 11)
         out.save(f, 'ch05-deepgemm-fp8-jit-and-grace-graph')
+
+        # 5.6.4 Fig 5-47: TileLang & ThunderKittens abstraction spectrum and TMEM double-buffered pipeline.
+        f, a = canvas(7.4)
+        a.add_patch(FancyBboxPatch((.02, .51), .96, .46, boxstyle='round,pad=0.003,rounding_size=0.012',
+                                   facecolor='#FAFCFE', edgecolor='#CBD5E1', lw=1.0))
+        text(a, .04, .94, 'A. 四代算子编程抽象的硬件控制粒度与开发效率定位', 11.5, weight='bold')
+        box(a, .04, .78, .44, .12, 'CUDA C++ / CUTLASS 3.x\n~1,800 行 · 100% 硬件控制\n手写 mbarrier 与寄存器调度', 'gray', 11)
+        box(a, .52, .78, .44, .12, 'Triton 3.x（块级隐式编译）\n~90 行 · B200 利用率 ~76%\n难控 Warp-Group 与 TMEM', 'orange', 11)
+        box(a, .04, .63, .44, .12, 'ThunderKittens 2.0\n~220 行 C++ · 96% 硬件峰值\n16×16 瓦片 + NVLink 重叠', 'blue', 11)
+        box(a, .52, .63, .44, .12, 'TileLang（三级显式流水）\n~80 行 Python · 98% 峰值\nKernel + pipelined_for + copy', 'green', 11)
+        arrow(a, (.26, .78), (.26, .75), 'control')
+        arrow(a, (.74, .78), (.74, .75), 'control')
+        box(a, .04, .53, .92, .08, '演进主线：将 TMEM/寄存器布局与异步 DMA 显式暴露给高层原语', 'purple', 11)
+
+        a.add_patch(FancyBboxPatch((.02, .02), .96, .46, boxstyle='round,pad=0.003,rounding_size=0.012',
+                                   facecolor='#FAFCFE', edgecolor='#CBD5E1', lw=1.0))
+        text(a, .04, .45, 'B. 算例 5-4 / 实验 5-17：Blackwell TMEM 双缓冲 TMA 流水对比', 11.5, weight='bold')
+        box(a, .04, .30, .44, .11, '朴素单缓冲（累加器在寄存器）\nTMA 0.75μs + MMA 1.00μs 串行\n16 步 28.00 μs（利用率 57.1%）', 'orange', 11)
+        box(a, .52, .30, .44, .11, 'TileLang 双缓冲 + TMEM\n预取 0.75μs + 16 步 16.00μs\n总计 16.75 μs（提速 1.67×）', 'green', 11)
+        arrow(a, (.48, .355), (.52, .355))
+        box(a, .04, .16, .44, .11, '单缓冲：128 regs/线程\n256 线程占 32,768 寄存器', 'gray', 11)
+        box(a, .52, .16, .44, .11, 'TMEM 卸载：56 regs/线程\n省 56.2% 寄存器供预取', 'blue', 11)
+        box(a, .04, .04, .92, .09, '结论：双缓冲流水 + 256 KB TMEM 驻留同时打破带宽空泡与寄存器墙', 'purple', 11)
+        out.save(f, 'ch05-tilelang-thunderkittens-abstraction-spectrum')
+
+        # 5.6.5 Fig 5-48: Mirage algebraic superoptimizer & Persistent Mega-Kernel (MPK) execution.
+        f, a = canvas(7.4)
+        a.add_patch(FancyBboxPatch((.02, .51), .96, .46, boxstyle='round,pad=0.003,rounding_size=0.012',
+                                   facecolor='#FAFCFE', edgecolor='#CBD5E1', lw=1.0))
+        text(a, .04, .94, 'A. Mirage 三级代数张量超优化与有限域 F_p 等价验证', 11.5, weight='bold')
+        box(a, .04, .78, .28, .12, '1. 内核图 KGraph\n跨算子代数重写\n融合归约与投影', 'blue', 11)
+        box(a, .36, .78, .28, .12, '2. 块图 TBGraph\n共享内存分块\n免全局显存落地', 'purple', 11)
+        box(a, .68, .78, .28, .12, '3. 线程图 TGraph\n寄存器指令合成\nF_p 等价验证', 'green', 11)
+        arrow(a, (.32, .84), (.36, .84))
+        arrow(a, (.64, .84), (.68, .84))
+        box(a, .04, .64, .92, .10, '代数融合：将 RMSNorm 归约折叠进前驱投影尾声，免去 HBM 往返', 'orange', 11)
+        box(a, .04, .53, .92, .08, '验证完备性：有限域 F_p 随机指纹测试，毫秒级判定代数等价', 'gray', 11)
+
+        a.add_patch(FancyBboxPatch((.02, .02), .96, .46, boxstyle='round,pad=0.003,rounding_size=0.012',
+                                   facecolor='#FAFCFE', edgecolor='#CBD5E1', lw=1.0))
+        text(a, .04, .45, 'B. 算例 5-5 / 实验 5-16：80 层模型（720 算子）单步解码耗时对比', 11.5, weight='bold')
+        box(a, .04, .30, .28, .12, 'Eager 逐算子\n计算 4.80+启动 2.52\n总计 8.80 ms', 'orange', 11)
+        box(a, .36, .30, .28, .12, 'CUDA Graph\n启动压至 0.08ms\n总计 6.30 ms', 'blue', 11)
+        box(a, .68, .30, .28, .12, 'Mirage MPK\n计算 4.80+队列 0.18\n总计 4.98 ms', 'green', 11)
+        arrow(a, (.32, .36), (.36, .36))
+        arrow(a, (.64, .36), (.68, .36))
+        box(a, .04, .16, .44, .11, 'SM 角色特化（132 SM）\n112 计算 SM + 20 通信 SM', 'purple', 11)
+        box(a, .52, .16, .44, .11, '片上 L2 / SMEM 任务队列\n消除 720 道全局栅栏与尾波', 'green', 11)
+        box(a, .04, .04, .92, .09, '净收益：MPK 较 Eager 快 1.77×（省 3.82ms），较 Graph 省 1.32ms', 'gray', 11)
+        out.save(f, 'ch05-mirage-mpk-persistent-megakernel-execution')
     (here / 'structure-layout-validation.json').write_text(json.dumps(out.checks, ensure_ascii=False, indent=2) + '\n')
     return out.outputs
 
