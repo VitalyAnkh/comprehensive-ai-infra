@@ -289,5 +289,29 @@
       "manuscripts/ch14/figure-data.json"
     ],
     "TeachingRole": "收束第 14 章全章协同设计方法论，串联流片前探索与生产集群实测验证"
+  },
+  {
+    "figure_id": "图 14-25",
+    "number": 25,
+    "file": "ch14-hardware-aware-hybrid-layer-allocation-pareto.svg",
+    "asset": "ch14/ch14-hardware-aware-hybrid-layer-allocation-pareto.svg",
+    "section": "14.9.3",
+    "caption": "固定硬件显存与延迟预算下，混合层配比（线性递推层比例 ρ_lin vs. 全局注意力层 1-ρ_lin）的质量—吞吐帕累托寻优曲面",
+    "source_refs": [
+      "manuscripts/ch14/figure-data.json"
+    ],
+    "TeachingRole": "建立以真实硬件 KV 预算与延迟为目标的异构混合层整数规划模型"
+  },
+  {
+    "figure_id": "图 14-26",
+    "number": 26,
+    "file": "ch14-sparse-upcycling-and-attention-distillation-pipeline.svg",
+    "asset": "ch14/ch14-sparse-upcycling-and-attention-distillation-pipeline.svg",
+    "section": "14.9.3",
+    "caption": "稠密全注意力模型通过 Sparse Upcycling 与跨层注意力蒸馏低成本转化为系统友好型混合 MoE 架构的训练流水线",
+    "source_refs": [
+      "manuscripts/ch14/figure-data.json"
+    ],
+    "TeachingRole": "展示如何仅用从头预训练约 20% 的算力（省 79.71%）将稠密模型热启动迁移为混合线性注意力与稀疏 MoE 架构"
   }
 ]

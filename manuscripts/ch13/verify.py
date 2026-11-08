@@ -43,22 +43,34 @@ expected_headings = [
     '13.2', '13.2.1', '13.2.2', '13.2.3',
     '13.3', '13.3.1', '13.3.2', '13.3.3',
     '13.4', '13.4.1', '13.4.2', '13.4.3',
-    '13.5', '13.5.1', '13.5.2',
+    '13.5', '13.5.1', '13.5.2', '13.5.3',
+    '13.6', '13.6.1', '13.6.2',
+    '13.7', '13.7.1', '13.7.2',
+    '13.8', '13.8.1', '13.8.2', '13.8.3', '13.8.4',
 ]
 found_headings = re.findall(r'^#{2,3} (13\.\d+(?:\.\d+)?) ', s, re.M)
-check('all five sections and twelve subsections match outline', found_headings == expected_headings)
+check('all eight sections and twenty-two subsections match outline', found_headings == expected_headings)
 
 h2s = re.findall(r'^## (.+)$', s, re.M)
 check('last H2 is 本章小结', len(h2s) >= 7 and h2s[-1].strip() == '本章小结')
 
-exercises = re.findall(r'^>\s*\*\*(?:练习|实验) 13-(\d+)：', s, re.M)
-check('six exercises 13-1 to 13-6 in order', exercises == [str(i) for i in range(1, 7)])
+exercises = re.findall(r'^>\s*\*\*(?:练习|实验) 13-(\d+)[：:]', s, re.M)
+check('seventeen exercises 13-1 to 13-17 in order', exercises == [str(i) for i in range(1, 18)])
+
+code_blocks = re.findall(r'```python\n.*?```', s, re.S)
+check('three production Python code blocks', len(code_blocks) == 3)
+
+worked_examples = re.findall(r'^>\s*\*\*算例\s*13-', s, re.M)
+check('fourteen standardized blockquote worked examples', len(worked_examples) == 14)
+
+table_captions = re.findall(r'^\*表 13-(\d+)　', s, re.M)
+check('ten standardized italic table captions 13-1 to 13-10', table_captions == [str(i) for i in range(1, 11)])
 
 fig_index = json.loads((HERE / 'figure-index.json').read_text())
 fig_count = len(fig_index)
-check('six figures in figure-index.json', fig_count == 6)
+check('twenty-six figures in figure-index.json', fig_count == 26)
 captions = re.findall(r'^\*图 13-(\d+)(?:：|　)', s, re.M)
-check('sequential external captions 13-1 to 13-6', captions == [str(i) for i in range(1, fig_count + 1)])
+check('sequential external captions 13-1 to 13-26', captions == [str(i) for i in range(1, fig_count + 1)])
 
 imgs = re.findall(r'!\[[^\]]*\]\((ch13/[^)]+)\)', s)
 check('active illustrations match figure-index.json', imgs == [row.get('asset') or f"ch13/{row['file']}" for row in fig_index])
@@ -93,7 +105,7 @@ check('no formula errors', not math_val['errors'] and 'katex-error' not in page)
 layout_val = json.loads((HERE / 'teaching-layout-validation.json').read_text())
 check(
     'book-size figure layout',
-    len(layout_val) == 6 and all(r['width_pt'] == 420 and r['min_label_pt'] >= 11 and not r['text_extent_warnings'] for r in layout_val),
+    len(layout_val) == 26 and all(r['width_pt'] == 420 and r['min_label_pt'] >= 11 and not r['text_extent_warnings'] for r in layout_val),
 )
 
 d = json.loads((HERE / 'figure-data.json').read_text())
@@ -128,6 +140,28 @@ check(
     and e4['host_total_cores'] - e4['host_reserved_cores'] == e4['host_avail_decode_cores']
     and close(e4['host_avail_decode_cores'] / e4['required_cpu_cores_soft'], e4['cpu_only_supply_ratio'])
     and e4['gpu_count'] * e4['nvdec_fps_per_gpu'] == e4['nvdec_total_fps'] > e4['total_fps'],
+)
+
+e11 = d['example_13_11_nixl_pipeline']
+check(
+    'example 13-11 NIXL multi-tier parallel transfer arithmetic',
+    close(sum(e11['tier_volumes_gb']), e11['total_kv_gb'])
+    and close(e11['serial_fetch_ms'], 225.10)
+    and close(e11['nixl_parallel_ms'], 80.20)
+    and close(round(e11['serial_fetch_ms'] / e11['nixl_parallel_ms'], 2), e11['speedup']),
+)
+
+e12 = d['example_13_12_checkpoint_ec']
+check(
+    'example 13-12 checkpoint RS(10,4) erasure coding arithmetic',
+    close(e12['total_ckpts'] * e12['ckpt_raw_tb'] * e12['rep_factor'], e12['pure_3rep_tb'])
+    and close(
+        e12['hot_keep_count'] * e12['ckpt_raw_tb'] * e12['rep_factor']
+        + e12['cold_count'] * e12['ckpt_raw_tb'] * e12['ec_factor'],
+        e12['tiered_ec_tb'],
+    )
+    and close(e12['pure_3rep_tb'] - e12['tiered_ec_tb'], e12['saved_tb'])
+    and close(round(e12['saved_tb'] / e12['pure_3rep_tb'] * 100.0, 2), e12['saving_pct']),
 )
 
 check('zero exclamation marks', '！' not in s)

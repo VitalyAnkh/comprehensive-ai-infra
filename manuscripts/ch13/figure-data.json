@@ -126,5 +126,45 @@
     "effective_dwpd": 33.75,
     "target_dwpd_limit": 3.0,
     "max_admission_ratio": 0.0889
+  },
+  "example_13_11_nixl_pipeline": {
+    "total_kv_gb": 8.0,
+    "tier_volumes_gb": [
+      3.2,
+      3.2,
+      1.6
+    ],
+    "tier_bw_gbps": [
+      50.0,
+      40.0,
+      20.0
+    ],
+    "tier_init_ms": [
+      0.05,
+      0.1,
+      0.15
+    ],
+    "sync_switch_ms": 0.4,
+    "nixl_desc_ms": 0.05,
+    "serial_fetch_ms": 225.1,
+    "nixl_parallel_ms": 80.2,
+    "speedup": 2.81,
+    "effective_bw_gbps": 99.75,
+    "exposed_after_overlap_ms": 20.05
+  },
+  "example_13_12_checkpoint_ec": {
+    "ckpt_raw_tb": 10.0,
+    "total_ckpts": 100,
+    "hot_keep_count": 3,
+    "cold_count": 97,
+    "rep_factor": 3.0,
+    "ec_k": 10,
+    "ec_m": 4,
+    "ec_factor": 1.4,
+    "pure_3rep_tb": 3000.0,
+    "tiered_ec_tb": 1448.0,
+    "saved_tb": 1552.0,
+    "saving_pct": 51.73,
+    "per_node_parity_mb_s": 66.7
   }
 }

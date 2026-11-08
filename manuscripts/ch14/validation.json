@@ -1,0 +1,406 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "check": "all nine sections and twenty-two subsections match outline",
+      "passed": true
+    },
+    {
+      "check": "last H2 is 本章小结",
+      "passed": true
+    },
+    {
+      "check": "seventeen exercises 14-1 to 14-17 in order",
+      "passed": true
+    },
+    {
+      "check": "three production Python code blocks",
+      "passed": true
+    },
+    {
+      "check": "thirteen standardized blockquote worked examples",
+      "passed": true
+    },
+    {
+      "check": "eleven standardized italic table captions 14-1 to 14-11",
+      "passed": true
+    },
+    {
+      "check": "twenty-six figures in figure-index.json",
+      "passed": true
+    },
+    {
+      "check": "sequential external captions 14-1 to 14-26",
+      "passed": true
+    },
+    {
+      "check": "active illustrations match figure-index.json",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch14-codesign-simultaneous-equations",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch14-codesign-simultaneous-equations",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch14-codesign-simultaneous-equations",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch14-v41-dual-track-context-scaling",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch14-v41-dual-track-context-scaling",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch14-v41-dual-track-context-scaling",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch14-v41-four-stage-attention-pipeline",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch14-v41-four-stage-attention-pipeline",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch14-v41-four-stage-attention-pipeline",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch14-digital-worker-v41-vs-k3-cost",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch14-digital-worker-v41-vs-k3-cost",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch14-digital-worker-v41-vs-k3-cost",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch14-opentallas-four-resource-and-wafer-hop",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch14-opentallas-four-resource-and-wafer-hop",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch14-opentallas-four-resource-and-wafer-hop",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch14-five-step-diagnostic-decision-tree",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch14-five-step-diagnostic-decision-tree",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch14-five-step-diagnostic-decision-tree",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch14-dflash-block-diffusion-role-reversal",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch14-dflash-block-diffusion-role-reversal",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch14-dflash-block-diffusion-role-reversal",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch14-beyond-chinchilla-lifecycle-compute-allocation",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch14-beyond-chinchilla-lifecycle-compute-allocation",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch14-beyond-chinchilla-lifecycle-compute-allocation",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch14-design-review-3candidate-kv-audit",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch14-design-review-3candidate-kv-audit",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch14-design-review-3candidate-kv-audit",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch14-datacenter-vs-consumer-gpu-crossover",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch14-datacenter-vs-consumer-gpu-crossover",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch14-datacenter-vs-consumer-gpu-crossover",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch14-preregistered-prediction-lifecycle",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch14-preregistered-prediction-lifecycle",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch14-preregistered-prediction-lifecycle",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch14-exp13-07-k96-counterexample-and-k192-ratios",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch14-exp13-07-k96-counterexample-and-k192-ratios",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch14-exp13-07-k96-counterexample-and-k192-ratios",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch14-exp13-07-commit-buffer-idempotence",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch14-exp13-07-commit-buffer-idempotence",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch14-exp13-07-commit-buffer-idempotence",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch14-four-double-counting-traps-matrix",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch14-four-double-counting-traps-matrix",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch14-four-double-counting-traps-matrix",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch14-2023-2026-cost-reduction-telescoping",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch14-2023-2026-cost-reduction-telescoping",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch14-2023-2026-cost-reduction-telescoping",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch14-dual-track-book-throughline-summary",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch14-dual-track-book-throughline-summary",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch14-dual-track-book-throughline-summary",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch14-rubin-v41-codesign-mapping-matrix",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch14-rubin-v41-codesign-mapping-matrix",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch14-rubin-v41-codesign-mapping-matrix",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch14-four-dimensional-codesign-closed-loop",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch14-four-dimensional-codesign-closed-loop",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch14-four-dimensional-codesign-closed-loop",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch14-chakra-execution-trace-graph-simulation",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch14-chakra-execution-trace-graph-simulation",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch14-chakra-execution-trace-graph-simulation",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch14-neusight-tile-roofline-calibration",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch14-neusight-tile-roofline-calibration",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch14-neusight-tile-roofline-calibration",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch14-farskip-collective-delayed-dependency",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch14-farskip-collective-delayed-dependency",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch14-farskip-collective-delayed-dependency",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch14-moe-granularity-vs-network-radix-co-design",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch14-moe-granularity-vs-network-radix-co-design",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch14-moe-granularity-vs-network-radix-co-design",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch14-kv-head-ratio-vs-tensor-parallel-limit",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch14-kv-head-ratio-vs-tensor-parallel-limit",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch14-kv-head-ratio-vs-tensor-parallel-limit",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch14-codesign-pre-silicon-to-production-loop",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch14-codesign-pre-silicon-to-production-loop",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch14-codesign-pre-silicon-to-production-loop",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch14-hardware-aware-hybrid-layer-allocation-pareto",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch14-hardware-aware-hybrid-layer-allocation-pareto",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch14-hardware-aware-hybrid-layer-allocation-pareto",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch14-sparse-upcycling-and-attention-distillation-pipeline",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch14-sparse-upcycling-and-attention-distillation-pipeline",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch14-sparse-upcycling-and-attention-distillation-pipeline",
+      "passed": true
+    },
+    {
+      "check": "local links exist",
+      "passed": true
+    },
+    {
+      "check": "all footnotes used and defined once",
+      "passed": true
+    },
+    {
+      "check": "sources.json integrity",
+      "passed": true
+    },
+    {
+      "check": "manifest.json integrity",
+      "passed": true
+    },
+    {
+      "check": "no formula errors",
+      "passed": true
+    },
+    {
+      "check": "book-size figure layout",
+      "passed": true
+    },
+    {
+      "check": "example 14-1 V4.1 dual-track arithmetic",
+      "passed": true
+    },
+    {
+      "check": "example 14-2 digital worker audit arithmetic",
+      "passed": true
+    },
+    {
+      "check": "example 14-3 OpenTallas step and hop arithmetic",
+      "passed": true
+    },
+    {
+      "check": "example 14-4 counterfactual SWA and candidate pool",
+      "passed": true
+    },
+    {
+      "check": "example 14-11 HW-NAS hybrid layer allocation arithmetic",
+      "passed": true
+    },
+    {
+      "check": "example 14-12 Sparse Upcycling compute saving arithmetic",
+      "passed": true
+    },
+    {
+      "check": "zero exclamation marks",
+      "passed": true
+    }
+  ],
+  "missing_links": []
+}

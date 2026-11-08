@@ -2,7 +2,7 @@
   "passed": true,
   "checks": [
     {
-      "check": "all five sections and twelve subsections match outline",
+      "check": "all eight sections and twenty-two subsections match outline",
       "passed": true
     },
     {
@@ -10,15 +10,27 @@
       "passed": true
     },
     {
-      "check": "six exercises 13-1 to 13-6 in order",
+      "check": "seventeen exercises 13-1 to 13-17 in order",
       "passed": true
     },
     {
-      "check": "six figures in figure-index.json",
+      "check": "three production Python code blocks",
       "passed": true
     },
     {
-      "check": "sequential external captions 13-1 to 13-6",
+      "check": "fourteen standardized blockquote worked examples",
+      "passed": true
+    },
+    {
+      "check": "ten standardized italic table captions 13-1 to 13-10",
+      "passed": true
+    },
+    {
+      "check": "twenty-six figures in figure-index.json",
+      "passed": true
+    },
+    {
+      "check": "sequential external captions 13-1 to 13-26",
       "passed": true
     },
     {
@@ -98,6 +110,246 @@
       "passed": true
     },
     {
+      "check": "no internal figure numbering: ch13-parquet-lance-vs-webdataset-io",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch13-parquet-lance-vs-webdataset-io",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch13-parquet-lance-vs-webdataset-io",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch13-dsec-erofs-ondemand-container-boot",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch13-dsec-erofs-ondemand-container-boot",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch13-dsec-erofs-ondemand-container-boot",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch13-faiss-flat-vs-iks-near-storage",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch13-faiss-flat-vs-iks-near-storage",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch13-faiss-flat-vs-iks-near-storage",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch13-hnsw-memory-vs-diskann-ssd-layout",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch13-hnsw-memory-vs-diskann-ssd-layout",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch13-hnsw-memory-vs-diskann-ssd-layout",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch13-rag-288-requests-calibration-trap",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch13-rag-288-requests-calibration-trap",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch13-rag-288-requests-calibration-trap",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch13-rag-topk-kv-blocks-and-rlimit-gap",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch13-rag-topk-kv-blocks-and-rlimit-gap",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch13-rag-topk-kv-blocks-and-rlimit-gap",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch13-rag-end-to-end-timeline-breakdown",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch13-rag-end-to-end-timeline-breakdown",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch13-rag-end-to-end-timeline-breakdown",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch13-three-tier-kv-cache-hierarchy",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch13-three-tier-kv-cache-hierarchy",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch13-three-tier-kv-cache-hierarchy",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch13-cacheblend-non-prefix-kv-fusion",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch13-cacheblend-non-prefix-kv-fusion",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch13-cacheblend-non-prefix-kv-fusion",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch13-ssd-dwpd-endurance-and-admission",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch13-ssd-dwpd-endurance-and-admission",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch13-ssd-dwpd-endurance-and-admission",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch13-storage-diagnosis-workflow",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch13-storage-diagnosis-workflow",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch13-storage-diagnosis-workflow",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch13-full-stack-ai-data-plane",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch13-full-stack-ai-data-plane",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch13-full-stack-ai-data-plane",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch13-falconfs-server-side-path-resolution",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch13-falconfs-server-side-path-resolution",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch13-falconfs-server-side-path-resolution",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch13-multimodal-tar-webdataset-vs-lance-random",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch13-multimodal-tar-webdataset-vs-lance-random",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch13-multimodal-tar-webdataset-vs-lance-random",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch13-distvs-helmsman-disaggregated-vector-search",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch13-distvs-helmsman-disaggregated-vector-search",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch13-distvs-helmsman-disaggregated-vector-search",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch13-copilotio-gds-vs-cpu-assisted-io",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch13-copilotio-gds-vs-cpu-assisted-io",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch13-copilotio-gds-vs-cpu-assisted-io",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch13-umap-moonbright-mmap-and-gpu-page-table",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch13-umap-moonbright-mmap-and-gpu-page-table",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch13-umap-moonbright-mmap-and-gpu-page-table",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch13-ai-storage-bandwidth-latency-iops-cube",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch13-ai-storage-bandwidth-latency-iops-cube",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch13-ai-storage-bandwidth-latency-iops-cube",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch13-nixl-unified-nonblocking-transfer-plane",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch13-nixl-unified-nonblocking-transfer-plane",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch13-nixl-unified-nonblocking-transfer-plane",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch13-checkpoint-replication-to-erasure-coding-lifecycle",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch13-checkpoint-replication-to-erasure-coding-lifecycle",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch13-checkpoint-replication-to-erasure-coding-lifecycle",
+      "passed": true
+    },
+    {
       "check": "local links exist",
       "passed": true
     },
@@ -135,6 +387,14 @@
     },
     {
       "check": "Example 13-4 multimodal decoding arithmetic",
+      "passed": true
+    },
+    {
+      "check": "example 13-11 NIXL multi-tier parallel transfer arithmetic",
+      "passed": true
+    },
+    {
+      "check": "example 13-12 checkpoint RS(10,4) erasure coding arithmetic",
       "passed": true
     },
     {

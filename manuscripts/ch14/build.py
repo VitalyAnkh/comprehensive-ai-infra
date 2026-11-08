@@ -136,6 +136,34 @@ def build_figure_data() -> dict:
             "weight_read_8b_fp4_h100_ms": 1.19,
             "weight_read_8b_fp4_h200_ms": 0.83,
             "weight_read_total_ratio": 25.1
+        },
+        "example_14_11_hwnas_hybrid_layers": {
+            "total_layers": 64,
+            "concurrent_sessions": 16,
+            "context_tokens": 131072,
+            "kv_budget_gib": 36.0,
+            "tpot_budget_ms": 25.0,
+            "full_layer_mib": 4096.0,
+            "linear_layer_mib": 64.0,
+            "optimal_full_layers": 8,
+            "optimal_linear_layers": 56,
+            "resident_state_gib": 35.50,
+            "state_compression_x": 7.21,
+            "step_tpot_ms": 24.08,
+            "tpot_speedup_x": 3.60
+        },
+        "example_14_12_sparse_upcycling": {
+            "dense_params_b": 8.0,
+            "num_experts": 8,
+            "active_experts": 2,
+            "active_params_b": 13.0,
+            "total_moe_params_b": 47.0,
+            "scratch_tokens_t": 15.0,
+            "align_tokens_t": 0.2,
+            "upcycle_tokens_t": 3.0,
+            "scratch_flops_e24": 1.17,
+            "migrate_flops_e24": 0.2374,
+            "compute_saving_pct": 79.71
         }
     }
 
@@ -623,6 +651,46 @@ def fig_14_24_codesign_loop(ex: Exporter):
     ex.save(fig, 'ch14-codesign-pre-silicon-to-production-loop')
 
 
+def fig_14_25_hwnas_pareto(ex: Exporter):
+    fig, ax = canvas(3.75)
+    card(ax, 0.02, 0.04, 0.46, 0.92, 'A. 算例 14-11：混合层整数规划', color='blue', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '64 层 · 16 并发 · 预算 ≤36 GiB\n全注意力 4 GiB vs 线性 64 MiB', 'blue', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '规划最优解：1:7 混合装配\n8 层全注意力 + 56 层线性层', 'teal', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '状态 35.50 GiB (省 7.21×)\nTPOT 24.08 ms (快 3.60×)', 'purple', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '1:7 全局/线性配比达帕累托最优', size=11, ha='center', weight='bold', color=BORDER_COL['blue'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'B. 硬件感知架构搜索 (HW-NAS)', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '摒弃纯 FLOPs 代理指标\n以芯片 TPOT 与 HBM 为目标', 'orange', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '异构装配：KDA/Mamba 压状态\nGQA/MLA 守检索 · MoE 扩容量', 'teal', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '随芯片算存比动态迁移：\n高算存比倾向高密度细专家', 'blue', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '将芯片物理边界编译为层间配比', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch14-hardware-aware-hybrid-layer-allocation-pareto')
+
+
+def fig_14_26_sparse_upcycling(ex: Exporter):
+    fig, ax = canvas(3.75)
+    card(ax, 0.02, 0.04, 0.46, 0.92, 'A. 算例 14-12：Sparse Upcycling', color='purple', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '起点：8B 稠密底座 (15T 词元)\n复制 FFN 为 8 专家 + 微扰', 'purple', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '0.2T 对齐 + 3.0T 稀疏退火\n总耗 0.2374×10²⁴ FLOPs', 'teal', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '较从头训 15T (1.17×10²⁴)\n净省 79.71% 预训练算力', 'blue', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '复用稠密底座沉没算力的捷径', size=11, ha='center', weight='bold', color=BORDER_COL['purple'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'B. 跨架构注意力线性化三阶蒸馏', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '阶段一：注意力矩阵对齐\n用教师 QK^T 监督线性核', 'blue', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '阶段二：逐层隐藏态对齐\n冻结主干最小化输出 L2 距离', 'teal', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '阶段三：端到端 KL 蒸馏微调\n约 20% 词元完成架构跃迁', 'orange', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, 'MOHAWK 低成本跨架构迁移范式', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch14-sparse-upcycling-and-attention-distillation-pipeline')
+
+
 def main():
     ex = Exporter(HERE)
     fig_14_1_simultaneous(ex)
@@ -649,6 +717,8 @@ def main():
     fig_14_22_moe_granularity(ex)
     fig_14_23_kv_head_tp(ex)
     fig_14_24_codesign_loop(ex)
+    fig_14_25_hwnas_pareto(ex)
+    fig_14_26_sparse_upcycling(ex)
     outputs = ex.finish()
 
     fig_data = build_figure_data()
@@ -894,6 +964,26 @@ def main():
             "caption": "从四资源下界筛选、Chakra/NeuSight 细粒度仿真、算法—系统—硬件联立改造到预注册证伪实验（实验 14-01 / 14-02）与全生命周期 TCO 摊销的协同工程飞轮",
             "source_refs": ["manuscripts/ch14/figure-data.json"],
             "TeachingRole": "收束第 14 章全章协同设计方法论，串联流片前探索与生产集群实测验证"
+        },
+        {
+            "figure_id": "图 14-25",
+            "number": 25,
+            "file": "ch14-hardware-aware-hybrid-layer-allocation-pareto.svg",
+            "asset": "ch14/ch14-hardware-aware-hybrid-layer-allocation-pareto.svg",
+            "section": "14.9.3",
+            "caption": "固定硬件显存与延迟预算下，混合层配比（线性递推层比例 ρ_lin vs. 全局注意力层 1-ρ_lin）的质量—吞吐帕累托寻优曲面",
+            "source_refs": ["manuscripts/ch14/figure-data.json"],
+            "TeachingRole": "建立以真实硬件 KV 预算与延迟为目标的异构混合层整数规划模型"
+        },
+        {
+            "figure_id": "图 14-26",
+            "number": 26,
+            "file": "ch14-sparse-upcycling-and-attention-distillation-pipeline.svg",
+            "asset": "ch14/ch14-sparse-upcycling-and-attention-distillation-pipeline.svg",
+            "section": "14.9.3",
+            "caption": "稠密全注意力模型通过 Sparse Upcycling 与跨层注意力蒸馏低成本转化为系统友好型混合 MoE 架构的训练流水线",
+            "source_refs": ["manuscripts/ch14/figure-data.json"],
+            "TeachingRole": "展示如何仅用从头预训练约 20% 的算力（省 79.71%）将稠密模型热启动迁移为混合线性注意力与稀疏 MoE 架构"
         }
     ]
     (HERE / 'figure-index.json').write_text(json.dumps(fig_index, ensure_ascii=False, indent=2) + '\n')

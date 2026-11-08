@@ -159,6 +159,34 @@ def build_figure_data() -> dict:
             "effective_dwpd": 33.75,
             "target_dwpd_limit": 3.0,
             "max_admission_ratio": 0.0889
+        },
+        "example_13_11_nixl_pipeline": {
+            "total_kv_gb": 8.0,
+            "tier_volumes_gb": [3.2, 3.2, 1.6],
+            "tier_bw_gbps": [50.0, 40.0, 20.0],
+            "tier_init_ms": [0.05, 0.10, 0.15],
+            "sync_switch_ms": 0.40,
+            "nixl_desc_ms": 0.05,
+            "serial_fetch_ms": 225.10,
+            "nixl_parallel_ms": 80.20,
+            "speedup": 2.81,
+            "effective_bw_gbps": 99.75,
+            "exposed_after_overlap_ms": 20.05
+        },
+        "example_13_12_checkpoint_ec": {
+            "ckpt_raw_tb": 10.0,
+            "total_ckpts": 100,
+            "hot_keep_count": 3,
+            "cold_count": 97,
+            "rep_factor": 3.0,
+            "ec_k": 10,
+            "ec_m": 4,
+            "ec_factor": 1.4,
+            "pure_3rep_tb": 3000.0,
+            "tiered_ec_tb": 1448.0,
+            "saved_tb": 1552.0,
+            "saving_pct": 51.73,
+            "per_node_parity_mb_s": 66.7
         }
     }
 
@@ -663,6 +691,46 @@ def fig_13_24_storage_cube(ex: Exporter):
     ex.save(fig, 'ch13-ai-storage-bandwidth-latency-iops-cube')
 
 
+def fig_13_25_nixl(ex: Exporter):
+    fig, ax = canvas(3.75)
+    card(ax, 0.02, 0.04, 0.46, 0.92, 'A. NIXL 统一异步传输控制面', color='blue', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '8.0 GB KV 跨介质注册\nCXL · RDMA · NVMe P2P', 'blue', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '非阻塞复合描述符 (0.05 ms)\n散聚块合并 + 三通道并发', 'teal', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '拓扑感知自动选路\nNVLink > P2P GDS > RoCEv2', 'purple', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '消除跨层 API 割裂与同步等待', size=11, ha='center', weight='bold', color=BORDER_COL['blue'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'B. 算例 13-11：三通道并发预取', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '传统分立 API 串行拉取\n三层累计耗时 225.10 ms', 'orange', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, 'NIXL 并发拉取 80.20 ms\n提速 2.81× (99.75 GB/s)', 'teal', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '与前序块计算重叠 75% 后\n净暴露停顿仅 20.05 ms', 'blue', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '支撑 PD 分离与多级 KV 换入', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch13-nixl-unified-nonblocking-transfer-plane')
+
+
+def fig_13_26_checkpoint_ec(ex: Exporter):
+    fig, ax = canvas(3.75)
+    card(ax, 0.02, 0.04, 0.46, 0.92, 'A. 热层 3 副本秒级暂存', color='orange', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '万卡单次快照裸量 10.0 TB\n100 个里程碑共 1.0 PB', 'orange', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '最近 N_hot=3 个热快照\n3 副本 (3.0×) 占 90.0 TB', 'teal', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '若 100 个全保留 3 副本：\n需消耗 3,000.0 TB 闪存', 'orange', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '热层：零编码开销、秒级回滚', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'B. 温冷层 RS(10,4) 纠删归档', color='blue', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '100 节点后台编码 66.7 MB/s\n10 数据 + 4 校验块 (1.4×)', 'blue', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '其余 97 个归档 1,358.0 TB\n容忍任意 4 节点同时故障', 'teal', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '算例 13-12：总占 1,448 TB\n净省 1,552 TB (省 51.73%)', 'purple', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '温冷：容量减半、高可靠归档', size=11, ha='center', weight='bold', color=BORDER_COL['blue'])
+    ex.save(fig, 'ch13-checkpoint-replication-to-erasure-coding-lifecycle')
+
+
 def main():
     ex = Exporter(HERE)
     fig_13_1_hierarchy(ex)
@@ -689,6 +757,8 @@ def main():
     fig_13_22_umap_moonbright(ex)
     fig_13_23_tar_vs_lance_seek(ex)
     fig_13_24_storage_cube(ex)
+    fig_13_25_nixl(ex)
+    fig_13_26_checkpoint_ec(ex)
     outputs = ex.finish()
 
     fig_data = build_figure_data()
@@ -934,6 +1004,26 @@ def main():
             "caption": "AI 原生存储底座全场景（检查点、十亿小文件、多级 KV、十亿向量 ANNS、细粒度协同 I/O）在带宽—延迟—IOPS 三维空间的映射总览",
             "source_refs": ["manuscripts/ch13/figure-data.json"],
             "TeachingRole": "总结第 13 章全部存储负载特征与对应系统原语的工程选型总表"
+        },
+        {
+            "figure_id": "图 13-25",
+            "number": 25,
+            "file": "ch13-nixl-unified-nonblocking-transfer-plane.svg",
+            "asset": "ch13/ch13-nixl-unified-nonblocking-transfer-plane.svg",
+            "section": "13.8.4",
+            "caption": "NIXL 跨 HBM、Host DRAM、本地 NVMe 与远端 RDMA 存储池的统一异步传输抽象与路径自动协商",
+            "source_refs": ["manuscripts/ch13/figure-data.json"],
+            "TeachingRole": "展示 NVIDIA NIXL 如何统一封装多介质零拷贝异步描述符并消减多级 KV 换入换出尾延迟"
+        },
+        {
+            "figure_id": "图 13-26",
+            "number": 26,
+            "file": "ch13-checkpoint-replication-to-erasure-coding-lifecycle.svg",
+            "asset": "ch13/ch13-checkpoint-replication-to-erasure-coding-lifecycle.svg",
+            "section": "13.8.4",
+            "caption": "PB 级检查点从热层 3 副本秒级闪存暂存到温冷层 RS(10,4) 纠删码对象归档的容量与恢复带宽瀑布图",
+            "source_refs": ["manuscripts/ch13/figure-data.json"],
+            "TeachingRole": "建立十万卡训练集群检查点热层 3 副本与温冷层 RS(10,4) 纠删码的分层生命周期归档账本"
         }
     ]
     (HERE / 'figure-index.json').write_text(json.dumps(fig_index, ensure_ascii=False, indent=2) + '\n')

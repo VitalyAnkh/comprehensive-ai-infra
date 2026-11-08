@@ -109,5 +109,33 @@
     "weight_read_8b_fp4_h100_ms": 1.19,
     "weight_read_8b_fp4_h200_ms": 0.83,
     "weight_read_total_ratio": 25.1
+  },
+  "example_14_11_hwnas_hybrid_layers": {
+    "total_layers": 64,
+    "concurrent_sessions": 16,
+    "context_tokens": 131072,
+    "kv_budget_gib": 36.0,
+    "tpot_budget_ms": 25.0,
+    "full_layer_mib": 4096.0,
+    "linear_layer_mib": 64.0,
+    "optimal_full_layers": 8,
+    "optimal_linear_layers": 56,
+    "resident_state_gib": 35.5,
+    "state_compression_x": 7.21,
+    "step_tpot_ms": 24.08,
+    "tpot_speedup_x": 3.6
+  },
+  "example_14_12_sparse_upcycling": {
+    "dense_params_b": 8.0,
+    "num_experts": 8,
+    "active_experts": 2,
+    "active_params_b": 13.0,
+    "total_moe_params_b": 47.0,
+    "scratch_tokens_t": 15.0,
+    "align_tokens_t": 0.2,
+    "upcycle_tokens_t": 3.0,
+    "scratch_flops_e24": 1.17,
+    "migrate_flops_e24": 0.2374,
+    "compute_saving_pct": 79.71
   }
 }

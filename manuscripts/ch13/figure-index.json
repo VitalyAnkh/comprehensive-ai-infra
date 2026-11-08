@@ -287,5 +287,29 @@
       "manuscripts/ch13/figure-data.json"
     ],
     "TeachingRole": "总结第 13 章全部存储负载特征与对应系统原语的工程选型总表"
+  },
+  {
+    "figure_id": "图 13-25",
+    "number": 25,
+    "file": "ch13-nixl-unified-nonblocking-transfer-plane.svg",
+    "asset": "ch13/ch13-nixl-unified-nonblocking-transfer-plane.svg",
+    "section": "13.8.4",
+    "caption": "NIXL 跨 HBM、Host DRAM、本地 NVMe 与远端 RDMA 存储池的统一异步传输抽象与路径自动协商",
+    "source_refs": [
+      "manuscripts/ch13/figure-data.json"
+    ],
+    "TeachingRole": "展示 NVIDIA NIXL 如何统一封装多介质零拷贝异步描述符并消减多级 KV 换入换出尾延迟"
+  },
+  {
+    "figure_id": "图 13-26",
+    "number": 26,
+    "file": "ch13-checkpoint-replication-to-erasure-coding-lifecycle.svg",
+    "asset": "ch13/ch13-checkpoint-replication-to-erasure-coding-lifecycle.svg",
+    "section": "13.8.4",
+    "caption": "PB 级检查点从热层 3 副本秒级闪存暂存到温冷层 RS(10,4) 纠删码对象归档的容量与恢复带宽瀑布图",
+    "source_refs": [
+      "manuscripts/ch13/figure-data.json"
+    ],
+    "TeachingRole": "建立十万卡训练集群检查点热层 3 副本与温冷层 RS(10,4) 纠删码的分层生命周期归档账本"
   }
 ]
