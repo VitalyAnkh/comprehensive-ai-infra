@@ -1,0 +1,236 @@
+[
+  {
+    "figure_id": "图 21-1",
+    "number": 1,
+    "file": "ch21-single-turn-chat-vs-multi-turn-agent-worm-loop.svg",
+    "asset": "ch21/ch21-single-turn-chat-vs-multi-turn-agent-worm-loop.svg",
+    "section": "21.1.1",
+    "caption": "单轮对话（Read-Once）与 40 轮自主智能体（WORM 95.12% 前缀复用 + 长工具等待空窗）的显存与算力时间线对比（算例 21-1）",
+    "source_refs": [
+      "experiments/ch21/21-01/run.py",
+      "manuscripts/ch21/figure-data.json"
+    ],
+    "TeachingRole": "揭示多轮智能体 95.12% 预填充词元为历史前缀重读且预填充/解码比达 205:1 的物理特征",
+    "figure": "21-1",
+    "name": "ch21-single-turn-chat-vs-multi-turn-agent-worm-loop"
+  },
+  {
+    "figure_id": "图 21-2",
+    "number": 2,
+    "file": "ch21-tool-wait-hbm-retain-recompute-offload-phase-diagram.svg",
+    "asset": "ch21/ch21-tool-wait-hbm-retain-recompute-offload-phase-diagram.svg",
+    "section": "21.1.2",
+    "caption": "工具等待时长 t_wait 与前缀长度 L_prefix 构成的“HBM 驻留 vs. 分层换出 vs. 丢弃重算”三维最优决策相图（t* = 2.16 s）",
+    "source_refs": [
+      "experiments/ch21/21-01/run.py",
+      "manuscripts/ch21/figure-data.json"
+    ],
+    "TeachingRole": "推导工具等待期 HBM 租金与 PCIe 换入/重算耗时的三段式切换边界",
+    "figure": "21-2",
+    "name": "ch21-tool-wait-hbm-retain-recompute-offload-phase-diagram"
+  },
+  {
+    "figure_id": "图 21-3",
+    "number": 3,
+    "file": "ch21-four-tier-kv-cache-hierarchy-dynamo-lmcache.svg",
+    "asset": "ch21/ch21-four-tier-kv-cache-hierarchy-dynamo-lmcache.svg",
+    "section": "21.2.1",
+    "caption": "GPU HBM ↔ Host DRAM ↔ Local NVMe ↔ Remote RDMA Pool 四级分层 KV 缓存架构与块级哈希去重",
+    "source_refs": [
+      "manuscripts/ch21/figure-data.json"
+    ],
+    "TeachingRole": "构建跨节点共享的四级 KV 记忆存储池与逐层异步 DMA 预取流水",
+    "figure": "21-3",
+    "name": "ch21-four-tier-kv-cache-hierarchy-dynamo-lmcache"
+  },
+  {
+    "figure_id": "图 21-4",
+    "number": 4,
+    "file": "ch21-kv-aware-global-radix-router-ttft-tradeoff.svg",
+    "asset": "ch21/ch21-kv-aware-global-radix-router-ttft-tradeoff.svg",
+    "section": "21.2.1",
+    "caption": "KV 感知全局路由器（NVIDIA Dynamo / SGLang HiCache）在节点排队延迟与前缀缓存命中率之间的联合寻优（算例 21-2）",
+    "source_refs": [
+      "experiments/ch21/21-01/run.py",
+      "manuscripts/ch21/figure-data.json"
+    ],
+    "TeachingRole": "证明综合排队与命中率的全局路由可将 64K 智能体请求 TTFT 从 510 ms 压至 170 ms（快 3.00 倍）",
+    "figure": "21-4",
+    "name": "ch21-kv-aware-global-radix-router-ttft-tradeoff"
+  },
+  {
+    "figure_id": "图 21-5",
+    "number": 5,
+    "file": "ch21-cachegen-anchor-delta-entropy-kv-streaming.svg",
+    "asset": "ch21/ch21-cachegen-anchor-delta-entropy-kv-streaming.svg",
+    "section": "21.2.2",
+    "caption": "CacheGen 利用锚点残差量化与算术编码实现 4.21 倍流式压缩并在 50 Gbps 网络上击败本地重算（算例 21-2）",
+    "source_refs": [
+      "experiments/ch21/21-01/run.py",
+      "manuscripts/ch21/figure-data.json"
+    ],
+    "TeachingRole": "确立跨机架传输 KV 缓存战胜本地 GPU 重算的临界带宽阈值与熵编码收益",
+    "figure": "21-5",
+    "name": "ch21-cachegen-anchor-delta-entropy-kv-streaming"
+  },
+  {
+    "figure_id": "图 21-6",
+    "number": 6,
+    "file": "ch21-microvm-snapshot-cow-userfaultfd-12ms-fork.svg",
+    "asset": "ch21/ch21-microvm-snapshot-cow-userfaultfd-12ms-fork.svg",
+    "section": "21.3.1",
+    "caption": "传统容器/虚机冷启动（1,500 ms）vs. Firecracker 内存快照 + userfaultfd 惰性缺页加载实现 12.0 ms 极速克隆（算例 21-3）",
+    "source_refs": [
+      "experiments/ch21/21-02/run.py",
+      "manuscripts/ch21/figure-data.json"
+    ],
+    "TeachingRole": "拆解微虚机写时复制快照与按需工作集预取实现 125 倍启动加速的内核机理",
+    "figure": "21-6",
+    "name": "ch21-microvm-snapshot-cow-userfaultfd-12ms-fork"
+  },
+  {
+    "figure_id": "图 21-7",
+    "number": 7,
+    "file": "ch21-synchronized-kv-and-sandbox-mcts-tree-forking.svg",
+    "asset": "ch21/ch21-synchronized-kv-and-sandbox-mcts-tree-forking.svg",
+    "section": "21.3.2",
+    "caption": "面向智能体树搜索（Tree-of-Actions）的 PagedAttention KV 块表与沙箱 OverlayFS/内存快照同步分叉与 8.50 ms 回滚",
+    "source_refs": [
+      "experiments/ch21/21-02/run.py",
+      "manuscripts/ch21/figure-data.json"
+    ],
+    "TeachingRole": "实现模型内部 KV 记忆与外部沙箱文件系统/内存状态的原子级同步树状回溯",
+    "figure": "21-7",
+    "name": "ch21-synchronized-kv-and-sandbox-mcts-tree-forking"
+  },
+  {
+    "figure_id": "图 21-8",
+    "number": 8,
+    "file": "ch21-computer-use-gui-webrtc-frame-diff-pipeline.svg",
+    "asset": "ch21/ch21-computer-use-gui-webrtc-frame-diff-pipeline.svg",
+    "section": "21.3.2",
+    "caption": "Computer-Use 桌面沙箱的脏矩形帧差分流（Dirty-Rect Streaming）、无障碍树（AXTree）混合提取与焦点放大流水线",
+    "source_refs": [
+      "manuscripts/ch21/figure-data.json"
+    ],
+    "TeachingRole": "通过脏矩形编码与 DOM/AXTree 结构化锚点将 GUI 智能体单步视觉开销压降 85%",
+    "figure": "21-8",
+    "name": "ch21-computer-use-gui-webrtc-frame-diff-pipeline"
+  },
+  {
+    "figure_id": "图 21-9",
+    "number": 9,
+    "file": "ch21-mcp-gateway-dynamic-tool-rag-and-auth-isolation.svg",
+    "asset": "ch21/ch21-mcp-gateway-dynamic-tool-rag-and-auth-isolation.svg",
+    "section": "21.4.1",
+    "caption": "模型上下文协议（MCP）安全网关：按需语义检索挂载 Top-8 工具 Schema（省 99.20% 词元）与零信任凭据隔离（算例 21-5）",
+    "source_refs": [
+      "experiments/ch21/21-02/run.py",
+      "manuscripts/ch21/figure-data.json"
+    ],
+    "TeachingRole": "解决万级企业工具全量挂载引发的 18 万词元上下文膨胀与凭据泄露风险",
+    "figure": "21-9",
+    "name": "ch21-mcp-gateway-dynamic-tool-rag-and-auth-isolation"
+  },
+  {
+    "figure_id": "图 21-10",
+    "number": 10,
+    "file": "ch21-idempotent-outbox-and-speculative-tool-prefetch.svg",
+    "asset": "ch21/ch21-idempotent-outbox-and-speculative-tool-prefetch.svg",
+    "section": "21.4.1",
+    "caption": "只读工具投机预取与写操作工具基于幂等键（Idempotency Key）和事务外发箱（Outbox）的精确一次执行保障",
+    "source_refs": [
+      "manuscripts/ch21/figure-data.json"
+    ],
+    "TeachingRole": "防止智能体超时重试或投机执行在外部世界引发重复扣款或重复下单事故",
+    "figure": "21-10",
+    "name": "ch21-idempotent-outbox-and-speculative-tool-prefetch"
+  },
+  {
+    "figure_id": "图 21-11",
+    "number": 11,
+    "file": "ch21-i19-telemetry-backlog-buffer-overflow-and-drain.svg",
+    "asset": "ch21/ch21-i19-telemetry-backlog-buffer-overflow-and-drain.svg",
+    "section": "21.4.1",
+    "caption": "锁定算例 I19：审计遥测断网期间 400 KiB/s 积压曲线（81.92 s 触顶 32 MiB、120 s 累积 46.875 MiB）与恢复后 76.92 s 排空过程（算例 21-4）",
+    "source_refs": [
+      "experiments/ch21/21-02/run.py",
+      "manuscripts/ch21/figure-data.json"
+    ],
+    "TeachingRole": "精确复算断网期间内存缓冲触顶时刻、外发箱溢写体积与净排空速率下的恢复时长",
+    "figure": "21-11",
+    "name": "ch21-i19-telemetry-backlog-buffer-overflow-and-drain"
+  },
+  {
+    "figure_id": "图 21-12",
+    "number": 12,
+    "file": "ch21-prompt-injection-taint-tracking-dual-llm-firewall.svg",
+    "asset": "ch21/ch21-prompt-injection-taint-tracking-dual-llm-firewall.svg",
+    "section": "21.4.1",
+    "caption": "防御间接提示词注入（Indirect Prompt Injection）的特权控制流与非受信数据流双 LLM 污点追踪防火墙",
+    "source_refs": [
+      "manuscripts/ch21/figure-data.json"
+    ],
+    "TeachingRole": "通过动态污点标签与控制面/数据面物理隔离阻断外部网页或邮件中的隐藏越权指令",
+    "figure": "21-12",
+    "name": "ch21-prompt-injection-taint-tracking-dual-llm-firewall"
+  },
+  {
+    "figure_id": "图 21-13",
+    "number": 13,
+    "file": "ch21-hipporag2-graph-vector-episodic-memory-consolidation.svg",
+    "asset": "ch21/ch21-hipporag2-graph-vector-episodic-memory-consolidation.svg",
+    "section": "21.4.2",
+    "caption": "HippoRAG 2 / Mem0 结合向量检索、知识图谱个性化 PageRank 与后台异步记忆提炼的长期记忆底座",
+    "source_refs": [
+      "manuscripts/ch21/figure-data.json"
+    ],
+    "TeachingRole": "利用海马体图谱索引与新皮层异步巩固突破上下文窗口限制并降低 96% 预填充开销",
+    "figure": "21-13",
+    "name": "ch21-hipporag2-graph-vector-episodic-memory-consolidation"
+  },
+  {
+    "figure_id": "图 21-14",
+    "number": 14,
+    "file": "ch21-multi-agent-dag-scheduler-and-token-budget-allocation.svg",
+    "asset": "ch21/ch21-multi-agent-dag-scheduler-and-token-budget-allocation.svg",
+    "section": "21.4.2",
+    "caption": "复杂软件工程任务中 Planner—Coder—Tester 多智能体 DAG 拓扑调度、公共前缀广播与动态词元预算熔断",
+    "source_refs": [
+      "manuscripts/ch21/figure-data.json"
+    ],
+    "TeachingRole": "通过边际增益监控与 DAG 预算熔断消除多智能体无限循环空谈风暴",
+    "figure": "21-14",
+    "name": "ch21-multi-agent-dag-scheduler-and-token-budget-allocation"
+  },
+  {
+    "figure_id": "图 21-15",
+    "number": 15,
+    "file": "ch21-agentic-cluster-cpu-gpu-sandbox-pool-sizing.svg",
+    "asset": "ch21/ch21-agentic-cluster-cpu-gpu-sandbox-pool-sizing.svg",
+    "section": "21.3.2",
+    "caption": "大规模 Agentic 云平台中 GPU 推理池、大容量 DRAM/NVMe KV 缓存池与高密 CPU 沙箱池的 Little 定律配比模型",
+    "source_refs": [
+      "manuscripts/ch21/figure-data.json"
+    ],
+    "TeachingRole": "依据推理活跃期与工具执行期的 1:12 驻留比指导异构计算与存储池容量规划",
+    "figure": "21-15",
+    "name": "ch21-agentic-cluster-cpu-gpu-sandbox-pool-sizing"
+  },
+  {
+    "figure_id": "图 21-16",
+    "number": 16,
+    "file": "ch21-autonomous-agent-infrastructure-full-stack-map.svg",
+    "asset": "ch21/ch21-autonomous-agent-infrastructure-full-stack-map.svg",
+    "section": "21.4.2",
+    "caption": "自主智能体基础设施从四级分层 KV 记忆、12 ms CoW 微虚机沙箱到幂等安全网关的全栈总图",
+    "source_refs": [
+      "experiments/ch21/21-01/run.py",
+      "experiments/ch21/21-02/run.py",
+      "manuscripts/ch21/figure-data.json"
+    ],
+    "TeachingRole": "收束第 21 章记忆分层化、环境可分叉化与工具执行幂等化的完整工程体系",
+    "figure": "21-16",
+    "name": "ch21-autonomous-agent-infrastructure-full-stack-map"
+  }
+]

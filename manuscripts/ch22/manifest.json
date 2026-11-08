@@ -1,0 +1,212 @@
+{
+  "outputs": [
+    {
+      "path": "manuscripts/ch22/ch22-acoustic-token-eviction-and-semantic-anchor-retention.pdf",
+      "sha256": "6c03d8bb124e251d6f4acc3e39c53c9569d599763ca88792938f9c31127bdea1"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-acoustic-token-eviction-and-semantic-anchor-retention.png",
+      "sha256": "b6d05bc3d65b984abd156e6791383e73286e1cbc64759bd621d4b4ced7c54a1f"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-acoustic-token-eviction-and-semantic-anchor-retention.svg",
+      "sha256": "589accf76dd17d18b497b844b46a746e3f85072c60c165395403095b5692d056"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-barge-in-playback-cursor-aligned-kv-rollback.pdf",
+      "sha256": "779e57a1a8487003557f3f878e7836de796f50c3ffcb84675802646ac1ddea48"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-barge-in-playback-cursor-aligned-kv-rollback.png",
+      "sha256": "9023d2b2d3c11460ed8e6ac454a0560000f2fc9d6a82a5858d96e596a8413008"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-barge-in-playback-cursor-aligned-kv-rollback.svg",
+      "sha256": "093cb76d7d57ca8a8e97b75e918250e393d4b6e3f79f43767df8315d8ac4a1f5"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-cascaded-asr-llm-tts-vs-native-full-duplex-s2s.pdf",
+      "sha256": "98c859746822bc3055a5a15855160f3c978c056da55896114c82b65f208d1607"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-cascaded-asr-llm-tts-vs-native-full-duplex-s2s.png",
+      "sha256": "466996559481cdbb2702afa9e758ad113722238b0ca102a61dfed8d024bb109f"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-cascaded-asr-llm-tts-vs-native-full-duplex-s2s.svg",
+      "sha256": "4a6005741c5dfa4c9ed86f14185f5038ebf147c73241791403f8b2aebd594e9b"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-delayed-codebook-pattern-vs-depth-transformer.pdf",
+      "sha256": "4177442cbf951b3954996d28191eb4987669b9e004d67b77fc18ef7d30a00a91"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-delayed-codebook-pattern-vs-depth-transformer.png",
+      "sha256": "6f4b2f99d25bb4c0026ad86e82d4ce68b8108898625c95c990641165d924a8ac"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-delayed-codebook-pattern-vs-depth-transformer.svg",
+      "sha256": "fbd8f1936b9065f73196a912a31c36643316534cda7fa1e0a4b56503e7c0e002"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-duplex-turn-taking-backchannel-and-overlap-state-machine.pdf",
+      "sha256": "725cb1fe0429063e3c2c8b001b6bb24fb38c93a0a508107b1b91cab160e6b413"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-duplex-turn-taking-backchannel-and-overlap-state-machine.png",
+      "sha256": "6e25cec065c4376a3d94f13c9baaeb8524d35e3b1471abd7bdba8b11db2615a8"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-duplex-turn-taking-backchannel-and-overlap-state-machine.svg",
+      "sha256": "6427487a79be64ae96fdb2a0c2d0a731d7af24848932923746c5324a5c7af07d"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-dynamic-batching-under-strict-80ms-isochronous-tick.pdf",
+      "sha256": "6e7220253391bb3505ab6002aaf602e8f3a5ee6e89a218d16a9d95d7b68006e7"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-dynamic-batching-under-strict-80ms-isochronous-tick.png",
+      "sha256": "0f3aa72cf6a109f3931bfb1f620671aa3a766ac614e170aa101571e2e37df7e8"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-dynamic-batching-under-strict-80ms-isochronous-tick.svg",
+      "sha256": "dce9a0a5c80dff9e65e6755e36530bad57b386a5f6682e00e0fe9698a51c8835"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-edge-vad-aec-wake-word-and-cloud-duplex-handover.pdf",
+      "sha256": "d98234004c125d9fc4d56e0fd596f85e3b42864acf303297b10392b899620f97"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-edge-vad-aec-wake-word-and-cloud-duplex-handover.png",
+      "sha256": "ef3b2ab3f6ff11e4785159b82878706f85d232b5e9bf12bbbf289d683d01d0e4"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-edge-vad-aec-wake-word-and-cloud-duplex-handover.svg",
+      "sha256": "02c2e9aac71a9b1963b76f0e89346374113dff713d87279cdaa04a1163a248b1"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-full-duplex-dual-audio-streams-and-inner-monologue.pdf",
+      "sha256": "d01568faafb0bca1975950ad9137bca71b5dca8df5f4f95634c6a013c2ab4a55"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-full-duplex-dual-audio-streams-and-inner-monologue.png",
+      "sha256": "b2f0f64e3e4d65bbeefb5d86f373eb16963b37494b3e774c63a90890490bdea8"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-full-duplex-dual-audio-streams-and-inner-monologue.svg",
+      "sha256": "59606408534af0919d9434e20719f871adca0c0d479b8d9d6af5abc3f753826f"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-full-duplex-gpu-concurrency-vs-p99-frame-underrun.pdf",
+      "sha256": "f18bb56ffdfa567de7448bd875a4a3e359a670a071cb24f5c9adadd436381f9f"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-full-duplex-gpu-concurrency-vs-p99-frame-underrun.png",
+      "sha256": "d098f3429472ec9ccaf9ca4c25600ebbadc872fc313741244518cc5a8c078b52"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-full-duplex-gpu-concurrency-vs-p99-frame-underrun.svg",
+      "sha256": "89e8f7ad1ba0bb4baf32b78d49344ed02e6c4b2c84127fdbf58b33e305c5fb45"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-full-duplex-omni-streaming-infrastructure-synthesis.pdf",
+      "sha256": "60bb84790af5ee8d752400b8ab46e537e3e2f490233c643ff2d800345b2a6e58"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-full-duplex-omni-streaming-infrastructure-synthesis.png",
+      "sha256": "275368182bfa865b8d5aa4f651736858cfb29e6f29a1876e6ca04d0713af202c"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-full-duplex-omni-streaming-infrastructure-synthesis.svg",
+      "sha256": "d3f1e12ae8e86935f8b4bb3a037d21e1d8d3128ae3fc2fcb49b3205021532b04"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-live-video-1fps-and-audio-12hz-interleaved-pacing.pdf",
+      "sha256": "be25365215c4a6340e9fc1fee9ec254a4e5b55266a486b29b13a60b06c83c550"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-live-video-1fps-and-audio-12hz-interleaved-pacing.png",
+      "sha256": "0f1a38f254febba5d31aa0b76bb6491a6400436d170d1d8c46c227696384518a"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-live-video-1fps-and-audio-12hz-interleaved-pacing.svg",
+      "sha256": "366cbd0064bf7a9a1cc3c31c37c176ac98c6307aa7f8936a935b2a6407592eb9"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-rvq-neural-audio-codec-semantic-acoustic-hierarchy.pdf",
+      "sha256": "19af670b6c96ce6b49b559c2669288c9d5f7b4a786286d37ae67dd66fed8d6b0"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-rvq-neural-audio-codec-semantic-acoustic-hierarchy.png",
+      "sha256": "5cd0529389215a624e5e86370ac18a9c3c998c1b842413b217864558d52e06a2"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-rvq-neural-audio-codec-semantic-acoustic-hierarchy.svg",
+      "sha256": "0c56531bac1beee57854d7189cafbc83c6dd26bad6b0a8f14fb2ec3222e9321c"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-streaming-causal-conv-vocoder-chunk-halo.pdf",
+      "sha256": "d5cb8224efbef1984dc64f300129a78ce74d410fbcea859e70cebb0ece0a0028"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-streaming-causal-conv-vocoder-chunk-halo.png",
+      "sha256": "5a7f1bb05c98c85459a90b8f7e578ae5379600d29baf47be47d6697cdc035e62"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-streaming-causal-conv-vocoder-chunk-halo.svg",
+      "sha256": "e9404cbeabe2003ca70c6647be9524364992e217e2ede56785c5bbf81a045764"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-temporal-and-depth-transformer-gpu-roofline-trap.pdf",
+      "sha256": "9a383b0eb09b218b1bc0c961ea6f0fe7a10427afaa717934c536f0e065cee920"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-temporal-and-depth-transformer-gpu-roofline-trap.png",
+      "sha256": "2976e740408d8f09b5579f6f004b1eb066a373a32ef2eb9207a0b210a8a5b2a6"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-temporal-and-depth-transformer-gpu-roofline-trap.svg",
+      "sha256": "91bbae41b9fdefdae246b049d53acbeadcb7c3a011a01cff53105f92e814cc7b"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-voice-cloning-zero-shot-speaker-embedding-cache.pdf",
+      "sha256": "54be0fdaae9978e38a14d5f65861bf6b8823f8e22417b468e95456ae03f274c5"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-voice-cloning-zero-shot-speaker-embedding-cache.png",
+      "sha256": "6c06ae2884c1306dedb32631b1326dca222f36fa7ccb3502776d9ea17fe1abfa"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-voice-cloning-zero-shot-speaker-embedding-cache.svg",
+      "sha256": "c61a30f301d535ca2b494f95ca0e7a8077f902fa13df1f684f99f6f2d0b0ef23"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-webrtc-opus-aec-to-gpu-end-to-end-latency-budget.pdf",
+      "sha256": "85fbe57cc3d8fd15c02a24a80e154d85b2b9c4601cb5e088e196f45a992cdb2b"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-webrtc-opus-aec-to-gpu-end-to-end-latency-budget.png",
+      "sha256": "e1bd2f4c38c97afbf539ed76b3ff37aae315c4cefae29378eb43002153cccc84"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-webrtc-opus-aec-to-gpu-end-to-end-latency-budget.svg",
+      "sha256": "71996071ace9f1ca23070326b2494992982f31e991452b946cfac9c79343ac5d"
+    },
+    {
+      "path": "manuscripts/ch22/figure-data.json",
+      "sha256": "0152d08c76214d537dd16056fc938ce9f8224211903542daa191fa1f51d3e1c6"
+    },
+    {
+      "path": "manuscripts/ch22/figure-index.json",
+      "sha256": "177965be993be1e35bc81b45b4eaf90107e4120ab1103c77013673cf207c633d"
+    },
+    {
+      "path": "manuscripts/ch22/teaching-layout-validation.json",
+      "sha256": "bce64b68874f1bfc4f555da791782e360442b9d530d72f96fe62559b18b437e7"
+    },
+    {
+      "path": "manuscripts/ch22/math-validation.json",
+      "sha256": "7a233177d76b512256d2a068743194ce12f6bb1305dfe53bb517332ba8df864b"
+    }
+  ]
+}

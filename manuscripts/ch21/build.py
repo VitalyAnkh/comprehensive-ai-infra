@@ -1,0 +1,627 @@
+#!/usr/bin/env python3
+"""Build all 16 publication-grade figures (420pt) and validation manifests for Chapter 21."""
+from __future__ import annotations
+
+import base64
+import hashlib
+import json
+import re
+import subprocess
+import sys
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parents[1]
+sys.path.insert(0, str(HERE.parent))
+
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
+from figure_style import COL, STYLE, Exporter, arrow, box, canvas, card, text
+from preview_output import preview_path
+
+plt.rcParams.update(STYLE)
+
+
+def sha256(path: Path) -> str:
+    raw = path.read_bytes()
+    if raw.startswith(b'version https://git-lfs.github.com/spec/v1'):
+        m = re.search(rb'oid sha256:([0-9a-f]{64})', raw)
+        if m:
+            return m.group(1).decode('ascii')
+    return hashlib.sha256(raw).hexdigest()
+
+
+def draw_dual_band(
+    ex: Exporter,
+    stem: str,
+    top_title: str,
+    top_color: str,
+    top_boxes: list[tuple[str, str]],
+    bot_title: str,
+    bot_color: str,
+    bot_boxes: list[tuple[str, str]],
+    footer: str,
+) -> None:
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, top_title, color=top_color)
+    if len(top_boxes) == 3:
+        xs = [(0.028, 0.296), (0.352, 0.296), (0.676, 0.296)]
+        for (x, w), (lbl, role) in zip(xs, top_boxes):
+            box(ax, x, 0.58, w, 0.24, lbl, role, size=11)
+        arrow(ax, (0.324, 0.70), (0.352, 0.70))
+        arrow(ax, (0.648, 0.70), (0.676, 0.70))
+    else:
+        xs = [(0.03, 0.45), (0.52, 0.45)]
+        for (x, w), (lbl, role) in zip(xs, top_boxes):
+            box(ax, x, 0.58, w, 0.24, lbl, role, size=11)
+        arrow(ax, (0.48, 0.70), (0.52, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, bot_title, color=bot_color)
+    if len(bot_boxes) == 3:
+        xs = [(0.028, 0.296), (0.352, 0.296), (0.676, 0.296)]
+        for (x, w), (lbl, role) in zip(xs, bot_boxes):
+            box(ax, x, 0.13, w, 0.20, lbl, role, size=11)
+        arrow(ax, (0.324, 0.23), (0.352, 0.23))
+        arrow(ax, (0.648, 0.23), (0.676, 0.23))
+    else:
+        xs = [(0.03, 0.45), (0.52, 0.45)]
+        for (x, w), (lbl, role) in zip(xs, bot_boxes):
+            box(ax, x, 0.13, w, 0.20, lbl, role, size=11)
+        arrow(ax, (0.48, 0.23), (0.52, 0.23))
+
+    text(ax, 0.50, 0.06, footer, size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, stem)
+
+
+def build_chapter() -> None:
+    ex = Exporter(HERE)
+
+    draw_dual_band(
+        ex,
+        'ch21-single-turn-chat-vs-multi-turn-agent-worm-loop',
+        '单轮对话（Read-Once）vs. 40 轮自主智能体（WORM 95.12% 复用）',
+        'blue',
+        [
+            ('单轮对话（Read-Once KV）\n提示 2,000 + 生成 500 词元\n结束后 KV 立即释放归零', 'orange'),
+            ('40 轮编程智能体（WORM）\n每轮 +2,000 词元至 80,000\n累计预填充 164 万词元', 'teal'),
+        ],
+        '40 轮智能体算力与时间轴解剖（算例 21-1）',
+        'teal',
+        [
+            ('① 历史前缀重复读\n156 万 / 164 万词元\n复用率 95.12%', 'blue'),
+            ('② 预填充/解码悬殊\n164 万 vs. 8,000\n比值高达 205 : 1', 'purple'),
+            ('③ 工具等待空窗\n每轮阻塞 5–45 s\nGPU 显存空转风险', 'orange'),
+        ],
+        '智能体负载由“预填充历史前缀复用”与“长工具等待空窗”双重支配',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch21-tool-wait-hbm-retain-recompute-offload-phase-diagram',
+        '工具等待期（t_wait）与前缀长度（L_prefix）三维决策相图',
+        'teal',
+        [
+            ('相区 I：t < 2.16 s\n驻留 GPU HBM3e\n零换出，立即续跑', 'blue'),
+            ('相区 II：t >= 2.16 s\n换出至 DRAM/RDMA\n15 s 省 85.6% 租金', 'teal'),
+            ('相区 III：前缀 < 2K\n直接丢弃 HBM 块\n返回后重算最快', 'orange'),
+        ],
+        '64K 前缀（9.00 GiB KV）恢复延迟与租金对比（算例 21-1）',
+        'blue',
+        [
+            ('丢弃重算（Recompute）\n65,536 词元重算需 500 ms\n浪费算力且拉长每轮延迟', 'orange'),
+            ('PCIe 5.0 换入（48 GiB/s）\n单向换入仅需 187.5 ms\n比重算快 2.67 倍', 'teal'),
+        ],
+        '以 t* = 2.16 s 为分界执行异步分层换出，兼顾显存成本与恢复速度',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch21-four-tier-kv-cache-hierarchy-dynamo-lmcache',
+        '四级分层 KV 缓存池（Dynamo / LMCache / Mooncake）金字塔',
+        'blue',
+        [
+            ('Tier 1: GPU HBM3e\n80–192 GB 容量\n微秒级热块命中', 'blue'),
+            ('Tier 2: Host DRAM\n512 GB | 48 GiB/s\n毫秒级无损换入', 'teal'),
+            ('Tier 3/4: NVMe/RDMA\n100 TB | 36 GiB/s\n跨节点共享记忆池', 'purple'),
+        ],
+        '块级 SHA-256 前缀哈希索引与零拷贝 DMA/RDMA 流水',
+        'teal',
+        [
+            ('前缀块链式哈希（Chunk Hash）\n每 64 词元生成唯一指纹\n支持跨会话全局去重共享', 'blue'),
+            ('逐层异步预取（Layer Prefetch）\n计算 l 层时 DMA 拉取 l+1 层\n掩盖 85% 以上 PCIe/RDMA 延迟', 'teal'),
+        ],
+        '四级存储池将单机显存上限扩展百倍，支撑百万级并发长程智能体',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch21-kv-aware-global-radix-router-ttft-tradeoff',
+        '全局基数树路由器（Global Radix Router）排队与命中联合寻优',
+        'purple',
+        [
+            ('节点 A（高命中）\n排队120ms | 90%命中\nTTFT = 170.0 ms', 'teal'),
+            ('节点 B（最少排队）\n排队10ms | 0%命中\nTTFT = 510.0 ms', 'orange'),
+            ('节点 C（RDMA 命中）\n排队20ms | 80%远端\nTTFT = 320.0 ms', 'blue'),
+        ],
+        '联合代价函数：排队 + 本地 DMA + 远端 RDMA + 重算（算例 21-2）',
+        'teal',
+        [
+            ('传统最少连接路由\n盲目派往空闲节点 B\n触发 64K 全量重算（500 ms）', 'orange'),
+            ('KV 感知全局路由（Dynamo）\n精准派往热缓存节点 A\n首字延迟缩短 3.00 倍', 'teal'),
+        ],
+        '在长上下文智能体场景下，KV 缓存位置权重远高于瞬时队列长度',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch21-cachegen-anchor-delta-entropy-kv-streaming',
+        'CacheGen 锚点差分量化与算术熵编码流式传输（算例 21-2）',
+        'teal',
+        [
+            ('① 锚点帧残差差分\n利用相邻词元高余弦相似\n提取层内局部残差 ΔK, ΔV', 'blue'),
+            ('② 分层量化 + 算术编码\n浅层高精度、深层激进量化\n16-bit 压至 3.80 bits（4.21×）', 'teal'),
+        ],
+        '50 Gbps（5.81 GiB/s）跨机架网络传输 vs. 本地重算回本线',
+        'orange',
+        [
+            ('原始 9.00 GiB KV 跨网传输\n耗时 1,549.1 ms > 重算 500 ms\n受制于 18 GiB/s 临界带宽墙', 'orange'),
+            ('CacheGen 压缩至 2.1375 GiB\n传输 367.9 ms + 解压 18.0 ms\n总计 385.9 ms（快 4.01 倍）', 'teal'),
+        ],
+        '当跨机架带宽低于 18 GiB/s 时，必须结合流式熵编码才能击败重算',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch21-microvm-snapshot-cow-userfaultfd-12ms-fork',
+        '容器/虚机冷启动（1,500 ms）vs. Firecracker 12 ms 快照克隆',
+        'blue',
+        [
+            ('传统虚机冷启动\n内核引导+环境加载\n耗时 1,500 ms', 'orange'),
+            ('Firecracker 快照\nMAP_PRIVATE 映射\n克隆仅 3.2 ms', 'blue'),
+            ('userfaultfd 缺页\n拉取 5.5 MiB 工作集\n总计 12.0 ms', 'teal'),
+        ],
+        '微虚机硬件虚拟化隔离（KVM）与极速弹性并发（算例 21-3）',
+        'teal',
+        [
+            ('强安全边界（独立 Guest 内核）\n阻断容器逃逸与宿主机污染\n支持任意 root 编译与测试', 'purple'),
+            ('启动提速 125 倍（1.5 s → 12 ms）\n每分支仅增 24 MiB 私有脏页\n单机可并发驻留上千沙箱', 'teal'),
+        ],
+        '微虚机 CoW 快照兼具硬件级虚拟化隔离与毫秒级函数式克隆速度',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch21-synchronized-kv-and-sandbox-mcts-tree-forking',
+        '面向智能体树搜索（MCTS）的 KV 块表与沙箱快照同步分叉',
+        'purple',
+        [
+            ('父节点 (S_t, KV_t)\n只读基快照 512 MiB\n共享前缀 KV 块', 'blue'),
+            ('16 路并发试错分支\n每分支 24 MiB 脏页\n总计 896 MiB', 'teal'),
+            ('破坏分支（rm -rf）\n丢弃分支 Upperdir\n零副作用回退父节点', 'orange'),
+        ],
+        '模型记忆（KV Cache）与外部世界状态（Sandbox FS/RAM）原子回滚',
+        'teal',
+        [
+            ('GPU 侧：KV 块表引用减一\n重置块指针耗时 0.15 ms\n无需物理擦除显存数据', 'blue'),
+            ('CPU 侧：OverlayFS 页表回退\n卸载差异层耗时 8.35 ms\n同步回滚共 8.50 ms < 10 ms', 'teal'),
+        ],
+        '唯有让外部沙箱具备与 KV 缓存同构的 CoW 树状语义，MCTS 才能闭环',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch21-computer-use-gui-webrtc-frame-diff-pipeline',
+        'Computer-Use 桌面 GUI 沙箱脏矩形差分流与 DOM 混合感知',
+        'blue',
+        [
+            ('① 虚拟帧缓冲 Xvfb\n仅捕获变化像素块\n省 92% 像素带宽', 'blue'),
+            ('② 多模态混合提取\n截图 + 无障碍树\n消除小图标漂移', 'teal'),
+            ('③ 亚毫秒动作注入\nxdotool 内核事件\n步进延迟 < 25 ms', 'purple'),
+        ],
+        'GUI 视觉词元预算控制与高分辨率局部放大（Crop-and-Zoom）',
+        'teal',
+        [
+            ('全屏粗粒度概览（256 词元）\n快速锁定目标窗口与控件区域\n避免每步灌入 4,096 视觉词元', 'blue'),
+            ('焦点区域原图裁剪（+128 词元）\n对准按钮/输入框做像素级点击\n坐标定位精度提升至 98.4%', 'teal'),
+        ],
+        '脏矩形差分与无障碍树融合将 GUI 智能体单步视觉开销压降 85%',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch21-mcp-gateway-dynamic-tool-rag-and-auth-isolation',
+        '模型上下文协议（MCP）安全网关与按需工具语义检索（算例 21-5）',
+        'teal',
+        [
+            ('企业级万级工具库挑战\n挂载 1,000 个工具 Schema\n每轮白白吞噬 180,000 词元', 'orange'),
+            ('动态工具检索（Tool RAG）\n稠密向量召回 Top-8 相关工具\n仅占 1,440 词元（省 99.20%）', 'teal'),
+        ],
+        '零信任租户级 OAuth 凭据注入与细粒度 RBAC 权限沙箱',
+        'purple',
+        [
+            ('模型对凭据零可见（Zero-Trust）\nLLM 仅输出符号化调用参数\n网关在出境瞬间注入短效 Token', 'blue'),
+            ('Schema 语法约束（XGrammar）\n将 JSON Schema 转为自动机\n100% 杜绝非法字段与类型幻觉', 'purple'),
+        ],
+        '动态工具检索实现 125 倍上下文压缩，同时消除多工具注意力稀释',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch21-idempotent-outbox-and-speculative-tool-prefetch',
+        '只读工具投机预取 vs. 写操作工具幂等事务外发箱（Outbox）',
+        'orange',
+        [
+            ('只读工具（搜索 / 查库 / 读文件）\n在解码生成参数中途投机预热\n掩盖 60%–80% 外部 API 往返时延', 'teal'),
+            ('写操作工具（转账 / 下单 / 删库）\n严禁投机执行，强制绑定幂等键\nKey = Hash(Session, Step)', 'orange'),
+        ],
+        '两阶段事务外发箱（Outbox）保障精确一次（Exactly-Once）执行',
+        'blue',
+        [
+            ('① 本地持久化写前日志（WAL）\n先将工具调用意图落盘至 Outbox\n防止推理节点崩溃导致状态丢失', 'blue'),
+            ('② 远端幂等去重网关校验\n网络超时重试携带相同幂等键\n直接返回首次结果，零重复扣款', 'teal'),
+        ],
+        '区分只读投机与有副作用写操作，是智能体进入金融/生产系统的底线',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch21-i19-telemetry-backlog-buffer-overflow-and-drain',
+        '锁定算例 I19：审计遥测断网积压与 81.92 s 内存缓冲触顶',
+        'orange',
+        [
+            ('断网产生速率 400 KiB/s\n本地内存缓冲 32 MiB\nt = 81.92 s 时内存达到满溢', 'orange'),
+            ('120 s 断网总积压 46.875 MiB\n超出内存的 14.875 MiB 溢写至\n本地 NVMe 外发箱（零丢失）', 'purple'),
+        ],
+        '网络恢复后 1.0 MiB/s 上行并发排空动力学（算例 21-4）',
+        'teal',
+        [
+            ('上行带宽 1,024 KiB/s\n扣除持续新增流 400 KiB/s\n净排空速率 = 624 KiB/s', 'blue'),
+            ('排空 48,000 KiB 积压耗时：\nT_drain = 48,000 / 624\n= 76.92 s 完全恢复稳态', 'teal'),
+        ],
+        '算例 I19 定律：排空时间取决于（上行带宽 - 持续产生率）的净差值',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch21-prompt-injection-taint-tracking-dual-llm-firewall',
+        '防御间接提示词注入（Indirect Prompt Injection）双流隔离',
+        'purple',
+        [
+            ('非受信外部数据流（Tainted）\n网页正文 / 邮件 / 外部文档\n由受限隔离模型解析提取变量', 'orange'),
+            ('特权控制流（Privileged）\n仅接收用户意图与符号化变量\n由规划主模型生成工具调用', 'blue'),
+        ],
+        '动态信息流污点追踪（Taint Tracking）与数据—指令边界门禁',
+        'teal',
+        [
+            ('污点标签传播（Taint Tagging）\n源自外部检索的变量均打上污点位\n严禁直接拼接到高危系统命令', 'purple'),
+            ('能力令牌（Capability Token）\n高危写操作需匹配初始授权策略图\n100% 阻断隐藏指令越权转账/泄密', 'teal'),
+        ],
+        '将控制面指令与数据面内容物理隔离，从根源阻断间接提示词注入',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch21-hipporag2-graph-vector-episodic-memory-consolidation',
+        '突破窗口极限的长期记忆底座：HippoRAG 2 + Mem0 双层巩固',
+        'blue',
+        [
+            ('海马体索引层（图谱 + 向量）\n实体—关系三元组 + 稠密嵌入\n个性化 PageRank 跨跳关联召回', 'blue'),
+            ('新皮层记忆巩固（Mem0 流水）\n异步提取用户偏好与排障经验\n冲突消解后更新长期事实库', 'teal'),
+        ],
+        '百万词元历史全量塞入 vs. 图谱—向量混合检索的成本与精度',
+        'teal',
+        [
+            ('全量塞入 1M 上下文窗口\n每轮预填充耗费海量算力与 HBM\n且受“中间迷失”效应困扰', 'orange'),
+            ('HippoRAG 2 召回 Top-4K 锚点\n多跳问答准确率提升 +14.2%\n长程会话显存开销降低 96%', 'teal'),
+        ],
+        '短期工作记忆靠分层 KV 缓存，跨会话长期记忆靠图谱—向量混合巩固',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch21-multi-agent-dag-scheduler-and-token-budget-allocation',
+        '多智能体（Planner-Coder-Tester）DAG 拓扑调度与死锁熔断',
+        'teal',
+        [
+            ('Planner 规划器\n拆解任务依赖 DAG\n分配节点词元预算', 'blue'),
+            ('Coder 编码工作池\n共享代码库前缀 KV\nCoW 沙箱并发修改', 'teal'),
+            ('Tester 验证网关\n运行单测返回报错\n触发通过或回滚重修', 'purple'),
+        ],
+        '防无限争论循环（Infinite Chatter Loop）的词元经济学熔断器',
+        'orange',
+        [
+            ('边际信息增益监控\n连续 3 轮修改未减少报错数时\n立即终止局部自修并升级路由', 'orange'),
+            ('拓扑级共享前缀广播\n子智能体复用 85% 公共仓库 KV\n避免 M 个智能体重复编码', 'teal'),
+        ],
+        '多智能体编排必须绑定有向无环图预算与早停熔断，防止词元风暴',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch21-agentic-cluster-cpu-gpu-sandbox-pool-sizing',
+        '大规模 Agentic 云平台三池解耦配比（GPU : DRAM : CPU 沙箱）',
+        'blue',
+        [
+            ('GPU 推理池\n专注高频预填充/解码\n不苦等工具与 I/O', 'blue'),
+            ('DRAM/NVMe 记忆池\n承接等待期换出 KV\n容量达 HBM 30 倍', 'teal'),
+            ('CPU 微虚机沙箱池\n运行万级并发沙箱\n12 ms 克隆与销毁', 'purple'),
+        ],
+        '基于 Little 定律 L = λ × W 的三池容量黄金配比公式',
+        'teal',
+        [
+            ('单次推理活跃期 W_gpu ≈ 1.2 s\n工具沙箱执行期 W_sbx ≈ 14.4 s\n在途会话驻留比 = 1 : 12', 'orange'),
+            ('1 张 H100 推理卡配对：\n512 GB 远端 KV 缓存池 +\n96 核高密 CPU 沙箱节点', 'teal'),
+        ],
+        '按在途驻留时间比解耦 GPU 推理池与 CPU 沙箱池，消除异构资源木桶等待',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch21-autonomous-agent-infrastructure-full-stack-map',
+        '第 21 章自主智能体基础设施全栈全景图（记忆 · 沙箱 · 网关）',
+        'teal',
+        [
+            ('记忆：四级 KV 池\n95.12% 复用换出\n路由 3× | 压缩 4.2×', 'blue'),
+            ('执行：12 ms 微虚机\nFirecracker 快照克隆\nMCTS 回滚 8.50 ms', 'teal'),
+            ('控制：MCP 幂等网关\nTool RAG 省 99.2%\n算例 I19 排空 76.92 s', 'purple'),
+        ],
+        '从“无状态词元生成”向“有状态、可回溯、防注入自主系统”跃迁',
+        'blue',
+        [
+            ('核心瓶颈：高复用前缀占满 HBM\n沙箱冷启动慢、重试引发副作用', 'orange'),
+            ('系统解法：分层 KV 池、CoW 沙箱\n事务外发箱与双流污点防火墙', 'teal'),
+        ],
+        '第 21 章收束：记忆分层、环境分叉与工具幂等构成智能体三大支柱',
+    )
+
+    outputs = ex.finish()
+
+    fig_index = [
+        {
+            "figure_id": "图 21-1",
+            "number": 1,
+            "file": "ch21-single-turn-chat-vs-multi-turn-agent-worm-loop.svg",
+            "asset": "ch21/ch21-single-turn-chat-vs-multi-turn-agent-worm-loop.svg",
+            "section": "21.1.1",
+            "caption": "单轮对话（Read-Once）与 40 轮自主智能体（WORM 95.12% 前缀复用 + 长工具等待空窗）的显存与算力时间线对比（算例 21-1）",
+            "source_refs": ["experiments/ch21/21-01/run.py", "manuscripts/ch21/figure-data.json"],
+            "TeachingRole": "揭示多轮智能体 95.12% 预填充词元为历史前缀重读且预填充/解码比达 205:1 的物理特征"
+        },
+        {
+            "figure_id": "图 21-2",
+            "number": 2,
+            "file": "ch21-tool-wait-hbm-retain-recompute-offload-phase-diagram.svg",
+            "asset": "ch21/ch21-tool-wait-hbm-retain-recompute-offload-phase-diagram.svg",
+            "section": "21.1.2",
+            "caption": "工具等待时长 t_wait 与前缀长度 L_prefix 构成的“HBM 驻留 vs. 分层换出 vs. 丢弃重算”三维最优决策相图（t* = 2.16 s）",
+            "source_refs": ["experiments/ch21/21-01/run.py", "manuscripts/ch21/figure-data.json"],
+            "TeachingRole": "推导工具等待期 HBM 租金与 PCIe 换入/重算耗时的三段式切换边界"
+        },
+        {
+            "figure_id": "图 21-3",
+            "number": 3,
+            "file": "ch21-four-tier-kv-cache-hierarchy-dynamo-lmcache.svg",
+            "asset": "ch21/ch21-four-tier-kv-cache-hierarchy-dynamo-lmcache.svg",
+            "section": "21.2.1",
+            "caption": "GPU HBM ↔ Host DRAM ↔ Local NVMe ↔ Remote RDMA Pool 四级分层 KV 缓存架构与块级哈希去重",
+            "source_refs": ["manuscripts/ch21/figure-data.json"],
+            "TeachingRole": "构建跨节点共享的四级 KV 记忆存储池与逐层异步 DMA 预取流水"
+        },
+        {
+            "figure_id": "图 21-4",
+            "number": 4,
+            "file": "ch21-kv-aware-global-radix-router-ttft-tradeoff.svg",
+            "asset": "ch21/ch21-kv-aware-global-radix-router-ttft-tradeoff.svg",
+            "section": "21.2.1",
+            "caption": "KV 感知全局路由器（NVIDIA Dynamo / SGLang HiCache）在节点排队延迟与前缀缓存命中率之间的联合寻优（算例 21-2）",
+            "source_refs": ["experiments/ch21/21-01/run.py", "manuscripts/ch21/figure-data.json"],
+            "TeachingRole": "证明综合排队与命中率的全局路由可将 64K 智能体请求 TTFT 从 510 ms 压至 170 ms（快 3.00 倍）"
+        },
+        {
+            "figure_id": "图 21-5",
+            "number": 5,
+            "file": "ch21-cachegen-anchor-delta-entropy-kv-streaming.svg",
+            "asset": "ch21/ch21-cachegen-anchor-delta-entropy-kv-streaming.svg",
+            "section": "21.2.2",
+            "caption": "CacheGen 利用锚点残差量化与算术编码实现 4.21 倍流式压缩并在 50 Gbps 网络上击败本地重算（算例 21-2）",
+            "source_refs": ["experiments/ch21/21-01/run.py", "manuscripts/ch21/figure-data.json"],
+            "TeachingRole": "确立跨机架传输 KV 缓存战胜本地 GPU 重算的临界带宽阈值与熵编码收益"
+        },
+        {
+            "figure_id": "图 21-6",
+            "number": 6,
+            "file": "ch21-microvm-snapshot-cow-userfaultfd-12ms-fork.svg",
+            "asset": "ch21/ch21-microvm-snapshot-cow-userfaultfd-12ms-fork.svg",
+            "section": "21.3.1",
+            "caption": "传统容器/虚机冷启动（1,500 ms）vs. Firecracker 内存快照 + userfaultfd 惰性缺页加载实现 12.0 ms 极速克隆（算例 21-3）",
+            "source_refs": ["experiments/ch21/21-02/run.py", "manuscripts/ch21/figure-data.json"],
+            "TeachingRole": "拆解微虚机写时复制快照与按需工作集预取实现 125 倍启动加速的内核机理"
+        },
+        {
+            "figure_id": "图 21-7",
+            "number": 7,
+            "file": "ch21-synchronized-kv-and-sandbox-mcts-tree-forking.svg",
+            "asset": "ch21/ch21-synchronized-kv-and-sandbox-mcts-tree-forking.svg",
+            "section": "21.3.2",
+            "caption": "面向智能体树搜索（Tree-of-Actions）的 PagedAttention KV 块表与沙箱 OverlayFS/内存快照同步分叉与 8.50 ms 回滚",
+            "source_refs": ["experiments/ch21/21-02/run.py", "manuscripts/ch21/figure-data.json"],
+            "TeachingRole": "实现模型内部 KV 记忆与外部沙箱文件系统/内存状态的原子级同步树状回溯"
+        },
+        {
+            "figure_id": "图 21-8",
+            "number": 8,
+            "file": "ch21-computer-use-gui-webrtc-frame-diff-pipeline.svg",
+            "asset": "ch21/ch21-computer-use-gui-webrtc-frame-diff-pipeline.svg",
+            "section": "21.3.2",
+            "caption": "Computer-Use 桌面沙箱的脏矩形帧差分流（Dirty-Rect Streaming）、无障碍树（AXTree）混合提取与焦点放大流水线",
+            "source_refs": ["manuscripts/ch21/figure-data.json"],
+            "TeachingRole": "通过脏矩形编码与 DOM/AXTree 结构化锚点将 GUI 智能体单步视觉开销压降 85%"
+        },
+        {
+            "figure_id": "图 21-9",
+            "number": 9,
+            "file": "ch21-mcp-gateway-dynamic-tool-rag-and-auth-isolation.svg",
+            "asset": "ch21/ch21-mcp-gateway-dynamic-tool-rag-and-auth-isolation.svg",
+            "section": "21.4.1",
+            "caption": "模型上下文协议（MCP）安全网关：按需语义检索挂载 Top-8 工具 Schema（省 99.20% 词元）与零信任凭据隔离（算例 21-5）",
+            "source_refs": ["experiments/ch21/21-02/run.py", "manuscripts/ch21/figure-data.json"],
+            "TeachingRole": "解决万级企业工具全量挂载引发的 18 万词元上下文膨胀与凭据泄露风险"
+        },
+        {
+            "figure_id": "图 21-10",
+            "number": 10,
+            "file": "ch21-idempotent-outbox-and-speculative-tool-prefetch.svg",
+            "asset": "ch21/ch21-idempotent-outbox-and-speculative-tool-prefetch.svg",
+            "section": "21.4.1",
+            "caption": "只读工具投机预取与写操作工具基于幂等键（Idempotency Key）和事务外发箱（Outbox）的精确一次执行保障",
+            "source_refs": ["manuscripts/ch21/figure-data.json"],
+            "TeachingRole": "防止智能体超时重试或投机执行在外部世界引发重复扣款或重复下单事故"
+        },
+        {
+            "figure_id": "图 21-11",
+            "number": 11,
+            "file": "ch21-i19-telemetry-backlog-buffer-overflow-and-drain.svg",
+            "asset": "ch21/ch21-i19-telemetry-backlog-buffer-overflow-and-drain.svg",
+            "section": "21.4.1",
+            "caption": "锁定算例 I19：审计遥测断网期间 400 KiB/s 积压曲线（81.92 s 触顶 32 MiB、120 s 累积 46.875 MiB）与恢复后 76.92 s 排空过程（算例 21-4）",
+            "source_refs": ["experiments/ch21/21-02/run.py", "manuscripts/ch21/figure-data.json"],
+            "TeachingRole": "精确复算断网期间内存缓冲触顶时刻、外发箱溢写体积与净排空速率下的恢复时长"
+        },
+        {
+            "figure_id": "图 21-12",
+            "number": 12,
+            "file": "ch21-prompt-injection-taint-tracking-dual-llm-firewall.svg",
+            "asset": "ch21/ch21-prompt-injection-taint-tracking-dual-llm-firewall.svg",
+            "section": "21.4.1",
+            "caption": "防御间接提示词注入（Indirect Prompt Injection）的特权控制流与非受信数据流双 LLM 污点追踪防火墙",
+            "source_refs": ["manuscripts/ch21/figure-data.json"],
+            "TeachingRole": "通过动态污点标签与控制面/数据面物理隔离阻断外部网页或邮件中的隐藏越权指令"
+        },
+        {
+            "figure_id": "图 21-13",
+            "number": 13,
+            "file": "ch21-hipporag2-graph-vector-episodic-memory-consolidation.svg",
+            "asset": "ch21/ch21-hipporag2-graph-vector-episodic-memory-consolidation.svg",
+            "section": "21.4.2",
+            "caption": "HippoRAG 2 / Mem0 结合向量检索、知识图谱个性化 PageRank 与后台异步记忆提炼的长期记忆底座",
+            "source_refs": ["manuscripts/ch21/figure-data.json"],
+            "TeachingRole": "利用海马体图谱索引与新皮层异步巩固突破上下文窗口限制并降低 96% 预填充开销"
+        },
+        {
+            "figure_id": "图 21-14",
+            "number": 14,
+            "file": "ch21-multi-agent-dag-scheduler-and-token-budget-allocation.svg",
+            "asset": "ch21/ch21-multi-agent-dag-scheduler-and-token-budget-allocation.svg",
+            "section": "21.4.2",
+            "caption": "复杂软件工程任务中 Planner—Coder—Tester 多智能体 DAG 拓扑调度、公共前缀广播与动态词元预算熔断",
+            "source_refs": ["manuscripts/ch21/figure-data.json"],
+            "TeachingRole": "通过边际增益监控与 DAG 预算熔断消除多智能体无限循环空谈风暴"
+        },
+        {
+            "figure_id": "图 21-15",
+            "number": 15,
+            "file": "ch21-agentic-cluster-cpu-gpu-sandbox-pool-sizing.svg",
+            "asset": "ch21/ch21-agentic-cluster-cpu-gpu-sandbox-pool-sizing.svg",
+            "section": "21.3.2",
+            "caption": "大规模 Agentic 云平台中 GPU 推理池、大容量 DRAM/NVMe KV 缓存池与高密 CPU 沙箱池的 Little 定律配比模型",
+            "source_refs": ["manuscripts/ch21/figure-data.json"],
+            "TeachingRole": "依据推理活跃期与工具执行期的 1:12 驻留比指导异构计算与存储池容量规划"
+        },
+        {
+            "figure_id": "图 21-16",
+            "number": 16,
+            "file": "ch21-autonomous-agent-infrastructure-full-stack-map.svg",
+            "asset": "ch21/ch21-autonomous-agent-infrastructure-full-stack-map.svg",
+            "section": "21.4.2",
+            "caption": "自主智能体基础设施从四级分层 KV 记忆、12 ms CoW 微虚机沙箱到幂等安全网关的全栈总图",
+            "source_refs": ["experiments/ch21/21-01/run.py", "experiments/ch21/21-02/run.py", "manuscripts/ch21/figure-data.json"],
+            "TeachingRole": "收束第 21 章记忆分层化、环境可分叉化与工具执行幂等化的完整工程体系"
+        }
+    ]
+    for row in fig_index:
+        row['figure'] = f"21-{row['number']}"
+        row['name'] = Path(row['file']).stem
+    (HERE / 'figure-index.json').write_text(json.dumps(fig_index, ensure_ascii=False, indent=2) + '\n')
+
+    md = HERE.parent / '21-自主智能体基础设施（Agentic Infra）、Computer Use 沙箱与分层 KV 记忆底座.md'
+    if md.exists():
+        text_md = md.read_text()
+        display = re.findall(r'\$\$(.+?)\$\$', text_md, re.S)
+        inline = re.findall(r'(?<!\$)\$(?!\$)([^$\n]+?)\$(?!\$)', text_md)
+        formulas = [f.strip() for f in display + inline]
+        katex_js = ROOT / 'manuscripts/ch06/vendor/katex/katex.js'
+        js = (
+            'const katex=require(process.argv[1]);const fs=require("fs");'
+            'const a=JSON.parse(fs.readFileSync(0,"utf8"));const e=[];'
+            'a.forEach((s,i)=>{try{katex.renderToString(s,{throwOnError:true,displayMode:i<'
+            + str(len(display))
+            + '})}catch(err){e.push({i,s,err:err.message})}});'
+            'console.log(JSON.stringify({total:a.length,display:'
+            + str(len(display))
+            + ',inline:'
+            + str(len(inline))
+            + ',errors:e}));'
+        )
+        res = subprocess.run(
+            ['node', '-e', js, str(katex_js)],
+            input=json.dumps(formulas),
+            text=True,
+            capture_output=True,
+            check=True,
+        )
+        math_val = json.loads(res.stdout)
+        assert not math_val['errors'], math_val['errors']
+        (HERE / 'math-validation.json').write_text(json.dumps(math_val, ensure_ascii=False, indent=2) + '\n')
+
+        import markdown
+
+        def repl_img(m):
+            alt, rel = m.group(1), m.group(2)
+            p = (md.parent / rel).with_suffix('.png')
+            b64 = base64.b64encode(p.read_bytes()).decode()
+            return f'<figure><img alt="{alt}" src="data:image/png;base64,{b64}"><figcaption>{alt}</figcaption></figure>'
+
+        work = re.sub(r'!\[([^\]]*)\]\((ch21/[^)]+)\)', repl_img, text_md)
+        body = markdown.markdown(work, extensions=['tables', 'fenced_code', 'footnotes', 'toc'])
+        html = f'<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>第 21 章：自主智能体基础设施（Agentic Infra）、Computer Use 沙箱与分层 KV 记忆底座</title></head><body>{body}</body></html>\n'
+        out_html = preview_path(md)
+        out_html.write_text(html)
+
+    sources = [
+        HERE / 'build.py',
+        HERE / 'figure-data.json',
+        HERE / 'figure-index.json',
+        ROOT / 'experiments/ch21/21-01/run.py',
+        ROOT / 'experiments/ch21/21-02/run.py',
+    ]
+    if md.exists():
+        sources.append(md)
+    (HERE / 'sources.json').write_text(
+        json.dumps(
+            {"sources": [{"path": str(p.relative_to(ROOT)), "sha256": sha256(p)} for p in sources]},
+            ensure_ascii=False,
+            indent=2,
+        )
+        + '\n'
+    )
+    all_outputs = sorted(outputs) + [
+        HERE / 'figure-data.json',
+        HERE / 'figure-index.json',
+        HERE / 'teaching-layout-validation.json',
+    ]
+    if (HERE / 'math-validation.json').exists():
+        all_outputs.append(HERE / 'math-validation.json')
+    (HERE / 'manifest.json').write_text(
+        json.dumps(
+            {"outputs": [{"path": str(p.relative_to(ROOT)), "sha256": sha256(p)} for p in all_outputs]},
+            ensure_ascii=False,
+            indent=2,
+        )
+        + '\n'
+    )
+    print(f'Built {len(outputs)} figure files for Chapter 21; 0 layout warnings.')
+
+
+if __name__ == '__main__':
+    build_chapter()

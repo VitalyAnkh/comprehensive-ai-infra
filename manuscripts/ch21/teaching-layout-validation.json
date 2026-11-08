@@ -1,0 +1,98 @@
+[
+  {
+    "figure": "ch21-single-turn-chat-vs-multi-turn-agent-worm-loop",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-tool-wait-hbm-retain-recompute-offload-phase-diagram",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-four-tier-kv-cache-hierarchy-dynamo-lmcache",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-kv-aware-global-radix-router-ttft-tradeoff",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-cachegen-anchor-delta-entropy-kv-streaming",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-microvm-snapshot-cow-userfaultfd-12ms-fork",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-synchronized-kv-and-sandbox-mcts-tree-forking",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-computer-use-gui-webrtc-frame-diff-pipeline",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-mcp-gateway-dynamic-tool-rag-and-auth-isolation",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-idempotent-outbox-and-speculative-tool-prefetch",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-i19-telemetry-backlog-buffer-overflow-and-drain",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-prompt-injection-taint-tracking-dual-llm-firewall",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-hipporag2-graph-vector-episodic-memory-consolidation",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-multi-agent-dag-scheduler-and-token-budget-allocation",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-agentic-cluster-cpu-gpu-sandbox-pool-sizing",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-autonomous-agent-infrastructure-full-stack-map",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  }
+]

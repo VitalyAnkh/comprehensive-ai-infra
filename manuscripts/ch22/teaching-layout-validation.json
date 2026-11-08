@@ -1,0 +1,98 @@
+[
+  {
+    "figure": "ch22-cascaded-asr-llm-tts-vs-native-full-duplex-s2s",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-full-duplex-dual-audio-streams-and-inner-monologue",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-rvq-neural-audio-codec-semantic-acoustic-hierarchy",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-delayed-codebook-pattern-vs-depth-transformer",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-temporal-and-depth-transformer-gpu-roofline-trap",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-webrtc-opus-aec-to-gpu-end-to-end-latency-budget",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-barge-in-playback-cursor-aligned-kv-rollback",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-streaming-causal-conv-vocoder-chunk-halo",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-live-video-1fps-and-audio-12hz-interleaved-pacing",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-acoustic-token-eviction-and-semantic-anchor-retention",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-dynamic-batching-under-strict-80ms-isochronous-tick",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-duplex-turn-taking-backchannel-and-overlap-state-machine",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-edge-vad-aec-wake-word-and-cloud-duplex-handover",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-voice-cloning-zero-shot-speaker-embedding-cache",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-full-duplex-gpu-concurrency-vs-p99-frame-underrun",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-full-duplex-omni-streaming-infrastructure-synthesis",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  }
+]

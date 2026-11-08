@@ -1,0 +1,35 @@
+{
+  "experiment_id": "21-01",
+  "agentic_worm_40turns": {
+    "turns_k": 40,
+    "final_turn_tokens": 80000,
+    "cumulative_prefill_tokens": 1640000,
+    "unique_written_tokens": 80000,
+    "reread_worm_tokens": 1560000,
+    "worm_reuse_ratio_pct": 95.12,
+    "total_decode_tokens": 8000,
+    "prefill_to_decode_ratio": 205.0
+  },
+  "tool_wait_phase_diagram": {
+    "prefix_tokens": 65536,
+    "kv_size_gib": 9.0,
+    "recompute_ms": 500.0,
+    "swap_in_ms": 187.5,
+    "roundtrip_swap_ms": 375.0,
+    "crossover_wait_sec": 2.16,
+    "hbm_cost_saving_at_15s_pct": 85.6,
+    "ttft_speedup_vs_recompute_x": 2.67
+  },
+  "kv_global_router_and_cachegen": {
+    "ttft_node_a_ms": 170.0,
+    "ttft_node_b_ms": 510.0,
+    "ttft_node_c_ms": 320.0,
+    "router_ttft_speedup_x": 3.0,
+    "cachegen_compression_x": 4.21,
+    "compressed_kv_gib": 2.1375,
+    "raw_transfer_ms": 1549.1,
+    "cachegen_transfer_ms": 385.9,
+    "cachegen_speedup_vs_raw_x": 4.01,
+    "critical_raw_bw_gib_s": 18.0
+  }
+}
