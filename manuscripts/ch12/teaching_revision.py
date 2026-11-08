@@ -264,6 +264,44 @@ def draw(here,data):
         box(a,.52,.30,.45,.17,'算术强度跃升：接受率 α=0.8\n期望产 2.44 词元，提速 2.1×','purple',11)
         box(a,.52,.04,.45,.20,'端侧能效红利：摊薄词元访存\n翻转能耗，推迟热降频相变','orange',11)
         out.save(f,'ch12-mobile-thermal-throttling-and-mlx-mtp')
+
+        # Path-E3 new figure 1: ch12-bitnet-b158-ternary-lut-and-flash-bundling (Fig 12-41)
+        f,a=canvas(6.4)
+        text(a,.25,.95,'A. BitNet b1.58 无乘法查表内核',12,ha='center')
+        text(a,.745,.95,'B. 闪存行列捆绑与滑窗流式加载',12,ha='center')
+        a.plot([.495,.495],[.03,.97],color=COL['line'],ls='--',lw=1.0)
+
+        box(a,.03,.75,.44,.15,'三值权重 {-1, 0, +1} (1.58 bit)\n7B 模型仅 1.38 GB (省 65%)','blue',11)
+        arrow(a,(.25,.75),(.25,.66),'data')
+        box(a,.03,.49,.44,.16,'TL1/TL2 查表：2/3 权重打包\n预计算 3^2=9 项激活和驻寄存器','green',11)
+        box(a,.03,.27,.44,.17,'消除浮点/整数乘法器阵列：\n纯 vtbl 查表累加，能耗降 55%','purple',11)
+        box(a,.03,.05,.44,.17,'端侧 CPU/NPU 吞吐跃升：\n84.8 GB/s 下界达 44.9 tok/s','gray',11)
+
+        box(a,.52,.75,.45,.15,'超出 DRAM 容量的大模型难题：\n2 KiB 随机读闪存仅 400 MB/s','orange',11)
+        arrow(a,(.745,.75),(.745,.66),'data')
+        box(a,.52,.49,.45,.16,'行列共现捆绑 (LLM in a Flash)\n上/门/下投影打包 64 KiB 块','blue',11)
+        box(a,.52,.27,.45,.17,'顺序块吞吐升至 3.2 GB/s (8×)\n叠加 5 步滑窗复用 75% 闪存块','green',11)
+        box(a,.52,.05,.45,.17,'端到端闪存 I/O 压缩 32×：\n单步读取 3.20 s -> 0.10 s','gray',11)
+        out.save(f,'ch12-bitnet-b158-ternary-lut-and-flash-bundling')
+
+        # Path-E3 new figure 2: ch12-edge-draft-cloud-verify-and-pii-gateway (Fig 12-42)
+        f,a=canvas(6.4)
+        text(a,.25,.95,'A. 端侧起草 + 云端批量验证流水',12,ha='center')
+        text(a,.745,.95,'B. 本地隐私脱敏还原网关 (PII)',12,ha='center')
+        a.plot([.495,.495],[.03,.97],color=COL['line'],ls='--',lw=1.0)
+
+        box(a,.03,.75,.44,.15,'端侧 1.5B 小模型本地起草\n自回归生成 K 词 (12 ms/tok)','blue',11)
+        arrow(a,(.25,.75),(.25,.66),'data')
+        box(a,.03,.49,.44,.16,'经广域网 (RTT 60 ms) 上传\n云端 671B 大模型单步并行验证','purple',11)
+        box(a,.03,.27,.44,.17,'单轮期望产出 (1-α^{K+1})/(1-α)\n摊薄跨网 RTT 与云端前向耗时','green',11)
+        box(a,.03,.05,.44,.17,'最优步长 K* 闭式权衡：\nRTT=60ms, α=0.80 时 K*=5 词','orange',11)
+
+        box(a,.52,.75,.45,.15,'上云前拦截：端侧跑轻量 NER\n识别姓名/卡号/密钥/IP 实体','orange',11)
+        arrow(a,(.745,.75),(.745,.66),'data')
+        box(a,.52,.49,.45,.16,'结构化占位符替换：\n映射为 [[PER_1]] 存安全区','blue',11)
+        box(a,.52,.27,.45,.17,'云端大模型在脱敏上下文上推理\n全链路零明文敏感数据出境','green',11)
+        box(a,.52,.05,.45,.17,'返回流式解码时本地查表还原：\n兼得云端旗舰智商与端侧零泄密','gray',11)
+        out.save(f,'ch12-edge-draft-cloud-verify-and-pii-gateway')
     data['12-ufs-vla']={'kind':'teaching_bound','sparse_ffn_gb':1.28,'rand_bw_gbps':0.4,'bundle_bw_gbps':3.2,
         'win_reuse':0.75,'step_s':[3.20,0.40,0.10],'vla_horizon_ms':500,'vla_plan_ms':200,'vla_base_ms':80,'vla_jitter_max_ms':220}
     out.finish();return out.outputs,out.checks

@@ -2,7 +2,7 @@
   "passed": true,
   "checks": [
     {
-      "check": "all five sections and eighteen subsection numbers match outline",
+      "check": "all five sections and subsection numbers match outline",
       "passed": true
     },
     {
@@ -435,6 +435,46 @@
     },
     {
       "check": "SVG PNG PDF available: figure-11-lifecycle-crossover",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch11-api-pricing-vs-provider-cost-and-routing",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch11-api-pricing-vs-provider-cost-and-routing",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch11-serverless-coldstart-and-hydraserve",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch11-serverless-coldstart-and-hydraserve",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch11-weave-rlboost-interleaving-and-spot",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch11-weave-rlboost-interleaving-and-spot",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch11-i16-allocation-illusion-vs-effective-progress",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch11-i16-allocation-illusion-vs-effective-progress",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch11-i21-dual-model-cache-hit-cost-slo-crossover",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch11-i21-dual-model-cache-hit-cost-slo-crossover",
       "passed": true
     },
     {

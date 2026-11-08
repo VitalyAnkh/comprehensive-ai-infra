@@ -222,6 +222,42 @@ def draw(here,data):
         box(a,.52,.30,.45,.17,'抢占迁移：保留已生成输出前缀\n换实例重做 Prefill（组内截齐）','orange',11)
         box(a,.52,.04,.45,.20,'成本盈亏门槛：费率 1.381×\n实测吞吐 1.5-2.0×，省 22-37%','green',11)
         out.save(f,'ch11-weave-rlboost-interleaving-and-spot')
+
+        # Path-E3 new figure 1: ch11-i16-allocation-illusion-vs-effective-progress (Fig 11-56, Locked Case I16)
+        f,a=canvas(6.4)
+        text(a,.25,.95,'A. 97.22% 分配率幻觉与四级剥蚀',12,ha='center')
+        text(a,.745,.95,'B. MPG = 33.33% 三阶审计矩阵',12,ha='center')
+        a.plot([.495,.495],[.03,.97],color=COL['line'],ls='--',lw=1.0)
+
+        box(a,.03,.75,.44,.15,'物理容量 C = 360,000 GPU·s\n单卡分配 350,000 s (97.22%)','orange',11)
+        arrow(a,(.25,.75),(.25,.66),'data')
+        box(a,.03,.49,.44,.16,'成组同步就绪 A = 300,000 s\n扣除未齐等待，SG = 83.33%','blue',11)
+        arrow(a,(.25,.49),(.25,.40),'data')
+        box(a,.03,.24,.44,.15,'落盘有效执行 G = 240,000 s\n扣抢占/回滚/饥饿，RG = 80.0%','purple',11)
+        box(a,.03,.04,.44,.15,'理想计算进展 I = 120,000 s\nPG = 50.0%，总 MPG = 33.33%','green',11)
+
+        box(a,.52,.75,.45,.15,'幻觉陷阱：97.22% × 50% = 48.6%\n漏计 110,000 GPU·s 成组与回滚','orange',11)
+        box(a,.52,.53,.45,.16,'调度层审计 (拉高 SG)：\n拓扑感知成组分配与弹性补位','blue',11)
+        box(a,.52,.30,.45,.17,'运行时审计 (拉高 RG)：\n异步检查点、热切换与防饥饿','purple',11)
+        box(a,.52,.04,.45,.20,'算子层审计 (拉高 PG)：\n通信掩盖与内核融合逼近屋脊线','green',11)
+        out.save(f,'ch11-i16-allocation-illusion-vs-effective-progress')
+
+        # Path-E3 new figure 2: ch11-i21-dual-model-cache-hit-cost-slo-crossover (Fig 11-57, Locked Case I21)
+        f,a=canvas(6.4)
+        text(a,.25,.95,'A. 双模型成本反超点 (h > 84.93%)',12,ha='center')
+        text(a,.745,.95,'B. 6s SLO 与双约束可行域 (91.84%)',12,ha='center')
+        a.plot([.495,.495],[.03,.97],color=COL['line'],ls='--',lw=1.0)
+
+        box(a,.03,.75,.44,.15,'模型 A (廉价啰嗦)：p_A = 0.80\n产 2000 词，恒 10s 超期','orange',11)
+        box(a,.03,.53,.44,.16,'模型 B (旗舰精炼)：p_B = 0.98\n标价 2× 但仅产 300 词，4s/12s','blue',11)
+        box(a,.03,.30,.44,.17,'期望合格成本反超点 (I21)：\nh > 84.93% 时 B 成本更省','green',11)
+        box(a,.03,.04,.44,.20,'反直觉结论：高前缀命中率下\n2× 标价旗舰单任务更省','gray',11)
+
+        box(a,.52,.75,.45,.15,'约束 1 (6 s 期限)：A 10s 出局\nB 仅在命中 (4s ≤ 6s) 达标','purple',11)
+        box(a,.52,.53,.45,.16,'约束 2 (联合合格率 ≥ 90%)：\np_B × h = 0.98 h ≥ 0.90','blue',11)
+        box(a,.52,.30,.45,.17,'双约束可行域下界：\nh ≥ 45/49 ≈ 91.84%','green',11)
+        box(a,.52,.04,.45,.20,'路由策略：亲和性哈希保命中\nh ≥ 91.84% 兼得低价与合规','gray',11)
+        out.save(f,'ch11-i21-dual-model-cache-hit-cost-slo-crossover')
     from dsec_figures import draw as draw_dsec
     draw_dsec(out)
     from core_principles_figures import draw as draw_principles
