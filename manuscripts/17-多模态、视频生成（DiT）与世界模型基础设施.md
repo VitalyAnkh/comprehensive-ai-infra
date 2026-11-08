@@ -4,7 +4,7 @@
 
 首先，输入输出的表征从一维符号流扩展为三维时空潜变量网格（$T \times H \times W$）：一段仅 10 秒、24 帧/秒的 1080p 视频在经过三维变分自编码器（3D Causal VAE）压缩与空间分块（Patchify）后，单样本即产生 $489{,}600$ 个时空词元；其次，视觉编码器（ViT）与扩散变换器（Diffusion Transformer, DiT）普遍采用无掩码的全双向自注意力（Full Bidirectional Attention），并在潜空间内执行 $K = 20\text{–}50$ 步迭代去噪，使算术强度从一维 Decode 的访存受限（Memory-bound）瞬间跃迁为极端的算力受限（Compute-bound）与跨节点全对全通信受限；最后，在去噪尾端将潜变量还原为像素空间的 3D 因果 VAE 解码阶段，特征图通道与分辨率同步放大，单样本瞬态激活峰值突破 $118\ \mathrm{GiB}$，直接击穿单张 80 GB 加速卡的显存物理上限。
 
-本章顺承第 5 章（三维并行与序列并行基础）与第 11–13 章（推理引擎与 PD 解耦服务），系统建立多模态理解（VLM / Omni-modal）、视频扩散生成（3D DiT）与实时交互世界模型的底层基础设施工程学。全章围绕四条定量主线展开：（1）高分辨率视觉动态切片（AnyRes / NaViT）、Qwen3-VL DeepStack 特征膨胀账本（从 $7.8125\ \mathrm{MiB}$ 编码器输出膨胀 $7.2$ 倍至 $56.25\ \mathrm{MiB}$ 主干 KV 缓存）与 3D 因果 VAE 带重叠光晕（Halo）的时空分块解码；（2）超长序列 DiT 的并行拓扑设计，严密推导张量并行（TP）、DeepSpeed-Ulysses（每层单卡通信 $\frac{4Nd}{P}$，受限于注意力头数 $P \le n_{\mathrm{head}}$）、Ring Attention（单步 $\frac{2Nd}{P}$、全环 $\frac{2(P-1)Nd}{P} \approx 2Nd$）与二维统一序列并行（2D-USP，将跨节点 RDMA 流量压缩 $9.0$ 倍）以及 `db-SP`（MLSys '26）双均衡切分；（3）扩散模型时间步冗余消除，涵盖 `DistriFusion` 位移 Patch 异步并行、`PipeFusion` 二维流水线、`TeaCache` 免训练残差复用（$2.12\times$ 端到端加速）、`SageAttention-3` FP4 微缩放量化与 `< 33.3 ms` 滚动 KV 世界模型；（4）从 `TriInfer`（MLSys '26）三阶段弹性合并到 `vLLM-Omni` / `ModServe` 的 `E-P-D-G`（编码—预填充—解码—生成）四池解耦架构与多模态嵌入缓存（Embedding Cache, EC）复用[^ch17-case-study]。
+本章顺承第 5 章（三维并行与序列并行基础）与第 11–13 章（推理引擎与 PD 解耦服务），系统建立多模态理解（VLM / Omni-modal）、视频扩散生成（3D DiT）与实时交互世界模型的底层基础设施工程学。全章围绕四条定量主线展开：（1）高分辨率视觉动态切片（AnyRes / NaViT）、Qwen3-VL DeepStack 特征膨胀账本（从 $7.8125\ \mathrm{MiB}$ 编码器输出膨胀 $7.2$ 倍至 $56.25\ \mathrm{MiB}$ 主干 KV 缓存）与 3D 因果 VAE 带重叠光晕（Halo）的时空分块解码；（2）超长序列 DiT 的并行拓扑设计，严密推导张量并行（TP）、DeepSpeed-Ulysses（每层单卡通信 $\frac{4Nd}{P}$，受限于注意力头数 $P \le n_{\mathrm{head}}$）、Ring Attention（单步 $\frac{2Nd}{P}$、全环 $\frac{2(P-1)Nd}{P} \approx 2Nd$）与二维统一序列并行（2D-USP，将跨节点 RDMA 流量压缩 $9.0$ 倍）以及 `db-SP`（MLSys '26）双均衡切分；（3）扩散模型时间步冗余消除，涵盖 `DistriFusion` 位移 Patch 异步并行、`PipeFusion` 二维流水线、`TeaCache` 免训练残差复用（$2.12\times$ 端到端加速）、`SageAttention-3` FP4 微缩放量化与 `< 33.3 ms` 滚动 KV 世界模型；（4）从 `TriInfer`（MLSys '26）三阶段弹性合并到 `vLLM-Omni` / `ModServe` 的 `E-P-D-G`（编码—预填充—解码—生成）四池解耦架构、多模态嵌入缓存（Embedding Cache, EC）复用，以及 `Transfusion / Show-o` 离散自回归与连续扩散混合掩码和 3D 高斯泼溅（3DGS）几何脚手架引导的相机可控世界模型[^ch17-case-study]。
 
 ---
 
@@ -37,41 +37,43 @@
 
 *图 17-2　AnyRes 动态高分辨率切片、NaViT 序列打包与 Qwen3-VL-4B DeepStack 特征（7.8125 MiB EC → 56.25 MiB KV，7.2x 放大）演化（算例 17-1）。*
 
-#### 算例 17-1：Qwen3-VL-4B 视觉词元生成与编码器输出（EC）vs. 主干 KV 缓存的 7.2 倍状态膨胀
-
-**问题设定**：考察 `Qwen3-VL-4B` 服务一条包含单张 $H \times W = 640 \times 640$ RGB 图像的请求。模型架构参数锁定如下：
-1. **视觉编码器（ViT）与空间合并**：基础视觉块大小 $p = 16$，通过 $m \times m = 2 \times 2$ 空间合并层输出视觉词元；合并后投射至主干隐藏维度的单层特征宽度为 $d_{\mathrm{proj}} = 2{,}560$（BF16，每元素 $2\ \mathrm{B}$）。
-2. **DeepStack 多层特征注入**：为增强细粒度空间对齐，`Qwen3-VL-4B` 除了输出视觉编码器最终层投射特征外，还额外抽取了 3 个中间层（第 `#5`、`#11`、`#17` 块）的多尺度视觉特征，每一路中间特征同样投射为宽度 $2{,}560$ 的 BF16 向量。
-3. **LLM 主干网络**：共 $L_{\mathrm{llm}} = 36$ 层，采用分组查询注意力（GQA），每层配置 $n_{\mathrm{kv}} = 8$ 个键值头（KV Heads），每个头维度 $d_{\mathrm{head}} = 128$，KV 缓存以 BF16（$2\ \mathrm{B}$）存储。
-
-试精确计算：（1）该图像生成的最终视觉词元数 $N_{\mathrm{vis}}$；（2）仅包含最终投射层时与包含 3 层 DeepStack 特征时的编码器输出总体积 $V_{\mathrm{EC}}$（按字节 $\mathrm{B}$ 与二进制兆字节 $\mathrm{MiB} = 2^{20}\ \mathrm{B}$ 计）；（3）这 $N_{\mathrm{vis}}$ 个视觉词元进入 36 层 LLM 主干后生成的 KV 缓存总体积 $V_{\mathrm{KV}}$，以及状态膨胀比 $\frac{V_{\mathrm{KV}}}{V_{\mathrm{EC}}}$。
-
-**逐项推导**：
-
-1. **视觉块切分与 $2 \times 2$ 空间合并后的词元数**：
-   原始 $640 \times 640$ 图像按 $p = 16$ 切分，得到的初始网格尺寸为：
-   $$N_{\mathrm{patch}} = \frac{640}{16} \times \frac{640}{16} = 40 \times 40 = 1{,}600\ \text{个初始块}$$
-   经过 $2 \times 2$ 空间合并（每 4 个相邻块融合为 1 个视觉词元）后，实际进入下游主干序列的视觉词元数为：
-   $$N_{\mathrm{vis}} = \frac{1{,}600}{2 \times 2} = 400\ \text{个视觉词元}$$
-
-2. **视觉编码器输出体积（Embedding Cache, EC）**：
-   - 若仅传输最终层投射特征（形状为 $[400, 2560]$，BF16）：
-     $$V_{\mathrm{EC, final}} = 400 \times 2{,}560 \times 2\ \mathrm{B} = 2{,}048{,}000\ \mathrm{B} = \frac{2{,}048{,}000}{1{,}048{,}576}\ \mathrm{MiB} = \mathbf{1.953125\ \mathrm{MiB}}$$
-   - 算上 `#5, #11, #17` 三个中间 DeepStack 特征层后，每个视觉词元携带 $(1 + 3) \times 2{,}560 = 10{,}240$ 维 BF16 特征（形状为 $[400, 10240]$）：
-     $$V_{\mathrm{EC}} = 400 \times 10{,}240 \times 2\ \mathrm{B} = 8{,}192{,}000\ \mathrm{B} = \frac{8{,}192{,}000}{1{,}048{,}576}\ \mathrm{MiB} = \mathbf{7.8125\ \mathrm{MiB}}$$
-
-3. **36 层 LLM 主干的 KV 缓存体积与膨胀倍数**：
-   在 36 层主干中，单个词元在每层需存储 Key 与 Value 两个张量，单词元全层 KV 字节数为：
-   $$B_{\mathrm{KV/tok}} = 2_{\mathrm{K,V}} \times L_{\mathrm{llm}} \times n_{\mathrm{kv}} \times d_{\mathrm{head}} \times 2\ \mathrm{B} = 2 \times 36 \times 8 \times 128 \times 2\ \mathrm{B} = \mathbf{147{,}456\ \mathrm{B/token}} = 144\ \mathrm{KiB/token}$$
-   因此，$400$ 个视觉词元对应的主干 KV 缓存总体积为：
-   $$V_{\mathrm{KV}} = 400 \times 147{,}456\ \mathrm{B} = 58{,}982{,}400\ \mathrm{B} = \frac{58{,}982{,}400}{1{,}048{,}576}\ \mathrm{MiB} = \mathbf{56.25\ \mathrm{MiB}}$$
-   对比含 DeepStack 的编码器输出 $V_{\mathrm{EC}} = 7.8125\ \mathrm{MiB}$，主干 KV 缓存对视觉状态体积的放大倍数为：
-   $$\frac{V_{\mathrm{KV}}}{V_{\mathrm{EC}}} = \frac{58{,}982{,}400\ \mathrm{B}}{8{,}192{,}000\ \mathrm{B}} = \frac{56.25\ \mathrm{MiB}}{7.8125\ \mathrm{MiB}} = \mathbf{7.2\times}$$
-   （若对比不含 DeepStack 的单层投射特征 $1.953125\ \mathrm{MiB}$，膨胀比更高达 $\mathbf{28.8\times}$。）
-
-**工程启示**：算例 17-1 揭示了一条决定多模态系统架构走向的物理事实——**视觉特征一旦跨越主干 Prefill 阶段转化为多层 KV 缓存，其体积便在 `Qwen3-VL-4B` 上膨胀 $7.2$ 倍（在层数更深的 72B 模型上甚至膨胀 $15\text{–}30$ 倍）**。因此，在跨节点阶段解耦时，将切分边界设在“编码器与预填充之间（传输 $7.8125\ \mathrm{MiB}$ 的 EC）”远比设在“预填充与解码之间（搬移 $56.25\ \mathrm{MiB}$ 的 KV）”节省网络带宽；同样，在多轮多模态对话缓存中，优先将温冷会话降级为 EC 缓存可立即释放 $1 - \frac{1}{7.2} = \mathbf{86.11\%}$ 的显存池空间。
+> **算例 17-1（Qwen3-VL-4B 视觉词元生成与编码器输出 EC vs. 主干 KV 缓存的 7.2 倍状态膨胀）：**
+>
+> **问题设定**：考察 `Qwen3-VL-4B` 服务一条包含单张 $H \times W = 640 \times 640$ RGB 图像的请求。模型架构参数锁定如下：
+> 1. **视觉编码器（ViT）与空间合并**：基础视觉块大小 $p = 16$，通过 $m \times m = 2 \times 2$ 空间合并层输出视觉词元；合并后投射至主干隐藏维度的单层特征宽度为 $d_{\mathrm{proj}} = 2{,}560$（BF16，每元素 $2\ \mathrm{B}$）。
+> 2. **DeepStack 多层特征注入**：为增强细粒度空间对齐，`Qwen3-VL-4B` 除了输出视觉编码器最终层投射特征外，还额外抽取了 3 个中间层（第 `#5`、`#11`、`#17` 块）的多尺度视觉特征，每一路中间特征同样投射为宽度 $2{,}560$ 的 BF16 向量。
+> 3. **LLM 主干网络**：共 $L_{\mathrm{llm}} = 36$ 层，采用分组查询注意力（GQA），每层配置 $n_{\mathrm{kv}} = 8$ 个键值头（KV Heads），每个头维度 $d_{\mathrm{head}} = 128$，KV 缓存以 BF16（$2\ \mathrm{B}$）存储。
+>
+> 试精确计算：（1）该图像生成的最终视觉词元数 $N_{\mathrm{vis}}$；（2）仅包含最终投射层时与包含 3 层 DeepStack 特征时的编码器输出总体积 $V_{\mathrm{EC}}$（按字节 $\mathrm{B}$ 与二进制兆字节 $\mathrm{MiB} = 2^{20}\ \mathrm{B}$ 计）；（3）这 $N_{\mathrm{vis}}$ 个视觉词元进入 36 层 LLM 主干后生成的 KV 缓存总体积 $V_{\mathrm{KV}}$，以及状态膨胀比 $\frac{V_{\mathrm{KV}}}{V_{\mathrm{EC}}}$。
+>
+> **逐项推导**：
+>
+> 1. **视觉块切分与 $2 \times 2$ 空间合并后的词元数**：
+>    原始 $640 \times 640$ 图像按 $p = 16$ 切分，得到的初始网格尺寸为：
+>    $$N_{\mathrm{patch}} = \frac{640}{16} \times \frac{640}{16} = 40 \times 40 = 1{,}600\ \text{个初始块}$$
+>    经过 $2 \times 2$ 空间合并（每 4 个相邻块融合为 1 个视觉词元）后，实际进入下游主干序列的视觉词元数为：
+>    $$N_{\mathrm{vis}} = \frac{1{,}600}{2 \times 2} = 400\ \text{个视觉词元}$$
+>
+> 2. **视觉编码器输出体积（Embedding Cache, EC）**：
+>    - 若仅传输最终层投射特征（形状为 $[400, 2560]$，BF16）：
+>      $$V_{\mathrm{EC, final}} = 400 \times 2{,}560 \times 2\ \mathrm{B} = 2{,}048{,}000\ \mathrm{B} = \frac{2{,}048{,}000}{1{,}048{,}576}\ \mathrm{MiB} = \mathbf{1.953125\ \mathrm{MiB}}$$
+>    - 算上 `#5, #11, #17` 三个中间 DeepStack 特征层后，每个视觉词元携带 $(1 + 3) \times 2{,}560 = 10{,}240$ 维 BF16 特征（形状为 $[400, 10240]$）：
+>      $$V_{\mathrm{EC}} = 400 \times 10{,}240 \times 2\ \mathrm{B} = 8{,}192{,}000\ \mathrm{B} = \frac{8{,}192{,}000}{1{,}048{,}576}\ \mathrm{MiB} = \mathbf{7.8125\ \mathrm{MiB}}$$
+>
+> 3. **36 层 LLM 主干的 KV 缓存体积与膨胀倍数**：
+>    在 36 层主干中，单个词元在每层需存储 Key 与 Value 两个张量，单词元全层 KV 字节数为：
+>    $$B_{\mathrm{KV/tok}} = 2_{\mathrm{K,V}} \times L_{\mathrm{llm}} \times n_{\mathrm{kv}} \times d_{\mathrm{head}} \times 2\ \mathrm{B} = 2 \times 36 \times 8 \times 128 \times 2\ \mathrm{B} = \mathbf{147{,}456\ \mathrm{B/token}} = 144\ \mathrm{KiB/token}$$
+>    因此，$400$ 个视觉词元对应的主干 KV 缓存总体积为：
+>    $$V_{\mathrm{KV}} = 400 \times 147{,}456\ \mathrm{B} = 58{,}982{,}400\ \mathrm{B} = \frac{58{,}982{,}400}{1{,}048{,}576}\ \mathrm{MiB} = \mathbf{56.25\ \mathrm{MiB}}$$
+>    对比含 DeepStack 的编码器输出 $V_{\mathrm{EC}} = 7.8125\ \mathrm{MiB}$，主干 KV 缓存对视觉状态体积的放大倍数为：
+>    $$\frac{V_{\mathrm{KV}}}{V_{\mathrm{EC}}} = \frac{58{,}982{,}400\ \mathrm{B}}{8{,}192{,}000\ \mathrm{B}} = \frac{56.25\ \mathrm{MiB}}{7.8125\ \mathrm{MiB}} = \mathbf{7.2\times}$$
+>    （若对比不含 DeepStack 的单层投射特征 $1.953125\ \mathrm{MiB}$，膨胀比更高达 $\mathbf{28.8\times}$。）
+>
+> **工程启示**：算例 17-1 揭示了一条决定多模态系统架构走向的物理事实——**视觉特征一旦跨越主干 Prefill 阶段转化为多层 KV 缓存，其体积便在 `Qwen3-VL-4B` 上膨胀 $7.2$ 倍（在层数更深的 72B 模型上甚至膨胀 $15\text{–}30$ 倍）**。因此，在跨节点阶段解耦时，将切分边界设在“编码器与预填充之间（传输 $7.8125\ \mathrm{MiB}$ 的 EC）”远比设在“预填充与解码之间（搬移 $56.25\ \mathrm{MiB}$ 的 KV）”节省网络带宽；同样，在多轮多模态对话缓存中，优先将温冷会话降级为 EC 缓存可立即释放 $1 - \frac{1}{7.2} = \mathbf{86.11\%}$ 的显存池空间。
 
 表 17-1 汇总对比了主流视觉语言模型在视觉词元化、空间合并与特征注入维度上的工程差异：
+
+*表 17-1　主流视觉语言模型（VLM）的动态视觉词元化、空间合并与跨阶段状态膨胀对比*
 
 | 模型家族 | 分辨率适配范式 | 基础块大小 $p$ | 空间合并比 $m\times m$ | 多层特征注入机制 | $640\times 640$ 单图词元数 | 跨阶段状态膨胀特征 |
 | :--- | :--- | :---: | :---: | :--- | :---: | :--- |
@@ -143,28 +145,30 @@ class Qwen3VLDynamicPatcherAndDeepStack(nn.Module):
    进入 DiT 主干前，潜变量张量再按步长 $(p_t, p_h, p_w)$（主流视频 DiT 取 $p_t = 1, p_h = 2, p_w = 2$）切分为互不重叠的三维小立方块，并展平为一维序列形态的时空词元流，总词元数 $N$ 为：
    $$N = N_t \times N_h \times N_w = \left\lceil\frac{T}{r_t p_t}\right\rceil \times \left\lceil\frac{H}{r_h p_h}\right\rceil \times \left\lceil\frac{W}{r_w p_w}\right\rceil$$
 
-#### 算例 17-2：10 秒 1080p 24fps 视频的 3D DiT 词元规模与 50 步去噪计算量
-
-**问题设定**：考察一段时长 $10\ \mathrm{s}$、帧率 $24\ \mathrm{fps}$（总帧数 $T = 240$）、分辨率 $W \times H = 1920 \times 1080$ 的全高清视频生成任务。系统采用 $r_t \times r_h \times r_w = 4 \times 8 \times 8$ 的 3D 因果 VAE，以及 $p_t \times p_h \times p_w = 1 \times 2 \times 2$ 的 DiT Patchify 层（对不可整除维度向上取整填充）。设 DiT 主干隐藏维度 $d = 4{,}096$，共 $L = 40$ 层，采样过程执行 $K = 50$ 个去噪步，且启用分类器自由引导（Classifier-Free Guidance, CFG，每步需同时评估条件分支与无条件分支）。试计算：（1）单样本时空词元总数 $N$；（2）仅自注意力核心（$Q K^\top$ 与 $\mathrm{ Score}\cdot V$）在 50 步生成中的总浮点运算量。
-
-**逐项推导**：
-
-1. **计算潜空间网格与 Patchify 后的时空词元总数 $N$**：
-   经 $4 \times 8 \times 8$ VAE 压缩后，潜空间尺寸为：
-   $$T' = \frac{240}{4} = 60,\qquad H' = \left\lceil\frac{1080}{8}\right\rceil = 135,\qquad W' = \frac{1920}{8} = 240$$
-   再经 $1 \times 2 \times 2$ Patchify 分块（高度 $135$ 向上补齐至偶数 $136$，即 $N_h = \lceil 135 / 2 \rceil = 68$）：
-   $$N_t = \frac{60}{1} = 60,\qquad N_h = \left\lceil\frac{135}{2}\right\rceil = 68,\qquad N_w = \frac{240}{2} = 120$$
-   三维网格展平后的时空词元总数为：
-   $$N = 60 \times 68 \times 120 = \mathbf{489{,}600\ \text{个时空词元}}$$
-
-2. **核算单层单次前向与 50 步双分支 CFG 的注意力计算量**：
-   在全双向自注意力下，长度为 $N = 489{,}600$、隐藏维 $d = 4{,}096$ 的序列，单层单次前向仅注意力矩阵乘（$\mathrm{FLOPs}_{\mathrm{attn, 1\text{-}layer}} = 4 N^2 d$，含 $Q K^\top$ 的 $2 N^2 d$ 与 $P V$ 的 $2 N^2 d$）即高达：
-   $$\mathrm{FLOPs}_{\mathrm{attn, 1\text{-}layer}} = 4 \times (489{,}600)^2 \times 4{,}096 \approx 3.9277 \times 10^{15}\ \mathrm{FLOPs} = \mathbf{3.93\ \mathrm{PFLOPs}}$$
-   贯穿 $L = 40$ 层、$K = 50$ 个去噪时间步、每步 2 条 CFG 分支（共 $40 \times 50 \times 2 = 4{,}000$ 次单层调用），仅自注意力一项的累积计算量即达到：
-   $$\mathrm{FLOPs}_{\mathrm{attn, total}} = 4{,}000 \times 3.9277 \times 10^{15} \approx \mathbf{1.571 \times 10^{19}\ \mathrm{FLOPs}} = 15.71\ \mathrm{EFLOPs}$$
-   即便在单卡有效 Tensor Core 吞吐达 $600\ \mathrm{TFLOPS}$ 的理想条件下，仅算完这 10 秒视频的注意力项就需要 $\frac{1.571 \times 10^{19}}{600 \times 10^{12}} \approx 26{,}185\ \mathrm{GPU\cdot s}$（即 64 张 H100 满负荷并行仍需约 $409$ 秒）。这直观解释了为何第 17.2 节的序列并行与第 17.3 节的时间步跳步/低比特注意力是视频生成落地的必由之路。
+> **算例 17-2（10 秒 1080p 24fps 视频的 3D DiT 词元规模与 50 步去噪计算量）：**
+>
+> **问题设定**：考察一段时长 $10\ \mathrm{s}$、帧率 $24\ \mathrm{fps}$（总帧数 $T = 240$）、分辨率 $W \times H = 1920 \times 1080$ 的全高清视频生成任务。系统采用 $r_t \times r_h \times r_w = 4 \times 8 \times 8$ 的 3D 因果 VAE，以及 $p_t \times p_h \times p_w = 1 \times 2 \times 2$ 的 DiT Patchify 层（对不可整除维度向上取整填充）。设 DiT 主干隐藏维度 $d = 4{,}096$，共 $L = 40$ 层，采样过程执行 $K = 50$ 个去噪步，且启用分类器自由引导（Classifier-Free Guidance, CFG，每步需同时评估条件分支与无条件分支）。试计算：（1）单样本时空词元总数 $N$；（2）仅自注意力核心（$Q K^\top$ 与 $\mathrm{ Score}\cdot V$）在 50 步生成中的总浮点运算量。
+>
+> **逐项推导**：
+>
+> 1. **计算潜空间网格与 Patchify 后的时空词元总数 $N$**：
+>    经 $4 \times 8 \times 8$ VAE 压缩后，潜空间尺寸为：
+>    $$T' = \frac{240}{4} = 60,\qquad H' = \left\lceil\frac{1080}{8}\right\rceil = 135,\qquad W' = \frac{1920}{8} = 240$$
+>    再经 $1 \times 2 \times 2$ Patchify 分块（高度 $135$ 向上补齐至偶数 $136$，即 $N_h = \lceil 135 / 2 \rceil = 68$）：
+>    $$N_t = \frac{60}{1} = 60,\qquad N_h = \left\lceil\frac{135}{2}\right\rceil = 68,\qquad N_w = \frac{240}{2} = 120$$
+>    三维网格展平后的时空词元总数为：
+>    $$N = 60 \times 68 \times 120 = \mathbf{489{,}600\ \text{个时空词元}}$$
+>
+> 2. **核算单层单次前向与 50 步双分支 CFG 的注意力计算量**：
+>    在全双向自注意力下，长度为 $N = 489{,}600$、隐藏维 $d = 4{,}096$ 的序列，单层单次前向仅注意力矩阵乘（$\mathrm{FLOPs}_{\mathrm{attn, 1\text{-}layer}} = 4 N^2 d$，含 $Q K^\top$ 的 $2 N^2 d$ 与 $P V$ 的 $2 N^2 d$）即高达：
+>    $$\mathrm{FLOPs}_{\mathrm{attn, 1\text{-}layer}} = 4 \times (489{,}600)^2 \times 4{,}096 \approx 3.9277 \times 10^{15}\ \mathrm{FLOPs} = \mathbf{3.93\ \mathrm{PFLOPs}}$$
+>    贯穿 $L = 40$ 层、$K = 50$ 个去噪时间步、每步 2 条 CFG 分支（共 $40 \times 50 \times 2 = 4{,}000$ 次单层调用），仅自注意力一项的累积计算量即达到：
+>    $$\mathrm{FLOPs}_{\mathrm{attn, total}} = 4{,}000 \times 3.9277 \times 10^{15} \approx \mathbf{1.571 \times 10^{19}\ \mathrm{FLOPs}} = 15.71\ \mathrm{EFLOPs}$$
+>    即便在单卡有效 Tensor Core 吞吐达 $600\ \mathrm{TFLOPS}$ 的理想条件下，仅算完这 10 秒视频的注意力项就需要 $\frac{1.571 \times 10^{19}}{600 \times 10^{12}} \approx 26{,}185\ \mathrm{GPU\cdot s}$（即 64 张 H100 满负荷并行仍需约 $409$ 秒）。这直观解释了为何第 17.2 节的序列并行与第 17.3 节的时间步跳步/低比特注意力是视频生成落地的必由之路。
 
 表 17-2 给出了主流开源与工业级视频扩散模型（3D DiT）的时空压缩比、主干架构与序列规模对比：
+
+*表 17-2　主流视频扩散生成模型（3D DiT）的 3D 因果 VAE 压缩比、Patchify 步长与注意力架构对比*
 
 | 视频生成模型 | 参数量规模 | 3D 因果 VAE 压缩比 $(r_t \times r_h \times r_w)$ | DiT Patchify 步长 $(p_t \times p_h \times p_w)$ | 总等效下采样比 | 条件文本编码器 | 注意力机制与位置编码 |
 | :--- | :---: | :---: | :---: | :---: | :--- | :--- |
@@ -184,24 +188,24 @@ class Qwen3VLDynamicPatcherAndDeepStack(nn.Module):
 
 *图 17-3　3D 因果 VAE 解码阶段的特征图显存洪峰（突破 80 GB）与带重叠 Halo 的时空分块（Spatial-Temporal Tiling）解码（算例 17-3）。*
 
-#### 算例 17-3（对应规划算例 4）：3D 因果 VAE 解码显存洪峰与带 Halo 时空分块的百倍压缩
-
-**问题设定**：承接算例 17-2 的 10 秒 1080p 视频（$T = 240, H = 1080, W = 1920$）。在 3D 因果 VAE 解码器末段上采样块中，特征图已还原至全分辨率 $240 \times 1080 \times 1920$，通道数为 $C = 128$，采用 FP16（$2\ \mathrm{B}$/元素）计算。由于 GroupNorm + 卷积 + 残差连接在算子执行期至少需同时驻留 $k = 1.0$ 到 $2.0$ 份全尺寸特征缓冲（先按单份完整中间特征张量及双缓冲峰值核算），试计算：（1）未分块（Untiled）全量解码时的单张特征图体积与双缓冲瞬态显存峰值；（2）若启用**时空分块解码（Spatial-Temporal Tiling）**——空间维切分为 $4 \times 4 = 16$ 个子块、时间维采用 $T_{\mathrm{win}} = 16$ 帧的因果滑动窗口，且为消除分块边界接缝在空间四周边框附加 $\alpha_{\mathrm{halo}} = 12.5\%$ 的重叠光晕区（Halo Overlap）——单块有效计算体积与双缓冲显存峰值降至多少？
-
-**逐项推导**：
-
-1. **未分块全量解码的激活洪峰**：
-   单份全分辨率 128 通道 FP16 特征张量的精确字节数为：
-   $$V_{\mathrm{untiled, 1x}} = 240 \times 1080 \times 1920 \times 128 \times 2\ \mathrm{B} = 127{,}401{,}984{,}000\ \mathrm{B} \approx \mathbf{118.6523\ \mathrm{GiB}}\ (\div 2^{30})$$
-   若算子融合边界需同时持有输入与输出双缓冲（$2\times$），瞬态显存需求更飙升至 $237.30\ \mathrm{GiB}$。即便仅驻留单份特征图（$118.65\ \mathrm{GiB}$），也早已击穿单张 H100/H800（$80\ \mathrm{GB}$）的物理显存上限。
-
-2. **时空分块（Spatial-Temporal Tiling）与 Halo 重叠区核算**：
-   - 将空间平面 $1080 \times 1920$ 切分为 $4 \times 4$ 网格，单个基础空间分块尺寸为 $H_{\mathrm{tile}} \times W_{\mathrm{tile}} = \frac{1080}{4} \times \frac{1920}{4} = 270 \times 480$。
-   - 算上边界 $\alpha_{\mathrm{halo}} = 12.5\%$ 的重叠光晕扩展（空间宽高各乘以 $1 + 0.125 = 1.125$，面积乘以 $1.125^2 = 1.265625$），以及时间维每次仅解码 $T_{\mathrm{win}} = 16$ 帧窗口：
-     $$V_{\mathrm{tiled, 1x}} = 16 \times (270 \times 1.125) \times (480 \times 1.125) \times 128 \times 2\ \mathrm{B} = 671{,}846{,}400\ \mathrm{B} \approx \mathbf{0.6257\ \mathrm{GiB}}$$
-   - 即使计入算子执行期的双缓冲峰值（$2 \times V_{\mathrm{tiled, 1x}}$），3D VAE 解码的瞬态激活显存也仅为：
-     $$V_{\mathrm{tiled, peak}} = 2 \times 0.6257\ \mathrm{GiB} \approx \mathbf{1.2514\ \mathrm{GiB}}$$
-   相比未分块的 $118.65\ \mathrm{GiB}$，时空分块以仅增加 $26.56\%$ 的边界 Halo 重算开销为代价，将显存峰值压缩了 **$\frac{118.6523}{1.2514} \approx 94.8\times$（单缓冲口径压缩 $189.6\times$）**，彻底根除了生成尾端的 OOM 陷阱。
+> **算例 17-3（3D 因果 VAE 解码显存洪峰与带 Halo 时空分块的百倍压缩）：**
+>
+> **问题设定**：承接算例 17-2 的 10 秒 1080p 视频（$T = 240, H = 1080, W = 1920$）。在 3D 因果 VAE 解码器末段上采样块中，特征图已还原至全分辨率 $240 \times 1080 \times 1920$，通道数为 $C = 128$，采用 FP16（$2\ \mathrm{B}$/元素）计算。由于 GroupNorm + 卷积 + 残差连接在算子执行期至少需同时驻留 $k = 1.0$ 到 $2.0$ 份全尺寸特征缓冲（先按单份完整中间特征张量及双缓冲峰值核算），试计算：（1）未分块（Untiled）全量解码时的单张特征图体积与双缓冲瞬态显存峰值；（2）若启用**时空分块解码（Spatial-Temporal Tiling）**——空间维切分为 $4 \times 4 = 16$ 个子块、时间维采用 $T_{\mathrm{win}} = 16$ 帧的因果滑动窗口，且为消除分块边界接缝在空间四周边框附加 $\alpha_{\mathrm{halo}} = 12.5\%$ 的重叠光晕区（Halo Overlap）——单块有效计算体积与双缓冲显存峰值降至多少？
+>
+> **逐项推导**：
+>
+> 1. **未分块全量解码的激活洪峰**：
+>    单份全分辨率 128 通道 FP16 特征张量的精确字节数为：
+>    $$V_{\mathrm{untiled, 1x}} = 240 \times 1080 \times 1920 \times 128 \times 2\ \mathrm{B} = 127{,}401{,}984{,}000\ \mathrm{B} \approx \mathbf{118.6523\ \mathrm{GiB}}\ (\div 2^{30})$$
+>    若算子融合边界需同时持有输入与输出双缓冲（$2\times$），瞬态显存需求更飙升至 $237.30\ \mathrm{GiB}$。即便仅驻留单份特征图（$118.65\ \mathrm{GiB}$），也早已击穿单张 H100/H800（$80\ \mathrm{GB}$）的物理显存上限。
+>
+> 2. **时空分块（Spatial-Temporal Tiling）与 Halo 重叠区核算**：
+>    - 将空间平面 $1080 \times 1920$ 切分为 $4 \times 4$ 网格，单个基础空间分块尺寸为 $H_{\mathrm{tile}} \times W_{\mathrm{tile}} = \frac{1080}{4} \times \frac{1920}{4} = 270 \times 480$。
+>    - 算上边界 $\alpha_{\mathrm{halo}} = 12.5\%$ 的重叠光晕扩展（空间宽高各乘以 $1 + 0.125 = 1.125$，面积乘以 $1.125^2 = 1.265625$），以及时间维每次仅解码 $T_{\mathrm{win}} = 16$ 帧窗口：
+>      $$V_{\mathrm{tiled, 1x}} = 16 \times (270 \times 1.125) \times (480 \times 1.125) \times 128 \times 2\ \mathrm{B} = 671{,}846{,}400\ \mathrm{B} \approx \mathbf{0.6257\ \mathrm{GiB}}$$
+>    - 即使计入算子执行期的双缓冲峰值（$2 \times V_{\mathrm{tiled, 1x}}$），3D VAE 解码的瞬态激活显存也仅为：
+>      $$V_{\mathrm{tiled, peak}} = 2 \times 0.6257\ \mathrm{GiB} \approx \mathbf{1.2514\ \mathrm{GiB}}$$
+>    相比未分块的 $118.65\ \mathrm{GiB}$，时空分块以仅增加 $26.56\%$ 的边界 Halo 重算开销为代价，将显存峰值压缩了 **$\frac{118.6523}{1.2514} \approx 94.8\times$（单缓冲口径压缩 $189.6\times$）**，彻底根除了生成尾端的 OOM 陷阱。
 
 在工程实现中，时空分块解码还必须配合**余弦羽化融合（Cosine Feathering Blend）**：对相邻空间分块的 Halo 重叠带施加线性或余弦渐变权重 $\omega(x) \in [0, 1]$ 加权求和，并在时间滑动窗口之间传递因果卷积的最后 $k_t - 1$ 帧历史激活缓存（Causal Conv Cache），从而保证拼合后的 1080p 视频在空间与时间上均无肉眼可见的网格接缝或闪烁。下面的代码展示了带 Halo 重叠带、二维余弦羽化融合与时间滑动窗口的 3D 因果 VAE 分块解码器核心实现：
 
@@ -339,36 +343,38 @@ class Tiled3DCausalVAEDecoder:
 
 让我们通过严密的数值算例，见证这一二维正交映射如何将跨节点 RDMA 流量砍掉 $9.0$ 倍。
 
-#### 算例 17-4（对应规划算例 3）：64 卡视频 DiT 下 Ulysses、Ring 与 8×8 2D-USP 的通信账本
-
-**问题设定**：承接算例 17-2，视频词元数 $N = 489{,}600$，隐藏维度 $d = 4{,}096$（设 $n_{\mathrm{head}} = 64$ 或 $32$，BF16 每元素 $b = 2\ \mathrm{B}$），总序列并行度 $P = 64$（部署于 8 台 8 卡节点）。试精确计算单层自注意力中：（1）Ulysses 单卡通信量 $V_{\mathrm{Ulysses}}$；（2）纯 64 卡 Ring Attention 的单步通信量 $V_{\mathrm{Ring, step}}$ 与全环跨机通信总量 $V_{\mathrm{Ring, total}}$；（3）采用 $P_{\mathrm{U}} = 8$（节点内 Ulysses）$\times P_{\mathrm{R}} = 8$（跨节点 Ring）的 2D-USP 时，每张卡的跨节点 RDMA 通信总量 $V_{\mathrm{USP, inter}}$ 及其相对纯 Ring 的流量压缩倍数。
-
-**逐项推导**：
-
-1. **基准张量体积 $N d b$**：
-   单个完整序列激活张量（如全量 $Q$）的字节数为：
-   $$N d b = 489{,}600 \times 4{,}096 \times 2\ \mathrm{B} = 4{,}010{,}803{,}200\ \mathrm{B} = \mathbf{3{,}825.0\ \mathrm{MiB}}\ (\div 2^{20})$$
-
-2. **纯 DeepSpeed-Ulysses（$P = 64$，仅当 $n_{\mathrm{head}} \ge 64$ 时可行）**：
-   每层 4 次 `All-to-All` 的单卡定标通信量为：
-   $$V_{\mathrm{Ulysses}} = \frac{4 N d b}{P} = \frac{4 \times 3{,}825.0\ \mathrm{MiB}}{64} = 250{,}675{,}200\ \mathrm{B} = \mathbf{239.0625\ \mathrm{MiB}}$$
-   但若模型注意力头数 $n_{\mathrm{head}} = 32 < 64$，纯 Ulysses 直接无法扩展至 64 卡；即便 $n_{\mathrm{head}} = 64$，64 卡全局 `All-to-All` 也会引发跨节点全对全突发拥塞（Incast）。
-
-3. **纯 64 卡 Ring Attention（$P = 64$）**：
-   - 单步传递 $\frac{N}{64}$ 长度的 $K$ 与 $V$：
-     $$V_{\mathrm{Ring, step}} = \frac{2 N d b}{P} = \frac{2 \times 3{,}825.0\ \mathrm{MiB}}{64} = 125{,}337{,}600\ \mathrm{B} = \mathbf{119.53125\ \mathrm{MiB}}$$
-   - 全环共需执行 $P - 1 = 63$ 步传递，单卡总通信量为：
-     $$V_{\mathrm{Ring, total}} = 63 \times 119.53125\ \mathrm{MiB} = 7{,}896{,}268{,}800\ \mathrm{B} = \mathbf{7{,}530.46875\ \mathrm{MiB}} \approx 2 N d b$$
-
-4. **$8 \times 8$ 二维统一序列并行（2D-USP：$P_{\mathrm{U}} = 8, P_{\mathrm{R}} = 8$）**：
-   - **节点内（NVLink）**：8 卡执行 Ulysses `All-to-All`；
-   - **节点间（RoCE / IB RDMA）**：外层 Ring 环路长度仅为 $P_{\mathrm{R}} = 8$（共需 $P_{\mathrm{R}} - 1 = 7$ 步）。在每一步中，单卡发送的 KV 块序列长度为 $\frac{N}{P_{\mathrm{R}}}$，但因注意力头已被机内 Ulysses 切分为 $\frac{1}{P_{\mathrm{U}}}$，单步跨机传输体积依然是 $\frac{2 (N / P_{\mathrm{R}}) (d / P_{\mathrm{U}}) b}{1} = \frac{2 N d b}{P_{\mathrm{R}} P_{\mathrm{U}}} = 119.53125\ \mathrm{MiB}$。
-   - 因此，走完 $P_{\mathrm{R}} - 1 = 7$ 步跨节点环路，单卡跨节点 RDMA 通信总量仅为：
-     $$V_{\mathrm{USP, inter}} = (P_{\mathrm{R}} - 1) \times \frac{2 N d b}{P} = 7 \times 119.53125\ \mathrm{MiB} = \mathbf{836.71875\ \mathrm{MiB}}$$
-   - 对比纯 64 卡 Ring 的 $7{,}530.46875\ \mathrm{MiB}$，跨节点网络流量压缩倍数为：
-     $$\frac{V_{\mathrm{Ring, total}}}{V_{\mathrm{USP, inter}}} = \frac{P - 1}{P_{\mathrm{R}} - 1} = \frac{63}{7} = \mathbf{9.0\times}$$
+> **算例 17-4（64 卡视频 DiT 下 Ulysses、Ring 与 8×8 2D-USP 的通信账本）：**
+>
+> **问题设定**：承接算例 17-2，视频词元数 $N = 489{,}600$，隐藏维度 $d = 4{,}096$（设 $n_{\mathrm{head}} = 64$ 或 $32$，BF16 每元素 $b = 2\ \mathrm{B}$），总序列并行度 $P = 64$（部署于 8 台 8 卡节点）。试精确计算单层自注意力中：（1）Ulysses 单卡通信量 $V_{\mathrm{Ulysses}}$；（2）纯 64 卡 Ring Attention 的单步通信量 $V_{\mathrm{Ring, step}}$ 与全环跨机通信总量 $V_{\mathrm{Ring, total}}$；（3）采用 $P_{\mathrm{U}} = 8$（节点内 Ulysses）$\times P_{\mathrm{R}} = 8$（跨节点 Ring）的 2D-USP 时，每张卡的跨节点 RDMA 通信总量 $V_{\mathrm{USP, inter}}$ 及其相对纯 Ring 的流量压缩倍数。
+>
+> **逐项推导**：
+>
+> 1. **基准张量体积 $N d b$**：
+>    单个完整序列激活张量（如全量 $Q$）的字节数为：
+>    $$N d b = 489{,}600 \times 4{,}096 \times 2\ \mathrm{B} = 4{,}010{,}803{,}200\ \mathrm{B} = \mathbf{3{,}825.0\ \mathrm{MiB}}\ (\div 2^{20})$$
+>
+> 2. **纯 DeepSpeed-Ulysses（$P = 64$，仅当 $n_{\mathrm{head}} \ge 64$ 时可行）**：
+>    每层 4 次 `All-to-All` 的单卡定标通信量为：
+>    $$V_{\mathrm{Ulysses}} = \frac{4 N d b}{P} = \frac{4 \times 3{,}825.0\ \mathrm{MiB}}{64} = 250{,}675{,}200\ \mathrm{B} = \mathbf{239.0625\ \mathrm{MiB}}$$
+>    但若模型注意力头数 $n_{\mathrm{head}} = 32 < 64$，纯 Ulysses 直接无法扩展至 64 卡；即便 $n_{\mathrm{head}} = 64$，64 卡全局 `All-to-All` 也会引发跨节点全对全突发拥塞（Incast）。
+>
+> 3. **纯 64 卡 Ring Attention（$P = 64$）**：
+>    - 单步传递 $\frac{N}{64}$ 长度的 $K$ 与 $V$：
+>      $$V_{\mathrm{Ring, step}} = \frac{2 N d b}{P} = \frac{2 \times 3{,}825.0\ \mathrm{MiB}}{64} = 125{,}337{,}600\ \mathrm{B} = \mathbf{119.53125\ \mathrm{MiB}}$$
+>    - 全环共需执行 $P - 1 = 63$ 步传递，单卡总通信量为：
+>      $$V_{\mathrm{Ring, total}} = 63 \times 119.53125\ \mathrm{MiB} = 7{,}896{,}268{,}800\ \mathrm{B} = \mathbf{7{,}530.46875\ \mathrm{MiB}} \approx 2 N d b$$
+>
+> 4. **$8 \times 8$ 二维统一序列并行（2D-USP：$P_{\mathrm{U}} = 8, P_{\mathrm{R}} = 8$）**：
+>    - **节点内（NVLink）**：8 卡执行 Ulysses `All-to-All`；
+>    - **节点间（RoCE / IB RDMA）**：外层 Ring 环路长度仅为 $P_{\mathrm{R}} = 8$（共需 $P_{\mathrm{R}} - 1 = 7$ 步）。在每一步中，单卡发送的 KV 块序列长度为 $\frac{N}{P_{\mathrm{R}}}$，但因注意力头已被机内 Ulysses 切分为 $\frac{1}{P_{\mathrm{U}}}$，单步跨机传输体积依然是 $\frac{2 (N / P_{\mathrm{R}}) (d / P_{\mathrm{U}}) b}{1} = \frac{2 N d b}{P_{\mathrm{R}} P_{\mathrm{U}}} = 119.53125\ \mathrm{MiB}$。
+>    - 因此，走完 $P_{\mathrm{R}} - 1 = 7$ 步跨节点环路，单卡跨节点 RDMA 通信总量仅为：
+>      $$V_{\mathrm{USP, inter}} = (P_{\mathrm{R}} - 1) \times \frac{2 N d b}{P} = 7 \times 119.53125\ \mathrm{MiB} = \mathbf{836.71875\ \mathrm{MiB}}$$
+>    - 对比纯 64 卡 Ring 的 $7{,}530.46875\ \mathrm{MiB}$，跨节点网络流量压缩倍数为：
+>      $$\frac{V_{\mathrm{Ring, total}}}{V_{\mathrm{USP, inter}}} = \frac{P - 1}{P_{\mathrm{R}} - 1} = \frac{63}{7} = \mathbf{9.0\times}$$
 
 表 17-3 系统对比了长序列 DiT 与多模态训练中的五种并行机制及其物理边界：
+
+*表 17-3　长序列三维扩散变换器（DiT）与交错多模态训练的五种并行范式对比*
 
 | 并行范式 | 切分维度 | 每层单卡总通信量（字节） | 跨节点 RDMA 通信量 | 最大并行度上限 | 算通重叠方式与适用拓扑 |
 | :--- | :--- | :---: | :---: | :---: | :--- |
@@ -583,20 +589,20 @@ $$\left\|K^{(t)} - K^{(t-1)}\right\|_F \ll \left\|K^{(t)}\right\|_F,\qquad \left
 - 当 $\delta_{\mathrm{acc}} + \hat{\ell}(\Delta_{\mathrm{rel}}(t)) < \varepsilon_{\mathrm{thresh}}$ 时，系统判定当前时间步特征漂移尚在视觉无损容差内，直接跳过全部 $L$ 层 DiT 计算，执行 $x_{t-1} \leftarrow \mathrm{Solver}(x_t, \Delta F_{\mathrm{cache}})$；
 - 一旦累积漂移触及门限 $\varepsilon_{\mathrm{thresh}}$，则清零 $\delta_{\mathrm{acc}}$ 并执行一次完整 DiT 前向传播刷新缓存 $\Delta F_{\mathrm{cache}}$。
 
-#### 算例 17-5：TeaCache 动态跳步在 50 步视频生成中的 2.12 倍端到端加速账本
-
-**问题设定**：在某 64 卡视频生成节点上，生成一段 10 秒 1080p 视频的基准流水耗时如下：前端 T5/ViT 条件编码与尾端 Tiled 3D VAE 解码固定耗时合计 $T_{\mathrm{fixed}} = 3.60\ \mathrm{s}$；DiT 主干执行 $K = 50$ 个去噪时间步，每步耗时 $t_{\mathrm{step}} = 1.20\ \mathrm{s}$。启用 `TeaCache`（门限设为视觉无损档位 $\varepsilon_{\mathrm{thresh}} = 0.15$）后，系统在首尾剧变区保留密集计算、在中段平缓区自适应跳步，实际仅在 $K_{\mathrm{active}} = 22$ 个关键时间步执行了 DiT 主干前向，其余 $28$ 步直接复用残差缓存（单次缓存复用耗时忽略不计，$< 0.5\ \mathrm{ms}$）。试计算：（1）50 步全量基线的端到端延迟 $T_{\mathrm{base}}$；（2）启用 `TeaCache` 后的端到端延迟 $T_{\mathrm{tea}}$、DiT 主干加速比与端到端总加速比（Amdahl 定律验证）。
-
-**逐项推导**：
-
-1. **50 步全量计算基线延迟**：
-   $$T_{\mathrm{base}} = K \times t_{\mathrm{step}} + T_{\mathrm{fixed}} = 50 \times 1.20\ \mathrm{s} + 3.60\ \mathrm{s} = 60.00\ \mathrm{s} + 3.60\ \mathrm{s} = \mathbf{63.60\ \mathrm{s}}$$
-
-2. **启用 `TeaCache`（保留 22 步、跳过 28 步）后的延迟与加速比**：
-   $$T_{\mathrm{tea}} = K_{\mathrm{active}} \times t_{\mathrm{step}} + T_{\mathrm{fixed}} = 22 \times 1.20\ \mathrm{s} + 3.60\ \mathrm{s} = 26.40\ \mathrm{s} + 3.60\ \mathrm{s} = \mathbf{30.00\ \mathrm{s}}$$
-   - DiT 去噪主干自身的纯加速比为 $\frac{60.00\ \mathrm{s}}{26.40\ \mathrm{s}} = \frac{50}{22} \approx \mathbf{2.273\times}$；
-   - 计入前后固定阶段 $T_{\mathrm{fixed}} = 3.60\ \mathrm{s}$ 后的端到端实测加速比为：
-     $$S_{\mathrm{e2e}} = \frac{T_{\mathrm{base}}}{T_{\mathrm{tea}}} = \frac{63.60\ \mathrm{s}}{30.00\ \mathrm{s}} = \mathbf{2.12\times}$$
+> **算例 17-5（TeaCache 动态跳步在 50 步视频生成中的 2.12 倍端到端加速账本）：**
+>
+> **问题设定**：在某 64 卡视频生成节点上，生成一段 10 秒 1080p 视频的基准流水耗时如下：前端 T5/ViT 条件编码与尾端 Tiled 3D VAE 解码固定耗时合计 $T_{\mathrm{fixed}} = 3.60\ \mathrm{s}$；DiT 主干执行 $K = 50$ 个去噪时间步，每步耗时 $t_{\mathrm{step}} = 1.20\ \mathrm{s}$。启用 `TeaCache`（门限设为视觉无损档位 $\varepsilon_{\mathrm{thresh}} = 0.15$）后，系统在首尾剧变区保留密集计算、在中段平缓区自适应跳步，实际仅在 $K_{\mathrm{active}} = 22$ 个关键时间步执行了 DiT 主干前向，其余 $28$ 步直接复用残差缓存（单次缓存复用耗时忽略不计，$< 0.5\ \mathrm{ms}$）。试计算：（1）50 步全量基线的端到端延迟 $T_{\mathrm{base}}$；（2）启用 `TeaCache` 后的端到端延迟 $T_{\mathrm{tea}}$、DiT 主干加速比与端到端总加速比（Amdahl 定律验证）。
+>
+> **逐项推导**：
+>
+> 1. **50 步全量计算基线延迟**：
+>    $$T_{\mathrm{base}} = K \times t_{\mathrm{step}} + T_{\mathrm{fixed}} = 50 \times 1.20\ \mathrm{s} + 3.60\ \mathrm{s} = 60.00\ \mathrm{s} + 3.60\ \mathrm{s} = \mathbf{63.60\ \mathrm{s}}$$
+>
+> 2. **启用 `TeaCache`（保留 22 步、跳过 28 步）后的延迟与加速比**：
+>    $$T_{\mathrm{tea}} = K_{\mathrm{active}} \times t_{\mathrm{step}} + T_{\mathrm{fixed}} = 22 \times 1.20\ \mathrm{s} + 3.60\ \mathrm{s} = 26.40\ \mathrm{s} + 3.60\ \mathrm{s} = \mathbf{30.00\ \mathrm{s}}$$
+>    - DiT 去噪主干自身的纯加速比为 $\frac{60.00\ \mathrm{s}}{26.40\ \mathrm{s}} = \frac{50}{22} \approx \mathbf{2.273\times}$；
+>    - 计入前后固定阶段 $T_{\mathrm{fixed}} = 3.60\ \mathrm{s}$ 后的端到端实测加速比为：
+>      $$S_{\mathrm{e2e}} = \frac{T_{\mathrm{base}}}{T_{\mathrm{tea}}} = \frac{63.60\ \mathrm{s}}{30.00\ \mathrm{s}} = \mathbf{2.12\times}$$
 
 下面的代码展示了 `TeaCache` 免训练时间步残差复用调度器与 `SageAttention-3` 键通道均值平滑量化的完整实现逻辑：
 
@@ -802,33 +808,35 @@ class StreamBatchingWorldModelPipeline:
 
 针对多模态理解中的 `E-P-D` 三阶段关系，本书案例库（`case-studies/multimodal-stage-placement.md`）与 **MLSys 2026 论文 `TriInfer`（#127）**[^ch17-triinfer]给出了从静态池化走向动态弹性调度的定量准则。下面我们先通过锁定算例推导 `E` 池与 `PD` 池的最优静态配比及 EC 缓存命中率对池容量的重塑效应。
 
-#### 算例 17-6：4 卡多模态集群下 E 池与 PD 池配比寻优及 75% EC 缓存命中率加速账本
+> **算例 17-6（4 卡多模态集群下 E 池与 PD 池配比寻优及 75% EC 缓存命中率加速账本）：**
+>
+> **问题设定**（锁定自 `case-studies/multimodal-stage-placement.md`）：某 4-GPU 节点服务同构多模态请求流。单张 GPU 若专职运行模态编码阶段 `E`，其未缓存图像编码速率为 $\mu_{\mathrm{img}} = 12\ \mathrm{img/s}$；若专职运行主干预填充与解码合并阶段 `PD`，其请求服务速率为 $\mu_{PD} = 4\ \mathrm{req/s}$。系统将 4 张 GPU 划分为 $n_E$ 张编码卡与 $n_{PD} = 4 - n_E$ 张主干卡（$n_E \in \{1, 2, 3\}$）。
+> 试分两个口径计算：
+> 1. **单图算力受限基线（每请求含 $1$ 张图像，无跨阶段链路瓶颈）**：此时单张 `E` 卡速率为 $\mu_E = 12\ \mathrm{req/s}$，端到端稳态吞吐为 $X(n_E, n_{PD}) = \min(R_E(n_E), R_{PD}(n_{PD}))$。求零缓存（$h = 0$）下三种整数配比 $(1,3), (2,2), (3,1)$ 的系统吞吐，以及开启编码器输出缓存（EC）且取得 $h = 75\%$ 命中率后单张 `E` 卡对总体请求流的有效支撑速率 $\mu_E^{\mathrm{eff}}(0.75) = \frac{\mu_E}{1 - h}$；
+> 2. **多图链路受限扩展（锁定案例库 4 图/请求 + `300 MB/s` 跨阶段传输上限）**：设每条请求携带 $4$ 张 $640 \times 640$ 图像（由算例 17-1 知单图含 DeepStack 的 EC 体积为 $7.8125\ \mathrm{MiB} = 8{,}192{,}000\ \mathrm{B}$，故每请求需从 `E` 向 `PD` 传输 $4 \times 8{,}192{,}000 = 32{,}768{,}000\ \mathrm{B} = 31.25\ \mathrm{MiB}$ 的 EC 张量），且共享的 `E -> PD` 交接链路有效带宽上限为 $B_{\mathrm{link}} = 300\ \mathrm{MB/s}$（即跨阶段交接吞吐上限为 $R_{\mathrm{link}} = \frac{300{,}000{,}000}{32{,}768{,}000} \approx \mathbf{9.16\ \mathrm{req/s}}$）。试对 $R(n_E, n_{PD}, h) = \min\!\left(\frac{12\,n_E}{4(1-h)},\; 4\,n_{PD},\; 9.16\right)$ 对比 $h = 0$ 与 $h = 75\%$ 下的最优整数卡数配比跃迁。
+>
+> **逐项推导**：
+>
+> 1. **单图基线（$1\ \mathrm{img/req}$，无链路瓶颈）下的 4 卡配比与 $h = 75\%$ 有效速率倍增**：
+>    当每请求含 $1$ 张图像且 $h = 0$ 时，$R_E = 12 n_E$，$R_{PD} = 4 n_{PD}$，枚举三种正整数切分方案可得表 17-4（上半部）：
+>    - `(1, 3)`：$R_E = 12,\ R_{PD} = 12 \implies X = \mathbf{12\ \mathrm{req/s}}$（两阶段严格匹配，4 卡满载）；
+>    - `(2, 2)`：$R_E = 24,\ R_{PD} = 8 \implies X = \mathbf{8\ \mathrm{req/s}}$（`PD` 池受限，编码池闲置 $16\ \mathrm{req/s}$）；
+>    - `(3, 1)`：$R_E = 36,\ R_{PD} = 4 \implies X = \mathbf{4\ \mathrm{req/s}}$（`PD` 池严重饥饿）。
+>    当开启 EC 缓存并取得 $h = 75\%$ 命中率时，仅 $1 - h = 25\%$ 的未命中请求消耗 `E` 卡算力，单张 `E` 卡在单图基线下的有效支撑速率放大 $4$ 倍至：
+>    $$\mu_E^{\mathrm{eff}}(0.75) = \frac{12}{1 - 0.75} = \mathbf{48\ \mathrm{req/s}}\quad(4\times\ \text{提升})$$
+>
+> 2. **多图（$4\ \mathrm{img/req}$）+ `300 MB/s` 交接链路上限下的最优配比漂移**：
+>    当每条请求含 $4$ 张图像时，单张 `E` 卡在 $h = 0$ 下每秒可编码 $12 / 4 = 3\ \mathrm{req/s}$，而在 $h = 75\%$ 下每秒可支撑 $\frac{12}{4(1 - 0.75)} = 12\ \mathrm{req/s}$；同时跨阶段链路封顶于 $R_{\mathrm{link}} \approx 9.16\ \mathrm{req/s}$：
+>    - **当 $h = 0$（零缓存）时**：
+>      - `1E + 3PD`：$\min(3,\ 12,\ 9.16) = \mathbf{3.00\ \mathrm{req/s}}$（受限于 `E` 池算力）；
+>      - **`2E + 2PD`（最优）**：$\min(6,\ 8,\ 9.16) = \mathbf{6.00\ \mathrm{req/s}}$（受限于 `E` 池，但总吞吐翻倍）；
+>      - `3E + 1PD`：$\min(9,\ 4,\ 9.16) = \mathbf{4.00\ \mathrm{req/s}}$（受限于 `PD` 池）。
+>    - **当 $h = 75\%$（高 EC 缓存命中）时**：
+>      - **`1E + 3PD`（逆袭为最优）**：$\min(12,\ 12,\ 9.16) = \mathbf{9.16\ \mathrm{req/s}}$（算力瓶颈解除，转由 `E -> PD` 交接链路带宽封顶）；
+>      - `2E + 2PD`：$\min(24,\ 8,\ 9.16) = \mathbf{8.00\ \mathrm{req/s}}$（受限于 2 张 `PD` 卡的 $8\ \mathrm{req/s}$ 上限）；
+>      - `3E + 1PD`：$\min(36,\ 4,\ 9.16) = \mathbf{4.00\ \mathrm{req/s}}$（受限于 `PD` 池）。
 
-**问题设定**（锁定自 `case-studies/multimodal-stage-placement.md`）：某 4-GPU 节点服务同构多模态请求流。单张 GPU 若专职运行模态编码阶段 `E`，其未缓存图像编码速率为 $\mu_{\mathrm{img}} = 12\ \mathrm{img/s}$；若专职运行主干预填充与解码合并阶段 `PD`，其请求服务速率为 $\mu_{PD} = 4\ \mathrm{req/s}$。系统将 4 张 GPU 划分为 $n_E$ 张编码卡与 $n_{PD} = 4 - n_E$ 张主干卡（$n_E \in \{1, 2, 3\}$）。
-试分两个口径计算：
-1. **单图算力受限基线（每请求含 $1$ 张图像，无跨阶段链路瓶颈）**：此时单张 `E` 卡速率为 $\mu_E = 12\ \mathrm{req/s}$，端到端稳态吞吐为 $X(n_E, n_{PD}) = \min(R_E(n_E), R_{PD}(n_{PD}))$。求零缓存（$h = 0$）下三种整数配比 $(1,3), (2,2), (3,1)$ 的系统吞吐，以及开启编码器输出缓存（EC）且取得 $h = 75\%$ 命中率后单张 `E` 卡对总体请求流的有效支撑速率 $\mu_E^{\mathrm{eff}}(0.75) = \frac{\mu_E}{1 - h}$；
-2. **多图链路受限扩展（锁定案例库 4 图/请求 + `300 MB/s` 跨阶段传输上限）**：设每条请求携带 $4$ 张 $640 \times 640$ 图像（由算例 17-1 知单图含 DeepStack 的 EC 体积为 $7.8125\ \mathrm{MiB} = 8{,}192{,}000\ \mathrm{B}$，故每请求需从 `E` 向 `PD` 传输 $4 \times 8{,}192{,}000 = 32{,}768{,}000\ \mathrm{B} = 31.25\ \mathrm{MiB}$ 的 EC 张量），且共享的 `E -> PD` 交接链路有效带宽上限为 $B_{\mathrm{link}} = 300\ \mathrm{MB/s}$（即跨阶段交接吞吐上限为 $R_{\mathrm{link}} = \frac{300{,}000{,}000}{32{,}768{,}000} \approx \mathbf{9.16\ \mathrm{req/s}}$）。试对 $R(n_E, n_{PD}, h) = \min\!\left(\frac{12\,n_E}{4(1-h)},\; 4\,n_{PD},\; 9.16\right)$ 对比 $h = 0$ 与 $h = 75\%$ 下的最优整数卡数配比跃迁。
-
-**逐项推导**：
-
-1. **单图基线（$1\ \mathrm{img/req}$，无链路瓶颈）下的 4 卡配比与 $h = 75\%$ 有效速率倍增**：
-   当每请求含 $1$ 张图像且 $h = 0$ 时，$R_E = 12 n_E$，$R_{PD} = 4 n_{PD}$，枚举三种正整数切分方案可得表 17-4（上半部）：
-   - `(1, 3)`：$R_E = 12,\ R_{PD} = 12 \implies X = \mathbf{12\ \mathrm{req/s}}$（两阶段严格匹配，4 卡满载）；
-   - `(2, 2)`：$R_E = 24,\ R_{PD} = 8 \implies X = \mathbf{8\ \mathrm{req/s}}$（`PD` 池受限，编码池闲置 $16\ \mathrm{req/s}$）；
-   - `(3, 1)`：$R_E = 36,\ R_{PD} = 4 \implies X = \mathbf{4\ \mathrm{req/s}}$（`PD` 池严重饥饿）。
-   当开启 EC 缓存并取得 $h = 75\%$ 命中率时，仅 $1 - h = 25\%$ 的未命中请求消耗 `E` 卡算力，单张 `E` 卡在单图基线下的有效支撑速率放大 $4$ 倍至：
-   $$\mu_E^{\mathrm{eff}}(0.75) = \frac{12}{1 - 0.75} = \mathbf{48\ \mathrm{req/s}}\quad(4\times\ \text{提升})$$
-
-2. **多图（$4\ \mathrm{img/req}$）+ `300 MB/s` 交接链路上限下的最优配比漂移**：
-   当每条请求含 $4$ 张图像时，单张 `E` 卡在 $h = 0$ 下每秒可编码 $12 / 4 = 3\ \mathrm{req/s}$，而在 $h = 75\%$ 下每秒可支撑 $\frac{12}{4(1 - 0.75)} = 12\ \mathrm{req/s}$；同时跨阶段链路封顶于 $R_{\mathrm{link}} \approx 9.16\ \mathrm{req/s}$：
-   - **当 $h = 0$（零缓存）时**：
-     - `1E + 3PD`：$\min(3,\ 12,\ 9.16) = \mathbf{3.00\ \mathrm{req/s}}$（受限于 `E` 池算力）；
-     - **`2E + 2PD`（最优）**：$\min(6,\ 8,\ 9.16) = \mathbf{6.00\ \mathrm{req/s}}$（受限于 `E` 池，但总吞吐翻倍）；
-     - `3E + 1PD`：$\min(9,\ 4,\ 9.16) = \mathbf{4.00\ \mathrm{req/s}}$（受限于 `PD` 池）。
-   - **当 $h = 75\%$（高 EC 缓存命中）时**：
-     - **`1E + 3PD`（逆袭为最优）**：$\min(12,\ 12,\ 9.16) = \mathbf{9.16\ \mathrm{req/s}}$（算力瓶颈解除，转由 `E -> PD` 交接链路带宽封顶）；
-     - `2E + 2PD`：$\min(24,\ 8,\ 9.16) = \mathbf{8.00\ \mathrm{req/s}}$（受限于 2 张 `PD` 卡的 $8\ \mathrm{req/s}$ 上限）；
-     - `3E + 1PD`：$\min(36,\ 4,\ 9.16) = \mathbf{4.00\ \mathrm{req/s}}$（受限于 `PD` 池）。
+*表 17-4　4 卡多模态集群下 E 池与 PD 池配比寻优及 75% EC 缓存命中率与链路瓶颈演化对比*
 
 | 配比方案 $(n_E, n_{PD})$ | 单图基线吞吐 ($1\ \mathrm{img/req}, h=0$) | 4 图/请求吞吐 ($h=0$, 算力受限) | 4 图/请求吞吐 ($h=75\%$, 含 $9.16$ 链路顶) | 瓶颈漂移与最优配比演化分析 |
 | :--- | :---: | :---: | :---: | :--- |
@@ -929,7 +937,9 @@ class EPDGDisaggregatedScheduler:
 
 *图 17-13　多轮多模态对话中缓存原始图片、缓存 ViT 视觉特征（7.8125 MiB）与缓存 LLM 全层 KV（56.25 MiB）的体积与重算延迟折中。*
 
-结合算例 17-1 的精确账本，图 17-13 对比了多模态服务中三级缓存形态的性价比边界：
+结合算例 17-1 的精确账本，图 17-13 对比了多模态服务中三级缓存形态的性价比边界（表 17-5）：
+
+*表 17-5　多模态在线服务中三级缓存形态（原始图像、编码器输出 EC 与主干 KV 缓存）的体积与重算代价对比*
 
 | 缓存形态 | 单图（`Qwen3-VL-4B` 400 词元）体积 | 相对主干 KV 体积比 | 后续轮次命中时的重算代价 | 适用生命周期层级 |
 | :--- | :---: | :---: | :--- | :--- |
@@ -969,7 +979,148 @@ class EPDGDisaggregatedScheduler:
 
 *图 17-18　多模态与世界模型基础设施的算法—并行—缓存—解耦四维总架构图。*
 
-图 17-15 至图 17-18 依次总结了本章前面剖析的 GPU 硬件媒体解码（NVDEC/nvJPEG）卸载、分类器自由引导（CFG）并行与尾部截断、1080p 视频生成三阶段延迟/显存错位规律，以及全章从三维潜空间表征、超长序列并行、时间步冗余压缩到全模态四池解耦的四维总架构图。读者可直接运行配套实验 `experiments/ch17/17-01`，在本地复现本章全部锁定算例的精确数值账本。
+图 17-15 至图 17-18 依次总结了本章前面剖析的 GPU 硬件媒体解码（NVDEC/nvJPEG）卸载、分类器自由引导（CFG）并行与尾部截断、1080p 视频生成三阶段延迟/显存错位规律，以及全章从三维潜空间表征、超长序列并行、时间步冗余压缩到全模态四池解耦的四维总架构图。读者可直接运行配套实验 `experiments/ch17/17-01` 与 `experiments/ch17/17-02`，在本地复现本章全部锁定算例的精确数值账本。
+
+### 17.4.3 原生多模态统一自回归—扩散混合架构（Transfusion / Show-o）与 3DGS 引导世界模型
+
+在 17.4.1 节与 17.4.2 节中，我们探讨了通过外部连接器将视觉编码器（ViT）、大语言模型（LLM）与扩散变换器（DiT）组装在一起的模块化全模态流水线。然而，前沿多模态基础模型正在向更深层的统一架构演进——即在**同一个 Transformer 主干权重与同一条交错序列**内，同时对离散文本词元执行**下一词元自回归预测（Next-Token Autoregressive Prediction）**，并对连续图像/视频潜变量块执行**多步迭代去噪扩散（Continuous Diffusion / Flow Matching）**。以 Meta `Transfusion`、字节与新国大 `Show-o`、`Janus-Pro` 以及 `Chameleon` 演进路线为代表的统一架构，虽然消除了跨模型投射的信息损耗，却给推理引擎的注意力内核与 KV 缓存管理带来了前所未有的系统挑战。
+
+![图 17-19：Transfusion / Show-o 离散自回归与连续扩散混合掩码（Hybrid Causal-Bidirectional Mask）及 KV 缓存分块调度](ch17/ch17-transfusion-hybrid-causal-bidirectional-mask.svg)
+
+*图 17-19　Transfusion / Show-o 离散自回归与连续扩散混合掩码（Hybrid Causal-Bidirectional Mask）及 KV 缓存分块调度。*
+
+如图 17-19 所示，在 `Transfusion` 架构中，一条图文交错序列由多个离散文本段 $\mathcal{T}_1, \mathcal{T}_2, \dots$ 与插入在 `<boi>`（图像起始符）和 `<eoi>`（图像终止符）之间的连续图像块 $\mathcal{I}_1, \mathcal{I}_2, \dots$ 共同构成。其注意力掩码不再是单一的下三角矩阵或全一矩阵，而是**分块因果—双向混合掩码（Blockwise Causal-Bidirectional Hybrid Mask）**：
+- **在文本段内部及跨段历史方向**：任意位置 $i$ 的词元（无论是文本词元还是图像块词元）对早于它的所有历史文本词元和**已完成去噪定稿**的历史图像块词元均保持单向因果可见（Lower-Triangular Causal Visibility）；
+- **在当前正在生成的图像段 $\mathcal{I}_m$ 内部**：当解码器生成出 `<boi>` 触发符后，引擎一次性压入 $N_{\mathrm{img}}$ 个高斯噪声潜变量块（例如 $16 \times 16 = 256$ 或 $32 \times 32 = 1{,}024$ 个块）。在这 $N_{\mathrm{img}}$ 个词元内部，注意力掩码切换为 **$N_{\mathrm{img}} \times N_{\mathrm{img}}$ 全双向可见正方形（Bidirectional Square Sub-block）**，并在此局部窗口上连续循环执行 $K = 20\text{–}30$ 个扩散去噪步；待最后一步去噪收敛并吐出 `<eoi>` 后，这 $N_{\mathrm{img}}$ 个图像词元的最终键值特征被冻结固化为只读历史 KV 缓存，引擎随即切回逐词元文本自回归解码。
+
+如果直接在标准 `vLLM` 或 `FlashAttention` 上运行这种混合序列，会立刻引爆两处性能灾难：
+1. **分块掩码碎片化与无效 FLOPs 浪费**：在标准 PagedAttention 中，若一个物理页块（Page Block，如 64 或 128 词元）内同时混装了末尾的因果文本词元和开头的双向图像词元，FlashAttention 的在线分块（Tile）循环将被迫在每个块内加载显式二维布尔掩码矩阵，无法走硬件最快的纯下三角或纯无掩码（Unmasked）快速路径，导致算子吞吐下跌 $35\%\text{–}50\%$。
+2. **$K$ 步图像去噪期间对只读前缀 KV 的重复 HBM 带宽冲击**：在生成单张图像的 $K = 25$ 个去噪时间步中，那 $N_{\mathrm{img}} = 1{,}024$ 个图像块在每一步都会原地覆写（In-place Overwrite）自身的瞬态 KV 缓冲，而排在它们前面的 $L_{\mathrm{prefix}}$ 个历史文本与历史图像 KV 缓存则完全不变。若将可变图像 KV 与只读前缀 KV 混在同一套分页链表中，不仅破坏了前缀缓存（Prefix Caching）的哈希不可变性，还会在小批量去噪时反复重读长前缀。
+
+工程上的高吞吐解法是构建**双轨分页 KV 缓存与模态对齐分块调度器（Dual-Track Paged KV & Modality-Aligned Tile Dispatcher）**：
+- **页边界强制模态对齐**：在 `<boi>` 与 `<eoi>` 切换点强制开启新的逻辑页块，确保任意物理页块要么是纯因果文本页（走标准 Causal FlashAttention 快路径），要么是纯双向图像页（走 Unmasked Bidirectional FlashAttention 快路径）；
+- **只读前缀页与瞬态去噪抓手页（Scratchpad KV Pages）物理分离**：为正在去噪的 $N_{\mathrm{img}}$ 个图像词元分配固定地址的**瞬态抓手页池（In-place Mutable Scratchpad Pool）**，在全部 $K$ 步去噪期间零页表分配地原位更新，仅在第 $K$ 步定稿后才将其提升（Promote）并追加至不可变前缀 KV 树。
+
+> **算例 17-7（Transfusion 图文交错混合掩码有效密度、FlashAttention 分块跳过与 D→G 跨池交接账本）：**
+>
+> **问题设定**：考察一个 36 层 `Transfusion` 统一多模态模型（GQA 配置同算例 17-1：每词元全层 KV 缓存体积为 $B_{\mathrm{KV/tok}} = 147{,}456\ \mathrm{B} = 144\ \mathrm{KiB}$）。某图文交错序列总长度为 $L_{\mathrm{tot}} = 4{,}096$ 个词元，由三段依次拼接而成：第一段为文本前缀 $L_{T_1} = 1{,}024$ 词元（下三角因果掩码），第二段为夹在 `<boi>` 与 `<eoi>` 之间的高清图像潜变量块 $L_{I_1} = 2{,}048$ 词元（对 $T_1$ 全可见、且在 $I_1$ 内部 $2{,}048 \times 2{,}048$ 全双向可见，执行 $K = 20$ 步扩散去噪），第三段为文本续写 $L_{T_2} = 1{,}024$ 词元（对 $T_1 + I_1$ 全可见、在 $T_2$ 内部下三角因果可见）。设 FlashAttention 分块（Tile）粒度为 $B_r \times B_c = 128 \times 128$。试精确计算：（1）整条序列在混合掩码下的有效 Query-Key 词元交互对数（Active Token Pairs）及其占 $4{,}096 \times 4{,}096$ 全矩阵的比例；（2）在 $32 \times 32 = 1{,}024$ 个 FlashAttention 块中，实际需执行的非空块数、可完全跳过的全零掩码块数（及跳过比例）与执行块内有效算力利用率；（3）在在线服务中，当解码池 `D` 吐出完 $L_{T_1} = 1{,}024$ 个文本词元并触发 `<boi>` 时，若将其只读前缀 KV 通过有效带宽 $50{,}000\ \mathrm{MiB/s}$（约 $50\ \mathrm{GB/s}$）的 RDMA 链路移交至高算力生成池 `G` 执行 20 步扩散去噪，需传输多少 $\mathrm{MiB}$ 的 KV 状态？交接耗时是多少毫秒？
+>
+> **逐项推导**：
+>
+> 1. **三段混合掩码的有效 Query-Key 词元交互面积**：
+>    - 文本段 $T_1$（$1{,}024$ 因果词元，按连续积分面积口径 $\frac{1}{2} L_{T_1}^2$）：
+>      $$A_{T_1} = \frac{1{,}024 \times 1{,}024}{2} = \mathbf{524{,}288\ \text{对}}$$
+>    - 图像段 $I_1$（$2{,}048$ 个块，可见全部 $T_1$ 前缀 + 自身 $I_1$ 全双向块）：
+>      $$A_{I_1} = 2{,}048 \times 1{,}024 + 2{,}048 \times 2{,}048 = 2{,}097{,}152 + 4{,}194{,}304 = \mathbf{6{,}291{,}456\ \text{对}}$$
+>    - 文本续写段 $T_2$（$1{,}024$ 因果词元，可见全部 $T_1 + I_1 = 3{,}072$ 前缀 + 自身下三角）：
+>      $$A_{T_2} = 1{,}024 \times 3{,}072 + \frac{1{,}024 \times 1{,}024}{2} = 3{,}145{,}728 + 524{,}288 = \mathbf{3{,}670{,}016\ \text{对}}$$
+>    - 三段合计有效交互对数与混合掩码密度为：
+>      $$A_{\mathrm{active}} = 524{,}288 + 6{,}291{,}456 + 3{,}670{,}016 = \mathbf{10{,}485{,}760\ \text{对}}$$
+>      $$\rho_{\mathrm{mask}} = \frac{10{,}485{,}760}{4{,}096 \times 4{,}096} = \frac{10{,}485{,}760}{16{,}777{,}216} = \mathbf{62.5\%}$$
+>
+> 2. **$128 \times 128$ FlashAttention 分块跳过与执行块内有效利用率**：
+>    三段对应的块数分别为 $b_{T_1} = \frac{1024}{128} = 8$、$b_{I_1} = \frac{2048}{128} = 16$、$b_{T_2} = \frac{1024}{128} = 8$（全矩阵共 $32 \times 32 = \mathbf{1{,}024}$ 个 Tile）：
+>    - $T_1$ 段活跃块数：$\frac{8 \times (8 + 1)}{2} = \mathbf{36\ \text{块}}$；
+>    - $I_1$ 段活跃块数：$16 \times 8 + 16 \times 16 = 128 + 256 = \mathbf{384\ \text{块}}$（全部 $100\%$ 满载无掩码）；
+>    - $T_2$ 段活跃块数：$8 \times (8 + 16) + \frac{8 \times (8 + 1)}{2} = 192 + 36 = \mathbf{228\ \text{块}}$。
+>    - 实际执行总块数 $N_{\mathrm{exec}} = 36 + 384 + 228 = \mathbf{648\ \text{块}}$，直接跳过全零掩码块 $1{,}024 - 648 = \mathbf{376\ \text{块}}$（省去 **$\mathbf{36.72\%}$** 的块调度），且已执行的 648 个块内部有效词元填充率高达：
+>      $$\eta_{\mathrm{tile}} = \frac{10{,}485{,}760}{648 \times 128 \times 128} = \frac{10{,}485{,}760}{10{,}616{,}832} \approx \mathbf{98.77\%}$$
+>
+> 3. **`<boi>` 触发 `D -> G` 跨池交接体积与延迟**：
+>    一旦解码池 `D` 吐出 `<boi>`，接下来需对 $L_{I_1} = 2{,}048$ 个图像词元并发执行去噪，单步算术强度相对单序列逐词元 Decode 暴涨 **$2{,}048\times$**。此时将 $L_{T_1} = 1{,}024$ 个已定稿前缀词元的 KV 缓存移交至生成池 `G`：
+>    $$V_{\mathrm{handoff}} = 1{,}024 \times 144\ \mathrm{KiB} = \mathbf{144.0\ \mathrm{MiB}},\qquad T_{\mathrm{handoff}} = \frac{144.0\ \mathrm{MiB}}{50{,}000\ \mathrm{MiB/s}} = \mathbf{2.88\ \mathrm{ms}}$$
+>    同时在生成池 `G` 内部，采用原位覆写抓手页（Scratchpad KV，固定占 $2{,}048 \times 144\ \mathrm{KiB} = 288.0\ \mathrm{MiB}$）替代 20 步按步追加分配（$5{,}760.0\ \mathrm{MiB}$），以仅 $2.88\ \mathrm{ms}$ 的交接代价彻底隔离了图像多步扩散对文本解码 TPOT 的干扰。
+
+除了图文统一主干，17.3.3 节讨论的交互式视频世界模型在实际落地自动驾驶闭环仿真与具身机器人导航时，还面临一个致命的物理缺陷：**纯二维潜空间视频扩散缺乏显式三维几何约束**。当智能体控制相机执行大角度环绕平移、先左转 90 度隔 5 秒再右转回原位时，纯 2D/3D 视频 DiT 极易发生“三维结构漂移与多视角幻觉（Multi-View Geometric Hallucination）”——原本停在路边的车辆或建筑在镜头转回时莫名变形甚至消失。
+
+![图 17-20：3D 高斯泼溅（3DGS）几何脚手架引导的 3D 视频世界模型（Camera-Controlled World Model）管线](ch17/ch17-3dgs-scaffold-guided-world-model-dit.svg)
+
+*图 17-20　3D 高斯泼溅（3DGS）几何脚手架引导的 3D 视频世界模型（Camera-Controlled World Model）管线。*
+
+如图 17-20 所示，工业界最新一代相机可控世界模型（以 `Wonderland`、`CAT3D`、`StreetGaussians` 与 `Genie-3D` 为代表）引入了**“显式三维高斯泼溅（3D Gaussian Splatting, 3DGS）几何脚手架 + 隐式 3D DiT 神经去噪补全”的双引擎混合管线**：
+1. **显式 3DGS 几何脚手架（Explicit 3DGS Geometric Scaffold）**：系统在显存中维护一组稀疏的三维各向异性高斯椭球集合 $\mathcal{G} = \{(\mu_k, \Sigma_k, \alpha_k, c_k)\}_{k=1}^M$（包含三维中心坐标 $\mu_k \in \mathbb{R}^3$、协方差矩阵 $\Sigma_k$、不透明度 $\alpha_k$ 与球谐外观特征 $c_k$），充当整个物理场景的持久三维记忆体。
+2. **微秒级视锥剔除（Frustum Culling）与分块光栅化（Tile-Based Splatting）**：当智能体在时刻 $t$ 输入新的六自由度相机外参矩阵 $[R_t \mid \mathbf{t}_t] \in \mathrm{SE}(3)$ 时，GPU 首先启动轻量级 CUDA 光栅化核：
+   - 第一步执行**视锥剔除**，瞬间过滤掉处于当前相机视野之外的 $70\%\text{–}85\%$ 高斯点；
+   - 第二步将屏幕空间划分为 $16 \times 16$ 像素瓦片（Tiles），按深度排序执行 $\alpha$-混合前向泼溅，在 **$1.5\text{–}3.0\ \mathrm{ms}$** 内渲染出几何严密对齐的粗糙 RGB 先验图、深度图（Depth Map）与未观测空洞掩码（Occlusion Inpainting Mask）。
+3. **普吕克射线嵌入（Plücker Ray Embedding）与 ControlNet/DiT 引导去噪**：将每个像素对应的相机光线转化为六维普吕克坐标 $\mathbf{r} = (\mathbf{d},\; \mathbf{o} \times \mathbf{d}) \in \mathbb{R}^6$（其中 $\mathbf{o}$ 为相机光心、$\mathbf{d}$ 为单位射线方向），与 3DGS 渲染出的粗糙特征图在通道维拼接后注入少步 3D DiT。此时 DiT 不再需要凭空猜测三维透视关系，只需专注于修复遮挡空洞、合成动态物体（行人、车流、光影反射）的高频逼真纹理，并将新生成的视角帧反向蒸馏回写以增量扩充 3DGS 高斯点云，从而在 $< 33.3\ \mathrm{ms}$ 预算内同时达成**100% 跨视角三维几何一致性**与**电影级光影真实感**。
+
+下面的生产级参考代码完整实现了 `Transfusion` 双轨分页混合掩码调度器与 `3DGS` 视锥剔除及普吕克射线条件注入引擎：
+
+```python
+import math
+import torch
+
+class TransfusionAnd3DGSWorldEngine:
+    """
+    复现算例 17-7 与 17.4.3 节核心机制：
+    1. Transfusion 图文交错混合掩码构造与双轨 Paged KV (只读前缀池 + 原位覆写去噪抓手池)
+    2. 3DGS 几何脚手架视锥剔除 (Frustum Culling) 与六维 Plucker 相机射线嵌入构造
+    """
+    def __init__(self, kv_bytes_per_tok: int = 147456):
+        self.kv_bpt = kv_bytes_per_tok
+
+    def profile_transfusion_dual_track_kv(
+        self,
+        prefix_tokens: int = 4096,
+        img_patch_tokens: int = 1024,
+        denoise_steps: int = 25,
+    ) -> dict[str, float]:
+        """核算算例 17-7：对比单轨按步追加与双轨原位抓手页 (Scratchpad) 的 KV 显存与注意力面积."""
+        prefix_mib = (prefix_tokens * self.kv_bpt) / (1024 ** 2)
+        scratch_mib = (img_patch_tokens * self.kv_bpt) / (1024 ** 2)
+        naive_append_mib = scratch_mib * denoise_steps
+
+        step_active_pairs = img_patch_tokens * (prefix_tokens + img_patch_tokens)
+        total_denoise_pairs = denoise_steps * step_active_pairs
+        causal_prefill_pairs = img_patch_tokens * prefix_tokens + (img_patch_tokens * (img_patch_tokens + 1)) // 2
+
+        return {
+            "prefix_kv_mib": round(prefix_mib, 4),
+            "scratchpad_kv_mib": round(scratch_mib, 4),
+            "naive_append_kv_mib": round(naive_append_mib, 4),
+            "scratchpad_compression_ratio": round(naive_append_mib / scratch_mib, 2),
+            "step_active_qk_pairs": step_active_pairs,
+            "total_denoise_qk_pairs": total_denoise_pairs,
+            "compute_amplification_vs_causal": round(total_denoise_pairs / causal_prefill_pairs, 2),
+        }
+
+    @staticmethod
+    def build_plucker_ray_embeddings(
+        cam_extrinsic_r: torch.Tensor,   # [B, 3, 3] 相机旋转矩阵 R (Camera-to-World)
+        cam_extrinsic_t: torch.Tensor,   # [B, 3] 相机光心世界坐标 o
+        h_lat: int,
+        w_lat: int,
+        focal_norm: float = 1.2,
+    ) -> torch.Tensor:
+        """构建六维普吕克射线坐标 r = (d, o x d)，输出形状 [B, 6, H_lat, W_lat]."""
+        device = cam_extrinsic_r.device
+        ys = torch.linspace(-0.5, 0.5, h_lat, device=device) / focal_norm
+        xs = torch.linspace(-0.5, 0.5, w_lat, device=device) / focal_norm
+        grid_y, grid_x = torch.meshgrid(ys, xs, indexing="ij")
+        dirs_cam = torch.stack([grid_x, grid_y, torch.ones_like(grid_x)], dim=-1)  # [H, W, 3]
+        dirs_world = torch.einsum("bij,hwj->bhwi", cam_extrinsic_r, dirs_cam)
+        d_unit = dirs_world / (dirs_world.norm(dim=-1, keepdim=True) + 1e-8)
+        o_expand = cam_extrinsic_t[:, None, None, :].expand_as(d_unit)
+        moment = torch.linalg.cross(o_expand, d_unit, dim=-1)
+        plucker = torch.cat([d_unit, moment], dim=-1)  # [B, H, W, 6]
+        return plucker.permute(0, 3, 1, 2).contiguous()
+
+    @staticmethod
+    def cull_3dgs_frustum(
+        means_3d_world: torch.Tensor,    # [M, 3] 场景全局 3D 高斯中心
+        w2c_rot: torch.Tensor,           # [3, 3] World-to-Camera 旋转
+        w2c_trans: torch.Tensor,         # [3] World-to-Camera 平移
+        near_z: float = 0.2,
+        far_z: float = 80.0,
+        fov_tan: float = 0.85,
+    ) -> torch.Tensor:
+        """执行视锥剔除：仅保留位于当前相机近/远裁剪面及视场角锥体内的活跃高斯点掩码."""
+        pts_cam = means_3d_world @ w2c_rot.T + w2c_trans[None, :]
+        z = pts_cam[:, 2]
+        valid_depth = (z >= near_z) & (z <= far_z)
+        valid_fov = (pts_cam[:, 0].abs() <= z * fov_tan) & (pts_cam[:, 1].abs() <= z * fov_tan)
+        return valid_depth & valid_fov
+```
 
 ---
 
@@ -1014,6 +1165,10 @@ class EPDGDisaggregatedScheduler:
 > **练习 17-11：E-P-D-G 集群配比与 EC 缓存敏感度。** 将算例 17-6 扩展至一个 $32$ 卡集群：单卡编码速率 $\mu_E = 15\ \mathrm{req/s}$，单卡预填充速率 $\mu_P = 5\ \mathrm{req/s}$，单卡解码速率 $\mu_D = 2.5\ \mathrm{req/s}$。（a）在零缓存（$h = 0$）下，求最大化稳态吞吐的最优整数卡数分配 $(n_E, n_P, n_D)$ 及系统吞吐；（b）当 EC 缓存命中率达到 $h = 80\%$ 时，仅需几张 `E` 卡即可喂饱其余所有卡？
 
 > **实验 17-12：多轮对话 EC 缓存 vs. KV 缓存容量规划与 `experiments/ch17/17-01` 全套账本复核。** 某节点拥有 $36\ \mathrm{GiB}$ 可用于缓存多轮历史会话的闲置内存池，服务 `Qwen3-VL-4B` 请求（每会话含 2 张 $640 \times 640$ 图像，单图参数同算例 17-1：EC 体积 $7.8125\ \mathrm{MiB}$，主干 KV 体积 $56.25\ \mathrm{MiB}$）。对比“全量驻留主干 KV”与“温会话降级驻留 EC”两种策略下该内存池可同时容纳的并发历史会话数，并运行 `python3 experiments/ch17/17-01/run.py && python3 experiments/ch17/17-01/verify.py` 复核本章全部锁定指标。
+
+> **练习 17-13：Transfusion 图文交错混合注意力分块占用率与双轨原位抓手页核算。** 承接算例 17-7（36 层 `Transfusion` 模型，每词元 KV 体积 $144\ \mathrm{KiB}$，FlashAttention 分块大小 $128 \times 128$）。复核算例 17-7 中 $L_{T_1} = 1{,}024, L_{I_1} = 2{,}048, L_{T_2} = 1{,}024$（总长 $4{,}096$）下的活跃块数 $648$ 与有效注意力对数 $10{,}485{,}760$；若将该序列扩展为前缀 $L_{\mathrm{prefix}} = 8{,}192$、图像段 $N_{\mathrm{img}} = 2{,}048$ 并执行 $K = 30$ 个去噪步，求双轨原位抓手页（Scratchpad KV）体积 $V_{\mathrm{scratch}}$（以 $\mathrm{MiB}$ 计）及相对单轨按步追加分配节省的瞬态显存（以 $\mathrm{GiB}$ 计）。
+
+> **实验 17-14：3DGS 几何脚手架视锥剔除与视频世界模型吞吐仿真（对应 `experiments/ch17/17-02`）。** 某自动驾驶交互式世界模型在显存中维护 $M = 1{,}200{,}000$ 个三维高斯椭球作为街道几何脚手架。在 30 FPS（帧预算 $33.3\ \mathrm{ms}$）闭环仿真中，相机视锥剔除（Frustum Culling）过滤掉了 $80\%$ 处于当前视野外的非活跃高斯点，使分块光栅化耗时从全量渲染的 $11.5\ \mathrm{ms}$ 降至 $2.4\ \mathrm{ms}$；随后由 4 步流式拼批（Stream Batching）3D DiT 耗时 $24.0\ \mathrm{ms}$ 与分块因果 VAE 解码耗时 $4.5\ \mathrm{ms}$ 完成纹理精修。求：（a）每帧参与光栅化的活跃高斯点数 $M_{\mathrm{active}}$；（b）启用视锥剔除前后的端到端单帧延迟与稳态帧率（FPS），判断是否满足 30 FPS 硬实时控制红线，并运行 `python3 experiments/ch17/17-02/run.py && python3 experiments/ch17/17-02/verify.py` 验证实验通过。
 
 ---
 
@@ -1086,6 +1241,41 @@ class EPDGDisaggregatedScheduler:
     - 降级驻留 EC 缓存可容纳：$\frac{36{,}864}{15.625} \approx \mathbf{2{,}359\ \text{个并发会话}}$（并发会话容量提升 **$7.2\times$**）。
   - 执行 `python3 experiments/ch17/17-01/run.py && python3 experiments/ch17/17-01/verify.py` 可验证上述全部指标通过断言。
 
+- **17-13 解答**：
+  1. **混合掩码分块与有效交互复核**：在 $(1{,}024, 2{,}048, 1{,}024)$ 下，有效交互对数为 $524{,}288 + 6{,}291{,}456 + 3{,}670{,}016 = \mathbf{10{,}485{,}760}$ 对（占全矩阵 $62.5\%$），执行块数为 $36 + 384 + 228 = \mathbf{648}$ 块（跳过 $376$ 块，省 $36.72\%$，执行块内有效填充率 $\mathbf{98.77\%}$）。
+  2. **扩展至前缀 $8{,}192$、图像 $2{,}048$、$K = 30$ 步的双轨 KV 账本**：
+     - 只读前缀 KV：$V_{\mathrm{prefix}} = 8{,}192 \times 144\ \mathrm{KiB} = \mathbf{1{,}152.0\ \mathrm{MiB}} = 1.125\ \mathrm{GiB}$；
+     - 原位抓手页 KV：$V_{\mathrm{scratch}} = 2{,}048 \times 144\ \mathrm{KiB} = \mathbf{288.0\ \mathrm{MiB}}$；
+     - 单轨按步追加分配峰值：$30 \times 288.0\ \mathrm{MiB} = 8{,}640.0\ \mathrm{MiB} = 8.4375\ \mathrm{GiB}$，双轨原位抓手页净节省 $8{,}640.0 - 288.0 = 8{,}352.0\ \mathrm{MiB} = \mathbf{8.15625\ \mathrm{GiB}}$（压缩 $30.0\times$）。
+
+- **17-14 解答**：
+  1. **视锥剔除后活跃高斯点数**：$M_{\mathrm{active}} = 1{,}200{,}000 \times (1 - 0.80) = \mathbf{240{,}000\ \text{个活跃高斯椭球}}$。
+  2. **端到端单帧延迟与稳态帧率对比**：
+     - **未启用视锥剔除（全量光栅化）**：$T_{\mathrm{full}} = 11.5 + 24.0 + 4.5 = \mathbf{40.0\ \mathrm{ms}} > 33.3\ \mathrm{ms}$，稳态帧率仅 $\frac{1000}{40.0} = \mathbf{25.00\ \mathrm{FPS}}$（未达 30 FPS 实时红线）；
+     - **启用视锥剔除后**：$T_{\mathrm{culled}} = 2.4 + 24.0 + 4.5 = \mathbf{30.9\ \mathrm{ms}} \le 33.3\ \mathrm{ms}$，稳态帧率提升至 $\frac{1000}{30.9} \approx \mathbf{32.36\ \mathrm{FPS}}$（稳稳跨过 30 FPS 实时红线）。
+     - 运行 `python3 experiments/ch17/17-02/run.py && python3 experiments/ch17/17-02/verify.py` 可完整复现 `Transfusion` 混合掩码与 `3DGS` 世界模型仿真账本。
+
+表 17-6 给出了第 17 章全部 14 道练习与实验的核心锁定数值速查索引：
+
+*表 17-6　第 17 章核心练习与实验锁定数值速查表*
+
+| 题目编号 | 考查工程主题 | 核心锁定输入参数 | 精确复算输出基准 |
+| :--- | :--- | :--- | :--- |
+| **17-1** | `Qwen3-VL-4B` DeepStack 膨胀 | $1280\times 960$, $p=16$, $2\times 2$ 合并 | $N_{\mathrm{vis}}=1{,}200$；EC $23.4375\ \mathrm{MiB} \to$ KV $168.75\ \mathrm{MiB}$（$7.2\times$） |
+| **17-2** | 3D 视频 DiT 潜空间词元数 | $8\ \mathrm{s} \times 30\ \mathrm{fps}$, $1280\times 720$, $4\times 8\times 8$ VAE | 潜网格 $(60, 90, 160)$；$1\times 2\times 2$ Patchify 后 $N = 216{,}000$ |
+| **17-3** | Ulysses vs. Ring vs. 2D-USP | $N=327{,}680$, $d=5{,}120$, $P=128$ ($8\times 16$) | 纯 Ring $6{,}350.0\ \mathrm{MiB} \to$ 2D-USP 跨机 $750.0\ \mathrm{MiB}$（省 $8.47\times$） |
+| **17-4** | `db-SP` 混合掩码负载均衡 | $8{,}192$ 双向图像 + $24{,}576$ 因果文本, $P=4$ | 朴素切分末卡/首卡面积比 $3.5\times \to$ ZigZag 配对完全均衡 |
+| **17-5** | 3D VAE 分块 Halo 峰值压缩 | $128\times 1024\times 1024$, $C=128$, FP16 | 未分块 $32.0\ \mathrm{GiB} \to$ 分块 $324.0\ \mathrm{MiB}$（Halo 重算 $+26.5625\%$） |
+| **17-6** | `DistriFusion` 通信掩盖下界 | 计算 $\frac{\alpha N^2 d}{P}$, 通信 $\beta \frac{P-1}{P} N d$ | 零暴露临界序列长 $N_{\min} = \frac{\beta}{\alpha}(P-1)$ |
+| **17-7** | `PipeFusion` 跨步连续流水 | $P=8$ 卡, $M=16$ Patch, $K=40$ 步 | 传统每步排空气泡率 $43.75\% \to$ 跨步连续气泡率 $1.09\%$ |
+| **17-8** | `TeaCache` 加速比与 Amdahl 上限 | $T_{\mathrm{fixed}}=3.60\ \mathrm{s}$, 保留 $10$ 步 ($1.20\ \mathrm{s}$/步) | 延迟 $15.60\ \mathrm{s}$（加速 $4.08\times$）；理论极限加速上限 $17.67\times$ |
+| **17-9** | `SageAttention` 键均值平滑 | $\tilde{K} = K - \mathbf{1}_N \mu_K$ | Softmax 行平移不变严格恒等；对 $Q$ 去均值破坏内积分布 |
+| **17-10** | 30 FPS 世界模型流式拼批 | $S=4$ 步, $B=1$ 需 $14\ \mathrm{ms}$, $B=4$ 需 $24\ \mathrm{ms}$ | 串行 $61\ \mathrm{ms}$（$16.39\ \mathrm{FPS}$）$\to$ 流式拼批 $29\ \mathrm{ms}$（$34.48\ \mathrm{FPS}$） |
+| **17-11** | `E-P-D` 32 卡配比与 EC 命中 | $\mu_E=15, \mu_P=5, \mu_D=2.5\ \mathrm{req/s}$ | $h=0$ 最优 $(3,9,20)$ 得 $45\ \mathrm{req/s}$；$h=80\%$ 仅需 $1$ 张 `E` 卡得 $50\ \mathrm{req/s}$ |
+| **17-12** | 多轮对话 EC vs. KV 容量规划 | $36\ \mathrm{GiB}$ 缓存池, 每会话 2 张 $640\times 640$ 图 | 驻留 KV 容纳 $327$ 会话 $\to$ 降级驻留 EC 容纳 $2{,}359$ 会话（$7.2\times$） |
+| **17-13** | `Transfusion` 混合掩码与双轨 KV | $(1024, 2048, 1024)$ 分块；$2048$ 图像 $30$ 步 | 有效面积 $10{,}485{,}760$（$648$ 块，$98.77\%$）；抓手页省 $8.15625\ \mathrm{GiB}$ |
+| **17-14** | `3DGS` 视锥剔除世界模型 (`17-02`) | $1.2\times 10^6$ 高斯点, 剔除 $80\%$ 视野外点 | 活跃 $240{,}000$ 点；延迟 $40.0\ \mathrm{ms}$（$25.0\ \mathrm{FPS}$）$\to 30.9\ \mathrm{ms}$（$32.36\ \mathrm{FPS}$） |
+
 ---
 
 ## 本章小结
@@ -1093,7 +1283,7 @@ class EPDGDisaggregatedScheduler:
 1. **三维潜空间与状态体积膨胀反转**：多模态与视频生成将一维因果符号流推向了三维双向潜变量网格（10 秒 1080p 视频达 $489{,}600$ 词元）。在 `Qwen3-VL-4B` 中，单张 $640 \times 640$ 图像的 400 个视觉词元在编码器出口（含 3 层 DeepStack）仅占 $7.8125\ \mathrm{MiB}$，进入 36 层主干转化为 KV 缓存后膨胀 $7.2$ 倍至 $56.25\ \mathrm{MiB}$；而在视频生成尾端，3D 因果 VAE 全分辨率上采样会产生 $118.65\ \mathrm{GiB}$ 的激活洪峰，必须通过带 Halo 重叠的时空分块解码（Tiled VAE）将其压缩百倍至 $1.25\ \mathrm{GiB}$ 以内。
 2. **二维统一序列并行（2D-USP）与双均衡切分（db-SP）**：面对 $\mathcal{O}(N^2 d)$ 的三维双向注意力，传统张量并行（TP）因通信量锚定在 $\mathcal{O}(Nd)$ 而失效。将节点内 NVLink 域的 DeepSpeed-Ulysses（通信 $\frac{4Nd}{P}$，受限于 $P \le n_{\mathrm{head}}$）与跨节点 RDMA 域的 Ring Attention（单步 $\frac{2Nd}{P}$、全环 $\approx 2Nd$）正交组合为 $8 \times 8$ 2D-USP，可将跨机流量从 $7{,}530.47\ \mathrm{MiB}$ 压缩 $9.0$ 倍至 $836.72\ \mathrm{MiB}$，并配合 `db-SP`（MLSys '26）消除混合掩码负载倾斜。
 3. **时间步平滑性复用与 `< 33.3 ms` 实时世界模型**：利用相邻扩散步的特征缓变性，`DistriFusion` 与 `PipeFusion` 用上一步陈旧 KV 彻底掩盖跨卡通信，`TeaCache` 通过跳过平缓中间步获得 $2.12\times$ 端到端加速，`SageAttention-3` 通过减去键通道序列均值释放 FP8/FP4 Tensor Core 吞吐；在此之上，结合块级因果扩散、少步分布匹配蒸馏、环形滚动 KV 缓存与跨帧步间流式拼批，交互式世界模型成功跨越 30 FPS 实时交互控制红线。
-4. **全模态 `E-P-D-G` 四池异构解耦与阶梯缓存**：从 `TriInfer`（MLSys '26）的动态弹性路由到 `vLLM-Omni` 的 `Encode-Prefill-Decode-Generate` 四池解耦，按各阶段算术强度与缓存命中率 $h$ 动态配比算力（如 $75\%$ EC 命中率使编码卡有效吞吐放大 $4$ 倍至 $48\ \mathrm{req/s}$），并在多轮对话温冷层将 KV 降级为紧凑 EC 缓存，构成了现代全模态在线服务的标准架构范式。
+4. **全模态 `E-P-D-G` 四池异构解耦、阶梯缓存与统一自回归—扩散/3DGS 世界模型**：从 `TriInfer`（MLSys '26）的动态弹性路由到 `vLLM-Omni` 的 `Encode-Prefill-Decode-Generate` 四池解耦，按各阶段算术强度与缓存命中率 $h$ 动态配比算力（如 $75\%$ EC 命中率使编码卡有效吞吐放大 $4$ 倍至 $48\ \mathrm{req/s}$），并在多轮对话温冷层将 KV 降级为紧凑 EC 缓存；而在模型架构最前沿，`Transfusion / Show-o` 通过双轨分页 KV（只读前缀池 + 原位覆写去噪抓手页）驯服了离散因果与连续双向混合掩码，配合三维高斯泼溅（3DGS）视锥剔除几何脚手架与普吕克射线引导，构成了新一代高保真、强几何一致的原生全模态与世界模型基础设施底座。
 
 [^ch17-case-study]: 本章算例 17-1 与算例 17-6 的锁定参数与阶段放置推导详见本书案例库：`case-studies/multimodal-stage-placement.md`（对应 `Qwen3-VL-4B` DeepStack 特征体积与 4 卡 `E` vs. `PD` 吞吐边界）。
 [^ch17-dbsp]: 关于面向变长多模态与因果/双向混合掩码的双均衡序列并行（Dual-Balanced Sequence Parallelism），参见 MLSys 2026 论文 `db-SP`（详见 `research/2026-infra-survey/reading-mlsys-2026.md`）。

@@ -393,8 +393,48 @@ def fig_18_18_closed_loop(ex: Exporter):
     arrow(ax, (0.74, 0.66), (0.74, 0.57))
     arrow(ax, (0.53, 0.47), (0.47, 0.47))
     arrow(ax, (0.26, 0.57), (0.26, 0.66))
-    box(ax, 0.05, 0.08, 0.90, 0.21, '实验：experiments/ch18/18-01（PPO 1152 GB vs GRPO 576 GB、\nRobustRL 省 300s、RollPacker 归一化、DistRS 216,000 词元边界）', 'teal', size=11)
+    box(ax, 0.05, 0.08, 0.90, 0.21, '实验：experiments/ch18/18-01 & 18-02（GRPO 省 50% 状态、\nRobustRL 省 300s、DistRS 216K 词元、跨洲 14,745x 压流）', 'teal', size=11)
     ex.save(fig, 'ch18-rlvr-and-test-time-compute-closed-loop')
+
+
+def fig_18_19_geo_async_rollout(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, 'Prime-RL：跨地域闲置算力异步 Rollout 收割（算例 18-9）', color='blue')
+    stages = [
+        (0.04, 0.58, 0.28, 0.24, '① 跨洲异构推理池\n收割闲置 H20/4090\n异步跑长尾生成', 'teal'),
+        (0.36, 0.58, 0.28, 0.24, '② 10 B/tok 窄带回传\n传词元 ID 与概率\n全批仅 160.0 MiB', 'blue'),
+        (0.68, 0.58, 0.28, 0.24, '③ 中心训练池过滤\n校验陈旧度 τ ≤ 2\n与序列几何 IS 比', 'purple'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.36, 0.70))
+    arrow(ax, (0.64, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '10 Gbps 广域网下传激活/KV vs. 传紧凑轨迹元数据的百倍反差', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '错误：跨机房回传 36 层 KV\n1,024×16K 词元达 2,473.9 GB\n10 Gbps 专线阻塞 1,979.1 s', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '正确：回传 10 B/tok 紧凑三元组\n全批 160.0 MiB（134.2 ms 传完）\n配 FP8 差分权重广播零暴露', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '用 14,745.6x 上行压缩 + 序列几何均值 IS 过滤打通全球异构算力 RL', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch18-geo-distributed-async-rollout-harvester')
+
+
+def fig_18_20_reward_hacking_breaker(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, 'RLVR 奖励黑客（Reward Hacking）的三维异常症状相图', color='orange')
+    symptoms = [
+        (0.04, 0.58, 0.28, 0.24, '① 长度失控膨胀\n堆砌无意义伪代码\n均长破 28K 词元', 'orange'),
+        (0.36, 0.58, 0.28, 0.24, '② 策略熵断崖坍缩\n退化为高频复读机\n熵跌破 0.05 nats', 'orange'),
+        (0.68, 0.58, 0.28, 0.24, '③ KL 散度突增\n偏离参考模型流形\n突破 0.25 熔断线', 'orange'),
+    ]
+    for x, y, w, h, label, role in symptoms:
+        box(ax, x, y, w, h, label, role, size=11)
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '双级在线统计制动器：软边界超长惩罚 + 硬熔断回滚机制', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '一级软制动（KL > 0.06 或超长）\n倍增 β_KL 并加分段长度罚项\n抑制无信息量的凑字数行为', 'teal', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '二级硬熔断（KL > 0.25 且低熵）\n中止当前步并回滚健康检查点\n隔离污染提示词并调高温度', 'blue', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '监控 (KL, 长度, 策略熵) 联合轨迹是长周期无人值守 RLVR 防崩溃底线', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch18-rlvr-reward-hacking-kl-divergence-breaker')
 
 
 def main():
@@ -417,6 +457,8 @@ def main():
     fig_18_16_dapo_filter(ex)
     fig_18_17_throughput_waterfall(ex)
     fig_18_18_closed_loop(ex)
+    fig_18_19_geo_async_rollout(ex)
+    fig_18_20_reward_hacking_breaker(ex)
     outputs = ex.finish()
 
     fig_index = [
@@ -599,6 +641,26 @@ def main():
             "caption": "测试时搜索合成高价值轨迹 → 沙箱验证 → 异步 RLVR 更新 → 蒸馏回直觉模型的自我演进总账本",
             "source_refs": ["experiments/ch18/18-01/run.py"],
             "TeachingRole": "收束第 18 章 RLVR 显存账本、训推池化、长尾治理与推理时搜索的工程总图"
+        },
+        {
+            "figure_id": "图 18-19",
+            "number": 19,
+            "file": "ch18-geo-distributed-async-rollout-harvester.svg",
+            "asset": "ch18/ch18-geo-distributed-async-rollout-harvester.svg",
+            "section": "18.4.3",
+            "caption": "跨地域闲置推理算力异步收割 Rollout 轨迹、Token ID 极窄带宽回传与中心 Learner 重要性采样过滤架构（算例 18-9）",
+            "source_refs": ["manuscripts/ch18/figure-data.json", "experiments/ch18/18-02/run.py"],
+            "TeachingRole": "复算 10 B/tok 紧凑回传将 1,024×16K 轨迹从 2,473.9 GB 压缩 14,745.6x 至 160.0 MiB 的广域网账本"
+        },
+        {
+            "figure_id": "图 18-20",
+            "number": 20,
+            "file": "ch18-rlvr-reward-hacking-kl-divergence-breaker.svg",
+            "asset": "ch18/ch18-rlvr-reward-hacking-kl-divergence-breaker.svg",
+            "section": "18.4.3",
+            "caption": "RLVR 训练中奖励黑客（长度失控与熵坍缩）的在线监控指标相图与自适应 KL 制动熔断机制",
+            "source_refs": ["manuscripts/ch18/figure-data.json", "experiments/ch18/18-02/run.py"],
+            "TeachingRole": "建立基于 (KL 散度, 输出长度, 策略熵) 的两级在线奖励黑客制动与检查点回滚状态机"
         }
     ]
     for row in fig_index:

@@ -391,8 +391,50 @@ def fig_17_18_synthesis(ex: Exporter):
     arrow(ax, (0.74, 0.66), (0.74, 0.57))
     arrow(ax, (0.53, 0.47), (0.47, 0.47))
     arrow(ax, (0.26, 0.57), (0.26, 0.66))
-    box(ax, 0.05, 0.08, 0.90, 0.21, '实验验证：experiments/ch17/17-01（Qwen3-VL-4B 7.2x 膨胀、\n489,600 词元 2D-USP 9.0x 减流、Tiled VAE 与 TeaCache 2.12x）', 'teal', size=11)
+    box(ax, 0.05, 0.08, 0.90, 0.21, '实验验证：experiments/ch17/17-01 & 17-02（Qwen3-VL 7.2x 膨胀、\n2D-USP 9.0x 减流、TeaCache 2.12x、Transfusion 62.5% 混合掩码）', 'teal', size=11)
     ex.save(fig, 'ch17-multimodal-world-model-infra-synthesis')
+
+
+def fig_17_19_transfusion_hybrid_mask(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, 'Transfusion 统一主干：分段因果—双向混合掩码（算例 17-7）', color='blue')
+    stages = [
+        (0.04, 0.58, 0.28, 0.24, '① 文本前缀 T1\n1024 词元因果掩码\n36 个活跃块', 'blue'),
+        (0.36, 0.58, 0.28, 0.24, '② 图像潜块 I1\n2048 词元块内双向\n384 个满载块', 'teal'),
+        (0.68, 0.58, 0.28, 0.24, '③ 文本续写 T2\n1024 词元见全前缀\n228 个活跃块', 'purple'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.36, 0.70))
+    arrow(ax, (0.64, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '块稀疏跳过与 <boi> 触发 D→G 跨池零阻塞切换', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, 'FlashAttn 分块掩码跳过\n仅算 648/1024 块（省 36.7%）\n执行块内有效利用率 98.77%', 'teal', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '遇 <boi> 算术强度升 2048x\n2.88 ms 迁出 144 MiB KV\n移交 G 池跑 20 步扩散去噪', 'orange', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '有效注意力面积 10,485,760 对（占全矩阵 62.5%），模式切换须跨池隔离', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch17-transfusion-hybrid-causal-bidirectional-mask')
+
+
+def fig_17_20_3dgs_world_model(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '3DGS 显式几何脚手架 + 视频 DiT 混合世界模型管线', color='teal')
+    stages = [
+        (0.04, 0.58, 0.28, 0.24, '① 显式 3DGS 光栅\n120 万三维高斯点\n2.4 ms 渲染深度图', 'teal'),
+        (0.36, 0.58, 0.28, 0.24, '② 4 步受控视频 DiT\n注入几何防视角漂移\n流式拼批 24.0 ms', 'blue'),
+        (0.68, 0.58, 0.28, 0.24, '③ 分块因果 VAE\n还原光影与非刚体\n耗时 4.5 ms 吐帧', 'purple'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.36, 0.70))
+    arrow(ax, (0.64, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '纯隐式视频 DiT vs. 3DGS—DiT 混合管线的几何一致性与实时帧率', color='blue')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '纯隐式视频 DiT 世界模型\n视角大角度旋转后三维坍塌\n闭环重投影误差 > 15 cm', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '3DGS 刚性几何 + DiT 光影\n总耗时 2.4+24.0+4.5 = 30.9 ms\n稳定达成 32.36 FPS 零漂移', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '用 3DGS 锁定欧氏空间几何守恒，用少步 DiT 补齐动态物理交互与材质', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch17-3dgs-scaffold-guided-world-model-dit')
 
 
 def main():
@@ -415,6 +457,8 @@ def main():
     fig_17_16_dit_cfg(ex)
     fig_17_17_end_to_end_breakdown(ex)
     fig_17_18_synthesis(ex)
+    fig_17_19_transfusion_hybrid_mask(ex)
+    fig_17_20_3dgs_world_model(ex)
     outputs = ex.finish()
 
     fig_index = [
@@ -597,6 +641,26 @@ def main():
             "caption": "多模态与世界模型基础设施的算法—并行—缓存—解耦四维总架构图",
             "source_refs": ["case-studies/multimodal-stage-placement.md", "experiments/ch17/17-01/run.py"],
             "TeachingRole": "收束第 17 章三维潜空间、2D-USP、时间步复用与 E-P-D-G 四池解耦的工程总账本"
+        },
+        {
+            "figure_id": "图 17-19",
+            "number": 19,
+            "file": "ch17-transfusion-hybrid-causal-bidirectional-mask.svg",
+            "asset": "ch17/ch17-transfusion-hybrid-causal-bidirectional-mask.svg",
+            "section": "17.4.3",
+            "caption": "统一多模态模型（Transfusion / Show-o / Bagel）中文本因果掩码与图像块双向扩散掩码的混合排布及模式切换状态机（算例 17-7）",
+            "source_refs": ["manuscripts/ch17/figure-data.json", "experiments/ch17/17-02/run.py"],
+            "TeachingRole": "推导混合掩码 62.5% 有效面积、648/1024 分块跳过及 <boi> 触发 D→G 跨池迁移的定量准则"
+        },
+        {
+            "figure_id": "图 17-20",
+            "number": 20,
+            "file": "ch17-3dgs-scaffold-guided-world-model-dit.svg",
+            "asset": "ch17/ch17-3dgs-scaffold-guided-world-model-dit.svg",
+            "section": "17.4.3",
+            "caption": "显式 3DGS 几何光栅化提供深度/法线控制条件与视频 DiT 生成逼真物理交互画面的混合世界模型管线",
+            "source_refs": ["manuscripts/ch17/figure-data.json", "experiments/ch17/17-02/run.py"],
+            "TeachingRole": "剖析 2.4 ms 3DGS 光栅化 + 24.0 ms 4 步视频 DiT + 4.5 ms VAE 达成 32.36 FPS 零几何漂移的管线账本"
         }
     ]
     for row in fig_index:

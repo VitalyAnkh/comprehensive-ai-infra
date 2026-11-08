@@ -40,5 +40,29 @@
     "naive_remaining_at_10s": 0.9,
     "conditional_remaining_at_10s": 90.0,
     "sunk_work_token_boundary": 216000
+  },
+  "geo_distributed_async_rl": {
+    "batch_trajectories": 1024,
+    "avg_seq_len": 16384,
+    "total_tokens": 16777216,
+    "kv_bytes_per_token": 147456,
+    "compact_bytes_per_token": 10,
+    "kv_payload_gb": 2473.9,
+    "compact_payload_mb": 167.77216,
+    "compact_payload_mib": 160.0,
+    "compression_ratio": 14745.6,
+    "wan_gbps": 10.0,
+    "compact_upload_ms": 134.2,
+    "fp8_delta_sync_s": 6.4,
+    "max_staleness_tau": 2,
+    "seq_is_bounds": [0.5, 2.0]
+  },
+  "reward_hacking_breaker": {
+    "kl_target": 0.04,
+    "kl_warn": 0.06,
+    "kl_breaker": 0.25,
+    "entropy_floor_nats": 0.05,
+    "soft_len_threshold": 24576,
+    "max_len_threshold": 32768
   }
 }

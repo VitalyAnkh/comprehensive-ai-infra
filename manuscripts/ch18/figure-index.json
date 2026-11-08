@@ -258,5 +258,35 @@
     "TeachingRole": "收束第 18 章 RLVR 显存账本、训推池化、长尾治理与推理时搜索的工程总图",
     "figure": "18-18",
     "name": "ch18-rlvr-and-test-time-compute-closed-loop"
+  },
+  {
+    "figure_id": "图 18-19",
+    "number": 19,
+    "file": "ch18-geo-distributed-async-rollout-harvester.svg",
+    "asset": "ch18/ch18-geo-distributed-async-rollout-harvester.svg",
+    "section": "18.4.3",
+    "caption": "跨地域闲置推理算力异步收割 Rollout 轨迹、Token ID 极窄带宽回传与中心 Learner 重要性采样过滤架构（算例 18-9）",
+    "source_refs": [
+      "manuscripts/ch18/figure-data.json",
+      "experiments/ch18/18-02/run.py"
+    ],
+    "TeachingRole": "复算 10 B/tok 紧凑回传将 1,024×16K 轨迹从 2,473.9 GB 压缩 14,745.6x 至 160.0 MiB 的广域网账本",
+    "figure": "18-19",
+    "name": "ch18-geo-distributed-async-rollout-harvester"
+  },
+  {
+    "figure_id": "图 18-20",
+    "number": 20,
+    "file": "ch18-rlvr-reward-hacking-kl-divergence-breaker.svg",
+    "asset": "ch18/ch18-rlvr-reward-hacking-kl-divergence-breaker.svg",
+    "section": "18.4.3",
+    "caption": "RLVR 训练中奖励黑客（长度失控与熵坍缩）的在线监控指标相图与自适应 KL 制动熔断机制",
+    "source_refs": [
+      "manuscripts/ch18/figure-data.json",
+      "experiments/ch18/18-02/run.py"
+    ],
+    "TeachingRole": "建立基于 (KL 散度, 输出长度, 策略熵) 的两级在线奖励黑客制动与检查点回滚状态机",
+    "figure": "18-20",
+    "name": "ch18-rlvr-reward-hacking-kl-divergence-breaker"
   }
 ]

@@ -2,7 +2,7 @@
   "outputs": [
     {
       "path": "manuscripts/ch18/ch18-colocated-vs-disaggregated-rl-architecture.pdf",
-      "sha256": "c0c1f770318a7e7bfc300c66f748abc3da77c87e824e563325118c26d6d975be"
+      "sha256": "5d7d2635e185c4f75639cb7a00854a493ed56551325a9336bec583dd703f988b"
     },
     {
       "path": "manuscripts/ch18/ch18-colocated-vs-disaggregated-rl-architecture.png",
@@ -10,11 +10,11 @@
     },
     {
       "path": "manuscripts/ch18/ch18-colocated-vs-disaggregated-rl-architecture.svg",
-      "sha256": "3ea1049316666c52522e6ffcfa69109dc292bea500a424102649a451e65f6c64"
+      "sha256": "591d601a6257ca79330380cfd6de3b062776418effe7e45f8c2756b672558d90"
     },
     {
       "path": "manuscripts/ch18/ch18-dapo-dynamic-sampling-zero-variance-filter.pdf",
-      "sha256": "eeca497137d4562ae2e02fe2704ed2a9a2693dc1ce1fab8c2d542407a5193f82"
+      "sha256": "885df043af174728734c807a411c8b52848eecd53fde6a0858e1a6771b33f058"
     },
     {
       "path": "manuscripts/ch18/ch18-dapo-dynamic-sampling-zero-variance-filter.png",
@@ -22,11 +22,11 @@
     },
     {
       "path": "manuscripts/ch18/ch18-dapo-dynamic-sampling-zero-variance-filter.svg",
-      "sha256": "c2ba41d20cb2c52f093bcce89a53e6115869a3a61b970e2d71657d2f357d89d5"
+      "sha256": "403ca7728e6fce8c136b7431654570d21f8a11fdfb941cf20d827ec497cb51f6"
     },
     {
       "path": "manuscripts/ch18/ch18-distrs-disaggregated-reward-sandbox-streaming.pdf",
-      "sha256": "0e8463e9ba5ed0823d48ae8744f50434b7b7482124700d3e33cde68798b9af92"
+      "sha256": "5ddddbc4c65d704727579d957bcb12afa0d6fa7ad54d62e043c48744254df405"
     },
     {
       "path": "manuscripts/ch18/ch18-distrs-disaggregated-reward-sandbox-streaming.png",
@@ -34,11 +34,23 @@
     },
     {
       "path": "manuscripts/ch18/ch18-distrs-disaggregated-reward-sandbox-streaming.svg",
-      "sha256": "9d7df978046c8df08b0f035bb2d1bb9b9dc11c39e81e4fc368c1bb2c5c53b665"
+      "sha256": "09ebe8a705f4ceba5b98fcadd395728a361dd16a44be0542759d800aa71469f5"
+    },
+    {
+      "path": "manuscripts/ch18/ch18-geo-distributed-async-rollout-harvester.pdf",
+      "sha256": "3ccc48caee526508f2278007819db6316b7afe13c4d1052095c47852f26e09f1"
+    },
+    {
+      "path": "manuscripts/ch18/ch18-geo-distributed-async-rollout-harvester.png",
+      "sha256": "a3798d4880aafe192400e1ca0657d292c3aca94242dfcd547fd724924f67818d"
+    },
+    {
+      "path": "manuscripts/ch18/ch18-geo-distributed-async-rollout-harvester.svg",
+      "sha256": "6ee9b7be422fe587a8b3992879863bd9449c93c6ce8539738059cdfcbccfcbec"
     },
     {
       "path": "manuscripts/ch18/ch18-hetrl-heterogeneous-inference-training-matching.pdf",
-      "sha256": "dc10b82506a564377b63aa51e88c3e781e5c23c5d48ad8299e863e39b9ec7a43"
+      "sha256": "abd01e3f0a15583c01e0652f14ff4d392f3a8aed6a05330666fd22fceb037598"
     },
     {
       "path": "manuscripts/ch18/ch18-hetrl-heterogeneous-inference-training-matching.png",
@@ -46,11 +58,11 @@
     },
     {
       "path": "manuscripts/ch18/ch18-hetrl-heterogeneous-inference-training-matching.svg",
-      "sha256": "7a78786bd010eecb1daf05b22a5b0f0f88c4e08449ad008b49617e8f54516db3"
+      "sha256": "1cb8dc4a2da3592bf1fb34e7e0e8980e568f2fae8476cf45b889b0d06d2dfa6f"
     },
     {
       "path": "manuscripts/ch18/ch18-long-cot-power-law-straggler-bubble.pdf",
-      "sha256": "0ec6f580fb908dc087fc00063efcc4fbd4e07e73f9142690378d09335d81b820"
+      "sha256": "ccc48382e063add17aa4fbb2286ef12e22b05e2a180c3d23b6b22d24bc0a9e81"
     },
     {
       "path": "manuscripts/ch18/ch18-long-cot-power-law-straggler-bubble.png",
@@ -58,11 +70,11 @@
     },
     {
       "path": "manuscripts/ch18/ch18-long-cot-power-law-straggler-bubble.svg",
-      "sha256": "45b386e9a1946f53f243b923472f9cc9ebf736c8bb147c243b239dc9e230c929"
+      "sha256": "3853869cba35f8c5b1c8c46e72c29b304bb50ae983a31aadf75f6b0b601964f9"
     },
     {
       "path": "manuscripts/ch18/ch18-multi-turn-tool-env-rl-state-suspension.pdf",
-      "sha256": "04d1870ea91c1fb72d31533f7fea9a0fe8dd2e66c64bbdbf8b0958224d9bf5ca"
+      "sha256": "25a9932fc8ddd755df6f1ba95af74fb1492378b24ba207c93bbdd9d3d32701d0"
     },
     {
       "path": "manuscripts/ch18/ch18-multi-turn-tool-env-rl-state-suspension.png",
@@ -70,11 +82,11 @@
     },
     {
       "path": "manuscripts/ch18/ch18-multi-turn-tool-env-rl-state-suspension.svg",
-      "sha256": "e61f6e748a755ba88afca60ae1b96d1807c6cb897343c75b07be16bf735e0ea2"
+      "sha256": "2be3d83d9a662619f94e7073e439acdcd99bd57cb6d56a3c0daa6367fbb9afe4"
     },
     {
       "path": "manuscripts/ch18/ch18-off-policy-importance-sampling-clipping.pdf",
-      "sha256": "29050a13513447c5a5d2ebe3f3bb03268e8404bb70983fd05a18d545f2127e10"
+      "sha256": "896a38d2f858d15a50e952feffdecd321af38a2bd3c5cbb61d5aa5f63a16f529"
     },
     {
       "path": "manuscripts/ch18/ch18-off-policy-importance-sampling-clipping.png",
@@ -82,11 +94,11 @@
     },
     {
       "path": "manuscripts/ch18/ch18-off-policy-importance-sampling-clipping.svg",
-      "sha256": "73406baf76b78e9f69373a19afab6ed360dcbb2adcd9908c8033ae8a46ab7c9c"
+      "sha256": "7015a4b1675f5c70f37c0a45d7b60791321a11d5ba6197cad5c105a107595163"
     },
     {
       "path": "manuscripts/ch18/ch18-ppo-four-model-vs-grpo-memory-ledger.pdf",
-      "sha256": "c21cf64e4b13bb323d6dc6a718c19222aab56294d17a11ca980e02797c40623b"
+      "sha256": "81e026a8eb7201f80b32c879c95d1cc72b03571ea77029ed6aaa0a7742587fb8"
     },
     {
       "path": "manuscripts/ch18/ch18-ppo-four-model-vs-grpo-memory-ledger.png",
@@ -94,11 +106,11 @@
     },
     {
       "path": "manuscripts/ch18/ch18-ppo-four-model-vs-grpo-memory-ledger.svg",
-      "sha256": "c3996ff3b824291f3f0020bfa56f2a4933ec59e60b230c4ab459f581007d8e3e"
+      "sha256": "d14af55a7e34222a49eee2e516e98ae1d6ff48c0889975ecebb9a7d02bd5c71c"
     },
     {
       "path": "manuscripts/ch18/ch18-rl-post-training-throughput-roofline.pdf",
-      "sha256": "a5380bb210f567bc5be96fdbe05aea248c1fd96ccfa8253a4b611def6c72f6aa"
+      "sha256": "ddff7428b19b70ba7a1011a9ea1d6fba9a42c1a78639e3837baef09d5047a48e"
     },
     {
       "path": "manuscripts/ch18/ch18-rl-post-training-throughput-roofline.png",
@@ -106,23 +118,23 @@
     },
     {
       "path": "manuscripts/ch18/ch18-rl-post-training-throughput-roofline.svg",
-      "sha256": "d8e6691aae3b541b2dc6a0aa7cf7f4f8d0efdef3020e681a97bdd47d3b87fc01"
+      "sha256": "7baaddf43b6a7cf615af68b80e2036ba6e0cd9e1f378a692f5615a7f9687b91c"
     },
     {
       "path": "manuscripts/ch18/ch18-rlvr-and-test-time-compute-closed-loop.pdf",
-      "sha256": "040b3025b002ab7cd5817f86107c98c8191fbc584de2da7e3c832038bfdc7c44"
+      "sha256": "da8833aa7938a8a6cd57e1b797b64499359ad3c3371b89477b8be1474ab68a50"
     },
     {
       "path": "manuscripts/ch18/ch18-rlvr-and-test-time-compute-closed-loop.png",
-      "sha256": "3e9b7c856fa71249719fbd2caca4951602ef1b1bf4684877a4e69c3398601ea2"
+      "sha256": "406499725e4e210fc3e246af7178ca703173f2b9a30cdfb9cb082383cc1b4039"
     },
     {
       "path": "manuscripts/ch18/ch18-rlvr-and-test-time-compute-closed-loop.svg",
-      "sha256": "0cc54982df00fc778fc6d474a928fe60f44b05ed5f9561636d3c93e77333272c"
+      "sha256": "279229076589bc2995c9024ff5e4cd3562c7adcb8919019300182ee44e789808"
     },
     {
       "path": "manuscripts/ch18/ch18-rlvr-iteration-timeline-rollout-dominance.pdf",
-      "sha256": "99455a2c50ab2924b9c876cea8457eec4aba149592d3fa456da6ee85b24ef55d"
+      "sha256": "31c0bca54737fc6512cfe20d59f8a98841e2cccd00cad7df7866f5007f0f9ce6"
     },
     {
       "path": "manuscripts/ch18/ch18-rlvr-iteration-timeline-rollout-dominance.png",
@@ -130,11 +142,23 @@
     },
     {
       "path": "manuscripts/ch18/ch18-rlvr-iteration-timeline-rollout-dominance.svg",
-      "sha256": "2a98333bdb61848bafcf0b4d6c8bd3e10b07cfc7bea31091995fed06056dbc5c"
+      "sha256": "b7036c5ef4fea395d6cefc28300ddfdd048bdfd0dbeb011f3dab1b3f0cbe371c"
+    },
+    {
+      "path": "manuscripts/ch18/ch18-rlvr-reward-hacking-kl-divergence-breaker.pdf",
+      "sha256": "7a37fe8cecd8efcff803e99aa5a4c247a994e0998f7ee46143b3247ce2aa08ce"
+    },
+    {
+      "path": "manuscripts/ch18/ch18-rlvr-reward-hacking-kl-divergence-breaker.png",
+      "sha256": "ac4dfab46ae06b1d338a1e9e666e6fc8502910f7127cadd0aa1f436ea01c1d17"
+    },
+    {
+      "path": "manuscripts/ch18/ch18-rlvr-reward-hacking-kl-divergence-breaker.svg",
+      "sha256": "beb228b28b64b89c7ba5fbdaee998c2f7907704b8e612e2452f2c20ca050ecf7"
     },
     {
       "path": "manuscripts/ch18/ch18-robustrl-role-based-fault-isolation.pdf",
-      "sha256": "b1b6c49c5a5d17f6f539dcd0a0dc96b9333e71dc3a054e856e1f0dba1eb562c2"
+      "sha256": "cdbeb6609ecae08a65b62626acba18679ea42031002ab098e800df6612aad993"
     },
     {
       "path": "manuscripts/ch18/ch18-robustrl-role-based-fault-isolation.png",
@@ -142,11 +166,11 @@
     },
     {
       "path": "manuscripts/ch18/ch18-robustrl-role-based-fault-isolation.svg",
-      "sha256": "59d846a65ffde9c8a84ec519ad3bf66db6468392a5d81cb45662693da36f65cc"
+      "sha256": "e51d88b65cfbb335c3b5591e74c713cd0ea5a806365807c5b6800296746f2398"
     },
     {
       "path": "manuscripts/ch18/ch18-rollpacker-tail-migration-and-cp-scaling.pdf",
-      "sha256": "186a26f4ea3d00f2651fdf7e4498f97b89daa69e2434ec6f793e9cbeefe8ef7d"
+      "sha256": "3f926afe77b8751f21aad0c79c787e0a38fa5a7b8e3d2895ff1353e321988779"
     },
     {
       "path": "manuscripts/ch18/ch18-rollpacker-tail-migration-and-cp-scaling.png",
@@ -154,11 +178,11 @@
     },
     {
       "path": "manuscripts/ch18/ch18-rollpacker-tail-migration-and-cp-scaling.svg",
-      "sha256": "12271165ae5b2401bece48bf99a0c1056732776082291825f43d7aef388b091e"
+      "sha256": "9a196543a8128e03ab5dc1878a418f27c920c93fb2df1d575e274580a50a869e"
     },
     {
       "path": "manuscripts/ch18/ch18-seer-divided-and-conquered-speculative-rollout.pdf",
-      "sha256": "afbab6119be57c44ac84673ea116694dd5ea8606dd8a4ef62a3a0d7552c24162"
+      "sha256": "ac93f81d7e730ae291838a305cfec1d36d6583ba80cf3826225caf9e27ea3834"
     },
     {
       "path": "manuscripts/ch18/ch18-seer-divided-and-conquered-speculative-rollout.png",
@@ -166,11 +190,11 @@
     },
     {
       "path": "manuscripts/ch18/ch18-seer-divided-and-conquered-speculative-rollout.svg",
-      "sha256": "5f00ad26f02d4c7d67e17c743a4f7cc0755d597052c518077f9fac6cd21a4ee5"
+      "sha256": "ee90ae99b08b4577622e404cbbf8f8b38f7d57f7b1e3ece676bded0f2f6b3ea7"
     },
     {
       "path": "manuscripts/ch18/ch18-speculative-tot-reward-barrier-bypass.pdf",
-      "sha256": "f021c41f021827b8ad9638df167a2a2da6a9ce1483cf180bacf82249f5cbac3e"
+      "sha256": "85dc6f6708c150ae78d9e0b72089d629266ba910adc4d3ddb3797560054b1c7d"
     },
     {
       "path": "manuscripts/ch18/ch18-speculative-tot-reward-barrier-bypass.png",
@@ -178,11 +202,11 @@
     },
     {
       "path": "manuscripts/ch18/ch18-speculative-tot-reward-barrier-bypass.svg",
-      "sha256": "30fa610fd778aa37daacb89abc6ebe4412df1f26ceafc1a23ed876ef787f1db2"
+      "sha256": "cee932d2fa9dddb1b48b0f0c18e6346e4104f498347230d9728c57e94666499a"
     },
     {
       "path": "manuscripts/ch18/ch18-staleness-bounded-partial-rollout-pipeline.pdf",
-      "sha256": "2f5110c32a3871871a4a2d6cc7a6a9c64bda3823af046efae7ec383fd4ef1a46"
+      "sha256": "3c136da9699867b72dd2e468fe5e3782f82c0fd1c2babbf769024d5cd861aa97"
     },
     {
       "path": "manuscripts/ch18/ch18-staleness-bounded-partial-rollout-pipeline.png",
@@ -190,11 +214,11 @@
     },
     {
       "path": "manuscripts/ch18/ch18-staleness-bounded-partial-rollout-pipeline.svg",
-      "sha256": "1c12ec65dc2a7433c3ac3ff51c010521b17410c45c26bc69e6ec7daabd100f80"
+      "sha256": "4ebbb2c21df1e63b45fb49ed5d42ff50011e29e715195107048af187f4d96b53"
     },
     {
       "path": "manuscripts/ch18/ch18-test-time-scaling-prm-tree-search-cow-kv.pdf",
-      "sha256": "44cd854acc1c9549f12b438e626cb5f67abc6e8151be3f86f43a1b5a4b00d83f"
+      "sha256": "37c2aeb03f5914c976b1ecda3903588195f348bf69cadcce53fa6fde49a33ab8"
     },
     {
       "path": "manuscripts/ch18/ch18-test-time-scaling-prm-tree-search-cow-kv.png",
@@ -202,11 +226,11 @@
     },
     {
       "path": "manuscripts/ch18/ch18-test-time-scaling-prm-tree-search-cow-kv.svg",
-      "sha256": "ddcdc2a5d5d0c5449aeb867c1b613d528cb0ac95317ce27e0d318f06556f15e7"
+      "sha256": "6304b1658e1e63ca76f0d9e4b26030c781c466056990da60105cd036cd0cd188"
     },
     {
       "path": "manuscripts/ch18/ch18-verl-3d-hybrid-engine-zero-redundancy-reshard.pdf",
-      "sha256": "2c6eac71cf68cf53248b8f612a7c7c4f76f99852265a9e63c1035d8ce482efc4"
+      "sha256": "9b25b714c05b3992349886e71592d4c6ad5c30a7f26a2a1ab8439feeb74b9a05"
     },
     {
       "path": "manuscripts/ch18/ch18-verl-3d-hybrid-engine-zero-redundancy-reshard.png",
@@ -214,23 +238,23 @@
     },
     {
       "path": "manuscripts/ch18/ch18-verl-3d-hybrid-engine-zero-redundancy-reshard.svg",
-      "sha256": "8e7bb2d8eae8a1b70cdf49e582dfc48eecb8c7054609652a7ecb1ddc5f776478"
+      "sha256": "0bc90cc190c71b72b4c7ca0638596f55adfeb2147c53b3fecf73c90e5bbdfd31"
     },
     {
       "path": "manuscripts/ch18/figure-data.json",
-      "sha256": "cd5224cf905cfe3acbcda6f9e330d4611e070447787a53bf5914d98cba75d254"
+      "sha256": "80945239ebd81714fb503d3ecf2c256a342ec5b6eb0c784514f2156307f38f6b"
     },
     {
       "path": "manuscripts/ch18/figure-index.json",
-      "sha256": "68e4c14fa2c5d21674ecd3c03d99c285e6c5a79c8739f97c82dee427e5316dc1"
+      "sha256": "92c1daff49ec18a42ed304503ee100cf2c7090b0dbfb1f3246127d31798246a1"
     },
     {
       "path": "manuscripts/ch18/teaching-layout-validation.json",
-      "sha256": "dd0abce79a6931207c659ef8c7135675cdd1c054f279fe483b2fe0891f7c13bc"
+      "sha256": "fd95835c8b792f3f474dd6f563bbaa55f76983b3d6466091c034b1a791a15a99"
     },
     {
       "path": "manuscripts/ch18/math-validation.json",
-      "sha256": "6b4b93f739ea44f874d2160b212cf1b9d5b7686f1aaf2445624a279766d9b19f"
+      "sha256": "0699e9ff271702069740ca83e4b4ddfca1d38084cbaf1061645368ec68e1bf9a"
     }
   ]
 }

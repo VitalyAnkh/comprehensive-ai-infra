@@ -260,5 +260,35 @@
     "TeachingRole": "收束第 17 章三维潜空间、2D-USP、时间步复用与 E-P-D-G 四池解耦的工程总账本",
     "figure": "17-18",
     "name": "ch17-multimodal-world-model-infra-synthesis"
+  },
+  {
+    "figure_id": "图 17-19",
+    "number": 19,
+    "file": "ch17-transfusion-hybrid-causal-bidirectional-mask.svg",
+    "asset": "ch17/ch17-transfusion-hybrid-causal-bidirectional-mask.svg",
+    "section": "17.4.3",
+    "caption": "统一多模态模型（Transfusion / Show-o / Bagel）中文本因果掩码与图像块双向扩散掩码的混合排布及模式切换状态机（算例 17-7）",
+    "source_refs": [
+      "manuscripts/ch17/figure-data.json",
+      "experiments/ch17/17-02/run.py"
+    ],
+    "TeachingRole": "推导混合掩码 62.5% 有效面积、648/1024 分块跳过及 <boi> 触发 D→G 跨池迁移的定量准则",
+    "figure": "17-19",
+    "name": "ch17-transfusion-hybrid-causal-bidirectional-mask"
+  },
+  {
+    "figure_id": "图 17-20",
+    "number": 20,
+    "file": "ch17-3dgs-scaffold-guided-world-model-dit.svg",
+    "asset": "ch17/ch17-3dgs-scaffold-guided-world-model-dit.svg",
+    "section": "17.4.3",
+    "caption": "显式 3DGS 几何光栅化提供深度/法线控制条件与视频 DiT 生成逼真物理交互画面的混合世界模型管线",
+    "source_refs": [
+      "manuscripts/ch17/figure-data.json",
+      "experiments/ch17/17-02/run.py"
+    ],
+    "TeachingRole": "剖析 2.4 ms 3DGS 光栅化 + 24.0 ms 4 步视频 DiT + 4.5 ms VAE 达成 32.36 FPS 零几何漂移的管线账本",
+    "figure": "17-20",
+    "name": "ch17-3dgs-scaffold-guided-world-model-dit"
   }
 ]

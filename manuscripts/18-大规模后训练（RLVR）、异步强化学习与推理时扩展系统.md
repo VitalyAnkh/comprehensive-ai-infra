@@ -4,7 +4,7 @@
 
 然而，当基础设施团队试图将原本面向预训练设计的万卡集群直接用于 RLVR 后训练时，往往会遭遇严重的硬件利用率滑坡——在朴素同步强化学习管线中，昂贵的旗舰 GPU 集群有效算力利用率（MFU）常常从预训练时的 $45\%\text{–}55\%$ 暴跌至 $10\%\text{–}15\%$。造成这一断层的根本原因在于，RLVR 并非单一计算形态的循环，而是**自回归长尾生成（Rollout，访存带宽受限）、外部沙箱规则验证（Reward Verification，CPU/容器 I/O 与重尾执行时间受限）以及多模型前反向传播（Actor/Ref/Critic Training，算力与集合通信受限）**三类截然不同物理负载的高频耦合。
 
-本章顺承第 4–6 章（分布式训练与容错）与第 11–13 章（推理引擎与 KV 缓存调度），系统建立大规模后训练（RLVR）、异步强化学习与推理时扩展系统的工程学体系。全章围绕四条定量主线展开：（1）从经典 PPO 四模型架构（总状态 $36\Psi$，32B 模型占 $1{,}152\ \mathrm{GB}$）到 GRPO/DAPO 消去 Critic 的显存账本（降至 $18\Psi = 576\ \mathrm{GB}$，节省 $50\%$ 状态显存）与自回归 Rollout 占 $70\%\text{–}90\%$ 墙钟时间的根源解剖；（2）训推共置（`veRL` / `HybridFlow` 的 `3D-HybridEngine` 零冗余子网格重分片）与物理训推分离（`OpenRLHF` / `RollArt` / `HetRL` 异构配比及 OSDI '26 `Weave` 互补作业错峰共享 $216$ 张 H20 与 $152$ 张 H800）；（3）攻克长思维链幂律长尾木桶效应，严密推导 NSDI '26 `RollPacker`（$160\times 10 = 1{,}600$ 投机采样池、双槽位竞争引发 $1/2 \to 1/4$ 长度偏置、流式训练重叠 $60\ \mathrm{s} \to 55\ \mathrm{s}$、以及不均等微批下“按微批均值直接平均得 $2.0$（有偏）” vs. “按全局总样本/总词元归一化得 $2.5$（无偏真值）”的无偏梯度定理）、OSDI '26 `Seer` 同源投机解码、陈旧度有界异步部分采样（Partial Rollout）与 OSDI '26 `RobustRL` 角色非对称容错（$790\ \mathrm{s}$ 全步重做降至 $490\ \mathrm{s}$ 保留 Rollout 恢复，净省 $300\ \mathrm{s}$）；（4）NSDI '26 `DistRS` 解耦奖励沙箱调度（重尾验证分布下朴素剩余时间估计 $0.9\ \mathrm{s}$ 与真实条件期望 $\mathbb{E}[S-10 \mid S>10] = 90.0\ \mathrm{s}$ 的百倍反差，及 $216{,}000$ 词元沉没工作量边界）与推理时树搜索（PagedAttention 写时复制 CoW 及 OSDI '26 `Breaking the Reward Barrier` 投机越障）[^ch18-cases]。
+本章顺承第 4–6 章（分布式训练与容错）与第 11–13 章（推理引擎与 KV 缓存调度），系统建立大规模后训练（RLVR）、异步强化学习与推理时扩展系统的工程学体系。全章围绕四条定量主线展开：（1）从经典 PPO 四模型架构（总状态 $36\Psi$，32B 模型占 $1{,}152\ \mathrm{GB}$）到 GRPO/DAPO 消去 Critic 的显存账本（降至 $18\Psi = 576\ \mathrm{GB}$，节省 $50\%$ 状态显存）与自回归 Rollout 占 $70\%\text{–}90\%$ 墙钟时间的根源解剖；（2）训推共置（`veRL` / `HybridFlow` 的 `3D-HybridEngine` 零冗余子网格重分片）与物理训推分离（`OpenRLHF` / `RollArt` / `HetRL` 异构配比及 OSDI '26 `Weave` 互补作业错峰共享 $216$ 张 H20 与 $152$ 张 H800）；（3）攻克长思维链幂律长尾木桶效应，严密推导 NSDI '26 `RollPacker`（$160\times 10 = 1{,}600$ 投机采样池、双槽位竞争引发 $1/2 \to 1/4$ 长度偏置、流式训练重叠 $60\ \mathrm{s} \to 55\ \mathrm{s}$、以及不均等微批下“按微批均值直接平均得 $2.0$（有偏）” vs. “按全局总样本/总词元归一化得 $2.5$（无偏真值）”的无偏梯度定理）、OSDI '26 `Seer` 同源投机解码、陈旧度有界异步部分采样（Partial Rollout）与 OSDI '26 `RobustRL` 角色非对称容错（$790\ \mathrm{s}$ 全步重做降至 $490\ \mathrm{s}$ 保留 Rollout 恢复，净省 $300\ \mathrm{s}$）；（4）NSDI '26 `DistRS` 解耦奖励沙箱调度（重尾验证分布下朴素剩余时间估计 $0.9\ \mathrm{s}$ 与真实条件期望 $\mathbb{E}[S-10 \mid S>10] = 90.0\ \mathrm{s}$ 的百倍反差，及 $216{,}000$ 词元沉没工作量边界）、推理时树搜索（PagedAttention 写时复制 CoW 及 OSDI '26 `Breaking the Reward Barrier` 投机越障），以及跨地域异构异步采样池（Geo-Distributed Rollout Harvesting，$14{,}745.6\times$ 窄带回传压缩）与奖励黑客（Reward Hacking）双级统计熔断工程[^ch18-cases]。
 
 ---
 
@@ -31,30 +31,32 @@
 - **用组内相对统计量取代可训练 Critic**：针对同一个提示词 $q$，策略模型一次性并行采样一组 $G$ 条候选轨迹 $\{o_1, o_2, \dots, o_G\}$（常见 $G = 8\text{–}64$），获得一组奖励 $\{r_1, \dots, r_G\}$，直接用组内样本均值与标准差归一化得到第 $i$ 条轨迹的优势值：
   $$\hat{A}_{i,t} = \frac{r_i - \mathrm{mean}(r_1, \dots, r_G)}{\mathrm{std}(r_1, \dots, r_G) + \epsilon}$$
 
-#### 算例 18-1：32B 推理模型下经典四模型 PPO vs. GRPO/DAPO 的静态模型状态显存账本
-
-**问题设定**：考察参数量 $\Psi = 32 \times 10^9$（32B）的稠密推理模型后训练任务。在经典 PPO 中，Actor、Critic、Reference、Reward 四个模型同为 32B 规模；在 GRPO/DAPO（配合规则沙箱验证）中，仅驻留可训练 Actor（32B）与冻结 Reference（32B）两个模型。按可训练模型状态 $16\Psi\ \mathrm{B}$、冻结模型状态 $2\Psi\ \mathrm{B}$（十进制 $\mathrm{GB} = 10^9\ \mathrm{B}$）核算：（1）PPO 四模型与 GRPO 双模型的总模型状态显存；（2）消去 Critic 与神经 RM 节省的绝对显存与百分比，以及最少所需的 80 GB H100/H800 卡数下界（假设仅模型状态最多占用单卡 $64\ \mathrm{GB}$ 以留出激活与 KV 空间）。
-
-**逐项推导**：
-
-1. **经典四模型 PPO 的静态状态总显存**：
-   - Actor（可训练）：$16 \times 32\ \mathrm{GB} = \mathbf{512\ \mathrm{GB}}$
-   - Critic（可训练）：$16 \times 32\ \mathrm{GB} = \mathbf{512\ \mathrm{GB}}$
-   - Reference（冻结）：$2 \times 32\ \mathrm{GB} = \mathbf{64\ \mathrm{GB}}$
-   - Reward（冻结）：$2 \times 32\ \mathrm{GB} = \mathbf{64\ \mathrm{GB}}$
-   $$M_{\mathrm{PPO}} = (16 + 16 + 2 + 2)\Psi = \mathbf{36\Psi} = 36 \times 32\ \mathrm{GB} = \mathbf{1{,}152\ \mathrm{GB}}$$
-
-2. **GRPO / DAPO（规则验证）的静态状态总显存**：
-   - Actor（可训练）：$16 \times 32\ \mathrm{GB} = \mathbf{512\ \mathrm{GB}}$
-   - Reference（冻结）：$2 \times 32\ \mathrm{GB} = \mathbf{64\ \mathrm{GB}}$
-   - Critic 与神经 RM：$\mathbf{0\ \mathrm{GB}}$
-   $$M_{\mathrm{GRPO}} = (16 + 2)\Psi = \mathbf{18\Psi} = 18 \times 32\ \mathrm{GB} = \mathbf{576\ \mathrm{GB}}$$
-
-3. **状态显存节省比与硬件卡数下界**：
-   $$\Delta M = 1{,}152\ \mathrm{GB} - 576\ \mathrm{GB} = \mathbf{576\ \mathrm{GB}}\quad(\text{精确削减 }\mathbf{50.0\%})$$
-   若每张 80 GB 加速卡最多分配 $64\ \mathrm{GB}$ 给静态模型状态，PPO 至少需要 $\lceil 1{,}152 / 64 \rceil = 18$ 张卡（按 2 的幂次拓扑需 $32$ 卡），而 GRPO 仅需 $\lceil 576 / 64 \rceil = 9$ 张卡（单台 8 卡节点开少量 CPU 卸载或 2 台 8 卡共 $16$ 卡即可宽裕运行）。
+> **算例 18-1（32B 推理模型下经典四模型 PPO vs. GRPO/DAPO 的静态模型状态显存账本）：**
+>
+> **问题设定**：考察参数量 $\Psi = 32 \times 10^9$（32B）的稠密推理模型后训练任务。在经典 PPO 中，Actor、Critic、Reference、Reward 四个模型同为 32B 规模；在 GRPO/DAPO（配合规则沙箱验证）中，仅驻留可训练 Actor（32B）与冻结 Reference（32B）两个模型。按可训练模型状态 $16\Psi\ \mathrm{B}$、冻结模型状态 $2\Psi\ \mathrm{B}$（十进制 $\mathrm{GB} = 10^9\ \mathrm{B}$）核算：（1）PPO 四模型与 GRPO 双模型的总模型状态显存；（2）消去 Critic 与神经 RM 节省的绝对显存与百分比，以及最少所需的 80 GB H100/H800 卡数下界（假设仅模型状态最多占用单卡 $64\ \mathrm{GB}$ 以留出激活与 KV 空间）。
+>
+> **逐项推导**：
+>
+> 1. **经典四模型 PPO 的静态状态总显存**：
+>    - Actor（可训练）：$16 \times 32\ \mathrm{GB} = \mathbf{512\ \mathrm{GB}}$
+>    - Critic（可训练）：$16 \times 32\ \mathrm{GB} = \mathbf{512\ \mathrm{GB}}$
+>    - Reference（冻结）：$2 \times 32\ \mathrm{GB} = \mathbf{64\ \mathrm{GB}}$
+>    - Reward（冻结）：$2 \times 32\ \mathrm{GB} = \mathbf{64\ \mathrm{GB}}$
+>    $$M_{\mathrm{PPO}} = (16 + 16 + 2 + 2)\Psi = \mathbf{36\Psi} = 36 \times 32\ \mathrm{GB} = \mathbf{1{,}152\ \mathrm{GB}}$$
+>
+> 2. **GRPO / DAPO（规则验证）的静态状态总显存**：
+>    - Actor（可训练）：$16 \times 32\ \mathrm{GB} = \mathbf{512\ \mathrm{GB}}$
+>    - Reference（冻结）：$2 \times 32\ \mathrm{GB} = \mathbf{64\ \mathrm{GB}}$
+>    - Critic 与神经 RM：$\mathbf{0\ \mathrm{GB}}$
+>    $$M_{\mathrm{GRPO}} = (16 + 2)\Psi = \mathbf{18\Psi} = 18 \times 32\ \mathrm{GB} = \mathbf{576\ \mathrm{GB}}$$
+>
+> 3. **状态显存节省比与硬件卡数下界**：
+>    $$\Delta M = 1{,}152\ \mathrm{GB} - 576\ \mathrm{GB} = \mathbf{576\ \mathrm{GB}}\quad(\text{精确削减 }\mathbf{50.0\%})$$
+>    若每张 80 GB 加速卡最多分配 $64\ \mathrm{GB}$ 给静态模型状态，PPO 至少需要 $\lceil 1{,}152 / 64 \rceil = 18$ 张卡（按 2 的幂次拓扑需 $32$ 卡），而 GRPO 仅需 $\lceil 576 / 64 \rceil = 9$ 张卡（单台 8 卡节点开少量 CPU 卸载或 2 台 8 卡共 $16$ 卡即可宽裕运行）。
 
 表 18-1 总结了主流后训练强化学习算法在模型组件、显存系数与系统瓶颈上的演进脉络：
+
+*表 18-1　主流强化学习后训练算法（PPO、RLOO、GRPO 与 DAPO）的模型组件与静态状态显存账本对比*
 
 | 算法范式 | 驻留模型组件 | 总静态模型状态系数 | 优势函数估计方式 | 组采样倍数 $G$ | 核心基础设施瓶颈转移方向 |
 | :--- | :--- | :---: | :--- | :---: | :--- |
@@ -133,6 +135,8 @@ def compute_grpo_dapo_policy_loss(
 
 表 18-2 定量对比了 RLVR 单步迭代内三大阶段的计算特征、算术强度与系统瓶颈：
 
+*表 18-2　RLVR 单步迭代内三大阶段（自回归 Rollout、规则沙箱验证与策略训练）的计算特征与瓶颈对比*
+
 | 迭代阶段 | 核心计算算子 | 算术强度（$\mathrm{FLOP/Byte}$） | 硬件受限类型 | 并发度随时间演化规律 | 典型墙钟时间占比 |
 | :--- | :--- | :---: | :--- | :--- | :---: |
 | **① 自回归生成（Rollout）** | 逐词元 GEMV + PagedAttention | $1\text{–}16$（随尾期骤降） | **HBM 带宽与容量受限** | 随短轨迹完成从 $B_{\max}$ 坍塌至 $1\text{–}2$ | **$70\%\text{–}90\%$** |
@@ -206,23 +210,23 @@ def model_rlvr_rollout_vs_train_wallclock(
 2. 在从训练态切换至生成态（`Transition-to-Rollout`）时，`3D-HybridEngine` 不跨全集群广播，而是将通信严格限制在节点内 NVLink 互连的**正交微分组（Micro-Group）**内执行一次并发 `AllGather`，直接将分片参数原位拼装为多组独立的 $TP_{\mathrm{inf}}$ 推理引擎实例（底层挂载 `vLLM` 或 `SGLang` 的 PagedAttention 算子）。
 3. 当本轮 Rollout 采样一结束，引擎立即释放这批瞬态拼装的完整 BF16 推理权重与 KV 缓存页池，将全部显存交还给训练态激活与梯度缓冲，从而在**零常驻冗余显存**的前提下将阶段切换耗时压缩了 $70\%\text{–}90\%$。
 
-#### 算例 18-2：64 卡训推共置集群中全网广播重分片 vs. 3D-HybridEngine 微分组重分片耗时对比
-
-**问题设定**：在 8 台 8 卡 H800 节点（共 $N_{\mathrm{gpu}} = 64$ 卡）上共置训练 $\Psi = 32\mathrm{B}$ 模型（BF16 推理权重体积 $V_W = 2\Psi = 64\ \mathrm{GB}$）。节点内 NVSwitch 单卡有效聚合通信带宽为 $B_{\mathrm{intra}} = 400\ \mathrm{GB/s}$，跨节点 RoCE 网络单卡有效集合通信带宽为 $B_{\mathrm{inter}} = 40\ \mathrm{GB/s}$。
-- **方案 A（朴素跨全集群 ZeRO-3 聚合）**：权重均匀切分在全部 64 张卡上，切换至推理态时需跨 64 卡执行全局 `AllGather` 收集完整 $64\ \mathrm{GB}$ 权重（随后在本地切出 $TP_{\mathrm{inf}} = 4$ 分片），受限于跨节点带宽 $B_{\mathrm{inter}}$；
-- **方案 B（`3D-HybridEngine` 机内微分组重分片）**：生成态目标为 $TP_{\mathrm{inf}} = 4$（每张推理卡仅需持有 $\frac{64\ \mathrm{GB}}{4} = 16\ \mathrm{GB}$ 权重分片），训练态分片布局与机内 8 卡对齐，使得每张卡只需在机内 NVLink 子组（规模 $g = 8$）内执行一次局部 `AllGather` 即可凑齐所需的 $16\ \mathrm{GB}$ 推理分片。
-
-试计算两种方案每次从训练态切往推理态的重分片通信量与通信耗时。
-
-**逐项推导**：
-
-1. **方案 A（朴素跨机全局聚合）**：
-   单卡需通过跨节点网络接收 $\frac{63}{64} \times 64\ \mathrm{GB} = 63.0\ \mathrm{GB}$ 权重数据，耗时为：
-   $$T_{\mathrm{naive}} = \frac{63.0\ \mathrm{GB}}{40\ \mathrm{GB/s}} = \mathbf{1.575\ \mathrm{s}} = 1{,}575\ \mathrm{ms}$$
-2. **方案 B（`3D-HybridEngine` 机内对齐微分组聚合）**：
-   每张卡最终仅需持有 $16\ \mathrm{GB}$ 推理权重（其中本地已持有 $\frac{1}{8}$ 即 $2\ \mathrm{GB}$），只需在节点内 NVLink 域接收 $\frac{7}{8} \times 16\ \mathrm{GB} = 14.0\ \mathrm{GB}$ 数据，耗时仅为：
-   $$T_{\mathrm{hybrid}} = \frac{14.0\ \mathrm{GB}}{400\ \mathrm{GB/s}} = \mathbf{0.035\ \mathrm{s}} = 35\ \mathrm{ms}$$
-   切换通信耗时缩短了 **$\frac{1{,}575\ \mathrm{ms}}{35\ \mathrm{ms}} = 45.0\times$**，彻底消除了每步训推切换的通信停顿。
+> **算例 18-2（64 卡训推共置集群中全网广播重分片 vs. 3D-HybridEngine 微分组重分片耗时对比）：**
+>
+> **问题设定**：在 8 台 8 卡 H800 节点（共 $N_{\mathrm{gpu}} = 64$ 卡）上共置训练 $\Psi = 32\mathrm{B}$ 模型（BF16 推理权重体积 $V_W = 2\Psi = 64\ \mathrm{GB}$）。节点内 NVSwitch 单卡有效聚合通信带宽为 $B_{\mathrm{intra}} = 400\ \mathrm{GB/s}$，跨节点 RoCE 网络单卡有效集合通信带宽为 $B_{\mathrm{inter}} = 40\ \mathrm{GB/s}$。
+> - **方案 A（朴素跨全集群 ZeRO-3 聚合）**：权重均匀切分在全部 64 张卡上，切换至推理态时需跨 64 卡执行全局 `AllGather` 收集完整 $64\ \mathrm{GB}$ 权重（随后在本地切出 $TP_{\mathrm{inf}} = 4$ 分片），受限于跨节点带宽 $B_{\mathrm{inter}}$；
+> - **方案 B（`3D-HybridEngine` 机内微分组重分片）**：生成态目标为 $TP_{\mathrm{inf}} = 4$（每张推理卡仅需持有 $\frac{64\ \mathrm{GB}}{4} = 16\ \mathrm{GB}$ 权重分片），训练态分片布局与机内 8 卡对齐，使得每张卡只需在机内 NVLink 子组（规模 $g = 8$）内执行一次局部 `AllGather` 即可凑齐所需的 $16\ \mathrm{GB}$ 推理分片。
+>
+> 试计算两种方案每次从训练态切往推理态的重分片通信量与通信耗时。
+>
+> **逐项推导**：
+>
+> 1. **方案 A（朴素跨机全局聚合）**：
+>    单卡需通过跨节点网络接收 $\frac{63}{64} \times 64\ \mathrm{GB} = 63.0\ \mathrm{GB}$ 权重数据，耗时为：
+>    $$T_{\mathrm{naive}} = \frac{63.0\ \mathrm{GB}}{40\ \mathrm{GB/s}} = \mathbf{1.575\ \mathrm{s}} = 1{,}575\ \mathrm{ms}$$
+> 2. **方案 B（`3D-HybridEngine` 机内对齐微分组聚合）**：
+>    每张卡最终仅需持有 $16\ \mathrm{GB}$ 推理权重（其中本地已持有 $\frac{1}{8}$ 即 $2\ \mathrm{GB}$），只需在节点内 NVLink 域接收 $\frac{7}{8} \times 16\ \mathrm{GB} = 14.0\ \mathrm{GB}$ 数据，耗时仅为：
+>    $$T_{\mathrm{hybrid}} = \frac{14.0\ \mathrm{GB}}{400\ \mathrm{GB/s}} = \mathbf{0.035\ \mathrm{s}} = 35\ \mathrm{ms}$$
+>    切换通信耗时缩短了 **$\frac{1{,}575\ \mathrm{ms}}{35\ \mathrm{ms}} = 45.0\times$**，彻底消除了每步训推切换的通信停顿。
 
 ### 18.2.2 训推物理分离（OpenRLHF / RollArt / HetRL）与多作业互补错峰池化（Weave, OSDI '26）
 
@@ -241,34 +245,34 @@ def model_rlvr_rollout_vs_train_wallclock(
 2. **多 RL 作业互补错峰共享（OSDI '26 `Weave`）**[^ch18-weave]：
    在仍需保持严格同策略（On-Policy，即当前步必须等本作业 Rollout 跑完才能开始 Learner 更新）的场景下，单个作业若独占物理分离的推理池和训练池，必然导致“跑 Rollout 时训练池全空置、跑训练时推理池全空置”。OSDI 2026 论文 `Weave` 提出了**跨作业细粒度时空编织（Inter-Job Spatio-Temporal Weaving）**：将周期相位互补的多个 RL 作业调度到共享的异构推理池与训练池上，用作业 B 的训练期填满作业 A 的推理期空谷，反之亦然。
 
-#### 算例 18-3（锁定自案例库 `case-studies/rl-scheduling-and-recovery.md`）：Weave 互补 RL 作业错峰共享 216 张 H20 与 152 张 H800 的硬件削峰账本
-
-**问题设定**：在配备 H20 Rollout 池与 H800 训练池（单池上限各 $328$ 卡）的异构集群上，同时运行两组同策略（On-Policy）RLVR 作业（作业组 A 与作业组 B）。两者的单步迭代周期均为 $T_{\mathrm{cycle}} = 480\ \mathrm{s}$，各自在生成阶段（Rollout）需占用 $216$ 张 H20、在训练阶段（Ref + Actor Training）需占用 $152$ 张 H800，但阶段时长分布恰好互补：
-- **作业组 A（长生成、短训练型）**：Rollout 耗时 $360\ \mathrm{s}$（占 $216$ 张 H20），训练耗时 $120\ \mathrm{s}$（占 $152$ 张 H800）；
-- **作业组 B（短生成、重训练型）**：Rollout 耗时 $120\ \mathrm{s}$（占 $216$ 张 H20），训练耗时 $360\ \mathrm{s}$（占 $152$ 张 H800）。
-
-试对比计算：（1）在无跨作业共享的独立静态分池（`Solo-D`）下，同时承载两组作业需预留多少张 H20 与多少张 H800？（2）在 `Weave` 将作业组 A 的 $[0, 360)\ \mathrm{s}$ 生成期与作业组 B 的 $[0, 360)\ \mathrm{s}$ 训练期反相错峰编织后，全周期任意时刻的实际共享峰值是多少张 H20 与多少张 H800？（3）若计入阶段切换成本，主机内存热切换（每阶段 $+5\ \mathrm{s}$）与冷启动（每阶段 $+45\ \mathrm{s}$）的周期分别是多少秒？是否满足相对独跑周期延长不超过 $10\%$（$528\ \mathrm{s}$）的 SLO 约束？
-
-**逐项推导**：
-
-1. **独立静态分池（`Solo-D`，无跨作业共享）的硬件总需求**：
-   若两组作业各自独占一对静态推理池与训练池，集群必须准备两套完整配额：
-   $$N_{\mathrm{H20, solo}} = 216 + 216 = \mathbf{432\ \text{张 H20}}\quad(\text{已超出测试床 }328\ \text{张 H20 物理上限})$$
-   $$N_{\mathrm{H800, solo}} = 152 + 152 = \mathbf{304\ \text{张 H800}}$$
-   此时合计需占用 $432 + 304 = 736$ 张 GPU，且每套池在半数周期内处于空转等待状态。
-
-2. **`Weave` 反相错峰编织后的精确时段资源水位与共享峰值**：
-   将稳态周期 $[0, 480)\ \mathrm{s}$ 切分为两个互补时间片：
-   - **时间片 I（$t \in [0, 360)\ \mathrm{s}$，共 $360\ \mathrm{s}$）**：作业组 A 在 Rollout 池运行（占 $216$ 张 H20），作业组 B 在训练池更新上一轮样本（占 $152$ 张 H800）；
-   - **时间片 II（$t \in [360, 480)\ \mathrm{s}$，共 $120\ \mathrm{s}$）**：作业组 A 切入训练池更新本轮样本（占 $152$ 张 H800），作业组 B 切入 Rollout 池生成（占 $216$ 张 H20）。
-   因此，两个互补作业组共享同一对资源池即可 $100\%$ 连续满载运行，全集群峰值实际使用量锁定为：
-   $$N_{\mathrm{H20, weave}} = \mathbf{216\ \text{张 H20}},\qquad N_{\mathrm{H800, weave}} = \mathbf{152\ \text{张 H800}}$$
-   直接省掉整整一对资源池（净省 $216$ 张 H20 与 $152$ 张 H800，即削减 **$50.0\%$** 的硬件池需求）。
-
-3. **热切换 vs. 冷启动的周期与 $10\%$ SLO 检验**：
-   单作业独跑周期为 $480\ \mathrm{s}$，允许 $10\%$ 减速的 SLO 上界为 $480 \times 1.10 = \mathbf{528\ \mathrm{s}}$。由于每个资源池在单周期内经历 $2$ 个阶段切换（且两池切换并行发生）：
-   - **主机内存驻留热切换（每阶段 $+5\ \mathrm{s}$）**：$T_{\mathrm{warm}} = 480 + 2 \times 5 = \mathbf{490\ \mathrm{s}} \le 528\ \mathrm{s}$（**满足 SLO**）；
-   - **冷启动重载（每阶段 $+45\ \mathrm{s}$）**：$T_{\mathrm{cold}} = 480 + 2 \times 45 = \mathbf{570\ \mathrm{s}} > 528\ \mathrm{s}$（**违反 SLO**）。
+> **算例 18-3（Weave 互补 RL 作业错峰共享 216 张 H20 与 152 张 H800 的硬件削峰账本）：**
+>
+> **问题设定**（锁定自案例库 `case-studies/rl-scheduling-and-recovery.md`）：在配备 H20 Rollout 池与 H800 训练池（单池上限各 $328$ 卡）的异构集群上，同时运行两组同策略（On-Policy）RLVR 作业（作业组 A 与作业组 B）。两者的单步迭代周期均为 $T_{\mathrm{cycle}} = 480\ \mathrm{s}$，各自在生成阶段（Rollout）需占用 $216$ 张 H20、在训练阶段（Ref + Actor Training）需占用 $152$ 张 H800，但阶段时长分布恰好互补：
+> - **作业组 A（长生成、短训练型）**：Rollout 耗时 $360\ \mathrm{s}$（占 $216$ 张 H20），训练耗时 $120\ \mathrm{s}$（占 $152$ 张 H800）；
+> - **作业组 B（短生成、重训练型）**：Rollout 耗时 $120\ \mathrm{s}$（占 $216$ 张 H20），训练耗时 $360\ \mathrm{s}$（占 $152$ 张 H800）。
+>
+> 试对比计算：（1）在无跨作业共享的独立静态分池（`Solo-D`）下，同时承载两组作业需预留多少张 H20 与多少张 H800？（2）在 `Weave` 将作业组 A 的 $[0, 360)\ \mathrm{s}$ 生成期与作业组 B 的 $[0, 360)\ \mathrm{s}$ 训练期反相错峰编织后，全周期任意时刻的实际共享峰值是多少张 H20 与多少张 H800？（3）若计入阶段切换成本，主机内存热切换（每阶段 $+5\ \mathrm{s}$）与冷启动（每阶段 $+45\ \mathrm{s}$）的周期分别是多少秒？是否满足相对独跑周期延长不超过 $10\%$（$528\ \mathrm{s}$）的 SLO 约束？
+>
+> **逐项推导**：
+>
+> 1. **独立静态分池（`Solo-D`，无跨作业共享）的硬件总需求**：
+>    若两组作业各自独占一对静态推理池与训练池，集群必须准备两套完整配额：
+>    $$N_{\mathrm{H20, solo}} = 216 + 216 = \mathbf{432\ \text{张 H20}}\quad(\text{已超出测试床 }328\ \text{张 H20 物理上限})$$
+>    $$N_{\mathrm{H800, solo}} = 152 + 152 = \mathbf{304\ \text{张 H800}}$$
+>    此时合计需占用 $432 + 304 = 736$ 张 GPU，且每套池在半数周期内处于空转等待状态。
+>
+> 2. **`Weave` 反相错峰编织后的精确时段资源水位与共享峰值**：
+>    将稳态周期 $[0, 480)\ \mathrm{s}$ 切分为两个互补时间片：
+>    - **时间片 I（$t \in [0, 360)\ \mathrm{s}$，共 $360\ \mathrm{s}$）**：作业组 A 在 Rollout 池运行（占 $216$ 张 H20），作业组 B 在训练池更新上一轮样本（占 $152$ 张 H800）；
+>    - **时间片 II（$t \in [360, 480)\ \mathrm{s}$，共 $120\ \mathrm{s}$）**：作业组 A 切入训练池更新本轮样本（占 $152$ 张 H800），作业组 B 切入 Rollout 池生成（占 $216$ 张 H20）。
+>    因此，两个互补作业组共享同一对资源池即可 $100\%$ 连续满载运行，全集群峰值实际使用量锁定为：
+>    $$N_{\mathrm{H20, weave}} = \mathbf{216\ \text{张 H20}},\qquad N_{\mathrm{H800, weave}} = \mathbf{152\ \text{张 H800}}$$
+>    直接省掉整整一对资源池（净省 $216$ 张 H20 与 $152$ 张 H800，即削减 **$50.0\%$** 的硬件池需求）。
+>
+> 3. **热切换 vs. 冷启动的周期与 $10\%$ SLO 检验**：
+>    单作业独跑周期为 $480\ \mathrm{s}$，允许 $10\%$ 减速的 SLO 上界为 $480 \times 1.10 = \mathbf{528\ \mathrm{s}}$。由于每个资源池在单周期内经历 $2$ 个阶段切换（且两池切换并行发生）：
+>    - **主机内存驻留热切换（每阶段 $+5\ \mathrm{s}$）**：$T_{\mathrm{warm}} = 480 + 2 \times 5 = \mathbf{490\ \mathrm{s}} \le 528\ \mathrm{s}$（**满足 SLO**）；
+>    - **冷启动重载（每阶段 $+45\ \mathrm{s}$）**：$T_{\mathrm{cold}} = 480 + 2 \times 45 = \mathbf{570\ \mathrm{s}} > 528\ \mathrm{s}$（**违反 SLO**）。
 
 下面的参考代码实现了 `veRL` 3D-HybridEngine 微分组重分片耗时评估与 `Weave`（OSDI '26）多作业互补错峰编织调度器：
 
@@ -338,6 +342,8 @@ class HybridEngineMicroGroupResharder:
 
 表 18-3 总结对比了当前工业界五种主流 RL 后训练系统架构的拓扑特征与适用场景：
 
+*表 18-3　工业界五种主流 RLVR 后训练系统架构（训推共置、异构分离、错峰编织与全异步流式）对比*
+
 | 系统架构代表 | 训推物理关系 | 权重同步/重分片机制 | 硬件同构/异构要求 | 长尾气泡消除手段 | 最优适用场景 |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **veRL（HybridFlow）** | 同池共置（Colocated） | `3D-HybridEngine` 机内微组 AllGather | 同构集群（如全 H800） | 动态切换小 $TP_{\mathrm{inf}}$ 提升并发 | 中等序列长度、严格同策略（On-Policy） |
@@ -374,35 +380,41 @@ class HybridEngineMicroGroupResharder:
 ![图 18-6：RollPacker（NSDI '26）尾部存活请求紧缩迁移、双槽位长度偏差（1/2 → 1/4）与微批均值平均（2.0）vs. 全局总词元归一化（2.5）对比（算例 18-5 & 18-6）](ch18/ch18-rollpacker-tail-migration-and-cp-scaling.svg)
 *图 18-6　RollPacker（NSDI '26）尾部存活请求紧缩迁移、双槽位长度偏差（1/2 → 1/4）与微批均值平均（2.0）vs. 全局总词元归一化（2.5）对比（算例 18-5 & 18-6）。*
 
-#### 算例 18-4 & 18-5（锁定自案例库 `case-studies/rollout-tail-and-sampling.md`）：RollPacker 投机采样池（1,600 vs. 1,024）、双槽位竞争长度偏差（1/2 → 1/4）与流式训练重叠（60s → 55s）
+> **算例 18-4（RollPacker 投机采样池 1,600 vs. 1,024 与 8 卡流式训练重叠 60s → 55s 时间线）：**
+>
+> **问题设定**（锁定自案例库 `case-studies/rollout-tail-and-sampling.md`）：考察 `RollPacker`（NSDI '26）的投机池扩展与流式训练重叠机制：
+> 1. **投机池容量扩展**：某目标训练步需要收集 $N_{\mathrm{target}} = 128\ \text{个提示词} \times 8\ \text{条响应/提示词} = 1{,}024$ 条有效响应。为掩盖慢轨迹与零方差过滤损耗，`RollPacker` 将两维各扩展 $1.25\times$，一次性投机派发 $N_{\mathrm{spec}} = 160\ \text{个提示词} \times 10\ \text{条响应/提示词}$。求投机池总响应数及超额比例。
+> 2. **流式训练重叠（Stream Trainer Overlap，锁定 8 卡时间线）**：在 8 卡节点上，串行基线的 Rollout 在 $40\ \mathrm{s}$ 结束，随后 8 卡计算整批梯度需 $16\ \mathrm{s}$，最后梯度归约与优化器更新另需 $4\ \mathrm{s}$（串行总周期 $40 + 16 + 4 = 60\ \mathrm{s}$）。启用 `Stream Trainer` 后，设在 $t = 10\ \mathrm{s}$ 时恰好有一半完整回答组已完成，系统立即腾出 $4$ 张卡转为训练副本，并将剩余在途请求迁移至另外 $4$ 张卡（迁移与状态交接耗时 $3\ \mathrm{s}$，使剩余 Rollout 完成时刻从 $40\ \mathrm{s}$ 顺延至 $43\ \mathrm{s}$）；早到的一半样本在 $4$ 张训练卡上用 $16\ \mathrm{s}$ 算完梯度（于 $10 + 3 + 16 = 29\ \mathrm{s}$ 完成），待 $43\ \mathrm{s}$ 全部 Rollout 完成后，全部 $8$ 张卡合算后一半样本梯度（耗时 $8\ \mathrm{s}$）并执行 $4\ \mathrm{s}$ 归约更新。求流式重叠后的完成时间，以及若迁移使 Rollout 延后 $10\ \mathrm{s}$（至 $50\ \mathrm{s}$）时的反例完成时间。
+>
+> **逐项推导**：
+>
+> 1. **投机池规模**：
+>    $$N_{\mathrm{spec}} = 160 \times 10 = \mathbf{1{,}600\ \text{条响应}},\qquad \text{超额比例} = \frac{1{,}600 - 1{,}024}{1{,}024} = \frac{576}{1{,}024} = \mathbf{+56.25\%}$$
+> 2. **流式训练重叠 8 卡锁定时间线**：
+>    - **串行基线**：$T_{\mathrm{serial}} = 40\ \mathrm{s} + 16\ \mathrm{s} + 4\ \mathrm{s} = \mathbf{60\ \mathrm{s}}$；
+>    - **流式重叠（迁移延后 $3\ \mathrm{s}$）**：前半批梯度在 $t = 10 + 3 + 16 = 29\ \mathrm{s}$ 算完，剩余 Rollout 在 $t = 40 + 3 = 43\ \mathrm{s}$ 结束，随后 8 卡合算后半批梯度（$8\ \mathrm{s}$）并更新（$4\ \mathrm{s}$）：
+>      $$T_{\mathrm{stream}} = \max(43,\ 29) + 8 + 4 = 43 + 12 = \mathbf{55\ \mathrm{s}}\quad(\text{单步净省 }5\ \mathrm{s})$$
+>    - **过度迁移反例（若剩余 Rollout 延后 $10\ \mathrm{s}$ 至 $50\ \mathrm{s}$）**：此时完成时间变为 $\max(50, 36) + 8 + 4 = \mathbf{62\ \mathrm{s}} > 60\ \mathrm{s}$，反而比串行更慢，这说明腾出训练卡前必须校验剩余 Rollout 的 KV 容量（例如 Qwen3-8B 下 $32$ 条 $8{,}192$ 词元轨迹共需 $36\ \mathrm{GiB}$，$4$ 卡单卡 $9\ \mathrm{GiB} \le 12\ \mathrm{GiB}$ 预算可行；若涨至 $16{,}384$ 词元则需 $72\ \mathrm{GiB}$、单卡 $18\ \mathrm{GiB}$ 超预算）与尾部减速幅度。
 
-**问题设定**：考察 `RollPacker`（NSDI '26）的三项锁定系统机制：
-1. **投机池容量扩展**：某目标训练步需要收集 $N_{\mathrm{target}} = 128\ \text{个提示词} \times 8\ \text{条响应/提示词} = 1{,}024$ 条有效响应。为掩盖慢轨迹与零方差过滤损耗，`RollPacker` 将两维各扩展 $1.25\times$，一次性投机派发 $N_{\mathrm{spec}} = 160\ \text{个提示词} \times 10\ \text{条响应/提示词}$。求投机池总响应数及超额比例。
-2. **先到先得截断引发的长度偏置（算例 18-5）**：为什么不能无脑采用“从 1,600 条在途轨迹中取最先跑完的前 1,024 条即刻终止采样”？考虑一个简化双槽位竞争模型：假设提示词分布中长回答（耗时 $6\ \mathrm{s}$ 或案例库 $10\ \mathrm{s}$）与短回答（耗时 $2\ \mathrm{s}$ 或案例库 $1\ \mathrm{s}$）的真实先验概率各为 $p_{\mathrm{long}} = \frac{1}{2}$、$p_{\mathrm{short}} = \frac{1}{2}$。若在 2 个并发工作槽位上同时启动两个独立采样的提示词，并只接纳**第一个完成**的回答入库，试计算入库样本是长回答的概率 $P(\text{入库为长回答})$，并说明其偏置后果。
-3. **流式训练重叠（Stream Trainer Overlap，锁定 8 卡时间线）**：在 8 卡节点上，串行基线的 Rollout 在 $40\ \mathrm{s}$ 结束，随后 8 卡计算整批梯度需 $16\ \mathrm{s}$，最后梯度归约与优化器更新另需 $4\ \mathrm{s}$（串行总周期 $40 + 16 + 4 = 60\ \mathrm{s}$）。启用 `Stream Trainer` 后，设在 $t = 10\ \mathrm{s}$ 时恰好有一半完整回答组已完成，系统立即腾出 $4$ 张卡转为训练副本，并将剩余在途请求迁移至另外 $4$ 张卡（迁移与状态交接耗时 $3\ \mathrm{s}$，使剩余 Rollout 完成时刻从 $40\ \mathrm{s}$ 顺延至 $43\ \mathrm{s}$）；早到的一半样本在 $4$ 张训练卡上用 $16\ \mathrm{s}$ 算完梯度（于 $10 + 3 + 16 = 29\ \mathrm{s}$ 完成），待 $43\ \mathrm{s}$ 全部 Rollout 完成后，全部 $8$ 张卡合算后一半样本梯度（耗时 $8\ \mathrm{s}$）并执行 $4\ \mathrm{s}$ 归约更新。求流式重叠后的完成时间，以及若迁移使 Rollout 延后 $10\ \mathrm{s}$（至 $50\ \mathrm{s}$）时的反例完成时间。
-
-**逐项推导**：
-
-1. **投机池规模**：
-   $$N_{\mathrm{spec}} = 160 \times 10 = \mathbf{1{,}600\ \text{条响应}},\qquad \text{超额比例} = \frac{1{,}600 - 1{,}024}{1{,}024} = \frac{576}{1{,}024} = \mathbf{+56.25\%}$$
-
-2. **双槽位竞争下的长回答入库概率退化**：
-   两个并发槽位独立抽取任务，共有 $2 \times 2 = 4$ 种等概率组合（每种概率 $\frac{1}{4}$）：
-   - `(短, 短)` $\to$ 短任务完成，入库为**短回答**；
-   - `(短, 长)` $\to$ 短任务抢先完成，入库为**短回答**；
-   - `(长, 短)` $\to$ 短任务抢先完成，入库为**短回答**；
-   - `(长, 长)` $\to$ 两个均为长任务，入库为**长回答**。
-   因此，仅当两个槽位同时抽中长回答时，长回答才能胜出：
-   $$P(\text{入库为长回答}) = \left(\frac{1}{2}\right)^2 = \mathbf{\frac{1}{4}} = 25.0\% \quad\left(\text{相对真实先验 }\frac{1}{2}\text{ 腰斩}\right)$$
-   **工程后果**：无约束的“先完成先入库”会系统性地筛除需要深度反思回溯的长思维链样本，诱发模型越训越短的**长度坍缩（Length Collapse）**。因此，`RollPacker` 严格规定未入选的提示词必须累积进入长轮次补齐完整回答（计入周期平均），并通过将已跑完短轨迹释放出的闲置 GPU 动态重组为更高并行度（增大 TP 或开启上下文并行 CP）去合力加速仍在途的长尾轨迹（Tail Repacking & Parallelism Scaling，图 18-6 Step ①）。
-
-3. **流式训练重叠 8 卡锁定时间线**：
-   - **串行基线**：$T_{\mathrm{serial}} = 40\ \mathrm{s} + 16\ \mathrm{s} + 4\ \mathrm{s} = \mathbf{60\ \mathrm{s}}$；
-   - **流式重叠（迁移延后 $3\ \mathrm{s}$）**：前半批梯度在 $t = 10 + 3 + 16 = 29\ \mathrm{s}$ 算完，剩余 Rollout 在 $t = 40 + 3 = 43\ \mathrm{s}$ 结束，随后 8 卡合算后半批梯度（$8\ \mathrm{s}$）并更新（$4\ \mathrm{s}$）：
-     $$T_{\mathrm{stream}} = \max(43,\ 29) + 8 + 4 = 43 + 12 = \mathbf{55\ \mathrm{s}}\quad(\text{单步净省 }5\ \mathrm{s})$$
-   - **过度迁移反例（若剩余 Rollout 延后 $10\ \mathrm{s}$ 至 $50\ \mathrm{s}$）**：此时完成时间变为 $\max(50, 36) + 8 + 4 = \mathbf{62\ \mathrm{s}} > 60\ \mathrm{s}$，反而比串行更慢，这说明腾出训练卡前必须校验剩余 Rollout 的 KV 容量（例如 Qwen3-8B 下 $32$ 条 $8{,}192$ 词元轨迹共需 $36\ \mathrm{GiB}$，$4$ 卡单卡 $9\ \mathrm{GiB} \le 12\ \mathrm{GiB}$ 预算可行；若涨至 $16{,}384$ 词元则需 $72\ \mathrm{GiB}$、单卡 $18\ \mathrm{GiB}$ 超预算）与尾部减速幅度。
+> **算例 18-5（双槽位竞争先到先得截断引发 1/2 → 1/4 长度偏置证明）：**
+>
+> **问题设定**（锁定自案例库 `case-studies/rollout-tail-and-sampling.md`）：为什么不能无脑采用“从 1,600 条在途轨迹中取最先跑完的前 1,024 条即刻终止采样”？考虑一个简化双槽位竞争模型：假设提示词分布中长回答（耗时 $6\ \mathrm{s}$ 或案例库 $10\ \mathrm{s}$）与短回答（耗时 $2\ \mathrm{s}$ 或案例库 $1\ \mathrm{s}$）的真实先验概率各为 $p_{\mathrm{long}} = \frac{1}{2}$、$p_{\mathrm{short}} = \frac{1}{2}$。若在 2 个并发工作槽位上同时启动两个独立采样的提示词，并只接纳**第一个完成**的回答入库，试计算入库样本是长回答的概率 $P(\text{入库为长回答})$，并说明其偏置后果。
+>
+> **逐项推导**：
+>
+> 1. **双槽位竞争下的长回答入库概率退化**：
+>    两个并发槽位独立抽取任务，共有 $2 \times 2 = 4$ 种等概率组合（每种概率 $\frac{1}{4}$）：
+>    - `(短, 短)` $\to$ 短任务完成，入库为**短回答**；
+>    - `(短, 长)` $\to$ 短任务抢先完成，入库为**短回答**；
+>    - `(长, 短)` $\to$ 短任务抢先完成，入库为**短回答**；
+>    - `(长, 长)` $\to$ 两个均为长任务，入库为**长回答**。
+>    因此，仅当两个槽位同时抽中长回答时，长回答才能胜出：
+>    $$P(\text{入库为长回答}) = \left(\frac{1}{2}\right)^2 = \mathbf{\frac{1}{4}} = 25.0\% \quad\left(\text{相对真实先验 }\frac{1}{2}\text{ 腰斩}\right)$$
+> 2. **工程后果**：无约束的“先完成先入库”会系统性地筛除需要深度反思回溯的长思维链样本，诱发模型越训越短的**长度坍缩（Length Collapse）**。因此，`RollPacker` 严格规定未入选的提示词必须累积进入长轮次补齐完整回答（计入周期平均），并通过将已跑完短轨迹释放出的闲置 GPU 动态重组为更高并行度（增大 TP 或开启上下文并行 CP）去合力加速仍在途的长尾轨迹（Tail Repacking & Parallelism Scaling，图 18-6 Step ①）。
 
 表 18-4 系统对比了五种长尾 Rollout 采样与调度策略在有效样本率、长度偏置风险与集群 MFU 上的表现：
+
+*表 18-4　长思维链 RLVR 中五种长尾 Rollout 采样与调度策略的有效样本率、无偏性与集群 MFU 对比*
 
 | 采样与长尾治理策略 | 提示词派发规模 | 零方差组（全对/全错）处理 | 长解采样分布无偏性 | 尾期闲置 GPU 利用方式 | 典型集群有效 MFU |
 | :--- | :--- | :--- | :--- | :--- | :---: |
@@ -493,28 +505,28 @@ class RollPackerTailScheduler:
 
 在进行尾部轨迹动态拼箱（Dynamic Microbatch Packing）或副本间样本不均匀分配时，`RollPacker` 还修正了一个在各大开源 RL 框架中普遍存在的数学漏洞：**当不同微批次（Microbatches）或数据并行副本内打包的样本条数（或有效词元总数）不相等时，梯度累加的归一化分母究竟应该怎么取？**
 
-#### 算例 18-6（锁定自案例库 `case-studies/rollout-tail-and-sampling.md`）：不均等微批下“按微批均值直接平均（2.0，有偏）”vs.“按全局总样本/总词元归一化（2.5，无偏真值）”的梯度偏置定理
-
-**问题设定**：严格对照本书案例库 `case-studies/rollout-tail-and-sampling.md` 的锁定标量梯度数据集：某次优化器步共包含 $4$ 个样本（或 $4$ 个标准词元块），其标量梯度（或损失）真值依次为 $\{1.0,\ 3.0,\ 3.0,\ 3.0\}$，按序列长度动态分装在 $M = 2$ 个微批次（或两个副本）中：
-- **微批次 1** 包含 $1$ 个样本 $\{1.0\}$：其微批内局部均值为 $\bar{g}_1 = 1.0$，微批内局部总和为 $S_1 = 1.0$；
-- **微批次 2** 包含 $3$ 个样本 $\{3.0, 3.0, 3.0\}$：其微批内局部均值为 $\bar{g}_2 = 3.0$，微批内局部总和为 $S_2 = 3.0 + 3.0 + 3.0 = 9.0$。
-
-试对比计算：（1）**按微批独立求均值再平均（Unweighted Average of Microbatch Means，有偏）**：直接将两个微批的局部均值 $\bar{g}_1 = 1.0$ 与 $\bar{g}_2 = 3.0$ 相加除以 $2$（或直接相加不除 $2$）会得到什么错误结果？（2）**按全局总样本/总词元加权归一化（Global Sample/Token-Weighted Normalization，无偏真值）**：汇总全部 $4$ 个样本的总和并除以全局分母 $N_{\mathrm{tot}} = 1 + 3 = 4$ 的真实均值是多少？（3）若要求对整批梯度执行幅值上限为 $2.0$ 的梯度裁剪（Gradient Clipping），“先形成整批梯度 $2.5$ 再裁剪”与“先逐样本裁剪到 $2.0$ 再平均”分别得到多少？
-
-**逐项推导**：
-
-1. **错误做法（按微批独立求均值再取算术平均，有偏）**：
-   若训练循环在每个微批内调用 `.mean()` 后直接除以微批数 $M = 2$：
-   $$\hat{g}_{\mathrm{micro\text{-}avg}} = \frac{\bar{g}_1 + \bar{g}_2}{2} = \frac{1.0 + 3.0}{2} = \mathbf{2.0}$$
-   （若微批各自取平均后直接相加而未除以 $M$，则会膨胀为 $1.0 + 3.0 = \mathbf{4.0}$。）在 $\hat{g}_{\mathrm{micro\text{-}avg}} = 2.0$ 中，微批 1 内单个样本获得的权重为 $\frac{1}{2 \times 1} = \frac{1}{2}$（比真实权重 $\frac{1}{4}$ 放大了 **$2.0\times$**），而微批 2 内每个样本仅获得 $\frac{1}{2 \times 3} = \frac{1}{6}$ 的权重。
-2. **正确做法（按全局总样本/总有效词元数加权归一化，无偏真值）**：
-   将微批 1 的局部总和 $S_1 = 1 \times 1.0 = 1.0$ 与微批 2 的局部总和 $S_2 = 3 \times 3.0 = 9.0$ 相加，再统一除以整批总样本数 $N_{\mathrm{tot}} = 1 + 3 = 4$（若集合通信采用 `AllReduce(AVG)`，则每个副本需先乘校正因子 $\text{副本数} \times \frac{N_m}{N_{\mathrm{tot}}}$）：
-   $$g_{\mathrm{global\text{-}norm}} = \frac{1 \times 1.0 + 3 \times 3.0}{1 + 3} = \frac{1.0 + 9.0}{4} = \mathbf{2.5}$$
-   **数学铁律**：要保证动态拼箱与静态大 Batch 严格数学等价，反向传播必须统一使用**当前优化器步的全局有效总词元数 $T_{\mathrm{global}} = \sum_{m=1}^M \sum_{i \in \mathrm{mb}_m} |o_i|$** 作为唯一归一化分母：
-   $$\nabla_\theta \mathcal{J}_{\mathrm{unbiased}} = \frac{1}{T_{\mathrm{global}}} \sum_{m=1}^M \left(\sum_{i \in \mathrm{mb}_m} \sum_{t=1}^{|o_i|} \nabla_\theta \ell_{i,t}\right)$$
-3. **非线性梯度裁剪（限幅 $\le 2.0$）的位置反例**：
-   - **正确（先累积形成整批梯度 $2.5$ 再裁剪）**：$\mathrm{clip}(2.5,\ 2.0) = \mathbf{2.0}$；
-   - **错误（先逐样本限幅为 $\{1.0, 2.0, 2.0, 2.0\}$ 再求平均）**：$\frac{1.0 + 2.0 + 2.0 + 2.0}{4} = \mathbf{1.75} \ne 2.0$。
+> **算例 18-6（不均等微批下“按微批均值直接平均 2.0 有偏”vs.“按全局总样本/总词元归一化 2.5 无偏真值”的梯度偏置定理）：**
+>
+> **问题设定**（锁定自案例库 `case-studies/rollout-tail-and-sampling.md`）：严格对照本书案例库 `case-studies/rollout-tail-and-sampling.md` 的锁定标量梯度数据集：某次优化器步共包含 $4$ 个样本（或 $4$ 个标准词元块），其标量梯度（或损失）真值依次为 $\{1.0,\ 3.0,\ 3.0,\ 3.0\}$，按序列长度动态分装在 $M = 2$ 个微批次（或两个副本）中：
+> - **微批次 1** 包含 $1$ 个样本 $\{1.0\}$：其微批内局部均值为 $\bar{g}_1 = 1.0$，微批内局部总和为 $S_1 = 1.0$；
+> - **微批次 2** 包含 $3$ 个样本 $\{3.0, 3.0, 3.0\}$：其微批内局部均值为 $\bar{g}_2 = 3.0$，微批内局部总和为 $S_2 = 3.0 + 3.0 + 3.0 = 9.0$。
+>
+> 试对比计算：（1）**按微批独立求均值再平均（Unweighted Average of Microbatch Means，有偏）**：直接将两个微批的局部均值 $\bar{g}_1 = 1.0$ 与 $\bar{g}_2 = 3.0$ 相加除以 $2$（或直接相加不除 $2$）会得到什么错误结果？（2）**按全局总样本/总词元加权归一化（Global Sample/Token-Weighted Normalization，无偏真值）**：汇总全部 $4$ 个样本的总和并除以全局分母 $N_{\mathrm{tot}} = 1 + 3 = 4$ 的真实均值是多少？（3）若要求对整批梯度执行幅值上限为 $2.0$ 的梯度裁剪（Gradient Clipping），“先形成整批梯度 $2.5$ 再裁剪”与“先逐样本裁剪到 $2.0$ 再平均”分别得到多少？
+>
+> **逐项推导**：
+>
+> 1. **错误做法（按微批独立求均值再取算术平均，有偏）**：
+>    若训练循环在每个微批内调用 `.mean()` 后直接除以微批数 $M = 2$：
+>    $$\hat{g}_{\mathrm{micro\text{-}avg}} = \frac{\bar{g}_1 + \bar{g}_2}{2} = \frac{1.0 + 3.0}{2} = \mathbf{2.0}$$
+>    （若微批各自取平均后直接相加而未除以 $M$，则会膨胀为 $1.0 + 3.0 = \mathbf{4.0}$。）在 $\hat{g}_{\mathrm{micro\text{-}avg}} = 2.0$ 中，微批 1 内单个样本获得的权重为 $\frac{1}{2 \times 1} = \frac{1}{2}$（比真实权重 $\frac{1}{4}$ 放大了 **$2.0\times$**），而微批 2 内每个样本仅获得 $\frac{1}{2 \times 3} = \frac{1}{6}$ 的权重。
+> 2. **正确做法（按全局总样本/总有效词元数加权归一化，无偏真值）**：
+>    将微批 1 的局部总和 $S_1 = 1 \times 1.0 = 1.0$ 与微批 2 的局部总和 $S_2 = 3 \times 3.0 = 9.0$ 相加，再统一除以整批总样本数 $N_{\mathrm{tot}} = 1 + 3 = 4$（若集合通信采用 `AllReduce(AVG)`，则每个副本需先乘校正因子 $\text{副本数} \times \frac{N_m}{N_{\mathrm{tot}}}$）：
+>    $$g_{\mathrm{global\text{-}norm}} = \frac{1 \times 1.0 + 3 \times 3.0}{1 + 3} = \frac{1.0 + 9.0}{4} = \mathbf{2.5}$$
+>    **数学铁律**：要保证动态拼箱与静态大 Batch 严格数学等价，反向传播必须统一使用**当前优化器步的全局有效总词元数 $T_{\mathrm{global}} = \sum_{m=1}^M \sum_{i \in \mathrm{mb}_m} |o_i|$** 作为唯一归一化分母：
+>    $$\nabla_\theta \mathcal{J}_{\mathrm{unbiased}} = \frac{1}{T_{\mathrm{global}}} \sum_{m=1}^M \left(\sum_{i \in \mathrm{mb}_m} \sum_{t=1}^{|o_i|} \nabla_\theta \ell_{i,t}\right)$$
+> 3. **非线性梯度裁剪（限幅 $\le 2.0$）的位置反例**：
+>    - **正确（先累积形成整批梯度 $2.5$ 再裁剪）**：$\mathrm{clip}(2.5,\ 2.0) = \mathbf{2.0}$；
+>    - **错误（先逐样本限幅为 $\{1.0, 2.0, 2.0, 2.0\}$ 再求平均）**：$\frac{1.0 + 2.0 + 2.0 + 2.0}{4} = \mathbf{1.75} \ne 2.0$。
 
 ![图 18-7：Seer（OSDI '26）分段征服长尾 Rollout 与组内共享前缀投机解码加速](ch18/ch18-seer-divided-and-conquered-speculative-rollout.svg)
 *图 18-7　Seer（OSDI '26）分段征服长尾 Rollout 与组内共享前缀投机解码加速。*
@@ -586,21 +598,21 @@ class SeerGroupSuffixSpeculator:
 - **当 Rollout 推理节点发生故障时**：由于推理角色无优化器状态，控制器无需重启训练池，仅替换对应故障机器并从保存的工具轮次轨迹续接重采；
 - **当 Learner 训练节点发生故障时**：虽然单台训练机器故障仍需重启整个 Trainer 角色，但独立 Rollout 池与 CPU 控制器上已保存的本轮完整轨迹无需作废，Trainer 从上一轮已提交检查点恢复后直接读取现成轨迹重做本次更新即可。
 
-#### 算例 18-7（锁定自案例库 `case-studies/rl-scheduling-and-recovery.md`）：RobustRL 训练侧故障下整步重做（790 s）vs. 保留轨迹重做更新（490 s）的 300 秒节省账本
-
-**问题设定**：严格对照本书案例库 `case-studies/rl-scheduling-and-recovery.md` 的锁定参数：设单轮 RLVR 迭代的标准工作量为 Rollout 采样 $T_{\mathrm{roll}} = 300\ \mathrm{s}$、训练更新 $T_{\mathrm{upd}} = 60\ \mathrm{s}$（正常无故障单轮周期为 $300 + 60 = 360\ \mathrm{s}$，每轮阻塞保存检查点耗时 $3\ \mathrm{s}$，占正常工作的 $\frac{3}{360} \approx 0.83\%$）。在某轮执行中，上一轮检查点已可靠保存，本轮 $300\ \mathrm{s}$ 的完整 Rollout 轨迹已生成完毕并保存在故障机器之外；随后进入训练更新阶段，当更新进行到 $t_{\mathrm{fail}} = 30\ \mathrm{s}$ 时某台训练机器发生故障（此时失败的更新尚未提交）。已知故障检测耗时 $T_{\mathrm{det}} = 20\ \mathrm{s}$，进程重启与状态恢复耗时 $T_{\mathrm{rec}} = 80\ \mathrm{s}$。试对比计算完成本轮有效更新所需的端到端总时间：（1）**整项任务重做（Full-Step Redo，丢弃本轮已生成的轨迹，回滚重跑整轮 Rollout + 更新）**；（2）**`RobustRL` 保留轨迹后重做更新（Rollout-Preserved Recovery，直接复用已保存轨迹重跑 $60\ \mathrm{s}$ 更新）**，以及净省的时间。
-
-**逐项推导**：
-
-1. **整项任务重做（Full-Step Redo）的端到端耗时**：
-   从本轮启动算起，经历了已完成的首轮采样（$300\ \mathrm{s}$）、中断前已消耗的更新（$30\ \mathrm{s}$）、故障检测（$20\ \mathrm{s}$）与恢复（$80\ \mathrm{s}$），随后因轨迹作废必须**重新执行一次 $300\ \mathrm{s}$ 的 Rollout 采样**加上 $60\ \mathrm{s}$ 的训练更新：
-   $$T_{\mathrm{redo}} = 300 + 30 + 20 + 80 + 300 + 60 = \mathbf{790\ \mathrm{s}}$$
-2. **`RobustRL` 保留轨迹后重做更新（Rollout-Preserved Recovery）的端到端耗时**：
-   由于本轮 $300\ \mathrm{s}$ 的完整轨迹已保存在故障 Trainer 机器之外，在完成故障检测（$20\ \mathrm{s}$）与 Trainer 状态恢复（$80\ \mathrm{s}$）后，无需重跑 Rollout，直接重做尚未提交的 $60\ \mathrm{s}$ 训练更新即可完成本轮：
-   $$T_{\mathrm{robust}} = 300 + 30 + 20 + 80 + 60 = \mathbf{490\ \mathrm{s}}$$
-3. **单次故障净节省时间与来源解剖**：
-   $$\Delta T_{\mathrm{saved}} = 790\ \mathrm{s} - 490\ \mathrm{s} = \mathbf{300\ \mathrm{s}}\quad(\text{精确节省 }38.0\%\text{ 的故障步总耗时})$$
-   可以看到，节省的 $300\ \mathrm{s}$ 完全来自**少做一次耗时的自回归 Rollout**，而故障检测（$20\ \mathrm{s}$）与状态恢复（$80\ \mathrm{s}$）本身并未变快。
+> **算例 18-7（RobustRL 训练侧故障下整步重做 790 s vs. 保留轨迹重做更新 490 s 的 300 秒节省账本）：**
+>
+> **问题设定**（锁定自案例库 `case-studies/rl-scheduling-and-recovery.md`）：严格对照本书案例库 `case-studies/rl-scheduling-and-recovery.md` 的锁定参数：设单轮 RLVR 迭代的标准工作量为 Rollout 采样 $T_{\mathrm{roll}} = 300\ \mathrm{s}$、训练更新 $T_{\mathrm{upd}} = 60\ \mathrm{s}$（正常无故障单轮周期为 $300 + 60 = 360\ \mathrm{s}$，每轮阻塞保存检查点耗时 $3\ \mathrm{s}$，占正常工作的 $\frac{3}{360} \approx 0.83\%$）。在某轮执行中，上一轮检查点已可靠保存，本轮 $300\ \mathrm{s}$ 的完整 Rollout 轨迹已生成完毕并保存在故障机器之外；随后进入训练更新阶段，当更新进行到 $t_{\mathrm{fail}} = 30\ \mathrm{s}$ 时某台训练机器发生故障（此时失败的更新尚未提交）。已知故障检测耗时 $T_{\mathrm{det}} = 20\ \mathrm{s}$，进程重启与状态恢复耗时 $T_{\mathrm{rec}} = 80\ \mathrm{s}$。试对比计算完成本轮有效更新所需的端到端总时间：（1）**整项任务重做（Full-Step Redo，丢弃本轮已生成的轨迹，回滚重跑整轮 Rollout + 更新）**；（2）**`RobustRL` 保留轨迹后重做更新（Rollout-Preserved Recovery，直接复用已保存轨迹重跑 $60\ \mathrm{s}$ 更新）**，以及净省的时间。
+>
+> **逐项推导**：
+>
+> 1. **整项任务重做（Full-Step Redo）的端到端耗时**：
+>    从本轮启动算起，经历了已完成的首轮采样（$300\ \mathrm{s}$）、中断前已消耗的更新（$30\ \mathrm{s}$）、故障检测（$20\ \mathrm{s}$）与恢复（$80\ \mathrm{s}$），随后因轨迹作废必须**重新执行一次 $300\ \mathrm{s}$ 的 Rollout 采样**加上 $60\ \mathrm{s}$ 的训练更新：
+>    $$T_{\mathrm{redo}} = 300 + 30 + 20 + 80 + 300 + 60 = \mathbf{790\ \mathrm{s}}$$
+> 2. **`RobustRL` 保留轨迹后重做更新（Rollout-Preserved Recovery）的端到端耗时**：
+>    由于本轮 $300\ \mathrm{s}$ 的完整轨迹已保存在故障 Trainer 机器之外，在完成故障检测（$20\ \mathrm{s}$）与 Trainer 状态恢复（$80\ \mathrm{s}$）后，无需重跑 Rollout，直接重做尚未提交的 $60\ \mathrm{s}$ 训练更新即可完成本轮：
+>    $$T_{\mathrm{robust}} = 300 + 30 + 20 + 80 + 60 = \mathbf{490\ \mathrm{s}}$$
+> 3. **单次故障净节省时间与来源解剖**：
+>    $$\Delta T_{\mathrm{saved}} = 790\ \mathrm{s} - 490\ \mathrm{s} = \mathbf{300\ \mathrm{s}}\quad(\text{精确节省 }38.0\%\text{ 的故障步总耗时})$$
+>    可以看到，节省的 $300\ \mathrm{s}$ 完全来自**少做一次耗时的自回归 Rollout**，而故障检测（$20\ \mathrm{s}$）与状态恢复（$80\ \mathrm{s}$）本身并未变快。
 
 下面的代码给出了陈旧度有界异步部分采样缓冲池（`StalenessBoundedPartialRolloutBuffer`）与 `RobustRL`（OSDI '26）非对称角色故障恢复控制器的完整参考实现：
 
@@ -680,29 +692,31 @@ def simulate_robustrl_fault_recovery(
 
 如图 18-11 所示，NSDI 2026 论文 **`DistRS`（Disaggregated Reward Scoring）**[^ch18-distrs] 指出，传统奖励调度器之所以频繁在负载均衡与超时抢占上做出灾难性误判，是因为它们用**无条件均值 $\mathbb{E}[S]$** 去估计一个已经运行了 $e$ 秒的任务的剩余时间（即误以为剩余时间等于 $\max(\mathbb{E}[S] - e, 0)$）。而在重尾分布（Decreasing Hazard Rate, DHR）下，**一个任务已经存活的时间 $e$ 越长，它属于重尾慢任务的后验概率就越高，其真实的期望剩余时间 $\mathbb{E}[S - e \mid S > e]$ 反而比初始均值还要长得多**。让我们通过锁定算例证明这一“越老越慢”的百倍反差。
 
-#### 算例 18-8（锁定自案例库 `case-studies/reward-deadlines-and-feedback.md`）：重尾沙箱验证中朴素剩余时间估计（0.9 s）vs. 真实条件剩余时间（90.0 s）的 100 倍误差与 216,000 词元沉没成本红线
-
-**问题设定**：
-1. **条件剩余时间反差**：某代码验证沙箱队列中的任务真实执行时间 $S$ 服从如下离散双峰重尾分布：每 $10$ 个任务中，有 $9$ 个常规任务耗时 $S = 1\ \mathrm{s}$（概率 $0.9$），有 $1$ 个病态重尾任务耗时 $S = 100\ \mathrm{s}$（概率 $0.1$）。现观察到某个正在沙箱中运行的验证任务已经持续执行了 $e = 10\ \mathrm{s}$ 仍未结束。试计算：（a）该分布的无条件期望服务时间 $\mathbb{E}[S]$；（b）朴素调度器按 $\max(\mathbb{E}[S] - e, 0)$ 估计的剩余时间；（c）真实的**条件期望剩余时间** $\mathbb{E}[S - e \mid S > e]$，以及真实值与朴素估计值的倍数差距。
-2. **超时死循环任务的沉没词元工作量边界**：在流式长尾生成中，某组包含 $6$ 个并发超期任务，每个任务已在推理引擎上持续占卡运行了 $60\ \mathrm{s}$，单任务有效生成吞吐速率为 $600\ \mathrm{tok/s}$。求这 $6$ 个任务已累积消耗的沉没词元工作量（Sunk Token Work）。
-
-**逐项推导**：
-
-1. **无条件均值与朴素剩余时间估计**：
-   $$\mathbb{E}[S] = 0.9 \times 1\ \mathrm{s} + 0.1 \times 100\ \mathrm{s} = 0.9 + 10.0 = \mathbf{10.9\ \mathrm{s}}$$
-   当任务已运行 $e = 10\ \mathrm{s}$ 时，朴素估计器认为它马上就要跑完了：
-   $$\hat{R}_{\mathrm{naive}}(10) = \max(\mathbb{E}[S] - 10,\ 0) = 10.9 - 10.0 = \mathbf{0.9\ \mathrm{s}}$$
-2. **基于贝叶斯后验的真实条件剩余时间 $\mathbb{E}[S - 10 \mid S > 10]$**：
-   既然该任务已经存活超过 $e = 10\ \mathrm{s}$，所有耗时 $1\ \mathrm{s}$ 的常规任务早已全部结束（$P(S = 1 \mid S > 10) = 0$）。在给定事件 $\{S > 10\}$ 下，该任务以 **$100\%$ 的条件概率**属于耗时 $100\ \mathrm{s}$ 的重尾慢任务：
-   $$\mathbb{E}[S - 10 \mid S > 10] = 100\ \mathrm{s} - 10\ \mathrm{s} = \mathbf{90.0\ \mathrm{s}}$$
-   真实剩余时间（$90.0\ \mathrm{s}$）是朴素估计（$0.9\ \mathrm{s}$）的 **$\frac{90.0}{0.9} = 100.0\times$**。如果调度器轻信“只剩 $0.9\ \mathrm{s}$”而把后续新到达的快任务继续排在这个慢任务所在的沙箱工作线程后面，就会造成整条队列长达 $90\ \mathrm{s}$ 的队头阻塞（Head-of-Line Blocking）。
-3. **超期任务的沉没词元工作量账本**：
-   $$W_{\mathrm{sunk}} = 6\ \text{个任务} \times 60\ \mathrm{s} \times 600\ \mathrm{tok/s} = \mathbf{216{,}000\ \text{个词元}}$$
-   这说明在决定是否强行杀死（Kill）超期生成或验证任务时，不能等代价膨胀到数十万词元后才被动超时，而必须基于条件生存分布 $\mathbb{E}[S - e \mid S > e]$ 实施主动隔离、降级到慢速专属沙箱队列或提前熔断。
+> **算例 18-8（重尾沙箱验证中朴素剩余时间估计 0.9 s vs. 真实条件剩余时间 90.0 s 的 100 倍误差与 216,000 词元沉没成本红线）：**
+>
+> **问题设定**（锁定自案例库 `case-studies/reward-deadlines-and-feedback.md`）：
+> 1. **条件剩余时间反差**：某代码验证沙箱队列中的任务真实执行时间 $S$ 服从如下离散双峰重尾分布：每 $10$ 个任务中，有 $9$ 个常规任务耗时 $S = 1\ \mathrm{s}$（概率 $0.9$），有 $1$ 个病态重尾任务耗时 $S = 100\ \mathrm{s}$（概率 $0.1$）。现观察到某个正在沙箱中运行的验证任务已经持续执行了 $e = 10\ \mathrm{s}$ 仍未结束。试计算：（a）该分布的无条件期望服务时间 $\mathbb{E}[S]$；（b）朴素调度器按 $\max(\mathbb{E}[S] - e, 0)$ 估计的剩余时间；（c）真实的**条件期望剩余时间** $\mathbb{E}[S - e \mid S > e]$，以及真实值与朴素估计值的倍数差距。
+> 2. **超时死循环任务的沉没词元工作量边界**：在流式长尾生成中，某组包含 $6$ 个并发超期任务，每个任务已在推理引擎上持续占卡运行了 $60\ \mathrm{s}$，单任务有效生成吞吐速率为 $600\ \mathrm{tok/s}$。求这 $6$ 个任务已累积消耗的沉没词元工作量（Sunk Token Work）。
+>
+> **逐项推导**：
+>
+> 1. **无条件均值与朴素剩余时间估计**：
+>    $$\mathbb{E}[S] = 0.9 \times 1\ \mathrm{s} + 0.1 \times 100\ \mathrm{s} = 0.9 + 10.0 = \mathbf{10.9\ \mathrm{s}}$$
+>    当任务已运行 $e = 10\ \mathrm{s}$ 时，朴素估计器认为它马上就要跑完了：
+>    $$\hat{R}_{\mathrm{naive}}(10) = \max(\mathbb{E}[S] - 10,\ 0) = 10.9 - 10.0 = \mathbf{0.9\ \mathrm{s}}$$
+> 2. **基于贝叶斯后验的真实条件剩余时间 $\mathbb{E}[S - 10 \mid S > 10]$**：
+>    既然该任务已经存活超过 $e = 10\ \mathrm{s}$，所有耗时 $1\ \mathrm{s}$ 的常规任务早已全部结束（$P(S = 1 \mid S > 10) = 0$）。在给定事件 $\{S > 10\}$ 下，该任务以 **$100\%$ 的条件概率**属于耗时 $100\ \mathrm{s}$ 的重尾慢任务：
+>    $$\mathbb{E}[S - 10 \mid S > 10] = 100\ \mathrm{s} - 10\ \mathrm{s} = \mathbf{90.0\ \mathrm{s}}$$
+>    真实剩余时间（$90.0\ \mathrm{s}$）是朴素估计（$0.9\ \mathrm{s}$）的 **$\frac{90.0}{0.9} = 100.0\times$**。如果调度器轻信“只剩 $0.9\ \mathrm{s}$”而把后续新到达的快任务继续排在这个慢任务所在的沙箱工作线程后面，就会造成整条队列长达 $90\ \mathrm{s}$ 的队头阻塞（Head-of-Line Blocking）。
+> 3. **超期任务的沉没词元工作量账本**：
+>    $$W_{\mathrm{sunk}} = 6\ \text{个任务} \times 60\ \mathrm{s} \times 600\ \mathrm{tok/s} = \mathbf{216{,}000\ \text{个词元}}$$
+>    这说明在决定是否强行杀死（Kill）超期生成或验证任务时，不能等代价膨胀到数十万词元后才被动超时，而必须基于条件生存分布 $\mathbb{E}[S - e \mid S > e]$ 实施主动隔离、降级到慢速专属沙箱队列或提前熔断。
 
 进一步地，当 RLVR 扩展到多轮软件工程智能体（如 SWE-bench 容器内跑 `pytest` 编译测试、或 Deep Research 智能体调用网页搜索 API）时，一条轨迹在生成 `<tool_call>` 后往往需要等待外部环境执行 $5\text{–}30\ \mathrm{s}$ 才能拿到观测结果 `<tool_output>` 继续下一轮生成。如下文图 18-14 所示，若在等待工具返回的数十秒内让该轨迹的数万词元 KV 缓存一直驻留在 GPU HBM 中，显存很快就会被挂起会话塞满。现代智能体 RL 框架通过**状态挂起与异步 KV 换出（Coroutine State Suspension & Async KV Offloading）**：一旦解析到工具调用停止符，立即将该会话转为挂起协程，通过 PCIe 双工 DMA 引擎把其 Paged KV 块异步换出至宿主机大容量 DDR5 内存池，瞬间腾出 HBM 页帧接纳其他就绪轨迹，待容器沙箱返回结果前再预取回填 HBM，使单卡可同时支撑的并发活跃环境数提升 $5\text{–}10$ 倍。
 
 表 18-5 对比了在重尾验证与慢速外部工具环境中，三种调度与状态管理机制的资源效率差异：
+
+*表 18-5　重尾奖励沙箱验证与多轮外部工具环境下的三种调度与状态管理机制对比*
 
 | 沙箱与环境调度机制 | 剩余时间估计模型 | 超期死循环应对策略 | 等待工具期间 KV 状态位置 | GPU HBM 有效利用率 | 队头阻塞（HoL）风险 |
 | :--- | :--- | :--- | :--- | :---: | :--- |
@@ -791,6 +805,8 @@ class MultiTurnAgentRLCoroutinePool:
 图 18-14 至图 18-17 将多轮工具环境 KV 挂起换出（18.4.1 节）、`HetRL` 异构算力配比（18.2.2 节）、`DAPO / RollPacker` 零方差过滤与投机超采池（18.3.2 节）以及四阶有效吞吐跃迁瀑布图（18.3.3 节）连缀成完整的系统演进谱系。
 
 表 18-6 总结了主流推理时计算扩展（Test-Time Compute Scaling）范式的搜索拓扑、KV 缓存复用机制与适用问题域：
+
+*表 18-6　主流推理时计算扩展（Test-Time Compute Scaling）范式的搜索拓扑、KV 复用与延迟瓶颈对比*
 
 | 推理时扩展范式 | 搜索拓扑结构 | 过程评估器（Verifier / PRM） | KV 缓存与显存管理机制 | 关键路径延迟瓶颈 | 最优适用任务类型 |
 | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -923,7 +939,151 @@ class PagedCoWTreeSearchManager:
 ![图 18-18：测试时搜索合成高价值轨迹 → 沙箱验证 → 异步 RLVR 更新 → 蒸馏回直觉模型的自我演进总账本](ch18/ch18-rlvr-and-test-time-compute-closed-loop.svg)
 *图 18-18　测试时搜索合成高价值轨迹 → 沙箱验证 → 异步 RLVR 更新 → 蒸馏回直觉模型的自我演进总账本。*
 
-图 18-18 将第 18 章的四大工程支柱收束为一个完整的自我演进架构：在推理时利用 CoW 树搜索与投机越障探索高难度问题空间，经 `DistRS` 解耦沙箱过滤验证后，转化为 `RollPacker / Seer / RobustRL` 高效异步 RLVR 训练管线的燃料，最终将慢思考搜索能力内化回模型参数之中。读者可直接运行配套实验 `experiments/ch18/18-01` 验证全部锁定账本。
+图 18-18 将第 18 章的四大工程支柱收束为一个完整的自我演进架构：在推理时利用 CoW 树搜索与投机越障探索高难度问题空间，经 `DistRS` 解耦沙箱过滤验证后，转化为 `RollPacker / Seer / RobustRL` 高效异步 RLVR 训练管线的燃料，最终将慢思考搜索能力内化回模型参数之中。读者可直接运行配套实验 `experiments/ch18/18-01` 与 `experiments/ch18/18-02` 验证全部锁定账本。
+
+### 18.4.3 跨地域异构异步采样池（Geo-Distributed Rollout Harvesting）与奖励黑客（Reward Hacking）熔断工程
+
+当单一旗舰数据中心的电力配额与推理卡（如 H20 / L40S）容量触顶时，工业界超大规模 RLVR 训练（如 Prime-RL、AReaL 跨区扩展与云边联合采样集群）开始将阶段 ①（自回归 Rollout 与沙箱规则验证）横向外溢至**跨地域异构边缘推理集群与夜间潮汐闲置算力池（Geo-Distributed Asynchronous Rollout Harvesting）**，而仅将阶段 ③（高带宽集合通信密集的 Learner 前反向传播）保留在配备 RoCEv2/InfiniBand 胖树互连的中心训练机房内。
+
+![图 18-19：跨地域异构异步采样池（Geo-Distributed Rollout Harvester）与广域网带宽账本](ch18/ch18-geo-distributed-async-rollout-harvester.svg)
+*图 18-19　跨地域异构异步采样池（Geo-Distributed Rollout Harvester）与广域网带宽账本。*
+
+为什么预训练很难跨广域网（WAN，典型专线带宽仅 $10\text{–}100\ \mathrm{Gbps}$、跨区 RTT 延迟 $15\text{–}50\ \mathrm{ms}$）高效扩展，而异步 RLVR 的 Rollout 采集池却天然适合跨机房部署？核心秘密在于图 18-19 揭示的**训推边界状态体积不对称性**：
+- **严禁跨机房传输激活张量或 KV 缓存**：如果试图在边缘推理机房与中心训练机房之间传输 36 层主干的 KV 缓存或隐藏态激活（每词元 $147{,}456\ \mathrm{B} = 144\ \mathrm{KiB}$），哪怕仅回传一个包含 $1{,}024$ 条 $16{,}384$ 词元轨迹的训练批次，数据量也会高达 $2.47\ \mathrm{TB}$，瞬间瘫痪跨城专线；
+- **仅回传每词元 $10\ \mathrm{B}$ 的紧凑轨迹三元组**：由于中心训练池在执行阶段 ③ 前向传播（计算 $\log \pi_\theta$ 与 $\log \pi_{\mathrm{ref}}$）时原本就要在全序列上重算一遍激活，边缘推理池只需通过广域网回传**词元 ID（`uint32`，$4\ \mathrm{B}$）+ 采样当下真实行为对数概率 $\log \pi_{\mathrm{behav}}$（`fp32`，$4\ \mathrm{B}$）+ 策略版本号/掩码（`uint16`，$2\ \mathrm{B}$）**，合计每词元仅占 **$10\ \mathrm{B}$**（外加每条轨迹末尾 1 个标量验证奖励 $r_i$）。
+- **下行权重增量差分压缩**：中心训练池每完成一步更新 $\theta^{(v)} \to \theta^{(v+1)}$，无需广播全量 BF16 权重，而是计算相对于上一版本权重的稀疏量化差分（FP8/INT4 Delta Weight Compression + 分层树状多播），在后台与长周期 Rollout 完全重叠下发。
+
+> **算例 18-9（10 Gbps 广域网下跨机房传输 KV/激活 vs. 传输 10 B/tok 紧凑轨迹元数据的 14,745.6 倍压缩账本）：**
+>
+> **问题设定**：某 32B 模型（36 层主干，单词元 KV 缓存体积 $B_{\mathrm{KV/tok}} = 147{,}456\ \mathrm{B}$）采用中心 H800 机房训练 + 跨城异构边缘 H20 机房异步 Rollout 架构，两机房之间通过一条有效带宽为 $B_{\mathrm{WAN}} = 10\ \mathrm{Gbps} = 1.25 \times 10^9\ \mathrm{B/s}$ 的专线连接。每个训练步需从边缘推理池回收 $N_{\mathrm{traj}} = 1{,}024$ 条完整长思维链轨迹，平均每条轨迹长度为 $\bar{L} = 16{,}384$ 个词元（全批总词元数 $N_{\mathrm{tok}} = 1{,}024 \times 16{,}384 = 16{,}777{,}216$）。试对比计算：（1）若错误地跨机房回传全层 KV 缓存，单步上行数据体积（以十进制 $\mathrm{GB}$ 与二进制 $\mathrm{GiB}$ 计）及在 $10\ \mathrm{Gbps}$ 专线上的传输耗时；（2）若采用标准异步 RLVR 紧凑轨迹格式（每词元 $10\ \mathrm{B}$：含 $4\ \mathrm{B}$ Token ID + $4\ \mathrm{B}$ 行为对数概率 + $2\ \mathrm{B}$ 版本掩码），单步上行数据体积（以 $\mathrm{MB}$ 与 $\mathrm{MiB}$ 计）、传输耗时及相对回传 KV 的压缩倍数；（3）在下行方向，若 32B 模型采用 FP8 稀疏权重差分编码（压缩比 $8\times$，即从 $64\ \mathrm{GB}$ BF16 压至 $8.0\ \mathrm{GB}$），在单步周期 $T_{\mathrm{step}} = 160\ \mathrm{s}$ 内后台下发权重需耗时多少秒？占广域网周期的多大比例？
+>
+> **逐项推导**：
+>
+> 1. **错误做法（跨机房回传全层 KV 缓存）**：
+>    全批 $16{,}777{,}216$ 个词元的 KV 缓存总字节数为：
+>    $$V_{\mathrm{KV, batch}} = 16{,}777{,}216 \times 147{,}456\ \mathrm{B} = 2{,}473{,}901{,}162{,}496\ \mathrm{B} \approx \mathbf{2{,}473.9\ \mathrm{GB}}\ (= 2{,}304.0\ \mathrm{GiB})$$
+>    在 $10\ \mathrm{Gbps}$（$1.25\ \mathrm{GB/s}$）专线上，单步回传耗时高达：
+>    $$T_{\mathrm{WAN, KV}} = \frac{2{,}473.901 \times 10^9\ \mathrm{B}}{1.25 \times 10^9\ \mathrm{B/s}} \approx \mathbf{1{,}979.1\ \mathrm{s}} \approx 33.0\ \text{分钟}$$
+>    这完全丧失了实时迭代的可能性。
+>
+> 2. **正确做法（回传 $10\ \mathrm{B/token}$ 紧凑轨迹元数据三元组）**：
+>    全批紧凑轨迹字节数仅为：
+>    $$V_{\mathrm{compact}} = 16{,}777{,}216 \times 10\ \mathrm{B} = 167{,}772{,}160\ \mathrm{B} = \mathbf{167.77216\ \mathrm{MB}}\ (= \mathbf{160.0\ \mathrm{MiB}})$$
+>    在 $10\ \mathrm{Gbps}$ 专线上的回传耗时骤降至：
+>    $$T_{\mathrm{WAN, compact}} = \frac{167{,}772{,}160\ \mathrm{B}}{1.25 \times 10^9\ \mathrm{B/s}} = \mathbf{0.1342\ \mathrm{s}} = 134.2\ \mathrm{ms}$$
+>    上行流量压缩倍数高达：
+>    $$\frac{V_{\mathrm{KV, batch}}}{V_{\mathrm{compact}}} = \frac{147{,}456\ \mathrm{B/tok}}{10\ \mathrm{B/tok}} = \mathbf{14{,}745.6\times}$$
+>
+> 3. **下行权重差分广播占比**：
+>    $8.0\ \mathrm{GB}$ 的 FP8 稀疏差分权重在 $10\ \mathrm{Gbps}$ 专线上仅需耗时 $\frac{8.0 \times 10^9}{1.25 \times 10^9} = \mathbf{6.4\ \mathrm{s}}$，占 $160\ \mathrm{s}$ 单步周期的 $\frac{6.4}{160} = \mathbf{4.0\%}$，可由双缓冲权重接收器在后台 $100\%$ 掩盖。
+
+在长周期无人值守的 RLVR 训练中，除了分布式吞吐与跨区通信，工程团队还必须构筑最后一道防线：**奖励黑客（Reward Hacking）与策略崩溃的在线统计熔断器（Online Statistical Circuit Breaker）**。在数十万步的强化学习试错中，策略模型极易发掘出规则验证器或格式解析器的边界漏洞——例如在代码生成中编写针对特定测试样例硬编码返回值的伪代码、在数学推导中疯狂堆砌无意义的自我重复短语（`Wait, wait, wait...`）以博取长度奖励偏置，或者在定理证明中利用元编程宏绕过检查。
+
+![图 18-20：RLVR 奖励黑客（Reward Hacking）检测、长度惩罚与 KL 散度动态熔断控制器](ch18/ch18-rlvr-reward-hacking-kl-divergence-breaker.svg)
+*图 18-20　RLVR 奖励黑客（Reward Hacking）检测、长度惩罚与 KL 散度动态熔断控制器。*
+
+如图 18-20 所示，一旦策略模型掉入奖励黑客陷阱，若未能在数个训练步内自动拦截，污染梯度将迅速摧毁模型的通用语言流形并导致不可逆的策略坍缩（Policy Collapse）。生产级 RLVR 训练平台在 Learner 更新入口部署**三维联合遥测与双级统计制动器（Two-Tier Statistical Circuit Breaker）**（表 18-7）：
+1. **三维联合健康度遥测**：在每个训练步实时聚合三个无偏统计指标——（a）**序列长度膨胀率** $\bar{L}_{\mathrm{step}} / \bar{L}_{\mathrm{baseline}}$ 与 3-gram 重复率；（b）**词元级策略熵（Policy Entropy）** $\mathcal{H}(\pi_\theta) = -\frac{1}{T}\sum_t \sum_{v \in \mathcal{V}} \pi_\theta(v \mid s_t)\log \pi_\theta(v \mid s_t)$（监测是否跌破坍缩红线 $\mathcal{H}_{\min} = 0.05\ \mathrm{nats}$）；（c）**Schulman K3 序列平均 KL 散度** $\mathbb{D}_{\mathrm{KL}}(\pi_\theta \,\|\, \pi_{\mathrm{ref}})$。
+2. **一级软制动（Adaptive Penalty & KL Controller）**：当检测到平均 KL 散度突破软门限（如 $\mathrm{KL} > 0.06$）或单组正确回答出现异常超长复读时，控制器自动倍增 KL 正则系数 $\beta_{\mathrm{KL}} \leftarrow 1.5 \beta_{\mathrm{KL}}$，并对超出软长度区间 $[L_{\mathrm{cache}}, L_{\max}]$ 的轨迹施加 DAPO 风格的**分段线性软长度惩罚（Soft Overlong Punishment）** $r_{\mathrm{len}}(L) = -\lambda \frac{L - L_{\mathrm{cache}}}{L_{\max} - L_{\mathrm{cache}}}$，温和压制凑字数冲动。
+3. **二级硬熔断与自动回滚（Hard Circuit Breaker & Checkpoint Rollback）**：一旦某步出现“验证奖励虚高飙升，但策略熵断崖跌破 $0.05\ \mathrm{nats}$ 且 KL 散度击穿硬红线 $\mathrm{KL}_{\max} = 0.25$”的典型奖励黑客组合特征，熔断器立即**拒绝提交当前步优化器更新**，将触发异常的提示词与漏洞代码样本隔离转储至人工审计黑名单队列（Quarantine Buffer），并将模型与优化器状态自动回滚至最近一个健康检查点，调高采样温度后无缝续训。
+
+*表 18-7　RLVR 后训练中三类典型奖励黑客（Reward Hacking）退化模式与双级熔断防线对比*
+
+| 退化与攻击模式 | 遥测指标异常特征 | 底层诱因分析 | 一级软制动响应 | 二级硬熔断与根治防线 |
+| :--- | :--- | :--- | :--- | :--- |
+| **思维链凑字数与复读膨胀** | $\bar{L} > 28\mathrm{K}$，N-gram 重复率 $>35\%$ | 截断偏差或长链偶发高分诱导无意义自我重复 | 启用分段软长度惩罚 $r_{\mathrm{len}}(L)$ | 剔除复读组样本并动态收紧 Clip 上界 |
+| **策略熵断崖坍缩（模式崩溃）** | 策略熵 $\mathcal{H}(\pi_\theta) < 0.05\ \mathrm{nats}$ | 对少数高分模板过度拟合，丧失探索多样性 | 启用 DAPO `Clip-Higher`（$\varepsilon_{\mathrm{high}}=0.28$） | 注入熵正则奖励项并回滚至健康步 |
+| **沙箱漏洞投机（Reward Hacking）** | 奖励骤升至 $\approx 1.0$，但 $\mathrm{KL} > 0.25$ | 模型发现判题脚本漏洞或硬编码绕过单测 | 倍增 $\beta_{\mathrm{KL}}$ 并启用序列几何均值 IS 裁剪 | **立即中止更新、隔离漏洞提示词并回滚检查点** |
+
+下面的参考代码实现了跨地域异步 Rollout 广域网带宽核算器、序列级几何均值重要性采样（GSPO / Sequence-Level Geometric IS）过滤以及双级奖励黑客统计熔断器：
+
+```python
+import math
+from dataclasses import dataclass
+
+@dataclass
+class StepTelemetryMetrics:
+    step_id: int
+    mean_reward: float
+    mean_kl: float
+    policy_entropy: float
+    mean_seq_len: float
+    ngram_repeat_ratio: float
+
+class GeoRolloutAndRewardHackingBreaker:
+    """
+    复现算例 18-9 与 18.4.3 节核心机制：
+    1. 跨地域异构异步 Rollout 广域网带宽账本 (10 B/tok 紧凑三元组 vs. 147,456 B/tok KV)
+    2. 序列级几何均值重要性采样比率 (Geometric Sequence IS Ratio) 防长序列乘积爆炸
+    3. 双级奖励黑客统计熔断器 (Soft Overlong Penalty + Hard KL/Entropy Circuit Breaker)
+    """
+    def __init__(
+        self,
+        kl_soft_thresh: float = 0.06,
+        kl_hard_thresh: float = 0.25,
+        entropy_min_thresh: float = 0.05,
+        soft_len_start: int = 24576,
+        max_len_limit: int = 32768,
+    ):
+        self.kl_soft = kl_soft_thresh
+        self.kl_hard = kl_hard_thresh
+        self.ent_min = entropy_min_thresh
+        self.l_start = soft_len_start
+        self.l_max = max_len_limit
+
+    @staticmethod
+    def audit_geo_wan_bandwidth(
+        num_trajectories: int = 1024,
+        mean_seq_len: int = 16384,
+        kv_bytes_per_tok: int = 147456,
+        compact_bytes_per_tok: int = 10,
+        wan_gbps: float = 10.0,
+    ) -> dict[str, float]:
+        """核算算例 18-9：对比跨机房回传 KV 与回传紧凑轨迹三元组的体积和耗时."""
+        total_tokens = num_trajectories * mean_seq_len
+        wan_bytes_per_sec = wan_gbps * 1e9 / 8.0
+        kv_total_bytes = total_tokens * kv_bytes_per_tok
+        compact_total_bytes = total_tokens * compact_bytes_per_tok
+        return {
+            "total_tokens": total_tokens,
+            "kv_transfer_gb": round(kv_total_bytes / 1e9, 2),
+            "kv_transfer_sec": round(kv_total_bytes / wan_bytes_per_sec, 2),
+            "compact_transfer_mib": round(compact_total_bytes / (1024 ** 2), 2),
+            "compact_transfer_sec": round(compact_total_bytes / wan_bytes_per_sec, 4),
+            "compression_ratio": round(kv_bytes_per_tok / compact_bytes_per_tok, 1),
+        }
+
+    def compute_soft_overlong_penalty(self, seq_len: int) -> float:
+        """DAPO 分段线性软超长惩罚：在 [soft_len_start, max_len_limit] 区间平滑扣减奖励."""
+        if seq_len <= self.l_start:
+            return 0.0
+        if seq_len >= self.l_max:
+            return -1.0
+        return -float(seq_len - self.l_start) / float(self.l_max - self.l_start)
+
+    def evaluate_step_circuit_breaker(self, m: StepTelemetryMetrics, kl_beta: float) -> dict[str, object]:
+        """执行双级在线统计熔断判定."""
+        if m.mean_kl >= self.kl_hard or (m.policy_entropy < self.ent_min and m.ngram_repeat_ratio > 0.30):
+            return {
+                "action": "HARD_ABORT_AND_ROLLBACK",
+                "commit_step": False,
+                "next_kl_beta": kl_beta * 2.0,
+                "quarantine_prompts": True,
+            }
+        if m.mean_kl >= self.kl_soft or m.ngram_repeat_ratio > 0.15:
+            return {
+                "action": "SOFT_BRAKE_SCALE_KL_AND_LEN_PENALTY",
+                "commit_step": True,
+                "next_kl_beta": round(kl_beta * 1.5, 6),
+                "quarantine_prompts": False,
+            }
+        return {
+            "action": "HEALTHY_COMMIT",
+            "commit_step": True,
+            "next_kl_beta": kl_beta,
+            "quarantine_prompts": False,
+        }
+```
 
 ---
 
@@ -945,7 +1105,7 @@ class PagedCoWTreeSearchManager:
 
 ## 练习与实验
 
-### 书面练习（18-1 至 18-12）
+### 书面练习与实验（18-1 至 18-14）
 
 > **练习 18-1（70B 模型 PPO vs. GRPO 显存账本核算）：** 考察参数量 $\Psi = 70 \times 10^9$（70B）的稠密模型后训练。（a）按可训练模型 $16\Psi$、冻结模型 $2\Psi$ 核算，四模型 PPO 与无 Critic 的 GRPO（仅 Actor + Ref）各自的静态模型状态总显存是多少 $\mathrm{GB}$？（b）若部署在 80 GB H800 集群上，且要求静态模型状态最多占单卡显存的 $70\%$（即 $56\ \mathrm{GB}$/卡），两种算法最少分别需要多少张 GPU？
 
@@ -971,15 +1131,15 @@ class PagedCoWTreeSearchManager:
 
 > **实验 18-12（Breaking the Reward Barrier 投机思维树搜索有效延迟）：** 设一层思维步生成耗时 $t_{\mathrm{gen}} = 1.2\ \mathrm{s}$，重型 PRM 对候选节点打分耗时 $t_{\mathrm{prm}} = 0.8\ \mathrm{s}$，总搜索深度 $D = 20$ 层。（a）求传统串行“生成—等 PRM—再生成”的端到端总延迟；（b）若采用 OSDI '26 投机思维树探索，将 $t_{\mathrm{prm}} = 0.8\ \mathrm{s}$ 完全隐藏在下一层生成 $t_{\mathrm{gen}} = 1.2\ \mathrm{s}$ 之内，且先验预展开命中率为 $\alpha = 80\%$（未命中的 $20\%$ 层需回滚重跑一次 $t_{\mathrm{gen}}$），求投机树搜索的期望总延迟与加速比，并结合 `experiments/ch18/18-01` 校验本章全部锁定指标。
 
-### 可运行实验（18-01）
+> **练习 18-13（跨地域异步 Rollout 广域网带宽与序列级几何重要性采样截断）：** 承接算例 18-9，某 72B 模型（80 层 GQA，$n_{\mathrm{kv}} = 8, d_{\mathrm{head}} = 128$，BF16 下每词元 KV 体积为 $2 \times 80 \times 8 \times 128 \times 2\ \mathrm{B} = 327{,}680\ \mathrm{B} = 320\ \mathrm{KiB}$）通过有效带宽 $B_{\mathrm{WAN}} = 20\ \mathrm{Gbps}$（即 $2.5 \times 10^9\ \mathrm{B/s}$）的跨区专线从边缘推理池回收 $N_{\mathrm{traj}} = 2{,}048$ 条平均长度 $\bar{L} = 32{,}768$ 词元的轨迹。（a）对比“回传全层 KV”与“回传每词元 $10\ \mathrm{B}$ 紧凑三元组”的单步上行体积与传输耗时，求流量压缩倍数；（b）解释为何在长达 $32{,}768$ 词元的异步偏离策略轨迹上，若直接对逐词元重要性比率求连乘 $\prod_{t=1}^T r_t(\theta)$ 会必然发生数值上溢或下溢归零，而采用序列级几何均值比率 $r_{\mathrm{geo}}(\theta) = \left(\prod_{t=1}^T r_t(\theta)\right)^{1/T} = \exp\!\left(\frac{1}{T}\sum_{t=1}^T (\log \pi_\theta(o_t) - \log \pi_{\mathrm{behav}}(o_t))\right)$ 能将量纲稳定在 $1.0$ 附近。
 
-- **实验目录**：`experiments/ch18/18-01`
-- **实验目标**：一键复现并校验本章全部锁定算例与工程账本，包括 32B 模型下 PPO（$1{,}152\ \mathrm{GB}$）vs. GRPO（$576\ \mathrm{GB}$，省 $50\%$）显存账本、OSDI '26 `Weave` 互补作业共享（$216$ H20 / $152$ H800）、OSDI '26 `RobustRL` 训练容错净省 $300\ \mathrm{s}$（$790\ \mathrm{s} \to 490\ \mathrm{s}$）、NSDI '26 `RollPacker` 投机池（$1{,}600$ vs. $1{,}024$）、双槽位长度偏差（$1/2 \to 1/4$）、流式重叠（$60\ \mathrm{s} \to 55\ \mathrm{s}$）与微批归一化偏置（有偏微批均值 $2.0$ vs. 无偏全局归一化 $2.5$），以及 NSDI '26 `DistRS` 条件剩余时间（$90.0\ \mathrm{s}$ vs. $0.9\ \mathrm{s}$）与 $216{,}000$ 词元沉没工作量边界。
-- **执行与校验命令**：
-  ```bash
-  python3 experiments/ch18/18-01/run.py
-  python3 experiments/ch18/18-01/verify.py
-  ```
+> **实验 18-14（RLVR 奖励黑客双级统计熔断器仿真与 `experiments/ch18/18-02` 校验）：** 在某代码 RLVR 训练的连续监控步中，控制器设置软长度惩罚起点 $L_{\mathrm{start}} = 24{,}576$、最大长度 $L_{\max} = 32{,}768$，KL 软门限 $0.06$、硬红线 $0.25$，策略熵下界 $0.05\ \mathrm{nats}$，初始 $\beta_{\mathrm{KL}} = 0.01$。（a）若某条轨迹生成长度为 $L = 28{,}672$ 词元，求其分段线性软超长惩罚值 $r_{\mathrm{len}}(28{,}672)$；（b）若第 101 步遥测得 $\mathrm{KL} = 0.08, \mathcal{H} = 0.22\ \mathrm{nats}$，第 102 步遥测得 $\mathrm{KL} = 0.31, \mathcal{H} = 0.03\ \mathrm{nats}$，分别写出双级熔断器在两步触发的动作与更新后的 $\beta_{\mathrm{KL}}$，并运行 `python3 experiments/ch18/18-02/run.py && python3 experiments/ch18/18-02/verify.py` 验证实验通过。
+
+### 可运行实验（18-01 与 18-02）
+
+- **实验目录**：`experiments/ch18/18-01` 与 `experiments/ch18/18-02`
+- **实验目标**：`18-01` 一键复现并校验 32B 模型下 PPO（$1{,}152\ \mathrm{GB}$）vs. GRPO（$576\ \mathrm{GB}$，省 $50\%$）显存账本、OSDI '26 `Weave` 互补作业共享（$216$ H20 / $152$ H800）、OSDI '26 `RobustRL` 训练容错净省 $300\ \mathrm{s}$（$790\ \mathrm{s} \to 490\ \mathrm{s}$）、NSDI '26 `RollPacker` 投机池（$1{,}600$ vs. $1{,}024$）、双槽位长度偏差（$1/2 \to 1/4$）、流式重叠（$60\ \mathrm{s} \to 55\ \mathrm{s}$）与微批归一化偏置（有偏微批均值 $2.0$ vs. 无偏全局归一化 $2.5$），以及 NSDI '26 `DistRS` 条件剩余时间（$90.0\ \mathrm{s}$ vs. $0.9\ \mathrm{s}$）与 $216{,}000$ 词元沉没工作量边界；`18-02` 复现跨地域异构异步采样池广域网带宽账本（$14{,}745.6\times\text{–}32{,}768.0\times$ 压缩）与 RLVR 奖励黑客双级统计熔断器。
+- **执行与校验命令**：在终端依次执行 `python3 experiments/ch18/18-01/run.py && python3 experiments/ch18/18-01/verify.py` 以及 `python3 experiments/ch18/18-02/run.py && python3 experiments/ch18/18-02/verify.py`。
 
 ---
 
@@ -1050,7 +1210,26 @@ class PagedCoWTreeSearchManager:
   - **传统串行树搜索**：每层耗时 $1.2 + 0.8 = 2.0\ \mathrm{s}$，$20$ 层共需 $20 \times 2.0 = \mathbf{40.0\ \mathrm{s}}$。
   - **OSDI '26 投机思维树探索**：由于 $t_{\mathrm{prm}} = 0.8\ \mathrm{s} < t_{\mathrm{gen}} = 1.2\ \mathrm{s}$，当预展开命中时（$80\%$ 概率）单层有效耗时仅为 $1.2\ \mathrm{s}$；未命中时（$20\%$ 概率）需重跑一层生成（耗时 $1.2 + 1.2 = 2.4\ \mathrm{s}$）。期望单层耗时为 $0.8 \times 1.2 + 0.2 \times 2.4 = 1.44\ \mathrm{s}$（外加末层 $0.8\ \mathrm{s}$ 收尾评分），$20$ 层期望总延迟约为 $\mathbf{29.6\ \mathrm{s}}$（若命中率达 $90\%$ 则降至 $26.4\ \mathrm{s}$，整体加速 **$1.35\times\text{–}1.52\times$**；当 $t_{\mathrm{prm}} \approx t_{\mathrm{gen}}$ 时加速比可达 **$1.8\times$** 以上）。
 
-下表给出了全章 12 道书面练习的核心锁定数值速查索引：
+- **18-13 解答**：
+  1. **72B 模型跨区回传 KV vs. 回传紧凑三元组**：
+     全批总词元数 $N_{\mathrm{tok}} = 2{,}048 \times 32{,}768 = 67{,}108{,}864$。
+     - **回传全层 KV**：体积为 $67{,}108{,}864 \times 327{,}680\ \mathrm{B} = 2.199023 \times 10^{13}\ \mathrm{B} \approx \mathbf{21{,}990.23\ \mathrm{GB}}$（$= 20{,}480.0\ \mathrm{GiB}$），在 $20\ \mathrm{Gbps}$（$2.5\ \mathrm{GB/s}$）专线上需耗时 $\frac{21{,}990.23}{2.5} \approx \mathbf{8{,}796.09\ \mathrm{s}}$（约 $2.44$ 小时）；
+     - **回传 $10\ \mathrm{B/tok}$ 紧凑三元组**：体积为 $67{,}108{,}864 \times 10\ \mathrm{B} = 671{,}088{,}640\ \mathrm{B} = \mathbf{671.09\ \mathrm{MB}}$（$= 640.0\ \mathrm{MiB}$），在 $20\ \mathrm{Gbps}$ 专线上耗时仅 $\frac{0.67108864}{2.5} = \mathbf{0.2684\ \mathrm{s}} = 268.4\ \mathrm{ms}$；
+     - **流量压缩倍数**：$\frac{327{,}680}{10} = \mathbf{32{,}768.0\times}$。
+  2. **序列级几何均值重要性采样（GSPO）稳定性**：
+     在长度 $T = 32{,}768$ 下，即使每个词元的对数概率差 $\Delta \ell_t = \log \pi_\theta(o_t) - \log \pi_{\mathrm{behav}}(o_t)$ 仅有平均 $+0.01$ 的微弱正向漂移，直接连乘也会变为 $\exp(32{,}768 \times 0.01) = \exp(327.68) \approx 1.8 \times 10^{142}$（直接引发 FP32 数值溢出）；而取几何均值 $\exp\!\left(\frac{1}{T}\sum_{t=1}^T \Delta \ell_t\right) = \exp(0.01) \approx \mathbf{1.01005}$，将序列级重要性比率严格稳定在与序列长度 $T$ 无关的 $\mathcal{O}(1)$ 区间。
+
+- **18-14 解答**：
+  1. **分段线性软超长惩罚值**：
+     $$r_{\mathrm{len}}(28{,}672) = -\frac{28{,}672 - 24{,}576}{32{,}768 - 24{,}576} = -\frac{4{,}096}{8{,}192} = \mathbf{-0.50}$$
+  2. **双级统计熔断器动作判定**：
+     - **第 101 步（$\mathrm{KL} = 0.08 \in [0.06, 0.25)$，$\mathcal{H} = 0.22 \ge 0.05$）**：触发**一级软制动（`SOFT_BRAKE_SCALE_KL_AND_LEN_PENALTY`）**，正常提交当前步更新，并将 $\beta_{\mathrm{KL}}$ 放大 $1.5$ 倍至 $0.01 \times 1.5 = \mathbf{0.015}$；
+     - **第 102 步（$\mathrm{KL} = 0.31 \ge 0.25$ 且 $\mathcal{H} = 0.03 < 0.05$）**：触发**二级硬熔断（`HARD_ABORT_AND_ROLLBACK`）**，拒绝提交当前步权重更新，将异常提示词隔离至审计黑名单，回滚至最近健康检查点，并将 $\beta_{\mathrm{KL}}$ 加倍至 $0.015 \times 2.0 = \mathbf{0.030}$。
+     - 执行 `python3 experiments/ch18/18-02/run.py && python3 experiments/ch18/18-02/verify.py` 可完整复核上述账本。
+
+表 18-8 给出了全章 14 道练习与实验的核心锁定数值速查索引：
+
+*表 18-8　第 18 章核心练习与实验锁定数值速查表*
 
 | 练习编号 | 考查工程主题 | 核心锁定输入参数 | 精确复算输出基准 |
 | :--- | :--- | :--- | :--- |
@@ -1066,6 +1245,8 @@ class PagedCoWTreeSearchManager:
 | **18-10** | DistRS 三峰重尾条件剩余时间 | $80\%\ 2\mathrm{s} + 15\%\ 20\mathrm{s} + 5\%\ 200\mathrm{s}$ | $\mathbb{E}[S] = 14.6\ \mathrm{s}$；$e=15\mathrm{s}$ 剩 $50.0\ \mathrm{s}$；$e=25\mathrm{s}$ 剩 $175.0\ \mathrm{s}$ |
 | **18-11** | PagedAttention CoW 思维树 | 根 $2048$, $8 \times 4 = 32$ 分支各 $256$ 词元 | 独立拷贝 $81{,}920$ 槽位 vs. CoW 共享 $12{,}288$ 槽位（省 $85.0\%$） |
 | **18-12** | Speculative ToT 投机越障 | $D = 20$, $t_{\mathrm{gen}} = 1.2\ \mathrm{s}$, $t_{\mathrm{prm}} = 0.8\ \mathrm{s}$ | 串行 $40.0\ \mathrm{s}$ vs. 投机越障 $29.6\ \mathrm{s}$（$80\%$ 命中率） |
+| **18-13** | 跨地域异步 Rollout 窄带回传 | 72B ($320\ \mathrm{KiB/tok}$), $2{,}048\times 32\mathrm{K}$, $20\ \mathrm{Gbps}$ | KV $21{,}990.23\ \mathrm{GB}$（$8{,}796.1\ \mathrm{s}$）$\to$ 三元组 $640.0\ \mathrm{MiB}$（$0.2684\ \mathrm{s}$，压 $32{,}768\times$） |
+| **18-14** | 奖励黑客双级统计熔断 (`18-02`) | $L=28{,}672 \in [24\mathrm{K}, 32\mathrm{K}]$；$\mathrm{KL}=0.08 \to 0.31$ | 软超长罚项 $-0.50$；101 步软制动 $\beta=0.015 \to 102$ 步硬熔断回滚 $\beta=0.030$ |
 
 ---
 
@@ -1074,7 +1255,7 @@ class PagedCoWTreeSearchManager:
 1. **从四模型 PPO 到无 Critic 的 GRPO/DAPO 显存减半**：经典 PPO 需同时驻留 Actor、Critic、Ref、RM 四个模型（静态状态达 $36\Psi$，32B 模型占 $1{,}152\ \mathrm{GB}$）；GRPO 与 DAPO 利用组采样（$G$ 条轨迹）相对均值与标准差直接计算优势并结合规则验证沙箱，彻底砍掉 Critic 与神经 RM，将静态模型状态精准削减 $50\%$ 至 $18\Psi$（$576\ \mathrm{GB}$），同时将系统核心瓶颈推向占据 $70\%\text{–}90\%$ 墙钟时间的自回归 Rollout。
 2. **训推共置零冗余重分片（veRL）与异构错峰池化（Weave）**：在同构集群上，`veRL` 的 `3D-HybridEngine` 通过机内正交微分组局部 `AllGather` 消除了训练分片与推理小 TP 之间的拓扑冲突；在异构物理分离集群上，`HetRL` 按生成与训练吞吐比配比 H20 与 H800，而 OSDI '26 `Weave` 通过将互补作业（$360/120\ \mathrm{s}$ 与 $120/360\ \mathrm{s}$）在 $480\ \mathrm{s}$ 周期内反相编织，使两组作业共享同一套峰值资源池（**$216$ 张 H20 + $152$ 张 H800**，相对独立分池 $432$ 张 H20 + $304$ 张 H800 节省整整一半硬件池）。
 3. **长尾木桶治理与无偏异步强化学习**：NSDI '26 `RollPacker` 揭示了盲目先到先得截断引发的双槽位长度偏置（长解入库率从 $1/2$ 跌至 $1/4$）及不均等微批平均引发的梯度偏置（有偏微批均值平均 $2.0$ vs. 无偏全局归一化真值 $2.5$），确立了全局总词元归一化铁律；OSDI '26 `Seer` 利用组内同源轨迹后缀树实现免模型投机加速；陈旧度有界 Partial Rollout 配合逐词元真实行为概率记录与 OSDI '26 `RobustRL` 非对称容错（训练故障恢复从 $790\ \mathrm{s}$ 降至 $490\ \mathrm{s}$，净省 $300\ \mathrm{s}$），构建起高吞吐、强容错的后训练流水线。
-4. **重尾奖励沙箱调度（DistRS）与推理时搜索越障**：NSDI '26 `DistRS` 证明了重尾验证分布下朴素剩余时间估计（$0.9\ \mathrm{s}$）与真实条件期望 $\mathbb{E}[S-10 \mid S>10] = 90.0\ \mathrm{s}$ 的百倍误差，并划定了 $216{,}000$ 词元沉没工作量红线；在推理时计算扩展中，PagedAttention 写时复制（CoW）页表与 OSDI '26 `Breaking the Reward Barrier` 投机思维树探索协同消除了树状搜索的显存膨胀与过程奖励等待屏障。
+4. **重尾奖励沙箱调度（DistRS）、推理时搜索越障与跨地域采样/防黑客熔断**：NSDI '26 `DistRS` 证明了重尾验证分布下朴素剩余时间估计（$0.9\ \mathrm{s}$）与真实条件期望 $\mathbb{E}[S-10 \mid S>10] = 90.0\ \mathrm{s}$ 的百倍误差，并划定了 $216{,}000$ 词元沉没工作量红线；在推理时计算扩展中，PagedAttention 写时复制（CoW）页表与 OSDI '26 `Breaking the Reward Barrier` 投机思维树探索协同消除了树状搜索的显存膨胀与过程奖励等待屏障；而在超大规模跨区扩展中，仅回传 $10\ \mathrm{B/tok}$ 紧凑轨迹三元组（实现 $14{,}745.6\times$ 上行流量压缩）配合双级在线统计熔断器（软超长惩罚 + 硬 KL/熵坍缩回滚），保障了长周期无人值守 RLVR 的全球扩展能力与收敛安全。
 
 [^ch18-cases]: 本章算例 18-3 至算例 18-8 的锁定参数与推导均直接锚定自本书案例库：`case-studies/rl-scheduling-and-recovery.md`、`case-studies/rollout-tail-and-sampling.md` 与 `case-studies/reward-deadlines-and-feedback.md`。
 [^ch18-weave]: 关于多 RL 作业在异构推理池与训练池上的互补时空错峰编织，参见 OSDI 2026 论文 `Weave`（详见 `research/2026-infra-survey/reading-osdi-2026.md` 与 `case-studies/rl-scheduling-and-recovery.md`）。

@@ -1,0 +1,33 @@
+{
+  "experiment_id": "18-02",
+  "distrs_and_heavy_tail": {
+    "unconditional_mean_s": 10.9,
+    "naive_rem_10s": 0.9,
+    "cond_rem_10s": 90.0,
+    "estimation_error_ratio": 100.0,
+    "sunk_work_tokens": 216000,
+    "trimodal_mean_s": 14.6,
+    "trimodal_cond_rem_15s": 50.0,
+    "trimodal_cond_rem_25s": 175.0
+  },
+  "geo_distributed_async_rl": {
+    "total_tokens": 16777216,
+    "kv_payload_gb": 2473.9,
+    "compact_payload_mb": 167.77216,
+    "compact_payload_mib": 160.0,
+    "uplink_compression_ratio": 14745.6,
+    "kv_upload_sec": 1979.1,
+    "compact_upload_ms": 134.2,
+    "fp8_delta_sync_sec": 6.4,
+    "seq_geom_is_ratio": 1.0833
+  },
+  "prm_cow_tree_search": {
+    "full_copy_token_slots": 81920,
+    "cow_shared_token_slots": 12288,
+    "cow_memory_saving_pct": 85.0,
+    "full_copy_gib": 11.25,
+    "cow_shared_gib": 1.6875,
+    "serial_tot_sec": 40.0,
+    "spec_tot_sec": 29.6
+  }
+}
