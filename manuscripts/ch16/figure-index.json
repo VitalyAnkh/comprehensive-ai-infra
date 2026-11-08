@@ -278,5 +278,29 @@
       "experiments/ch16/16-02/run.py"
     ],
     "TeachingRole": "收束第 16 章硬件机密底座、侧信道与可验证层、高密微虚机沙箱与可恢复审计账本的四层纵深防御"
+  },
+  {
+    "figure_id": "图 16-23",
+    "number": 23,
+    "file": "ch16-lease-bound-encrypted-weight-distribution.svg",
+    "asset": "ch16/ch16-lease-bound-encrypted-weight-distribution.svg",
+    "section": "16.6.4",
+    "caption": "私有化部署中基于远程证明租约（Lease-Bound KMS）与 GPU TEE 的闭源模型权重防导出硬件绑定流程",
+    "source_refs": [
+      "manuscripts/ch16/figure-data.json"
+    ],
+    "TeachingRole": "展示如何通过周期性远程证明心跳与硬件熔断显存清零保护私有化部署的百亿美金模型权重"
+  },
+  {
+    "figure_id": "图 16-24",
+    "number": 24,
+    "file": "ch16-fused-cryptographic-logit-watermark-kernel.svg",
+    "asset": "ch16/ch16-fused-cryptographic-logit-watermark-kernel.svg",
+    "section": "16.6.4",
+    "caption": "在 TEE 采样算子内原位融合伪随机锦标赛水印（SynthID/Gumbel Watermark）及统计验证检测边界",
+    "source_refs": [
+      "manuscripts/ch16/figure-data.json"
+    ],
+    "TeachingRole": "将密码学生成水印下沉至 GPU TEE 采样算子内部以阻断宿主机剥离，并推导 Z 分数检测最小词元数"
   }
 ]

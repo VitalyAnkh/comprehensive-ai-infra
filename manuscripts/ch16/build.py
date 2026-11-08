@@ -475,6 +475,46 @@ def fig_16_22_defense_in_depth(ex: Exporter):
     ex.save(fig, 'ch16-trusted-ai-infrastructure-defense-in-depth')
 
 
+def fig_16_23_lease_bound_weights(ex: Exporter):
+    fig, ax = canvas(3.75)
+    card(ax, 0.02, 0.04, 0.46, 0.92, 'A. 远程证明租约绑定权重分发', color='blue', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '磁盘/主机常驻密文模型权重\n140 GB AES-GCM-256 加密块', 'blue', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, 'CPU+GPU 双 TEE 联合远程证明\nKMS 签发租约密钥 (心跳 60 s)', 'teal', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '仅在 GPU 加密 HBM 内解封 DEK\n宿主机 root 零明文访问权限', 'purple', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '私有化部署严防闭源权重被盗', size=11, ha='center', weight='bold', color=BORDER_COL['blue'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'B. 算例 16-11：宽限期与硬件擦除', color='orange', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '断网宽限期 T_grace = 600 s\n容忍最多 10 次心跳闪断', 'teal', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '超时或拆机篡改触发硬件熔断\n0.50 ms 销毁片上寄存器 DEK', 'orange', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '控制器按 7.0 TB/s 并行覆写\n20.0 ms 完成 140 GB 显存清零', 'blue', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '密码学擦除 + 物理显存覆写双保险', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+    ex.save(fig, 'ch16-lease-bound-encrypted-weight-distribution')
+
+
+def fig_16_24_fused_watermark(ex: Exporter):
+    fig, ax = canvas(3.75)
+    card(ax, 0.02, 0.04, 0.46, 0.92, 'A. TEE 算子内联锦标赛水印', color='purple', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '传统用户态 Python 后处理水印\n易被恶意宿主机截获并剥离', 'orange', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, 'TEE 采样算子融合 (SynthID)\nm=4 层伪随机锦标赛非失真采样', 'purple', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '保持单步分布无偏 (零 PPL 退化)\n辅以指令/数据 KV 污点标签隔离', 'teal', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '算子级硬件绑定阻断无损剥离', size=11, ha='center', weight='bold', color=BORDER_COL['purple'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'B. 算例 16-12：Z 分数检验边界', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, 'm=4 层 · 熵 H=1.8 bits/tok\n单层有效胜率 p_eff = 0.62', 'blue', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, 'L=200 词元 (N=800 位检验)\nZ = 6.79 · FPR ≈ 9.86e-11', 'teal', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '锁定 Z ≥ 4.0 合规取证门限\n最小检测长度 L_min = 70 词元', 'purple', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '短文本即可实现高置信度内容溯源', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch16-fused-cryptographic-logit-watermark-kernel')
+
+
 def main():
     ex = Exporter(HERE)
     fig_16_1_threat_model(ex)
@@ -499,6 +539,8 @@ def main():
     fig_16_20_janus_nested(ex)
     fig_16_21_blowfish_prism(ex)
     fig_16_22_defense_in_depth(ex)
+    fig_16_23_lease_bound_weights(ex)
+    fig_16_24_fused_watermark(ex)
     outputs = ex.finish()
 
     fig_index = [
@@ -721,6 +763,26 @@ def main():
             "caption": "可信 AI 基础设施纵深防御全景（硬件 TEE-I/O + 流量填充 + 远程证明/抽检 + Firecracker 微虚机 + 幂等审计账本）",
             "source_refs": ["experiments/ch16/16-01/run.py", "experiments/ch16/16-02/run.py"],
             "TeachingRole": "收束第 16 章硬件机密底座、侧信道与可验证层、高密微虚机沙箱与可恢复审计账本的四层纵深防御"
+        },
+        {
+            "figure_id": "图 16-23",
+            "number": 23,
+            "file": "ch16-lease-bound-encrypted-weight-distribution.svg",
+            "asset": "ch16/ch16-lease-bound-encrypted-weight-distribution.svg",
+            "section": "16.6.4",
+            "caption": "私有化部署中基于远程证明租约（Lease-Bound KMS）与 GPU TEE 的闭源模型权重防导出硬件绑定流程",
+            "source_refs": ["manuscripts/ch16/figure-data.json"],
+            "TeachingRole": "展示如何通过周期性远程证明心跳与硬件熔断显存清零保护私有化部署的百亿美金模型权重"
+        },
+        {
+            "figure_id": "图 16-24",
+            "number": 24,
+            "file": "ch16-fused-cryptographic-logit-watermark-kernel.svg",
+            "asset": "ch16/ch16-fused-cryptographic-logit-watermark-kernel.svg",
+            "section": "16.6.4",
+            "caption": "在 TEE 采样算子内原位融合伪随机锦标赛水印（SynthID/Gumbel Watermark）及统计验证检测边界",
+            "source_refs": ["manuscripts/ch16/figure-data.json"],
+            "TeachingRole": "将密码学生成水印下沉至 GPU TEE 采样算子内部以阻断宿主机剥离，并推导 Z 分数检测最小词元数"
         }
     ]
     (HERE / 'figure-index.json').write_text(json.dumps(fig_index, ensure_ascii=False, indent=2) + '\n')

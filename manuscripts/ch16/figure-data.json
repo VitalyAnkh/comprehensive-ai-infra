@@ -72,6 +72,22 @@
       "gross_drain_rate_kibs": 1024,
       "net_drain_rate_kibs": 624,
       "recovery_drain_time_s": 76.923
+    },
+    "lease_bound_weights_example_16_11": {
+      "weight_gb": 140.0,
+      "heartbeat_interval_s": 60.0,
+      "grace_period_s": 600.0,
+      "hbm_write_bw_gbps": 7000.0,
+      "zeroization_ms": 20.0,
+      "dek_rotation_ms": 0.50
+    },
+    "tournament_watermark_example_16_12": {
+      "tournament_layers_m": 4,
+      "tokens_L": 200,
+      "entropy_bits_per_tok": 1.8,
+      "effective_win_prob": 0.62,
+      "z_score_at_200": 6.79,
+      "min_tokens_for_z4": 70
     }
   }
 }

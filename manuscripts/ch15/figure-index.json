@@ -279,5 +279,29 @@
       "experiments/ch15/15-02/run.py"
     ],
     "TeachingRole": "汇总结温、液冷、储能套利、动静态能耗与跨城协同训练的工程总账本"
+  },
+  {
+    "figure_id": "图 15-23",
+    "number": 23,
+    "file": "ch15-48v-vs-800v-hvdc-and-vertical-power-delivery.svg",
+    "asset": "ch15/ch15-48v-vs-800v-hvdc-and-vertical-power-delivery.svg",
+    "section": "15.6.4",
+    "caption": "120–250 kW 超高密机柜中传统 48V 铜排瓶颈 vs. 800V HVDC 高压直流母线与芯片背部垂直供电（VPD）的损耗对比",
+    "source_refs": [
+      "manuscripts/ch15/figure-data.json"
+    ],
+    "TeachingRole": "量化 140 kW 机柜从 48V 升级至 800V HVDC 及垂直供电（VPD）带来的 277.8 倍母排焦耳损耗下降"
+  },
+  {
+    "figure_id": "图 15-24",
+    "number": 24,
+    "file": "ch15-sofc-microgrid-and-heat-recovery-ere-loop.svg",
+    "asset": "ch15/ch15-sofc-microgrid-and-heat-recovery-ere-loop.svg",
+    "section": "15.6.4",
+    "caption": "吉瓦级 AI 园区现场 SOFC/燃气微网、BESS 储能与 60°C 液冷余热回收（ERE < 1.0）综合能量闭环",
+    "source_refs": [
+      "manuscripts/ch15/figure-data.json"
+    ],
+    "TeachingRole": "建立现场 SOFC 微网直供与 60°C 液冷废热区域供暖回收（ERE = 0.43 < 1.0）的能量复用方程"
   }
 ]

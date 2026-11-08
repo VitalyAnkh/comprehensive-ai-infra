@@ -460,6 +460,46 @@ def fig_15_22_master_ledger(ex: Exporter):
     ex.save(fig, 'ch15-gigawatt-campus-master-engineering-ledger')
 
 
+def fig_15_23_hvdc_vpd(ex: Exporter):
+    fig, ax = canvas(3.75)
+    card(ax, 0.02, 0.04, 0.46, 0.92, 'A. 传统 48V 铜排与横向供电瓶颈', color='orange', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '140 kW 机柜 @ 48 VDC 母线\n电流 2,916.7 A · 铜排 1,458 mm²', 'orange', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '回路电阻 0.8 mΩ 下 I²R 损耗\n高达 6,805.6 W (占整柜 4.86%)', 'orange', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '板级横向供电 (35 μΩ, 2,400 A)\n单芯损 201.6 W · 压降 84 mV', 'orange', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '120–250 kW 机柜撞上 48V 物理墙', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'B. 800V HVDC 与垂直供电 (VPD)', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '±400V / 800V HVDC 高压母线\n电流 175.0 A · 铜排仅 87.5 mm²', 'teal', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '同阻值母线 I²R 损耗仅 24.50 W\n焦耳热损耗骤降 277.78×', 'blue', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '背面垂直供电 VPD (3.5 μΩ)\n单芯损 20.16 W · 整柜省 13.1 kW', 'purple', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '支撑 Rubin NVL72 / Ultra 高密机架', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch15-48v-vs-800v-hvdc-and-vertical-power-delivery')
+
+
+def fig_15_24_sofc_ere(ex: Exporter):
+    fig, ax = canvas(3.75)
+    card(ax, 0.02, 0.04, 0.46, 0.92, 'A. 现场 SOFC 微网绕过并网排队', color='blue', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '市政高压并网排队 3–5 年\nSOFC 燃料电池微网先行投产', 'blue', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '电化学直转效率 η_e ≈ 60–65%\n原生输出 800V 直流并入母线', 'teal', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '配合园区 BESS 吸收 50 ms 尖峰\n构筑零并网冲击独立微网', 'purple', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '破解园区并网排队 Time-to-Power', size=11, ha='center', weight='bold', color=BORDER_COL['blue'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'B. 算例 15-12：60°C 余热回收 ERE', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '100 MW 液冷中心 (PUE = 1.08)\n总输入功率 108.0 MW', 'orange', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, 'W45/微流道输出 60°C 高温回水\n回收 65% 热能 (65.0 MW) 供暖', 'teal', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, 'ERE = (108-65)/100 = 0.43\n年供热 569.4 GWh·减碳 11.4 万t', 'blue', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '从单纯耗能中心进化为区域热电枢纽', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch15-sofc-microgrid-and-heat-recovery-ere-loop')
+
+
 def main():
     ex = Exporter(HERE)
     fig_15_1_power_chain(ex)
@@ -484,6 +524,8 @@ def main():
     fig_15_20_dips_wan(ex)
     fig_15_21_carbon_lifecycle(ex)
     fig_15_22_master_ledger(ex)
+    fig_15_23_hvdc_vpd(ex)
+    fig_15_24_sofc_ere(ex)
     outputs = ex.finish()
 
     fig_index = [
@@ -706,6 +748,26 @@ def main():
             "caption": "吉瓦级 AI 园区从电网并网、储能平滑、微通道液冷到跨城光网协同的完整工程总账本",
             "source_refs": ["experiments/ch15/15-01/run.py", "experiments/ch15/15-02/run.py"],
             "TeachingRole": "汇总结温、液冷、储能套利、动静态能耗与跨城协同训练的工程总账本"
+        },
+        {
+            "figure_id": "图 15-23",
+            "number": 23,
+            "file": "ch15-48v-vs-800v-hvdc-and-vertical-power-delivery.svg",
+            "asset": "ch15/ch15-48v-vs-800v-hvdc-and-vertical-power-delivery.svg",
+            "section": "15.6.4",
+            "caption": "120–250 kW 超高密机柜中传统 48V 铜排瓶颈 vs. 800V HVDC 高压直流母线与芯片背部垂直供电（VPD）的损耗对比",
+            "source_refs": ["manuscripts/ch15/figure-data.json"],
+            "TeachingRole": "量化 140 kW 机柜从 48V 升级至 800V HVDC 及垂直供电（VPD）带来的 277.8 倍母排焦耳损耗下降"
+        },
+        {
+            "figure_id": "图 15-24",
+            "number": 24,
+            "file": "ch15-sofc-microgrid-and-heat-recovery-ere-loop.svg",
+            "asset": "ch15/ch15-sofc-microgrid-and-heat-recovery-ere-loop.svg",
+            "section": "15.6.4",
+            "caption": "吉瓦级 AI 园区现场 SOFC/燃气微网、BESS 储能与 60°C 液冷余热回收（ERE < 1.0）综合能量闭环",
+            "source_refs": ["manuscripts/ch15/figure-data.json"],
+            "TeachingRole": "建立现场 SOFC 微网直供与 60°C 液冷废热区域供暖回收（ERE = 0.43 < 1.0）的能量复用方程"
         }
     ]
     (HERE / 'figure-index.json').write_text(json.dumps(fig_index, ensure_ascii=False, indent=2) + '\n')

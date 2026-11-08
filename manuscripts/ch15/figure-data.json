@@ -52,5 +52,27 @@
     "rtt_ms": 10.0,
     "inner_steps_H": 500,
     "bandwidth_compression": 500
+  },
+  "hvdc_vpd_example_15_11": {
+    "rack_power_kw": 140.0,
+    "bus_resistance_mohm": 0.8,
+    "current_48v_a": 2916.67,
+    "current_800v_a": 175.0,
+    "i2r_loss_48v_w": 6805.56,
+    "i2r_loss_800v_w": 24.50,
+    "loss_reduction_ratio": 277.78,
+    "copper_area_48v_mm2": 1458.33,
+    "copper_area_800v_mm2": 87.50
+  },
+  "sofc_ere_example_15_12": {
+    "it_power_mw": 100.0,
+    "pue": 1.08,
+    "total_power_mw": 108.0,
+    "heat_recovery_ratio": 0.65,
+    "reused_heat_mw": 65.0,
+    "ere": 0.43,
+    "erf": 0.6019,
+    "annual_reused_gwh": 569.4,
+    "annual_co2_saved_kt": 113.88
   }
 }
