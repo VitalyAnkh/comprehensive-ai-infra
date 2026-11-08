@@ -52,5 +52,35 @@
     "trigger_rate_pct": 0.5,
     "triage_daily_gb_per_robot": 12.96,
     "bandwidth_reduction_x": 200.0
+  },
+  "three_tier_wbc_and_fast_tokenizer": {
+    "source": "experiments/ch19/19-02/run.py (Visuotactile WBC + Physical Intelligence FAST DCT Tokenizer)",
+    "tier1_vlm_hz": 2.0,
+    "tier2_flow_hz": 100.0,
+    "tier3_wbc_tactile_hz": 1000.0,
+    "tier3_period_us": 1000.0,
+    "tier3_wcet_breakdown_us": {
+      "tactile_and_ethercat_read_us": 180.0,
+      "slip_margin_reflex_us": 40.0,
+      "wbc_qp_28dof_solve_us": 420.0,
+      "ethercat_pdo_tx_us": 160.0,
+      "total_wcet_us": 800.0,
+      "safety_margin_us": 200.0
+    },
+    "slip_displacement_100hz_mm": 1.80,
+    "slip_displacement_1000hz_mm": 0.12,
+    "slip_reduction_x": 15.0,
+    "fast_dct_action_tokenizer": {
+      "chunk_horizon_steps": 50,
+      "action_dims": 14,
+      "naive_time_domain_tokens": 700,
+      "dct_retained_low_freqs": 8,
+      "fast_bpe_tokens": 80,
+      "compression_ratio_x": 8.75,
+      "token_reduction_pct": 88.57,
+      "energy_retention_pct": 99.47,
+      "ar_decode_naive_ms": 2450.0,
+      "ar_decode_fast_ms": 280.0
+    }
   }
 }

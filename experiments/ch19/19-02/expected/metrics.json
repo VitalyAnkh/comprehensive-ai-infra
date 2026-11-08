@@ -1,0 +1,40 @@
+{
+  "experiment_id": "19-02",
+  "three_tier_humanoid_wbc": {
+    "tier1_vlm_hz": 2.0,
+    "tier2_flow_hz": 100.0,
+    "tier3_wbc_hz": 1000.0,
+    "tier3_period_us": 1000.0,
+    "tier3_wcet_us": 800.0,
+    "tier3_margin_us": 200.0,
+    "slip_disp_100hz_mm": 1.8,
+    "slip_disp_1000hz_mm": 0.12,
+    "slip_reduction_x": 15.0
+  },
+  "fast_dct_action_tokenizer": {
+    "horizon_h": 50,
+    "action_dims": 14,
+    "naive_tokens": 700,
+    "retained_low_freqs": 8,
+    "fast_bpe_tokens": 80,
+    "compression_ratio_x": 8.75,
+    "token_reduction_pct": 88.57,
+    "ar_decode_naive_ms": 2450.0,
+    "ar_decode_fast_ms": 280.0,
+    "energy_retention_pct": 99.47,
+    "recon_rmse_mm": 0.2431
+  },
+  "ptp_alignment_and_cbf_shield": {
+    "software_skew_ms": 27.0,
+    "ptp_interp_skew_ms": 0.018,
+    "software_pos_err_mm": 16.2,
+    "ptp_pos_err_mm": 0.011,
+    "sync_accuracy_gain_x": 1472.7,
+    "v_nom_m_s": 0.85,
+    "v_safe_at_15mm": 0.3,
+    "raw_cbf_margin": -0.55,
+    "post_cbf_margin": 0.0,
+    "safety_violations_500steps": 0,
+    "min_dist_mm": 1.2
+  }
+}

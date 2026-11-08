@@ -363,6 +363,48 @@ def fig_19_16_full_stack_map(ex: Exporter):
     ex.save(fig, 'ch19-embodied-ai-full-stack-infrastructure-map')
 
 
+def fig_19_17_three_tier_humanoid_control(ex: Exporter) -> None:
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '人形机器人三级异构频率解耦（2 Hz → 100 Hz → 1,000 Hz）', color='blue')
+    tiers = [
+        (0.03, 0.58, 0.29, 0.24, 'Tier 1：VLM 规划\n2 Hz 视觉语义推理\n发布潜特征 z_t', 'blue'),
+        (0.355, 0.58, 0.29, 0.24, 'Tier 2：流匹配头\n100 Hz (≤4.2 ms)\n输出 H=50 步轨迹', 'teal'),
+        (0.68, 0.58, 0.29, 0.24, 'Tier 3：WBC 力控\n1,000 Hz (800 μs)\n28维 QP+打滑补偿', 'orange'),
+    ]
+    for x, y, w, h, label, role in tiers:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.355, 0.70))
+    arrow(ax, (0.645, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, 'Tier 3 (1,000 μs 硬实时周期) 预算拆解与初生打滑抑制', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '1,000 μs 周期 WCET = 800 μs\n触觉读取 180 + 打滑判定 40 μs\n+ WBC-QP 420 + 下发 160 μs', 'teal', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '初生打滑抑制（v = 0.12 m/s）\n100 Hz 环滑移 1.80 mm（失稳）\n1,000 Hz 触觉环滑移 0.12 mm', 'purple', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '1,000 Hz 视触觉打滑反射与全身动力学平衡运行在实时核紧凑 QP 内', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch19-three-tier-vlm-flow-wbc-humanoid-control')
+
+
+def fig_19_18_fast_dct_tokenizer(ex: Exporter) -> None:
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '高频动作块（H=50 步 × D_a=14 维 = 700 元素）分词范式对比', color='orange')
+    box(ax, 0.04, 0.58, 0.44, 0.24, '传统时域逐帧分箱（256-Bin）\n50 × 14 = 700 个离散 Token\n相邻帧 Δa≈0 复读，需 2,450 ms', 'orange', size=11)
+    box(ax, 0.52, 0.58, 0.44, 0.24, 'FAST 频域动作分词（DCT+BPE）\n前 K=8 低频分量占能 99.47%\n压至 80 Token（8.75× 压缩）', 'teal', size=11)
+    arrow(ax, (0.48, 0.70), (0.52, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, 'FAST 频域动作序列分词（DCT-II + BPE）三阶段压缩流水线', color='teal')
+    steps = [
+        (0.03, 0.13, 0.29, 0.20, '① DCT-II 频域变换\n平滑轨迹转频域谱\n高频 k≥8 量化归零', 'blue'),
+        (0.355, 0.13, 0.29, 0.20, '② 游程与 BPE 编码\n稀疏矩阵压 80 词元\n序列缩短 88.57%', 'teal'),
+        (0.68, 0.13, 0.29, 0.20, '③ 跨本体统一训练\n兼容双臂与人形臂\nRMSE < 0.35 mm', 'purple'),
+    ]
+    for x, y, w, h, label, role in steps:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.23), (0.355, 0.23))
+    arrow(ax, (0.645, 0.23), (0.68, 0.23))
+    text(ax, 0.50, 0.06, '物理机械运动受低通惯性约束：在频域分词可消除 88.57% 的时域冗余', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch19-fast-dct-frequency-action-tokenization')
+
+
 def build_chapter() -> None:
     ex = Exporter(HERE)
     fig_19_1_cloud_vs_embodied(ex)
@@ -381,6 +423,8 @@ def build_chapter() -> None:
     fig_19_14_edge_offload_safety(ex)
     fig_19_15_vla_token_pruning(ex)
     fig_19_16_full_stack_map(ex)
+    fig_19_17_three_tier_humanoid_control(ex)
+    fig_19_18_fast_dct_tokenizer(ex)
     outputs = ex.finish()
 
     fig_index = [
@@ -539,10 +583,30 @@ def build_chapter() -> None:
             "number": 16,
             "file": "ch19-embodied-ai-full-stack-infrastructure-map.svg",
             "asset": "ch19/ch19-embodied-ai-full-stack-infrastructure-map.svg",
-            "section": "19.4.2",
+            "section": "19.4.3",
             "caption": "具身智能从万级 GPU 物理仿真、双频实时机载推理到车队影子数据飞轮的全栈基础设施总图",
             "source_refs": ["experiments/ch19/19-01/run.py"],
             "TeachingRole": "收束第 19 章硬实时控制、GPU 原生仿真与 Sim-to-Real 数据闭环的工程总账本"
+        },
+        {
+            "figure_id": "图 19-17",
+            "number": 17,
+            "file": "ch19-three-tier-vlm-flow-wbc-humanoid-control.svg",
+            "asset": "ch19/ch19-three-tier-vlm-flow-wbc-humanoid-control.svg",
+            "section": "19.4.4",
+            "caption": "人形机器人三级实时控制架构（2 Hz VLM 语义规划 → 100 Hz Flow-Matching 末端轨迹 → 1,000 Hz WBC/MPC 全身力矩平衡与触觉反射）",
+            "source_refs": ["experiments/ch19/19-02/run.py", "manuscripts/ch19/figure-data.json"],
+            "TeachingRole": "剖析 1,000 Hz 视触觉初生打滑反射与 28-DoF 全身动力学二次规划（WCET = 800 μs）的三级解耦"
+        },
+        {
+            "figure_id": "图 19-18",
+            "number": 18,
+            "file": "ch19-fast-dct-frequency-action-tokenization.svg",
+            "asset": "ch19/ch19-fast-dct-frequency-action-tokenization.svg",
+            "section": "19.4.4",
+            "caption": "时域逐帧离散化动作 Token 在高频采样下的边际信息坍缩 vs. FAST（离散余弦变换 DCT + BPE）频域动作压缩",
+            "source_refs": ["experiments/ch19/19-02/run.py", "manuscripts/ch19/figure-data.json"],
+            "TeachingRole": "证明利用机械轨迹低通特性将 700 个时域动作值压缩为 80 个频域词元（8.75× 压缩）的机理"
         }
     ]
     for row in fig_index:
@@ -594,7 +658,13 @@ def build_chapter() -> None:
         out_html = preview_path(md)
         out_html.write_text(html)
 
-    sources = [HERE / 'build.py', HERE / 'figure-data.json', HERE / 'figure-index.json', ROOT / 'experiments/ch19/19-01/run.py']
+    sources = [
+        HERE / 'build.py',
+        HERE / 'figure-data.json',
+        HERE / 'figure-index.json',
+        ROOT / 'experiments/ch19/19-01/run.py',
+        ROOT / 'experiments/ch19/19-02/run.py',
+    ]
     if md.exists():
         sources.append(md)
     (HERE / 'sources.json').write_text(

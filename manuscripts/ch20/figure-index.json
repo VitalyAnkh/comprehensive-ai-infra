@@ -232,5 +232,34 @@
     "TeachingRole": "提炼贯穿全书二十章的十条第一性原理与定量工程铁律",
     "figure": "20-16",
     "name": "ch20-ten-first-principles-of-ai-infra"
+  },
+  {
+    "figure_id": "图 20-17",
+    "number": 17,
+    "file": "ch20-chaos-fault-injection-and-canary-rollout-gate.svg",
+    "asset": "ch20/ch20-chaos-fault-injection-and-canary-rollout-gate.svg",
+    "section": "20.5.3",
+    "caption": "面向十万卡集群的混沌故障注入（SDC 比特翻转 / RoCE 灰丢包 / 慢节点）与金丝雀灰度发布验证闭环",
+    "source_refs": [
+      "experiments/ch20/20-02/run.py",
+      "manuscripts/ch20/figure-data.json"
+    ],
+    "TeachingRole": "通过 200 次主动混沌演练（99.5% 召回率，MTTR = 3.85 s）验证十万卡自愈闭环",
+    "figure": "20-17",
+    "name": "ch20-chaos-fault-injection-and-canary-rollout-gate"
+  },
+  {
+    "figure_id": "图 20-18",
+    "number": 18,
+    "file": "ch20-core-cluster-to-four-new-frontiers-bridge.svg",
+    "asset": "ch20/ch20-core-cluster-to-four-new-frontiers-bridge.svg",
+    "section": "20.5.3",
+    "caption": "从前 20 章通用大模型训练/推理底座迈向第 21–24 章（自主智能体、全双工语音、百亿亿次数据工厂、AI for Science）的架构映射桥接图",
+    "source_refs": [
+      "manuscripts/ch20/figure-data.json"
+    ],
+    "TeachingRole": "构建第 20 章与第 24 章前后呼应的双枢纽结构，自然引出四大新兴基础设施疆域",
+    "figure": "20-18",
+    "name": "ch20-core-cluster-to-four-new-frontiers-bridge"
   }
 ]

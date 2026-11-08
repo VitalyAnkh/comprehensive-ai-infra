@@ -2,23 +2,27 @@
   "sources": [
     {
       "path": "manuscripts/ch19/build.py",
-      "sha256": "cf9f3ff979fb70232273615f828d1bbb1e365c7e8d552f72ff122bf968f48c9d"
+      "sha256": "2c0d9b48fd8b11a3f158b772f14a62d0c11daf8f9d287f1ea5d4ac47847fb3b5"
     },
     {
       "path": "manuscripts/ch19/figure-data.json",
-      "sha256": "440526b92e91976dc651d95fdbaf1892c08c9ff986438941c026dc95d14d13c0"
+      "sha256": "cb8d30d7805d9d6b32dc216cc7935033910864765d240cff4671310d1fcacd24"
     },
     {
       "path": "manuscripts/ch19/figure-index.json",
-      "sha256": "c99032340f8ac657dbc62df8912f11ce739a7f06ab3a6219ed834af34a3265e3"
+      "sha256": "d707c68738559e0d4c02e767837f18314ad0c4d3f56f19ee3e9857c53b835ce3"
     },
     {
       "path": "experiments/ch19/19-01/run.py",
-      "sha256": "74beda44019327a6398bd45cba8670050f2b28a3ab0bd53b8f6cba5249f93610"
+      "sha256": "58cb3195e24b4e10c3b25c129e37f3756cc99b45e2bc98fe7133414ad3cb0ec5"
+    },
+    {
+      "path": "experiments/ch19/19-02/run.py",
+      "sha256": "1f6e262be634ce7dd1a87111849a5c6df25055e49de7d2e19387c8789d0ca00f"
     },
     {
       "path": "manuscripts/19-具身智能（VLA）、实时控制与大规模物理仿真底座.md",
-      "sha256": "d0afbca008cdf14ceef5bab24c838db7b2e59804e62c854f7c2d059825faff4a"
+      "sha256": "6c2684e9ea4cf52735e90d03bef5755a8eea69b228e0e89fad68f4eec34556b8"
     }
   ]
 }

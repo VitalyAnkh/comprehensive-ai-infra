@@ -2,7 +2,7 @@
   "outputs": [
     {
       "path": "manuscripts/ch20/ch20-abft-checksum-matrix-multiplication.pdf",
-      "sha256": "8f1abe0b14f3f8bbac31b8f21938d74c6493d53a8cfc4b0a691d14ee3c79dba1"
+      "sha256": "436a9f9cd73bfab00dfa123d1db2bc6ead8834428681aaf1f353a6166145d806"
     },
     {
       "path": "manuscripts/ch20/ch20-abft-checksum-matrix-multiplication.png",
@@ -10,11 +10,11 @@
     },
     {
       "path": "manuscripts/ch20/ch20-abft-checksum-matrix-multiplication.svg",
-      "sha256": "fc820b2c926de29555daacf5371783e95125285190cf633936700773e6a7c603"
+      "sha256": "058b3a65111a3aa6995993e6cd7e8161c47eee736910ff28f17a01fb23559d7d"
     },
     {
       "path": "manuscripts/ch20/ch20-automated-burn-in-fleet-health-pipeline.pdf",
-      "sha256": "d50fd85d2a74cad4ede09d402931e0cdd877a280fc4e9122953028afaebf98f1"
+      "sha256": "a681aa36b9265a2563d339d3b41f79174ddf084f3608953f1ca2b03de98d0394"
     },
     {
       "path": "manuscripts/ch20/ch20-automated-burn-in-fleet-health-pipeline.png",
@@ -22,11 +22,23 @@
     },
     {
       "path": "manuscripts/ch20/ch20-automated-burn-in-fleet-health-pipeline.svg",
-      "sha256": "53294e25b53a9e4918cad4c4f2b559d91f016df222223c0675b256796d476197"
+      "sha256": "5d16028c6b3c9fa2476e41035b054c12b401e2641225732bde25c859bd4011f7"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-chaos-fault-injection-and-canary-rollout-gate.pdf",
+      "sha256": "11d164135c3ade0744b24223bf60d952df54ac7bc6f21ebb1d6b4a53f33ca700"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-chaos-fault-injection-and-canary-rollout-gate.png",
+      "sha256": "69b0d5cbead364a5b7fd658e978d85fa9ac5d86d45da4cf98f4cf034a6b6b486"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-chaos-fault-injection-and-canary-rollout-gate.svg",
+      "sha256": "8123188bd4f030b061bee6489ce638cf8db5fc05f3ba68fe902d2698b1bf945d"
     },
     {
       "path": "manuscripts/ch20/ch20-cluster-mtbf-scaling-and-llama3-failures.pdf",
-      "sha256": "465462fd903080ba91ea50af860b8ae46d3c0f5e019ec763a5345c77409858ab"
+      "sha256": "cf7e4efa11c9f280309ce9048e0649e9f23b501e41384336281ce61f881365dd"
     },
     {
       "path": "manuscripts/ch20/ch20-cluster-mtbf-scaling-and-llama3-failures.png",
@@ -34,11 +46,23 @@
     },
     {
       "path": "manuscripts/ch20/ch20-cluster-mtbf-scaling-and-llama3-failures.svg",
-      "sha256": "01cf0df1b808100d311b15344031d449f8f62a15fa6569caaafe7702793f64dd"
+      "sha256": "7b0a878b3f69a24fe6deeb49dcf8c1e8c6b821a1c9d62cd0e1f4c34501601afd"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-core-cluster-to-four-new-frontiers-bridge.pdf",
+      "sha256": "88978a97dc34db64034259948a0a86ec127087adb32146b46c66214a350603f5"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-core-cluster-to-four-new-frontiers-bridge.png",
+      "sha256": "90f23294dee76ec0dd2c23b99ae861e815583df92e85f1c95b3f3ad5bd18b0eb"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-core-cluster-to-four-new-frontiers-bridge.svg",
+      "sha256": "8f55a7a2423de47ba7ac67a7f5131f63a9fe36f86de33a203ea48563e967e717"
     },
     {
       "path": "manuscripts/ch20/ch20-effective-training-time-ratio-ettr-model.pdf",
-      "sha256": "0f6192f1ec1fe7466cf3eb407cce395fffafc2b99b380e836c4f516659b47c28"
+      "sha256": "3caa5a1ef24bdd9e7e7e4fd6eeb7390acd9f8e1c45047b167bf314a912ed6995"
     },
     {
       "path": "manuscripts/ch20/ch20-effective-training-time-ratio-ettr-model.png",
@@ -46,11 +70,11 @@
     },
     {
       "path": "manuscripts/ch20/ch20-effective-training-time-ratio-ettr-model.svg",
-      "sha256": "977197fe6a2e17188704ff7f6f0ff19609f0bb3281846c098c095902d2d6c32d"
+      "sha256": "bc602b07d9a99cad9d1aa513647d9448525a37cc5877c8eeba95c82d57bc0b21"
     },
     {
       "path": "manuscripts/ch20/ch20-five-benchmark-gaming-traps.pdf",
-      "sha256": "df444b15f6872537912dafef8bafe306ce6db26b0aba7860cc5d6e1d6c6d2204"
+      "sha256": "0bdf0a4fb33f38ed1adba88953dfc323f9994fc9a0c5cc5a7a0227d221a29ba3"
     },
     {
       "path": "manuscripts/ch20/ch20-five-benchmark-gaming-traps.png",
@@ -58,11 +82,11 @@
     },
     {
       "path": "manuscripts/ch20/ch20-five-benchmark-gaming-traps.svg",
-      "sha256": "994b9d8375ff08115b8f052053ddb415091b1f7b21b06e0e28d50bfdb33fdbcf"
+      "sha256": "bbee6dc2425d00247e4c981b03b7b59ecfcf5f4f85c7f45f20b0d91d8a528070"
     },
     {
       "path": "manuscripts/ch20/ch20-flashinfer-bench-cceval-and-blink-profiling.pdf",
-      "sha256": "8186d50092263337d3bec6f41c1d662c32217dee70a7b210590501ad1684749a"
+      "sha256": "3d481ea90b23366e45ad36b8458f749a246f74d02d6389ff16d2c2ce37b614b1"
     },
     {
       "path": "manuscripts/ch20/ch20-flashinfer-bench-cceval-and-blink-profiling.png",
@@ -70,11 +94,11 @@
     },
     {
       "path": "manuscripts/ch20/ch20-flashinfer-bench-cceval-and-blink-profiling.svg",
-      "sha256": "50b32b3b3df4f6238f755971e37283caac1861bbc7e30d0fd78f802aac323682"
+      "sha256": "df74d3fc33714d897ab633d2d2671cf75a078f35287ac4916d0b07873eaf2e18"
     },
     {
       "path": "manuscripts/ch20/ch20-hot-spare-pool-queuing-dimensioning.pdf",
-      "sha256": "fcd4253f6fe16777dc72bf24e0af9d18dce8139931d5cce61735b7c95e9c6a04"
+      "sha256": "98d44e95ebacc788257c2648ec8535e297065cc4f4dd670eae1008cbe0749f34"
     },
     {
       "path": "manuscripts/ch20/ch20-hot-spare-pool-queuing-dimensioning.png",
@@ -82,11 +106,11 @@
     },
     {
       "path": "manuscripts/ch20/ch20-hot-spare-pool-queuing-dimensioning.svg",
-      "sha256": "b081e203704438e2bd8278a6ff7d3a8eb049efcb623454124ff7a182ffb5308a"
+      "sha256": "6204626bd32658e289b92fe205a81aafbdb476a32c1cb5908667b5fcaca305eb"
     },
     {
       "path": "manuscripts/ch20/ch20-microbatch-rerun-vs-checkpoint-rollback.pdf",
-      "sha256": "006099128de0f411ca838b11c61a7373ea260ff1a001c703a3e3ebf1c561f9d4"
+      "sha256": "b2f76ab218b7e34645cf80dfd4572f55e2a53a0cdb32001b845835f480326377"
     },
     {
       "path": "manuscripts/ch20/ch20-microbatch-rerun-vs-checkpoint-rollback.png",
@@ -94,11 +118,11 @@
     },
     {
       "path": "manuscripts/ch20/ch20-microbatch-rerun-vs-checkpoint-rollback.svg",
-      "sha256": "96bf4fbc2bb88fe79b858d6dda5d3a61f7f6563a16691940ead87f79de92cd10"
+      "sha256": "a73a6fc290f03966a9259b4fe51ef81e7a5675592376fa6c5ea18ff9c218c0fc"
     },
     {
       "path": "manuscripts/ch20/ch20-nccl-flight-recorder-straggler-blame.pdf",
-      "sha256": "092a270748e04e6484a0ecf4225f2da8ead70874aef5ce06923030208b792860"
+      "sha256": "fd649ecfb2748f18b09b7a1e7edfba6610863d12a148d58c39bdc1b071c1dc4b"
     },
     {
       "path": "manuscripts/ch20/ch20-nccl-flight-recorder-straggler-blame.png",
@@ -106,11 +130,11 @@
     },
     {
       "path": "manuscripts/ch20/ch20-nccl-flight-recorder-straggler-blame.svg",
-      "sha256": "5ae20371d9a345bad315ea172ae51901709ef1048997f85dffd2fcee42a6fb17"
+      "sha256": "0a7c7c8e6f7bc9e87cb28b5ba15905862a4a6e1fd93eddb9ee99314c18033701"
     },
     {
       "path": "manuscripts/ch20/ch20-optical-ber-fec-gray-failure-detection.pdf",
-      "sha256": "acbcb499e91ebd669ce97c4e76779d860dbc0e171483cacb0face10238e66377"
+      "sha256": "7adbfa63e04f3f735f4a4d5eafc5aafc203aaabdb9a8bb26080c91e34e09414c"
     },
     {
       "path": "manuscripts/ch20/ch20-optical-ber-fec-gray-failure-detection.png",
@@ -118,11 +142,11 @@
     },
     {
       "path": "manuscripts/ch20/ch20-optical-ber-fec-gray-failure-detection.svg",
-      "sha256": "191e075e6ec3eee09c9986bea171b33589d7e283ae13f28e775b7577090b8c08"
+      "sha256": "44688288c9d8ba343afc05d65d8211895388d5801d48af9c37796a26fb56dcc6"
     },
     {
       "path": "manuscripts/ch20/ch20-safeguarding-sdc-and-opguard-bitwise-debug.pdf",
-      "sha256": "fd78cf5944d96fb96b932be63b41bca40f5ff23597144001639baf3c4abd3b5f"
+      "sha256": "24683f40ac59b2a60ff28701ee379860e430cc078e66839db7c77b98033138d5"
     },
     {
       "path": "manuscripts/ch20/ch20-safeguarding-sdc-and-opguard-bitwise-debug.png",
@@ -130,11 +154,11 @@
     },
     {
       "path": "manuscripts/ch20/ch20-safeguarding-sdc-and-opguard-bitwise-debug.svg",
-      "sha256": "9ef00d78fcdb0a19f33007a2c21a89363044f94c179ed92a48af3d9ad6bbb7e0"
+      "sha256": "7aaf7bb932248f0651a8efee6664c2be99955f0ff1d98cc029c2a27e882d4661"
     },
     {
       "path": "manuscripts/ch20/ch20-sdc-bitflip-allreduce-contamination.pdf",
-      "sha256": "802aea6ba81e2ac490de6690ffc8647e3cc2cf875dd5dbbe31edbaef56ef4626"
+      "sha256": "9fcddd07b74412eacd86ab87e4ab9edf128a0b64928344c789d918b8463e501d"
     },
     {
       "path": "manuscripts/ch20/ch20-sdc-bitflip-allreduce-contamination.png",
@@ -142,11 +166,11 @@
     },
     {
       "path": "manuscripts/ch20/ch20-sdc-bitflip-allreduce-contamination.svg",
-      "sha256": "b93b2a31ea4e0f967ba5281d63c782d22891587c36e7f8f71f663464d6ac4107"
+      "sha256": "345bdd60626f361b3528a50d499481f9c6e713fde41729afcf780ba1c3cee337"
     },
     {
       "path": "manuscripts/ch20/ch20-ten-first-principles-of-ai-infra.pdf",
-      "sha256": "18b7e80093de9630035f6958867c489ebab9c5c134777e203ddc8954f638a313"
+      "sha256": "5768007dcfa846afbb5ae6833f75dfdb9cf71008691dfc252726402453776600"
     },
     {
       "path": "manuscripts/ch20/ch20-ten-first-principles-of-ai-infra.png",
@@ -154,11 +178,11 @@
     },
     {
       "path": "manuscripts/ch20/ch20-ten-first-principles-of-ai-infra.svg",
-      "sha256": "dae8f6510e994ae8d804b1b3e486e346bc66664481a32370d2bb63a67e71984f"
+      "sha256": "6c2def7dc5850de8eb52e68847a8f78bf7acc4c28e7cea7e9821bfd2f92dc67d"
     },
     {
       "path": "manuscripts/ch20/ch20-trainmover-subsecond-hot-migration.pdf",
-      "sha256": "8845671105994f1a12fc693812940165c2f965b7f19d0d204c548f46539fc6ec"
+      "sha256": "75d6d5cb3c0b72a5839bcf036382bd81f037c05a1515bc60e5280321c1cbcb3f"
     },
     {
       "path": "manuscripts/ch20/ch20-trainmover-subsecond-hot-migration.png",
@@ -166,11 +190,11 @@
     },
     {
       "path": "manuscripts/ch20/ch20-trainmover-subsecond-hot-migration.svg",
-      "sha256": "d987fff80773ca37b7f5e1eb41525d61d22e1d3b011cfbe70fe7bc647b95692f"
+      "sha256": "36cda788fa5000059627af33e941668ee9c042b1eb8ff22dd7cefdcf36a7a45b"
     },
     {
       "path": "manuscripts/ch20/ch20-twenty-chapter-architecture-knowledge-graph.pdf",
-      "sha256": "d08d8886dd08bdf0093ce985f0efad1c82151a01258ed57dd7209174372fb263"
+      "sha256": "e971aa1b1060bebce538eb1e3b0f7ef794c7ca7f88066109e03376fd015efbd1"
     },
     {
       "path": "manuscripts/ch20/ch20-twenty-chapter-architecture-knowledge-graph.png",
@@ -178,11 +202,11 @@
     },
     {
       "path": "manuscripts/ch20/ch20-twenty-chapter-architecture-knowledge-graph.svg",
-      "sha256": "f6d5f111e924784cb0975cda3607aadf9d0892e07a092e3034447aa4d31c879e"
+      "sha256": "1695f8e97520014976101dfbd13863ed08c6652ad915264a8a0effcbc137d655"
     },
     {
       "path": "manuscripts/ch20/ch20-twenty-chapter-dual-track-master-ledger.pdf",
-      "sha256": "0ac35f01744c39d9ae7d8dd3245e35a018885a6801198c569f82bfece9c9d007"
+      "sha256": "bfd237b05a84eff76dfa1a311db98312ef2b32f86d74c9c29fd5b6a368dfda51"
     },
     {
       "path": "manuscripts/ch20/ch20-twenty-chapter-dual-track-master-ledger.png",
@@ -190,23 +214,23 @@
     },
     {
       "path": "manuscripts/ch20/ch20-twenty-chapter-dual-track-master-ledger.svg",
-      "sha256": "09dc5117274db855391f6832b5dd55c4d584ff5ffc21165d23e2d6c4ebf70660"
+      "sha256": "8171f1892a80a00cc52112bdf2cf85de6c0e09d0b72d30fbd68537876b6ef391"
     },
     {
       "path": "manuscripts/ch20/figure-data.json",
-      "sha256": "0cf52d63248527610116fccff86601db9e32dd9e539ef6eedff770bfa4232d30"
+      "sha256": "f818963f7652d9b4ae0998015ff11ec5d0eadb3efc5f90b965d56bc4bd82a14b"
     },
     {
       "path": "manuscripts/ch20/figure-index.json",
-      "sha256": "c6abb58cb8d4371c0d8ec11adb09848446cbf8d2852830d47a60ece197aa07e6"
+      "sha256": "92eb0181d6d4b312ba859d1d002a2880663124ca40fa4dc247780b7ac0a1f90a"
     },
     {
       "path": "manuscripts/ch20/teaching-layout-validation.json",
-      "sha256": "7708482b472635daeb9a6426f9c73a73d8bc994c4f758a4cfd324eec4e83c9bb"
+      "sha256": "e0ec7a5d3b0ffd93490a30c74a6576fa6e1e88603b4e0a6b45534cbce17014cc"
     },
     {
       "path": "manuscripts/ch20/math-validation.json",
-      "sha256": "e55e240d1d219a454ddcaf456632c97c5aec1f7f08015b19507a2c6324956e41"
+      "sha256": "20590bfc0d54d4af9b3beb6d32d48883bed2d4449262afcd8dd39edbf846b501"
     }
   ]
 }

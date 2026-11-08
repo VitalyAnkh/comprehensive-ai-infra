@@ -9,7 +9,7 @@
 1. **十万卡规模下的可靠性悬崖与静默数据损坏（Silent Data Corruption, SDC）**：当同步训练域跨越数万张卡时，“一卡故障、全网陪葬重启”的传统模式会让有效训练时间比（ETTR）跌破 $65\%$；而逃逸 HBM ECC 校验的算术单元静默比特翻转（SDC），更能在毫无告警的情况下毁掉耗时数周的预训练成果。如何构建融合代数不变量校验（ABFT）、跨秩统计感知（**`Safeguarding LLM Training at Scale` OSDI '26**）、位级确定性对齐定位（**`OpGuard` OSDI '26**）与亚秒级无重启热接管（**`TrainMover` OSDI '26**）的机队自愈底座？
 2. **AI 基础设施的基准评测与可信剖析科学（Benchmarking & Profiling Science）**：为什么学术论文或厂商宣传材料里声称“$3\times\text{–}5\times$ 加速”的算子、通信库或调度器，一旦部署到真实生产流量中往往收益大幅缩水甚至引发尾延迟倒退？如何识破“算术平均加速比悖论”“单调顺序热漂移”与“硬件 PMU 采样失真（**`Blink` OSDI '26**）”，建立可证伪、防污染的四维工业级评测体系？
 
-作为全书二十章的收官之章，本章将首先推导十万卡集群可靠性的数学法则与 SDC 防御机制，随后结合本仓库锁定的生产诊断案例建立反作弊评测规范，最后在第 20.5 节对全书二十章知识体系、双轨贯穿主线（Qwen3-8B Dense 轨与 DeepSeek V4.1 MoE 轨）及十条第一性原理铁律作出终极收束。
+作为全书前二十章“通用大模型核心算力、训练推理与可靠性底座”的阶段性枢纽之章，本章将首先推导十万卡集群可靠性的数学法则与 SDC 防御机制，随后结合本仓库锁定的生产诊断案例建立反作弊评测规范，最后在第 20.5 节对前二十章知识体系、双轨贯穿主线（Qwen3-8B Dense 轨与 DeepSeek V4.1 MoE 轨）及十条第一性原理铁律作出阶段性收束，并搭建通往第 21–24 章四大新兴疆域（自主智能体基础设施、全双工原生语音、EB 级数据与合成数据工厂、AI for Science 科学智能及全书二十四章终极收束）的系统桥梁。
 
 ---
 
@@ -878,6 +878,85 @@ def blink_debiased_flat_profiler(
 
 ---
 
+### 20.5.3 混沌故障注入演练（Chaos Fault Injection）、灰度金丝雀上线门禁与向第 21–24 章四大新兴疆域的延伸导引
+
+在十万卡智能工厂中，一套从未在真实压力下演练过的容错系统，在真正遭遇级联故障时往往会因为“监控守护进程自身超时”“RDMA 重连风暴”或“热备池权限配置缺失”而彻底失效。同样，一套只靠离线脚本把关的性能评测流水线，也极易在内核驱动、NCCL 版本或算子库滚动升级时放过低概率精度退化与尾延迟回退。因此，十万卡集群的日常运维闭环必须由**主动混沌故障注入演练（Chaos Fault Injection GameDay）**与**两阶段灰度金丝雀上线门禁（Two-Stage Canary Rollout Gate）**共同锁死（**图 20-17**）：
+
+1. **十万卡机队混沌故障注入演练（Chaos GameDay）的四大注入算子与闭环 SLA**：
+   借鉴超大规模云服务商的混沌工程范式，AI 基础设施团队每周在影子训练分区或合成基准负载上定期注入四类受控故障（每批次共 $N_{\mathrm{chaos}} = 200$ 次独立故障事件），并以**故障检出召回率（Detection Recall）**、**平均检出时间（MTTD）**与**平均自愈恢复时间（MTTR）**作为硬性验收门禁：
+   - **算术通路静默比特翻转注入（Tensor Core Bit-Flip SDC，50 次）**：通过调试寄存器或编译器插桩，在选定 Rank 的 GEMM 累加器或输出张量中随机翻转 1 个 `BFloat16` 指数位（如 $+32$ 阶跃），检验算子级 ABFT 行列校验和与 AllReduce 归约前跨秩梯度统计监控能否在单步内拦截，并触发 `OpGuard` 在 $50\ \mathrm{ms}$ 内完成位级对齐微批重算定位（实测召回率 $50/50 = 100\%$，$\mathrm{MTTD} = 0.042\ \mathrm{s}$）；
+   - **计算降频与 PCIe 带宽抢占慢节点注入（Straggler & Thermal Throttle，50 次）**：在选定 GPU 上注入人为功耗墙下调（从 $700\ \mathrm{W}$ 降至 $350\ \mathrm{W}$）或高并发 NVMe 写盘抢占 PCIe 通道，制造 $2.0\text{–}5.0\ \mathrm{ms}$ 的同步滞后，检验 `NCCL Flight Recorder` 入队时间戳偏斜矩阵（Arrival Skew Matrix）能否在 $3.2\ \mathrm{s}$ 内定位唯一正偏斜根因卡，避免误判为全网拥塞（实测召回率 $50/50 = 100\%$）；
+   - **800G 光模块 RS-FEC 高阶纠错灰故障注入（Optical Gray Failure，50 次）**：通过交换机端口可编程衰减器抬升误码率，迫使光模块频繁落入 Symbol Errors $\ge 12$ 的重传边缘（单轨延迟从 $0.8\ \mathrm{ms}$ 劣化至 $3.2\ \mathrm{ms}$），检验光链路遥测守护进程能否在链路完全闪断前主动排空（Drain）该轨流量（实测召回率 $49/50 = 98.0\%$，$\mathrm{MTTD} = 6.80\ \mathrm{s}$）；
+   - **HBM 双比特不可纠正 ECC 与 RDMA 断链注入（Uncorrectable ECC / Link Drop，50 次）**：模拟瞬间掉卡或网卡 QP 断开，检验 `TrainMover` 能否在不销毁全局通信域的前提下，于 $0.68\ \mathrm{s}$ 内完成局部 RDMA QP 重映射与热备节点接管（实测召回率 $50/50 = 100\%$，$\mathrm{MTTD} = 0.84\ \mathrm{s}$）。
+   综合全部 $200$ 次注入演练，自动化免疫底座实现 **$199/200 = 99.50\%$** 的综合故障召回率，平均检出时间 $\mathrm{MTTD} = \mathbf{2.70\ \mathrm{s}}$，端到端自动恢复时间 $\mathrm{MTTR}_{\mathrm{auto}} = \mathbf{3.85\ \mathrm{s}}$——相比传统依赖人工值班排查与 `torchrun` 全网重启的 $\mathrm{MTTR}_{\mathrm{manual}} = 1,500.0\ \mathrm{s}$（$25$ 分钟），故障恢复速度提升了 **$389.61\times$**。
+
+2. **两阶段灰度金丝雀上线门禁（Two-Stage Canary Gate）**：
+   任何新的算子内核（如新版 FlashAttention-4 / DeepGEMM）、通信库补丁或驱动固件在推向十万卡主集群前，必须依次闯过两道自动化门禁：
+   - **Stage 1（离线确定性门禁）**：强制执行锁定 TDP 预热、真实流量形状分布加权计时（严禁算术平均加速比）、`ABBA` 对称交替测序（消除线性热漂移）与 `Blink` 硬件无偏剖析；若加权总耗时退步或 FP8/BF16 尾数误差超过 $1\ \mathrm{ulp}$，直接拦截拒绝；
+   - **Stage 2（5% 线上金丝雀与影子门禁）**：在 5% 生产流量分片上试运行 $24\ \mathrm{h}$，实时监控 P99 尾延迟、梯度范数余弦相似度与 SDC 告警计数；一旦触发 $\Delta \mathrm{P99} > +3.0\%$ 或任何 1 次 SDC 事件，控制面在 $3\ \mathrm{s}$ 内自动将流量切回旧版黄金镜像。
+
+![十万卡混沌故障注入演练与两阶段金丝雀门禁流水线](ch20/ch20-chaos-fault-injection-and-canary-rollout-gate.svg)
+*图 20-17　十万卡机队混沌故障注入演练（Chaos GameDay）与两阶段金丝雀上线门禁流水线（算例 20-6，锁定 `experiments/ch20/20-02/run.py`）：通过主动注入 4 类 200 次硬件/灰故障实现 99.50% 自动召回与 3.85 s 亚秒/秒级自愈（比人工恢复快 389.61 倍），并用 Stage 1（ABBA + 加权耗时）与 Stage 2（5% 金丝雀自动回滚）锁死上线质量。*
+
+3. **从前二十章通用大模型底座迈向第 21–24 章四大新兴疆域的架构桥梁**：
+   至此，本书前二十章已经完整构筑了围绕“单次前向/反向传播与流式词元生成”的通用大模型核心基础设施。然而，2025–2026 年的 AI 工业界正在经历一场从**“单一模型词元生成（Token Generation）”向“系统级闭环智能体、全模态实时交互、EB 级合成数据飞轮与物理科学发现”**的范式跃迁。如**图 20-18** 所示，前二十章锻造的每一项底层技术，都将作为基石直接支撑本书最后四章（第 21–24 章）的四大新兴前沿：
+   - **迈向第 21 章（Agentic AI 基础设施、树状状态分支缓存、安全代码沙箱与百万智能体编排）**：第 8–9 章的前缀缓存与 PD 分离，在面对智能体多轮 ReAct 工具调用、蒙特卡洛树搜索（MCTS）与强化学习多分支 Rollout 时，演化为**树状 KV 缓存写时复制（RadixAttention + Copy-on-Write）**、**微秒级代码执行安全沙箱（MicroVM / WebAssembly 快照克隆，将工具等待期间的 GPU KV 显存税降低 85%）**与**结构化语法状态机零开销掩码（`XGrammar`）**；
+   - **迈向第 22 章（全双工原生语音基础设施、神经音频编解码器、微秒级流式推理与声学回声消除）**：第 19 章的机载硬实时确定性调度与第 9 章的流式解码，在面对人类自然对话 $<200\ \mathrm{ms}$ 端到端语音响应与随时打断（Barge-in）时，演化为**残差矢量量化神经音频编解码（RVQ Codec，$12.5\text{–}50\ \mathrm{Hz}$ 多码本并行生成）**、**双通道全双工听—说并发状态机（Moshi / GPT-4o 架构）**与**端云协同声学回声消除（AEC）及 WebRTC 抖动缓冲**；
+   - **迈向第 23 章（EB 级预训练数据基础设施、分布式模糊去重、模型驱动质量过滤与合成数据工厂）**：第 13 章的高吞吐并行存储（3FS）与第 18 章的验证器农场，在面对互联网自然语料枯竭（Data Wall）时，演化为**EB 级多模态数据湖（Apache Iceberg + Lance 列式随机访问）**、**十万核级分布式 MinHash-LSH 模糊去重与后缀数组精确去重**，以及**消耗上万张 GPU 日产百亿高价值推理思维链的合成数据精炼工厂（Synthetic Data Factory）**；
+   - **迈向第 24 章（AI for Science 科学智能基础设施、球谐等变算子、几何三角注意力与全书二十四章终极收束）**：第 4–7 章的算子融合与三维并行，在面对全地球高分辨率气象预报（GraphCast / FourCastNet）、生物大分子全原子扩散结构预测（AlphaFold 3）与千万原子分子动力学模拟时，演化为**三维球面傅里叶神经算子（SFNO）**、**显存复杂度 $\mathcal{O}(N^3)$ 的几何三角自注意力分块核（Tiled Triangle Attention）**、**$\mathrm{SE}(3)$ 等变球谐张量积算子**，并在第 24.5 节完成全书二十四章与十二条第一性原理铁律的终极交响收束。
+
+![前二十章通用集群底座向第 21–24 章四大新兴疆域的延伸桥梁](ch20/ch20-core-cluster-to-four-new-frontiers-bridge.svg)
+*图 20-18　从前二十章通用大模型与十万卡可靠性底座向第 21–24 章四大新兴疆域（自主智能体基础设施、全双工原生语音、EB 级合成数据工厂、AI for Science 科学智能及全书二十四章终极收束）的架构映射桥梁。*
+
+> **算例 20-6（十万卡机队混沌故障注入 GameDay 演练召回率、平均恢复时间 MTTR 与 8-Rank 入队偏斜反演账本，锁定 `experiments/ch20/20-02/run.py`）**
+> **场景设定**：（1）在一个 8-Rank AllReduce 同步通信组中，7 个健康 Rank 在 $t = 10.0\ \mathrm{ms}$ 准时入队，而 Rank 5 因 PCIe/降频慢节点故障在 $t = 12.0\ \mathrm{ms}$ 入队，全员到齐后 Ring AllReduce 真实网络传输耗时 $0.40\ \mathrm{ms}$，核算健康 Rank 观测到的表面通信时间、慢节点空等占比，以及 `TrainMover` 亚秒级热迁移（$0.68\ \mathrm{s}$）相比传统 `torchrun` 全网重启（$300.0\ \mathrm{s}$）的恢复加速比；（2）在十万卡机队上执行 $200$ 次 Chaos GameDay 故障注入（SDC 翻转、慢节点、800G 光模块 FEC 灰故障、HBM ECC 掉卡各 $50$ 次），核算综合召回率、平均检出时间 $\mathrm{MTTD}$ 与自动自愈加速比。
+> **逐步推导**：
+> 1. **8-Rank 入队偏斜反演与 `TrainMover` 亚秒级热接管**：全体完成时刻为 $\max(10.0, 12.0) + 0.40 = 12.40\ \mathrm{ms}$。7 个健康 Rank 观测到的 AllReduce 持续时间为 $12.40 - 10.0 = \mathbf{2.40\ \mathrm{ms}}$，其中等待 Rank 5 的空转时间为 $2.00\ \mathrm{ms}$（慢节点等待占比高达 $2.00 / 2.40 = \mathbf{83.33\%}$，真实网络传输仅占 $16.67\%$）。`NCCL Flight Recorder` 通过计算各 Rank 相对于中位数到达时刻（$10.0\ \mathrm{ms}$）的偏斜向量 $\Delta \mathbf{t} = [0, 0, 0, 0, 0, +2.0, 0, 0]\ \mathrm{ms}$，一步锁定 `straggler_rank = 5`。随后触发 `TrainMover` 在 **$0.68\ \mathrm{s}$** 内完成局部 RDMA QP 重映射与热备替换，相比传统 $300.0\ \mathrm{s}$ 全局销毁重启提速 **$441.18\times$**。
+> 2. **200 次混沌注入演练总账本**：四类故障分别检出 $50, 50, 49, 50$ 次，总检出 $199/200$ 次，综合召回率 **$\mathrm{Recall} = 99.50\%$**；四类检出耗时加权均值 $\mathrm{MTTD} = \frac{50\times 0.042 + 50\times 3.20 + 49\times 6.80 + 50\times 0.84}{199} = \frac{537.30}{199} = \mathbf{2.70\ \mathrm{s}}$；自动自愈恢复耗时加权均值 $\mathrm{MTTR}_{\mathrm{auto}} = \mathbf{3.85\ \mathrm{s}}$，相比人工处置 $\mathrm{MTTR}_{\mathrm{manual}} = 1,500.0\ \mathrm{s}$ 提速 **$389.61\times$**。
+
+下面给出集合通信入队偏斜矩阵（Arrival Skew Matrix）慢节点定位器与十万卡混沌演练 SLA 审计器的生产级参考实现：
+
+```python
+from typing import Dict, List
+
+
+class ChaosGameDayAndArrivalSkewAuditor:
+    """集合通信入队偏斜慢节点定位器与十万卡 Chaos GameDay 自动自愈审计器。"""
+
+    @staticmethod
+    def diagnose_arrival_skew(enqueue_ms: List[float], net_tx_ms: float) -> Dict[str, float]:
+        sorted_t = sorted(enqueue_ms)
+        median_t = sorted_t[len(sorted_t) // 2]
+        skews = [round(t - median_t, 4) for t in enqueue_ms]
+        max_skew = max(skews)
+        straggler_rank = skews.index(max_skew)
+        completion_ms = max(enqueue_ms) + net_tx_ms
+        healthy_duration_ms = completion_ms - min(enqueue_ms)
+        wait_share_pct = round(100.0 * max_skew / healthy_duration_ms, 2)
+        return {
+            "straggler_rank": float(straggler_rank),
+            "max_skew_ms": round(max_skew, 4),
+            "observed_allreduce_ms": round(healthy_duration_ms, 4),
+            "straggler_wait_share_pct": wait_share_pct,
+        }
+
+    @staticmethod
+    def audit_chaos_gameday(campaigns: List[Dict[str, float]], manual_mttr_s: float = 1500.0) -> Dict[str, float]:
+        total_injected = sum(int(c["injected"]) for c in campaigns)
+        total_detected = sum(int(c["detected"]) for c in campaigns)
+        mttd_s = sum(c["detected"] * c["mttd_s"] for c in campaigns) / max(1, total_detected)
+        mttr_auto_s = sum(c["detected"] * c["mttr_s"] for c in campaigns) / max(1, total_detected)
+        return {
+            "total_injected": float(total_injected),
+            "detection_recall_pct": round(100.0 * total_detected / max(1, total_injected), 2),
+            "mttd_sec": round(mttd_s, 2),
+            "mttr_auto_sec": round(mttr_auto_s, 2),
+            "mttr_speedup_vs_manual": round(manual_mttr_s / mttr_auto_s, 2),
+        }
+```
+
+---
+
 ## 常见误区
 
 1. **误区一：“每张 H100 GPU 的平均无故障时间长达 5 年以上，而且显存开启了硬件 ECC，所以跑几万张卡的训练只要每隔几小时存一次远端磁盘检查点就高枕无忧了。”**
@@ -944,15 +1023,21 @@ def blink_debiased_flat_profiler(
 > （1）复算算例 20-1（Meta $16\mathrm{K}$ 卡 $419$ 次故障外推至十万卡 $\mathrm{MTBF} = 30.41\ \mathrm{min}$，以及传统落盘检查点 $\mathrm{ETTR} = 63.22\%$ vs. 内存快照+热迁移 $\mathrm{ETTR} = 92.34\%$）与算例 20-2（泊松热备池 $S_{\min} = 40$）；
 > （2）复算算例 20-3（$4,096$ 阶矩阵乘 ABFT $0.0732\%$ 开销与 $(2, 3)$ 坐标 $+64.0$ 翻转原地修复）以及算例 20-4 / 20-5（慢节点 $2.0\ \mathrm{ms}$ 偏斜 vs. $0.2\ \mathrm{ms}$ 带宽收益、$5.25\times$ 加速比悖论 $p^* = 15/19$ 与 `ABBA` 漂移抵消）。
 
-### 可运行实验（20-01）
+> **练习 20-11（集合通信 Arrival Skew Matrix 慢节点根因反演与光模块 FEC 重传灰故障定位）：**
+> 在某 $16$-Rank 跨机架 AllReduce 通信组中，`NCCL Flight Recorder` 记录到单步集合通信的入队时刻：除 Rank 11 在 $t_{11} = 28.5\ \mathrm{ms}$ 入队外，其余 $15$ 个健康 Rank 均在 $t = 22.5\ \mathrm{ms}$ 入队；全员到齐后 Ring AllReduce 的网络传输耗时为 $1.5\ \mathrm{ms}$。
+> （1）求其余 $15$ 个健康 Rank 在 Profiler 中观测到的 AllReduce 算子持续时间，以及其中等待 Rank 11 的慢节点空转占比；
+> （2）若将集群网络带宽直接翻倍（使真实网络传输耗时从 $1.5\ \mathrm{ms}$ 降至 $0.75\ \mathrm{ms}$），而未隔离慢节点 Rank 11，求健康 Rank 观测到的 AllReduce 持续时间仅缩短了百分之几？若改用 `TrainMover` 在 $0.68\ \mathrm{s}$ 内将 Rank 11 热迁移至健康热备卡（消除 $6.0\ \mathrm{ms}$ 入队偏斜），单步 AllReduce 耗时可获得多少倍的真实加速？
 
-- **实验目录**：`experiments/ch20/20-01`
-- **实验目标**：一键复现并校验本章全部锁定算例与生产案例账本，包括 Meta $16,384$ 卡 $419$ 次故障外推至十万卡 $\mathrm{MTBF} = 30.41\ \mathrm{min}$、Young-Daly 最优检查点周期与有效训练时间比（传统落盘 $\mathrm{ETTR} = 63.22\%$ vs. 内存异步快照+秒级热迁移 $\mathrm{ETTR} = 92.34\%$）、泊松维修队列热备节点池（$L=24.0,\; S_{\min}=40$）、ABFT 矩阵乘行列校验和（$0.0732\%$ 开销与 $(2,3)$ 处 $+64.0$ 翻转原地修复）、集合通信慢节点偏斜（$2.0\ \mathrm{ms}$ vs. 带宽翻倍 $0.2\ \mathrm{ms}$）与环路死锁检测，以及 $5.25\times$ 算术平均加速比悖论（$p^* = 15/19$）、`ABBA` 时漂抵消与金丝雀自动回滚门禁。
-- **执行与校验命令**：
-  ```bash
-  python3 experiments/ch20/20-01/run.py
-  python3 experiments/ch20/20-01/verify.py
-  ```
+> **实验 20-12（运行 `experiments/ch20/20-02` 复算 Arrival Skew 慢节点定位、TrainMover 亚秒级热迁移与四大跑分失真修正）：**
+> 运行并阅读本章第二个配套实验 `experiments/ch20/20-02/run.py` 与 `experiments/ch20/20-02/verify.py`：
+> （1）复算算例 20-6 中的 8-Rank 入队偏斜矩阵诊断（精确锁定 `straggler_rank = 5`、偏斜 $2.0\ \mathrm{ms}$、慢节点等待占比 $83.33\%$）以及 `TrainMover` 亚秒级热迁移（$0.68\ \mathrm{s}$ vs. 传统重启 $300.0\ \mathrm{s}$，提速 $441.18\times$）；
+> （2）复算四大跑分失真修正与两阶段金丝雀门禁（$5.25\times$ 算术平均加速比实则 $0.9524\times$ 倒退、`ABBA` 消除 $-16.0\ \mu\mathrm{s}$ 漂移偏置、金丝雀捕获 $+4.8\%$ P99 退化自动回滚），以及十万卡 $200$ 次 Chaos GameDay 故障注入演练（$99.50\%$ 召回率、$\mathrm{MTTD} = 2.70\ \mathrm{s}$、$\mathrm{MTTR}_{\mathrm{auto}} = 3.85\ \mathrm{s}$，比人工恢复快 $389.61\times$）。
+
+### 可运行实验（20-01 与 20-02）
+
+- **实验目录**：`experiments/ch20/20-01`（十万卡 Young-Daly 周期、热备池排队模型与 ABFT SDC 修复器）、`experiments/ch20/20-02`（Arrival Skew 慢节点定位、`TrainMover` 热迁移、四大跑分失真修正与 Chaos GameDay 演练审计器）
+- **实验目标**：一键复现并校验本章全部锁定算例与生产案例账本，包括十万卡 $\mathrm{MTBF} = 30.41\ \mathrm{min}$、Young-Daly 最优检查点周期与有效训练时间比（$\mathrm{ETTR}\ 63.22\% \to 92.34\%$）、泊松热备节点池（$S_{\min}=40$）、ABFT 矩阵乘行列校验和（$0.0732\%$ 开销与原地修复）（`20-01`），以及 8-Rank 入队偏斜慢节点定位（$83.33\%$ 等待占比）、`TrainMover` $0.68\ \mathrm{s}$ 热接管（快 $441.18\times$）、四大跑分失真修正与 $200$ 次 Chaos GameDay 故障注入演练（$99.50\%$ 召回率、$\mathrm{MTTR}_{\mathrm{auto}} = 3.85\ \mathrm{s}$）（`20-02`）。
+- **执行与校验命令**：在终端依次执行 `python3 experiments/ch20/20-01/run.py && python3 experiments/ch20/20-01/verify.py` 以及 `python3 experiments/ch20/20-02/run.py && python3 experiments/ch20/20-02/verify.py`。
 
 ---
 
@@ -998,7 +1083,14 @@ def blink_debiased_flat_profiler(
 - **20-10 解答**：
   在仓库根目录执行 `python3 experiments/ch20/20-01/run.py && python3 experiments/ch20/20-01/verify.py`，终端输出 `Experiment 20-01 verified successfully.`，所有指标与本章算例及锁定案例 $100\%$ 一致。
 
-下表给出了全章 10 道练习与实验的核心锁定数值速查索引：
+- **20-11 解答**：
+  1. 全体完成时刻为 $\max(22.5, 28.5) + 1.5 = 30.0\ \mathrm{ms}$；其余 $15$ 个健康 Rank 观测到的 AllReduce 持续时间为 $30.0 - 22.5 = \mathbf{7.50\ \mathrm{ms}}$，其中等待 Rank 11 的慢节点空转时间为 $28.5 - 22.5 = 6.0\ \mathrm{ms}$，占比高达 $\frac{6.0}{7.50} = \mathbf{80.00\%}$。
+  2. 若盲目将网络带宽翻倍（传输从 $1.5\ \mathrm{ms}$ 降至 $0.75\ \mathrm{ms}$），健康 Rank 看到的持续时间变为 $6.0 + 0.75 = \mathbf{6.75\ \mathrm{ms}}$，仅缩短了 $\frac{7.50 - 6.75}{7.50} = \mathbf{10.00\%}$；若通过 `NCCL Flight Recorder` 偏斜矩阵定位并用 `TrainMover` 替换慢节点 Rank 11（消除 $6.0\ \mathrm{ms}$ 偏斜），单步 AllReduce 耗时直接从 $7.50\ \mathrm{ms}$ 降至 **$1.50\ \mathrm{ms}$**，获得 **$\mathbf{5.00\times}$** 的真实加速。
+
+- **20-12 解答**：
+  在仓库根目录执行 `python3 experiments/ch20/20-02/run.py && python3 experiments/ch20/20-02/verify.py`，终端输出 `Experiment 20-02 verified successfully.`，实测锁定 `straggler_rank = 5`（等待占比 $83.33\%$）、`TrainMover` $0.68\ \mathrm{s}$ 热接管（提速 $441.18\times$）、`ABBA` 消除 $-16.0\ \mu\mathrm{s}$ 漂移，以及 $200$ 次 Chaos GameDay 演练 $99.50\%$ 召回率与 $\mathrm{MTTR}_{\mathrm{auto}} = 3.85\ \mathrm{s}$（提速 $389.61\times$）。
+
+下表给出了全章 12 道练习与实验的核心锁定数值速查索引：
 
 | 练习编号 | 考查工程主题 | 核心锁定输入参数 | 精确复算输出基准 |
 | :--- | :--- | :--- | :--- |
@@ -1012,8 +1104,10 @@ def blink_debiased_flat_profiler(
 | **20-8** | 线性热漂移 AABB vs. ABBA | $d_k = k\delta,\; \delta = 12.0\ \mu\mathrm{s}$ | AABB 偏置 $-24.0\ \mu\mathrm{s}$；ABBA 恒等于 $\mu_A - \mu_B$ |
 | **20-9** | 全书双轨从机载到万卡综合题 | Qwen3-8B INT4 $4.6\ \mathrm{GB}$ vs. DeepSeek V4.1 | 机载单步访存下限 $7.67\ \mathrm{ms}$；五大系统技术各破一墙 |
 | **20-10** | 十万卡容错与评测反例实验 | `experiments/ch20/20-01` 锁定脚本 | $\mathrm{ETTR}\ 63.22\% \to 92.34\%, S_{\min}=40, p^*=15/19$ |
+| **20-11** | 16-Rank 入队偏斜反演与热迁移 | $15$ 卡 $22.5\ \mathrm{ms}$ vs. 慢卡 $28.5\ \mathrm{ms}$, 传输 $1.5\ \mathrm{ms}$ | 观测 $7.50\ \mathrm{ms}$（$80\%$ 等待）；带宽翻倍仅省 $10\%$，替换慢卡快 $5.00\times$ |
+| **20-12** | 偏斜定位、金丝雀与混沌演练实验 | `experiments/ch20/20-02` 锁定脚本 | `straggler_rank=5`（$83.33\%$），`TrainMover` 快 $441.18\times$，演练召回 $99.50\%$ |
 
-*表 20-9　第 20 章十道练习与可运行实验核心锁定数值速查表。*
+*表 20-9　第 20 章十二道练习与可运行实验核心锁定数值速查表。*
 
 ---
 
@@ -1021,8 +1115,8 @@ def blink_debiased_flat_profiler(
 
 1. **十万卡可靠性反比坍缩与热备池排队论**：集群级平均无故障时间随规模按 $\mathrm{MTBF}_{\mathrm{cluster}} = \mathrm{MTBF}_{\mathrm{unit}} / N$ 反比衰减——从 Meta $16,384$ 卡的 $3.09$ 小时（$54$ 天 $419$ 次中断，硬件占 $78\%$）外推至十万卡时，每 **$30.41$ 分钟**即发生一次中断。利用内存异步快照（$C=5\ \mathrm{s}$）、`TrainMover` 秒级无重启接管（$T_{\mathrm{rec}}=5\ \mathrm{s}$）与泊松维修队列热备池（$L=24 \implies S_{\min}=40$ 台，占比 $<0.4\%$），可将十万卡有效训练时间比（ETTR）从 $63.22\%$ 拉升至 **$92.34\%$**。
 2. **静默数据损坏（SDC）的三道毫秒级在线防线**：算术单元内部的瞬态或老化比特翻转会逃逸 HBM ECC 并通过单次 AllReduce 污染全网权重。通过 **（1）算子级 ABFT 行列校验和**（开销 $0.0732\% < 0.5\%$）、**（2）AllReduce 归约前跨秩梯度统计拦截**（`Safeguarding LLM Training` OSDI '26，3,500 万卡时验证）与 **（3）控制良性非确定性的位级对齐重放定位**（`OpGuard` OSDI '26，耗时 $50\ \mathrm{ms}$ 微批重算），可在线揪出物理坏卡并实现零检查点回滚自愈。
-3. **慢节点到达偏斜取证与光链路灰故障预测**：在紧耦合集合通信中，单张慢卡迟到 $2.0\ \mathrm{ms}$ 会让其余所有健康卡显示“通信耗时 $2.4\ \mathrm{ms}$”。利用 `NCCL Flight Recorder` 入队时间戳偏斜矩阵与 800G 光模块 RS-FEC 高阶纠错桶斜率监控，可精准区分慢节点等待与网络拥塞，主动隔离灰故障。
-4. **反作弊基准评测科学与全书二十章收束**：算术平均加速比会制造“$5.25\times$ 加速实则比基线更慢”的假象，单调 `AABB` 测量会把热漂移当成算法收益，扁平负载会让传统 PMU 采样失真。结合 `FlashInfer-Bench`、`CCEval`、`DriftBench`、`Blink`（OSDI '26）与 `ABBA` 两阶段金丝雀门禁，辅以贯穿全书二十章的双轨主线与十条第一性原理铁律，构成了现代 AI 基础设施架构师的完整方法论体系。
+3. **慢节点到达偏斜取证与光链路灰故障预测**：在紧耦合集合通信中，单张慢卡迟到 $2.0\ \mathrm{ms}$ 会让其余所有健康卡显示“通信耗时 $2.4\ \mathrm{ms}$”（其中 $83.33\%$ 在空等慢卡）。利用 `NCCL Flight Recorder` 入队时间戳偏斜矩阵与 800G 光模块 RS-FEC 高阶纠错桶斜率监控，配合 `TrainMover` $0.68\ \mathrm{s}$ 亚秒级热迁移（比全局重启快 $441.18\times$），可精准隔离慢节点与灰故障。
+4. **反作弊基准评测科学、混沌演练门禁与向四大新兴疆域的延伸**：算术平均加速比会制造“$5.25\times$ 加速实则比基线更慢”的假象，单调 `AABB` 测量会把热漂移当成算法收益，扁平负载会让传统 PMU 采样失真。结合 `FlashInfer-Bench`、`CCEval`、`DriftBench`、`Blink`（OSDI '26）、两阶段金丝雀门禁与 $200$ 次 Chaos GameDay 主动故障注入演练（$99.50\%$ 召回率，$\mathrm{MTTR}_{\mathrm{auto}} = 3.85\ \mathrm{s}$），本章完成了前二十章通用大模型底座的阶段性收束，并正式开启第 21–24 章四大新兴前沿疆域。
 
 [^ch20-llama3]: 关于 Meta Llama 3 405B 在 $16,384$ 张 H100 GPU 上历时 $54$ 天的 $419$ 次非计划中断分类账本，参见 Dubey 等人的技术报告 *The Llama 3 Herd of Models*（Section 3.3, arXiv:2407.21783, 2024）。
 [^ch20-daly]: 关于周期性检查点开销与平均无故障间隔下的最优检查点间隔公式（$\tau_{\mathrm{opt}} = \sqrt{2 C_{\mathrm{ckpt}} M}$），参见 Daly 的经典论文 *A Higher Order Estimate of the Optimum Checkpoint Interval for Restart Dumps*（Future Generation Computer Systems, 2006）。

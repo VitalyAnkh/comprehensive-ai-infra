@@ -54,5 +54,30 @@
       "aabb_means_us": [105.0, 115.0],
       "abba_means_us": [115.0, 105.0]
     }
+  },
+  "chaos_gameday_and_frontier_bridge": {
+    "source": "experiments/ch20/20-02/run.py (100K-GPU Chaos Fault Injection & Chapters 21-24 Bridge)",
+    "total_injected_faults": 200,
+    "detected_faults": 199,
+    "overall_recall_pct": 99.5,
+    "mean_mttd_sec": 2.7,
+    "mean_auto_mttr_sec": 3.85,
+    "manual_mttr_sec": 1500.0,
+    "mttr_speedup_x": 389.61,
+    "arrival_skew_8rank_case": {
+      "healthy_enqueue_ms": 10.0,
+      "straggler_rank": 5,
+      "straggler_enqueue_ms": 12.0,
+      "arrival_skew_ms": 2.0,
+      "ring_transfer_ms": 0.4,
+      "observed_healthy_duration_ms": 2.4,
+      "wait_share_pct": 83.33
+    },
+    "four_new_frontiers_ch21_ch24": {
+      "ch21_agentic": "95% WORM KV + 12 ms MicroVM CoW + 76.92 s Telemetry Drain",
+      "ch22_speech": "<200 ms Full-Duplex S2S + 12.5 Hz Mimi RVQ + Cursor KV Rollback",
+      "ch23_data_factory": "0.5% MinHash/Classifier/Influence Funnel + Mid-Training Mix",
+      "ch24_ai4science": "O(N^3) Triangle Attention + 3D FFT/Equivariance + 24-Ch Synthesis"
+    }
   }
 }

@@ -220,7 +220,7 @@
     "number": 16,
     "file": "ch19-embodied-ai-full-stack-infrastructure-map.svg",
     "asset": "ch19/ch19-embodied-ai-full-stack-infrastructure-map.svg",
-    "section": "19.4.2",
+    "section": "19.4.3",
     "caption": "具身智能从万级 GPU 物理仿真、双频实时机载推理到车队影子数据飞轮的全栈基础设施总图",
     "source_refs": [
       "experiments/ch19/19-01/run.py"
@@ -228,5 +228,35 @@
     "TeachingRole": "收束第 19 章硬实时控制、GPU 原生仿真与 Sim-to-Real 数据闭环的工程总账本",
     "figure": "19-16",
     "name": "ch19-embodied-ai-full-stack-infrastructure-map"
+  },
+  {
+    "figure_id": "图 19-17",
+    "number": 17,
+    "file": "ch19-three-tier-vlm-flow-wbc-humanoid-control.svg",
+    "asset": "ch19/ch19-three-tier-vlm-flow-wbc-humanoid-control.svg",
+    "section": "19.4.4",
+    "caption": "人形机器人三级实时控制架构（2 Hz VLM 语义规划 → 100 Hz Flow-Matching 末端轨迹 → 1,000 Hz WBC/MPC 全身力矩平衡与触觉反射）",
+    "source_refs": [
+      "experiments/ch19/19-02/run.py",
+      "manuscripts/ch19/figure-data.json"
+    ],
+    "TeachingRole": "剖析 1,000 Hz 视触觉初生打滑反射与 28-DoF 全身动力学二次规划（WCET = 800 μs）的三级解耦",
+    "figure": "19-17",
+    "name": "ch19-three-tier-vlm-flow-wbc-humanoid-control"
+  },
+  {
+    "figure_id": "图 19-18",
+    "number": 18,
+    "file": "ch19-fast-dct-frequency-action-tokenization.svg",
+    "asset": "ch19/ch19-fast-dct-frequency-action-tokenization.svg",
+    "section": "19.4.4",
+    "caption": "时域逐帧离散化动作 Token 在高频采样下的边际信息坍缩 vs. FAST（离散余弦变换 DCT + BPE）频域动作压缩",
+    "source_refs": [
+      "experiments/ch19/19-02/run.py",
+      "manuscripts/ch19/figure-data.json"
+    ],
+    "TeachingRole": "证明利用机械轨迹低通特性将 700 个时域动作值压缩为 80 个频域词元（8.75× 压缩）的机理",
+    "figure": "19-18",
+    "name": "ch19-fast-dct-frequency-action-tokenization"
   }
 ]

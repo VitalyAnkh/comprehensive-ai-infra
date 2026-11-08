@@ -364,6 +364,42 @@ def fig_20_16_ten_principles(ex: Exporter):
     ex.save(fig, 'ch20-ten-first-principles-of-ai-infra')
 
 
+def fig_20_17_chaos_fault_injection(ex: Exporter) -> None:
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '四维主动混沌故障注入演练（200 次注入，总召回率 99.5%）', color='orange')
+    faults = [
+        (0.03, 0.58, 0.29, 0.24, '① 算子 SDC 注入\n翻转 +32..+64\nABFT 100% 捕获\nMTTD = 0.042 s', 'orange'),
+        (0.355, 0.58, 0.29, 0.24, '② 慢卡与光模块\n+2.0 ms 偏斜/FEC\n偏斜阵 99% 定位\nMTTD = 3.2–6.8 s', 'purple'),
+        (0.68, 0.58, 0.29, 0.24, '③ 掉卡与金丝雀\nTrainMover 0.68 s\n>3% P99 熔断回滚\nMTTR = 3.85 s', 'teal'),
+    ]
+    for x, y, w, h, label, role in faults:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.355, 0.70))
+    arrow(ax, (0.645, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '混沌演练 + 两阶段金丝雀门禁 vs. 传统被动排障收益对比', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '传统被动运维（无 GameDay）\n告警链路失效、慢卡长期潜伏\n人工重启耗时 1,500 s（25 min）', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '主动混沌检验 + 自治 SRE 闭环\n199/200 故障秒级自动拦截隔离\n恢复提速 389.6×，ETTR 92.34%', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '未经受主动故障注入检验的容错状态机，在十万卡风暴中易发级联雪崩', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-chaos-fault-injection-and-canary-rollout-gate')
+
+
+def fig_20_18_frontier_bridge(ex: Exporter) -> None:
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '前 20 章通用训推与可靠性底座 → 第 21–24 章四大新兴战略疆域', color='blue')
+    box(ax, 0.04, 0.58, 0.44, 0.24, '第 21 章智能体与第 22 章全双工\n95% WORM KV + 12 ms CoW 沙箱\n<200 ms S2S + 游标对齐回滚', 'blue', size=11)
+    box(ax, 0.52, 0.58, 0.44, 0.24, '第 23 章数据厂与第 24 章科学终章\n0.5% 清洗漏斗 + 中训练配比\nO(N^3) 三角注意 + 24 章收束', 'purple', size=11)
+    arrow(ax, (0.48, 0.70), (0.52, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '双枢纽收束结构：第 20 章（通用可靠性枢纽）↔ 第 24 章（全书终章）', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '第一枢纽（第 1–20 章）：\n算术强度、超节点互联、PD 分离\n与十万卡防 SDC 构筑通用底座', 'blue', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '第二枢纽（第 21–24 章）：\n向长程环境状态、硬实时音频流、\n源头数据燃料与科学智能延伸', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '第一性原理（字节、局部性、拓扑同构与尾延迟治理）贯穿全部二十四章', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-core-cluster-to-four-new-frontiers-bridge')
+
+
 def build_chapter() -> None:
     ex = Exporter(HERE)
     fig_20_1_mtbf_scaling(ex)
@@ -382,6 +418,8 @@ def build_chapter() -> None:
     fig_20_14_dual_track_ledger(ex)
     fig_20_15_knowledge_graph(ex)
     fig_20_16_ten_principles(ex)
+    fig_20_17_chaos_fault_injection(ex)
+    fig_20_18_frontier_bridge(ex)
     outputs = ex.finish()
 
     fig_index = [
@@ -544,6 +582,26 @@ def build_chapter() -> None:
             "caption": "AI 基础设施架构师的十条第一性原理终极法则总结图",
             "source_refs": ["manuscripts/ch20/figure-data.json"],
             "TeachingRole": "提炼贯穿全书二十章的十条第一性原理与定量工程铁律"
+        },
+        {
+            "figure_id": "图 20-17",
+            "number": 17,
+            "file": "ch20-chaos-fault-injection-and-canary-rollout-gate.svg",
+            "asset": "ch20/ch20-chaos-fault-injection-and-canary-rollout-gate.svg",
+            "section": "20.5.3",
+            "caption": "面向十万卡集群的混沌故障注入（SDC 比特翻转 / RoCE 灰丢包 / 慢节点）与金丝雀灰度发布验证闭环",
+            "source_refs": ["experiments/ch20/20-02/run.py", "manuscripts/ch20/figure-data.json"],
+            "TeachingRole": "通过 200 次主动混沌演练（99.5% 召回率，MTTR = 3.85 s）验证十万卡自愈闭环"
+        },
+        {
+            "figure_id": "图 20-18",
+            "number": 18,
+            "file": "ch20-core-cluster-to-four-new-frontiers-bridge.svg",
+            "asset": "ch20/ch20-core-cluster-to-four-new-frontiers-bridge.svg",
+            "section": "20.5.3",
+            "caption": "从前 20 章通用大模型训练/推理底座迈向第 21–24 章（自主智能体、全双工语音、百亿亿次数据工厂、AI for Science）的架构映射桥接图",
+            "source_refs": ["manuscripts/ch20/figure-data.json"],
+            "TeachingRole": "构建第 20 章与第 24 章前后呼应的双枢纽结构，自然引出四大新兴基础设施疆域"
         }
     ]
     for row in fig_index:
@@ -602,6 +660,7 @@ def build_chapter() -> None:
         ROOT / 'case-studies/collective-paths-and-diagnosis.md',
         ROOT / 'case-studies/optimization-evaluation-and-deployment.md',
         ROOT / 'experiments/ch20/20-01/run.py',
+        ROOT / 'experiments/ch20/20-02/run.py',
     ]
     if md.exists():
         sources.append(md)
