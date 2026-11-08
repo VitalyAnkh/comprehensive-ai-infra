@@ -295,6 +295,42 @@ def draw(here,data):
         box(a,.52,.30,.45,.17,'单节点故障恢复路径：\n备用节点从对等端内存拉取状态','green',11)
         box(a,.52,.04,.45,.20,'结合张量重计算消除磁盘往返：\n恢复耗时较传统 PFS 缩短十倍','purple',11)
         out.save(f,'ch10-bytecheckpoint-resharding-and-checkmate')
+
+        # New Path-E3 figure 1: ch10-i20-double-buffer-dma-staging-timeline (Fig 10-55, Locked Case I20)
+        f,a=canvas(6.4)
+        text(a,.25,.95,'A. 串行 vs 单设备槽 vs 双缓冲 (I20)',12,ha='center')
+        text(a,.745,.95,'B. 缓冲区复用约束与链路降级翻转',12,ha='center')
+        a.plot([.495,.495],[.03,.97],color=COL['line'],ls='--',lw=1.0)
+
+        box(a,.03,.75,.44,.15,'8 块 × 64 MiB BF16 激活张量\n准备 1ms / H2D 2.604ms / 算 4ms','gray',11)
+        box(a,.03,.53,.44,.16,'① 同步串行 (1 主机+1 设备槽)\n8 × 7.604 = 60.833 ms','orange',11)
+        box(a,.03,.30,.44,.17,'② 单设备槽 (2 主机+1 设备槽)\nDMA 等计算完：53.833 ms','purple',11)
+        box(a,.03,.05,.44,.19,'③ 乒乓双槽 (2 主机+2 设备槽)\n7.604 + 7×4 = 35.604 ms (1.71×)','green',11)
+
+        box(a,.52,.75,.45,.15,'事件同步与安全复用边界：\n主机槽等 DMA；设备槽等计算','blue',11)
+        box(a,.52,.53,.45,.16,'暂存空间代价：\n双侧各 2×64 = 128 MiB 缓冲','blue',11)
+        box(a,.52,.30,.45,.17,'④ PCIe 降级至 12 GiB/s：\n单块 H2D 升至 5.208 ms (>4ms)','orange',11)
+        box(a,.52,.05,.45,.19,'瓶颈由计算翻转回传输：\n双缓冲耗时升至 46.667 ms','gray',11)
+        out.save(f,'ch10-i20-double-buffer-dma-staging-timeline')
+
+        # New Path-E3 figure 2: ch10-distributed-muon-newton-schulz-and-rl-readmission (Fig 10-56)
+        f,a=canvas(6.4)
+        text(a,.25,.95,'A. 分布式 Muon 正交化与重叠',12,ha='center')
+        text(a,.745,.95,'B. RL 节点掉线弹性重准入状态机',12,ha='center')
+        a.plot([.495,.495],[.03,.97],color=COL['line'],ls='--',lw=1.0)
+
+        box(a,.03,.75,.44,.15,'动量归约：跨 DP ReduceScatter\n分片动量 M_i，通信量减半','blue',11)
+        arrow(a,(.25,.75),(.25,.66),'data')
+        box(a,.03,.49,.44,.16,'5 步 BF16 Newton-Schulz 迭代\nX\' = aX + bAX + cA^2X (A=XX^T)','green',11)
+        box(a,.03,.27,.44,.17,'分片正交化与 AllGather 重叠\n第 l 层正交化掩盖 l-1 层广播','purple',11)
+        box(a,.03,.05,.44,.17,'省去二阶矩 v，状态降 33%\n额外正交化 FLOPs 占比 < 1%','gray',11)
+
+        box(a,.52,.75,.45,.15,'Rollout 掉线隔离 (DRAINING)\n健康节点接管未完成采样','orange',11)
+        arrow(a,(.745,.75),(.745,.66),'data')
+        box(a,.52,.49,.45,.16,'重启并建通信域 (SYNCING)\n禁旧版本权重直接入生成池','purple',11)
+        box(a,.52,.27,.45,.17,'定向上传最新策略切片 v_curr\n校验哈希并清空残留 KV 池','blue',11)
+        box(a,.52,.05,.45,.17,'版本屏障对齐后重入 (ACTIVE)\n严防跨代差样本污染策略梯度','green',11)
+        out.save(f,'ch10-distributed-muon-newton-schulz-and-rl-readmission')
     from core_principles_figures import draw as draw_principles
     draw_principles(10, out)
     out.finish();return out.outputs,out.checks

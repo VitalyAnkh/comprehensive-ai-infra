@@ -225,6 +225,42 @@ def draw(here,data):
         box(a,.52,.27,.45,.17,'Mooncake 预测性准入判据：\n预估未来窗 [t, t+T] 的 KV 水位','green',11)
         box(a,.52,.05,.45,.17,'超上限 M_D_max 则 P 前拒绝\n或延后准入，零无效 Prefill','blue',11)
         out.save(f,'ch09-mooncake-kv-centric-and-early-rejection')
+
+        # New Path-E3 figure 1: ch09-eplb-shadow-expert-warmup-atomic-swap (Fig 9-53)
+        f,a=canvas(6.4)
+        text(a,.25,.95,'A. 影子专家后台预热与权重复制',12,ha='center')
+        text(a,.745,.95,'B. 路由表双缓冲原子切换与排空',12,ha='center')
+        a.plot([.495,.495],[.03,.97],color=COL['line'],ls='--',lw=1.0)
+
+        box(a,.03,.75,.44,.15,'滑窗统计专家命中直方图\n识别超阈值热点专家 (4× 负载)','orange',11)
+        arrow(a,(.25,.75),(.25,.66),'data')
+        box(a,.03,.49,.44,.16,'在空闲卡冗余槽分配影子缓冲\n异步 RDMA/NVLink 复制 36 MiB','blue',11)
+        box(a,.03,.27,.44,.17,'复制期 (0.62~5.32 ms) 零阻塞\n前台仍按旧路由表 v_t 分发','green',11)
+        box(a,.03,.05,.44,.17,'影子副本校验与算子预热就绪\n标记 ShadowSlot 状态 READY','gray',11)
+
+        box(a,.52,.75,.45,.15,'构造新路由表 v_{t+1}：\n热点专家按权重轮询多副本','blue',11)
+        arrow(a,(.745,.75),(.745,.66),'data')
+        box(a,.52,.49,.45,.16,'微批边界原子交换路由表指针\n新批次立即读取 v_{t+1} 分流','green',11)
+        box(a,.52,.27,.45,.17,'旧版本在途 Combine 引用计数\n等待在途微批归并 (ref=0)','purple',11)
+        box(a,.52,.05,.45,.17,'安全回收旧冷门副本冗余槽位\n全程零停机、零丢包、等价','gray',11)
+        out.save(f,'ch09-eplb-shadow-expert-warmup-atomic-swap')
+
+        # New Path-E3 figure 2: ch09-layerwise-pipelined-kv-transfer-ttft-hiding (Fig 9-54)
+        f,a=canvas(6.4)
+        text(a,.25,.95,'A. 整份串行 vs 按层流水 KV 交接',12,ha='center')
+        text(a,.745,.95,'B. 暴露延迟压缩与双轨拥塞回退',12,ha='center')
+        a.plot([.495,.495],[.03,.97],color=COL['line'],ls='--',lw=1.0)
+
+        box(a,.03,.75,.44,.15,'传统整份串行交接：\n32/36 层算完再发 1~1.125 GiB','orange',11)
+        box(a,.03,.53,.44,.16,'串行暴露交接耗时：\n25 GB/s 下等待 42.95~48.32 ms','orange',11)
+        box(a,.03,.30,.44,.17,'按层流水异步 RDMA 交接：\n算完第 l 层即发 32 MiB KV','blue',11)
+        box(a,.03,.05,.44,.19,'前 L-1 层传输隐藏于计算中\n仅末层 1.35 ms 暴露于 TTFT','green',11)
+
+        box(a,.52,.75,.45,.15,'计算掩盖判据：\n单层计算 t_P,l >= 传输 t_X,l','blue',11)
+        box(a,.52,.53,.45,.16,'双轨 RDMA 负载分担：\n奇偶层交错走 Rail-0 / Rail-1','green',11)
+        box(a,.52,.30,.45,.17,'网络拥塞或接收槽满回退：\n合并 k 层聚批发送防队头阻塞','purple',11)
+        box(a,.52,.05,.45,.19,'细粒度完成位图 (Bitmask)：\n全层置 1 后 D 池即启动首步','gray',11)
+        out.save(f,'ch09-layerwise-pipelined-kv-transfer-ttft-hiding')
     from v41_case_figures import draw as draw_v41
     draw_v41(9, out)
     out.finish();return out.outputs,out.checks
