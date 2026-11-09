@@ -561,6 +561,81 @@ def draw(here, data):
         ax2.grid(axis='x', linestyle=':', alpha=0.5, color='#CBD5E1')
         out.save(f, 'ch01-north-star-efficiency-waterfall-chain')
 
+        # 26. ch01-inference-amortized-overtraining-scaling-curve (Path F3 Fig 1-27)
+        f, (ax1, ax2) = plt.subplots(1, 2, figsize=(420 / 72, 4.1))
+        f.subplots_adjust(left=0.22, right=0.96, bottom=0.20, top=0.85, wspace=0.64)
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+
+        ot_modes = ['纯训练基线', '推理 50T', '推理 200T', '推理 500T']
+        ot_ratios = [20.0, 260.0, 820.0, 1875.0]
+        cols_ot = [COL['gray'], COL['blue'], COL['teal'], COL['green']]
+        edges_ot = [BORDER_COL['gray'], BORDER_COL['blue'], BORDER_COL['teal'], BORDER_COL['green']]
+        y_ot = np.arange(len(ot_modes))
+        ax1.barh(y_ot, ot_ratios, height=0.54, color=cols_ot, edgecolor=edges_ot, linewidth=1.2)
+        for i, v_ot in enumerate(ot_ratios):
+            ax1.text(v_ot + 45.0, i, f'{v_ot:.0f}x', va='center', fontsize=11, weight='bold', color=COL['ink'])
+        ax1.set_yticks(y_ot, ot_modes)
+        ax1.invert_yaxis()
+        ax1.set_xlim(0, 2550.0)
+        ax1.set_xlabel('最优训练词元/参数比 D/N', fontsize=11)
+        ax1.set_title('A  推理摊销最优过训练比', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(axis='x', linestyle=':', alpha=0.5, color='#CBD5E1')
+
+        tco_models = ['32B (0.64T)', '16B (3.8T)', '8B (15T)']
+        tco_eflops = [32.12, 16.36, 8.72]
+        cols_tc = [COL['orange'], COL['blue'], COL['green']]
+        edges_tc = [BORDER_COL['orange'], BORDER_COL['blue'], BORDER_COL['green']]
+        y_tc = np.arange(len(tco_models))
+        ax2.barh(y_tc, tco_eflops, height=0.50, color=cols_tc, edgecolor=edges_tc, linewidth=1.2)
+        for i, v_tc in enumerate(tco_eflops):
+            ax2.text(v_tc + 0.9, i, f'{v_tc:.2f}', va='center', fontsize=11, weight='bold', color=COL['ink'])
+        ax2.set_yticks(y_tc, tco_models)
+        ax2.invert_yaxis()
+        ax2.set_xlim(0, 44.0)
+        ax2.set_xlabel('全周期总算力（10^24 FLOPs）', fontsize=11)
+        ax2.set_title('B  500T 推理总算力账本', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(axis='x', linestyle=':', alpha=0.5, color='#CBD5E1')
+        out.save(f, 'ch01-inference-amortized-overtraining-scaling-curve')
+
+        # 27. ch01-thirty-chapter-five-pillar-workload-spectrum (Path F3 Fig 1-28)
+        f, a = canvas(6.8)
+        card(a, 0.02, 0.49, 0.96, 0.48, 'A  全书 30 章五大算力象限与前沿负载扩展谱系', '', 'blue', title_size=11.5)
+        pillars_top = [
+            (0.045, '1 搜广推 HSTU', '万亿表三级缓存\nM-FALCON 44.8x', 'blue'),
+            (0.355, '2 后自回归生成', 'dLLM 块并行去噪\nBLT 动态字节分块', 'purple'),
+            (0.665, '3 极低延迟推理', '晶圆级片上 SRAM\n16.5 us 持久内核', 'orange'),
+        ]
+        for px, ptitle, pbody, pcol in pillars_top:
+            card(a, px, 0.68, 0.29, 0.20, ptitle, pbody, pcol, title_size=11, body_size=11)
+        card(
+            a, 0.045, 0.51, 0.43, 0.145,
+            '4 去中心化训练 (Ch28)',
+            'DiLoCo 降带宽 2000x',
+            'teal', title_size=11, body_size=11
+        )
+        card(
+            a, 0.525, 0.51, 0.43, 0.145,
+            '5 源码与自演进 (Ch29-30)',
+            'FlashMLA · RLVR 合成',
+            'green', title_size=11, body_size=11
+        )
+
+        card(a, 0.02, 0.03, 0.96, 0.43, 'B  30 章全栈四维物理边界：算术强度 · 状态介质 · 互联 · 自治', '', 'purple', title_size=11.5)
+        bounds_30 = [
+            (0.045, '存储介质谱系', '44GB 片上 SRAM\n至百 PB 3FS 池', 'blue'),
+            (0.355, '通信带宽跨度', 'NVL576 3.6 TB/s\n至广域 350 Mbps', 'orange'),
+            (0.665, '延迟与自治闭环', '高频量化 <25 us\nAIOps 42s 自愈', 'green'),
+        ]
+        for bx, btitle, bbody, bcol in bounds_30:
+            card(a, bx, 0.175, 0.29, 0.205, btitle, bbody, bcol, title_size=11, body_size=11)
+        box(
+            a, 0.045, 0.05, 0.91, 0.095,
+            '全书主线：围绕算术强度、状态局部性、关键路径掩盖与能效比演进',
+            'green', size=11
+        )
+        out.save(f, 'ch01-thirty-chapter-five-pillar-workload-spectrum')
+
     from core_principles_figures import draw as draw_principles
     draw_principles(1, out)
     return out.finish()

@@ -922,6 +922,265 @@ if __name__ == "__main__":
 
 *图 1-26　AI 工厂全栈北极星效率链（$\mathrm{Efficiency}_{\mathrm{E2E}} = \mathrm{MPG}_{\mathrm{fleet}} \times \frac{\mathrm{Goodput}_{\mathrm{SLO}}}{\mathrm{Throughput}_{\mathrm{raw}}} \times P(\text{Task Verified})$，其中 $\mathrm{ETTR}_{\mathrm{cluster}} \equiv \mathrm{RG}_{\mathrm{runtime}}$ 无重复计数）。左：算例 1-4 的五级折损瀑布（$100.0\% \to 66.7\% \to 33.3\% \to 26.0\% \to 16.9\%$）；右：单点提算子 $\mathrm{PG}$ 与全栈五级协同的倍增效应对比。*
 
+#### 推理摊销全生命周期扩展律（Inference-Amortized Scaling Law）与 30 章五大负载谱系
+
+在完成了单次前向推理、机队 MPG 漏斗与端到端北极星效率链的定量建模之后，站在基础模型研发与数据中心规划的最顶层，架构师还必须回答两个决定数十亿美元资本开支（CapEx）的战略问题：**第一，当一个模型在生命周期内要服务数百万亿（数百 Trillion）个推理词元时，为什么全行业一致放弃了经典的 Chinchilla $20:1$ 词元—参数比，转而对 $8\mathrm{B}$ 乃至 $32\mathrm{B}$ 模型执行高达 $1{,}000\times\text{—}2{,}000\times$ 的深度过训练（Extreme Overtraining）？第二，当视野从大语言模型扩展到全书三十章涵盖的搜广推生成式推荐、扩散语言模型、微秒级 SRAM 推理、去中心化广域网训练与自演进算子合成时，整座智算中心的硬件配比与系统瓶颈将遵循怎样的全局谱系？**
+
+**1. 推理摊销全生命周期扩展律（Inference-Amortized Scaling Law）。** 经典的 Chinchilla 扩展律（Hoffmann 等，2022）通过最小化固定预训练浮点预算 $C_{\mathrm{train}} = 6 N D_{\mathrm{train}}$ 下的交叉熵损失：
+
+$$
+L(N, D_{\mathrm{train}}) = E + \frac{A}{N^\alpha} + \frac{B}{D_{\mathrm{train}}^\beta}, \quad (\alpha \approx 0.34,\ \beta \approx 0.37 \approx \alpha),
+$$
+
+得出最优预训练词元数与参数量成正比：$D_{\mathrm{train}}^{\mathrm{Chinchilla}} \approx 20 N$。然而，这一结论隐含了一个在工业界完全不成立的前提——**只计预训练算力成本，将后续数年的在线推理成本视为零**。在实际生产中，若模型商业化生命周期内累计需要处理的有效推理词元总数为 $D_{\mathrm{inf}}$（包含输入预填充、解码输出、多轮 Agent 重放与测试时采样扩展），由于每个推理词元在激活参数量为 $N$ 的模型上均需消耗 $2N$ 次乘加运算，全生命周期的总浮点计算量账本（或考虑训练与推理硬件有效利用率差异 $\gamma = \mathrm{MFU}_{\mathrm{train}} / \mathrm{MFU}_{\mathrm{inf}}$ 后的等效算力账本）为：
+
+$$
+C_{\mathrm{lifecycle}}(N, D_{\mathrm{train}}, D_{\mathrm{inf}}) = 6 N D_{\mathrm{train}} + 2 \gamma N D_{\mathrm{inf}}.
+$$
+
+当工程团队的目标是**达到给定的目标验证损失阈值 $L(N, D_{\mathrm{train}}) = L_{\mathrm{target}}$（即锁定模型能力水平）并最小化全生命周期总成本 $C_{\mathrm{lifecycle}}$** 时，参数量 $N$ 同时乘在 $6 D_{\mathrm{train}}$ 与 $2 \gamma D_{\mathrm{inf}}$ 两项前面：缩减参数量 $N$ 虽然需要按幂律大幅增加预训练词元数 $D_{\mathrm{train}}(N) = \left(\frac{B}{\Delta L - A N^{-\alpha}}\right)^{1/\beta}$ 以维持相同的能力水平 $\Delta L = L_{\mathrm{target}} - E$，但却能等比例削减未来数百万亿次推理调用中的 $2 \gamma N D_{\mathrm{inf}}$ 账单，并同时降低单实例显存容量门槛与单步权重读取带宽下界。对 $C_{\mathrm{lifecycle}}(N)$ 求关于 $N$ 的一阶导数并令 $\frac{\mathrm{d}C_{\mathrm{lifecycle}}}{\mathrm{d}N} = 0$，可得推理摊销下的最优过训练平衡方程：
+
+$$
+6 D_{\mathrm{train}}^* \left(1 - \frac{\alpha}{\beta} \cdot \frac{A (N^*)^{-\alpha}}{B (D_{\mathrm{train}}^*)^{-\beta}}\right) + 2 \gamma D_{\mathrm{inf}} = 0 \implies \frac{A (N^*)^{-\alpha}}{B (D_{\mathrm{train}}^*)^{-\beta}} = \frac{\beta}{\alpha} \left(1 + \frac{\gamma D_{\mathrm{inf}}}{3 D_{\mathrm{train}}^*}\right).
+$$
+
+在对称指数近似（$\alpha = \beta = \frac{1}{3}$，且设纯训练最优比 $D_{\mathrm{train}}^{\mathrm{Chinchilla}} / N^{\mathrm{Chinchilla}} = \rho_0 = 20$）下，记纯训练最优参数量为 $N_0$、最优训练词元数为 $D_0 = \rho_0 N_0$，则达到完全相同能力水平 $\Delta L$ 的任意模型规模 $N = \kappa N_0$（其中缩容因子 $\kappa \in (\text{渐近下界 } 2^{-1/\alpha}, 1]$）所需的预训练词元数为：
+
+$$
+D_{\mathrm{train}}(\kappa) = D_0 \cdot \left(2 - \kappa^{-\alpha}\right)^{-1/\alpha}.
+$$
+
+> **算例 1-5（累计服务 500T 推理词元下的最优过训练倍数 $D_{\mathrm{train}}/N$ 与全周期算力推导）**
+>
+> 设某能力档位的 Chinchilla 纯训练最优点为参数量 $N_0 = 32\ \mathrm{B}$（$3.2 \times 10^{10}$）、预训练词元数 $D_0 = 20 N_0 = 0.64\ \mathrm{T}$（$6.4 \times 10^{11}$ 个词元），幂律指数取对称标度 $\alpha = \beta = 0.34$，使得对于任意参数量 $N$，维持同等交叉熵损失所需的预训练词元数满足 $N^{-\alpha} + \rho_0^\alpha D_{\mathrm{train}}^{-\alpha} = 2 N_0^{-\alpha}$。设模型上线后全生命周期累计服务 $D_{\mathrm{inf}} = 500\ \mathrm{T}$（$5.0 \times 10^{14}$）个推理词元，且计入推理期批大小受限导致的硬件有效利用率折算系数 $\gamma = 1.0$（即按纯 FLOPs 核算 $C_{\mathrm{total}} = 6 N D_{\mathrm{train}} + 2 N D_{\mathrm{inf}}$）：
+> 1. **方案甲（Chinchilla 标准训练：$N_0 = 32\ \mathrm{B},\ D_0 = 0.64\ \mathrm{T}$）**：训练算力仅为 $C_{\mathrm{train}} = 6 \times 32 \times 10^9 \times 0.64 \times 10^{12} = \mathbf{0.123 \times 10^{24}\ \mathrm{FLOPs}}$，但服务 $500\ \mathrm{T}$ 推理词元的算力高达 $C_{\mathrm{inf}} = 2 \times 32 \times 10^9 \times 500 \times 10^{12} = \mathbf{32.00 \times 10^{24}\ \mathrm{FLOPs}}$，全生命周期总算力为 $\mathbf{32.12 \times 10^{24}\ \mathrm{FLOPs}}$（推理占比高达 $99.62\%$）。
+> 2. **方案乙（中度缩容过训练：$N_1 = 16\ \mathrm{B},\ D_1 = 3.80\ \mathrm{T}$）**：过训练倍数提升至 $D_1 / N_1 = \mathbf{237.5\ \mathrm{tok/param}}$，训练算力增至 $C_{\mathrm{train}} = 6 \times 16 \times 10^9 \times 3.80 \times 10^{12} = \mathbf{0.365 \times 10^{24}\ \mathrm{FLOPs}}$，而推理算力减半至 $C_{\mathrm{inf}} = \mathbf{16.00 \times 10^{24}\ \mathrm{FLOPs}}$，全周期总算力降至 $\mathbf{16.36 \times 10^{24}\ \mathrm{FLOPs}}$。
+> 3. **方案丙（深度缩容过训练：$N_2 = 8\ \mathrm{B},\ D_2 = 15.0\ \mathrm{T}$，如 Qwen3-8B / Llama-3 8B 范式）**：过训练倍数高达 $D_2 / N_2 = 15.0\ \mathrm{T} / 8\ \mathrm{B} = \mathbf{1{,}875.0\ \mathrm{tok/param}}$（为 Chinchilla 比值的 **$93.75\times$**）。此时预训练算力上升至 $C_{\mathrm{train}} = 6 \times 8 \times 10^9 \times 15.0 \times 10^{12} = \mathbf{0.720 \times 10^{24}\ \mathrm{FLOPs}}$（比方案甲训练贵 $5.86\times$），但 $500\ \mathrm{T}$ 词元的推理算力骤降至 $C_{\mathrm{inf}} = 2 \times 8 \times 10^9 \times 500 \times 10^{12} = \mathbf{8.00 \times 10^{24}\ \mathrm{FLOPs}}$，全生命周期总算力仅为 $\mathbf{8.72 \times 10^{24}\ \mathrm{FLOPs}}$——**用预训练阶段多投入的 $0.60 \times 10^{24}\ \mathrm{FLOPs}$，换取了推理阶段整整 $24.00 \times 10^{24}\ \mathrm{FLOPs}$ 的巨额节省（投资回报比高达 $40:1$，全生命周期总算力降低 $72.85\%$）**，并且使模型能够直接装入单张消费级显卡或超节点高速缓存中运行。
+
+下面的 Python 代码实现了**推理摊销全生命周期最优模型规模与过训练比率求解器 `optimize_inference_amortized_scaling()`**，可在任意目标能力档位与累计推理词元规模 $D_{\mathrm{inf}}$ 下自动寻优 $N^*$、$D_{\mathrm{train}}^*$ 与全生命周期成本节省比：
+
+```python
+from dataclasses import dataclass
+from typing import List
+
+@dataclass(frozen=True)
+class OvertrainingPlanReport:
+    label: str
+    params_b: float
+    train_tokens_t: float
+    tokens_per_param: float
+    train_eflops_24: float
+    infer_eflops_24: float
+    total_eflops_24: float
+    lifecycle_saving_pct: float
+
+def optimize_inference_amortized_scaling(
+    n0_chinchilla_b: float = 32.0,
+    rho0_chinchilla: float = 20.0,
+    infer_tokens_t: float = 500.0,
+    util_ratio_gamma: float = 1.0,
+    candidate_Configs: tuple = (
+        ("Chinchilla 标准训 (32B)", 32.0, 0.64),
+        ("中度缩容过训 (16B)", 16.0, 3.80),
+        ("深度缩容过训 (8B)", 8.0, 15.00),
+    ),
+) -> List[OvertrainingPlanReport]:
+    """核算不同过训练倍数 (D_train / N) 在给定累计推理词元 D_inf 下的全生命周期算力账本."""
+    d0_t = (n0_chinchilla_b * rho0_chinchilla) / 1000.0
+    base_total_24 = (6.0 * n0_chinchilla_b * d0_t + 2.0 * util_ratio_gamma * n0_chinchilla_b * infer_tokens_t) / 1000.0
+
+    reports: List[OvertrainingPlanReport] = []
+    for label, n_b, d_t in candidate_Configs:
+        tok_per_param = (d_t * 1000.0) / n_b
+        c_train_24 = (6.0 * n_b * d_t) / 1000.0
+        c_infer_24 = (2.0 * util_ratio_gamma * n_b * infer_tokens_t) / 1000.0
+        c_total_24 = c_train_24 + c_infer_24
+        saving_pct = (1.0 - c_total_24 / base_total_24) * 100.0
+        reports.append(
+            OvertrainingPlanReport(
+                label=label,
+                params_b=n_b,
+                train_tokens_t=d_t,
+                tokens_per_param=round(tok_per_param, 1),
+                train_eflops_24=round(c_train_24, 3),
+                infer_eflops_24=round(c_infer_24, 2),
+                total_eflops_24=round(c_total_24, 2),
+                lifecycle_saving_pct=round(saving_pct, 2),
+            )
+        )
+    return reports
+
+if __name__ == "__main__":
+    for r in optimize_inference_amortized_scaling():
+        print(
+            f"{r.label:24s} | D/N={r.tokens_per_param:6.1f}x | "
+            f"Train={r.train_eflops_24:5.3f}e24 | Infer={r.infer_eflops_24:5.2f}e24 | "
+            f"Total={r.total_eflops_24:5.2f}e24 (Save {r.lifecycle_saving_pct:5.2f}%)"
+        )
+```
+
+图 1-27 展示了全生命周期推理摊销下最优词元/参数比 $D_{\mathrm{train}}^*/N^*$ 的指数级跃升，以及算例 1-5 中三种训练方案在服务 $500\ \mathrm{T}$ 推理词元时的全周期总算力账本对比：
+
+![全生命周期推理摊销下最优过训练比率与 500T 推理词元总算力账本对比。左图展示从 Chinchilla 纯训练最优（20x）到累计服务 50T（260x）、200T（820x）与 500T（1875x）推理词元时的最优训练词元/参数比跃升；右图对比 32B 标准训（32.12e24 FLOPs）、16B 中度训（16.36e24 FLOPs）与 8B 深度过训（8.72e24 FLOPs）的全周期算力消耗。](ch01/ch01-inference-amortized-overtraining-scaling-curve.svg)
+
+*图 1-27　推理摊销全生命周期扩展律（Inference-Amortized Scaling Law）。左：当累计推理流量从零增至 $500\ \mathrm{T}$ 词元时，最优训练词元/参数比 $D_{\mathrm{train}}^*/N^*$ 从 Chinchilla 的 $20\times$ 跃升至 $1{,}875\times$；右：在同等能力水平下服务 $500\ \mathrm{T}$ 推理词元时，$8\mathrm{B}$ 深度过训练模型（$15\ \mathrm{T}$ 训练词元）将全生命周期总算力从 $32.12\times 10^{24}\ \mathrm{FLOPs}$ 压缩至 $8.72\times 10^{24}\ \mathrm{FLOPs}$。*
+
+**2. 全书 30 章五大架构部类与全场景算力谱系。** 进一步将视野拉开到整座现代智算中心，除了第 1–24 章讨论的基础大模型训推、多模态视频（DiT）、强化学习后训练（RLVR）、具身智能（VLA）、自主智能体（Agentic Infra）、全双工语音、百 PB 级数据工程与科学智能（AI4Science）外，本书**第五部分（第 25–30 章）**将深入剖析支撑全球互联网现金流与下一代系统演进的另外五大皇冠支柱：
+- **支柱一：生成式推荐系统（HSTU / OneRec）、万亿稀疏嵌入表（DLRM）与十亿级 GPU 向量检索（第 25 章）**。搜广推与企业级 GraphRAG 占据全球互联网巨头日常 AI 算力的半壁江山，其核心矛盾是 $10\ \mathrm{TB}$ 幂律稀疏嵌入表在 HBM—CXL—NVMe 间的三级缓存命中率（加权查表延迟 $2.19\ \mu\mathrm{s}$），以及利用 `M-FALCON` 微批前缀摊销将单请求千级候选物品打分算力缩减 $44.80\times$。
+- **支柱二：后自回归生成范式——扩散语言模型（dLLM）、无分词架构（BLT）与测试时记忆网络（Titans / TTT，第 26 章）**。通过块掩码并行去噪将单请求解码算术强度从 $1\ \mathrm{FLOP/B}$ 推高至 $64\ \mathrm{FLOPs/B}$（$32\mathrm{B}$ 模型提速 $5.93\times$ 达 $592.6\ \mathrm{tok/s}$），通过字节条件熵动态分块省去 $4.194\ \mathrm{GB}$ 词表投影，并通过分块对偶矩阵乘将测试时神经记忆更新提速 $24.60\times$。
+- **支柱三：晶圆级/3D-SRAM 专用推理芯片（WSE-3 / Groq LPU）、微秒级高频 AI 与三值量化（BitNet b1.58，第 27 章）**。针对低并发极速交互（$B \le 14$）与金融高频风控（$< 25\ \mu\mathrm{s}$ P99.99），剖析全片上 SRAM 菊花链（$70\mathrm{B}$ 单流 $1{,}850\ \mathrm{tok/s}$）、内核旁路加持久化轮询 Megakernel（中位数延迟 $16.5\ \mu\mathrm{s}$）以及每字节打包 5 个三值权重的无乘法器查找表引擎（`T-MAC`）。
+- **支柱四：主权 AI、广域网去中心化低通信训练（Streaming DiLoCo）、实时伴飞护栏与密码学水印（第 28 章）**。通过内循环 $H=500$ 步本地更新加外循环 FP4 分片流水同步，将跨洲际广域网带宽需求从 $700\ \mathrm{Gbps}$ 压低 $2{,}000\times$ 至 $350\ \mathrm{Mbps}$ 且零暴露等待；同时以 $< 3.5\ \mathrm{ms}$ 异步伴飞护栏、残差流 SAE 原位钳位与 $30$ 层锦标赛采样水印（`SynthID-Text`）构筑安全防线。
+- **支柱五：DeepSeek 开源基础设施全栈源码解剖（第 29 章）与自演进 AI 基础设施（AI for AI Infra，第 30 章）**。从 `FlashMLA`（$3{,}000\ \mathrm{GB/s}$）、`DeepGEMM`（JIT 省寄存器 + 二级累加 $1{,}358\ \mathrm{TFLOPS}$）、`DeepEP`（零 SM 占用 IBGDA）、`DualPipe`、`3FS`（180 节点 $6.60\ \mathrm{TB/s}$）与 `KTransformers`（单卡 4090D + 双路 CPU AMX 跑 671B），一路走向基于 Nsight 硬件剖析反馈的多轮 RLVR 算子自动合成（`KernelBench` / `Kevin`，正确率 $94.8\%$、超越 `torch.compile` $1.58\times$）与自治 AIOps（42 秒定位隔离慢节点，挽回 $1{,}350$ 万美元算力）。
+
+> **算例 1-6（30 章五大典型负载的机柜级功耗、显存容量与网络带宽配比核算）**
+>
+> 考察一座总供电预算为 $P_{\mathrm{facility}} = 120.0\ \mathrm{MW}$（园区 $\mathrm{PUE} = 1.15$，IT 设备净可用功率 $P_{\mathrm{IT}} = 120.0 / 1.15 = \mathbf{104.35\ \mathrm{MW}}$）的下一代混合智算中心，计划按业务流量配比部署五大主力集群，采用单机柜 IT 满载功率 $130.0\ \mathrm{kW}$ 的 72 卡液冷超节点机柜（全园共可部署 $\lfloor 104{,}347.8 / 130.0 \rfloor = \mathbf{802}$ 个超节点机柜，合计 $802 \times 72 = \mathbf{57{,}744}$ 张加速卡）：
+> 1. **象限 I（40% 算力配额，$321$ 个机柜 / $23{,}112$ 卡）：MoE 预训练与长思维链 RLVR（第 10、18、29 章）**。计算与跨节点 All-to-All 通信并重，要求每卡配备 $800\ \mathrm{Gbps}\text{—}1.6\ \mathrm{Tbps}$ 无损 RoCEv2/IBGDA Scale-Out 网卡（双平面聚合二分带宽 $23{,}112 \times 100\ \mathrm{GB/s} \approx \mathbf{2.31\ \mathrm{PB/s}}$），并配套 180 节点级 `3FS` 高速检查点与语料存储池。
+> 2. **象限 II（25% 算力配额，$200$ 个机柜 / $14{,}400$ 卡）：生成式推荐 HSTU 与十亿级向量检索（第 25 章）**。单实例需挂载 TB 级 CXL 3.1 温表内存池与高 IOPS NVMe SSD 冷表阵列，通过三级缓存将 $10\ \mathrm{TB}$ 稀疏表访问延迟压至 $2.19\ \mu\mathrm{s}$，并通过 `M-FALCON` 前缀摊销支撑每秒数亿次候选物品打分。
+> 3. **象限 III（20% 算力配额，$160$ 个机柜 / $11{,}520$ 卡）：在线长上下文 Agent、块扩散 dLLM 与 P-D 分离推理池（第 8、9、21、26 章）**。瓶颈在于跨轮次 KV 状态驻留容量与全局前缀路由，需按 $1:3$ 配比划分计算密集型 Prefill 节点与高显存带宽 Decode/dLLM 节点，并挂载分布式 `Mooncake / LMCache` KV 缓存池。
+> 4. **象限 IV（10% 算力配额，$80$ 个机柜 / $5{,}760$ 卡）：多模态视频世界模型、全双工语音与具身仿真（第 17、19、22 章）**。严守 $20\ \mathrm{FPS}$ 交互帧率与 $< 80\ \mathrm{ms}$ 端到端语音延迟，需在超节点内部完成三维时空序列并行与神经音频编解码流水。
+> 5. **象限 V（5% 算力配额，$41$ 个机柜 / $2{,}952$ 卡等效功耗）：晶圆级/3D-SRAM 极低延迟池与 AI4Science 科学计算池（第 24、27 章）**。其中 SRAM 专用推理阵列承接并发度 $B \le 14$ 的高频极速 Agent 与微秒级风控请求（单流 $1{,}850\ \mathrm{tok/s}$），GPU 池承接生物大分子三角注意力与气象网格 3D FFT。
+
+下面的两个生产级 Python 代码块分别实现了**多模态 + 智能体 + 生成式推荐混合数据中心机队容量分配规划器 `plan_multi_paradigm_fleet_allocation()`** 与 **跨代际加速器（H100 / B200 / Vera Rubin R100 / TPU v7 Ironwood）全生命周期 TCO 与每百万词元成本分析器 `evaluate_cross_gen_accelerator_tco()`**：
+
+```python
+from dataclasses import dataclass
+from typing import Dict, List
+
+@dataclass(frozen=True)
+class FleetQuadrantAllocation:
+    quadrant_name: str
+    power_share_pct: float
+    racks: int
+    accelerators: int
+    it_power_mw: float
+    hbm_pool_tb: float
+    scale_out_bw_tbps: float
+
+def plan_multi_paradigm_fleet_allocation(
+    facility_power_mw: float = 120.0,
+    pue: float = 1.15,
+    rack_it_kw: float = 130.0,
+    gpus_per_rack: int = 72,
+    hbm_per_gpu_gb: float = 192.0,
+) -> Dict[str, object]:
+    """根据园区总供电预算、PUE 与五大负载配比规划超节点机柜数、显存池容量与网络带宽."""
+    it_power_mw = facility_power_mw / pue
+    total_racks = int((it_power_mw * 1000.0) // rack_it_kw)
+    specs = [
+        ("Q1: MoE预训练 + RLVR (Ch10/18/29)", 0.40, 800.0),
+        ("Q2: 生成式推荐HSTU + 向量库 (Ch25)", 0.25, 400.0),
+        ("Q3: Agent长上下文 + dLLM推理 (Ch21/26)", 0.20, 400.0),
+        ("Q4: 视频世界模型 + 全双工语音 (Ch17/22)", 0.10, 400.0),
+        ("Q5: 3D-SRAM极速池 + AI4Science (Ch24/27)", 0.05, 400.0),
+    ]
+    allocations: List[FleetQuadrantAllocation] = []
+    assigned_racks = 0
+    for idx, (name, share, nic_gbps) in enumerate(specs):
+        racks = round(total_racks * share) if idx < len(specs) - 1 else (total_racks - assigned_racks)
+        assigned_racks += racks
+        gpus = racks * gpus_per_rack
+        p_mw = (racks * rack_it_kw) / 1000.0
+        hbm_tb = (gpus * hbm_per_gpu_gb) / 1000.0
+        net_tbps = (gpus * nic_gbps) / 1000.0
+        allocations.append(
+            FleetQuadrantAllocation(
+                quadrant_name=name,
+                power_share_pct=share * 100.0,
+                racks=racks,
+                accelerators=gpus,
+                it_power_mw=round(p_mw, 2),
+                hbm_pool_tb=round(hbm_tb, 2),
+                scale_out_bw_tbps=round(net_tbps, 2),
+            )
+        )
+    return {
+        "it_power_mw": round(it_power_mw, 2),
+        "total_racks": total_racks,
+        "total_accelerators": total_racks * gpus_per_rack,
+        "allocations": allocations,
+    }
+
+if __name__ == "__main__":
+    plan = plan_multi_paradigm_fleet_allocation()
+    print(f"IT可用功率={plan['it_power_mw']} MW | 总机柜={plan['total_racks']} | 总卡数={plan['total_accelerators']}")
+    for a in plan["allocations"]:
+        print(f"  {a.quadrant_name:38s}: {a.racks:3d}柜 ({a.accelerators:5d}卡) | HBM={a.hbm_pool_tb:6.2f} TB | Net={a.scale_out_bw_tbps:6.2f} Tbps")
+```
+
+```python
+from dataclasses import dataclass
+from typing import List
+
+@dataclass(frozen=True)
+class AcceleratorGenSpec:
+    name: str
+    fp8_tflops: float          # 稠密 FP8 Tensor Core 峰值算力 (TFLOPS)
+    hbm_bw_tbps: float         # 片上 HBM 物理带宽 (TB/s)
+    hbm_cap_gb: float          # 单卡 HBM 容量 (GB)
+    tdp_kw: float              # 单卡含机柜分摊功耗 (kW)
+    amortized_hourly_usd: float  # 三年折旧 + 运维单卡每小时 CapEx 分摊 (USD/h)
+
+def evaluate_cross_gen_accelerator_tco(
+    model_weight_gb: float = 70.0,
+    electricity_usd_per_kwh: float = 0.07,
+    pue: float = 1.15,
+    mbu_eff: float = 0.72,
+    batch_size: int = 32,
+) -> List[dict]:
+    """对比 H100、B200、Vera Rubin R100 与 TPU v7 Ironwood 的解码吞吐、能效与每百万词元成本."""
+    gens = [
+        AcceleratorGenSpec("H100 SXM (HBM3)", 1979.0, 3.35, 80.0, 1.02, 1.85),
+        AcceleratorGenSpec("B200 SXM (HBM3e)", 4500.0, 8.00, 192.0, 1.35, 2.75),
+        AcceleratorGenSpec("Vera Rubin R100 (HBM4)", 8000.0, 19.20, 288.0, 1.80, 3.80),
+        AcceleratorGenSpec("TPU v7 Ironwood (HBM3e)", 4614.0, 7.37, 192.0, 1.15, 2.20),
+    ]
+    results = []
+    for g in gens:
+        # 单步解码耗时下界 (批大小 batch_size 共享一次权重读取)
+        t_mem_s = model_weight_gb / (g.hbm_bw_tbps * 1000.0 * mbu_eff)
+        t_comp_s = (2.0 * batch_size * model_weight_gb) / (g.fp8_tflops * 1000.0 * 0.55)
+        t_step_s = max(t_mem_s, t_comp_s)
+        tok_per_s = batch_size / t_step_s
+        power_hourly_usd = g.tdp_kw * pue * electricity_usd_per_kwh
+        total_hourly_usd = g.amortized_hourly_usd + power_hourly_usd
+        usd_per_mtok = total_hourly_usd / ((tok_per_s * 3600.0) / 1e6)
+        tok_per_joule = tok_per_s / (g.tdp_kw * pue * 1000.0)
+        results.append({
+            "accelerator": g.name,
+            "ridge_flop_per_b": round((g.fp8_tflops * 1000.0) / (g.hbm_bw_tbps * 1000.0), 1),
+            "step_ms": round(t_step_s * 1000.0, 2),
+            "throughput_tok_s": round(tok_per_s, 1),
+            "tok_per_joule": round(tok_per_joule, 3),
+            "usd_per_mtok": round(usd_per_mtok, 4),
+        })
+    return results
+
+if __name__ == "__main__":
+    for row in evaluate_cross_gen_accelerator_tco():
+        print(
+            f"{row['accelerator']:25s} | Step={row['step_ms']:5.2f} ms | "
+            f"TP={row['throughput_tok_s']:7.1f} tok/s | "
+            f"Eff={row['tok_per_joule']:5.3f} tok/J | Cost={row['usd_per_mtok']:6.4f} USD/MTok"
+        )
+```
+
+图 1-28 与表 1-8 汇总了全书 30 章五大架构部类的负载扩展谱系、四维物理边界与章节映射坐标：
+
+![全书 30 章五大算力象限与前沿负载扩展谱系。上半部分展示搜广推生成式推荐 HSTU（第 25 章）、后自回归扩散语言模型与无分词架构（第 26 章）、晶圆级全片上 SRAM 与微秒级高频 AI（第 27 章）、广域网去中心化训练 DiLoCo 与安全护栏（第 28 章）以及 DeepSeek 源码解剖与自演进 AI Infra（第 29-30 章）；下半部分归纳存储介质谱系、通信带宽跨度及延迟与自治闭环构成的 30 章全栈四维物理边界。](ch01/ch01-thirty-chapter-five-pillar-workload-spectrum.svg)
+
+*图 1-28　全书 30 章五大算力象限与四维物理边界谱系。从片上 $44\ \mathrm{GB}$ SRAM（$21\ \mathrm{PB/s}$）到百 PB 级 `3FS` 存储池，从超节点正交背板 `NVLink 6`（$3.6\ \mathrm{TB/s}$）到跨洲际广域网 `Streaming DiLoCo`（$350\ \mathrm{Mbps}$），全书三十章共同受算术强度、状态局部性、关键路径掩盖与信息—能量转换效率四大守恒律支配。*
+
+*表 1-8　全书 30 章五大架构部类与核心负载谱系的系统瓶颈、硬件锚点及章节映射总表*
+
+| 架构部类 | 覆盖章节 | 代表性工作负载与系统栈 | 核心算术强度与延迟目标 | 关键硬件与系统量化锚点 |
+| --- | --- | --- | --- | --- |
+| **第一部分：模型与负载** | 第 1–3 章 | 稠密/MoE/MLA/混合注意力、长上下文与多轮负载 | 单步解码 $\sim 1\ \mathrm{FLOP/B}$；预填充 $>200\ \mathrm{FLOPs/B}$ | 推理摊销过训练比 $1{,}875\times$；MLA 矩阵吸收压缩访存 $28.44\times$ |
+| **第二部分：芯片与系统** | 第 4–7 章 | GPU/TPU 加速器、算子运行时、超节点与数据中心网络 | Tensor Core 脊点 $250\text{—}420\ \mathrm{FLOPs/B}$ | NVFP4 微缩放；`NVLink 6` $3.6\ \mathrm{TB/s}$；`1.6T` 网卡与 Falcon 传输 |
+| **第三部分：训推与端边云调度** | 第 8–12 章 | 推理引擎、P-D 分离、5D 训练、集群调度与端边云协同 | 在线 TTFT $< 0.5\ \mathrm{s}$，TPOT $< 25\ \mathrm{ms}$ | `vLLM V1 / SGLang` 零开销重叠调度；`CuMemMap` 休眠唤醒；`ExecuTorch` |
+| **第四部分：跨层协同与科学集群** | 第 13–24 章 | 存储底座、吉瓦电力、TEE、DiT、RLVR、VLA、Agent、语音、数据与 AI4S | 语音全双工 $< 80\ \mathrm{ms}$；VLA 控制 $< 10\ \mathrm{ms}$ | 微通道芯片内液冷 $>250\ \mathrm{W/cm^2}$；`LMCache`；百 PB GPU 模糊去重 |
+| **第五部分：前沿范式与自演进系统** | 第 25–30 章 | 生成式推荐 HSTU、扩散语言模型 dLLM、晶圆级 SRAM、DiLoCo、DeepSeek 全栈与算子合成 | 高频量化 P99.99 $< 25\ \mu\mathrm{s}$；SRAM 单流 $1{,}850\ \mathrm{tok/s}$ | `M-FALCON` $44.8\times$ 摊销；`Streaming DiLoCo` 降带宽 $2{,}000\times$；`FlashMLA` $3{,}000\ \mathrm{GB/s}$ |
+
 > **练习 1-6〔延伸〕：从流量特征、网络税与容量边界评估架构演进**
 >
 > 1. 沿用第 1.4.2 节的公式 $n_{\mathrm{core}}=\lambda_{\mathrm{packet}}/\mu_{\mathrm{core}}$：当现代 AI 计算节点的网卡速率从 $40\ \mathrm{Gbit/s}$ 升级十倍至 $400\ \mathrm{Gbit/s}$（如 ConnectX-7），而同期单颗 CPU 核心的复杂协议栈包处理能力 $\mu_{\mathrm{core}}$ 仅从 $10\text{—}20\ \mathrm{Mpps}$ 提升至 $15\text{—}30\ \mathrm{Mpps}$ 时，若以 84 字节最小帧线速到达（约 $595.2\ \mathrm{Mpps}$）且完全依赖主机 CPU 软件逐包处理，单张网卡需要消耗多少颗 CPU 核心？请据此说明为什么现代 AI 集群普遍采用智能网卡卸载与 RDMA（远程直接内存访问）技术。
@@ -971,9 +1230,40 @@ if __name__ == "__main__":
 > 1. 运行或对照第 1.4.4 节的 `solve_critical_path_and_slack` 脚本与 [`experiments/ch01/`](file:///Users/quan.zheng/projects/dev/ai/ai-infra-book/experiments/ch01) 实验套件：在练习 1-12 的双缓冲解码微步 DAG 中，计算主机侧算子下发边 `Host_Launch_Prep`（$120\ \mu\mathrm{s}$）和 GPU 注意力尾部边 `Attn_Tail`（$90\ \mu\mathrm{s}$）各自的松弛度 $\mathrm{Slack}(e)$（单位：$\mu\mathrm{s}$）。若将 All-to-All 通信边 `AllToAll_RDMA_410us` 的耗时从 $410\ \mu\mathrm{s}$ 持续压缩至 $100\ \mu\mathrm{s}$（假设慢节点等待已清零），请找出关键路径从“网卡通信分支”切换回“GPU 注意力计算分支”的临界通信耗时 $t_{\mathrm{comm}}^*$。
 > 2. 结合 [`experiments/ch01/01-03/verify.py`](file:///Users/quan.zheng/projects/dev/ai/ai-infra-book/experiments/ch01/01-03/verify.py) 与 [`experiments/ch01/01-04/verify.py`](file:///Users/quan.zheng/projects/dev/ai/ai-infra-book/experiments/ch01/01-04/verify.py)，验证在单步端到端耗时由“纯权重读取 $T_{\mathrm{read}}$ + 暴露通信 $T_{\mathrm{comm,exp}}$ + 固定主机/采样开销 $T_{\mathrm{fixed}}$”组成时，为什么仅将显存带宽提升 $2\times$ 带来的实际加速比严格受限于阿姆达尔定律公式 $\mathrm{Speedup} = 1 / [(1 - f_{\mathrm{mem}}) + f_{\mathrm{mem}}/2]$。
 
-为便于读者自检本章 14 道练习的纸笔推演结果，表 1-8 汇总了各题的核心锁定输入与目标校验值：
+> **练习 1-15〔延伸〕：推理摊销全生命周期扩展律（Chinchilla vs. Inference-Amortized Overtraining）的最优参数量与过训练倍数推导**
+>
+> 1. 参照第 1.4.5 节式与算例 1-5：设某能力档位的 Chinchilla 纯训练最优点为参数量 $N_0 = 32\ \mathrm{B}$、预训练词元数 $D_0 = 0.64\ \mathrm{T}$（即 $D_0 / N_0 = 20$），对比将模型缩容 $4\times$ 并深度过训练的方案（$N_2 = 8\ \mathrm{B}$、预训练词元数 $D_2 = 15.0\ \mathrm{T}$，即 $D_2 / N_2 = 1{,}875$）。设训练与推理等效利用率比 $\gamma = 1.0$，请写出两套方案的全生命周期总算力差值 $\Delta C(D_{\mathrm{inf}}) = C_{32\mathrm{B}}(D_{\mathrm{inf}}) - C_{8\mathrm{B}}(D_{\mathrm{inf}})$，并精确求解使 $8\mathrm{B}$ 深度过训练方案在全生命周期算力上开始反超 $32\mathrm{B}$ 标准训练方案的**盈亏平衡累计推理词元数 $D_{\mathrm{inf}}^*$（单位：$\mathrm{T}$ tokens，保留两位小数）**。
+> 2. 在现实在线推理集群中，由于解码阶段受制于显存带宽与尾延迟 SLO，单次推理 FLOP 的硬件有效利用率往往低于大批量预训练（即等效折算系数 $\gamma = \mathrm{MFU}_{\mathrm{train}} / \mathrm{MFU}_{\mathrm{inf}} = 0.45 / 0.15 = 3.0$）。请计算当 $\gamma = 3.0$ 时，上述盈亏平衡累计推理词元数 $D_{\mathrm{inf}}^*$ 缩短至多少 $\mathrm{T}$ tokens，并说明为什么推理侧算力利用率越低，预训练阶段做深度过训练（缩减模型参数量 $N$）的经济收益反而越显著。
 
-*表 1-8　第 1 章核心与延伸练习（练习 1-1 至 1-14）关键锁定参数与参考核算目标速查*
+> **练习 1-16〔延伸〕：全书 30 章五大负载谱系的混合机队容量规划与跨代际加速器（H100 vs. B200 vs. Vera Rubin）TCO 拐点核算**
+>
+> 1. 沿用算例 1-6 的 $P_{\mathrm{facility}} = 120.0\ \mathrm{MW}$、$\mathrm{PUE} = 1.15$ 智算园区基线（共 $802$ 个 $130.0\ \mathrm{kW}$ 的 72 卡超节点机柜，合计 $57{,}744$ 张加速卡）。若通过部署第 15 章的芯片内微通道液冷与中压直流供电，将园区 $\mathrm{PUE}$ 从 $1.15$ 压降至 $1.06$，且保持总市电输入功率 $120.0\ \mathrm{MW}$ 与单机柜 IT 功率 $130.0\ \mathrm{kW}$ 不变，请问全园区可额外增配多少个 72 卡超节点机柜与多少张加速卡？
+> 2. 对照 `evaluate_cross_gen_accelerator_tco()` 的锁定参数（运行 $70\ \mathrm{GB}$ 量化模型，批大小 $B=32$，有效带宽利用率 $\mathrm{MBU}=0.72$，电价 $0.07\ \mathrm{USD/kWh}$，$\mathrm{PUE}=1.15$）：分别验证 H100 SXM（$\beta = 3.35\ \mathrm{TB/s}$，功耗 $1.02\ \mathrm{kW}$，折旧 $1.85\ \mathrm{USD/h}$）与 Vera Rubin R100（$\beta = 19.20\ \mathrm{TB/s}$，功耗 $1.80\ \mathrm{kW}$，折旧 $3.80\ \mathrm{USD/h}$）在访存受限解码区间的单步耗时（ms）、每秒生成吞吐（tok/s）、每焦耳生成词元数（tok/J）以及每百万词元综合成本（USD/MTok），解释为什么单卡每小时成本贵 $2.05\times$ 的新一代架构反而能将每百万词元成本压低近 $64\%$。
+
+### 参考解答与详尽推导
+
+#### 练习 1-15 解答
+1. **当 $\gamma = 1.0$ 时的盈亏平衡累计推理词元数 $D_{\mathrm{inf}}^*$**：
+   - $32\mathrm{B}$ 标准训练方案的预训练算力为 $C_{\mathrm{train},32\mathrm{B}} = 6 \times 32\times 10^9 \times 0.64\times 10^{12} = 0.12288 \times 10^{24}\ \mathrm{FLOPs}$；
+   - $8\mathrm{B}$ 深度过训练方案的预训练算力为 $C_{\mathrm{train},8\mathrm{B}} = 6 \times 8\times 10^9 \times 15.0\times 10^{12} = 0.72000 \times 10^{24}\ \mathrm{FLOPs}$；
+   - 预训练阶段额外多付出的算力差额为 $\Delta C_{\mathrm{train}} = 0.72000 - 0.12288 = \mathbf{0.59712 \times 10^{24}\ \mathrm{FLOPs}}$；
+   - 每服务 $1\ \mathrm{T}$（$10^{12}$）个推理词元，$8\mathrm{B}$ 模型相比 $32\mathrm{B}$ 模型节省的推理算力为 $2 \times (32 - 8) \times 10^9 \times 10^{12} = 48 \times 10^{21}\ \mathrm{FLOPs} = 0.048 \times 10^{24}\ \mathrm{FLOPs/T}$；
+   - 因此盈亏平衡累计推理词元数为 $D_{\mathrm{inf}}^* = \frac{0.59712}{0.048} = \mathbf{12.44\ \mathrm{T}\ \text{tokens}}$。只要全生命周期累计推理量超过 $12.44\ \mathrm{T}$ 词元（大型公有云 API 通常数天即可达到），深度过训练 $8\mathrm{B}$ 模型即全面胜出。
+2. **当 $\gamma = 3.0$ 时的盈亏平衡点前移**：
+   - 计入推理期有效算力折损 $\gamma = 3.0$ 后，每服务 $1\ \mathrm{T}$ 推理词元节省的等效算力放大 $3$ 倍至 $2 \gamma (32 - 8) \times 10^{21} = 0.144 \times 10^{24}\ \mathrm{FLOPs/T}$；
+   - 盈亏平衡点缩短为 $D_{\mathrm{inf}}^*(\gamma=3) = \frac{0.59712}{0.144} \approx \mathbf{4.15\ \mathrm{T}\ \text{tokens}}$。因为在线解码受限于 HBM 访存带宽，推理期的算力单价远高于预训练期的大矩阵乘，缩减参数量 $N$ 直接节省了最昂贵的在线显存带宽与常驻卡数。
+
+#### 练习 1-16 解答
+1. **降低 PUE 释放的额外超节点机柜与加速卡规模**：
+   - 当 $\mathrm{PUE}$ 从 $1.15$ 降至 $1.06$ 时，园区 IT 可用功率从 $120.0 / 1.15 = 104.35\ \mathrm{MW}$ 提升至 $120.0 / 1.06 = \mathbf{113.21\ \mathrm{MW}}$（净增 $8.86\ \mathrm{MW}$）；
+   - 可部署的 $130.0\ \mathrm{kW}$ 超节点机柜总数从 $802$ 个增加至 $\lfloor 113{,}207.5 / 130.0 \rfloor = \mathbf{870}$ 个（**净增 $68$ 个超节点机柜，即额外增加 $68 \times 72 = \mathbf{4{,}896}$ 张加速卡**）。
+2. **H100 SXM 与 Vera Rubin R100 的吞吐、能效与 TCO 对比**：
+   - **H100 SXM**：单步访存时间 $t_{\mathrm{step}} = \frac{70.0}{3{,}350 \times 0.72} = \mathbf{29.02\ \mathrm{ms}}$，$B=32$ 下吞吐率 $\mathrm{TP} = 32 / 0.0290215 = \mathbf{1{,}102.6\ \mathrm{tok/s}}$；单卡含 PUE 总功率 $1.02 \times 1.15 = 1.173\ \mathrm{kW}$，能效 $\mathbf{0.940\ \mathrm{tok/J}}$；每小时总成本 $1.85 + 1.173 \times 0.07 = 1.9321\ \mathrm{USD/h}$，每小时产出 $3.9695\ \mathrm{MTok}$，折合成本 **$\mathbf{0.4867\ \mathrm{USD/MTok}}$**。
+   - **Vera Rubin R100**：单步访存时间 $t_{\mathrm{step}} = \frac{70.0}{19{,}200 \times 0.72} = \mathbf{5.06\ \mathrm{ms}}$，吞吐率跃升 $5.73\times$ 至 $\mathbf{6{,}319.6\ \mathrm{tok/s}}$；单卡含 PUE 功率 $1.80 \times 1.15 = 2.070\ \mathrm{kW}$，能效提升 $3.25\times$ 至 $\mathbf{3.053\ \mathrm{tok/J}}$；每小时总成本 $3.80 + 2.070 \times 0.07 = 3.9449\ \mathrm{USD/h}$，每小时产出 $22.7506\ \mathrm{MTok}$，折合成本降至 **$\mathbf{0.1734\ \mathrm{USD/MTok}}$**（相比 H100 降低 **$64.37\%$**）。
+
+为便于读者自检本章 16 道练习的纸笔推演结果，表 1-9 汇总了各题的核心锁定输入与目标校验值：
+
+*表 1-9　第 1 章核心与延伸练习（练习 1-1 至 1-16）关键锁定参数与参考核算目标速查*
 
 | 练习编号与属性 | 核心锁定输入参数 | 关键参考核算结果与工程判据 |
 | --- | --- | --- |
@@ -991,12 +1281,14 @@ if __name__ == "__main__":
 | **练习 1-12〔延伸〕** | $t_{\mathrm{attn}}=350,\ t_{\mathrm{ffn}}=480,\ t_{\mathrm{comm}}=410$（重叠 $260$），慢节点 $90\ \mu\mathrm{s}$ | 暴露通信 $150\ \mu\mathrm{s}$，基线 $T_{\mathrm{step}}=1070\ \mu\mathrm{s}$；方案一加速 $1.00\times$（非关键路径），方案二降至 $898\ \mu\mathrm{s}$（$1.19\times$） |
 | **练习 1-13〔延伸〕** | $\lambda=2\ \mathrm{req/s}$，驻留 $4\ \mathrm{s}$ vs. $180\ \mathrm{s}$；北极星五因子提升（$\mathrm{PG}\to 62.5\%,\ P_{\mathrm{ver}}\to 76\%$） | 在途会话 $8\to 360$，KV 需求 $2.4\ \mathrm{GB}\to 108\ \mathrm{GB}$（单卡溢出）；改造后 $\mathrm{MPG}=41.67\%,\ \mathrm{Efficiency}_{\mathrm{E2E}}=24.70\%$ |
 | **练习 1-14〔延伸〕** | 微步 DAG 松弛度求解与阿姆达尔带宽翻倍上限 | `Host_Launch_Prep` 松弛度 $140\ \mu\mathrm{s}$，`Attn_Tail` 松弛度 $150\ \mu\mathrm{s}$（含慢节点）；临界通信耗时 $t_{\mathrm{comm}}^* = 350\ \mu\mathrm{s}$ |
+| **练习 1-15〔延伸〕** | $32\mathrm{B}$ ($0.64\ \mathrm{T}$) vs. $8\mathrm{B}$ ($15.0\ \mathrm{T}$)，$\gamma = 1.0 \to 3.0$ | 预训练多花 $0.597\times 10^{24}\ \mathrm{FLOPs}$；$\gamma=1.0$ 时盈亏平衡 $D_{\mathrm{inf}}^* = 12.44\ \mathrm{T}$，$\gamma=3.0$ 时前移至 $4.15\ \mathrm{T}$ |
+| **练习 1-16〔延伸〕** | $120\ \mathrm{MW}$ 园区 $\mathrm{PUE}\ 1.15 \to 1.06$；H100 vs. Vera Rubin R100（$70\ \mathrm{GB}, B=32$） | PUE 降幅释放 $+68$ 个机柜（$+4{,}896$ 卡）；R100 单步 $5.06\ \mathrm{ms}$、能效 $3.053\ \mathrm{tok/J}$，成本从 $0.4867$ 降至 $0.1734\ \mathrm{USD/MTok}$ |
 
 ## 本章数字速查
 
-表 1-9 汇总了第 1.3.3 节实测所用的 **Qwen3-8B** 模型在单请求（$B=1$）下的核心资源数字。其中，**prefill** 阶段一次性处理全部输入 token 并产出首个输出 token；**decode** 阶段则每步送入 1 个新生成的 token，结合显存中已保存的 KV 缓存继续生成下一个 token。表中数据统一按 BF16 精度的权重、激活值与 KV 缓存计算；prefill 阶段的输入长度设为 2048 个 token，decode 阶段则考察在已有 2048 个历史上下文 token 的基础上往前生成一步。[^model-numbers]
+表 1-10 汇总了第 1.3.3 节实测所用的 **Qwen3-8B** 模型在单请求（$B=1$）下的核心资源数字。其中，**prefill** 阶段一次性处理全部输入 token 并产出首个输出 token；**decode** 阶段则每步送入 1 个新生成的 token，结合显存中已保存的 KV 缓存继续生成下一个 token。表中数据统一按 BF16 精度的权重、激活值与 KV 缓存计算；prefill 阶段的输入长度设为 2048 个 token，decode 阶段则考察在已有 2048 个历史上下文 token 的基础上往前生成一步。[^model-numbers]
 
-*表 1-9　Qwen3-8B 单请求（B=1，2048 上下文）prefill 与 decode 核心资源数字速查*
+*表 1-10　Qwen3-8B 单请求（B=1，2048 上下文）prefill 与 decode 核心资源数字速查*
 
 | 模型需求 | 数值 | 估算用途与说明 |
 | --- | ---: | --- |
@@ -1012,9 +1304,9 @@ if __name__ == "__main__":
 
 这组定量数据清晰地揭示了大模型推理两个阶段的本质差异：prefill 阶段一次性处理成百上千个输入 token，矩阵运算量极大，主要考验芯片的峰值算力；而单请求 decode 阶段每次只处理 1 个新 token，算力消耗很小，却依然要把庞大的模型权重和历史 KV 缓存从显存重读一遍，主要受制于显存带宽。因此，提升矩阵算力、扩充显存带宽与增大 batch 批内复用，分别应对的是截然不同的耗时瓶颈。
 
-**全书纸笔估算的参数、公式适用条件与单位制核对表（D11-SP03）。** 为了避免在跨章节定量计算中发生十进制/二进制单位混淆、比特/字节漏除 8 或忽视公式隐含前提，表 1-10 汇总了本书纸笔估算统一遵循的五条核对准则。
+**全书纸笔估算的参数、公式适用条件与单位制核对表（D11-SP03）。** 为了避免在跨章节定量计算中发生十进制/二进制单位混淆、比特/字节漏除 8 或忽视公式隐含前提，表 1-11 汇总了本书纸笔估算统一遵循的五条核对准则。
 
-*表 1-10　全书定量估算的参数符号、公式适用前提与单位制统一核对准则（D11-SP03，原表 1-5）*
+*表 1-11　全书定量估算的参数符号、公式适用前提与单位制统一核对准则（D11-SP03，原表 1-5）*
 
 | 核对维度 | 标准符号与换算关系 | 适用前提与常见陷阱防范 | 典型基准校验值 |
 | --- | --- | --- | --- |
@@ -1092,4 +1384,4 @@ if __name__ == "__main__":
 
 在定量分析任何一个 AI 系统时，都可以遵循固定的三步法：第一步用容量约束检查数据能否装下，第二步用浮点运算量和数据读写量分别除以算力与带宽算出理论时间下界，第三步结合执行依赖分析流水线重叠与等待。由硬件峰值算出的时间下界代表了不可逾越的物理极限，理论下界与实测耗时之比就是硬件利用率（MFU 与 MBU）；当实测表现远低于物理极限时，原因要么是纸面模型漏算了必做的工作，要么是软件系统引入了可以消除的额外开销。在本章的 70B 解码算例中，权重读取耗时是矩阵计算耗时的约 148 倍，系统处于典型的访存受限状态，因此提升显存带宽、量化压缩权重和通过批处理复用权重，才是缩短分摊耗时的有效手段。需要牢记的是，批内复用虽然能大幅推高系统总吞吐率，但单个用户感受到的响应延迟依然包含排队等待与整批执行的时间。
 
-本章的核心练习为练习 1-2、1-3、1-4 和 1-11，分别训练显存容量核算与多卡分配、硬件参数与 batch size 变化下的时间下界推演、用实测数据检验理论模型的科学方法，以及微秒级主机调度旁路（ghOSt）与智能网卡内存策略卸载（Wave）的边界核算；延伸练习 1-5 至 1-10 及 1-12—1-14 则进一步结合 Amdahl 定律、实测耗时拆解、机队全栈效率（$\mathrm{MPG}=\mathrm{SG}\times\mathrm{RG}\times\mathrm{PG}$）三级漏斗、可编程网卡卸载与超节点互联的比例边界、单步权重读取时间下界折叠链（$S_0\to S_3$）、传统云与 AI 数据中心的尾延迟耦合和功率密度切换、跨层关键路径有向无环图（XProf / ProfInfer / StriaTrace）的暴露瓶颈归因，以及五大 AI 负载范式与全栈北极星效率链（$\mathrm{Efficiency}_{\mathrm{E2E}}$），训练从单卡到吉瓦级园区的系统瓶颈排查与架构演进评估。下一章我们将深入真实的 Transformer 与块扩散/字节潜空间模型内部，把本章粗略近似的 $2N$ 运算量与权重读取量拆解到每一层具体的矩阵尺寸、注意力机制与状态大小上；随后在第 3—12 章逐层展开工作负载、AI 加速器、GPU 算子、超节点与分布式并行、数据中心网络、推理与训练系统、集群调度及端边云推理，在第 13—18 章推进 AI 原生存储底座、模型—硬件协同设计、吉瓦级 AI 数据中心能源热学、机密 AI 计算、原生多模态与视频世界模型（DiT）以及大规模后训练（RLVR）与推理时扩展，并最终在第 19—24 章完成具身智能（VLA）与大规模物理仿真、十万卡集群可靠性与基准评测科学、自主智能体基础设施（Agentic Infra）、全双工实时语音、百亿亿次数据工程与合成数据工厂以及科学智能（AI for Science）的二十四章全栈大满贯收束。
+本章的核心练习为练习 1-2、1-3、1-4 和 1-11，分别训练显存容量核算与多卡分配、硬件参数与 batch size 变化下的时间下界推演、用实测数据检验理论模型的科学方法，以及微秒级主机调度旁路（ghOSt）与智能网卡内存策略卸载（Wave）的边界核算；延伸练习 1-5 至 1-10 及 1-12—1-16 则进一步结合 Amdahl 定律、实测耗时拆解、机队全栈效率（$\mathrm{MPG}=\mathrm{SG}\times\mathrm{RG}\times\mathrm{PG}$）三级漏斗、可编程网卡卸载与超节点互联的比例边界、单步权重读取时间下界折叠链（$S_0\to S_3$）、传统云与 AI 数据中心的尾延迟耦合和功率密度切换、跨层关键路径有向无环图（XProf / ProfInfer / StriaTrace）的暴露瓶颈归因、五大 AI 负载范式与全栈北极星效率链（$\mathrm{Efficiency}_{\mathrm{E2E}}$），以及推理摊销全生命周期扩展律（过训练倍数 $D/N = 1{,}875\times$）与跨代际加速器 TCO 核算，训练从单卡到百兆瓦级园区的系统瓶颈排查与架构演进评估。下一章我们将深入真实的 Transformer、多头潜在注意力（MLA）矩阵吸收与块扩散/字节潜空间模型内部，把本章粗略近似的 $2N$ 运算量与权重读取量拆解到每一层具体的矩阵尺寸、注意力机制与状态大小上；随后在第 3—12 章逐层展开工作负载、AI 加速器、GPU 算子、超节点与分布式并行、数据中心网络、推理与训练系统、集群调度及端边云推理，在第 13—24 章推进 AI 原生存储底座、模型—硬件协同设计、吉瓦级 AI 数据中心能源热学、机密 AI 计算、原生多模态与视频世界模型（DiT）、大规模后训练（RLVR）、具身智能（VLA）、十万卡集群可靠性、自主智能体（Agentic Infra）、全双工实时语音、百亿亿次数据工程与科学智能（AI4Science），并最终在第 25—30 章完成生成式推荐（HSTU）与 GPU 向量检索、后自回归生成范式（dLLM / BLT / Titans）、晶圆级/3D-SRAM 微秒级推理与三值量化（BitNet b1.58）、广域网去中心化训练（DiLoCo）与安全水印、DeepSeek 开源基础设施全栈源码解剖以及自演进 AI 基础设施（AI for AI Infra）的三十章全栈终极大收束。

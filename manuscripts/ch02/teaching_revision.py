@@ -682,6 +682,75 @@ def draw(here, data):
         )
         out.save(f, 'ch02-byte-latent-transformer-entropy-dynamic-patching')
 
+        # 41. ch02-mla-matrix-absorption-tensor-contraction-datapath (Path F3 Fig 2-45)
+        f, a = canvas(6.6)
+        card(a, 0.02, 0.50, 0.96, 0.47, 'A  MLA 展开路径 vs. 矩阵吸收紧凑路径的张量收缩变换', '', 'blue', title_size=11.5)
+        card(
+            a, 0.045, 0.70, 0.43, 0.19,
+            '展开路径（Prefill 路径）',
+            'c_KV 先经 W_UK/W_UV 展开\n单头宽 128+64，V 宽 128\n适合长提示词单次展开复用',
+            'orange', title_size=11, body_size=11
+        )
+        card(
+            a, 0.525, 0.70, 0.43, 0.19,
+            '矩阵吸收路径（Decode 路径）',
+            'W_UK 吸收进查询侧 q_abs\nW_UV 移至注意力汇总之后\n直接与潜变量 C_KV 做点积',
+            'green', title_size=11, body_size=11
+        )
+        box(
+            a, 0.045, 0.53, 0.91, 0.135,
+            '恒等本质：(q W_UQ)(c_KV W_UK)^T = (q W_UQ W_UK^T) c_KV^T',
+            'blue', size=11
+        )
+
+        card(a, 0.02, 0.03, 0.96, 0.44, 'B  DeepSeek-V3 (128头) 单词元缓存读取与计算代价对比', '', 'purple', title_size=11.5)
+        mla_metrics = [
+            (0.045, 'HBM 读取压缩', '展开 65,536 B/词\n吸收 1,152 B/词', 'green'),
+            (0.355, '吸收投影开销', '128x128x512 变换\n仅当前 m=1 执行', 'blue'),
+            (0.665, '算术强度跃升', '128头共享潜变量\n达 241.8 FLOPs/B', 'teal'),
+        ]
+        for mx, mtitle, mbody, mcol in mla_metrics:
+            card(a, mx, 0.175, 0.29, 0.21, mtitle, mbody, mcol, title_size=11, body_size=11)
+        box(
+            a, 0.045, 0.05, 0.91, 0.095,
+            '向后桥接（第 29 章 FlashMLA）：[512+64] 头维跑出 3,000 GB/s 带宽',
+            'gray', size=11
+        )
+        out.save(f, 'ch02-mla-matrix-absorption-tensor-contraction-datapath')
+
+        # 42. ch02-hybrid-linear-full-attention-state-capacity-pareto (Path F3 Fig 2-46)
+        f, (ax1, ax2) = plt.subplots(1, 2, figsize=(420 / 72, 4.1))
+        f.subplots_adjust(left=0.22, right=0.96, bottom=0.20, top=0.85, wspace=0.64)
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+
+        hyb_ratios = ['全注意力 0:1', '混合 1:1', '混合 3:1', '混合 7:1']
+        state_1m_gib = [80.00, 40.04, 20.06, 10.07]
+        cols_hb = [COL['orange'], COL['blue'], COL['green'], COL['teal']]
+        edges_hb = [BORDER_COL['orange'], BORDER_COL['blue'], BORDER_COL['green'], BORDER_COL['teal']]
+        y_hb = np.arange(len(hyb_ratios))
+        ax1.barh(y_hb, state_1m_gib, height=0.54, color=cols_hb, edgecolor=edges_hb, linewidth=1.2)
+        for yi, v_g in enumerate(state_1m_gib):
+            ax1.text(v_g + 1.8, yi, f'{v_g:.2f}', va='center', fontsize=11, weight='bold', color=COL['ink'])
+        ax1.set_yticks(y_hb, hyb_ratios)
+        ax1.invert_yaxis()
+        ax1.set_xlim(0, 112.0)
+        ax1.set_xlabel('1M 状态容量（GiB）', fontsize=11)
+        ax1.set_title('A  层间配比与 1M 状态', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(axis='x', linestyle=':', alpha=0.5, color='#CBD5E1')
+
+        niah_scores = [98.2, 97.6, 96.4, 91.2]
+        ax2.barh(y_hb, niah_scores, height=0.54, color=cols_hb, edgecolor=edges_hb, linewidth=1.2)
+        for yi, v_n in enumerate(niah_scores):
+            ax2.text(v_n + 1.8, yi, f'{v_n:.1f}%', va='center', fontsize=11, weight='bold', color=COL['ink'])
+        ax2.set_yticks(y_hb, hyb_ratios)
+        ax2.invert_yaxis()
+        ax2.set_xlim(0, 132.0)
+        ax2.set_xlabel('1M 针海检索召回率（%）', fontsize=11)
+        ax2.set_title('B  3:1 黄金配比召回拐点', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(axis='x', linestyle=':', alpha=0.5, color='#CBD5E1')
+        out.save(f, 'ch02-hybrid-linear-full-attention-state-capacity-pareto')
+
     from core_principles_figures import draw as draw_principles
     draw_principles(2, out)
     from v41_case_figures import draw as draw_v41
