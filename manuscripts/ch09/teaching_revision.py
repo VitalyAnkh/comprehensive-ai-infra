@@ -2,7 +2,7 @@
 from fractions import Fraction
 import numpy as np
 import matplotlib.pyplot as plt
-from figure_style import COL,STYLE,canvas,plot,text,box,arrow,Exporter
+from figure_style import COL,BORDER_COL,TEXT_COL,STYLE,canvas,plot,text,box,arrow,Exporter
 
 def draw(here,data):
     out=Exporter(here)
@@ -261,6 +261,112 @@ def draw(here,data):
         box(a,.52,.30,.45,.17,'网络拥塞或接收槽满回退：\n合并 k 层聚批发送防队头阻塞','purple',11)
         box(a,.52,.05,.45,.19,'细粒度完成位图 (Bitmask)：\n全层置 1 后 D 池即启动首步','gray',11)
         out.save(f,'ch09-layerwise-pipelined-kv-transfer-ttft-hiding')
+
+        # Path-F3 Fig 9-55: NVIDIA Dynamo & Mooncake KV-Aware Global Router
+        f, (ax1, ax2) = plt.subplots(2, 1, figsize=(420 / 72, 6.8))
+        f.subplots_adjust(left=0.16, right=0.95, bottom=0.10, top=0.92, hspace=0.52)
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+
+        r_modes = ['仅看排队\n(实例 C 重算)', '死守前缀\n(实例 A 排队)', 'Dynamo+Mooncake\n(实例 B 拉取)']
+        q_wait_ms = np.array([10.0, 340.0, 15.0])
+        kv_pull_ms = np.array([0.0, 0.0, 17.7])
+        prefill_ms = np.array([238.0, 52.0, 52.0])
+        tot_ttft_ms = q_wait_ms + kv_pull_ms + prefill_ms
+        x_r = np.arange(len(r_modes))
+        w_r = 0.42
+
+        ax1.bar(x_r, q_wait_ms, width=w_r, color=COL['orange'], edgecolor=BORDER_COL['orange'], lw=1.1, label='实例排队等待 Q_i')
+        ax1.bar(x_r, kv_pull_ms, width=w_r, bottom=q_wait_ms, color=COL['blue'], edgecolor=BORDER_COL['blue'], lw=1.1, label='NIXL 远端 KV 拉取')
+        ax1.bar(x_r, prefill_ms, width=w_r, bottom=q_wait_ms + kv_pull_ms, color=COL['green'], edgecolor=BORDER_COL['green'], lw=1.1, label='增量/全量 Prefill 计算')
+        lbls_r = ['248.0 ms (重算)', '392.0 ms (排队)', '84.7 ms (-78.4%)']
+        cols_r = ['blue', 'orange', 'green']
+        for xi, tot, lr, cr in zip(x_r, tot_ttft_ms, lbls_r, cols_r):
+            ax1.text(xi, tot + 12.0, lr, ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL[cr])
+        ax1.set_xticks(x_r, r_modes)
+        ax1.set_xlim(-0.55, 2.55)
+        ax1.set_ylim(0, 740.0)
+        ax1.set_yticks([0, 100, 200, 300, 400])
+        ax1.set_ylabel('首 Token 延迟 TTFT（ms）', fontsize=11)
+        ax1.set_title('A  算例 9-6：16K 请求在三类路由策略下的 TTFT 拆解', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(axis='y', linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax1.legend(frameon=True, loc='upper right', fontsize=11)
+
+        rps_vals = np.array([8, 16, 24, 32, 40])
+        p99_sticky = np.array([135.0, 210.0, 385.0, 680.0, 1120.0])
+        p99_least_q = np.array([185.0, 230.0, 295.0, 410.0, 620.0])
+        p99_dynamo = np.array([88.0, 102.0, 118.0, 142.0, 186.0])
+        x_q = np.arange(len(rps_vals))
+
+        ax2.plot(x_q, p99_sticky, color=BORDER_COL['orange'], lw=2.2, marker='^', ms=5.5, label='死守前缀路由 (Sticky Prefix)')
+        ax2.plot(x_q, p99_least_q, color=BORDER_COL['blue'], lw=2.2, marker='s', ms=5.0, label='仅看队列路由 (Least-Loaded)')
+        ax2.plot(x_q, p99_dynamo, color=BORDER_COL['green'], lw=2.4, marker='o', ms=5.5, label='Dynamo + Mooncake 联合代价路由')
+        for xi, vs, vl, vd in zip(x_q, p99_sticky, p99_least_q, p99_dynamo):
+            if xi >= 2:
+                ax2.text(xi - 0.08, vs + 50.0, f'{vs:.0f}', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['orange'])
+            else:
+                ax2.text(xi, vl + 45.0, f'{vl:.0f}', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['blue'])
+            ax2.text(xi + 0.05, vd - 55.0, f'{vd:.0f}', ha='center', va='top', fontsize=11, weight='bold', color=TEXT_COL['green'])
+        ax2.set_xticks(x_q, [f'{r} req/s' for r in rps_vals])
+        ax2.set_xlim(-0.45, 4.45)
+        ax2.set_ylim(-140.0, 1480.0)
+        ax2.set_yticks([0, 300, 600, 900, 1200])
+        ax2.set_xlabel('集群全局请求到达率 λ', fontsize=11)
+        ax2.set_ylabel('集群 p99 TTFT（ms）', fontsize=11)
+        ax2.set_title('B  不同负载水位下三类全局路由器的 p99 尾延迟对比', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(True, linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax2.legend(frameon=True, loc='upper left', fontsize=11)
+        out.save(f, 'ch09-nvidia-dynamo-mooncake-kv-aware-global-router')
+
+        # Path-F3 Fig 9-56: KTransformers Single-GPU MLA + Dual-Socket CPU AMX Routed Experts
+        f, (ax1, ax2) = plt.subplots(2, 1, figsize=(420 / 72, 6.8))
+        f.subplots_adjust(left=0.16, right=0.95, bottom=0.10, top=0.92, hspace=0.52)
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+
+        b_kt = ['B=1', 'B=4', 'B=8', 'B=16']
+        t_pcie_stream = [368.0, 382.0, 410.0, 465.0]
+        t_cpu_avx512 = [142.0, 168.0, 215.0, 310.0]
+        t_kt_amx = [53.8, 62.5, 78.4, 112.0]
+        x_k = np.arange(len(b_kt))
+        w_k = 0.24
+
+        ax1.bar(x_k - w_k, t_pcie_stream, width=w_k, color=COL['orange'], edgecolor=BORDER_COL['orange'], lw=1.1, label='PCIe 动态流式搬运专家')
+        ax1.bar(x_k, t_cpu_avx512, width=w_k, color=COL['blue'], edgecolor=BORDER_COL['blue'], lw=1.1, label='CPU AVX-512 原地执行')
+        ax1.bar(x_k + w_k, t_kt_amx, width=w_k, color=COL['green'], edgecolor=BORDER_COL['green'], lw=1.1, label='KTransformers (GPU+AMX)')
+        for xi, vp, va, vk in zip(x_k, t_pcie_stream, t_cpu_avx512, t_kt_amx):
+            ax1.text(xi - w_k - 0.03, vp + 10.0, f'{vp:.0f}', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['orange'])
+            ax1.text(xi, va + 10.0, f'{va:.0f}', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['blue'])
+            dx_k = 0.05 if xi < 3 else 0.11
+            ax1.text(xi + w_k + dx_k, vk + 10.0, f'{vk:.1f}', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['green'])
+        ax1.set_xticks(x_k, b_kt)
+        ax1.set_xlim(-0.55, 3.65)
+        ax1.set_ylim(0, 740.0)
+        ax1.set_yticks([0, 150, 300, 450])
+        ax1.set_ylabel('671B 单步解码耗时（ms）', fontsize=11)
+        ax1.set_title('A  算例 9-7：三种 671B 异构解码架构的单步耗时对比', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(axis='y', linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax1.legend(frameon=True, loc='upper left', fontsize=11)
+
+        numa_schemes = ['跨 NUMA 随机访问\n(UPI 穿透拥塞)', '奇偶层切分 NUMA\n(层间同步等待)', '激活广播+专家分片\n(KTransformers 零穿透)']
+        tok_per_sec_b1 = [10.9, 14.7, 18.6]
+        tok_per_sec_b8 = [54.2, 76.5, 102.0]
+        x_nm = np.arange(len(numa_schemes))
+        w_nm = 0.34
+
+        ax2.bar(x_nm - w_nm / 2, tok_per_sec_b1, width=w_nm, color=COL['teal'], edgecolor=BORDER_COL['teal'], lw=1.2, label='单并发解码 (B=1)')
+        ax2.bar(x_nm + w_nm / 2, tok_per_sec_b8, width=w_nm, color=COL['green'], edgecolor=BORDER_COL['green'], lw=1.2, label='8 并发总吞吐 (B=8)')
+        for xi, v1, v8 in zip(x_nm, tok_per_sec_b1, tok_per_sec_b8):
+            ax2.text(xi - w_nm / 2, v1 + 3.0, f'{v1:.1f}', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['teal'])
+            ax2.text(xi + w_nm / 2, v8 + 3.0, f'{v8:.1f}', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['green'])
+        ax2.set_xticks(x_nm, numa_schemes)
+        ax2.set_xlim(-0.55, 2.55)
+        ax2.set_ylim(0, 132.0)
+        ax2.set_ylabel('解码吞吐率（tok/s）', fontsize=11)
+        ax2.set_title('B  双路 DDR5 CPU NUMA 拓扑对齐与激活广播对解码吞吐的提升', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(axis='y', linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax2.legend(frameon=True, loc='upper left', fontsize=11)
+        out.save(f, 'ch09-ktransformers-gpu-mla-and-cpu-amx-routed-experts')
     from v41_case_figures import draw as draw_v41
     draw_v41(9, out)
     out.finish();return out.outputs,out.checks

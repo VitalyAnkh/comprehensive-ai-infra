@@ -2,7 +2,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Polygon
-from figure_style import COL,STYLE,canvas,plot,text,box,arrow,Exporter
+from figure_style import COL,BORDER_COL,TEXT_COL,STYLE,canvas,plot,text,box,arrow,Exporter
 
 def draw(here,data):
     out=Exporter(here)
@@ -331,6 +331,104 @@ def draw(here,data):
         box(a,.52,.27,.45,.17,'定向上传最新策略切片 v_curr\n校验哈希并清空残留 KV 池','blue',11)
         box(a,.52,.05,.45,.17,'版本屏障对齐后重入 (ACTIVE)\n严防跨代差样本污染策略梯度','green',11)
         out.save(f,'ch10-distributed-muon-newton-schulz-and-rl-readmission')
+
+        # Path-F3 Fig 10-57: Selective Activation Recomputation (Core Attention + MLA Up-Proj + SwiGLU)
+        f, (ax1, ax2) = plt.subplots(2, 1, figsize=(420 / 72, 6.8))
+        f.subplots_adjust(left=0.16, right=0.95, bottom=0.10, top=0.92, hspace=0.52)
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+
+        recomp_modes = ['全量保存\n(无重算)', '仅重算注意力\n(Core Attn)', '细粒度重算\n(三模块联合)', '整层全重算\n(Full Ckpt)']
+        act_mem_mib = [1424.0, 784.0, 240.0, 64.0]
+        cols_rc = ['orange', 'blue', 'green', 'purple']
+        x_rc = np.arange(len(recomp_modes))
+        for xi, val, cn in zip(x_rc, act_mem_mib, cols_rc):
+            ax1.bar(xi, val, width=0.44, color=COL[cn], edgecolor=BORDER_COL[cn], lw=1.2)
+        lbls_rc = ['1424 MiB\n(+0% 算力)', '784 MiB\n(+4.2% 算力)', '240 MiB\n(+11.8% 算力)', '64 MiB\n(+33.3% 算力)']
+        for xi, val, lr, cn in zip(x_rc, act_mem_mib, lbls_rc, cols_rc):
+            ax1.text(xi, val + 45.0, lr, ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL[cn])
+        ax1.set_xticks(x_rc, recomp_modes)
+        ax1.set_xlim(-0.55, 3.55)
+        ax1.set_ylim(0, 1820.0)
+        ax1.set_yticks([0, 400, 800, 1200, 1600])
+        ax1.set_ylabel('单层每微批保留激活（MiB）', fontsize=11)
+        ax1.set_title('A  算例 10-6：四种重计算策略下单层保留激活与算力开销', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(axis='y', linestyle=':', alpha=0.5, color='#CBD5E1')
+
+        stage_act_gib = np.array([89.0, 49.0, 15.0, 4.0])
+        eff_mfu_pct = np.array([0.0, 46.5, 51.4, 41.2])  # 0.0 represents OOM for No Recompute on 80GB H100
+        x_s2 = np.arange(len(recomp_modes))
+        w_s2 = 0.34
+
+        ax2.bar(x_s2 - w_s2 / 2, stage_act_gib, width=w_s2, color=COL['blue'], edgecolor=BORDER_COL['blue'], lw=1.2, label='8 微批在途激活 (GiB)')
+        ax2.bar(x_s2 + w_s2 / 2, eff_mfu_pct, width=w_s2, color=COL['green'], edgecolor=BORDER_COL['green'], lw=1.2, label='端到端有效 MFU (%)')
+        for xi, vg, vm in zip(x_s2, stage_act_gib, eff_mfu_pct):
+            ax2.text(xi - w_s2 * 0.62, vg + 2.5, f'{vg:.0f}G', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['blue'])
+            m_lbl = 'OOM' if vm == 0.0 else f'{vm:.1f}%'
+            m_col = TEXT_COL['orange'] if vm == 0.0 else TEXT_COL['green']
+            ax2.text(xi + w_s2 * 0.62, vm + 2.5, m_lbl, ha='center', va='bottom', fontsize=11, weight='bold', color=m_col)
+        ax2.set_xticks(x_s2, recomp_modes)
+        ax2.set_xlim(-0.55, 3.55)
+        ax2.set_ylim(0, 118.0)
+        ax2.set_ylabel('激活显存 (GiB) / MFU (%)', fontsize=11)
+        ax2.set_title('B  PP=8 首阶段在途激活显存与 80GB H100 有效 MFU 对比', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(axis='y', linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax2.legend(frameon=True, loc='upper right', fontsize=11)
+        out.save(f, 'ch10-selective-activation-recomputation-mla-and-swiglu')
+
+        # Path-F3 Fig 10-58: Megatron-Core / TorchTitan 5D Hybrid Parallel Memory Breakdown
+        f, (ax1, ax2) = plt.subplots(2, 1, figsize=(420 / 72, 6.8))
+        f.subplots_adjust(left=0.16, right=0.95, bottom=0.10, top=0.92, hspace=0.52)
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+
+        p5_configs = ['3D 基线 (无重算)\nTP8·PP8', '4D + 整层重算\nTP4·EP16·PP8', '5D + 细粒度重算\nTP2·CP2·EP32']
+        m_wt_grad = np.array([18.4, 14.2, 14.2])
+        m_opt_shard = np.array([11.0, 21.0, 21.0])
+        m_act_inflight = np.array([78.0, 18.0, 15.0])
+        m_comm_buf = np.array([11.0, 11.0, 8.4])
+        m_totals = m_wt_grad + m_opt_shard + m_act_inflight + m_comm_buf
+        x_p5 = np.arange(len(p5_configs))
+        w_p5 = 0.42
+
+        ax1.bar(x_p5, m_wt_grad, width=w_p5, color=COL['blue'], edgecolor=BORDER_COL['blue'], lw=1.1, label='权重+梯度分片')
+        ax1.bar(x_p5, m_opt_shard, width=w_p5, bottom=m_wt_grad, color=COL['purple'], edgecolor=BORDER_COL['purple'], lw=1.1, label='ZeRO-1 优化器分片')
+        ax1.bar(x_p5, m_act_inflight, width=w_p5, bottom=m_wt_grad + m_opt_shard, color=COL['orange'], edgecolor=BORDER_COL['orange'], lw=1.1, label='在途微批激活')
+        ax1.bar(x_p5, m_comm_buf, width=w_p5, bottom=m_wt_grad + m_opt_shard + m_act_inflight, color=COL['teal'], edgecolor=BORDER_COL['teal'], lw=1.1, label='通信与临时缓冲')
+        ax1.axhline(79.1, color=BORDER_COL['orange'], ls='--', lw=1.4)
+        ax1.text(2.48, 83.0, '上限 79.1 GiB', ha='right', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['orange'])
+        ax1.text(0.0, 122.0, '118.4 GiB (OOM)', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['orange'])
+        ax1.text(1.0, 83.0, '64.2 GiB (41.2%)', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['blue'])
+        ax1.text(2.0, 61.0, '58.6 GiB (51.4%)', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['green'])
+        ax1.set_xticks(x_p5, p5_configs)
+        ax1.set_xlim(-0.55, 2.55)
+        ax1.set_ylim(0, 195.0)
+        ax1.set_yticks([0, 40, 80, 120])
+        ax1.set_ylabel('单卡峰值显存（GiB）', fontsize=11)
+        ax1.set_title('A  算例 10-7：235B MoE 在三种并行方案下的单卡显存拆解', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(axis='y', linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax1.legend(frameon=True, loc='upper right', ncol=2, fontsize=11)
+
+        seq_lens = ['8K', '32K', '64K', '128K']
+        mfu_tp8_nocp = np.array([46.2, 38.5, 31.0, 24.5])
+        mfu_5d_hybrid = np.array([51.4, 50.2, 48.6, 46.8])
+        x_sq = np.arange(len(seq_lens))
+
+        ax2.plot(x_sq, mfu_5d_hybrid, color=BORDER_COL['green'], lw=2.4, marker='o', ms=5.5, label='5D 混合并行 (TP2×CP×EP32×PP8)')
+        ax2.plot(x_sq, mfu_tp8_nocp, color=BORDER_COL['orange'], lw=2.2, marker='s', ms=5.5, label='传统重 TP 并行 (TP8 无 CP)')
+        for xi, v5, vt in zip(x_sq, mfu_5d_hybrid, mfu_tp8_nocp):
+            ax2.text(xi, v5 + 2.2, f'{v5:.1f}%', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['green'])
+            ax2.text(xi, vt - 3.0, f'{vt:.1f}%', ha='center', va='top', fontsize=11, weight='bold', color=TEXT_COL['orange'])
+        ax2.set_xticks(x_sq, seq_lens)
+        ax2.set_xlim(-0.4, 3.4)
+        ax2.set_ylim(12.0, 74.0)
+        ax2.set_yticks([20, 30, 40, 50, 60])
+        ax2.set_xlabel('训练上下文序列长度 S', fontsize=11)
+        ax2.set_ylabel('集群有效算力利用率 MFU（%）', fontsize=11)
+        ax2.set_title('B  长序列扩展下 5D 混合并行与重 TP 方案的 MFU 保持率对比', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(True, linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax2.legend(frameon=True, loc='upper right', fontsize=11)
+        out.save(f, 'ch10-megatron-core-torchtitan-5d-parallel-memory-breakdown')
     from core_principles_figures import draw as draw_principles
     draw_principles(10, out)
     out.finish();return out.outputs,out.checks

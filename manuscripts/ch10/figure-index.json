@@ -278,5 +278,15 @@
     "number": 56,
     "caption": "分布式 Muon 优化器 Newton-Schulz 正交化流水线与 RL 节点掉线弹性重准入状态机。左栏展示跨 DP 组 `ReduceScatter` 归约分片动量 $M_i$ 后，在本地 BF16 Tensor Core 上执行 5 步多项式迭代 $X_{k+1}=aX_k+b(X_kX_k^\\top)X_k+c(X_kX_k^\\top)^2X_k$ 并与层间 `AllGather` 重叠的机制（省去二阶矩 $v$ 使优化器状态降 33%）；右栏展示 Rollout 节点掉线后经隔离接管（`DRAINING`）、重启同步（`SYNCING`）、定向上传最新策略切片 `v_curr` 并清空残留 KV 池，直至版本屏障对齐后重新挂入生成池（`ACTIVE`）的闭环状态机。",
     "file": "ch10-distributed-muon-newton-schulz-and-rl-readmission.svg"
+  },
+  {
+    "number": 57,
+    "caption": "MLA + MoE 架构下的细粒度选择性激活重计算（`Core Attention + MLA Up-Projection + SwiGLU`）。子图 A 对比单层每微批（$S=8{,}192, b=1$）在全量保存、仅重算核心注意力、细粒度三模块联合重算与整层全重计算四种策略下的保留激活体积与额外重算 FLOPs 百分比；子图 B 展示在 $\\mathrm{PP}=8$ 首阶段（需同时驻留 $8$ 个在途微批）下，细粒度选择性重计算如何将激活显存控制在 $15.0\\ \\mathrm{GiB}$ 并取得全场最高的 $51.4\\%$ 端到端有效 MFU。",
+    "file": "ch10-selective-activation-recomputation-mla-and-swiglu.svg"
+  },
+  {
+    "number": 58,
+    "caption": "Megatron-Core / TorchTitan 5D 混合并行显存账本与长序列扩展效率。子图 A 对比在 80 GB H100（可用上限 $79.1\\ \\mathrm{GiB}$）上训练 `235B-A22B` MoE 模型时，3D 基线（无重算，$\\mathrm{TP}8\\times\\mathrm{PP}8$，峰值 $118.4\\ \\mathrm{GiB}$ 触发 OOM）、4D 整层重算（$\\mathrm{TP}4\\times\\mathrm{EP}16\\times\\mathrm{PP}8$，$64.2\\ \\mathrm{GiB}$）与 5D 细粒度重算（$\\mathrm{TP}2\\times\\mathrm{CP}2\\times\\mathrm{EP}32\\times\\mathrm{PP}8\\times\\mathrm{ZeRO\\text{-}1}$，峰值 $58.6\\ \\mathrm{GiB}$）的四项显存构成；子图 B 对比序列长度从 $8\\mathrm{K}$ 扩展至 $128\\mathrm{K}$ 时 5D 混合并行与传统重 $\\mathrm{TP}$ 方案的 MFU 轨迹。",
+    "file": "ch10-megatron-core-torchtitan-5d-parallel-memory-breakdown.svg"
   }
 ]

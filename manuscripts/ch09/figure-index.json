@@ -214,5 +214,13 @@
   {
     "name": "ch09-layerwise-pipelined-kv-transfer-ttft-hiding",
     "number": 54
+  },
+  {
+    "name": "ch09-nvidia-dynamo-mooncake-kv-aware-global-router",
+    "number": 55
+  },
+  {
+    "name": "ch09-ktransformers-gpu-mla-and-cpu-amx-routed-experts",
+    "number": 56
   }
 ]
