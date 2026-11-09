@@ -8,7 +8,7 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle, FancyBboxPatch, Patch
 import numpy as np
-from figure_style import COL, STYLE, Exporter, canvas, plot, box, text, arrow
+from figure_style import COL, BORDER_COL, TEXT_COL, STYLE, Exporter, canvas, plot, box, text, arrow
 from figure_style.typography import configure_font
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -313,6 +313,93 @@ def draw(here, data=None):
         box(a, .52, .16, .44, .11, '片上 L2 / SMEM 任务队列\n消除 720 道全局栅栏与尾波', 'green', 11)
         box(a, .04, .04, .92, .09, '净收益：MPK 较 Eager 快 1.77×（省 3.82ms），较 Graph 省 1.32ms', 'gray', 11)
         out.save(f, 'ch05-mirage-mpk-persistent-megakernel-execution')
+
+        # 5.6.5 Fig 5-49: Variable-length Split-KV persistent tile scheduler (FlashMLA / FlashDecoding++).
+        f, (ax1, ax2) = plt.subplots(2, 1, figsize=(420 / 72, 6.8))
+        f.subplots_adjust(left=0.16, right=0.95, bottom=0.10, top=0.92, hspace=0.52)
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+
+        sched_modes = ['逐请求单块\n(k=1, 16 CTA)', '静态固定切分\n(k=8, 128 CTA)', 'FlashMLA 持久瓦片\n(132 SM 均匀配额)']
+        lat_us = [1843.2, 245.0, 42.0]
+        sub_lbls = ['SM利用 1.95%', 'SM利用 15.62%', '均衡100% (快5.83×)']
+        cols_m = ['orange', 'blue', 'green']
+        x_m = np.arange(len(sched_modes))
+        for xi, lv, sl, cn in zip(x_m, lat_us, sub_lbls, cols_m):
+            ax1.bar(xi, lv, width=0.45, color=COL[cn], edgecolor=BORDER_COL[cn], lw=1.3)
+            ax1.text(xi, lv * 1.18, f'{lv:.1f} μs\n{sl}', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL[cn])
+        ax1.set_yscale('log')
+        ax1.set_xticks(x_m, sched_modes)
+        ax1.set_xlim(-0.55, 2.55)
+        ax1.set_ylim(15.0, 6800.0)
+        ax1.set_ylabel('批次注意力耗时（μs，对数）', fontsize=11)
+        ax1.set_title('A  算例 5-6：偏斜变长批次 (2×64K+4×8K+10×512) 耗时对比', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(True, linestyle=':', alpha=0.5, color='#CBD5E1')
+
+        sm_groups = ['SM 0..15\n(64K长序列)', 'SM 16..47\n(8K中序列)', 'SM 48..127\n(512短序列)', 'SM 128..131\n(尾部分组)']
+        tiles_k8 = [128, 16, 1, 0]
+        tiles_mla = [20, 20, 20, 20]
+        x_g = np.arange(len(sm_groups))
+        w_b = 0.34
+        ax2.bar(x_g - w_b / 2, tiles_k8, width=w_b, color=COL['orange'], edgecolor=BORDER_COL['orange'], lw=1.2, label='静态固定切分 (k=8, 峰值128瓦片)')
+        ax2.bar(x_g + w_b / 2, tiles_mla, width=w_b, color=COL['green'], edgecolor=BORDER_COL['green'], lw=1.2, label='FlashMLA 持久调度 (恒定20瓦片/SM)')
+        for xi, v8, vmla in zip(x_g, tiles_k8, tiles_mla):
+            ax2.text(xi - w_b / 2, v8 + 4.0, f'{v8}', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['orange'])
+            ax2.text(xi + w_b / 2, vmla + 4.0, f'{vmla}', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['green'])
+        ax2.set_xticks(x_g, sm_groups)
+        ax2.set_xlim(-0.6, 3.6)
+        ax2.set_ylim(0, 158)
+        ax2.set_ylabel('每 SM 分配瓦片数', fontsize=11)
+        ax2.set_title('B  132 个 SM 上的 KV 瓦片负载分布（总计 2,640 瓦片）', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(axis='y', linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax2.legend(frameon=True, loc='upper right', fontsize=11)
+        out.save(f, 'ch05-variable-length-split-kv-persistent-tile-scheduler')
+
+        # 5.6.5 Fig 5-50: Runtime JIT shape specialization register pressure & SM residency cliff.
+        f, (ax1, ax2) = plt.subplots(2, 1, figsize=(420 / 72, 6.8))
+        f.subplots_adjust(left=0.16, right=0.95, bottom=0.10, top=0.92, hspace=0.52)
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+
+        r_grid = np.arange(48, 208, 1)
+        r_aligned = np.ceil(r_grid / 8.0) * 8.0
+        n_cta_curve = np.floor(65536.0 / (256.0 * r_aligned))
+        ax1.step(r_grid, n_cta_curve, where='post', color=BORDER_COL['blue'], lw=2.4, label='SM 驻留线程块上限 N_CTA(r)')
+        ax1.axvline(128.0, color=BORDER_COL['orange'], lw=1.6, ls='--', label='驻留断崖 r=128 (2→1 CTA/SM)')
+        ax1.scatter([120, 160], [2, 1], s=60,
+                    color=[BORDER_COL['green'], BORDER_COL['orange']],
+                    facecolor=[COL['green'], COL['orange']], linewidth=1.6, zorder=5)
+        ax1.annotate('JIT 常量特化 (r=120):\n2 CTA/SM (93.8%, 0溢出)',
+                     xy=(120, 2.0), xytext=(56, 1.12),
+                     arrowprops=dict(arrowstyle='->', color=BORDER_COL['green'], lw=1.3),
+                     fontsize=11, weight='bold', color=TEXT_COL['green'])
+        ax1.annotate('通用未特化 (r=160):\n跌落至 1 CTA/SM',
+                     xy=(160, 1.0), xytext=(136, 2.05),
+                     arrowprops=dict(arrowstyle='->', color=BORDER_COL['orange'], lw=1.3),
+                     fontsize=11, weight='bold', color=TEXT_COL['orange'])
+        ax1.set(xlim=(48, 204), ylim=(0.4, 4.6),
+                xlabel='每线程分配寄存器数 r（256 线程/CTA）',
+                ylabel='每 SM 驻留 CTA 数')
+        ax1.set_yticks([1, 2, 3, 4])
+        ax1.set_title('A  SM 寄存器堆容量 (65,536) 下的并发线程块驻留阶梯曲线', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(True, linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax1.legend(frameon=True, loc='upper right', fontsize=11)
+
+        jit_modes = ['通用限寄存器\n(cap=128, 溢出28r)', '通用不限寄存器\n(r=160, 1 CTA/SM)', '运行期 JIT 特化\n(r=120, 2 CTA/0溢出)']
+        t_gemm_us = [332.5, 198.2, 127.3]
+        tflops_lbl = ['310 TFLOP/s', '520 TFLOP/s', '810 TFLOP/s (2.61×)']
+        cols_j = ['orange', 'blue', 'green']
+        x_j = np.arange(len(jit_modes))
+        for xi, tv, tl, cn in zip(x_j, t_gemm_us, tflops_lbl, cols_j):
+            ax2.bar(xi, tv, width=0.45, color=COL[cn], edgecolor=BORDER_COL[cn], lw=1.3)
+            ax2.text(xi, tv + 10.0, f'{tv:.1f} μs\n{tl}', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL[cn])
+        ax2.set_xticks(x_j, jit_modes)
+        ax2.set_xlim(-0.55, 2.55)
+        ax2.set_ylim(0, 415.0)
+        ax2.set_ylabel('Grouped GEMM 耗时（μs）', fontsize=11)
+        ax2.set_title('B  算例 5-7：MoE 分组 FP8 GEMM 三种编译模式耗时对比', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(axis='y', linestyle=':', alpha=0.5, color='#CBD5E1')
+        out.save(f, 'ch05-jit-compile-time-shape-specialization-register-pressure')
     (here / 'structure-layout-validation.json').write_text(json.dumps(out.checks, ensure_ascii=False, indent=2) + '\n')
     return out.outputs
 

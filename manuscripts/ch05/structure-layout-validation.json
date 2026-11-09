@@ -76,5 +76,17 @@
     "width_pt": 420.0,
     "min_label_pt": 11.0,
     "text_extent_warnings": []
+  },
+  {
+    "figure": "ch05-variable-length-split-kv-persistent-tile-scheduler",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch05-jit-compile-time-shape-specialization-register-pressure",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
   }
 ]

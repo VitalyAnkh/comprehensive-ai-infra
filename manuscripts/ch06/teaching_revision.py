@@ -1,7 +1,7 @@
 """Chapter six: follow ownership, then messages, then elapsed time."""
 import numpy as np
 import matplotlib.pyplot as plt
-from figure_style import COL, STYLE, canvas, plot, text, box, arrow, Exporter
+from figure_style import COL, BORDER_COL, TEXT_COL, STYLE, canvas, plot, text, box, arrow, Exporter
 
 def draw(here,data):
     out=Exporter(here)
@@ -273,4 +273,98 @@ def draw(here,data):
         box(a,.68,.23,.30,.17,'Twisted Torus\n按并行维扭曲环路\n对角 28 → 16 跳','blue',11)
         box(a,.02,.03,.96,.15,'24×24×16 二分带宽：2×384×600 GB/s = 460.8 TB/s，支撑全域归约','purple',11)
         out.save(f,'ch06-tpu-v7-ironwood-9216-3d-torus-ocs-reconfig')
+
+        # 6.7.6 Fig 6-66: Rubin Ultra NVL576 (Kyber) orthogonal midplane 224G PAM4 insertion loss budget.
+        f, (ax1, ax2) = plt.subplots(2, 1, figsize=(420 / 72, 6.8))
+        f.subplots_adjust(left=0.16, right=0.95, bottom=0.10, top=0.92, hspace=0.52)
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+
+        pkg_configs = ['传统共面背板\n(18寸PCB, 0铜缆)', 'Oberon NVL72\n(6寸PCB+42寸铜缆)', 'Kyber NVL576\n(7.5寸正交板, 0铜缆)']
+        il_pkg_conn = np.array([9.2, 9.2, 9.2])  # 6.4 dB pkg + 2.8 dB conn
+        il_pcb = np.array([20.70, 6.90, 8.63])
+        il_cable = np.array([0.0, 10.08, 0.0])
+        il_margin = np.array([1.80, 1.80, 1.80])
+        il_totals = il_pkg_conn + il_pcb + il_cable + il_margin
+        x_p = np.arange(len(pkg_configs))
+        w_p = 0.42
+
+        ax1.bar(x_p, il_pkg_conn, width=w_p, color=COL['blue'], edgecolor=BORDER_COL['blue'], lw=1.1, label='封装+连接器 (9.2dB)')
+        ax1.bar(x_p, il_pcb, width=w_p, bottom=il_pkg_conn, color=COL['orange'], edgecolor=BORDER_COL['orange'], lw=1.1, label='PCB走线 (1.15dB/寸)')
+        ax1.bar(x_p, il_cable, width=w_p, bottom=il_pkg_conn + il_pcb, color=COL['teal'], edgecolor=BORDER_COL['teal'], lw=1.1, label='铜缆 (0.24dB/寸)')
+        ax1.bar(x_p, il_margin, width=w_p, bottom=il_pkg_conn + il_pcb + il_cable, color=COL['purple'], edgecolor=BORDER_COL['purple'], lw=1.1, label='串扰余量 (1.8dB)')
+        ax1.axhline(28.0, color=BORDER_COL['orange'], lw=1.8, ls='--', label='无源上限 (28dB)')
+
+        status_lbls = ['31.70 dB (超标+3.7dB)', '27.98 dB (余量0.02dB)', '19.63 dB (余量8.38dB)']
+        status_cols = ['orange', 'blue', 'green']
+        for xi, tot, sl, sc in zip(x_p, il_totals, status_lbls, status_cols):
+            ax1.text(xi, tot + 0.9, sl, ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL[sc])
+        ax1.set_xticks(x_p, pkg_configs)
+        ax1.set_xlim(-0.55, 2.55)
+        ax1.set_ylim(0, 74.0)
+        ax1.set_yticks([0, 10, 20, 30, 40])
+        ax1.set_ylabel('56 GHz 插入损耗（dB）', fontsize=11)
+        ax1.set_title('A  224G PAM4 (56 GHz) 三种背板插入损耗预算对比', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(axis='y', linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax1.legend(frameon=True, loc='upper right', ncol=2, fontsize=11)
+
+        racks_scale = ['GB200 NVL72\n(Oberon, 72卡)', 'Vera Rubin NVL72\n(Oberon, 72卡)', 'Rubin Ultra NVL576\n(Kyber, 576裸片)']
+        bw_bidir_pbs = [0.13, 0.26, 2.07]
+        sub_r = ['130 TB/s (NVLink 5)', '260 TB/s (NVLink 6)', '2.07 PB/s (正交中板)']
+        cols_r = ['blue', 'teal', 'green']
+        x_r = np.arange(len(racks_scale))
+        for xi, bv, sr, cn in zip(x_r, bw_bidir_pbs, sub_r, cols_r):
+            ax2.bar(xi, bv, width=0.44, color=COL[cn], edgecolor=BORDER_COL[cn], lw=1.3)
+            ax2.text(xi, bv * 1.18, f'{bv:.2f} PB/s\n{sr}', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL[cn])
+        ax2.set_yscale('log')
+        ax2.set_xticks(x_r, racks_scale)
+        ax2.set_xlim(-0.55, 2.55)
+        ax2.set_ylim(0.06, 6.5)
+        ax2.set_ylabel('整柜双向互连带宽（PB/s，对数）', fontsize=11)
+        ax2.set_title('B  单机柜超节点从 72 卡铜缆盒到 576 裸片正交中板带宽跃迁', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(True, linestyle=':', alpha=0.5, color='#CBD5E1')
+        out.save(f, 'ch06-rubin-ultra-nvl576-orthogonal-midplane-insertion-loss-budget')
+
+        # 6.7.6 Fig 6-67: Full-bisection NVSwitch fabric vs. 3D Torus collective scaling.
+        f, (ax1, ax2) = plt.subplots(2, 1, figsize=(420 / 72, 6.8))
+        f.subplots_adjust(left=0.16, right=0.95, bottom=0.10, top=0.92, hspace=0.52)
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+
+        k_vals = np.array([4, 8, 12, 16, 20])
+        n_labels = ['64\n(4³)', '512\n(8³)', '1,728\n(12³)', '4,096\n(16³)', '8,000\n(20³)']
+        per_node_bisect_sw = np.array([900.0] * 5)
+        per_node_bisect_torus = 200.0 / k_vals
+        x_k = np.arange(len(k_vals))
+
+        ax1.plot(x_k, per_node_bisect_sw, color=BORDER_COL['green'], lw=2.4, marker='o', ms=5.5, label='全对分交换网 (恒定 900 GB/s/卡)')
+        ax1.plot(x_k, per_node_bisect_torus, color=BORDER_COL['orange'], lw=2.4, marker='s', ms=5.5, label='3D Torus (200/K GB/s/卡, O(N^-1/3))')
+        for xi, vt in zip(x_k, per_node_bisect_torus):
+            ax1.text(xi, vt * 1.25, f'{vt:.1f} GB/s', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['orange'])
+        ax1.set_yscale('log')
+        ax1.set_xticks(x_k, n_labels)
+        ax1.set_xlim(-0.45, 4.45)
+        ax1.set_ylim(6.0, 2600.0)
+        ax1.set_ylabel('单卡折算单向对分带宽（GB/s）', fontsize=11)
+        ax1.set_title('A  全连接交换网 vs. 3D Torus 单卡对分带宽随规模演进', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(True, linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax1.legend(frameon=True, loc='center right', fontsize=11)
+
+        t_a2a_sw = [38.20, 38.71, 39.76, 39.77, 39.78]
+        t_a2a_torus = [113.35, 226.70, 340.04, 453.39, 566.74]
+        ax2.plot(x_k, t_a2a_torus, color=BORDER_COL['orange'], lw=2.4, marker='s', ms=5.5, label='3D Torus 全域均匀 All-to-All')
+        ax2.plot(x_k, t_a2a_sw, color=BORDER_COL['green'], lw=2.4, marker='o', ms=5.5, label='全连接交换网 All-to-All')
+        for xi, ts, tt in zip(x_k, t_a2a_sw, t_a2a_torus):
+            ax2.text(xi, tt + 24.0, f'{tt:.1f} μs', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['orange'])
+            if xi in (1, 3):
+                ax2.text(xi, ts + 22.0, f'{ts:.1f} μs ({tt/ts:.1f}×)', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['green'])
+        ax2.set_xticks(x_k, n_labels)
+        ax2.set_xlim(-0.45, 4.45)
+        ax2.set_ylim(0, 680.0)
+        ax2.set_xlabel('超节点总卡数 N（对应 3D Torus 边长 K³）', fontsize=11)
+        ax2.set_ylabel('64 MiB All-to-All 耗时（μs）', fontsize=11)
+        ax2.set_title('B  64 MiB 均匀 MoE All-to-All 耗时随规模扩展曲线', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(True, linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax2.legend(frameon=True, loc='upper left', fontsize=11)
+        out.save(f, 'ch06-nvswitch-full-bisection-vs-3d-torus-collective-scaling')
     out.finish();return out.outputs,out.checks
