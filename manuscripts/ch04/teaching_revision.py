@@ -621,6 +621,96 @@ def draw(here, data, teaching):
         ax2.grid(axis='y', linestyle=':', alpha=0.5, color='#CBD5E1')
         out.save(f, 'ch04-sram-asic-vs-hbm-gpu-heterogeneous-pd-serving')
 
+        # 36. ch04-nvfp4-mxfp4-two-level-microscaling-tensor-core-datapath (Path F3 Fig 4-52)
+        f, (ax1, ax2) = plt.subplots(2, 1, figsize=(420 / 72, 6.8))
+        f.subplots_adjust(left=0.16, right=0.95, bottom=0.10, top=0.92, hspace=0.52)
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+
+        mult_labels = ['1.0× (高斯)', '2.0× 离群', '4.0× 离群', '6.0× 离群', '8.0× 离群']
+        sqnr_i4 = [18.80, 17.63, 13.46, 11.58, 10.66]
+        sqnr_mx = [18.93, 18.64, 17.00, 15.63, 15.00]
+        sqnr_nv = [20.46, 20.45, 20.84, 20.70, 20.74]
+        x_m = np.arange(len(mult_labels))
+
+        ax1.plot(x_m, sqnr_nv, color=BORDER_COL['green'], lw=2.4, marker='o', ms=5.5, label='NVFP4 (g=16, E4M3+FP32)')
+        ax1.plot(x_m, sqnr_mx, color=BORDER_COL['blue'], lw=2.2, marker='s', ms=5.2, label='OCP MXFP4 (g=32, E8M0)')
+        ax1.plot(x_m, sqnr_i4, color=BORDER_COL['orange'], lw=2.1, ls='--', marker='^', ms=5.0, label='INT4 对称块量化 (g=128)')
+        for xi, v_nv, v_mx in zip(x_m, sqnr_nv, sqnr_mx):
+            ax1.text(xi, v_nv + 0.55, f'{v_nv:.2f} dB', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['green'])
+            mx_dy = -1.35 if xi == 0 else 0.50
+            mx_va = 'top' if xi == 0 else 'bottom'
+            ax1.text(xi, v_mx + mx_dy, f'{v_mx:.2f} dB', ha='center', va=mx_va, fontsize=11, weight='bold', color=TEXT_COL['blue'])
+        ax1.set_xticks(x_m, mult_labels)
+        ax1.set_xlim(-0.45, 4.45)
+        ax1.set_ylim(5.5, 25.5)
+        ax1.set_ylabel('量化信噪比 SQNR（dB）', fontsize=11)
+        ax1.set_title('A  算例 4-6：离群通道下 INT4、MXFP4 与 NVFP4 信噪比对比', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(True, linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax1.legend(frameon=True, loc='lower left', fontsize=11)
+
+        stages = ['1. 16/32元\nE2M1内积树', '2. 微块缩放\n(E8M0/E4M3)', '3. TMEM/FP32\n主累加器', '4. 张量级FP32\n二级重缩放']
+        eff_precision = [14.0, 18.9, 20.7, 23.5]
+        x_s = np.arange(len(stages))
+        cols_s = ['blue', 'teal', 'green', 'purple']
+        sub_s = ['4b内积树', '微块缩放', 'FP32累加', '二级缩放']
+        for xi, ep, sl, cn in zip(x_s, eff_precision, sub_s, cols_s):
+            ax2.bar(xi, ep, width=0.45, color=COL[cn], edgecolor=BORDER_COL[cn], lw=1.3)
+            ax2.text(xi, ep + 0.6, f'{ep:.1f} dB\n{sl}', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL[cn])
+        ax2.set_xticks(x_s, stages)
+        ax2.set_xlim(-0.55, 3.55)
+        ax2.set_ylim(0, 31.0)
+        ax2.set_ylabel('等效动态范围（dB）', fontsize=11)
+        ax2.set_title('B  第五代/第六代 Tensor Core 双级微缩放点积硬件数据通路', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(axis='y', linestyle=':', alpha=0.5, color='#CBD5E1')
+        out.save(f, 'ch04-nvfp4-mxfp4-two-level-microscaling-tensor-core-datapath')
+
+        # 37. ch04-cxl31-memory-pooling-fabric-queueing-latency-model (Path F3 Fig 4-53)
+        f, (ax1, ax2) = plt.subplots(2, 1, figsize=(420 / 72, 6.8))
+        f.subplots_adjust(left=0.16, right=0.95, bottom=0.10, top=0.92, hspace=0.52)
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+
+        rho_grid = np.linspace(0.05, 0.95, 180)
+        t_cxl_switch = 245.0 + 45.0 * (rho_grid / (1.0 - rho_grid))
+        t_cxl_direct = 175.0 + 35.0 * (rho_grid / (1.0 - rho_grid))
+        ax1.plot(rho_grid * 100.0, t_cxl_switch, color=BORDER_COL['orange'], lw=2.4, label='CXL 3.1 交换机池 (245ns)')
+        ax1.plot(rho_grid * 100.0, t_cxl_direct, color=BORDER_COL['blue'], lw=2.2, ls='--', label='CXL 3.1 直连卡 (175ns)')
+        ax1.axhline(85.0, color=BORDER_COL['green'], lw=1.8, ls=':', label='本地 DDR5 基线 (85ns)')
+        ax1.scatter([70.0, 90.0], [350.0, 650.0], s=58,
+                    color=[BORDER_COL['teal'], BORDER_COL['orange']],
+                    facecolor=[COL['teal'], COL['orange']], linewidth=1.6, zorder=5)
+        ax1.annotate('甜点区 ρ=70%:\nT = 350.0 ns',
+                     xy=(70.0, 350.0), xytext=(32.0, 440.0),
+                     arrowprops=dict(arrowstyle='->', color=BORDER_COL['teal'], lw=1.3),
+                     fontsize=11, weight='bold', color=TEXT_COL['teal'])
+        ax1.annotate('排队发散 ρ=90%:\nT = 650.0 ns',
+                     xy=(90.0, 650.0), xytext=(55.0, 810.0),
+                     arrowprops=dict(arrowstyle='->', color=BORDER_COL['orange'], lw=1.3),
+                     fontsize=11, weight='bold', color=TEXT_COL['orange'])
+        ax1.set(xlim=(0, 100), ylim=(0, 1180),
+                xlabel='CXL 3.1 端口带宽利用率 ρ（%）',
+                ylabel='端到端访存延迟（ns）')
+        ax1.set_title('A  CXL 3.1 交换机内存池在突发 KV 访存下的 M/G/1 排队延迟曲线', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(True, linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax1.legend(frameon=True, loc='upper left', fontsize=11)
+
+        tiers = ['全量 HBM\n(64.4 GB)', '2%冷页召回\n(HBM掩盖)', '5%冷页召回\n(CXL受限)', '全量 CXL\n(无热过滤)']
+        t_step_vals = [8.05, 3.55, 7.65, 153.06]
+        x_t = np.arange(len(tiers))
+        cols_t = ['blue', 'green', 'teal', 'orange']
+        for xi, tv, cn in zip(x_t, t_step_vals, cols_t):
+            ax2.bar(xi, tv, width=0.45, color=COL[cn], edgecolor=BORDER_COL[cn], lw=1.3)
+            ax2.text(xi, tv * 1.15, f'{tv:.2f} ms', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL[cn])
+        ax2.set_yscale('log')
+        ax2.set_xticks(x_t, tiers)
+        ax2.set_xlim(-0.55, 3.55)
+        ax2.set_ylim(1.5, 420.0)
+        ax2.set_ylabel('单步 Decode 耗时（ms，对数）', fontsize=11)
+        ax2.set_title('B  算例 4-7：128K 上下文 HBM + CXL 3.1 分层解码耗时', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(True, linestyle=':', alpha=0.5, color='#CBD5E1')
+        out.save(f, 'ch04-cxl31-memory-pooling-fabric-queueing-latency-model')
+
     from sync_figures import draw as draw_sync
     data['4-sync'] = draw_sync(out, root)
     from core_principles_figures import draw as draw_principles

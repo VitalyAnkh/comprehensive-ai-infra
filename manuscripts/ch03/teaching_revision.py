@@ -776,6 +776,106 @@ def draw(here, data):
         ax2.legend(frameon=True, loc='upper left', fontsize=11)
         out.save(f, 'ch03-multi-agent-fanout-tail-amplification-barrier')
 
+        # 40. ch03-multi-turn-prefix-cache-hit-rate-roofline-shift (Path F3 Fig 3-40)
+        f, (ax1, ax2) = plt.subplots(2, 1, figsize=(420 / 72, 6.6))
+        f.subplots_adjust(left=0.16, right=0.95, bottom=0.10, top=0.92, hspace=0.52)
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+
+        eta_grid = np.linspace(0.0, 0.992, 220)
+        s_tot = 8192.0
+        p_miss_grid = s_tot * (1.0 - eta_grid)
+        s_hit_grid = s_tot * eta_grid
+        f_lin_grid = 2.0 * 8.192e9 * p_miss_grid
+        f_attn_grid = 4.0 * 36.0 * 32.0 * 128.0 * p_miss_grid * (s_hit_grid + 0.5 * p_miss_grid)
+        v_w_b = 16.384e9
+        v_kv_b = s_tot * 147456.0
+        i_mod_grid = (f_lin_grid + f_attn_grid) / (v_w_b + v_kv_b)
+        i_attn_grid = f_attn_grid / v_kv_b
+
+        ax1.plot(eta_grid * 100.0, i_attn_grid, color=BORDER_COL['teal'], lw=2.1, ls='--', label='注意力核 I_attn')
+        ax1.plot(eta_grid * 100.0, i_mod_grid, color=BORDER_COL['blue'], lw=2.4, label='全模型增量 I_model')
+        ax1.axhline(295.3, color=BORDER_COL['orange'], lw=1.8, ls=':', label='H100 嵴点 (295.3)')
+        ax1.axhline(2272.7, color=BORDER_COL['purple'], lw=1.8, ls='-.', label='Rubin 嵴点 (2,273)')
+        ax1.scatter([76.35, 97.00], [2272.7, 295.3], s=58,
+                    color=[BORDER_COL['purple'], BORDER_COL['orange']],
+                    facecolor=[COL['purple'], COL['orange']], linewidth=1.6, zorder=5)
+        ax1.annotate('Rubin 相变:\nη* = 76.4%',
+                     xy=(76.35, 2272.7), xytext=(40.0, 4500.0),
+                     arrowprops=dict(arrowstyle='->', color=BORDER_COL['purple'], lw=1.3),
+                     fontsize=11, weight='bold', color=TEXT_COL['purple'])
+        ax1.annotate('H100 相变:\nη* = 97.0%',
+                     xy=(97.00, 295.3), xytext=(66.0, 620.0),
+                     arrowprops=dict(arrowstyle='->', color=BORDER_COL['orange'], lw=1.3),
+                     fontsize=11, weight='bold', color=TEXT_COL['orange'])
+        ax1.set_yscale('log')
+        ax1.set(xlim=(0, 100), ylim=(60, 38000),
+                xlabel='多轮 Agent 前缀缓存命中率 η_hit（%）',
+                ylabel='有效算术强度（FLOP/B）')
+        ax1.set_title('A  8K 上下文前缀命中率 η_hit 驱动 Prefill 跌入带宽受限区', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(True, linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax1.legend(frameon=True, loc='lower left', ncol=2, fontsize=11, columnspacing=0.8)
+
+        wl_names = ['短对话\n(1K/0.5K)', '长文档\n(64K/0.5K)', '多轮Agent\n(32K/92%中)', '长思维链\n(2K/16K)']
+        n_prefill = np.array([11, 36, 12, 1])
+        n_decode = np.array([53, 28, 52, 63])
+        x_w = np.arange(len(wl_names))
+        ax2.bar(x_w - 0.18, n_prefill, width=0.34, color=COL['blue'], edgecolor=BORDER_COL['blue'], lw=1.3, label='Prefill 节点 N_P')
+        ax2.bar(x_w + 0.18, n_decode, width=0.34, color=COL['orange'], edgecolor=BORDER_COL['orange'], lw=1.3, label='Decode 节点 N_D')
+        for xi, np_v, nd_v in zip(x_w, n_prefill, n_decode):
+            ax2.text(xi - 0.18, np_v + 1.5, f'{np_v}', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['blue'])
+            ax2.text(xi + 0.18, nd_v + 1.5, f'{nd_v}', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['orange'])
+        ax2.set_xticks(x_w, wl_names)
+        ax2.set_xlim(-0.55, 3.55)
+        ax2.set_ylim(0, 86)
+        ax2.set_ylabel('64 卡集群节点配比', fontsize=11)
+        ax2.set_title('B  四类在线负载漂移下 64 卡分离式集群最优 N_P : N_D 配比', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(axis='y', linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax2.legend(frameon=True, loc='upper left', ncol=2, fontsize=11)
+        out.save(f, 'ch03-multi-turn-prefix-cache-hit-rate-roofline-shift')
+
+        # 41. ch03-autoregressive-vs-block-diffusion-workload-profile (Path F3 Fig 3-41)
+        f, (ax1, ax2) = plt.subplots(2, 1, figsize=(420 / 72, 6.6))
+        f.subplots_adjust(left=0.16, right=0.95, bottom=0.10, top=0.92, hspace=0.52)
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+
+        blk_labels = ['AR (L=1)', 'L=16', 'L=32', 'L=64', 'L=128', 'L=256']
+        ai_vals = [2.23, 35.62, 71.24, 142.47, 284.95, 569.89]
+        tput_vals = [314.8, 503.7, 1007.4, 2014.8, 3358.1, 3731.4]
+        x_d = np.arange(len(blk_labels))
+        cols_d = ['gray', 'blue', 'teal', 'green', 'green', 'orange']
+
+        for xi, av, cn in zip(x_d, ai_vals, cols_d):
+            ax1.bar(xi, av, width=0.46, color=COL[cn], edgecolor=BORDER_COL[cn], lw=1.3)
+            ax1.text(xi, av * 1.15, f'{av:.1f}', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL[cn])
+        ax1.axhline(369.4, color=BORDER_COL['purple'], lw=1.9, ls='--', label='H100 有效嵴点 (369.4 FLOP/B)')
+        ax1.set_yscale('log')
+        ax1.set_xticks(x_d, blk_labels)
+        ax1.set_xlim(-0.55, 5.55)
+        ax1.set_ylim(1.2, 1600.0)
+        ax1.set_ylabel('单步算术强度（FLOP/B）', fontsize=11)
+        ax1.set_title('A  自回归解码 vs. 块扩散去噪 (K_eff=10..14) 的算术强度跃迁', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(True, linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax1.legend(frameon=True, loc='upper left', fontsize=11)
+
+        ax2.plot(x_d, tput_vals, color=BORDER_COL['green'], lw=2.5, marker='o', ms=6.0, label='单流有效吞吐 (tok/s)')
+        for xi, tv in zip(x_d, tput_vals):
+            ax2.text(xi, tv + 190.0, f'{tv:.0f}', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['green'])
+        ax2.annotate('免费算力区 (L≤128):\n10×–12× 算力换 6.4×–10.7× 提速',
+                     xy=(3, 2014.8), xytext=(0.05, 3250.0),
+                     arrowprops=dict(arrowstyle='->', color=BORDER_COL['teal'], lw=1.3),
+                     fontsize=11, weight='bold', color=TEXT_COL['teal'])
+        ax2.set_xticks(x_d, blk_labels)
+        ax2.set_xlim(-0.55, 5.55)
+        ax2.set_ylim(0, 4800.0)
+        ax2.set_xlabel('生成范式与并行去噪块大小 L_blk（词元数）', fontsize=11)
+        ax2.set_ylabel('生成吞吐（tokens/s）', fontsize=11)
+        ax2.set_title('B  算例 3-6：生成 512 词元的单流吞吐加速与算力受限饱和拐点', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(True, linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax2.legend(frameon=True, loc='lower right', fontsize=11)
+        out.save(f, 'ch03-autoregressive-vs-block-diffusion-workload-profile')
+
     from v41_case_figures import draw as draw_v41
     draw_v41(3, out)
     from core_principles_figures import draw as draw_principles

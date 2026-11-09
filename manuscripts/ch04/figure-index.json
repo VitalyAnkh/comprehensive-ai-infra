@@ -202,5 +202,13 @@
   {
     "figure": "4-51",
     "asset": "ch04/ch04-sram-asic-vs-hbm-gpu-heterogeneous-pd-serving.svg"
+  },
+  {
+    "figure": "4-52",
+    "asset": "ch04/ch04-nvfp4-mxfp4-two-level-microscaling-tensor-core-datapath.svg"
+  },
+  {
+    "figure": "4-53",
+    "asset": "ch04/ch04-cxl31-memory-pooling-fabric-queueing-latency-model.svg"
   }
 ]
