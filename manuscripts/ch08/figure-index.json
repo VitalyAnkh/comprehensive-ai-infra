@@ -174,5 +174,13 @@
   {
     "name": "ch08-eagle3-multilayer-draft-vs-pld-lookup",
     "number": 44
+  },
+  {
+    "name": "ch08-synchronous-engine-bubble-vs-vllm-v1-sglang-overlap-scheduler",
+    "number": 45
+  },
+  {
+    "name": "ch08-async-future-token-id-pipeline-on-device-sampling",
+    "number": 46
   }
 ]

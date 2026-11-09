@@ -3,7 +3,7 @@ import json, math
 import numpy as np
 from fractions import Fraction
 import matplotlib.pyplot as plt
-from figure_style import COL,STYLE,canvas,plot,text,box,arrow,Exporter
+from figure_style import COL,BORDER_COL,TEXT_COL,STYLE,canvas,plot,text,box,arrow,Exporter
 
 def draw(here,data):
     out=Exporter(here)
@@ -312,4 +312,95 @@ def draw(here,data):
         box(a,.525,.04,.46,.15,'源端硬件速率整形（Pacing）\n网卡按租户配额控制注入节拍\n将跨租户 p99 干扰压回 <8%','green',11)
         arrow(a,(.475,.325),(.525,.325));arrow(a,(.245,.25),(.245,.19));arrow(a,(.475,.115),(.525,.115))
         out.save(f,'ch07-sharp-in-network-aggregation-and-tenant-isolation')
+
+        # Path-F3 Fig 7-70: 1.6Tbps ConnectX-8 (8x200G PAM4) & Google Falcon Hardware Reliable Transport
+        f, (ax1, ax2) = plt.subplots(2, 1, figsize=(420 / 72, 6.8))
+        f.subplots_adjust(left=0.16, right=0.95, bottom=0.10, top=0.92, hspace=0.52)
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+
+        nic_gens = ['ConnectX-7\n(400G, 4×100G)', 'ConnectX-8 单卡\n(800G, 4×200G)', 'ConnectX-8 双GPU\n(1.6T, 8×200G)']
+        raw_bw_gbs = np.array([50.0, 100.0, 200.0])
+        eff_payload_gbs = np.array([46.2, 92.8, 185.6])  # RS(544,514) FEC + UET/RoCE header efficiency
+        pcie_host_gbs = np.array([64.0, 128.0, 256.0])    # Gen5 x16 vs Gen6 x16 vs Gen6 x32 (2x x16)
+        x_n = np.arange(len(nic_gens))
+        w_n = 0.27
+
+        ax1.bar(x_n - w_n, pcie_host_gbs, width=w_n, color=COL['blue'], edgecolor=BORDER_COL['blue'], lw=1.1, label='PCIe 主机通道上限')
+        ax1.bar(x_n, raw_bw_gbs, width=w_n, color=COL['teal'], edgecolor=BORDER_COL['teal'], lw=1.1, label='网络物理线速')
+        ax1.bar(x_n + w_n, eff_payload_gbs, width=w_n, color=COL['green'], edgecolor=BORDER_COL['green'], lw=1.1, label='RDMA 有效载荷带宽')
+        for xi, pv, rv, ev in zip(x_n, pcie_host_gbs, raw_bw_gbs, eff_payload_gbs):
+            ax1.text(xi - w_n - 0.02, pv + 5.0, f'{pv:.0f}', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['blue'])
+            ax1.text(xi - 0.02, rv + 11.0, f'{rv:.0f}', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['teal'])
+            ax1.text(xi + w_n + 0.04, ev + 3.0, f'{ev:.1f}', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['green'])
+        ax1.set_xticks(x_n, nic_gens)
+        ax1.set_xlim(-0.55, 2.55)
+        ax1.set_ylim(0, 325.0)
+        ax1.set_ylabel('单向带宽（GB/s）', fontsize=11)
+        ax1.set_title('A  400G / 800G / 1.6T 网卡与 PCIe Gen6 带宽配比', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(axis='y', linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax1.legend(frameon=True, loc='upper left', fontsize=11)
+
+        trans_modes = ['RoCEv2 GBN\n(DCQCN+PFC)', 'UEC 1.0\n(喷洒+SACK)', 'Google Falcon\n(双环RSwift)', 'CX-8 + Spec-X\n(FGAR+DDP)']
+        p99_incast_us = [312.0, 94.5, 48.2, 26.4]
+        cols_tm = ['orange', 'blue', 'teal', 'green']
+        x_t = np.arange(len(trans_modes))
+        for xi, val, cn in zip(x_t, p99_incast_us, cols_tm):
+            ax2.bar(xi, val, width=0.44, color=COL[cn], edgecolor=BORDER_COL[cn], lw=1.2)
+            ax2.text(xi, val + 10.0, f'{val:.1f} μs', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL[cn])
+        ax2.set_xticks(x_t, trans_modes)
+        ax2.set_xlim(-0.55, 3.55)
+        ax2.set_ylim(0, 380.0)
+        ax2.set_ylabel('16 MiB All-to-All p99（μs）', fontsize=11)
+        ax2.set_title('B  1‰ 微突发丢包下四套硬件传输栈的 p99 尾延迟对比', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(axis='y', linestyle=':', alpha=0.5, color='#CBD5E1')
+        out.save(f, 'ch07-1600g-connectx8-and-google-falcon-hardware-transport')
+
+        # Path-F3 Fig 7-71: MoE All-to-All Incast Adaptive Routing (FGAR) & Receiver Credit Loop
+        f, (ax1, ax2) = plt.subplots(2, 1, figsize=(420 / 72, 6.8))
+        f.subplots_adjust(left=0.16, right=0.95, bottom=0.10, top=0.92, hspace=0.52)
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+
+        flow_counts = np.array([8, 16, 32, 64, 128])
+        util_ecmp = np.array([44.2, 36.8, 28.3, 34.5, 41.2])
+        util_flowlet = np.array([76.5, 74.0, 71.8, 73.5, 75.2])
+        util_fgar_ddp = np.array([95.2, 95.8, 96.4, 96.8, 97.1])
+        x_f = np.arange(len(flow_counts))
+
+        ax1.plot(x_f, util_fgar_ddp, color=BORDER_COL['green'], lw=2.3, marker='o', ms=5.5, label='Spectrum-X800 逐包 FGAR + CX-8 DDP')
+        ax1.plot(x_f, util_flowlet, color=BORDER_COL['blue'], lw=2.1, marker='s', ms=5.0, label='传统微突发 Flowlet 切换')
+        ax1.plot(x_f, util_ecmp, color=BORDER_COL['orange'], lw=2.1, marker='^', ms=5.5, label='静态五元组 ECMP 哈希')
+        for xi, ve, vf in zip(x_f, util_ecmp, util_fgar_ddp):
+            ax1.text(xi, vf + 2.5, f'{vf:.1f}%', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['green'])
+            ax1.text(xi, ve - 5.5, f'{ve:.1f}%', ha='center', va='top', fontsize=11, weight='bold', color=TEXT_COL['orange'])
+        ax1.set_xticks(x_f, [f'{c} 流' for c in flow_counts])
+        ax1.set_xlim(-0.4, 4.4)
+        ax1.set_ylim(-4.0, 182.0)
+        ax1.set_yticks([20, 40, 60, 80, 100])
+        ax1.set_xlabel('叶交换机并发活跃 MoE 微流数（32 条上联链路）', fontsize=11)
+        ax1.set_ylabel('脊层割集有效利用率（%）', fontsize=11)
+        ax1.set_title('A  MoE 突发微流下三类路由的有效割集利用率', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(True, linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax1.legend(frameon=True, loc='upper right', fontsize=11)
+
+        incast_deg = np.array([8, 16, 32, 64])
+        q_pfc_dcqcn_mib = np.array([0.85, 1.92, 4.35, 9.60])
+        q_credit_loop_mib = np.array([0.18, 0.24, 0.31, 0.38])
+        x_ic = np.arange(len(incast_deg))
+        w_ic = 0.34
+
+        ax2.bar(x_ic - w_ic / 2, q_pfc_dcqcn_mib, width=w_ic, color=COL['orange'], edgecolor=BORDER_COL['orange'], lw=1.2, label='被动反应式 DCQCN + PFC')
+        ax2.bar(x_ic + w_ic / 2, q_credit_loop_mib, width=w_ic, color=COL['green'], edgecolor=BORDER_COL['green'], lw=1.2, label='接收端预授权信用环 (Credit Loop)')
+        for xi, vp, vc in zip(x_ic, q_pfc_dcqcn_mib, q_credit_loop_mib):
+            ax2.text(xi - w_ic / 2, vp + 0.25, f'{vp:.2f}M', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['orange'])
+            ax2.text(xi + w_ic / 2, vc + 0.25, f'{vc:.2f}M', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['green'])
+        ax2.set_xticks(x_ic, [f'{d}:1 Incast' for d in incast_deg])
+        ax2.set_xlim(-0.55, 3.55)
+        ax2.set_ylim(0, 11.8)
+        ax2.set_ylabel('目标叶端口队列峰值（MiB）', fontsize=11)
+        ax2.set_title('B  N:1 MoE Incast 汇聚下端口瞬态队列峰值对比', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(axis='y', linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax2.legend(frameon=True, loc='upper left', fontsize=11)
+        out.save(f, 'ch07-moe-incast-adaptive-routing-and-credit-loop')
     out.finish();return out.outputs,out.checks

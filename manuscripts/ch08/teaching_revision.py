@@ -2,7 +2,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
-from figure_style import COL,STYLE,canvas,plot,text,box,arrow,Exporter
+from figure_style import COL,BORDER_COL,TEXT_COL,STYLE,canvas,plot,text,box,arrow,Exporter
 
 def draw(here,data):
     out=Exporter(here)
@@ -275,6 +275,103 @@ def draw(here,data):
         box(a,.525,.04,.46,.15,'投机解码工业选型决策矩阵\n显存充裕选 EAGLE-3 / 原生 MTP\n显存受限或改写选零显存 PLD','orange',11)
         arrow(a,(.475,.325),(.525,.325));arrow(a,(.245,.25),(.245,.19));arrow(a,(.475,.115),(.525,.115))
         out.save(f,'ch08-eagle3-multilayer-draft-vs-pld-lookup')
+
+        # Path-F3 Fig 8-45: Synchronous Engine Bubble (vLLM V0) vs. Zero-Overhead Overlap Scheduler (vLLM V1 / SGLang)
+        f, (ax1, ax2) = plt.subplots(2, 1, figsize=(420 / 72, 6.8))
+        f.subplots_adjust(left=0.16, right=0.95, bottom=0.10, top=0.92, hspace=0.52)
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+
+        sched_archs = ['同步串行调度\n(vLLM V0)', '异步输出后处理\n(Async Detok)', '零开销异步重叠\n(vLLM V1/SGLang)']
+        t_gpu_ms = np.array([12.80, 12.80, 12.80])
+        t_cpu_sched_ms = np.array([2.20, 2.20, 0.00])   # 1.85ms radix/block + 0.35ms H2D hidden in overlap
+        t_post_sync_ms = np.array([1.40, 0.35, 0.08])   # D2H sync + detok vs CUDA Event trigger
+        t_totals = t_gpu_ms + t_cpu_sched_ms + t_post_sync_ms
+        x_s = np.arange(len(sched_archs))
+        w_s = 0.42
+
+        ax1.bar(x_s, t_gpu_ms, width=w_s, color=COL['green'], edgecolor=BORDER_COL['green'], lw=1.1, label='GPU 前向+采样 (12.80ms)')
+        ax1.bar(x_s, t_cpu_sched_ms, width=w_s, bottom=t_gpu_ms, color=COL['orange'], edgecolor=BORDER_COL['orange'], lw=1.1, label='暴露 CPU 调度+H2D')
+        ax1.bar(x_s, t_post_sync_ms, width=w_s, bottom=t_gpu_ms + t_cpu_sched_ms, color=COL['purple'], edgecolor=BORDER_COL['purple'], lw=1.1, label='暴露 D2H 同步+后处理')
+        lbls_s = ['16.40 ms\n(空泡22.0%)', '15.35 ms\n(空泡16.6%)', '12.88 ms\n(空泡0.6%)']
+        cols_s = ['orange', 'blue', 'green']
+        for xi, tot, ls, cs in zip(x_s, t_totals, lbls_s, cols_s):
+            ax1.text(xi, tot + 0.6, ls, ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL[cs])
+        ax1.set_xticks(x_s, sched_archs)
+        ax1.set_xlim(-0.55, 2.55)
+        ax1.set_ylim(0, 36.5)
+        ax1.set_yticks([0, 5, 10, 15, 20])
+        ax1.set_ylabel('单步迭代耗时（ms）', fontsize=11)
+        ax1.set_title('A  同步调度空泡拆解与零开销重叠调度耗时压缩', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(axis='y', linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax1.legend(frameon=True, loc='upper right', fontsize=11)
+
+        batches_o = np.array([8, 16, 32, 64, 128])
+        tps_v0 = np.array([580.0, 1085.0, 1951.2, 3420.0, 5680.0])
+        tps_v1_overlap = np.array([765.0, 1410.0, 2484.5, 4290.0, 6950.0])
+        x_b = np.arange(len(batches_o))
+
+        ax2.plot(x_b, tps_v1_overlap, color=BORDER_COL['green'], lw=2.3, marker='o', ms=5.5, label='零开销重叠调度 (vLLM V1 / SGLang)')
+        ax2.plot(x_b, tps_v0, color=BORDER_COL['orange'], lw=2.2, marker='s', ms=5.5, label='同步串行调度 (vLLM V0)')
+        for xi, v0, v1 in zip(x_b, tps_v0, tps_v1_overlap):
+            gain = (v1 / v0 - 1.0) * 100.0
+            dx_g = -0.18 if xi == 3 else (-0.10 if xi in (1, 2) else -0.04)
+            dy_g = 560.0 if xi == 3 else 440.0
+            ax2.text(xi + dx_g, v1 + dy_g, f'{v1:.0f}\n(+{gain:.1f}%)', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['green'])
+            ax2.text(xi + 0.08, v0 - 440.0, f'{v0:.0f}', ha='center', va='top', fontsize=11, weight='bold', color=TEXT_COL['orange'])
+        ax2.set_xticks(x_b, [f'B={b}' for b in batches_o])
+        ax2.set_xlim(-0.48, 4.48)
+        ax2.set_ylim(-1450.0, 9900.0)
+        ax2.set_yticks([0, 2000, 4000, 6000, 8000])
+        ax2.set_xlabel('并发解码批大小 B', fontsize=11)
+        ax2.set_ylabel('系统解码吞吐（tok/s）', fontsize=11)
+        ax2.set_title('B  不同批大小下消除控制面空泡的解码吞吐增益', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(True, linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax2.legend(frameon=True, loc='upper left', fontsize=11)
+        out.save(f, 'ch08-synchronous-engine-bubble-vs-vllm-v1-sglang-overlap-scheduler')
+
+        # Path-F3 Fig 8-46: Async Future Token ID Pipeline & FlashInfer Sorting-Free On-Device Sampling
+        f, (ax1, ax2) = plt.subplots(2, 1, figsize=(420 / 72, 6.8))
+        f.subplots_adjust(left=0.16, right=0.95, bottom=0.10, top=0.92, hspace=0.52)
+        for ax in (ax1, ax2):
+            ax.spines[['top', 'right']].set_visible(False)
+
+        vocab_labels = ['32K\n(Llama-2)', '128K\n(Llama-3)', '152K\n(Qwen3)', '256K\n(Gemma/多语)']
+        t_host_sample_ms = [1.45, 4.80, 5.65, 9.20]
+        t_gpu_radix_ms = [0.28, 0.92, 1.12, 1.85]
+        t_flashinfer_ms = [0.04, 0.09, 0.11, 0.16]
+        x_v = np.arange(len(vocab_labels))
+        w_v = 0.27
+
+        ax1.bar(x_v - w_v, t_host_sample_ms, width=w_v, color=COL['orange'], edgecolor=BORDER_COL['orange'], lw=1.1, label='Host CPU 同步采样')
+        ax1.bar(x_v, t_gpu_radix_ms, width=w_v, color=COL['blue'], edgecolor=BORDER_COL['blue'], lw=1.1, label='GPU 全词表 Radix 排序')
+        ax1.bar(x_v + w_v, t_flashinfer_ms, width=w_v, color=COL['green'], edgecolor=BORDER_COL['green'], lw=1.1, label='FlashInfer 免排序拒绝采样')
+        for xi, vh, vr, vf in zip(x_v, t_host_sample_ms, t_gpu_radix_ms, t_flashinfer_ms):
+            ax1.text(xi - w_v, vh + 0.25, f'{vh:.2f}', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['orange'])
+            ax1.text(xi, vr + 0.55, f'{vr:.2f}', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['blue'])
+            ax1.text(xi + w_v + 0.03, vf + 0.15, f'{vf:.2f}', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['green'])
+        ax1.set_xticks(x_v, vocab_labels)
+        ax1.set_xlim(-0.55, 3.55)
+        ax1.set_ylim(0, 11.8)
+        ax1.set_ylabel('B=64 Top-K/Top-P 耗时（ms）', fontsize=11)
+        ax1.set_title('A  大词表下三种采样器耗时对比（B=64，提速 10.2×）', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.grid(axis='y', linestyle=':', alpha=0.5, color='#CBD5E1')
+        ax1.legend(frameon=True, loc='upper left', fontsize=11)
+
+        pipe_schemes = ['传统 D2H 阻塞\n(StreamSync)', 'Future ID 占位\n(GPU 原位回填)', 'Future ID + 语法\n(异步掩码推进)']
+        step_overhead_us = [1400.0, 80.0, 95.0]
+        cols_p = ['orange', 'green', 'teal']
+        x_p = np.arange(len(pipe_schemes))
+        for xi, val, cn in zip(x_p, step_overhead_us, cols_p):
+            ax2.bar(xi, val, width=0.42, color=COL[cn], edgecolor=BORDER_COL[cn], lw=1.2)
+            ax2.text(xi, val + 55.0, f'{val:.0f} μs', ha='center', va='bottom', fontsize=11, weight='bold', color=TEXT_COL[cn])
+        ax2.set_xticks(x_p, pipe_schemes)
+        ax2.set_xlim(-0.55, 2.55)
+        ax2.set_ylim(0, 1750.0)
+        ax2.set_ylabel('跨步 Token 依赖暴露延迟（μs）', fontsize=11)
+        ax2.set_title('B  Future Token ID 负索引消除跨步 CPU-GPU 阻塞同步', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.grid(axis='y', linestyle=':', alpha=0.5, color='#CBD5E1')
+        out.save(f, 'ch08-async-future-token-id-pipeline-on-device-sampling')
     from core_principles_figures import draw as draw_principles
     draw_principles(8, out)
     from v41_case_figures import draw as draw_v41
