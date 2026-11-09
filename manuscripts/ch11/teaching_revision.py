@@ -258,6 +258,44 @@ def draw(here,data):
         box(a,.52,.30,.45,.17,'双约束可行域下界：\nh ≥ 45/49 ≈ 91.84%','green',11)
         box(a,.52,.04,.45,.20,'路由策略：亲和性哈希保命中\nh ≥ 91.84% 兼得低价与合规','gray',11)
         out.save(f,'ch11-i21-dual-model-cache-hit-cost-slo-crossover')
+
+        # Path-F3 new figure 1: ch11-cumemmap-virtual-memory-sleep-wake-colocation (Fig 11-58)
+        f,a=canvas(6.4)
+        text(a,.24,.95,'A. CuMemMap 虚实地址解耦',12,ha='center')
+        text(a,.745,.95,'B. Sleep Level 1 / 2 切换耗时对比',12,ha='center')
+        a.plot([.495,.495],[.03,.97],color=COL['line'],ls='--',lw=1.0)
+
+        box(a,.03,.75,.44,.15,'预留虚拟地址 V_w + V_kv\n绑定 CUDA Graph 指针不变','blue',11)
+        arrow(a,(.25,.75),(.25,.66),'data')
+        box(a,.03,.49,.44,.16,'休眠：cuMemUnmap 物理页\n释放 112 GB (97%) HBM','orange',11)
+        arrow(a,(.25,.49),(.25,.40),'data')
+        box(a,.03,.24,.44,.15,'训练期：FSDP2 独占 112 GB\n推理仅留 1.2 GB 壳上下文','purple',11)
+        box(a,.03,.04,.44,.15,'唤醒：cuMemMap 映射新页\n免重编图 (省 12.0 s)','green',11)
+
+        box(a,.52,.75,.45,.15,'传统销毁冷重启：38.0 s\n读权重 22 s + 重编图 12 s','orange',11)
+        box(a,.52,.53,.45,.16,'Sleep L1 (卸载至主机内存)\nPCIe 往返 2.32 s (唤醒 1.18 s)','blue',11)
+        box(a,.52,.30,.45,.17,'Sleep L2 (就地丢弃旧权重)\n休眠 25 ms + 唤醒 0.455 s','green',11)
+        box(a,.52,.04,.45,.20,'RL 训推同卡混部净收益：\nL2 提速 83.5×，省 37.5 s','gray',11)
+        out.save(f,'ch11-cumemmap-virtual-memory-sleep-wake-colocation')
+
+        # Path-F3 new figure 2: ch11-serverless-gpu-rdma-multicast-cold-start (Fig 11-59)
+        f,a=canvas(6.4)
+        text(a,.25,.95,'A. 单播出口拥塞 vs. RDMA 流水线',12,ha='center')
+        text(a,.745,.95,'B. 交换机多播与 O(1) 扩容曲线',12,ha='center')
+        a.plot([.495,.495],[.03,.97],color=COL['line'],ls='--',lw=1.0)
+
+        box(a,.03,.75,.44,.15,'突发扩容 N=16 (84 GB/副本)\n源端 200G，接收端 100G','orange',11)
+        arrow(a,(.25,.75),(.25,.66),'data')
+        box(a,.03,.49,.44,.16,'并发单播：源端发 1,344 GB\n耗时 53.76 s (出口打满)','orange',11)
+        arrow(a,(.25,.49),(.25,.40),'data')
+        box(a,.03,.24,.44,.15,'RDMA 40 MB 块链式流水：\n尾延时 15×3.2 ms ≈ 48 ms','blue',11)
+        box(a,.03,.04,.44,.15,'链式 16 副本就绪：6.77 s\n消除源端瓶颈，提速 7.94×','green',11)
+
+        box(a,.52,.75,.45,.15,'交换机硬件多播 / 二级树：\n单份权重在叶脊交换机复制','purple',11)
+        box(a,.52,.53,.45,.16,'块位图 (Bitmap) 选择重传：\n0.2% 损耗仅补发缺失分块','blue',11)
+        box(a,.52,.30,.45,.17,'16 副本多播就绪：6.74 s\n提速 7.98×，逼近 6.72 s 下界','green',11)
+        box(a,.52,.04,.45,.20,'扩容不变性：1 至 64 副本\n冷启动恒定在 6.7–6.8 s','gray',11)
+        out.save(f,'ch11-serverless-gpu-rdma-multicast-cold-start')
     from dsec_figures import draw as draw_dsec
     draw_dsec(out)
     from core_principles_figures import draw as draw_principles

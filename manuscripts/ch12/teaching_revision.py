@@ -302,6 +302,44 @@ def draw(here,data):
         box(a,.52,.27,.45,.17,'云端大模型在脱敏上下文上推理\n全链路零明文敏感数据出境','green',11)
         box(a,.52,.05,.45,.17,'返回流式解码时本地查表还原：\n兼得云端旗舰智商与端侧零泄密','gray',11)
         out.save(f,'ch12-edge-draft-cloud-verify-and-pii-gateway')
+
+        # Path-F3 new figure 1: ch12-executorch-aot-export-and-npu-delegate-pipeline (Fig 12-43)
+        f,a=canvas(6.4)
+        text(a,.24,.95,'A. ExecuTorch 导出与静态内存池',12,ha='center')
+        text(a,.745,.95,'B. NPU 子图碎片化 vs. 融合委派',12,ha='center')
+        a.plot([.495,.495],[.03,.97],color=COL['line'],ls='--',lw=1.0)
+
+        box(a,.03,.75,.44,.15,'torch.export 捕获 ATen 图\n降级为 Edge Dialect (EXIR)','blue',11)
+        arrow(a,(.25,.75),(.25,.66),'data')
+        box(a,.03,.49,.44,.16,'静态生命周期区间分析：\n峰值激活 192 -> 48 MiB (4×)','green',11)
+        arrow(a,(.25,.49),(.25,.40),'data')
+        box(a,.03,.24,.44,.15,'Delegate 算子分区下放\nQNN / CoreML / XNNPACK','purple',11)
+        box(a,.03,.04,.44,.15,'生成 .pte FlatBuffer 产物\n50 KB 运行时，零动态分配','gray',11)
+
+        box(a,.52,.75,.45,.15,'纯移动端 CPU 基线 (XNNPACK)\n320 算子串行耗时 96.00 ms','orange',11)
+        box(a,.52,.53,.45,.16,'碎片化 NPU 委派 (85% 下放)\n24 次切换耗 30 ms -> 64.8 ms','orange',11)
+        box(a,.52,.30,.45,.17,'算子重写单图融合 (97.5%)\n仅 2 次首尾切换 (2.50 ms)','green',11)
+        box(a,.52,.04,.45,.20,'端到端延迟压降至 28.30 ms\n较 CPU 提速 3.39×，省 2.29×','blue',11)
+        out.save(f,'ch12-executorch-aot-export-and-npu-delegate-pipeline')
+
+        # Path-F3 new figure 2: ch12-unified-memory-desktop-cluster-tb5-rdma-ring (Fig 12-44)
+        f,a=canvas(6.4)
+        text(a,.24,.95,'A. 桌面统一内存微集群 (TB5/GB10)',12,ha='center')
+        text(a,.745,.95,'B. 671B 模型 TP4 同步墙 vs. PP4',12,ha='center')
+        a.plot([.495,.495],[.03,.97],color=COL['line'],ls='--',lw=1.0)
+
+        box(a,.03,.75,.44,.15,'4×Mac Studio 雷电 5 环网\n2 TB 统一内存，3.28 TB/s','blue',11)
+        arrow(a,(.25,.75),(.25,.66),'data')
+        box(a,.03,.49,.44,.16,'Thunderbolt 5 RDMA 直连\n80 Gbps (8.5 GB/s)，18 μs','green',11)
+        arrow(a,(.25,.49),(.25,.40),'data')
+        box(a,.03,.24,.44,.15,'2×DGX Spark (200G CX-7)\n256 GB 一致内存，2.5 μs','purple',11)
+        box(a,.03,.04,.44,.15,'桌面本地装载 405B/671B\n免机房供电，数据零出境','gray',11)
+
+        box(a,.52,.75,.45,.15,'671B Q4 每步读 23.6 GB\n4 机并行访存下界 7.20 ms','blue',11)
+        box(a,.52,.53,.45,.16,'TP=4 同步墙：每词 366 跳\nTCP 24.3 ms，RDMA 14.4 ms','orange',11)
+        box(a,.52,.30,.45,.17,'PP=4 层间切分：仅 4 跳/词\n单流 28.9 ms (通信 0.08 ms)','purple',11)
+        box(a,.52,.04,.45,.20,'PP=4 + MTP 投机微批流水：\n4 机满载并发达 96.5 tok/s','green',11)
+        out.save(f,'ch12-unified-memory-desktop-cluster-tb5-rdma-ring')
     data['12-ufs-vla']={'kind':'teaching_bound','sparse_ffn_gb':1.28,'rand_bw_gbps':0.4,'bundle_bw_gbps':3.2,
         'win_reuse':0.75,'step_s':[3.20,0.40,0.10],'vla_horizon_ms':500,'vla_plan_ms':200,'vla_base_ms':80,'vla_jitter_max_ms':220}
     out.finish();return out.outputs,out.checks

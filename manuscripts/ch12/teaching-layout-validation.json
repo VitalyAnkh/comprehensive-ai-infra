@@ -238,5 +238,17 @@
     "width_pt": 420.0,
     "min_label_pt": 11.0,
     "text_extent_warnings": []
+  },
+  {
+    "figure": "ch12-executorch-aot-export-and-npu-delegate-pipeline",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch12-unified-memory-desktop-cluster-tb5-rdma-ring",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
   }
 ]

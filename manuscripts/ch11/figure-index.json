@@ -283,5 +283,15 @@
     "file": "ch11-i21-dual-model-cache-hit-cost-slo-crossover.svg",
     "caption": "锁定算例 I21——双模型前缀缓存命中率对成本与延迟可行域的联合塑造：左图展示旗舰模型 B（单价高 $2\\times$ 但仅生成 $300$ token、通过率 $98\\%$）的单位合格任务成本随前缀命中率 $h$ 上升而急剧下降，在 $h = 1291/1520 \\approx 84.93\\%$ 处反超廉价模型 A（$0.013625\\ \\text{美元}$）；右图展示模型 B 的期望延迟在 $h = 75.00\\%$ 处跨入 $\\le 6\\ \\mathrm{s}$ 门槛，而按时合格率 $0.98h$ 在 $h = 45/49 \\approx 91.84\\%$ 处正式突破 $90\\%$ 业务红线。",
     "number": 57
+  },
+  {
+    "file": "ch11-cumemmap-virtual-memory-sleep-wake-colocation.svg",
+    "caption": "基于 CUDA 虚拟显存管理（`cuMemMap` / `cuMemUnmap`）的训推同卡混部休眠唤醒机制：左图展示如何保持虚拟地址区间 $\\mathcal{V}_w$ 与 $\\mathcal{V}_{\\mathrm{kv}}$ 恒定以守护已捕获的 CUDA Graph 指针，同时释放 $112\\ \\mathrm{GB}$（$96.97\\%$）底层物理 HBM 页供 FSDP2 训练独占；右图对比传统冷重启（$38.0\\ \\mathrm{s}$）、Sleep Level 1 主机内存卸载（唤醒 $1.18\\ \\mathrm{s}$、往返 $2.32\\ \\mathrm{s}$）与 Sleep Level 2 原位丢弃同步（休眠 $25\\ \\mathrm{ms}$、唤醒 $0.455\\ \\mathrm{s}$、提速 $83.5\\times$）。",
+    "number": 58
+  },
+  {
+    "file": "ch11-serverless-gpu-rdma-multicast-cold-start.svg",
+    "caption": "Serverless GPU 突发扩容（$N = 16$ 副本、每副本 $84\\ \\mathrm{GB}$ 权重）下的跨网分发对比：左图展示传统一对多单播受制于源端 $200\\ \\mathrm{Gbit/s}$ 出口而拉长至 $53.76\\ \\mathrm{s}$，以及 $40\\ \\mathrm{MB}$ 块级 RDMA 链式流水线如何将其压降至 $6.77\\ \\mathrm{s}$（提速 $7.94\\times$）；右图展示叶脊交换机硬件 RDMA 多播配合块位图选择性补发在 $6.74\\ \\mathrm{s}$ 内完成 $16$ 副本同步上线（提速 $7.98\\times$），实现扩容耗时对副本数 $N$ 的 $O(1)$ 不变性。",
+    "number": 59
   }
 ]

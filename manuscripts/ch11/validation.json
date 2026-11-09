@@ -478,6 +478,22 @@
       "passed": true
     },
     {
+      "check": "no internal figure numbering: ch11-cumemmap-virtual-memory-sleep-wake-colocation",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch11-cumemmap-virtual-memory-sleep-wake-colocation",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch11-serverless-gpu-rdma-multicast-cold-start",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch11-serverless-gpu-rdma-multicast-cold-start",
+      "passed": true
+    },
+    {
       "check": "local links exist",
       "passed": true
     },
