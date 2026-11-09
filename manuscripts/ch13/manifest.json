@@ -2,7 +2,7 @@
   "outputs": [
     {
       "path": "manuscripts/ch13/ch13-3fs-craq-architecture.pdf",
-      "sha256": "9941bd7ec0cf0bb475ab2b551883f7d0461f5870b09ee483ac30970f90fe19d8"
+      "sha256": "8198ce5283a2af7cc834874a71e6b7085f0247721fc86c3a944fc2870206807a"
     },
     {
       "path": "manuscripts/ch13/ch13-3fs-craq-architecture.png",
@@ -10,11 +10,11 @@
     },
     {
       "path": "manuscripts/ch13/ch13-3fs-craq-architecture.svg",
-      "sha256": "8003f2bb5794c42a2ec81509aa8bd34925c030b5e0c422be535d3282a2ded984"
+      "sha256": "4eae524acaa0e585bc4b6b4d26d7dc01e13f5b24d7bcbec0f71238985c948f80"
     },
     {
       "path": "manuscripts/ch13/ch13-ai-storage-bandwidth-latency-iops-cube.pdf",
-      "sha256": "c2027bcfdfbcb463c8b6321c2fe453b062bbda0d8f3cd39fe52195a9007fb10c"
+      "sha256": "f9aefdaa7e7986e0ecfd08c133d9c3cbf44b11e5e89f1bb0c71c318683619d18"
     },
     {
       "path": "manuscripts/ch13/ch13-ai-storage-bandwidth-latency-iops-cube.png",
@@ -22,11 +22,11 @@
     },
     {
       "path": "manuscripts/ch13/ch13-ai-storage-bandwidth-latency-iops-cube.svg",
-      "sha256": "b4dfeff532d5a985ed684006a14bb853ec498ed8ec0cc62457f79be98b8517d9"
+      "sha256": "3d46e3318e9e4363867a73a8e22610de3c5fb265c845ca557d373a13f2d46178"
     },
     {
       "path": "manuscripts/ch13/ch13-cacheblend-non-prefix-kv-fusion.pdf",
-      "sha256": "cb8bc8befe101f2d2f5e7d71f12517e3397ca554df5153a2778585db327f3e6f"
+      "sha256": "4646b51b53bd95e24510a20a26ba1760059924e738e4c63a7acb71d398abee5b"
     },
     {
       "path": "manuscripts/ch13/ch13-cacheblend-non-prefix-kv-fusion.png",
@@ -34,11 +34,23 @@
     },
     {
       "path": "manuscripts/ch13/ch13-cacheblend-non-prefix-kv-fusion.svg",
-      "sha256": "74a81560865affd19f92f564661ef38cf643de51a0377c7cffea81a2ba5c99a2"
+      "sha256": "0a785a0b9cefd0c48498b748ae5c6c8d65ccb4e724c0f6d8a0951f938f90a164"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-checkpoint-and-kv-unified-nvme-pool-qos.pdf",
+      "sha256": "f4935620e88fb131c006538037acac9701f2d295d1eb62569fa7aaff367b086c"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-checkpoint-and-kv-unified-nvme-pool-qos.png",
+      "sha256": "9c805b996aa03f6b5a4d171451352ca2cc7a8b205e7964b49b6018df4e58d551"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-checkpoint-and-kv-unified-nvme-pool-qos.svg",
+      "sha256": "aceea810a5d54d8cdcb0812c2368a32ade5818284c8d5ac4e155abd7ea0a6c4e"
     },
     {
       "path": "manuscripts/ch13/ch13-checkpoint-replication-to-erasure-coding-lifecycle.pdf",
-      "sha256": "f7dd189c387cb7bb64149cb0117a5e5e0a2dbafa3e91aca4b4fc3d365beb6f6e"
+      "sha256": "67e8005e1e3cf64c2935e36efe1e3fb9bcb3fdc0d67a5b9c6ea8a9ea5f6147ad"
     },
     {
       "path": "manuscripts/ch13/ch13-checkpoint-replication-to-erasure-coding-lifecycle.png",
@@ -46,11 +58,11 @@
     },
     {
       "path": "manuscripts/ch13/ch13-checkpoint-replication-to-erasure-coding-lifecycle.svg",
-      "sha256": "50359f0e64ed228b5fd0c3ab76ebc27755b9617761fa30c389158f5736b5948f"
+      "sha256": "0961eea103e81671d4b34542520ea508ce309914baceeaa2fd08f676e9ffa507"
     },
     {
       "path": "manuscripts/ch13/ch13-copilotio-gds-vs-cpu-assisted-io.pdf",
-      "sha256": "29d9d5453f6ae4e8bd8b190b69635eb3a512faa2d7faee8c9cd85b220f5948ad"
+      "sha256": "f5580174f83febc9a247a6f7666daa77ac9aa0acd46a777ac48fdf4e2654d505"
     },
     {
       "path": "manuscripts/ch13/ch13-copilotio-gds-vs-cpu-assisted-io.png",
@@ -58,11 +70,11 @@
     },
     {
       "path": "manuscripts/ch13/ch13-copilotio-gds-vs-cpu-assisted-io.svg",
-      "sha256": "cb43c48bb9d9137fb014e817b73ec39378cf9fe92d4e8c347a161cb8a07472d7"
+      "sha256": "46e6d0e8b02bf1a154fe0cf548e17be71fbbf99bb53ee30b02c8c00a3ff236cc"
     },
     {
       "path": "manuscripts/ch13/ch13-distvs-helmsman-disaggregated-vector-search.pdf",
-      "sha256": "e3444b5821d69db9ac7ba6bd82e4aafd9c4e1afdfbbc5be9d4d7bb0d37edbaca"
+      "sha256": "ba8370cd0d024da1042a28444478a6a2dc3024ad02c27830fcf5e21889d1179b"
     },
     {
       "path": "manuscripts/ch13/ch13-distvs-helmsman-disaggregated-vector-search.png",
@@ -70,11 +82,11 @@
     },
     {
       "path": "manuscripts/ch13/ch13-distvs-helmsman-disaggregated-vector-search.svg",
-      "sha256": "cb5c25ffcacba798926343bb6d46fefb9f4bc74c45fa30a17bccb24073114d5d"
+      "sha256": "45a57f35eccea86d8005f8860cfe3223c4ed2f435cd1a2ed63ffe7a173d22bef"
     },
     {
       "path": "manuscripts/ch13/ch13-dsec-erofs-ondemand-container-boot.pdf",
-      "sha256": "b366b0f5c87edfebb0c0a24e29756400dbb034a399aa8be80c3585e43ab32cc2"
+      "sha256": "38279c93524eccde013677c61d3234b184196af48eebcf4b78e128d84fbe0c9e"
     },
     {
       "path": "manuscripts/ch13/ch13-dsec-erofs-ondemand-container-boot.png",
@@ -82,11 +94,11 @@
     },
     {
       "path": "manuscripts/ch13/ch13-dsec-erofs-ondemand-container-boot.svg",
-      "sha256": "92641e73f8605c01ae7ff8b71f4cfbe891273ecd7ad305a598d197027743c6da"
+      "sha256": "e6b3a9ce8f0da515f4c7f92347eca3a3c4b315152623a30ea1c3b0cdd921bed3"
     },
     {
       "path": "manuscripts/ch13/ch13-faiss-flat-vs-iks-near-storage.pdf",
-      "sha256": "82a125ab7ea60b413130c079016de2265e99a0df99b6158e6b694ae208f8ba92"
+      "sha256": "cc5535aa0e34c6913f4624948771d9925db12b41c00cb74c6c6ef39fe6c226da"
     },
     {
       "path": "manuscripts/ch13/ch13-faiss-flat-vs-iks-near-storage.png",
@@ -94,11 +106,11 @@
     },
     {
       "path": "manuscripts/ch13/ch13-faiss-flat-vs-iks-near-storage.svg",
-      "sha256": "b212a8e1c2af4d3045dc62f04a4497d046381420deb152c75b41d84e5e83a7d8"
+      "sha256": "38345a98ba63d53eb2f20824c728342f4af2b0f6bb226fae7f444daa0688405a"
     },
     {
       "path": "manuscripts/ch13/ch13-falconfs-server-side-path-resolution.pdf",
-      "sha256": "d5d3ffe0e5915431ebe778d42a9a24bb3403120962a145cc79011e2f1687a5e9"
+      "sha256": "69701ddad4278b4322393ef334a7b9a598999f1eec8b6b769cf22de4800121e6"
     },
     {
       "path": "manuscripts/ch13/ch13-falconfs-server-side-path-resolution.png",
@@ -106,11 +118,11 @@
     },
     {
       "path": "manuscripts/ch13/ch13-falconfs-server-side-path-resolution.svg",
-      "sha256": "e0ebc567ee945b08264a16dddd2e4dfb7682fcd420a0e7c5bdddf9d83e9a4dba"
+      "sha256": "a963ea0fd987b36d1d2b62fd50d0b2481bdd9c595ce8fb65899e2afb823047c4"
     },
     {
       "path": "manuscripts/ch13/ch13-full-stack-ai-data-plane.pdf",
-      "sha256": "7aa39327ca3a4fec469c54dbf2bd7ecb0d58e75096da7e717f2c6f4e37f0b8c1"
+      "sha256": "93e82014c082dd151572764546378d285be896e78f4f597ed9267329a2b66157"
     },
     {
       "path": "manuscripts/ch13/ch13-full-stack-ai-data-plane.png",
@@ -118,11 +130,11 @@
     },
     {
       "path": "manuscripts/ch13/ch13-full-stack-ai-data-plane.svg",
-      "sha256": "c71366644bcad8c90ae6e4fadde15a8fa842357089988206c2aa86e038dcced7"
+      "sha256": "d000e6204835de018646a5d9ff35fdbbb4646204c1f06e3c232da2ebe2bb66c6"
     },
     {
       "path": "manuscripts/ch13/ch13-hnsw-memory-vs-diskann-ssd-layout.pdf",
-      "sha256": "539e376b0f54cef2f2c50211513804140731ce6147723620c83cadfb6ad320a0"
+      "sha256": "adc78ee7df1897b4ae32622876752a74004d65b03610110a7ea5e267bc40a2b1"
     },
     {
       "path": "manuscripts/ch13/ch13-hnsw-memory-vs-diskann-ssd-layout.png",
@@ -130,11 +142,11 @@
     },
     {
       "path": "manuscripts/ch13/ch13-hnsw-memory-vs-diskann-ssd-layout.svg",
-      "sha256": "d265f2cfcd06dd912bce0d09be862f22c4145a5d6ecf0eb4270fb0f503d34b3c"
+      "sha256": "5be22312c9f5586aa5fb7ecd6ed536913828771e0e245f2e7098290e52e60ae7"
     },
     {
       "path": "manuscripts/ch13/ch13-kv-layout-read-amplification.pdf",
-      "sha256": "ca19cda40b139107f7aa44c3f19a70cd888519c348b002e1be883ab8b6b24bbb"
+      "sha256": "44c95c017b66657551b9c6e0b4397388329e4457cd7b534ea40026da922aaeb6"
     },
     {
       "path": "manuscripts/ch13/ch13-kv-layout-read-amplification.png",
@@ -142,11 +154,23 @@
     },
     {
       "path": "manuscripts/ch13/ch13-kv-layout-read-amplification.svg",
-      "sha256": "b5bfdbac96515b317bee8a89888be3ec397338e8d8436147ee1110f1cb421c80"
+      "sha256": "ddebba64bf89a5a4d28644ac5625d3ea32285fd2679ce2045756f2caf574fe29"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-lmcache-prefix-kv-compression-and-gds-prefetch.pdf",
+      "sha256": "bb3c045cbe186812ddf9e448df0f2c580b8cb9da1dabea7087d2f1349cbbd435"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-lmcache-prefix-kv-compression-and-gds-prefetch.png",
+      "sha256": "3bd9bf5b5e9b63a946172d7695a3052f9aafc6404e4f40e5316d1c969aa7849d"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-lmcache-prefix-kv-compression-and-gds-prefetch.svg",
+      "sha256": "6b6eff22e4989ed7f806696a431cbc171d4b69f6fd40093500ce7ddadf0dc847"
     },
     {
       "path": "manuscripts/ch13/ch13-multimodal-dataloader-pipeline.pdf",
-      "sha256": "4b4e196f9c40cff9cd4e0ec221ee87011a569e24a88ff0ed6a53d67ec4271196"
+      "sha256": "466a74c8caec5b9beeba3be0e8fa967e45bff2364e1675bde5a4b480a3489d34"
     },
     {
       "path": "manuscripts/ch13/ch13-multimodal-dataloader-pipeline.png",
@@ -154,11 +178,11 @@
     },
     {
       "path": "manuscripts/ch13/ch13-multimodal-dataloader-pipeline.svg",
-      "sha256": "03190d549b4d75f460b199e10a700fdab5daec99ff81c577e8db9a15630026b5"
+      "sha256": "54674fff5159a75f49ba3e608f1e5bfa5ad0094bf4e5ee9dbdc3209e55ec393f"
     },
     {
       "path": "manuscripts/ch13/ch13-multimodal-tar-webdataset-vs-lance-random.pdf",
-      "sha256": "effef3b876a4e61ff2759ba882197da4ad833f5e22c98bfa45998f44a0b0fe97"
+      "sha256": "298a798f2310d66b0037afaa7c5d41a4bd40f6f2dcea3ae952f6fd094fa6e76e"
     },
     {
       "path": "manuscripts/ch13/ch13-multimodal-tar-webdataset-vs-lance-random.png",
@@ -166,11 +190,11 @@
     },
     {
       "path": "manuscripts/ch13/ch13-multimodal-tar-webdataset-vs-lance-random.svg",
-      "sha256": "0d95d6457b196509d93d668e357cc11854da3809339321f141df809ec703d2ae"
+      "sha256": "61af75090f83566b3de784e228acca976b9f1b407a74ac20ba43cc23bca7ab95"
     },
     {
       "path": "manuscripts/ch13/ch13-nixl-unified-nonblocking-transfer-plane.pdf",
-      "sha256": "abd1a97eff9a41aae5a9720c3268caba5876c67950e4f35a515d8d21d024703f"
+      "sha256": "ff89e7cfc7462530d592efbd2f1c312f092ece3ef6d47e16be61a02b26dc5eec"
     },
     {
       "path": "manuscripts/ch13/ch13-nixl-unified-nonblocking-transfer-plane.png",
@@ -178,11 +202,11 @@
     },
     {
       "path": "manuscripts/ch13/ch13-nixl-unified-nonblocking-transfer-plane.svg",
-      "sha256": "0546769e862ef07629615327ae4bf03a78d1cd986847f9969e0bbe7c61c44ca8"
+      "sha256": "c516b10b9fe1b791ae635e67f16041022f8a552655665bfebd55ce8c774d518d"
     },
     {
       "path": "manuscripts/ch13/ch13-parquet-lance-vs-webdataset-io.pdf",
-      "sha256": "7331eb3caae128385f74fa495778086da6bd158e1e71632426b4d1f382dc8786"
+      "sha256": "3ba1481651a6195da4e51792b27b6b7a8afae28e48ea7c6c604c607c785c3624"
     },
     {
       "path": "manuscripts/ch13/ch13-parquet-lance-vs-webdataset-io.png",
@@ -190,11 +214,11 @@
     },
     {
       "path": "manuscripts/ch13/ch13-parquet-lance-vs-webdataset-io.svg",
-      "sha256": "bfef21252e75c315806aee2623864d425982c80655a6736061b2d292d2413502"
+      "sha256": "3dec3aafec61b8e674a19dc1757ce0e042fc750f808810766761f65564bcfb35"
     },
     {
       "path": "manuscripts/ch13/ch13-posix-pagecache-vs-gds-dma.pdf",
-      "sha256": "42110ef47237cdc1afbb04f48f2eb136dfd94bed1e89a5073ba0a162562e24e9"
+      "sha256": "f47d05b8200749e47a0d4803f205f1d6b73a11dc1ef614a05c58eea580e461f0"
     },
     {
       "path": "manuscripts/ch13/ch13-posix-pagecache-vs-gds-dma.png",
@@ -202,11 +226,11 @@
     },
     {
       "path": "manuscripts/ch13/ch13-posix-pagecache-vs-gds-dma.svg",
-      "sha256": "52fe7db92ffa9e13825cd4901ea32fcda0166ebb9fc59eee27e8e4a7df891757"
+      "sha256": "ec34473806f5acc5abda8b2b7eb3d18a4c0e1ec60b432582ab7f8c1818623c5e"
     },
     {
       "path": "manuscripts/ch13/ch13-rag-288-requests-calibration-trap.pdf",
-      "sha256": "521ed5b93d537cba91a7021b8e718eba14eadd7e6e6d1faa082eb42b05289908"
+      "sha256": "c6f8f65c8310642c7af7d011ab573d46a11d994ca2bb3ab0d24e855b3bb7090d"
     },
     {
       "path": "manuscripts/ch13/ch13-rag-288-requests-calibration-trap.png",
@@ -214,11 +238,11 @@
     },
     {
       "path": "manuscripts/ch13/ch13-rag-288-requests-calibration-trap.svg",
-      "sha256": "90ddb9f24a254c0e459be9bd72a37c9a648f24c1b8945d222aefe793112d45b8"
+      "sha256": "f037bb7c6065633def359ff9593970e7d80049c8fc69c281320da01fd34573c9"
     },
     {
       "path": "manuscripts/ch13/ch13-rag-end-to-end-timeline-breakdown.pdf",
-      "sha256": "22826f3b452f31af092076d6d9035bbbf1d93c008e6e421e6225997b2e69676a"
+      "sha256": "6309672d059c99ae1d2ff0c203cd42759eded560519fd19c58ca9b55d4482448"
     },
     {
       "path": "manuscripts/ch13/ch13-rag-end-to-end-timeline-breakdown.png",
@@ -226,11 +250,11 @@
     },
     {
       "path": "manuscripts/ch13/ch13-rag-end-to-end-timeline-breakdown.svg",
-      "sha256": "37c2a1519c052a948439899d3c9cc53c03aa7fb3232341aa9f7290c9e4336f86"
+      "sha256": "88c65ec39ff74337eea10cfb0ac02a3287bad9730b3f1eaee92bf5de6152e036"
     },
     {
       "path": "manuscripts/ch13/ch13-rag-topk-kv-blocks-and-rlimit-gap.pdf",
-      "sha256": "ab9cb876c022258f2a05f28184023c9bdfb9539cd24fa47e4641adf4ecc0792c"
+      "sha256": "df4618faf0d3fd3803cea7b8cd8dc38c252720853f9946da140993048896a347"
     },
     {
       "path": "manuscripts/ch13/ch13-rag-topk-kv-blocks-and-rlimit-gap.png",
@@ -238,11 +262,11 @@
     },
     {
       "path": "manuscripts/ch13/ch13-rag-topk-kv-blocks-and-rlimit-gap.svg",
-      "sha256": "99ef46733874602ebe6474384e1f135db89c790d27e59a97d60c741700f4e58e"
+      "sha256": "a7a8ba44be75467f3bcc99d8c0507bd8da5c7e907595a2b80b5fb0f74644c3d4"
     },
     {
       "path": "manuscripts/ch13/ch13-ssd-dwpd-endurance-and-admission.pdf",
-      "sha256": "5443ef45da510cc7988d6395832f87d9eaafaa72042c78cd35f0b1ff3810c1f7"
+      "sha256": "f70ce6bb88c34d36b90b590d54b76c185547045b64cd71a8472e06bdd6cae9f2"
     },
     {
       "path": "manuscripts/ch13/ch13-ssd-dwpd-endurance-and-admission.png",
@@ -250,11 +274,11 @@
     },
     {
       "path": "manuscripts/ch13/ch13-ssd-dwpd-endurance-and-admission.svg",
-      "sha256": "a79bbe4a343c89e9b6f7b974e56c6137211d69764f7e40744c964b2bc4413aef"
+      "sha256": "28822b85a4d7073ce7faf92cc661be7072764cb0ad66442fe5461dbfe6d35cb8"
     },
     {
       "path": "manuscripts/ch13/ch13-storage-diagnosis-workflow.pdf",
-      "sha256": "00b50710c31df6f8763d45b8db45f17665a40a55062635c69fd39a928ae2cbc7"
+      "sha256": "e0001823e2e54a8f3d7b5797cad6fec8347ca41dcbf4f96f6f942b28f920efef"
     },
     {
       "path": "manuscripts/ch13/ch13-storage-diagnosis-workflow.png",
@@ -262,11 +286,11 @@
     },
     {
       "path": "manuscripts/ch13/ch13-storage-diagnosis-workflow.svg",
-      "sha256": "f0655c4bc406668b1b57673869296928d86a978502f29c01f7373b85063d950c"
+      "sha256": "f56d8fd9c7a24ee976f8cb7203d78dc460f2aaec4df313cb199c40bb65d5ecbd"
     },
     {
       "path": "manuscripts/ch13/ch13-storage-hierarchy-and-access-patterns.pdf",
-      "sha256": "a7a931c7e04921ebd91ca12b421d51af6f11455c2273b20887a4bcc82d2e3039"
+      "sha256": "e9f8d79313b51d334045424e317c0371283dc3561f449dcce973e90e12a50786"
     },
     {
       "path": "manuscripts/ch13/ch13-storage-hierarchy-and-access-patterns.png",
@@ -274,11 +298,11 @@
     },
     {
       "path": "manuscripts/ch13/ch13-storage-hierarchy-and-access-patterns.svg",
-      "sha256": "5d4c235eca375f7a6333538a2bde6818c823c534b1000639e547d9953e307234"
+      "sha256": "6ca19269835f31107d024c0801297f1fe05e810d5f2ea4c32c2e39816a76f5ab"
     },
     {
       "path": "manuscripts/ch13/ch13-three-tier-kv-cache-hierarchy.pdf",
-      "sha256": "90be7962b0c85ae1372dac518846b4102a0f52250cfb07edb6b46d20649d85b5"
+      "sha256": "19e3781443d9066b08b9dfcfd57a484781937e7d2fea65a4c22f5e90aabb8acd"
     },
     {
       "path": "manuscripts/ch13/ch13-three-tier-kv-cache-hierarchy.png",
@@ -286,11 +310,11 @@
     },
     {
       "path": "manuscripts/ch13/ch13-three-tier-kv-cache-hierarchy.svg",
-      "sha256": "226c22bfe0c92809f33b090acf5c3575552c280b3c052b17ca3953d14176f4c8"
+      "sha256": "864dd7f3e73deec1af08ba5cb486e98c58f7e1e838a89ad290d941899bf99505"
     },
     {
       "path": "manuscripts/ch13/ch13-umap-moonbright-mmap-and-gpu-page-table.pdf",
-      "sha256": "22e49ed8e5a21f37f0d1726e340ede50bc4718326873ea6fafb49351e48e1342"
+      "sha256": "cce2f64d84470eee42a5d0a5bfd0fcd792c0e5834cc75db3d5a6654daf22a267"
     },
     {
       "path": "manuscripts/ch13/ch13-umap-moonbright-mmap-and-gpu-page-table.png",
@@ -298,11 +322,11 @@
     },
     {
       "path": "manuscripts/ch13/ch13-umap-moonbright-mmap-and-gpu-page-table.svg",
-      "sha256": "17a500ff7128582724253252c4dafec16a990569f40e447391b9ab792dfd98d8"
+      "sha256": "4c8e0fe900d6e7e6f89baa3fd1af09eb293364591ba1631d504394e2128f632c"
     },
     {
       "path": "manuscripts/ch13/ch13-zns-gc-tail-latency.pdf",
-      "sha256": "4bd75f02edea8ff75b966202003d3e446fb44db65fb7f85320894b69df4c5a5e"
+      "sha256": "75bdb5cb51dd4d5c0dcf640031c61d618dc77f8e1105d754cb12f5e92a1e9523"
     },
     {
       "path": "manuscripts/ch13/ch13-zns-gc-tail-latency.png",
@@ -310,23 +334,23 @@
     },
     {
       "path": "manuscripts/ch13/ch13-zns-gc-tail-latency.svg",
-      "sha256": "86e4f3b9cac59a7d35cf30bd865d42a1508e54d2727247d35d6e82411b2f3ba3"
+      "sha256": "141d3bc9692d84315a641186766e42f769086fb811d35a0c046a119c8fad34aa"
     },
     {
       "path": "manuscripts/ch13/figure-data.json",
-      "sha256": "007cbb0261938b0e67199b96a6624038cd913b9bcb508d746b284f9976e3b632"
+      "sha256": "572cce292c90c76aeaf9a48b76d0de85be40458d650de281935f892f6fdc46f5"
     },
     {
       "path": "manuscripts/ch13/figure-index.json",
-      "sha256": "27a78d693cf6cc0ac824de36cb3425137b81ca2a5509c79600bbb999a434222c"
+      "sha256": "5b9199123dc6859ec69ee8f237c13c004d1a5744364d4be94264f77b25b88fa9"
     },
     {
       "path": "manuscripts/ch13/teaching-layout-validation.json",
-      "sha256": "514c36e9eea817255a7363867f60ccc2b99946ff52f5e4cc18ba348fef453d57"
+      "sha256": "e5e607d8e08cd8ad89ddb9ad5049de3128182c584c25f0e9736b57ce31052a27"
     },
     {
       "path": "manuscripts/ch13/math-validation.json",
-      "sha256": "280cc401e59642ccb55bf3e6d68bdd65620c3ee5dd7faea19c7e8d5e399e7737"
+      "sha256": "e04d4f3ab69f9177922dec73e4fbb5c72574a9b7ac9ffca4b30401b970017248"
     }
   ]
 }

@@ -55,22 +55,22 @@ h2s = re.findall(r'^## (.+)$', s, re.M)
 check('last H2 is 本章小结', len(h2s) >= 7 and h2s[-1].strip() == '本章小结')
 
 exercises = re.findall(r'^>\s*\*\*(?:练习|实验) 13-(\d+)[：:]', s, re.M)
-check('seventeen exercises 13-1 to 13-17 in order', exercises == [str(i) for i in range(1, 18)])
+check('nineteen exercises 13-1 to 13-19 in order', exercises == [str(i) for i in range(1, 20)])
 
 code_blocks = re.findall(r'```python\n.*?```', s, re.S)
-check('three production Python code blocks', len(code_blocks) == 3)
+check('six production Python code blocks', len(code_blocks) == 6)
 
 worked_examples = re.findall(r'^>\s*\*\*算例\s*13-', s, re.M)
 check('fourteen standardized blockquote worked examples', len(worked_examples) == 14)
 
 table_captions = re.findall(r'^\*表 13-(\d+)　', s, re.M)
-check('ten standardized italic table captions 13-1 to 13-10', table_captions == [str(i) for i in range(1, 11)])
+check('eleven standardized italic table captions 13-1 to 13-11', table_captions == [str(i) for i in range(1, 12)])
 
 fig_index = json.loads((HERE / 'figure-index.json').read_text())
 fig_count = len(fig_index)
-check('twenty-six figures in figure-index.json', fig_count == 26)
+check('twenty-eight figures in figure-index.json', fig_count == 28)
 captions = re.findall(r'^\*图 13-(\d+)(?:：|　)', s, re.M)
-check('sequential external captions 13-1 to 13-26', captions == [str(i) for i in range(1, fig_count + 1)])
+check('sequential external captions 13-1 to 13-28', captions == [str(i) for i in range(1, fig_count + 1)])
 
 imgs = re.findall(r'!\[[^\]]*\]\((ch13/[^)]+)\)', s)
 check('active illustrations match figure-index.json', imgs == [row.get('asset') or f"ch13/{row['file']}" for row in fig_index])
@@ -105,7 +105,7 @@ check('no formula errors', not math_val['errors'] and 'katex-error' not in page)
 layout_val = json.loads((HERE / 'teaching-layout-validation.json').read_text())
 check(
     'book-size figure layout',
-    len(layout_val) == 26 and all(r['width_pt'] == 420 and r['min_label_pt'] >= 11 and not r['text_extent_warnings'] for r in layout_val),
+    len(layout_val) == 28 and all(r['width_pt'] == 420 and r['min_label_pt'] >= 11 and not r['text_extent_warnings'] for r in layout_val),
 )
 
 d = json.loads((HERE / 'figure-data.json').read_text())

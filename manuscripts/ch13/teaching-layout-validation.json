@@ -154,5 +154,17 @@
     "width_pt": 420.0,
     "min_label_pt": 11.0,
     "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-lmcache-prefix-kv-compression-and-gds-prefetch",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-checkpoint-and-kv-unified-nvme-pool-qos",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
   }
 ]

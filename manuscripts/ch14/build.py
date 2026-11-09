@@ -164,6 +164,20 @@ def build_figure_data() -> dict:
             "scratch_flops_e24": 1.17,
             "migrate_flops_e24": 0.2374,
             "compute_saving_pct": 79.71
+        },
+        "experiment_14_03_moe_pareto": {
+            "optimal_G": 8,
+            "optimal_expert_dim": 512,
+            "optimal_layer_ms": 0.74,
+            "optimal_utility_score": 3.87,
+            "rubin_ridge_flop_per_b": 2272.73,
+            "tpuv7_ridge_flop_per_b": 626.05,
+            "rubin_step_ms": 11.86,
+            "tpuv7_step_ms": 33.64,
+            "rubin_speedup_vs_tpuv7": 2.84,
+            "hwnas_best_tpot_ms": 12.91,
+            "hwnas_best_state_gib": 28.25,
+            "hwnas_best_quality": 96.80
         }
     }
 
@@ -691,6 +705,46 @@ def fig_14_26_sparse_upcycling(ex: Exporter):
     ex.save(fig, 'ch14-sparse-upcycling-and-attention-distillation-pipeline')
 
 
+def fig_14_27_moe_bw_pareto(ex: Exporter):
+    fig, ax = canvas(3.75)
+    card(ax, 0.02, 0.04, 0.46, 0.92, 'A. 细粒度专家切分 G 拐点', color='purple', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, 'G=1..4：d_exp ≥ 1024\n瓦片满载但表达收益未饱', 'orange', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '最优 G*=8：d_exp=512\n耗时 0.74 ms · 效用 3.87', 'teal', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '过切 G=16：d_exp=256\n瓦片折半 · 耗时 2.02 ms', 'purple', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, 'd_exp 严丝合缝对齐 N_tile=512', size=11, ha='center', weight='bold', color=BORDER_COL['purple'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'B. Rubin vs TPU v7 单步账本', color='blue', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, 'Vera Rubin (22 TB/s HBM4)\n算存比 2,272.73 FLOP/B', 'blue', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, 'TPU v7 (7.37 TB/s HBM3e)\n算存比 626.05 FLOP/B', 'teal', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '单步 11.86 vs 33.64 ms\nRubin 解码吞吐快 2.84×', 'blue', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, 'HBM4 与 NVLink 6 协同提速', size=11, ha='center', weight='bold', color=BORDER_COL['blue'])
+    ex.save(fig, 'ch14-moe-granularity-vs-memory-bandwidth-pareto')
+
+
+def fig_14_28_hwnas_loop(ex: Exporter):
+    fig, ax = canvas(3.75)
+    card(ax, 0.02, 0.04, 0.46, 0.92, 'A. 三维超参数候选空间', color='teal', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '粒度 G ∈ {2, 4, 8, 16}\n激活比 ρ_act 三档扫描', 'teal', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '全注意力比 r_attn 三档\n正交组合 36 组候选架构', 'blue', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '硬件红线：TPOT ≤ 15.0 ms\n并发状态显存 ≤ 40.0 GiB', 'orange', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '剔除 r_attn=50% (54.83 GiB)', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'B. 闭环帕累托筛选最优解', color='purple', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '36 组候选筛出 6 组可行解\n按质量函数 Q 降序排列', 'purple', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '锁定 (G*=8, 3.125%, 25%)\n16/512 专家 + 1:3 注意力', 'teal', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '单步 12.91 ms · 状态 28.25G\n综合质量得分 96.80', 'blue', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '实验 14-03 全自动闭环寻优', size=11, ha='center', weight='bold', color=BORDER_COL['purple'])
+    ex.save(fig, 'ch14-hardware-aware-neural-architecture-search-loop')
+
+
 def main():
     ex = Exporter(HERE)
     fig_14_1_simultaneous(ex)
@@ -719,6 +773,8 @@ def main():
     fig_14_24_codesign_loop(ex)
     fig_14_25_hwnas_pareto(ex)
     fig_14_26_sparse_upcycling(ex)
+    fig_14_27_moe_bw_pareto(ex)
+    fig_14_28_hwnas_loop(ex)
     outputs = ex.finish()
 
     fig_data = build_figure_data()
@@ -984,6 +1040,26 @@ def main():
             "caption": "稠密全注意力模型通过 Sparse Upcycling 与跨层注意力蒸馏低成本转化为系统友好型混合 MoE 架构的训练流水线",
             "source_refs": ["manuscripts/ch14/figure-data.json"],
             "TeachingRole": "展示如何仅用从头预训练约 20% 的算力（省 79.71%）将稠密模型热启动迁移为混合线性注意力与稀疏 MoE 架构"
+        },
+        {
+            "figure_id": "图 14-27",
+            "number": 27,
+            "file": "ch14-moe-granularity-vs-memory-bandwidth-pareto.svg",
+            "asset": "ch14/ch14-moe-granularity-vs-memory-bandwidth-pareto.svg",
+            "section": "14.9.3",
+            "caption": "MoE 细粒度专家切分因子 G 的表达收益与矩阵瓦片填充率拐点（G*=8 时 d_exp=512 严丝合缝对齐瓦片下界，单层耗时 0.74 ms），以及 Vera Rubin NVL72 与 TPU v7 在 671B/37B MoE 上的单步吞吐对比",
+            "source_refs": ["manuscripts/ch14/figure-data.json", "experiments/ch14/14-03/README.md"],
+            "TeachingRole": "建立 MoE 专家切分粒度 G 与加速器矩阵核心瓦片尺寸、HBM4/NVLink 6 带宽比联立寻优的定量边界"
+        },
+        {
+            "figure_id": "图 14-28",
+            "number": 28,
+            "file": "ch14-hardware-aware-neural-architecture-search-loop.svg",
+            "asset": "ch14/ch14-hardware-aware-neural-architecture-search-loop.svg",
+            "section": "14.9.3",
+            "caption": "面向下一代加速器的三维超参数（专家粒度 G、激活比 ρ_act、全注意力混合比 r_attn）硬件感知神经架构搜索（HW-NAS）闭环：从 36 组候选中筛出 6 组可行解并锁定 (8, 3.125%, 25%) 最优工作点",
+            "source_refs": ["manuscripts/ch14/figure-data.json", "experiments/ch14/14-03/README.md"],
+            "TeachingRole": "展示三维架构超参数在硬件 TPOT 与状态显存红线约束下的闭环帕累托寻优流程"
         }
     ]
     (HERE / 'figure-index.json').write_text(json.dumps(fig_index, ensure_ascii=False, indent=2) + '\n')

@@ -187,6 +187,19 @@ def build_figure_data() -> dict:
             "saved_tb": 1552.0,
             "saving_pct": 51.73,
             "per_node_parity_mb_s": 66.7
+        },
+        "experiment_13_04_lmcache_qos": {
+            "raw_kv_mib": 8192.0,
+            "compressed_kv_mib": 2155.79,
+            "compression_ratio": 3.80,
+            "uncompressed_serial_ms": 713.60,
+            "compressed_pipelined_ms": 273.02,
+            "ttft_speedup_x": 2.61,
+            "three_tier_avg_ms": 230.11,
+            "three_tier_cost_saving_pct": 87.98,
+            "fifo_p99_read_ms": 13.80,
+            "wrr_p99_read_ms": 1.35,
+            "tail_latency_reduction_x": 10.22
         }
     }
 
@@ -731,6 +744,46 @@ def fig_13_26_checkpoint_ec(ex: Exporter):
     ex.save(fig, 'ch13-checkpoint-replication-to-erasure-coding-lifecycle')
 
 
+def fig_13_27_lmcache_prefix_kv(ex: Exporter):
+    fig, ax = canvas(3.75)
+    card(ax, 0.02, 0.04, 0.46, 0.92, 'A. 锚点差分压缩与 16 块流水', color='blue', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '64K 前缀原始 KV 8.0 GiB\n未压缩串行耗 713.60 ms', 'orange', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '锚点差分压缩 3.80×\n降至 2,155.79 MiB 落盘', 'teal', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '16 块 GDS+解压流水重叠\nTTFT 273.02 ms (2.61×)', 'blue', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '逐层组 I/O 掩盖前向计算', size=11, ha='center', weight='bold', color=BORDER_COL['blue'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'B. 100 TiB 三级冷热对象池', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, 'L2 DRAM 热池 (占 5%)\n命中 45% · 42.0 ms', 'blue', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, 'L3 NVMe 温池 (占 25%)\n命中 40% · 273.02 ms', 'teal', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, 'L5 S3 冷池 (70% 命中 15%)\n均 230.11 ms · 省 87.98%', 'purple', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '比 1,850 ms 重算提速 8.04×', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch13-lmcache-prefix-kv-compression-and-gds-prefetch')
+
+
+def fig_13_28_nvme_pool_qos(ex: Exporter):
+    fig, ax = canvas(3.75)
+    card(ax, 0.02, 0.04, 0.46, 0.92, 'A. 单 FIFO 队列队头阻塞', color='orange', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '检查点 1 MiB 突发顺序写\n单次编程占用 0.80 ms', 'orange', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '前方 16 个写请求排队\n队头阻塞达 12.80 ms', 'orange', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '叠加 1.00 ms KV 突发读\n读 P99 恶化至 13.80 ms', 'purple', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '大块写阻塞在线推理 TTFT', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'B. 硬件 WRR + 128 KiB 切片', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, 'NVMe WRR 队列权重 8:2\nKV 读锁定 8.0 GiB/s', 'teal', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '1 MiB 写切为 128 KiB 块\n单块非抢占仅 0.10 ms', 'blue', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, 'KV 读 P99 降至 1.35 ms\n尾延迟削减达 10.22×', 'teal', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '兼顾高吞吐落盘与毫秒级读', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch13-checkpoint-and-kv-unified-nvme-pool-qos')
+
+
 def main():
     ex = Exporter(HERE)
     fig_13_1_hierarchy(ex)
@@ -759,6 +812,8 @@ def main():
     fig_13_24_storage_cube(ex)
     fig_13_25_nixl(ex)
     fig_13_26_checkpoint_ec(ex)
+    fig_13_27_lmcache_prefix_kv(ex)
+    fig_13_28_nvme_pool_qos(ex)
     outputs = ex.finish()
 
     fig_data = build_figure_data()
@@ -1024,6 +1079,26 @@ def main():
             "caption": "PB 级检查点从热层 3 副本秒级闪存暂存到温冷层 RS(10,4) 纠删码对象归档的容量与恢复带宽瀑布图",
             "source_refs": ["manuscripts/ch13/figure-data.json"],
             "TeachingRole": "建立十万卡训练集群检查点热层 3 副本与温冷层 RS(10,4) 纠删码的分层生命周期归档账本"
+        },
+        {
+            "figure_id": "图 13-27",
+            "number": 27,
+            "file": "ch13-lmcache-prefix-kv-compression-and-gds-prefetch.svg",
+            "asset": "ch13/ch13-lmcache-prefix-kv-compression-and-gds-prefetch.svg",
+            "section": "13.8.4",
+            "caption": "LMCache / Mooncake Store 跨请求前缀 KV 锚点差分压缩（3.80×）、16 块逐层组 GDS 异步预取与 GPU 解压流水线（713.60 ms 降至 273.02 ms，提速 2.61×）及 DRAM—NVMe—S3 三级冷热分层",
+            "source_refs": ["manuscripts/ch13/figure-data.json", "experiments/ch13/13-04/README.md"],
+            "TeachingRole": "展示跨请求前缀 KV 锚点差分压缩、逐层组 GDS 异步流水预取与三级冷热对象存储池的延迟及 TCO 收益"
+        },
+        {
+            "figure_id": "图 13-28",
+            "number": 28,
+            "file": "ch13-checkpoint-and-kv-unified-nvme-pool-qos.svg",
+            "asset": "ch13/ch13-checkpoint-and-kv-unified-nvme-pool-qos.svg",
+            "section": "13.8.4",
+            "caption": "训练检查点 1 MiB 突发写与在线 KV 缓存读取共享 NVMe 池时，单一 FIFO 队列队头阻塞（P99 达 13.80 ms）与 NVMe 硬件 WRR（8:2 权重）+ 128 KiB 写微块切片 QoS 隔离（P99 降至 1.35 ms，改善 10.22×）对比",
+            "source_refs": ["manuscripts/ch13/figure-data.json", "experiments/ch13/13-04/README.md"],
+            "TeachingRole": "剖析共享 NVMe 存储池中大块检查点写对在线 KV 读的队头阻塞机理及硬件 WRR 加写微块切片的 QoS 治理"
         }
     ]
     (HERE / 'figure-index.json').write_text(json.dumps(fig_index, ensure_ascii=False, indent=2) + '\n')

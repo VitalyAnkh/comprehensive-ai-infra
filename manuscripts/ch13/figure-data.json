@@ -166,5 +166,18 @@
     "saved_tb": 1552.0,
     "saving_pct": 51.73,
     "per_node_parity_mb_s": 66.7
+  },
+  "experiment_13_04_lmcache_qos": {
+    "raw_kv_mib": 8192.0,
+    "compressed_kv_mib": 2155.79,
+    "compression_ratio": 3.8,
+    "uncompressed_serial_ms": 713.6,
+    "compressed_pipelined_ms": 273.02,
+    "ttft_speedup_x": 2.61,
+    "three_tier_avg_ms": 230.11,
+    "three_tier_cost_saving_pct": 87.98,
+    "fifo_p99_read_ms": 13.8,
+    "wrr_p99_read_ms": 1.35,
+    "tail_latency_reduction_x": 10.22
   }
 }

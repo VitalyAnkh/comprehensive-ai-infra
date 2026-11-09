@@ -10,11 +10,11 @@
       "passed": true
     },
     {
-      "check": "seventeen exercises 13-1 to 13-17 in order",
+      "check": "nineteen exercises 13-1 to 13-19 in order",
       "passed": true
     },
     {
-      "check": "three production Python code blocks",
+      "check": "six production Python code blocks",
       "passed": true
     },
     {
@@ -22,15 +22,15 @@
       "passed": true
     },
     {
-      "check": "ten standardized italic table captions 13-1 to 13-10",
+      "check": "eleven standardized italic table captions 13-1 to 13-11",
       "passed": true
     },
     {
-      "check": "twenty-six figures in figure-index.json",
+      "check": "twenty-eight figures in figure-index.json",
       "passed": true
     },
     {
-      "check": "sequential external captions 13-1 to 13-26",
+      "check": "sequential external captions 13-1 to 13-28",
       "passed": true
     },
     {
@@ -347,6 +347,30 @@
     },
     {
       "check": "PDF is binary not LFS pointer: ch13-checkpoint-replication-to-erasure-coding-lifecycle",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch13-lmcache-prefix-kv-compression-and-gds-prefetch",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch13-lmcache-prefix-kv-compression-and-gds-prefetch",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch13-lmcache-prefix-kv-compression-and-gds-prefetch",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch13-checkpoint-and-kv-unified-nvme-pool-qos",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch13-checkpoint-and-kv-unified-nvme-pool-qos",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch13-checkpoint-and-kv-unified-nvme-pool-qos",
       "passed": true
     },
     {

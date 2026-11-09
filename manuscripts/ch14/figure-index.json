@@ -313,5 +313,31 @@
       "manuscripts/ch14/figure-data.json"
     ],
     "TeachingRole": "展示如何仅用从头预训练约 20% 的算力（省 79.71%）将稠密模型热启动迁移为混合线性注意力与稀疏 MoE 架构"
+  },
+  {
+    "figure_id": "图 14-27",
+    "number": 27,
+    "file": "ch14-moe-granularity-vs-memory-bandwidth-pareto.svg",
+    "asset": "ch14/ch14-moe-granularity-vs-memory-bandwidth-pareto.svg",
+    "section": "14.9.3",
+    "caption": "MoE 细粒度专家切分因子 G 的表达收益与矩阵瓦片填充率拐点（G*=8 时 d_exp=512 严丝合缝对齐瓦片下界，单层耗时 0.74 ms），以及 Vera Rubin NVL72 与 TPU v7 在 671B/37B MoE 上的单步吞吐对比",
+    "source_refs": [
+      "manuscripts/ch14/figure-data.json",
+      "experiments/ch14/14-03/README.md"
+    ],
+    "TeachingRole": "建立 MoE 专家切分粒度 G 与加速器矩阵核心瓦片尺寸、HBM4/NVLink 6 带宽比联立寻优的定量边界"
+  },
+  {
+    "figure_id": "图 14-28",
+    "number": 28,
+    "file": "ch14-hardware-aware-neural-architecture-search-loop.svg",
+    "asset": "ch14/ch14-hardware-aware-neural-architecture-search-loop.svg",
+    "section": "14.9.3",
+    "caption": "面向下一代加速器的三维超参数（专家粒度 G、激活比 ρ_act、全注意力混合比 r_attn）硬件感知神经架构搜索（HW-NAS）闭环：从 36 组候选中筛出 6 组可行解并锁定 (8, 3.125%, 25%) 最优工作点",
+    "source_refs": [
+      "manuscripts/ch14/figure-data.json",
+      "experiments/ch14/14-03/README.md"
+    ],
+    "TeachingRole": "展示三维架构超参数在硬件 TPOT 与状态显存红线约束下的闭环帕累托寻优流程"
   }
 ]

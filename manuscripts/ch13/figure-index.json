@@ -311,5 +311,31 @@
       "manuscripts/ch13/figure-data.json"
     ],
     "TeachingRole": "建立十万卡训练集群检查点热层 3 副本与温冷层 RS(10,4) 纠删码的分层生命周期归档账本"
+  },
+  {
+    "figure_id": "图 13-27",
+    "number": 27,
+    "file": "ch13-lmcache-prefix-kv-compression-and-gds-prefetch.svg",
+    "asset": "ch13/ch13-lmcache-prefix-kv-compression-and-gds-prefetch.svg",
+    "section": "13.8.4",
+    "caption": "LMCache / Mooncake Store 跨请求前缀 KV 锚点差分压缩（3.80×）、16 块逐层组 GDS 异步预取与 GPU 解压流水线（713.60 ms 降至 273.02 ms，提速 2.61×）及 DRAM—NVMe—S3 三级冷热分层",
+    "source_refs": [
+      "manuscripts/ch13/figure-data.json",
+      "experiments/ch13/13-04/README.md"
+    ],
+    "TeachingRole": "展示跨请求前缀 KV 锚点差分压缩、逐层组 GDS 异步流水预取与三级冷热对象存储池的延迟及 TCO 收益"
+  },
+  {
+    "figure_id": "图 13-28",
+    "number": 28,
+    "file": "ch13-checkpoint-and-kv-unified-nvme-pool-qos.svg",
+    "asset": "ch13/ch13-checkpoint-and-kv-unified-nvme-pool-qos.svg",
+    "section": "13.8.4",
+    "caption": "训练检查点 1 MiB 突发写与在线 KV 缓存读取共享 NVMe 池时，单一 FIFO 队列队头阻塞（P99 达 13.80 ms）与 NVMe 硬件 WRR（8:2 权重）+ 128 KiB 写微块切片 QoS 隔离（P99 降至 1.35 ms，改善 10.22×）对比",
+    "source_refs": [
+      "manuscripts/ch13/figure-data.json",
+      "experiments/ch13/13-04/README.md"
+    ],
+    "TeachingRole": "剖析共享 NVMe 存储池中大块检查点写对在线 KV 读的队头阻塞机理及硬件 WRR 加写微块切片的 QoS 治理"
   }
 ]

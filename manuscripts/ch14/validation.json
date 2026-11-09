@@ -10,11 +10,11 @@
       "passed": true
     },
     {
-      "check": "seventeen exercises 14-1 to 14-17 in order",
+      "check": "nineteen exercises 14-1 to 14-19 in order",
       "passed": true
     },
     {
-      "check": "three production Python code blocks",
+      "check": "six production Python code blocks",
       "passed": true
     },
     {
@@ -22,15 +22,15 @@
       "passed": true
     },
     {
-      "check": "eleven standardized italic table captions 14-1 to 14-11",
+      "check": "twelve standardized italic table captions 14-1 to 14-12",
       "passed": true
     },
     {
-      "check": "twenty-six figures in figure-index.json",
+      "check": "twenty-eight figures in figure-index.json",
       "passed": true
     },
     {
-      "check": "sequential external captions 14-1 to 14-26",
+      "check": "sequential external captions 14-1 to 14-28",
       "passed": true
     },
     {
@@ -347,6 +347,30 @@
     },
     {
       "check": "PDF is binary not LFS pointer: ch14-sparse-upcycling-and-attention-distillation-pipeline",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch14-moe-granularity-vs-memory-bandwidth-pareto",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch14-moe-granularity-vs-memory-bandwidth-pareto",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch14-moe-granularity-vs-memory-bandwidth-pareto",
+      "passed": true
+    },
+    {
+      "check": "no internal figure numbering: ch14-hardware-aware-neural-architecture-search-loop",
+      "passed": true
+    },
+    {
+      "check": "SVG PNG PDF available: ch14-hardware-aware-neural-architecture-search-loop",
+      "passed": true
+    },
+    {
+      "check": "PDF is binary not LFS pointer: ch14-hardware-aware-neural-architecture-search-loop",
       "passed": true
     },
     {

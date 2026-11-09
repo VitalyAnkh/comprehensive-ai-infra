@@ -137,5 +137,19 @@
     "scratch_flops_e24": 1.17,
     "migrate_flops_e24": 0.2374,
     "compute_saving_pct": 79.71
+  },
+  "experiment_14_03_moe_pareto": {
+    "optimal_G": 8,
+    "optimal_expert_dim": 512,
+    "optimal_layer_ms": 0.74,
+    "optimal_utility_score": 3.87,
+    "rubin_ridge_flop_per_b": 2272.73,
+    "tpuv7_ridge_flop_per_b": 626.05,
+    "rubin_step_ms": 11.86,
+    "tpuv7_step_ms": 33.64,
+    "rubin_speedup_vs_tpuv7": 2.84,
+    "hwnas_best_tpot_ms": 12.91,
+    "hwnas_best_state_gib": 28.25,
+    "hwnas_best_quality": 96.8
   }
 }
