@@ -290,5 +290,35 @@
     "TeachingRole": "剖析 2.4 ms 3DGS 光栅化 + 24.0 ms 4 步视频 DiT + 4.5 ms VAE 达成 32.36 FPS 零几何漂移的管线账本",
     "figure": "17-20",
     "name": "ch17-3dgs-scaffold-guided-world-model-dit"
+  },
+  {
+    "figure_id": "图 17-21",
+    "number": 21,
+    "file": "ch17-causal-streaming-world-model-20fps-kv-rolling.svg",
+    "asset": "ch17/ch17-causal-streaming-world-model-20fps-kv-rolling.svg",
+    "section": "17.4.3",
+    "caption": "自回归流式因果视频世界模型（CausVid / Oasis / Matrix-Game）的块因果滚动 KV 缓存池（1 Sink + 5 滑窗，恒定 1.3184 GiB）架构（算例 17-8）",
+    "source_refs": [
+      "manuscripts/ch17/figure-data.json",
+      "experiments/ch17/17-03/run.py"
+    ],
+    "TeachingRole": "推导 1 Sink + 5 滑窗（21,600 词元）将无限时长世界模型 KV 显存锁定在 1.3184 GiB 的定量账本",
+    "figure": "17-21",
+    "name": "ch17-causal-streaming-world-model-20fps-kv-rolling"
+  },
+  {
+    "figure_id": "图 17-22",
+    "number": 22,
+    "file": "ch17-teacache-timestep-embedding-aware-activation-reuse.svg",
+    "asset": "ch17/ch17-teacache-timestep-embedding-aware-activation-reuse.svg",
+    "section": "17.4.3",
+    "caption": "金字塔注意力广播（PAB）与 TeaCache 时间步嵌入感知特征复用在流式世界模型中的跨步/跨帧加速路径",
+    "source_refs": [
+      "manuscripts/ch17/figure-data.json",
+      "experiments/ch17/17-03/run.py"
+    ],
+    "TeachingRole": "解析空间/时间/交叉注意力金字塔广播与 TeaCache 如何将单帧延迟从 62.0 ms 压至 38.0 ms（26.32 FPS）",
+    "figure": "17-22",
+    "name": "ch17-teacache-timestep-embedding-aware-activation-reuse"
   }
 ]

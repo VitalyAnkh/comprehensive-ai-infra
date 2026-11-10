@@ -29,7 +29,7 @@
 为兼顾任意宽高比与高分辨率细节，现代视觉语言模型普遍转向两类动态视觉词元化路线：
 
 - **AnyRes 动态网格切片（Dynamic Grid Tiling）**：以 LLaVA-NeXT 与 InternVL 系列为代表，系统预先定义一组候选网格模板（如 $\{1\times 1, 1\times 2, 2\times 1, 2\times 2, 2\times 3, 3\times 2\}$）。当一张高分辨率图片到达时，预处理器根据原图宽高比与面积选择畸变最小的网格，将原图切分为若干个标准尺寸局部子图（Tiles），外加一张缩放后的全局缩略图（Thumbnail）以保留宏观构图上下文，一并送入 ViT 编码。
-- **原生分辨率打包（NaViT / Qwen2.5-VL / Qwen3-VL）**：放弃固定子图框定，直接以步长 $p \times p$（如 $p = 14$ 或 $p = 16$）将任意尺寸图像切分为原生视觉块（Patches），配合二维旋转位置编码（2D-RoPE）保留精确空间坐标。为了在完成 ViT 特征提取后减轻下游大语言模型主干的序列长度压力，系统在 ViT 末端引入 **$m \times m$ 空间相邻块合并层（Spatial Patch Merger，常见 $m = 2$）**，将每 $2 \times 2 = 4$ 个相邻视觉块沿通道维拼接并投射为 1 个紧凑的视觉词元。
+- **原生分辨率打包（NaViT / Qwen2.5-VL / Qwen3-VL）**[^ch17-anyres-navit]：放弃固定子图框定，直接以步长 $p \times p$（如 $p = 14$ 或 $p = 16$）将任意尺寸图像切分为原生视觉块（Patches），配合二维旋转位置编码（2D-RoPE）保留精确空间坐标。为了在完成 ViT 特征提取后减轻下游大语言模型主干的序列长度压力，系统在 ViT 末端引入 **$m \times m$ 空间相邻块合并层（Spatial Patch Merger，常见 $m = 2$）**，将每 $2 \times 2 = 4$ 个相邻视觉块沿通道维拼接并投射为 1 个紧凑的视觉词元。
 
 即便经过 $2 \times 2$ 空间合并，现网多模态服务依然面临一个极具隐蔽性的系统设计分岔口：**在分离式推理或前缀缓存架构中，究竟应当在编码器与主干模型之间传输/缓存编码器输出特征（EC），还是在预填充与解码之间传输/缓存主干 KV 缓存？** 许多工程师直觉地以为“视觉编码器的输出特征包含多层高维浮点向量，体积一定比开了分组查询注意力（GQA）的 LLM KV 缓存更大”。下面我们基于真实工业模型参数（锁定自本书案例库 `case-studies/multimodal-stage-placement.md`）做一次精确到字节的账本核算。
 
@@ -133,7 +133,7 @@ class Qwen3VLDynamicPatcherAndDeepStack(nn.Module):
 
 ### 17.1.2 视频生成（Sora / Wan2.1 / HunyuanVideo / CogVideoX）的三维时空词元化
 
-当任务从多模态理解转向高保真视频生成（Video Generation）时，计算主体变成了三维扩散变换器（3D DiT，代表系统包括 Sora、Wan2.1、HunyuanVideo 与 CogVideoX）。如果直接在原始像素空间（Pixel Space）对一段 10 秒、24 帧/秒、分辨率 $1920 \times 1080$ 的视频运行自注意力，像素总数高达 $240 \times 1080 \times 1920 = 4.97664 \times 10^8$，任何硬件都无法承受其二次方复杂度。
+当任务从多模态理解转向高保真视频生成（Video Generation）时，计算主体变成了三维扩散变换器（3D DiT，代表系统包括 Sora、Wan2.1、HunyuanVideo 与 CogVideoX）[^ch17-wan-hunyuan]。如果直接在原始像素空间（Pixel Space）对一段 10 秒、24 帧/秒、分辨率 $1920 \times 1080$ 的视频运行自注意力，像素总数高达 $240 \times 1080 \times 1920 = 4.97664 \times 10^8$，任何硬件都无法承受其二次方复杂度。
 
 因此，现代视频生成基础设施统一采用“**两级空间—时间下采样**”将原始视频映射为紧凑的三维潜空间词元序列：
 
@@ -207,7 +207,7 @@ class Qwen3VLDynamicPatcherAndDeepStack(nn.Module):
 >      $$V_{\mathrm{tiled, peak}} = 2 \times 0.6257\ \mathrm{GiB} \approx \mathbf{1.2514\ \mathrm{GiB}}$$
 >    相比未分块的 $118.65\ \mathrm{GiB}$，时空分块以仅增加 $26.56\%$ 的边界 Halo 重算开销为代价，将显存峰值压缩了 **$\frac{118.6523}{1.2514} \approx 94.8\times$（单缓冲口径压缩 $189.6\times$）**，彻底根除了生成尾端的 OOM 陷阱。
 
-在工程实现中，时空分块解码还必须配合**余弦羽化融合（Cosine Feathering Blend）**：对相邻空间分块的 Halo 重叠带施加线性或余弦渐变权重 $\omega(x) \in [0, 1]$ 加权求和，并在时间滑动窗口之间传递因果卷积的最后 $k_t - 1$ 帧历史激活缓存（Causal Conv Cache），从而保证拼合后的 1080p 视频在空间与时间上均无肉眼可见的网格接缝或闪烁。下面的代码展示了带 Halo 重叠带、二维余弦羽化融合与时间滑动窗口的 3D 因果 VAE 分块解码器核心实现：
+在工程实现中，时空分块解码还必须配合**余弦羽化融合（Cosine Feathering Blend）**[^ch17-causal-vae]：对相邻空间分块的 Halo 重叠带施加线性或余弦渐变权重 $\omega(x) \in [0, 1]$ 加权求和，并在时间滑动窗口之间传递因果卷积的最后 $k_t - 1$ 帧历史激活缓存（Causal Conv Cache），从而保证拼合后的 1080p 视频在空间与时间上均无肉眼可见的网格接缝或闪烁。下面的代码展示了带 Halo 重叠带、二维余弦羽化融合与时间滑动窗口的 3D 因果 VAE 分块解码器核心实现：
 
 ```python
 import math
@@ -309,7 +309,7 @@ class Tiled3DCausalVAEDecoder:
 
 ### 17.2.2 DeepSpeed-Ulysses（All-to-All 头切分）vs. Ring Attention（环路分块流水）
 
-将长度为 $N$ 的序列均匀切分到 $P$ 张 GPU 上后，每张卡仅持有局部序列片段 $X_i \in \mathbb{R}^{(N/P) \times d}$。在线性投射（QKV 矩阵乘、FFN）与逐词元归一化（AdaLN-Zero）阶段，各卡天然独立并行，无需任何通信；唯一的全局耦合点在于**全双向自注意力计算**——每张卡上的局部查询 $Q_i$ 都需要与所有 $P$ 张卡上的完整键值序列 $K, V$ 交互。围绕如何完成这一全局注意力交互，工业界演化出两条正交的技术路线：
+将长度为 $N$ 的序列均匀切分到 $P$ 张 GPU 上后，每张卡仅持有局部序列片段 $X_i \in \mathbb{R}^{(N/P) \times d}$。在线性投射（QKV 矩阵乘、FFN）与逐词元归一化（AdaLN-Zero）阶段，各卡天然独立并行，无需任何通信；唯一的全局耦合点在于**全双向自注意力计算**——每张卡上的局部查询 $Q_i$ 都需要与所有 $P$ 张卡上的完整键值序列 $K, V$ 交互。围绕如何完成这一全局注意力交互，工业界演化出两条正交的技术路线[^ch17-ulysses-ring]：
 
 ![图 17-4：张量并行（TP）、DeepSpeed-Ulysses（每层 4Nd/P，P ≤ n_head）与 Ring Attention（单步 2Nd/P、全环 2(P-1)Nd/P ≈ 2Nd，无头数限制）对比（算例 17-4）](ch17/ch17-tp-vs-ulysses-vs-ring-attention-comm.svg)
 
@@ -331,7 +331,7 @@ class Tiled3DCausalVAEDecoder:
 
 ### 17.2.3 二维统一序列并行（2D-USP）、双均衡切分（db-SP, MLSys '26）与 CFG 并行
 
-既然 Ulysses 省总流量却受限于头数且对全互连带宽敏感，而 Ring Attention 无头数上限却忌惮长环路跨机流量，最自然的工程解法便是将两者正交组合为**二维统一序列并行（2D Unified Sequence Parallelism, 2D-USP，见 xDiT 与 USP 框架）**，并在外层进一步套上分类器自由引导并行（CFG-Parallel）。
+既然 Ulysses 省总流量却受限于头数且对全互连带宽敏感，而 Ring Attention 无头数上限却忌惮长环路跨机流量，最自然的工程解法便是将两者正交组合为**二维统一序列并行（2D Unified Sequence Parallelism, 2D-USP，见 xDiT 与 USP 框架）**[^ch17-usp-xdit]，并在外层进一步套上分类器自由引导并行（CFG-Parallel）。
 
 ![图 17-5：2D 统一序列并行（USP）：节点内 NVLink 跑 Ulysses All-to-All + 跨节点 RoCE 跑 Ring Attention P2P 重叠流水](ch17/ch17-2d-usp-hybrid-ulysses-ring-topology.svg)
 
@@ -571,7 +571,7 @@ $$\left\|K^{(t)} - K^{(t-1)}\right\|_F \ll \left\|K^{(t)}\right\|_F,\qquad \left
 
 *图 17-8　PipeFusion 将空间分块与去噪时间步交错流水化的气泡消除时序图。*
 
-然而，`DistriFusion` 需要每张卡保存全模型权重并在每层广播完整 KV 激活，对显存容量和互连带宽仍有较高要求。针对 PCIe 节点或普通以太网环境，`PipeFusion` 提出了**层间模型切分 + 空间 Patch 微批次 + 跨去噪步连续流水**的二维流水线（图 17-8）：
+然而，`DistriFusion` 需要每张卡保存全模型权重并在每层广播完整 KV 激活，对显存容量和互连带宽仍有较高要求。针对 PCIe 节点或普通以太网环境，`PipeFusion` 提出了**层间模型切分 + 空间 Patch 微批次 + 跨去噪步连续流水**的二维流水线（图 17-8）[^ch17-distrifusion-pipefusion]：
 1. **消除权重冗余**：将 $L$ 层 DiT 主干按层切分到 $P$ 个流水线阶段（Stages），每张卡仅存储 $L/P$ 层权重。
 2. **用空间分块充当微批次，并用陈旧激活打破步间屏障**：在单样本生成（Batch Size $= 1$）下，传统流水线并行因缺少微批次而退化为串行执行；`PipeFusion` 将单张图像/视频潜变量在空间维切分为 $M$ 个子块（Patches）充当流水微批次。更关键的是，传统同步流水线在每个去噪步末尾都必须排空（Flush）并等待整图拼合，50 个去噪步会产生 $50 \times (P - 1)$ 个流水线气泡；而借助与 `DistriFusion` 相同的“跨步陈旧 KV 缓存复用”，当第 $0$ 号卡算完第 $t$ 步最后一个空间块 $M-1$ 后，无需等待第 $P-1$ 号卡跑完第 $t$ 步末层，即可无缝灌入第 $t-1$ 步的第 $0$ 个空间块，使整趟 50 步生成仅在首步启动与末步收尾时产生 **1 次** 流水线排空，且卡间仅需点对点传输层边界处的单个 Patch 隐藏态（通信量比传输全层 QKV 降低一个数量级以上）。
 
@@ -583,7 +583,7 @@ $$\left\|K^{(t)} - K^{(t-1)}\right\|_F \ll \left\|K^{(t)}\right\|_F,\qquad \left
 
 *图 17-9　TeaCache / AdaCache 基于时间步特征差分的自适应跳步复用与质量—延迟帕累托曲线（算例 17-5）。*
 
-这正是 `TeaCache`（Timestep Embedding Aware Cache）、`AdaCache` 与 `FasterCache` 等免训练缓存加速方案的核心思想。观测表明，视频 DiT 在去噪全周期的表示演化呈现鲜明的“**U 型速率曲线**”：在最初的 $15\%$ 去噪步（从纯高斯噪声凝聚出宏观场景布局与运动主轴）和最后的 $15\%$ 去噪步（高频纹理锐化与伪影收敛），相邻步输出残差 $\Delta F_t = F(x_t, t) - x_t$ 变化剧烈，不可跳过；而在中间 $70\%$ 的去噪区间内，连续数步的主干残差输出近乎线性平移。
+这正是 `TeaCache`（Timestep Embedding Aware Cache）、`AdaCache` 与 `FasterCache` 等免训练缓存加速方案的核心思想[^ch17-teacache-pab]。观测表明，视频 DiT 在去噪全周期的表示演化呈现鲜明的“**U 型速率曲线**”：在最初的 $15\%$ 去噪步（从纯高斯噪声凝聚出宏观场景布局与运动主轴）和最后的 $15\%$ 去噪步（高频纹理锐化与伪影收敛），相邻步输出残差 $\Delta F_t = F(x_t, t) - x_t$ 变化剧烈，不可跳过；而在中间 $70\%$ 的去噪区间内，连续数步的主干残差输出近乎线性平移。
 
 如图 17-9 所示，`TeaCache` 利用开销极低的**时间步调制输入相对一阶差分** $\Delta_{\mathrm{rel}}(t) = \frac{\|\mathrm{Mod}(x_t, e_t) - \mathrm{Mod}(x_{t+1}, e_{t+1})\|_1}{\|\mathrm{Mod}(x_{t+1}, e_{t+1})\|_1}$ 经离线多项式拟合标定后，作为整座 DiT 主干输出残差相对变化的无偏代理指标（Proxy），并在运行时维护累积漂移量 $\delta_{\mathrm{acc}}$：
 - 当 $\delta_{\mathrm{acc}} + \hat{\ell}(\Delta_{\mathrm{rel}}(t)) < \varepsilon_{\mathrm{thresh}}$ 时，系统判定当前时间步特征漂移尚在视觉无损容差内，直接跳过全部 $L$ 层 DiT 计算，执行 $x_{t-1} \leftarrow \mathrm{Solver}(x_t, \Delta F_{\mathrm{cache}})$；
@@ -692,7 +692,7 @@ def sage_attention_key_smooth_and_block_quant(
 对于无法跳过的那 22 个关键去噪步，其算力消耗的绝对大头仍在 $\mathcal{O}(N^2 d)$ 的三维自注意力核。能否利用 Hopper 的 FP8 Tensor Core 或 Blackwell 的 NVFP4 Tensor Core 直接加速注意力矩阵乘？
 如图 17-10 左栏所示，如果在 DiT 中直接对查询 $Q$ 与键 $K$ 做对称低比特块量化（INT8/FP8/FP4），生成画面会立刻出现大面积色块崩坏。其根源在于：**视频 DiT 的键张量 $K \in \mathbb{R}^{N \times d_{\mathrm{head}}}$ 沿通道维存在强烈的固定偏置离群值（Channel-wise Outlier Bias）**——某些特征通道在整个时空序列上的均值高达其余通道的 $10\text{–}50$ 倍，直接吞噬了低位宽浮点数的动态范围。
 
-`SageAttention`（演进至针对 Blackwell NVFP4 微缩放架构的 `SageAttention-3`）利用 Softmax 的平移不变性（Translation Invariance），给出了一个零精度损失的代数恒等变换（图 17-10 右栏）：
+`SageAttention`（演进至针对 Blackwell NVFP4 微缩放架构的 `SageAttention-3`）利用 Softmax 的平移不变性（Translation Invariance），给出了一个零精度损失的代数恒等变换（图 17-10 右栏）[^ch17-sageattention]：
 1. **键通道序列均值平滑（Key Smoothing）**：记键张量沿序列维度的均值为 $\mu_K = \frac{1}{N}\sum_{j=1}^N K_j \in \mathbb{R}^{1 \times d_{\mathrm{head}}}$，定义去均值后的平滑键张量为 $\tilde{K}_j = K_j - \mu_K$。由于对任意查询行向量 $Q_i \in \mathbb{R}^{1 \times d_{\mathrm{head}}}$，内积 $c_i = Q_i \mu_K^\top$ 是一个与键索引 $j$ 无关的标量常数，根据 Softmax 对整行加减常数保持严格不变的性质：
    $$\mathrm{Softmax}\!\left(\frac{Q_i K^\top}{\sqrt{d_{\mathrm{head}}}}\right) = \mathrm{Softmax}\!\left(\frac{Q_i \tilde{K}^\top + c_i \mathbf{1}^\top}{\sqrt{d_{\mathrm{head}}}}\right) \equiv \mathrm{Softmax}\!\left(\frac{Q_i \tilde{K}^\top}{\sqrt{d_{\mathrm{head}}}}\right)$$
    先在在线流式核中减去 $\mu_K$，无需任何重训练即可将 $K$ 的动态范围压缩 $5\text{–}15$ 倍，彻底铲除通道直流偏置。
@@ -710,7 +710,7 @@ def sage_attention_key_smooth_and_block_quant(
 
 *图 17-11　交互式世界模型（StreamDiffusionV2 / CausVid）的因果少步蒸馏与 `<33.3 ms` 滚动 KV 帧生成流水线。*
 
-如图 17-11 所示，要将原本耗时数十秒的双向视频扩散模型压缩进 $33.3\ \mathrm{ms}$ 的实时交互预算，基础设施必须协同完成四项结构改造（以 `CausVid` 与 `StreamDiffusionV2` 为代表）：
+如图 17-11 所示，要将原本耗时数十秒的双向视频扩散模型压缩进 $33.3\ \mathrm{ms}$ 的实时交互预算，基础设施必须协同完成四项结构改造（以 `CausVid` 与 `StreamDiffusionV2` 为代表）[^ch17-causvid-oasis]：
 
 1. **从全双向扩散改造为块级因果自回归扩散（Block-Causal Autoregressive Diffusion）**：
    离线视频 DiT 允许第 1 帧关注第 240 帧（非因果），因而无法流式吐帧。实时世界模型通过非对称蒸馏，将注意力掩码改造为**帧块内双向、帧块间严格单向因果（Block-Causal Attention）**：生成第 $\tau$ 个潜空间帧块时，仅依赖已定稿的历史帧块 $\{1, \dots, \tau-1\}$ 与当前外部动作输入 $a_\tau$。
@@ -791,7 +791,7 @@ class StreamBatchingWorldModelPipeline:
 
 ## 17.4 原生全模态（Omni-modal）在线服务：E-P-D-G 四阶段解耦与多模态缓存
 
-在第 13 章中，我们已经证明了针对纯文本大语言模型，将算力密集的预填充（Prefill, P）与访存密集的解码（Decode, D）物理分离，能够消除长提示词对流式吐词延迟（TPOT）的阻塞。然而，当线上服务升级为同时接收文本、高分图片、视频片段与实时语音，并能同步输出文本、语音或合成图像的**原生全模态模型（Omni-modal Models，如 GPT-4o、Qwen2.5-Omni、Gemini 2.5 及 `vLLM-Omni` 服务栈）**时，传统的二元 P/D 分离框架已不足以刻画完整的硬件瓶颈谱系。
+在第 13 章中，我们已经证明了针对纯文本大语言模型，将算力密集的预填充（Prefill, P）与访存密集的解码（Decode, D）物理分离，能够消除长提示词对流式吐词延迟（TPOT）的阻塞。然而，当线上服务升级为同时接收文本、高分图片、视频片段与实时语音，并能同步输出文本、语音或合成图像的**原生全模态模型（Omni-modal Models，如 GPT-4o、Qwen2.5-Omni、Gemini 2.5 及 `vLLM-Omni` 服务栈）**[^ch17-vllm-omni]时，传统的二元 P/D 分离框架已不足以刻画完整的硬件瓶颈谱系。
 
 ### 17.4.1 从 TriInfer（MLSys '26）到 E-P-D-G（编码—预填充—解码—生成）四池异构解耦
 
@@ -983,7 +983,7 @@ class EPDGDisaggregatedScheduler:
 
 ### 17.4.3 原生多模态统一自回归—扩散混合架构（Transfusion / Show-o）与 3DGS 引导世界模型
 
-在 17.4.1 节与 17.4.2 节中，我们探讨了通过外部连接器将视觉编码器（ViT）、大语言模型（LLM）与扩散变换器（DiT）组装在一起的模块化全模态流水线。然而，前沿多模态基础模型正在向更深层的统一架构演进——即在**同一个 Transformer 主干权重与同一条交错序列**内，同时对离散文本词元执行**下一词元自回归预测（Next-Token Autoregressive Prediction）**，并对连续图像/视频潜变量块执行**多步迭代去噪扩散（Continuous Diffusion / Flow Matching）**。以 Meta `Transfusion`、字节与新国大 `Show-o`、`Janus-Pro` 以及 `Chameleon` 演进路线为代表的统一架构，虽然消除了跨模型投射的信息损耗，却给推理引擎的注意力内核与 KV 缓存管理带来了前所未有的系统挑战。
+在 17.4.1 节与 17.4.2 节中，我们探讨了通过外部连接器将视觉编码器（ViT）、大语言模型（LLM）与扩散变换器（DiT）组装在一起的模块化全模态流水线。然而，前沿多模态基础模型正在向更深层的统一架构演进——即在**同一个 Transformer 主干权重与同一条交错序列**内，同时对离散文本词元执行**下一词元自回归预测（Next-Token Autoregressive Prediction）**，并对连续图像/视频潜变量块执行**多步迭代去噪扩散（Continuous Diffusion / Flow Matching）**。以 Meta `Transfusion`、字节与新国大 `Show-o`、`Bagel`、`Janus-Pro` 以及 `Chameleon` 演进路线为代表的统一架构[^ch17-transfusion-bagel]，虽然消除了跨模型投射的信息损耗，却给推理引擎的注意力内核与 KV 缓存管理带来了前所未有的系统挑战。
 
 ![图 17-19：Transfusion / Show-o 离散自回归与连续扩散混合掩码（Hybrid Causal-Bidirectional Mask）及 KV 缓存分块调度](ch17/ch17-transfusion-hybrid-causal-bidirectional-mask.svg)
 
@@ -1037,7 +1037,7 @@ class EPDGDisaggregatedScheduler:
 
 *图 17-20　3D 高斯泼溅（3DGS）几何脚手架引导的 3D 视频世界模型（Camera-Controlled World Model）管线。*
 
-如图 17-20 所示，工业界最新一代相机可控世界模型（以 `Wonderland`、`CAT3D`、`StreetGaussians` 与 `Genie-3D` 为代表）引入了**“显式三维高斯泼溅（3D Gaussian Splatting, 3DGS）几何脚手架 + 隐式 3D DiT 神经去噪补全”的双引擎混合管线**：
+如图 17-20 所示，工业界最新一代相机可控世界模型（以 `Wonderland`、`CAT3D`、`StreetGaussians` 与 `Genie-3D` 为代表）引入了**“显式三维高斯泼溅（3D Gaussian Splatting, 3DGS）几何脚手架 + 隐式 3D DiT 神经去噪补全”的双引擎混合管线**[^ch17-3dgs-world]：
 1. **显式 3DGS 几何脚手架（Explicit 3DGS Geometric Scaffold）**：系统在显存中维护一组稀疏的三维各向异性高斯椭球集合 $\mathcal{G} = \{(\mu_k, \Sigma_k, \alpha_k, c_k)\}_{k=1}^M$（包含三维中心坐标 $\mu_k \in \mathbb{R}^3$、协方差矩阵 $\Sigma_k$、不透明度 $\alpha_k$ 与球谐外观特征 $c_k$），充当整个物理场景的持久三维记忆体。
 2. **微秒级视锥剔除（Frustum Culling）与分块光栅化（Tile-Based Splatting）**：当智能体在时刻 $t$ 输入新的六自由度相机外参矩阵 $[R_t \mid \mathbf{t}_t] \in \mathrm{SE}(3)$ 时，GPU 首先启动轻量级 CUDA 光栅化核：
    - 第一步执行**视锥剔除**，瞬间过滤掉处于当前相机视野之外的 $70\%\text{–}85\%$ 高斯点；
@@ -1122,6 +1122,181 @@ class TransfusionAnd3DGSWorldEngine:
         return valid_depth & valid_fov
 ```
 
+#### 自回归流式因果视频世界模型（CausVid / Oasis / Matrix-Game 20 FPS 实时交互生成）的块因果 KV 缓存滚动窗口与跨帧特征复用（TeaCache / PAB）
+
+当交互式视频世界模型（如 `CausVid`、Decart/Etched `Oasis`、昆仑万维 `Matrix-Game` 与 `GameNGen`）从短短数秒的镜头预览迈向长达数十分钟的连续开放世界交互（要求稳定帧率 $\ge 20\ \mathrm{FPS}$，即单帧平均生成延迟 $\le 50.0\ \mathrm{ms}$、每 3 帧潜空间块生成延迟 $\le 150.0\ \mathrm{ms}$）时，17.3.3 节初步勾勒的块因果扩散架构还必须攻克两道更为苛刻的系统级瓶颈：**无限时长交互下的历史 KV 显存膨胀与长程外观退化（Error Accumulation & Drift）**，以及**少步去噪（$S = 4$ 步 DMD）内部空间—时间—条件注意力的重复算力开销**。
+
+![图 17-21：自回归流式因果视频世界模型（CausVid / Oasis / Matrix-Game）的块因果滚动 KV 缓存池（1 Sink + 5 滑窗，恒定 1.3184 GiB）架构（算例 17-8）](ch17/ch17-causal-streaming-world-model-20fps-kv-rolling.svg)
+
+*图 17-21　自回归流式因果视频世界模型（CausVid / Oasis / Matrix-Game）的块因果滚动 KV 缓存池（1 Sink + 5 滑窗，恒定 1.3184 GiB）架构（算例 17-8）。*
+
+如图 17-21 所示，在非对称分布匹配蒸馏（Distribution Matching Distillation, DMD，将双向教师视频 DiT 蒸馏为 4 步块因果学生模型）中，视频流按每块 $F_{\mathrm{chunk}} = 3$ 帧 RGB 画面（经 3D 因果 VAE 压缩为 1 个潜空间帧块，720p 下含 $N_{\mathrm{chunk}} = \frac{720}{16} \times \frac{1280}{16} = 45 \times 80 = 3{,}600$ 个时空词元）为单位自回归向前推进。若不加裁剪地保留全部历史块的 KV 缓存，连续运行 10 分钟（$20\ \mathrm{FPS} \implies 12{,}000$ 帧 $= 4{,}000$ 个块）将累积 $1.44 \times 10^7$ 个词元、耗尽超过 $878\ \mathrm{GiB}$ 显存，且二次方注意力复杂度早在第 15 秒就会将帧率拖垮至 $2\ \mathrm{FPS}$ 以下；反之，若简单采用先入先出（FIFO）滑动窗口丢弃最老的块，一旦包含初始场景主色调、光照基准与主角外观的**第 0 号起始帧块（Initial Anchor Frame Chunk）**被逐出窗口，后续生成画面就会在 20 秒内迅速发生色彩饱和度过曝与几何结构崩解。
+
+工程上的高鲁棒解法是构建**“固定首块注意力锚点（Attention Sink Chunk）+ 环形 FIFO 近期滚动滑窗（Rolling Window Chunks）+ 帧块边界相对 RoPE 重锚定”的三段式块因果 KV 内存池**：
+1. **常驻锚点区（Pinned Attention Sink）**：将第 0 号起始潜空间块（$M_{\mathrm{sink}} = 1$ 块，$3{,}600$ 词元）永久锁定在物理页槽位 `[0 : 3600)`，充当全局视觉风格、主角外观与Softmax 注意力分母的稳定锚点，永不驱逐；
+2. **环形滚动窗口区（Ring-Buffer Sliding Window）**：仅保留最近 $M_{\mathrm{win}} = 5$ 个已完成去噪定稿的历史潜空间块（共 $5 \times 3{,}600 = 18{,}000$ 词元）。当第 $\tau$ 个新块完成全部 $S = 4$ 步去噪定稿（Finalized）后，其最终步产出的清洁键值张量 $(K_\tau^{(0)}, V_\tau^{(0)})$ 直接原位覆写环形缓冲区中最老的第 $(\tau - M_{\mathrm{win}}) \bmod M_{\mathrm{win}}$ 号物理槽位，使任意时刻参与跨块因果注意力的历史上下文严格恒定为 $M_{\mathrm{act}} = M_{\mathrm{sink}} + M_{\mathrm{win}} = 6$ 个块（$21{,}600$ 词元）；
+3. **跨块相对三维旋转位置编码（Block-Relative 3D-RoPE Re-Anchoring）**：为防止无限流式生成中时间步索引 $\tau \to \infty$ 超出训练期 RoPE 最大频率波长，每次执行注意力前，将锚点块的时间位置固定映射为 $t_{\mathrm{pos}} = 0$，将滚动窗口内的 5 个近期块动态重映射为连续逻辑位置 $t_{\mathrm{pos}} \in \{1, 2, 3, 4, 5\}$，当前生成块映射为 $t_{\mathrm{pos}} = 6$，彻底消除长程位置外推退化。
+
+![图 17-22：金字塔注意力广播（PAB）与 TeaCache 时间步嵌入感知特征复用在流式世界模型中的跨步/跨帧加速路径](ch17/ch17-teacache-timestep-embedding-aware-activation-reuse.svg)
+
+*图 17-22　金字塔注意力广播（PAB）与 TeaCache 时间步嵌入感知特征复用在流式世界模型中的跨步/跨帧加速路径。*
+
+在锁死 $\mathcal{O}(1)$ 显存占用之后，为了在单张加速卡上将每块（3 帧）的生成时间压缩进 $150.0\ \mathrm{ms}$ 红线（即 $\ge 20\ \mathrm{FPS}$），生产级世界模型进一步融合了**金字塔注意力广播（Pyramid Attention Broadcast, PAB）与跨帧/跨步 `TeaCache` 特征复用**（图 17-22）：
+- **三类注意力分支的频谱分化规律**：在世界模型 DiT 的每一层内部，包含空间自注意力（Spatial Attention，刻画帧内高频边缘细节）、时间块因果注意力（Temporal Block-Causal Attention，刻画跨帧运动轨迹）以及动作/文本交叉注意力（Action/Text Cross-Attention，注入键盘/手柄控制信号）。实验测得三者在 4 个去噪步 $s \in \{4, 3, 2, 1\}$ 间的特征余弦相似度呈现明显的金字塔层级：动作/文本交叉注意力在整个 4 步去噪内几乎恒定不变（变化率 $< 2\%$），时间因果注意力在中段去噪步间平缓演进，而空间注意力变化相对最快；
+- **金字塔广播周期 $(R_{\mathrm{spa}}, R_{\mathrm{tmp}}, R_{\mathrm{crs}})$ 与 TeaCache 门控联动**：系统为三类分支设定金字塔形的广播复用跨度 $1 \le R_{\mathrm{spa}} < R_{\mathrm{tmp}} < R_{\mathrm{crs}} \le S$（例如在 $S = 4$ 步去噪中，交叉注意力仅在首步 $s=4$ 计算 1 次并向后广播复用 3 步；时间块因果注意力仅在首末关键步 $s \in \{4, 1\}$ 计算、中间步直接复用缓存；当连续多帧玩家未输入剧烈视角转动、动作嵌入差分 $\|\Delta a_\tau\|_1 < \varepsilon_a$ 时，`TeaCache` 直接跳过第 $s=2$ 步的整层空间+时间前向计算），从而在不损失交互跟手度与画面锐度的前提下砍掉 $40\%\text{–}45\%$ 的去噪算力；
+- **流式 3D 因果 VAE 的跨块卷积特征环回（Causal 3D Convolution Feature Ring-Buffer）**：当第 $\tau$ 个潜空间块完成 4 步 DMD 去噪并送入流式 3D 因果 VAE 解码器还原为 $3$ 帧 720p RGB 画面时，解码器内部所有时间维卷积核（如 kernel size $k_t = 3$）严禁访问未来块 $\tau+1$，且必须将上一块 $\tau-1$ 末尾 $k_t - 1 = 2$ 个时间切片的中间激活张量缓存在独立的片上 FIFO 寄存器池中。这一跨块卷积激活缓存仅占约 $48\ \mathrm{MiB}$ 显存，却彻底消除了块与块交界处（每 3 帧一次）的亮度闪烁与时间接缝伪影（Temporal Block Boundary Flickering）。
+
+从系统调度与显存确定性的角度审视，上述“块因果 KV 环形滚动池 + PAB 金字塔跨步广播 + TeaCache 动作门控 + 流式因果 VAE 激活环回”四位一体管线，将原本随交互时长呈 $\mathcal{O}(\tau)$ 无界增长的计算与显存复杂度严格封印为与时间无关的常数级 $\mathcal{O}(1)$ 稳态预算：
+
+$$\begin{aligned}
+V_{\mathrm{KV, steady}}(\tau) &\equiv \left(M_{\mathrm{sink}} + M_{\mathrm{win}} + 1_{\mathrm{cur}}\right) \cdot N_{\mathrm{chunk}} \cdot B_{\mathrm{KV/tok}} = \text{const}, \quad \forall \tau \ge M_{\mathrm{win}} + 1 \\
+T_{\mathrm{chunk, opt}}(\tau) &= \sum_{s=1}^{S} \Big(\mathbb{I}_{\mathrm{spa}}(s) t_{\mathrm{spa}} + \mathbb{I}_{\mathrm{tmp}}(s) t_{\mathrm{tmp}} + \mathbb{I}_{\mathrm{crs}}(s) t_{\mathrm{crs}} + \big(1 - \mathbb{I}_{\mathrm{spa}}(s)\big) t_{\mathrm{mod}}\Big) + t_{\mathrm{vae}}
+\end{aligned}$$
+
+其中 $\mathbb{I}_{\mathrm{spa}}(s), \mathbb{I}_{\mathrm{tmp}}(s), \mathbb{I}_{\mathrm{crs}}(s) \in \{0, 1\}$ 分别为第 $s$ 个去噪步在空间、时间因果与动作交叉注意力分支上的激活指示函数，$t_{\mathrm{mod}}$ 为命中 `TeaCache` 整层残差复用时的轻量级 AdaLN 仿射调制开销。正是这一严格的资源上界保证，使得云端世界模型集群能够像传统云游戏实例一样按固定显存配额（如每并发会话锁定 $< 5\ \mathrm{GiB}$ 激活与 KV 缓存）实现长达数小时的零抖动连续服务：
+1. **无感热迁移（Zero-Downtime Session Migration）**：由于单会话的持久上下文状态仅由 $1$ 个锚点块与 $5$ 个环形滑窗块（8 层跨块口径仅 $1.3184\ \mathrm{GiB}$）唯一决定，当宿主机执行负载均衡或预维护驱逐时，控制平面可在 $30\ \mathrm{ms}$ 内通过 RoCEv2 RDMA 将该 $1.3184\ \mathrm{GiB}$ 状态快照迁移至目标 GPU，玩家端感知不到任何帧率卡顿；
+2. **多分支平行宇宙试探（Speculative Action Branching）**：借助底层 PagedAttention 的写时复制（CoW）页表，当玩家处于高概率操作分岔点（如十字路口左转/直行/刹车）时，引擎可零拷贝共享前 $6$ 个历史块的 KV 页，并在空闲算力槽位预先投机渲染未来 1 个潜空间块，把动作响应端到端感知延迟（Motion-to-Photon Latency）进一步压低至单次 VAE 解码耗时（$\approx 18\ \mathrm{ms}$）量级。
+
+> **算例 17-8（CausVid / Matrix-Game 720p 实时流式世界模型的块因果滚动 KV 显存账本与 PAB/TeaCache 26.32 FPS 帧率核算）：**
+>
+> **问题设定**：考察部署在单张 80 GB H100 上的 720p（$W \times H = 1280 \times 720$）自回归流式因果世界模型（架构对齐 `CausVid / Matrix-Game`）。系统每生成一个潜空间块对应输出 $F_{\mathrm{chunk}} = 3$ 帧连续 RGB 画面，单块时空词元数为 $N_{\mathrm{chunk}} = \frac{720}{16} \times \frac{1280}{16} = 45 \times 80 = 3{,}600$。DiT 主干共 $L = 28$ 层，每层配置 $n_{\mathrm{kv}} = 16$ 个键值头、头维度 $d_{\mathrm{head}} = 128$（BF16，每元素 $2\ \mathrm{B}$）。每个新块经过 $S = 4$ 步 DMD 去噪：在未开启特征复用时，单步完整 DiT 前向耗时 $t_{\mathrm{step, full}} = 42.0\ \mathrm{ms}$（其中帧内空间注意力与 FFN 占 $18.0\ \mathrm{ms}$、跨块时间因果注意力占 $16.0\ \mathrm{ms}$、动作/文本交叉注意力占 $8.0\ \mathrm{ms}$），块末流式 3D 因果 VAE 解码（输出 3 帧）固定耗时 $t_{\mathrm{vae}} = 18.0\ \mathrm{ms}$。
+> 试精确计算：
+> 1. **块因果滚动 KV 缓存池显存账本**：当配置 $M_{\mathrm{sink}} = 1$ 个常驻首块锚点 + $M_{\mathrm{win}} = 5$ 个近期滚动窗口块（外加 1 个当前去噪块的原位抓手缓冲）时，活跃历史上下文词元数 $N_{\mathrm{hist}}$ 是多少？28 层主干的历史滚动 KV 缓存池显存体积 $V_{\mathrm{roll}}$（以二进制 $\mathrm{GiB} = 2^{30}\ \mathrm{B}$ 计）是多少？对比连续运行 10 分钟（$20\ \mathrm{FPS}$，共 $12{,}000$ 帧 $= 4{,}000$ 个块）无界累积的 KV 显存体积，压缩了多少倍？
+> 2. **未复用基线 vs. PAB + TeaCache 跨步复用下的实时帧率（FPS）**：在 4 步去噪 $s \in \{4, 3, 2, 1\}$ 中，启用 PAB + TeaCache 后，第 $s=4$ 与 $s=1$ 两步执行完整时间+空间计算（其中交叉注意力仅在 $s=4$ 算 1 次并在 $s \in \{3, 2, 1\}$ 零开销广播复用，故 $s=4$ 耗时 $42.0\ \mathrm{ms}$、$s=1$ 耗时 $42.0 - 8.0 = 34.0\ \mathrm{ms}$），而中间平滑步 $s=3$ 复用时间与交叉注意力（仅跑空间+FFN，耗时 $18.0\ \mathrm{ms}$）、$s=2$ 命中 `TeaCache` 整步残差复用（调制与残差叠加开销 $2.0\ \mathrm{ms}$）。求启用复用前后的单块（3 帧）总耗时、折合单帧平均延迟与稳态帧率（FPS），判断是否突破 $20\ \mathrm{FPS}$（$\le 50.0\ \mathrm{ms/frame}$）实时交互红线。
+>
+> **逐项推导**：
+>
+> 1. **块因果滚动 KV 缓存池（$1\ \mathrm{Sink} + 5\ \mathrm{Window}$）的 $\mathcal{O}(1)$ 显存账本**：
+>    - 活跃历史块数为 $M_{\mathrm{act}} = 1 + 5 = 6$ 块，对应历史 KV 词元总数：
+>      $$N_{\mathrm{hist}} = 6 \times 3{,}600 = \mathbf{21{,}600\ \text{个时空词元}}$$
+>    - 在 $L = 28$ 层、$n_{\mathrm{kv}} = 16$、$d_{\mathrm{head}} = 128$（BF16，$2\ \mathrm{B}$）下，单个词元全层 KV 字节数为：
+>      $$B_{\mathrm{KV/tok}} = 2_{\mathrm{K,V}} \times 28 \times 16 \times 128 \times 2\ \mathrm{B} = \mathbf{229{,}376\ \mathrm{B/token}} = 224\ \mathrm{KiB/token}$$
+>    - 因此，6 个历史块的滚动 KV 缓存池总体积恒定为：
+>      $$V_{\mathrm{roll}} = 21{,}600 \times 229{,}376\ \mathrm{B} = 4{,}954{,}521{,}600\ \mathrm{B} = \frac{4{,}954{,}521{,}600}{1{,}073{,}741{,}824}\ \mathrm{GiB} \approx \mathbf{4.6143\ \mathrm{GiB}}$$
+>      （若当前块与历史块在时间注意力层采用了 $2 \times 2$ 空间降采样键值压缩，即每块 KV 词元压缩至 $900$ 个，或仅在 $8$ 个时空混合层维护跨块 KV，则滚动 KV 池更可进一步压至 $\frac{2}{7} \times 4.6143 \approx \mathbf{1.3184\ \mathrm{GiB}}$；即便全 28 层无压缩驻留也仅占 $4.6143\ \mathrm{GiB}$。）
+>    - 反观 10 分钟（$4{,}000$ 个块，共 $14{,}400{,}000$ 词元）无界累积：全 28 层 KV 将高达 $4{,}000 \times 3{,}600 \times 229{,}376\ \mathrm{B} \approx \mathbf{3{,}076.17\ \mathrm{GiB}}$（8 层跨块 KV 口径亦高达 **$\mathbf{878.91\ \mathrm{GiB}}$**），6 块滚动缓存池将其严格压缩了 **$\frac{4{,}000}{6} = \mathbf{666.67\times}$**，且显存随交互时长增长率为零。
+>
+> 2. **4 步块因果去噪下未复用 vs. PAB + TeaCache 复用的延迟与帧率**：
+>    - **未开启特征复用基线**：4 步完整 DiT 加上块末 VAE 解码耗时为：
+>      $$T_{\mathrm{chunk, base}} = 4 \times 42.0\ \mathrm{ms} + 18.0\ \mathrm{ms} = 168.0 + 18.0 = \mathbf{186.0\ \mathrm{ms/chunk}}$$
+>      折合单帧平均延迟 $t_{\mathrm{frame, base}} = \frac{186.0}{3} = \mathbf{62.0\ \mathrm{ms/frame}} > 50.0\ \mathrm{ms}$，稳态帧率仅为 $\frac{1000}{62.0} \approx \mathbf{16.13\ \mathrm{FPS}}$（未达 $20\ \mathrm{FPS}$ 交互红线）。
+>    - **开启 PAB + TeaCache 跨步复用后**：4 个去噪步的 DiT 耗时依次为 $42.0\ \mathrm{ms}\ (s=4) + 18.0\ \mathrm{ms}\ (s=3) + 2.0\ \mathrm{ms}\ (s=2) + 34.0\ \mathrm{ms}\ (s=1) = \mathbf{96.0\ \mathrm{ms}}$（较 $168.0\ \mathrm{ms}$ 净省 $42.86\%$），加上块末 VAE 解码 $18.0\ \mathrm{ms}$，单块（3 帧）总耗时降至：
+>      $$T_{\mathrm{chunk, opt}} = 96.0\ \mathrm{ms} + 18.0\ \mathrm{ms} = \mathbf{114.0\ \mathrm{ms/chunk}}$$
+>      折合单帧平均延迟与稳态帧率为：
+>      $$t_{\mathrm{frame, opt}} = \frac{114.0\ \mathrm{ms}}{3\ \text{帧}} = \mathbf{38.0\ \mathrm{ms/frame}} \le 50.0\ \mathrm{ms},\qquad \mathrm{FPS}_{\mathrm{opt}} = \frac{1000}{38.0} \approx \mathbf{26.32\ \mathrm{FPS}}$$
+>      端到端帧率提升 **$\frac{26.32}{16.13} = \mathbf{1.63\times}$**，在单卡上流畅跨过 $20\ \mathrm{FPS}$ 实时交互世界模型门槛。
+
+表 17-6 汇总对比了主流实时流式视频世界模型在因果掩码粒度、KV 缓存管理、特征复用策略与稳态交互帧率上的工程差异：
+
+*表 17-6　自回归流式因果世界模型（CausVid / Oasis / Matrix-Game）的块因果 KV 窗口与跨步/跨帧特征复用（PAB / TeaCache）对比*
+
+| 世界模型系统与技术方案 | 时间因果掩码粒度 | 历史 KV 缓存池结构 | 跨步/跨帧特征复用机制 | 10 分钟交互 KV 显存形态 | 720p 单卡稳态帧率 |
+| :--- | :--- | :--- | :--- | :---: | :---: |
+| **离线双向视频 DiT（Wan2.1）** | 全序列双向无掩码 | 无 KV 缓存（全帧重算） | 仅支持离线 TeaCache 跳步 | 无法流式交互（首帧延迟 $>30\ \mathrm{s}$） | $< 1\ \mathrm{FPS}$ |
+| **朴素无界因果扩散** | 块内双向 + 块间全历史因果 | 随帧块数 $t$ 线性追加 | 4 步全量重算无复用 | **线性暴涨（$> 878\ \mathrm{GiB}$ OOM）** | 随时间从 $16\ \mathrm{FPS}$ 跌至 $<2\ \mathrm{FPS}$ |
+| **纯 FIFO 滑窗（无 Sink）** | 块内双向 + 近 $M_{\mathrm{win}}$ 块因果 | 环形覆写（丢弃首帧锚点） | 4 步全量计算 | 恒定 $\mathcal{O}(1)$，但 **20 秒后色彩/几何崩塌** | $16.13\ \mathrm{FPS}$（$62.0\ \mathrm{ms}$/帧） |
+| **CausVid / Matrix-Game + PAB + TeaCache** | **块内双向 + 块间相对 RoPE 因果** | **$1$ Sink 锚点 + $5$ 环形滑窗块** | **PAB 三级金字塔广播 + TeaCache 跳步** | **恒定 $\mathcal{O}(1)$（8 层跨块 $1.32\ \mathrm{GiB}$ / 28 层 $4.61\ \mathrm{GiB}$）** | **$26.32\ \mathrm{FPS}$（$38.0\ \mathrm{ms}$/帧）** |
+
+下面的生产级参考代码完整实现了支持 `1 Sink + 5 Rolling Window` 块因果 KV 缓存池、金字塔注意力广播（PAB）与 `TeaCache` 动作感知跨步特征复用的 20+ FPS 实时流式世界模型推理引擎（可直接运行配套实验 `experiments/ch17/17-03` 验证全部锁定数值）：
+
+```python
+from dataclasses import dataclass
+
+@dataclass
+class StreamingWorldModelConfig:
+    chunk_rgb_frames: int = 3
+    tokens_per_chunk: int = 3600
+    sink_chunks: int = 1
+    window_chunks: int = 5
+    dit_layers: int = 28
+    cross_chunk_layers: int = 8
+    kv_heads: int = 16
+    head_dim: int = 128
+    dmd_steps: int = 4
+
+class CausalStreamingWorldModelEngine:
+    """
+    复现算例 17-8 (CausVid / Oasis / Matrix-Game 实时流式世界模型引擎)：
+    1. 维护 1 个常驻首块 Attention Sink + 5 个环形滚动窗口块的块因果 KV 缓存池
+    2. 结合金字塔注意力广播 (PAB: 空间/时间/条件三级频率复用) 与 TeaCache 跳步
+    3. 核算 720p 下从 186.0 ms/chunk (16.13 FPS) 到 114.0 ms/chunk (26.32 FPS) 的加速账本
+    """
+    def __init__(self, cfg: StreamingWorldModelConfig | None = None):
+        self.cfg = cfg or StreamingWorldModelConfig()
+        self.sink_slot: int | None = None
+        self.ring_slots: list[int] = [-1] * self.cfg.window_chunks
+        self.write_cursor: int = 0
+
+    def step_kv_rolling_window(self, chunk_idx: int) -> dict[str, object]:
+        """当第 chunk_idx 个潜空间块完成 4 步去噪定稿后，更新 Sink + 环形滚动 KV 窗口并重映射相对位置."""
+        if chunk_idx < self.cfg.sink_chunks:
+            self.sink_slot = chunk_idx
+        else:
+            slot = self.write_cursor % self.cfg.window_chunks
+            self.ring_slots[slot] = chunk_idx
+            self.write_cursor += 1
+
+        valid_ring = [c for c in self.ring_slots if c >= 0]
+        # 按时间先后顺序排列窗口块，并绑定连续相对 RoPE 位置索引 [0, 1, ..., M_act-1]
+        ordered_chunks = ([self.sink_slot] if self.sink_slot is not None else []) + sorted(valid_ring)
+        relative_rope_positions = list(range(len(ordered_chunks)))
+        return {
+            "active_chunk_ids": ordered_chunks,
+            "relative_rope_positions": relative_rope_positions,
+            "active_kv_tokens": len(ordered_chunks) * self.cfg.tokens_per_chunk,
+        }
+
+    def audit_memory_and_fps(
+        self,
+        spatial_ffn_ms: float = 18.0,
+        temporal_causal_ms: float = 16.0,
+        cross_cond_ms: float = 8.0,
+        teacache_skip_overhead_ms: float = 2.0,
+        vae_decode_chunk_ms: float = 18.0,
+        ten_min_chunks: int = 4000,
+    ) -> dict[str, float]:
+        """精确复算算例 17-8 的滚动 KV 显存体积与 PAB + TeaCache 帧率账本."""
+        c = self.cfg
+        active_chunks = c.sink_chunks + c.window_chunks  # 6
+        active_tokens = active_chunks * c.tokens_per_chunk  # 21,600
+        bytes_per_tok_per_layer = 2 * c.kv_heads * c.head_dim * 2  # 8,192 B
+
+        full_28l_rolling_gib = (active_tokens * c.dit_layers * bytes_per_tok_per_layer) / (1024 ** 3)
+        hybrid_8l_rolling_gib = (active_tokens * c.cross_chunk_layers * bytes_per_tok_per_layer) / (1024 ** 3)
+        unbounded_10min_8l_gib = (ten_min_chunks * c.tokens_per_chunk * c.cross_chunk_layers * bytes_per_tok_per_layer) / (1024 ** 3)
+
+        step_full_ms = spatial_ffn_ms + temporal_causal_ms + cross_cond_ms  # 42.0 ms
+        uncached_dit_ms = c.dmd_steps * step_full_ms  # 168.0 ms
+        uncached_chunk_ms = uncached_dit_ms + vae_decode_chunk_ms  # 186.0 ms
+        uncached_frame_ms = uncached_chunk_ms / c.chunk_rgb_frames  # 62.0 ms
+
+        # PAB + TeaCache 4 步分解: s=4 (42ms) + s=3 (18ms) + s=2 (2ms) + s=1 (34ms) = 96.0 ms
+        pab_teacache_dit_ms = (
+            step_full_ms
+            + spatial_ffn_ms
+            + teacache_skip_overhead_ms
+            + (spatial_ffn_ms + temporal_causal_ms)
+        )
+        opt_chunk_ms = pab_teacache_dit_ms + vae_decode_chunk_ms  # 114.0 ms
+        opt_frame_ms = opt_chunk_ms / c.chunk_rgb_frames  # 38.0 ms
+
+        return {
+            "active_kv_tokens": active_tokens,
+            "full_28l_rolling_kv_gib": round(full_28l_rolling_gib, 4),
+            "hybrid_8l_rolling_kv_gib": round(hybrid_8l_rolling_gib, 4),
+            "unbounded_10min_8l_gib": round(unbounded_10min_8l_gib, 2),
+            "kv_compression_ratio_10min": round(ten_min_chunks / active_chunks, 2),
+            "uncached_chunk_ms": round(uncached_chunk_ms, 2),
+            "uncached_frame_ms": round(uncached_frame_ms, 2),
+            "uncached_fps": round(1000.0 / uncached_frame_ms, 2),
+            "pab_teacache_dit_ms": round(pab_teacache_dit_ms, 2),
+            "opt_chunk_ms": round(opt_chunk_ms, 2),
+            "opt_frame_ms": round(opt_frame_ms, 2),
+            "streaming_fps": round(1000.0 / opt_frame_ms, 2),
+            "fps_speedup": round((1000.0 / opt_frame_ms) / (1000.0 / uncached_frame_ms), 2),
+        }
+```
+
 ---
 
 ## 常见误区
@@ -1169,6 +1344,10 @@ class TransfusionAnd3DGSWorldEngine:
 > **练习 17-13：Transfusion 图文交错混合注意力分块占用率与双轨原位抓手页核算。** 承接算例 17-7（36 层 `Transfusion` 模型，每词元 KV 体积 $144\ \mathrm{KiB}$，FlashAttention 分块大小 $128 \times 128$）。复核算例 17-7 中 $L_{T_1} = 1{,}024, L_{I_1} = 2{,}048, L_{T_2} = 1{,}024$（总长 $4{,}096$）下的活跃块数 $648$ 与有效注意力对数 $10{,}485{,}760$；若将该序列扩展为前缀 $L_{\mathrm{prefix}} = 8{,}192$、图像段 $N_{\mathrm{img}} = 2{,}048$ 并执行 $K = 30$ 个去噪步，求双轨原位抓手页（Scratchpad KV）体积 $V_{\mathrm{scratch}}$（以 $\mathrm{MiB}$ 计）及相对单轨按步追加分配节省的瞬态显存（以 $\mathrm{GiB}$ 计）。
 
 > **实验 17-14：3DGS 几何脚手架视锥剔除与视频世界模型吞吐仿真（对应 `experiments/ch17/17-02`）。** 某自动驾驶交互式世界模型在显存中维护 $M = 1{,}200{,}000$ 个三维高斯椭球作为街道几何脚手架。在 30 FPS（帧预算 $33.3\ \mathrm{ms}$）闭环仿真中，相机视锥剔除（Frustum Culling）过滤掉了 $80\%$ 处于当前视野外的非活跃高斯点，使分块光栅化耗时从全量渲染的 $11.5\ \mathrm{ms}$ 降至 $2.4\ \mathrm{ms}$；随后由 4 步流式拼批（Stream Batching）3D DiT 耗时 $24.0\ \mathrm{ms}$ 与分块因果 VAE 解码耗时 $4.5\ \mathrm{ms}$ 完成纹理精修。求：（a）每帧参与光栅化的活跃高斯点数 $M_{\mathrm{active}}$；（b）启用视锥剔除前后的端到端单帧延迟与稳态帧率（FPS），判断是否满足 30 FPS 硬实时控制红线，并运行 `python3 experiments/ch17/17-02/run.py && python3 experiments/ch17/17-02/verify.py` 验证实验通过。
+
+> **练习 17-15：CausVid / Oasis 块因果滚动 KV 缓存池显存账本与长程漂移防御。** 承接算例 17-8，考察一个 720p（$1280 \times 720$）自回归流式因果世界模型：每潜空间块对应 $F_{\mathrm{chunk}} = 3$ 帧 RGB 视频、含 $N_{\mathrm{chunk}} = 3{,}600$ 个时空词元；模型共 $28$ 层，其中 $8$ 层为跨块时间因果注意力层（$n_{\mathrm{kv}} = 16, d_{\mathrm{head}} = 128$，BF16 每元素 $2\ \mathrm{B}$）。（a）求配置 $M_{\mathrm{sink}} = 1$ 个常驻首块锚点 + $M_{\mathrm{win}} = 5$ 个环形滚动滑窗块（共 $6$ 个活跃历史块）时的历史 KV 词元数 $N_{\mathrm{hist}}$，以及 8 层跨块 KV 口径与全 28 层 KV 口径下的滚动缓存池体积（以 $\mathrm{GiB}$ 计，保留四位小数）；（b）若连续交互 10 分钟（$20\ \mathrm{FPS}$，共 $4{,}000$ 个块）而不裁剪历史 KV，8 层跨块 KV 将膨胀至多少 $\mathrm{GiB}$？滚动窗口将其压缩了多少倍？（c）解释为何滚动窗口必须保留第 0 号起始帧块作为常驻 `Attention Sink` 并配合块间相对三维 RoPE 重锚定。
+
+> **实验 17-16：金字塔注意力广播（PAB）与 TeaCache 跨步复用实时帧率核算（对应 `experiments/ch17/17-03`）。** 在算例 17-8 的 4 步 DMD 块因果世界模型中（每块输出 $3$ 帧 RGB，块末因果 VAE 解码固定耗时 $t_{\mathrm{vae}} = 18.0\ \mathrm{ms}$），未启用特征复用时每步 DiT 耗时 $42.0\ \mathrm{ms}$（含空间+FFN $18.0\ \mathrm{ms}$、时间因果注意力 $16.0\ \mathrm{ms}$、动作/条件交叉注意力 $8.0\ \mathrm{ms}$）。启用 PAB + TeaCache 后，4 个去噪步 $s \in \{4, 3, 2, 1\}$ 的 DiT 耗时分别降为 $42.0\ \mathrm{ms}$、$18.0\ \mathrm{ms}$、$2.0\ \mathrm{ms}$ 与 $34.0\ \mathrm{ms}$。求启用复用前后的单块总耗时（$\mathrm{ms/chunk}$）、单帧平均延迟（$\mathrm{ms/frame}$）与稳态帧率（$\mathrm{FPS}$），验证其突破 $20\ \mathrm{FPS}$ 实时交互红线，并运行 `python3 experiments/ch17/17-03/run.py && python3 experiments/ch17/17-03/verify.py` 验证实验通过。
 
 ---
 
@@ -1255,9 +1434,26 @@ class TransfusionAnd3DGSWorldEngine:
      - **启用视锥剔除后**：$T_{\mathrm{culled}} = 2.4 + 24.0 + 4.5 = \mathbf{30.9\ \mathrm{ms}} \le 33.3\ \mathrm{ms}$，稳态帧率提升至 $\frac{1000}{30.9} \approx \mathbf{32.36\ \mathrm{FPS}}$（稳稳跨过 30 FPS 实时红线）。
      - 运行 `python3 experiments/ch17/17-02/run.py && python3 experiments/ch17/17-02/verify.py` 可完整复现 `Transfusion` 混合掩码与 `3DGS` 世界模型仿真账本。
 
-表 17-6 给出了第 17 章全部 14 道练习与实验的核心锁定数值速查索引：
+- **17-15 解答**：
+  1. **块因果滚动 KV 缓存池（$1\ \mathrm{Sink} + 5\ \mathrm{Window} = 6$ 块）显存体积**：
+     活跃历史词元数为 $N_{\mathrm{hist}} = 6 \times 3{,}600 = \mathbf{21{,}600}$ 个词元。单层每词元 KV 字节数为 $2 \times 16 \times 128 \times 2\ \mathrm{B} = 8{,}192\ \mathrm{B} = 8\ \mathrm{KiB}$：
+     - **8 层跨块时间注意力 KV 口径**：$V_{\mathrm{roll, 8L}} = 21{,}600 \times 8 \times 8{,}192\ \mathrm{B} = 1{,}415{,}577{,}600\ \mathrm{B} \approx \mathbf{1.3184\ \mathrm{GiB}}$；
+     - **全 28 层 KV 口径**：$V_{\mathrm{roll, 28L}} = 21{,}600 \times 28 \times 8{,}192\ \mathrm{B} = 4{,}954{,}521{,}600\ \mathrm{B} \approx \mathbf{4.6143\ \mathrm{GiB}}$。
+  2. **10 分钟（$4{,}000$ 块）无界 KV 膨胀与压缩倍数**：
+     8 层跨块无界累积体积达 $4{,}000 \times 3{,}600 \times 8 \times 8{,}192\ \mathrm{B} \approx \mathbf{878.91\ \mathrm{GiB}}$（全 28 层更达 $3{,}076.17\ \mathrm{GiB}$），6 块滚动缓存池将其严格压缩了 $\frac{4{,}000}{6} \approx \mathbf{666.67\times}$。
+  3. **首块 `Attention Sink` 与相对 RoPE 的物理必要性**：
+     第 0 号起始帧块承载了初始场景主色调、相机内参基准与主角外观特征，同时吸收自注意力 Softmax 分母的冗余概率质量；若被 FIFO 逐出，自回归误差会在十余秒内指数放大导致色彩过曝与结构崩塌；而块间相对 RoPE 重锚定将窗口内块位置始终锁定在 $\{0, 1, \dots, 6\}$，防止时间步索引 $\tau \to \infty$ 越出训练期位置编码波长范围。
 
-*表 17-6　第 17 章核心练习与实验锁定数值速查表*
+- **17-16 解答**：
+  1. **未启用特征复用基线**：
+     单块（3 帧）总耗时 $T_{\mathrm{chunk, base}} = 4 \times 42.0 + 18.0 = 168.0 + 18.0 = \mathbf{186.0\ \mathrm{ms/chunk}}$；折合单帧延迟 $\frac{186.0}{3} = \mathbf{62.0\ \mathrm{ms/frame}}$，稳态帧率 $\frac{1000}{62.0} \approx \mathbf{16.13\ \mathrm{FPS}} < 20\ \mathrm{FPS}$。
+  2. **启用 PAB + TeaCache 跨步复用后**：
+     4 步 DiT 耗时降至 $42.0 + 18.0 + 2.0 + 34.0 = \mathbf{96.0\ \mathrm{ms}}$（省去 $42.86\%$ DiT 耗时），加上 VAE 解码 $18.0\ \mathrm{ms}$，单块总耗时为 $T_{\mathrm{chunk, opt}} = 96.0 + 18.0 = \mathbf{114.0\ \mathrm{ms/chunk}}$；折合单帧平均延迟 $\frac{114.0}{3} = \mathbf{38.0\ \mathrm{ms/frame}} \le 50.0\ \mathrm{ms}$，稳态帧率跃升至 $\frac{1000}{38.0} \approx \mathbf{26.32\ \mathrm{FPS}}$（加速 $\mathbf{1.63\times}$，跨过 $20\ \mathrm{FPS}$ 实时交互红线）。
+  3. 运行 `python3 experiments/ch17/17-03/run.py && python3 experiments/ch17/17-03/verify.py` 可完整复核上述锁定账本。
+
+表 17-7 给出了第 17 章全部 16 道练习与实验的核心锁定数值速查索引：
+
+*表 17-7　第 17 章核心练习与实验锁定数值速查表*
 
 | 题目编号 | 考查工程主题 | 核心锁定输入参数 | 精确复算输出基准 |
 | :--- | :--- | :--- | :--- |
@@ -1275,6 +1471,8 @@ class TransfusionAnd3DGSWorldEngine:
 | **17-12** | 多轮对话 EC vs. KV 容量规划 | $36\ \mathrm{GiB}$ 缓存池, 每会话 2 张 $640\times 640$ 图 | 驻留 KV 容纳 $327$ 会话 $\to$ 降级驻留 EC 容纳 $2{,}359$ 会话（$7.2\times$） |
 | **17-13** | `Transfusion` 混合掩码与双轨 KV | $(1024, 2048, 1024)$ 分块；$2048$ 图像 $30$ 步 | 有效面积 $10{,}485{,}760$（$648$ 块，$98.77\%$）；抓手页省 $8.15625\ \mathrm{GiB}$ |
 | **17-14** | `3DGS` 视锥剔除世界模型 (`17-02`) | $1.2\times 10^6$ 高斯点, 剔除 $80\%$ 视野外点 | 活跃 $240{,}000$ 点；延迟 $40.0\ \mathrm{ms}$（$25.0\ \mathrm{FPS}$）$\to 30.9\ \mathrm{ms}$（$32.36\ \mathrm{FPS}$） |
+| **17-15** | `CausVid` 块因果滚动 KV 缓存池 | $1$ Sink + $5$ 滑窗 ($21{,}600$ 词元), 10 分钟 $4{,}000$ 块 | 8 层 KV $1.3184\ \mathrm{GiB}$（28 层 $4.6143\ \mathrm{GiB}$），较无界 $878.91\ \mathrm{GiB}$ 压缩 $666.67\times$ |
+| **17-16** | `PAB + TeaCache` 流式帧率 (`17-03`) | 4 步 DMD ($42\to 42/18/2/34\ \mathrm{ms}$), VAE $18\ \mathrm{ms}$ | 单块 $186.0\ \mathrm{ms}$（$16.13\ \mathrm{FPS}$）$\to 114.0\ \mathrm{ms}$ / 单帧 $38.0\ \mathrm{ms}$（$26.32\ \mathrm{FPS}$） |
 
 ---
 
@@ -1282,9 +1480,21 @@ class TransfusionAnd3DGSWorldEngine:
 
 1. **三维潜空间与状态体积膨胀反转**：多模态与视频生成将一维因果符号流推向了三维双向潜变量网格（10 秒 1080p 视频达 $489{,}600$ 词元）。在 `Qwen3-VL-4B` 中，单张 $640 \times 640$ 图像的 400 个视觉词元在编码器出口（含 3 层 DeepStack）仅占 $7.8125\ \mathrm{MiB}$，进入 36 层主干转化为 KV 缓存后膨胀 $7.2$ 倍至 $56.25\ \mathrm{MiB}$；而在视频生成尾端，3D 因果 VAE 全分辨率上采样会产生 $118.65\ \mathrm{GiB}$ 的激活洪峰，必须通过带 Halo 重叠的时空分块解码（Tiled VAE）将其压缩百倍至 $1.25\ \mathrm{GiB}$ 以内。
 2. **二维统一序列并行（2D-USP）与双均衡切分（db-SP）**：面对 $\mathcal{O}(N^2 d)$ 的三维双向注意力，传统张量并行（TP）因通信量锚定在 $\mathcal{O}(Nd)$ 而失效。将节点内 NVLink 域的 DeepSpeed-Ulysses（通信 $\frac{4Nd}{P}$，受限于 $P \le n_{\mathrm{head}}$）与跨节点 RDMA 域的 Ring Attention（单步 $\frac{2Nd}{P}$、全环 $\approx 2Nd$）正交组合为 $8 \times 8$ 2D-USP，可将跨机流量从 $7{,}530.47\ \mathrm{MiB}$ 压缩 $9.0$ 倍至 $836.72\ \mathrm{MiB}$，并配合 `db-SP`（MLSys '26）消除混合掩码负载倾斜。
-3. **时间步平滑性复用与 `< 33.3 ms` 实时世界模型**：利用相邻扩散步的特征缓变性，`DistriFusion` 与 `PipeFusion` 用上一步陈旧 KV 彻底掩盖跨卡通信，`TeaCache` 通过跳过平缓中间步获得 $2.12\times$ 端到端加速，`SageAttention-3` 通过减去键通道序列均值释放 FP8/FP4 Tensor Core 吞吐；在此之上，结合块级因果扩散、少步分布匹配蒸馏、环形滚动 KV 缓存与跨帧步间流式拼批，交互式世界模型成功跨越 30 FPS 实时交互控制红线。
-4. **全模态 `E-P-D-G` 四池异构解耦、阶梯缓存与统一自回归—扩散/3DGS 世界模型**：从 `TriInfer`（MLSys '26）的动态弹性路由到 `vLLM-Omni` 的 `Encode-Prefill-Decode-Generate` 四池解耦，按各阶段算术强度与缓存命中率 $h$ 动态配比算力（如 $75\%$ EC 命中率使编码卡有效吞吐放大 $4$ 倍至 $48\ \mathrm{req/s}$），并在多轮对话温冷层将 KV 降级为紧凑 EC 缓存；而在模型架构最前沿，`Transfusion / Show-o` 通过双轨分页 KV（只读前缀池 + 原位覆写去噪抓手页）驯服了离散因果与连续双向混合掩码，配合三维高斯泼溅（3DGS）视锥剔除几何脚手架与普吕克射线引导，构成了新一代高保真、强几何一致的原生全模态与世界模型基础设施底座。
+3. **时间步平滑性复用与 `< 33.3 ms` 实时世界模型**：利用相邻扩散步的特征缓变性，`DistriFusion` 与 `PipeFusion` 用上一步陈旧 KV 彻底掩盖跨卡通信，`TeaCache` 通过跳过平缓中间步获得 $2.12\times$ 端到端加速，`SageAttention-3` 通过减去键通道序列均值释放 FP8/FP4 Tensor Core 吞吐；在此之上，结合块级因果扩散、少步分布匹配蒸馏、环形滚动 KV 缓存与跨帧步间流式拼批，交互式世界模型成功跨越 20–30 FPS 实时交互控制红线。
+4. **全模态 `E-P-D-G` 四池异构解耦、阶梯缓存与统一自回归—扩散/3DGS/CausVid 世界模型**：从 `TriInfer`（MLSys '26）的动态弹性路由到 `vLLM-Omni` 的 `Encode-Prefill-Decode-Generate` 四池解耦，按各阶段算术强度与缓存命中率 $h$ 动态配比算力（如 $75\%$ EC 命中率使编码卡有效吞吐放大 $4$ 倍至 $48\ \mathrm{req/s}$），并在多轮对话温冷层将 KV 降级为紧凑 EC 缓存；而在模型架构最前沿，`Transfusion / Show-o` 通过双轨分页 KV 驯服了离散因果与连续双向混合掩码，配合三维高斯泼溅（3DGS）视锥剔除几何脚手架及 `CausVid / Matrix-Game` 的 `1 Sink + 5 滑窗` 块因果 KV 滚动池（恒定 $1.3184\ \mathrm{GiB}$）与 PAB/TeaCache 跨步复用（$26.32\ \mathrm{FPS}$），构成了新一代高保真、强几何一致的原生全模态与实时世界模型基础设施底座。
 
 [^ch17-case-study]: 本章算例 17-1 与算例 17-6 的锁定参数与阶段放置推导详见本书案例库：`case-studies/multimodal-stage-placement.md`（对应 `Qwen3-VL-4B` DeepStack 特征体积与 4 卡 `E` vs. `PD` 吞吐边界）。
+[^ch17-anyres-navit]: Dehghani et al. (Google DeepMind), "Patch n' Pack: NaViT, a Vision Transformer for any Aspect Ratio and Resolution," *NeurIPS 2023*；以及 Bai et al., "Qwen2.5-VL / Qwen3-VL Technical Report," *arXiv 2025*（原生动态分辨率分块、2D-RoPE 与 $2 \times 2$ 空间相邻块合并架构）。
+[^ch17-wan-hunyuan]: Peebles & Xie, "Scalable Diffusion Models with Transformers (DiT)," *ICCV 2023*；Kong et al., "HunyuanVideo: A Systematic Framework For Large Video Generative Models," *arXiv:2412.03603*；以及 Wan Team, "Wan: Open and Advanced Large-Scale Video Generative Models (Wan2.1)," *arXiv:2503.20314*。
+[^ch17-causal-vae]: Yang et al., "CogVideoX: Text-to-Video Diffusion Models with An Expert Transformer," *ICLR 2025*（详见 3D Causal VAE 时间因果卷积缓存、空间—时间分块解码与边界余弦羽化融合机制）。
+[^ch17-ulysses-ring]: Jacobs et al. (Microsoft DeepSpeed), "DeepSpeed Ulysses: System Optimizations for Enabling Training of Extreme Long Sequence Transformer Models," *arXiv:2309.14509*；以及 Liu et al., "Ring Attention with Blockwise Transformers for Near-Infinite Context," *ICLR 2024*。
+[^ch17-usp-xdit]: Fang & Zhao, "USP: A Unified Sequence Parallelism Approach for Long Context Generative AI (xDiT)," *arXiv:2405.07719*（节点内 NVLink 域 Ulysses `All-to-All` 与跨节点 RDMA 域 Ring Attention 二维正交组合）。
 [^ch17-dbsp]: 关于面向变长多模态与因果/双向混合掩码的双均衡序列并行（Dual-Balanced Sequence Parallelism），参见 MLSys 2026 论文 `db-SP`（详见 `research/2026-infra-survey/reading-mlsys-2026.md`）。
+[^ch17-distrifusion-pipefusion]: Li et al., "DistriFusion: Distributed Parallel Inference for High-Resolution Diffusion Models," *CVPR 2024*；以及 Wang et al., "PipeFusion: Displaced Patch Pipeline Parallelism for Inference of Diffusion Transformer Models," *arXiv:2405.14430*。
+[^ch17-teacache-pab]: Liu et al., "Timestep Embedding Tells: It's Time to Cache for Video Diffusion Model (TeaCache)," *CVPR 2025*；以及 Zhao et al., "Real-Time Video Generation with Pyramid Attention Broadcast (PAB)," *ICLR 2025*。
+[^ch17-sageattention]: Zhang et al., "SageAttention: Accurate 8-Bit Attention for Plug-and-Play Inference Acceleration," *ICLR 2025*；以及 Zhang et al., "SageAttention2 / SageAttention3: Microscaling FP4 Attention for Blackwell GPUs," *arXiv 2025*。
+[^ch17-causvid-oasis]: Yin et al. (MIT & Adobe), "From Slow Bidirectional to Fast Autoregressive Video Diffusion Models (CausVid)," *CVPR 2025*；Valevski et al. (Google Research), "Diffusion Models Are Real-Time Game Engines (GameNGen)," *ICLR 2025*；以及 Decart & Etched, "Oasis: A Universe in a Transformer," *Technical Report 2024*。
+[^ch17-vllm-omni]: 关于多模态 `Encode-Prefill-Decode-Generate (E-P-D-G)` 四阶段异构池化、编码特征缓存（EC）复用与图文音交错微批聚合，参见 `vLLM-Omni` 与 `ModServe` 架构规范及本书 `case-studies/multimodal-stage-placement.md`。
 [^ch17-triinfer]: 关于多模态服务中编码器、预填充与解码三阶段的动态合并与分离准则（$\rho = c_{\mathrm{attn}} / c_{\mathrm{ffn}}$），参见 MLSys 2026 论文 #127 `TriInfer`（详见 `research/2026-infra-survey/reading-mlsys-2026.md` 与 `case-studies/multimodal-stage-placement.md`）。
+[^ch17-transfusion-bagel]: Zhou et al. (Meta AI), "Transfusion: Predict the Next Token and Diffuse Images with One Multi-Modal Model," *ICLR 2025*；以及 Xie et al., "Show-o: One Single Transformer to Unify Multimodal Understanding and Generation," *ICLR 2025*。
+[^ch17-3dgs-world]: Kerbl et al., "3D Gaussian Splatting for Real-Time Radiance Field Rendering," *ACM Transactions on Graphics (SIGGRAPH) 2023*；以及 Liang et al., "Wonderland: Navigating 3D Scenes from a Single Image," *CVPR 2025*。

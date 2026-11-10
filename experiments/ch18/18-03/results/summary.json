@@ -1,0 +1,29 @@
+{
+  "experiment_id": "18-03",
+  "cow_trajectory_tree_forking": {
+    "branch_factor_l1": 4,
+    "branch_factor_l2": 4,
+    "num_leaves": 16,
+    "linear_sandbox_cpu_sec": 672.0,
+    "forked_sandbox_cpu_sec": 114.0,
+    "sandbox_cpu_speedup": 5.89,
+    "linear_total_cpu_sec": 1056.0,
+    "forked_total_cpu_sec": 498.0,
+    "total_cpu_saving_pct": 52.84,
+    "linear_prefix_kv_slots": 131072,
+    "forked_prefix_kv_slots": 20480,
+    "prefix_kv_saving_pct": 84.38
+  },
+  "vtrace_and_tis_off_policy": {
+    "step_is_ratio": 1.25,
+    "horizon_steps": 10,
+    "unclipped_prod_is": 9.3132,
+    "unclipped_var_amp": 86.74,
+    "vtrace_rho_bar": 1.2,
+    "vtrace_c_bar": 1.0,
+    "vtrace_prod_c": 1.0,
+    "vtrace_first_step_target": 1.2,
+    "vtrace_last_step_target": 1.2,
+    "variance_amplification_reduction": 7.76
+  }
+}

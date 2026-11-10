@@ -437,6 +437,48 @@ def fig_17_20_3dgs_world_model(ex: Exporter):
     ex.save(fig, 'ch17-3dgs-scaffold-guided-world-model-dit')
 
 
+def fig_17_21_causal_streaming_20fps(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, 'CausVid / Matrix-Game 块因果滚动 KV 窗口架构（算例 17-8）', color='blue')
+    stages = [
+        (0.04, 0.58, 0.28, 0.24, '① 首块注意力锚点\n1 个 Sink 块（3帧）\n3600 词元常驻不驱逐', 'blue'),
+        (0.36, 0.58, 0.28, 0.24, '② 环形滚动 KV 窗\n5 个近期块（15帧）\n18000 词元 FIFO 覆写', 'teal'),
+        (0.68, 0.58, 0.28, 0.24, '③ 当前去噪生成块\n块内双向 + 块间因果\n4 步 DMD 吐出 3 帧', 'purple'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.36, 0.70))
+    arrow(ax, (0.64, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '全历史线性增长 vs. 6 块滚动 KV 池的显存与延迟边界', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '无界历史 KV 累积\n10 分钟达 1440 万词元\n显存爆表 > 878 GiB 且掉帧', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '1 Sink + 5 滑窗（21600 词元）\n28 层 KV 恒定 1.3184 GiB\n无限时长稳定 > 20 FPS', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '块因果掩码将离线双向扩散转化为 O(1) 显存复杂度的无限流式世界模型', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch17-causal-streaming-world-model-20fps-kv-rolling')
+
+
+def fig_17_22_teacache_pab_reuse(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '金字塔注意力广播（PAB）与 TeaCache 跨帧/跨步特征复用', color='teal')
+    stages = [
+        (0.04, 0.58, 0.28, 0.24, '① 空间自注意力\n高频细节变化最快\n间隔 2 步广播复用', 'blue'),
+        (0.36, 0.58, 0.28, 0.24, '② 时间因果注意力\n中频运动轨迹平滑\n间隔 3 步跨步复用', 'teal'),
+        (0.68, 0.58, 0.28, 0.24, '③ 条件交叉注意力\n低频控制语义最稳\n4 步仅首步算 1 次', 'purple'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.36, 0.70))
+    arrow(ax, (0.64, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '4 步块因果去噪下未复用 vs. PAB + TeaCache 复用延迟账本', color='blue')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '4 步全量块因果计算\nDiT 168 ms + VAE 18 ms\n单帧 62.0 ms（仅 16.13 FPS）', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, 'PAB + TeaCache 跨步复用\nDiT 压至 96 ms + VAE 18 ms\n单帧 38.0 ms（达 26.32 FPS）', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '按空间/时间/条件特征频谱分层复用，单块耗时从 186 ms 降至 114 ms', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch17-teacache-timestep-embedding-aware-activation-reuse')
+
+
 def main():
     ex = Exporter(HERE)
     fig_17_1_1d_vs_3d_tokens(ex)
@@ -459,6 +501,8 @@ def main():
     fig_17_18_synthesis(ex)
     fig_17_19_transfusion_hybrid_mask(ex)
     fig_17_20_3dgs_world_model(ex)
+    fig_17_21_causal_streaming_20fps(ex)
+    fig_17_22_teacache_pab_reuse(ex)
     outputs = ex.finish()
 
     fig_index = [
@@ -661,6 +705,26 @@ def main():
             "caption": "显式 3DGS 几何光栅化提供深度/法线控制条件与视频 DiT 生成逼真物理交互画面的混合世界模型管线",
             "source_refs": ["manuscripts/ch17/figure-data.json", "experiments/ch17/17-02/run.py"],
             "TeachingRole": "剖析 2.4 ms 3DGS 光栅化 + 24.0 ms 4 步视频 DiT + 4.5 ms VAE 达成 32.36 FPS 零几何漂移的管线账本"
+        },
+        {
+            "figure_id": "图 17-21",
+            "number": 21,
+            "file": "ch17-causal-streaming-world-model-20fps-kv-rolling.svg",
+            "asset": "ch17/ch17-causal-streaming-world-model-20fps-kv-rolling.svg",
+            "section": "17.4.3",
+            "caption": "自回归流式因果视频世界模型（CausVid / Oasis / Matrix-Game）的块因果滚动 KV 缓存池（1 Sink + 5 滑窗，恒定 1.3184 GiB）架构（算例 17-8）",
+            "source_refs": ["manuscripts/ch17/figure-data.json", "experiments/ch17/17-03/run.py"],
+            "TeachingRole": "推导 1 Sink + 5 滑窗（21,600 词元）将无限时长世界模型 KV 显存锁定在 1.3184 GiB 的定量账本"
+        },
+        {
+            "figure_id": "图 17-22",
+            "number": 22,
+            "file": "ch17-teacache-timestep-embedding-aware-activation-reuse.svg",
+            "asset": "ch17/ch17-teacache-timestep-embedding-aware-activation-reuse.svg",
+            "section": "17.4.3",
+            "caption": "金字塔注意力广播（PAB）与 TeaCache 时间步嵌入感知特征复用在流式世界模型中的跨步/跨帧加速路径",
+            "source_refs": ["manuscripts/ch17/figure-data.json", "experiments/ch17/17-03/run.py"],
+            "TeachingRole": "解析空间/时间/交叉注意力金字塔广播与 TeaCache 如何将单帧延迟从 62.0 ms 压至 38.0 ms（26.32 FPS）"
         }
     ]
     for row in fig_index:

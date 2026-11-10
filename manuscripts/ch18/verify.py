@@ -51,25 +51,25 @@ h2s = re.findall(r'^## (.+)$', s, re.M)
 check('last H2 is 本章小结', len(h2s) >= 6 and h2s[-1].strip() == '本章小结')
 
 exercises = re.findall(r'^>\s*\*\*(?:练习|实验) 18-(\d+)[：:（]', s, re.M)
-check('fourteen exercises 18-1 to 18-14 in order', exercises == [str(i) for i in range(1, 15)])
+check('sixteen exercises 18-1 to 18-16 in order', exercises == [str(i) for i in range(1, 17)])
 
 code_blocks = re.findall(r'```python\n.*?```', s, re.S)
-check('nine production Python code blocks', len(code_blocks) == 9 and len(re.findall(r'```', s)) == 18)
+check('ten production Python code blocks', len(code_blocks) == 10 and len(re.findall(r'```', s)) == 20)
 
 worked_examples = re.findall(r'^>\s*\*\*算例\s*18-', s, re.M)
-check('nine standardized blockquote worked examples', len(worked_examples) == 9)
+check('ten standardized blockquote worked examples', len(worked_examples) == 10)
 
 table_captions = re.findall(r'^\*表 18-(\d+)　', s, re.M)
-check('eight standardized italic table captions 18-1 to 18-8', table_captions == [str(i) for i in range(1, 9)])
+check('nine standardized italic table captions 18-1 to 18-9', table_captions == [str(i) for i in range(1, 10)])
 
 fig_index = json.loads((HERE / 'figure-index.json').read_text())
 fig_count = len(fig_index)
-check('twenty figures in figure-index.json', fig_count == 20)
+check('twenty-two figures in figure-index.json', fig_count == 22)
 captions = re.findall(r'^\*图 18-(\d+)(?:：|　)', s, re.M)
-check('sequential captions 18-1 to 18-20', sorted(captions, key=int) == [str(i) for i in range(1, fig_count + 1)])
+check('sequential captions 18-1 to 18-22', sorted(captions, key=int) == [str(i) for i in range(1, fig_count + 1)])
 
 imgs = re.findall(r'!\[.+?\]\((ch18/[^)]+)\)', s)
-check('twenty active illustrations match figure-index.json', set(imgs) == {row.get('asset') or f"ch18/{row['file']}" for row in fig_index} and len(imgs) == 20)
+check('twenty-two active illustrations match figure-index.json', set(imgs) == {row.get('asset') or f"ch18/{row['file']}" for row in fig_index} and len(imgs) == 22)
 
 for rel in imgs:
     p = md.parent / rel
@@ -87,7 +87,7 @@ check('local links exist', not missing)
 
 defs = re.findall(r'^\[\^([^\]]+)\]:', s, re.M)
 refs = re.findall(r'\[\^([^\]]+)\](?!:)', s)
-check('all footnotes used and defined once', set(defs) == set(refs) and len(defs) == len(set(defs)) and len(defs) >= 7)
+check('all footnotes used and defined once', set(defs) == set(refs) and len(defs) == len(set(defs)) and len(defs) >= 19)
 
 for name, key in [('sources.json', 'sources'), ('manifest.json', 'outputs')]:
     data = json.loads((HERE / name).read_text())[key]
@@ -100,7 +100,7 @@ check('no formula errors', not math_val['errors'] and 'katex-error' not in page)
 layout_val = json.loads((HERE / 'teaching-layout-validation.json').read_text())
 check(
     'book-size figure layout',
-    len(layout_val) == 20 and all(r['width_pt'] == 420 and r['min_label_pt'] >= 11 and not r['text_extent_warnings'] for r in layout_val),
+    len(layout_val) == 22 and all(r['width_pt'] == 420 and r['min_label_pt'] >= 11 and not r['text_extent_warnings'] for r in layout_val),
 )
 
 d = json.loads((HERE / 'figure-data.json').read_text())
@@ -111,6 +111,17 @@ check(
     and close(round(geo['total_tokens'] * geo['kv_bytes_per_token'] / 1e9, 1), geo['kv_payload_gb'])
     and close(round(geo['total_tokens'] * geo['compact_bytes_per_token'] / (1024 * 1024), 1), geo['compact_payload_mib'])
     and close(round(geo['kv_bytes_per_token'] / geo['compact_bytes_per_token'], 1), geo['compression_ratio']),
+)
+
+mt = d['multi_turn_agentic_rlvr_and_vtrace']
+check(
+    'example 18-10 multi-turn agentic RLVR CoW tree forking and V-trace arithmetic',
+    mt['branch_factor_l1'] * mt['branch_factor_l2'] == 16
+    and close(16 * (mt['root_setup_sec'] + mt['prefix_turns'] * mt['turn_exec_sec']), mt['linear_sandbox_cpu_sec'])
+    and close(mt['root_setup_sec'] + 4 * (mt['prefix_turns'] * mt['turn_exec_sec']), mt['forked_sandbox_cpu_sec'])
+    and close(round(mt['linear_sandbox_cpu_sec'] / mt['forked_sandbox_cpu_sec'], 2), mt['sandbox_cpu_speedup'])
+    and close(round((1.0 - mt['forked_prefix_kv_slots'] / mt['linear_prefix_kv_slots']) * 100.0, 2), mt['prefix_kv_saving_pct'])
+    and close(round(mt['step_is_ratio'] ** mt['horizon_steps'], 4), mt['unclipped_prod_is']),
 )
 
 passed = sum(1 for c in checks if c['passed'])

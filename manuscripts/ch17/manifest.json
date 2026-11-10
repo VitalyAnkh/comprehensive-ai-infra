@@ -2,7 +2,7 @@
   "outputs": [
     {
       "path": "manuscripts/ch17/ch17-1d-llm-vs-3d-spatiotemporal-dit-tokens.pdf",
-      "sha256": "2a792922b8589afc021a6d2961b69b16a52b3e29876e0f997d9a4b22e934c0f7"
+      "sha256": "65e292dea1165a218eca3285f9703ca8de344e55836888d450d116be825a9ceb"
     },
     {
       "path": "manuscripts/ch17/ch17-1d-llm-vs-3d-spatiotemporal-dit-tokens.png",
@@ -10,11 +10,11 @@
     },
     {
       "path": "manuscripts/ch17/ch17-1d-llm-vs-3d-spatiotemporal-dit-tokens.svg",
-      "sha256": "9bf2231c2e82e77d68fcf0507316358795f312aad113631c341f5d445034897f"
+      "sha256": "659de6638086e83c3946122846c950df166914ecd6cbb41b018bf8662e28167a"
     },
     {
       "path": "manuscripts/ch17/ch17-2d-usp-hybrid-ulysses-ring-topology.pdf",
-      "sha256": "58db25d8aa6bf5c611754dad6fd37350d97a981deb6ee8e6de42ea815c1dae50"
+      "sha256": "ddd1b57e3a56510135a95c8cfc0e13a747a61e6394a15dd97504e832e8bd628e"
     },
     {
       "path": "manuscripts/ch17/ch17-2d-usp-hybrid-ulysses-ring-topology.png",
@@ -22,11 +22,11 @@
     },
     {
       "path": "manuscripts/ch17/ch17-2d-usp-hybrid-ulysses-ring-topology.svg",
-      "sha256": "3d78406f90047f94a0c621057b820197b467201b85ee59f7bbd484171f75d580"
+      "sha256": "957e7c4c626bc02e0aa5cfd997490e1ef84421f77bbe9ea6d432bf13e6001361"
     },
     {
       "path": "manuscripts/ch17/ch17-3d-causal-vae-memory-spike-and-tiling.pdf",
-      "sha256": "a9671ab86ce4476f82df2d8563ef2a6ffcf35a6fc7cbe87974eef978bbe924aa"
+      "sha256": "45c9827c3f5a6d9e135e09a37df9240b3fd1b30d2fe80b419558be1f62ef6210"
     },
     {
       "path": "manuscripts/ch17/ch17-3d-causal-vae-memory-spike-and-tiling.png",
@@ -34,11 +34,11 @@
     },
     {
       "path": "manuscripts/ch17/ch17-3d-causal-vae-memory-spike-and-tiling.svg",
-      "sha256": "b1599acba39c1ba7732c9d7283a18b579099d530184589000256d7b9e5bb403e"
+      "sha256": "8466bf0a42e8ec250bb1da97f51e859f2918b67410b2973ec469d8e57e26b11c"
     },
     {
       "path": "manuscripts/ch17/ch17-3dgs-scaffold-guided-world-model-dit.pdf",
-      "sha256": "9d07bd7d0c01234df026c13d647527adde6b34624b646eccccceb4dc2eac5ff2"
+      "sha256": "0d860dfffe9de5efb3dd6ca21bdd0d605b0da55c2a0dcbc734d9530de6775c86"
     },
     {
       "path": "manuscripts/ch17/ch17-3dgs-scaffold-guided-world-model-dit.png",
@@ -46,11 +46,11 @@
     },
     {
       "path": "manuscripts/ch17/ch17-3dgs-scaffold-guided-world-model-dit.svg",
-      "sha256": "294a26d76e9a225e3f445087e51f64b57fc55b2db70042bf235f5d40145054e2"
+      "sha256": "bc649283e5346dbf70f5b5ebfbe18e7c3e5c189528a13c5f195d2dacd59de4ee"
     },
     {
       "path": "manuscripts/ch17/ch17-anyres-navit-dynamic-image-tiling.pdf",
-      "sha256": "96fb85a72b4c7dc742e2944314826c16506ecb85c2b8cbc9e322a055ee283aac"
+      "sha256": "81eddeb6594736f5a098aca986cf649ce6c1c810bed412e7bba6d5bee68d88f7"
     },
     {
       "path": "manuscripts/ch17/ch17-anyres-navit-dynamic-image-tiling.png",
@@ -58,11 +58,11 @@
     },
     {
       "path": "manuscripts/ch17/ch17-anyres-navit-dynamic-image-tiling.svg",
-      "sha256": "89ab76c177f7913e5dc76ebdbc5721e611ff87ad9aeda2e1e183355edce5d496"
+      "sha256": "5f94244b8caa39faa929ad9254b72e8a628e18875ca428fb796c1b0e0c76d1fa"
     },
     {
       "path": "manuscripts/ch17/ch17-audio-video-text-interleaved-batching.pdf",
-      "sha256": "bf7ff80f169d5251fab1d50c4884f668833943624471cad902ba60ed3a8de768"
+      "sha256": "01563231d12047dc9d07f07f9aedc1612cac7f56e21a4a7c5e13d2843e99e1e0"
     },
     {
       "path": "manuscripts/ch17/ch17-audio-video-text-interleaved-batching.png",
@@ -70,11 +70,23 @@
     },
     {
       "path": "manuscripts/ch17/ch17-audio-video-text-interleaved-batching.svg",
-      "sha256": "6728109f86797d67e284a2a51d2eb03354368881ab7be15ef25c55129d54125a"
+      "sha256": "0c5612cf49995d77bfb2bfeb8610430c41c163a228221bd30cec57dabd677af4"
+    },
+    {
+      "path": "manuscripts/ch17/ch17-causal-streaming-world-model-20fps-kv-rolling.pdf",
+      "sha256": "939e58aa138e19b8d56b85c4a948c99c0e9773c8ac408e03e55923752c87cd17"
+    },
+    {
+      "path": "manuscripts/ch17/ch17-causal-streaming-world-model-20fps-kv-rolling.png",
+      "sha256": "def12ae47060f3cec3a1f9e7b6c36ef8f1202c3502045b51251ca83b6a6ba88b"
+    },
+    {
+      "path": "manuscripts/ch17/ch17-causal-streaming-world-model-20fps-kv-rolling.svg",
+      "sha256": "be88f9bd3b17fef4536ca73f6e479baf9de034dd664aaed5c7e70fc9728ec9b9"
     },
     {
       "path": "manuscripts/ch17/ch17-dbsp-dual-balanced-sequence-parallelism.pdf",
-      "sha256": "5aba162f8bf14aa18cf8d3ca8bf86d898882b52f4a2d9a085f5bf0dc5466f870"
+      "sha256": "1a0925d84d97059bdd83d952c778f51f87cb047848ca6ce3fcc8bf1962d05355"
     },
     {
       "path": "manuscripts/ch17/ch17-dbsp-dual-balanced-sequence-parallelism.png",
@@ -82,11 +94,11 @@
     },
     {
       "path": "manuscripts/ch17/ch17-dbsp-dual-balanced-sequence-parallelism.svg",
-      "sha256": "b33f955f5759faea7d98e244348c7e6e87edf1661808f6d973f6da4d66dbd682"
+      "sha256": "511a76f457f063e18b7537ca77f9e56f4a69c8595e7abfc0dc52ad7017c64df7"
     },
     {
       "path": "manuscripts/ch17/ch17-distrifusion-displaced-patch-parallelism.pdf",
-      "sha256": "dc350c5cc1ae7d84914833147245e3ea04fa26dd2948120a9ee34d73f9ccdeb1"
+      "sha256": "f2411a41ce34b4275c2ee4862e7c9897b9c75ca55f9d497d45831792c9fbad6c"
     },
     {
       "path": "manuscripts/ch17/ch17-distrifusion-displaced-patch-parallelism.png",
@@ -94,11 +106,11 @@
     },
     {
       "path": "manuscripts/ch17/ch17-distrifusion-displaced-patch-parallelism.svg",
-      "sha256": "7190ad34521d73e951d3923176bcc83e24b4ba1272d2f513ca937e5ecfe0387c"
+      "sha256": "bec44c3922c7166300fee141d6fad4d76eb45ee38ec5e7d39839669a53154f9f"
     },
     {
       "path": "manuscripts/ch17/ch17-dit-cfg-classifier-free-guidance-parallel.pdf",
-      "sha256": "402b90636b5378b2e4e6af9cf4695f7d657c07d4e1c7f5253a37dbd5ec955bac"
+      "sha256": "87e7d969da147f45b5afd3c8b56b340b54d0c99fd98303fc38c416647d69dedf"
     },
     {
       "path": "manuscripts/ch17/ch17-dit-cfg-classifier-free-guidance-parallel.png",
@@ -106,11 +118,11 @@
     },
     {
       "path": "manuscripts/ch17/ch17-dit-cfg-classifier-free-guidance-parallel.svg",
-      "sha256": "b88d3b8d2155f8c1f89c3ecd18923bba4ba63b247c5d8f314f3f6458ffa94d88"
+      "sha256": "2b9d73091e7ae307b5e6974fa039a17fef0e891386464879fbcfc94969cb912c"
     },
     {
       "path": "manuscripts/ch17/ch17-epdg-four-stage-disaggregated-serving.pdf",
-      "sha256": "7ddeab6e5e374d549eed4b7bfdfa730bf0e712074862abb6b0d04a36b346bbdc"
+      "sha256": "a0af9d03168672ba9e5719074ef6a54d2b7a4ad7bea98b65a18afd4f43c8cbbd"
     },
     {
       "path": "manuscripts/ch17/ch17-epdg-four-stage-disaggregated-serving.png",
@@ -118,11 +130,11 @@
     },
     {
       "path": "manuscripts/ch17/ch17-epdg-four-stage-disaggregated-serving.svg",
-      "sha256": "26911998016db46979255da8a23e82099cb71c6b81472c22dda2766df4046fda"
+      "sha256": "8abd0d75a28a59407ab969b5f6cad8077e24258b8717d866f52139b5972dc284"
     },
     {
       "path": "manuscripts/ch17/ch17-interactive-world-model-rolling-kv-30fps.pdf",
-      "sha256": "916aedfd2125809b6a487e8f822b0b0ef05497d66eb71d4b5fdcce171120205f"
+      "sha256": "72d9484811d595d2f5fd5eed804820b935429b49f8143e4fd1f471897335b165"
     },
     {
       "path": "manuscripts/ch17/ch17-interactive-world-model-rolling-kv-30fps.png",
@@ -130,11 +142,11 @@
     },
     {
       "path": "manuscripts/ch17/ch17-interactive-world-model-rolling-kv-30fps.svg",
-      "sha256": "899b0dac571caec235fed375ae01602eacf4c61dea6cb0162a5cfe7ade1d5d12"
+      "sha256": "b29b72ea48beac08ab53f7d0c9d3e8ad9e793e4549002ba5ac068d46b57a1148"
     },
     {
       "path": "manuscripts/ch17/ch17-multimodal-dataloader-gpu-decode-nvjpeg.pdf",
-      "sha256": "b08fef2b84b12f47ccfea3bf4ffafe00631d0a6c2a0fa64f3ebed2516ec9f8d6"
+      "sha256": "85ab320400557f60d2efbaf9c92666f1d666b1b46195c4211bd0556ba610d893"
     },
     {
       "path": "manuscripts/ch17/ch17-multimodal-dataloader-gpu-decode-nvjpeg.png",
@@ -142,11 +154,11 @@
     },
     {
       "path": "manuscripts/ch17/ch17-multimodal-dataloader-gpu-decode-nvjpeg.svg",
-      "sha256": "fdd196900b1988862449f79922dd8d815c00ea4b9ea823e762b30302c7bd6e82"
+      "sha256": "83fca09a7153195a3e94293e4db09e1cd0c91e7a1ddeb136550c580b7102ecd0"
     },
     {
       "path": "manuscripts/ch17/ch17-multimodal-world-model-infra-synthesis.pdf",
-      "sha256": "5bf6d6c440c1425c734076063cbd7836d60c5c81c47c6c11d4be0d72379f74f8"
+      "sha256": "69e0842418c88699927fada64db8b6c31fc8897a54bb654bbd27b23041cef52b"
     },
     {
       "path": "manuscripts/ch17/ch17-multimodal-world-model-infra-synthesis.png",
@@ -154,11 +166,11 @@
     },
     {
       "path": "manuscripts/ch17/ch17-multimodal-world-model-infra-synthesis.svg",
-      "sha256": "fcdc91b9c0d80d9c16cb278bb1f23bd79b9545b22e918ffdc9d635d36c1fdce6"
+      "sha256": "3969ccd3d1c4e6735177e3a1bbdf3afc88075d45b10212f8b10d7e885da8fe9e"
     },
     {
       "path": "manuscripts/ch17/ch17-pipefusion-step-patch-2d-pipeline.pdf",
-      "sha256": "ef6cbdc90577261758adccdbef64756375b5168c1f680a18392e09d04a840c24"
+      "sha256": "fcf596e8f537577ea9d4520754f3344db99c07de8118290ae54b767c5bd827c3"
     },
     {
       "path": "manuscripts/ch17/ch17-pipefusion-step-patch-2d-pipeline.png",
@@ -166,11 +178,11 @@
     },
     {
       "path": "manuscripts/ch17/ch17-pipefusion-step-patch-2d-pipeline.svg",
-      "sha256": "649b559dfea132ac07dc19ca5badba91e37d4e4b74594b4bb0057b0990a6c18a"
+      "sha256": "e93108e69eea3a1f25cea9464259aa41e1f5c1147cb80969ca28954956f1dfd5"
     },
     {
       "path": "manuscripts/ch17/ch17-sageattention3-fp4-quantized-attention.pdf",
-      "sha256": "c48054edea23f2b5a29bcdad18c2454127e0cb389c0804c5c7b9ae37ad902964"
+      "sha256": "91261f3ce99c9c0308546e45ca0ab0589213c710c32f7cea8febb8942f09df2e"
     },
     {
       "path": "manuscripts/ch17/ch17-sageattention3-fp4-quantized-attention.png",
@@ -178,11 +190,23 @@
     },
     {
       "path": "manuscripts/ch17/ch17-sageattention3-fp4-quantized-attention.svg",
-      "sha256": "dc6f87f6abd7c1dbc532aa81979b6316d89d340b0a624d73da574b1347eb01f9"
+      "sha256": "0f079172f8a7da6709ac2869552b17e97022f18303157a6c901b122acd77630f"
+    },
+    {
+      "path": "manuscripts/ch17/ch17-teacache-timestep-embedding-aware-activation-reuse.pdf",
+      "sha256": "849aad485b8f7c214ea3ec56fc3ba408f11f63485826f86082c612d542be88e7"
+    },
+    {
+      "path": "manuscripts/ch17/ch17-teacache-timestep-embedding-aware-activation-reuse.png",
+      "sha256": "486b3a78510653c2c671c526429e5496ddd2ff2de91a9b3af45e4676be65ad17"
+    },
+    {
+      "path": "manuscripts/ch17/ch17-teacache-timestep-embedding-aware-activation-reuse.svg",
+      "sha256": "9daaa5fbd079c0c8b0261984f15c264529bfee93ffcc0b573aa4e804cd0f4f42"
     },
     {
       "path": "manuscripts/ch17/ch17-teacache-timestep-residual-reuse.pdf",
-      "sha256": "7d2a32e874b3df9ae463f1d3646da01ff969ad488ac76ee0b60fd5dd49d6c0c5"
+      "sha256": "10f6175ae0375944976172e37e972d2c7c43a596032701c2e1a4be75f2b89c90"
     },
     {
       "path": "manuscripts/ch17/ch17-teacache-timestep-residual-reuse.png",
@@ -190,11 +214,11 @@
     },
     {
       "path": "manuscripts/ch17/ch17-teacache-timestep-residual-reuse.svg",
-      "sha256": "8c3433557513f3ee7c30df9676f77be8a0690fdb0b9577efa86c4ee6b9c855f4"
+      "sha256": "82d4afeb923ca6a0aaf880f445c4db8ffaf0433360ebd3c7d736943766badca0"
     },
     {
       "path": "manuscripts/ch17/ch17-tp-vs-ulysses-vs-ring-attention-comm.pdf",
-      "sha256": "aca573783c89ccabfb4eff422d912d7ee9e453def96ca68d0c8d6e7fd12ac056"
+      "sha256": "fa354edcba6aca1ed3cd642ec077e2f2800e38ed6947d543a900b4c36e447715"
     },
     {
       "path": "manuscripts/ch17/ch17-tp-vs-ulysses-vs-ring-attention-comm.png",
@@ -202,11 +226,11 @@
     },
     {
       "path": "manuscripts/ch17/ch17-tp-vs-ulysses-vs-ring-attention-comm.svg",
-      "sha256": "b0ca440570dadd96e2644afebad4de7628f58e976def18e2c96671346e6b93b6"
+      "sha256": "0c390511afef3dd8ff6aad31ef426d3ed26e4d4c19229fc24099ee52a750da46"
     },
     {
       "path": "manuscripts/ch17/ch17-transfusion-hybrid-causal-bidirectional-mask.pdf",
-      "sha256": "ba0471b11f5f5f20f16a9c1a5da5bebd7e0ecd8441c776885998e05b989226b8"
+      "sha256": "fb5d56f279f0bfb8c718f5b619ce369ecbedd0f33b1ebdf83444f49e5e92f2c6"
     },
     {
       "path": "manuscripts/ch17/ch17-transfusion-hybrid-causal-bidirectional-mask.png",
@@ -214,11 +238,11 @@
     },
     {
       "path": "manuscripts/ch17/ch17-transfusion-hybrid-causal-bidirectional-mask.svg",
-      "sha256": "9c67b9bec165525d93dc81d7311eec81158fdb586ab949d7701f076cd973d061"
+      "sha256": "aae06c6adfd978c0fcc60162cbc220912b30aeeb832cbd717e57754abb1a2dff"
     },
     {
       "path": "manuscripts/ch17/ch17-video-dit-end-to-end-latency-breakdown.pdf",
-      "sha256": "aa5540f515ca9282e7d2a2570b5709225c9ef5cb89107de9273496984e5ba73a"
+      "sha256": "afb0d1dcf836c08165f5f94adfede4feec6e33e6cb601adc1bf2fd0b1b831dd8"
     },
     {
       "path": "manuscripts/ch17/ch17-video-dit-end-to-end-latency-breakdown.png",
@@ -226,11 +250,11 @@
     },
     {
       "path": "manuscripts/ch17/ch17-video-dit-end-to-end-latency-breakdown.svg",
-      "sha256": "c40f5aedfe016d40a2d1e0e07d93faf2827e1628151577c82a9a9b2e49b101a2"
+      "sha256": "96b4a88e7da12227d6a80b2baf340d053679953635d4cbeee3cd31b1b5ec9769"
     },
     {
       "path": "manuscripts/ch17/ch17-vit-embedding-cache-vs-llm-kv-cache.pdf",
-      "sha256": "2ad501864d144b45d3dd5234a54350da8a399e710f0b37733bb032ca6b74f46d"
+      "sha256": "31d7896659a17b6f951013e2f4d75d83870c6a6a74b57b12c643199b887e604e"
     },
     {
       "path": "manuscripts/ch17/ch17-vit-embedding-cache-vs-llm-kv-cache.png",
@@ -238,23 +262,23 @@
     },
     {
       "path": "manuscripts/ch17/ch17-vit-embedding-cache-vs-llm-kv-cache.svg",
-      "sha256": "20ef6c540a010478d09c0c3c1c2ccd56a64631ef6e88a4e938b0c2367f08fd4c"
+      "sha256": "f8d1f8afccc0e4cf389a79bb9bd5d8ca742664024a044e63802024ef49e0d239"
     },
     {
       "path": "manuscripts/ch17/figure-data.json",
-      "sha256": "0b3911470400b74f8d87513d9b2043dcf9ff4d38e1588f7ad80f46aefd66a912"
+      "sha256": "0e15c72e3df2a2e09a027326e1a5c818f07f4053ddad15f0b3399187883ebe48"
     },
     {
       "path": "manuscripts/ch17/figure-index.json",
-      "sha256": "aa797a4292e7bf2edeef9e3977aab06822d3a6754b2aa60683a823c207202186"
+      "sha256": "18657fffd28140ed3fac17de992b589c385d785fa1dbc43b36f01f6b0cf38de7"
     },
     {
       "path": "manuscripts/ch17/teaching-layout-validation.json",
-      "sha256": "f618acd405097a01edfec7ae0e0629a89c9aaf52fbba995c59ccf8e39e8b4715"
+      "sha256": "10400a981316bbe08c5bc6fa0ac4c0cf4cf7699388d53a8673cdd6dda2587b01"
     },
     {
       "path": "manuscripts/ch17/math-validation.json",
-      "sha256": "6e9a7f25ebd24754421a763f9a75012db2dd7869078b84d3ab64975b60220134"
+      "sha256": "3859bcd38243c5b9282d8522f8e2bc67a74fb30419770f9b8e232be28d2b6dac"
     }
   ]
 }

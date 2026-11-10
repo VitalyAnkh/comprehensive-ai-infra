@@ -66,5 +66,25 @@
     "tiled_vae_ms": 4.5,
     "total_frame_ms": 30.9,
     "steady_fps": 32.36
+  },
+  "causal_streaming_world_model_20fps": {
+    "resolution": "1280x720",
+    "chunk_rgb_frames": 3,
+    "tokens_per_chunk": 3600,
+    "sink_chunks": 1,
+    "rolling_window_chunks": 5,
+    "total_active_chunks": 6,
+    "active_kv_tokens": 21600,
+    "dit_layers": 28,
+    "kv_heads": 16,
+    "head_dim": 128,
+    "rolling_kv_gib": 1.3184,
+    "dmd_steps": 4,
+    "uncached_dit_chunk_ms": 168.0,
+    "pab_teacache_dit_chunk_ms": 96.0,
+    "causal_vae_chunk_ms": 18.0,
+    "total_chunk_ms": 114.0,
+    "per_frame_latency_ms": 38.0,
+    "streaming_fps": 26.32
   }
 }

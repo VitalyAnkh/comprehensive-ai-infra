@@ -26,7 +26,7 @@
 
 让我们按第 4 章确立的混合精度训练显存公式，核算这套四模型架构对显存池的沉重挤压：对于一个参数量为 $\Psi$ 的可训练模型（如 Actor 或 Critic），在 BF16 权重（$2\Psi$）+ BF16 梯度（$2\Psi$）+ FP32 主权重副本（$4\Psi$）+ FP32 AdamW 一阶与二阶动量（$4\Psi + 4\Psi$）的标准配置下，单个可训练模型的静态模型状态体积高达 **$16\Psi$ 字节**；而单个冻结推理模型（如 Ref 或 RM）的 BF16 权重占 **$2\Psi$ 字节**。
 
-当模型规模迈向 $32\mathrm{B}\text{–}671\mathrm{B}$、且推理思维链拉长至 $32\mathrm{K}\text{–}64\mathrm{K}$ 词元时，维护一个与 Actor 同尺寸的可训练 Critic 模型不仅直接吃掉一半的训练态显存与反向传播算力，而且在超长思维链下训练价值函数 $V_\phi$ 极易出现冷启动估计偏差。因此，现代推理模型后训练全面转向了**基于可验证规则奖励（Verifiable Rewards）的无 Critic 组相对优势算法**——以 **GRPO（Group Relative Policy Optimization）**、**DAPO（Decoupled Clip and Dynamic Sampling Policy Optimization）** 与 **RLOO（Leave-One-Out）** 为代表（图 18-1 右栏）：
+当模型规模迈向 $32\mathrm{B}\text{–}671\mathrm{B}$、且推理思维链拉长至 $32\mathrm{K}\text{–}64\mathrm{K}$ 词元时，维护一个与 Actor 同尺寸的可训练 Critic 模型不仅直接吃掉一半的训练态显存与反向传播算力，而且在超长思维链下训练价值函数 $V_\phi$ 极易出现冷启动估计偏差。因此，现代推理模型后训练全面转向了**基于可验证规则奖励（Verifiable Rewards）的无 Critic 组相对优势算法**——以 **GRPO（Group Relative Policy Optimization）**[^ch18-deepseek-r1-grpo]、**DAPO（Decoupled Clip and Dynamic Sampling Policy Optimization）**[^ch18-dapo] 与 **RLOO（Leave-One-Out）** 为代表（图 18-1 右栏）：
 - **用确定性规则验证器取代神经网络 RM**：对于数学题、代码生成与定理证明，直接调用答案解析器、单元测试沙箱或形式化验证器判定正确性，给出零参数开销的精准规则奖励 $r_i \in \{0, 1\}$；
 - **用组内相对统计量取代可训练 Critic**：针对同一个提示词 $q$，策略模型一次性并行采样一组 $G$ 条候选轨迹 $\{o_1, o_2, \dots, o_G\}$（常见 $G = 8\text{–}64$），获得一组奖励 $\{r_1, \dots, r_G\}$，直接用组内样本均值与标准差归一化得到第 $i$ 条轨迹的优势值：
   $$\hat{A}_{i,t} = \frac{r_i - \mathrm{mean}(r_1, \dots, r_G)}{\mathrm{std}(r_1, \dots, r_G) + \epsilon}$$
@@ -65,7 +65,7 @@
 | **GRPO（DeepSeek-R1）** | **Actor + Ref（+ 规则沙箱）** | **$18\Psi$** | 组内均值与标准差归一化 | $G = 8\text{–}64$ | **长思维链 Rollout 耗时占 $70\%\text{–}90\%$** |
 | **DAPO** | Actor + Ref（动态过滤零方差） | **$18\Psi$** | 解耦上下 Clip + 全局词元归一化 | $G = 16\text{–}64$ | **需投机超额采样池填补全对/全错空缺** |
 
-下面的参考代码实现了 GRPO / DAPO 的组相对优势计算、解耦上下裁剪（Clip-Higher $\varepsilon_{\mathrm{high}} > \varepsilon_{\mathrm{low}}$，防止熵坍缩）、无偏 K3 KL 散度估计器以及全局有效词元归一化损失函数：
+下面的参考代码实现了 GRPO / DAPO 的组相对优势计算、解耦上下裁剪（Clip-Higher $\varepsilon_{\mathrm{high}} > \varepsilon_{\mathrm{low}}$，防止熵坍缩）、无偏 K3 KL 散度估计器[^ch18-schulman-kl]以及全局有效词元归一化损失函数：
 
 ```python
 import torch
@@ -194,7 +194,7 @@ def model_rlvr_rollout_vs_train_wallclock(
 
 ### 18.2.1 训推共置与零冗余重分片：veRL（HybridFlow）的 3D-HybridEngine 机制
 
-在同构 GPU 集群（例如全 H100/H800 集群）上，训推共置（以字节跳动开源的 `veRL` / `HybridFlow` 为代表）具有一个天然优势：全部 GPU 在阶段 ① 100% 投入 Rollout 生成，在阶段 ③ 100% 投入 Actor/Ref 训练，无需跨两个物理隔离的集群池搬移数百 GB 的全量模型权重。
+在同构 GPU 集群（例如全 H100/H800 集群）上，训推共置（以字节跳动开源的 `veRL` / `HybridFlow` 为代表）[^ch18-verl-hybridflow]具有一个天然优势：全部 GPU 在阶段 ① 100% 投入 Rollout 生成，在阶段 ③ 100% 投入 Actor/Ref 训练，无需跨两个物理隔离的集群池搬移数百 GB 的全量模型权重。
 
 然而，训推共置面临一个棘手的**并行拓扑失配矛盾（Parallelism Mismatch）**：
 - **在训练阶段（阶段 ③）**：为了容纳庞大的优化器状态（$12\Psi$）、梯度与全序列激活，32B–70B 模型必须采用深度分片策略，例如较大的张量并行度 $TP_{\mathrm{tr}} = 8$、流水线并行度 $PP_{\mathrm{tr}} = 4$ 与 ZeRO-3 / FSDP 数据并行度 $DP_{\mathrm{tr}}$；
@@ -230,7 +230,7 @@ def model_rlvr_rollout_vs_train_wallclock(
 
 ### 18.2.2 训推物理分离（OpenRLHF / RollArt / HetRL）与多作业互补错峰池化（Weave, OSDI '26）
 
-尽管 `veRL` 的训推共置在同构短序列场景下极为高效，但在超大规模工业集群中，**物理训推分离（Disaggregated RL Architecture，代表系统包括 `OpenRLHF`、`StreamRL`、`RollArt`、`HetRL` 与 OSDI '26 `Weave`）**正成为另一股不可替代的主流范式（图 18-4）：
+尽管 `veRL` 的训推共置在同构短序列场景下极为高效，但在超大规模工业集群中，**物理训推分离（Disaggregated RL Architecture，代表系统包括 `OpenRLHF`、`StreamRL`、`RollArt`、`HetRL` 与 OSDI '26 `Weave`）**[^ch18-openrlhf-areal]正成为另一股不可替代的主流范式（图 18-4）：
 
 ![图 18-4：训推共置（veRL）与物理训推分离及互补错峰池化（Weave OSDI '26，算例 18-3）对比](ch18/ch18-colocated-vs-disaggregated-rl-architecture.svg)
 *图 18-4　训推共置（veRL）与物理训推分离及互补错峰池化（Weave OSDI '26，算例 18-3）对比。*
@@ -239,7 +239,7 @@ def model_rlvr_rollout_vs_train_wallclock(
 
 1. **消除同构硬件错配税（`HetRL` 异构算力配比准则）**：
    如下文图 18-15 所示，自回归 Rollout 是典型的 HBM 带宽与容量受限负载，使用算力昂贵但显存带宽比偏低的旗舰训练卡（如 H800/B200）跑 Decode 是极大的资本浪费；而像 H20（96 GB HBM3，$4.0\ \mathrm{TB/s}$ 高带宽）或推理优化卡在单位成本下的 KV 容量与访存带宽远超旗舰训练卡。
-   设单步 RL 迭代在推理池上的总生成工作量为 $W_{\mathrm{inf}}$（词元数），单张推理卡（如 H20）的有效生成吞吐为 $\eta_{\mathrm{inf}}$（$\mathrm{tok/s}$）；在训练池上的总前反向工作量为 $W_{\mathrm{tr}}$，单张训练卡（如 H800）的有效训练吞吐为 $\eta_{\mathrm{tr}}$（$\mathrm{tok/s}$）。为使异步流水线中推理池节拍 $T_{\mathrm{rollout}}(N_{\mathrm{inf}}) = \frac{W_{\mathrm{inf}}}{N_{\mathrm{inf}} \eta_{\mathrm{inf}}}$ 与训练池节拍 $T_{\mathrm{train}}(N_{\mathrm{tr}}) = \frac{W_{\mathrm{tr}}}{N_{\mathrm{tr}} \eta_{\mathrm{tr}}}$ 严格匹配、实现零互等泡泡，`HetRL` 给出两池最优卡数配比方程：
+   设单步 RL 迭代在推理池上的总生成工作量为 $W_{\mathrm{inf}}$（词元数），单张推理卡（如 H20）的有效生成吞吐为 $\eta_{\mathrm{inf}}$（$\mathrm{tok/s}$）；在训练池上的总前反向工作量为 $W_{\mathrm{tr}}$，单张训练卡（如 H800）的有效训练吞吐为 $\eta_{\mathrm{tr}}$（$\mathrm{tok/s}$）。为使异步流水线中推理池节拍 $T_{\mathrm{rollout}}(N_{\mathrm{inf}}) = \frac{W_{\mathrm{inf}}}{N_{\mathrm{inf}} \eta_{\mathrm{inf}}}$ 与训练池节拍 $T_{\mathrm{train}}(N_{\mathrm{tr}}) = \frac{W_{\mathrm{tr}}}{N_{\mathrm{tr}} \eta_{\mathrm{tr}}}$ 严格匹配、实现零互等泡泡，`HetRL` 给出两池最优卡数配比方程[^ch18-hetrl]：
    $$\frac{N_{\mathrm{inf}}}{N_{\mathrm{tr}}} = \frac{W_{\mathrm{inf}} / \eta_{\mathrm{inf}}}{W_{\mathrm{tr}} / \eta_{\mathrm{tr}}}$$
 
 2. **多 RL 作业互补错峰共享（OSDI '26 `Weave`）**[^ch18-weave]：
@@ -571,7 +571,7 @@ class SeerGroupSuffixSpeculator:
 
 ### 18.3.3 陈旧度有界异步部分采样（Partial Rollout）、重要性采样校准与角色容错（RobustRL, OSDI '26）
 
-即便用了尾部拼箱与同源投机，只要坚持“第 $v$ 步生成的轨迹必须在第 $v$ 步全部跑完”的全同步屏障，一条 $64\mathrm{K}$ 词元的极端轨迹仍会让集群等待数十秒。要想彻底消灭世代间的同步屏障气泡，就必须跨入**陈旧度有界的异步部分采样（Staleness-Bounded Asynchronous Partial Rollout，代表系统包括 Kimi k1.5、StreamRL、RollArt 与 AReaL）**。
+即便用了尾部拼箱与同源投机，只要坚持“第 $v$ 步生成的轨迹必须在第 $v$ 步全部跑完”的全同步屏障，一条 $64\mathrm{K}$ 词元的极端轨迹仍会让集群等待数十秒。要想彻底消灭世代间的同步屏障气泡，就必须跨入**陈旧度有界的异步部分采样（Staleness-Bounded Asynchronous Partial Rollout，代表系统包括 Kimi k1.5、StreamRL、RollArt 与 AReaL）**[^ch18-kimi-k15-partial]。
 
 ![图 18-8：同步屏障 Rollout vs. 陈旧度有界（τ ≤ τ_max）异步部分采样（Partial Rollout）的流水线吞吐跃升](ch18/ch18-staleness-bounded-partial-rollout-pipeline.svg)
 *图 18-8　同步屏障 Rollout vs. 陈旧度有界（$\tau \le \tau_{\max}$）异步部分采样（Partial Rollout）的流水线吞吐跃升。*
@@ -770,7 +770,7 @@ class MultiTurnAgentRLCoroutinePool:
 
 ### 18.4.2 推理时计算扩展（Test-Time Compute Scaling）：PagedAttention CoW 树搜索与投机越障（OSDI '26）
 
-后训练 RLVR 与在线服务在**推理时计算扩展（Test-Time Compute Scaling）**上实现了完美会师：无论是训练阶段利用蒙特卡洛树搜索（MCTS）合成高质量推理轨迹，还是在线部署阶段利用过程奖励模型（Process Reward Model, PRM）指导束搜索（Beam Search）、Best-of-$N$ 或思维树（Tree-of-Thoughts, ToT）搜索，其底层计算形态都是一棵**从单条问题根前缀不断分叉、评估、剪枝与回溯的动态生成树**。
+后训练 RLVR 与在线服务在**推理时计算扩展（Test-Time Compute Scaling）**上实现了完美会师：无论是训练阶段利用蒙特卡洛树搜索（MCTS）合成高质量推理轨迹，还是在线部署阶段利用过程奖励模型（Process Reward Model, PRM）[^ch18-prm-lets-verify]指导束搜索（Beam Search）、Best-of-$N$ 或思维树（Tree-of-Thoughts, ToT）搜索，其底层计算形态都是一棵**从单条问题根前缀不断分叉、评估、剪枝与回溯的动态生成树**。
 
 ![图 18-12：推理时扩展（Best-of-N / PRM 树搜索）利用 PagedAttention 写时复制（CoW）共享父节点 KV 缓存](ch18/ch18-test-time-scaling-prm-tree-search-cow-kv.svg)
 *图 18-12　推理时扩展（Best-of-N / PRM 树搜索）利用 PagedAttention 写时复制（CoW）共享父节点 KV 缓存。*
@@ -943,7 +943,7 @@ class PagedCoWTreeSearchManager:
 
 ### 18.4.3 跨地域异构异步采样池（Geo-Distributed Rollout Harvesting）与奖励黑客（Reward Hacking）熔断工程
 
-当单一旗舰数据中心的电力配额与推理卡（如 H20 / L40S）容量触顶时，工业界超大规模 RLVR 训练（如 Prime-RL、AReaL 跨区扩展与云边联合采样集群）开始将阶段 ①（自回归 Rollout 与沙箱规则验证）横向外溢至**跨地域异构边缘推理集群与夜间潮汐闲置算力池（Geo-Distributed Asynchronous Rollout Harvesting）**，而仅将阶段 ③（高带宽集合通信密集的 Learner 前反向传播）保留在配备 RoCEv2/InfiniBand 胖树互连的中心训练机房内。
+当单一旗舰数据中心的电力配额与推理卡（如 H20 / L40S）容量触顶时，工业界超大规模 RLVR 训练（如 Prime-RL、AReaL 跨区扩展与云边联合采样集群）[^ch18-prime-geo-rl]开始将阶段 ①（自回归 Rollout 与沙箱规则验证）横向外溢至**跨地域异构边缘推理集群与夜间潮汐闲置算力池（Geo-Distributed Asynchronous Rollout Harvesting）**，而仅将阶段 ③（高带宽集合通信密集的 Learner 前反向传播）保留在配备 RoCEv2/InfiniBand 胖树互连的中心训练机房内。
 
 ![图 18-19：跨地域异构异步采样池（Geo-Distributed Rollout Harvester）与广域网带宽账本](ch18/ch18-geo-distributed-async-rollout-harvester.svg)
 *图 18-19　跨地域异构异步采样池（Geo-Distributed Rollout Harvester）与广域网带宽账本。*
@@ -995,7 +995,7 @@ class PagedCoWTreeSearchManager:
 | **策略熵断崖坍缩（模式崩溃）** | 策略熵 $\mathcal{H}(\pi_\theta) < 0.05\ \mathrm{nats}$ | 对少数高分模板过度拟合，丧失探索多样性 | 启用 DAPO `Clip-Higher`（$\varepsilon_{\mathrm{high}}=0.28$） | 注入熵正则奖励项并回滚至健康步 |
 | **沙箱漏洞投机（Reward Hacking）** | 奖励骤升至 $\approx 1.0$，但 $\mathrm{KL} > 0.25$ | 模型发现判题脚本漏洞或硬编码绕过单测 | 倍增 $\beta_{\mathrm{KL}}$ 并启用序列几何均值 IS 裁剪 | **立即中止更新、隔离漏洞提示词并回滚检查点** |
 
-下面的参考代码实现了跨地域异步 Rollout 广域网带宽核算器、序列级几何均值重要性采样（GSPO / Sequence-Level Geometric IS）过滤以及双级奖励黑客统计熔断器：
+下面的参考代码实现了跨地域异步 Rollout 广域网带宽核算器、序列级几何均值重要性采样（GSPO / Sequence-Level Geometric IS）[^ch18-gspo-qwen]过滤以及双级奖励黑客统计熔断器：
 
 ```python
 import math
@@ -1085,6 +1085,184 @@ class GeoRolloutAndRewardHackingBreaker:
         }
 ```
 
+#### 多轮工具交互强化学习（Multi-Turn Agentic RLVR，如 SWE-RL / DeepResearch-RL）的环境状态检查点分叉、长轨迹分段优势估计与离策略重要性采样截断（V-trace / TIS）
+
+当 RLVR 后训练从单轮静态问答（Single-Turn Math/Code QA）迈向真实软件工程修复（如 Meta `SWE-RL`、`OpenHands-RL` 在 GitHub 代码仓库 Docker 容器内执行多轮定位、修改、编译与 `pytest` 回归）以及深度网络调研（如 `DeepResearch-RL`、`Search-R1` 跨数十个网页发起多跳检索与交叉核验）[^ch18-swerl-deepresearch]时，一条强化学习轨迹由 $K = 5\text{–}20$ 个交互轮次（Turns）交替拼接而成：
+$$\tau = \big(s_0,\; a_1,\; o_1,\; a_2,\; o_2,\; \dots,\; a_K,\; o_K,\; r_{\mathrm{final}}\big)$$
+其中 $a_k$ 是策略模型生成的思考与工具调用动作（`<think>...<tool_call>`），而 $o_k$ 是外部容器沙箱或搜索引擎返回的观测输出（`<tool_output>`）。相比单轮 RLVR，多轮智能体强化学习（Multi-Turn Agentic RLVR）在系统底座与统计收敛层面临三大全新挑战：
+
+1. **沙箱环境状态与 KV 缓存的联合树状检查点分叉（Environment & KV Tree Forking）**：
+   在多轮软件工程任务中，若对同一个 Issue 按组大小 $G = 16$ 独立从头线性启动 16 个 Docker 容器跑满 5 轮，不仅前几轮高度雷同的仓库克隆、虚拟环境构建与初始定位（往往耗时 $15\text{–}40\ \mathrm{s}$）被重复执行了 16 次，而且在终局单测奖励 $r_{\mathrm{final}} \in \{0, 1\}$ 下，无法区分“究竟是第 2 轮文件定位错了，还是第 4 轮补丁语法写错了”。
+2. **外部环境观测词元掩码（Environment Observation Masking）与双层分段优势估计（Turn-Level Credit Assignment）**：
+   沙箱返回的编译器报错日志或网页正文 $o_k$ 并非由策略模型采样生成（其真实生成概率属于未知外部环境转移核 $P_{\mathrm{env}}(o_k \mid s_{k-1}, a_k)$）。若将 $o_k$ 混入策略梯度损失或重要性采样乘积，会引发严重的似然错配与梯度污染。
+3. **长跨度异步离策略下的重要性采样方差爆炸与 V-trace / TIS 截断修正**：
+   多轮工具交互单条轨迹耗时常达 $3\text{–}10$ 分钟，等轨迹完成时中心 Learner 往往已向前更新了 $\Delta v = 2\text{–}4$ 个版本。在数万词元、十余个轮次的跨度上，未截断的词元级或轮次级重要性采样比率连乘 $\prod_{t} r_t$ 会呈指数级发散，单条离群轨迹即可炸毁整个训练步。
+
+![图 18-21：多轮工具交互强化学习（SWE-RL / DeepResearch-RL）中容器环境快照（OverlayFS + CRIU）与 Paged KV 树状分叉架构（算例 18-10）](ch18/ch18-multi-turn-agentic-rlvr-trajectory-tree-forking.svg)
+*图 18-21　多轮工具交互强化学习（SWE-RL / DeepResearch-RL）中容器环境快照（OverlayFS + CRIU）与 Paged KV 树状分叉架构（算例 18-10）。*
+
+如图 18-21 所示，新一代多轮智能体 RLVR 基础设施通过**“容器环境写时复制快照（OverlayFS + CRIU）与 GPU Paged KV 页表同步树状分叉”**彻底打通了状态复用与轮次级信用分配：
+- **双平面写时复制分叉（Dual-Plane CoW Tree Forking）**：在根节点 $s_0$，沙箱集群仅启动 **1 个** 根容器完成代码库克隆、依赖编译与基线测试，并调用 Linux `OverlayFS`（文件系统增量层）与 `CRIU`（Checkpoint/Restore In Userspace，进程内存页表写时复制快照）冻结环境状态，同时 GPU 推理池冻结根提示词的 Paged KV 物理块。在关键决策点（例如完成前 2 轮文件定位后），控制器从根节点派生出 $B_1 = 4$ 个中间探索分支，每个分支在完成工具调用后再分叉出 $B_2 = 4$ 个补丁修复叶分支（合计 $G = B_1 \times B_2 = 16$ 条叶轨迹）。分叉瞬间，无论容器磁盘/内存还是 GPU HBM KV 缓存均实现**零字节深拷贝**，仅当子分支修改特定源文件或追加新词元时才触发增量块分配。
+- **轮次级蒙特卡洛回溯与双层优势估计（Bi-Level Turn & Token Advantage）**：由于树状拓扑在同一中间节点 $u$ 下拥有多个共享相同历史前缀 $(s_0, a_{1:k}, o_{1:k})$ 的子分支集合 $\mathcal{L}(u)$，系统无需训练重型 Critic，即可直接用子树叶节点的平均终局奖励 $\hat{V}(u) = \frac{1}{|\mathcal{L}(u)|}\sum_{i \in \mathcal{L}(u)} r_{\mathrm{final}}^{(i)}$ 作为第 $k$ 轮状态的无偏价值基线。由此，第 $k$ 轮工具动作段 $a_k$ 的**轮次级增量优势**为 $\Delta \hat{A}_{\mathrm{turn}, k} = \hat{V}(u_k) - \hat{V}(\mathrm{parent}(u_k))$，再叠加组内归一化终局优势 $\hat{A}_{\mathrm{ep}}^{(i)}$，并严格将所有环境观测词元 $o_k$ 的损失掩码置零（$m_t = \mathbb{I}[t \in \bigcup_{k=1}^K a_k]$）。
+
+![图 18-22：异步离策略强化学习中连乘重要性采样爆炸与 V-trace（ρ̄, c̄ 双重截断）/ TIS 轨迹修正及环境观测掩码机制](ch18/ch18-asynchronous-off-policy-importance-sampling-clipping.svg)
+*图 18-22　异步离策略强化学习中连乘重要性采样爆炸与 V-trace（$\bar{\rho}, \bar{c}$ 双重截断）/ TIS 轨迹修正及环境观测掩码机制。*
+
+针对异步多轮采样引发的策略偏移（$\pi_{\theta}$ vs. $\pi_{\mu}$），系统引入 IMPALA **V-trace 双重截断重要性采样（Dual-Clipped V-trace）**与**截断重要性采样（Truncated Importance Sampling, TIS）**[^ch18-vtrace-impala]（图 18-22）：
+- 定义仅在策略动作词元（或动作轮次 $k$）上有效的重要性比率 $r_k = \exp\!\left(\frac{1}{|a_k|}\sum_{t \in a_k} (\log \pi_\theta(y_t \mid h_t) - \log \pi_\mu(y_t \mid h_t))\right)$，并构造两个不同截断上界的权重：
+  $$\rho_k = \min(\bar{\rho},\; r_k),\qquad c_k = \min(\bar{c},\; r_k)\qquad (\text{典型配置 }\bar{\rho} = 1.20,\ \bar{c} = 1.00)$$
+- 其中，$\rho_k \le \bar{\rho}$ 用于直接缩放第 $k$ 步时序差分（TD）误差 $\delta_k V = \rho_k \big(r_k^{\mathrm{turn}} + \gamma V(s_k) - V(s_{k-1})\big)$ 与策略梯度幅值，决定收敛的不动点目标；而 $c_k \le \bar{c} = 1.00$ 则充当跨轮次回溯迹（Eligibility Trace）的收缩门控，在递推公式：
+  $$v_k = V(s_{k-1}) + \delta_k V + \gamma c_k \big(v_{k+1} - V(s_k)\big)$$
+  中确保任意多步回溯乘积 $\prod_{j=k}^{m} (\gamma c_j) \le \gamma^{m-k+1} \le 1$ **永不发生大于 1 的指数级连乘爆炸**。
+
+> **算例 18-10（SWE-RL 多轮工具交互树分叉的 5.89 倍沙箱 CPU 加速、84.38% 前缀 KV 节省与 V-trace 离策略方差截断账本）：**
+>
+> **问题设定**：考察一个多轮软件工程强化学习任务（`SWE-RL`），针对单个代码仓库 Issue 需采样 $G = 16$ 条完整修复轨迹。每条轨迹包含根容器初始化（克隆仓库、构建依赖镜像并启动 LSP/测试守护进程，耗时 $T_{\mathrm{init}} = 18.0\ \mathrm{s}$，根提示词与仓库目录上下文长 $L_0 = 4{,}096$ 词元）以及后续 $K = 4$ 个工具交互轮次（每轮容器执行 `git grep / pytest` 平均耗时 $T_{\mathrm{tool}} = 12.0\ \mathrm{s}$，每轮新增模型思考+环境观测共 $L_{\mathrm{turn}} = 2{,}048$ 词元）。
+> 试对比核算：
+> 1. **16 条独立线性重跑 vs. 两级树状分叉（$1 \to 4 \to 16$）的沙箱 CPU 耗时与前缀 KV 显存槽位**：在树状分叉方案中，1 个根容器完成初始化（$18.0\ \mathrm{s}$，存 $1$ 份 $L_0 = 4{,}096$ 词元 KV），随后分叉为 $B_1 = 4$ 个一级分支执行前 2 轮文件定位（每个分支跑 2 轮工具耗时 $2 \times 12.0 = 24.0\ \mathrm{s}$，各存 $2 \times 2{,}048 = 4{,}096$ 词元增量 KV），最后从每个一级分支各调用 `OverlayFS + CRIU` 与 PagedAttention CoW 分叉出 $B_2 = 4$ 个二级叶分支（共 $16$ 个叶分支）独立执行后 2 轮补丁修改与回归单测。求两种方案在“根初始化 + 前 2 轮公共探索阶段”消耗的总沙箱 CPU 秒数与前缀 KV 词元槽位数（即前 $8{,}192$ 词元前缀所占槽位），以及总沙箱 CPU 时间（含后 2 轮）的加速比；
+> 2. **10 步异步离策略轨迹下未截断连乘 IS vs. V-trace（$\bar{\rho} = 1.20, \bar{c} = 1.00$）的数值稳定性对比**：设某条包含 $H = 10$ 个动作段的异步陈旧轨迹（$\tau = 3$）在当前策略 $\pi_\theta$ 下每个动作段的原始重要性比率均为 $r_k = 1.25$（$k = 1, \dots, 10$），折扣因子 $\gamma = 1.0$，各段初始价值估计 $V(s_k) = 0$，仅末段获得终局验证奖励 $R_{10} = 1.0$。求：（a）未截断轨迹级连乘重要性权重 $W_{\mathrm{unclipped}} = \prod_{k=1}^{10} r_k$；（b）在 V-trace（$\bar{\rho} = 1.20, \bar{c} = 1.00$）下，末段修正目标 $v_{10}$ 与传递回首段的目标 $v_1$ 分别是多少？
+>
+> **逐项推导**：
+>
+> 1. **容器沙箱 CPU 耗时与前缀 KV 槽位账本**：
+>    - **方案 A（16 条独立线性轨迹从头重跑）**：
+>      - 前缀阶段（根初始化 + 前 2 轮工具）沙箱 CPU 耗时：$16 \times (18.0 + 2 \times 12.0) = 16 \times 42.0 = \mathbf{672.0\ \mathrm{s}}$（若算上后 2 轮 $16 \times 24.0 = 384.0\ \mathrm{s}$，全流程总沙箱 CPU 耗时为 $672.0 + 384.0 = \mathbf{1{,}056.0\ \mathrm{s}}$）；
+>      - 前缀阶段（前 $L_0 + 2 L_{\mathrm{turn}} = 4{,}096 + 4{,}096 = 8{,}192$ 词元）独立驻留 KV 槽位数：$16 \times 8{,}192 = \mathbf{131{,}072\ \text{个词元槽位}}$。
+>    - **方案 B（OverlayFS/CRIU + PagedAttention CoW 两级树分叉 $1 \to 4 \to 16$）**：
+>      - 前缀阶段沙箱 CPU 耗时：根节点跑 1 次初始化（$18.0\ \mathrm{s}$）+ 4 个一级分支各跑 2 轮定位（$4 \times 24.0 = 96.0\ \mathrm{s}$），合计仅需：
+>        $$T_{\mathrm{prefix, fork}} = 18.0 + 96.0 = \mathbf{114.0\ \mathrm{s}}$$
+>        前缀阶段沙箱 CPU 开销直接压缩了 **$\frac{672.0}{114.0} \approx \mathbf{5.89\times}$（净省 $558.0\ \mathrm{s}$）**；算上 16 个叶分支各自独立的后 2 轮（$384.0\ \mathrm{s}$），全树总沙箱 CPU 耗时从 $1{,}056.0\ \mathrm{s}$ 降至 $114.0 + 384.0 = \mathbf{498.0\ \mathrm{s}}$（节省 **$52.84\%$**）。
+>      - 前缀阶段（前 $8{,}192$ 词元）CoW 共享 KV 槽位数：1 份根节点（$4{,}096$）+ 4 份一级分支增量（$4 \times 4{,}096 = 16{,}384$），合计仅占：
+>        $$N_{\mathrm{slot, fork}} = 4{,}096 + 16{,}384 = \mathbf{20{,}480\ \text{个词元槽位}}$$
+>        相对独立线性重跑的 $131{,}072$ 个槽位，前缀 KV 显存精确节省了 **$1 - \frac{20{,}480}{131{,}072} = \mathbf{84.375\% \approx 84.38\%}$**。
+>
+> 2. **未截断连乘 IS vs. V-trace 双重截断数值对比**：
+>    - **未截断轨迹连乘重要性权重**：
+>      $$W_{\mathrm{unclipped}} = \prod_{k=1}^{10} 1.25 = (1.25)^{10} \approx \mathbf{9.3132}$$
+>      仅仅 10 个动作段每个 $+25\%$ 的温和策略漂移，连乘后就将梯度放大了 $9.31$ 倍（若按词元级连乘 1,000 步更会突破 $10^{96}$）。
+>    - **V-trace（$\bar{\rho} = 1.20, \bar{c} = 1.00$）双重截断递推**：
+>      在每一步 $k$，$\rho_k = \min(1.20, 1.25) = \mathbf{1.20}$，回溯迹系数 $c_k = \min(1.00, 1.25) = \mathbf{1.00}$。
+>      - 末段（$k = 10$）：$\delta_{10} V = \rho_{10} (R_{10} - 0) = 1.20 \times 1.0 = \mathbf{1.20}$，故 $v_{10} = \mathbf{1.20}$；
+>      - 向前递推至首段（$k = 9, \dots, 1$）：由于中间段即时奖励为 $0$ 且 $V(s_k) = 0$，故 $\delta_k V = 0$，递推式简化为 $v_k = 0 + 0 + 1.0 \times c_k \times v_{k+1} = 1.00 \times v_{k+1}$，从而首段目标严格稳定在：
+>        $$v_1 = v_{10} \times \prod_{k=1}^{9} c_k = 1.20 \times (1.00)^9 = \mathbf{1.20}$$
+>      相对未截断连乘的 $9.3132$，V-trace 将多步回溯放大倍数严格锁死在 $\bar{\rho} = \mathbf{1.20}$，在保留无偏信用传递路径的同时彻底根除了离策略方差爆炸。
+
+表 18-8 汇总对比了多轮工具交互强化学习（Agentic RLVR）中四种轨迹采样、信用分配与离策略修正范式的工程特征：
+
+*表 18-8　多轮智能体强化学习（Agentic RLVR）中轨迹生成、优势信用分配与离策略修正范式对比*
+
+| 多轮 RLVR 架构范式 | 容器环境与 KV 状态管理 | 环境观测词元 $o_k$ 处理 | 优势信用分配粒度 | 异步离策略重要性采样修正 | 16 分支前缀沙箱耗时与稳定性 |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **朴素线性全序列 GRPO** | 16 个容器独立从头重跑 | 误将 $o_k$ 混入损失分母 | 仅整条轨迹共享标量 $\hat{A}_{\mathrm{ep}}$ | 词元级连乘或无修正 | 前缀耗时 $672.0\ \mathrm{s}$，长轨迹梯度易崩 |
+| **线性采样 + 观测掩码** | 16 个容器独立线性执行 | **强制掩码置零 $m_t = 0$** | 整条轨迹共享 $\hat{A}_{\mathrm{ep}}$ | 逐词元 PPO Clip | 前缀耗时 $672.0\ \mathrm{s}$，中段坏动作难归因 |
+| **进程级树分叉（无 V-trace）** | **OverlayFS/CRIU + CoW KV** | 强制掩码置零 $m_t = 0$ | **轮次子树均值差分 $\Delta \hat{A}_{\mathrm{turn}}$** | 轮次连乘 IS（$\tau \ge 2$ 易发散） | 前缀降至 $114.0\ \mathrm{s}$，但异步陈旧样本失稳 |
+| **树分叉 + 双层优势 + V-trace** | **OverlayFS/CRIU + CoW KV（省 84.4%）** | **观测词元与 IS 比率双重掩码** | **轮次增量 $\Delta \hat{A}_{\mathrm{turn}}$ + 终局 $\hat{A}_{\mathrm{ep}}$** | **V-trace ($\bar{\rho}=1.2, \bar{c}=1.0$) + TIS** | **前缀 $114.0\ \mathrm{s}$（快 $5.89\times$），$\tau \le 4$ 稳健收敛** |
+
+下面的生产级参考代码实现了支持 `OverlayFS/CRIU + Paged KV` 树状分叉核算、环境观测词元掩码、双层轮次优势估计以及 V-trace（$\bar{\rho}, \bar{c}$ 双重截断）离策略修正的 `MultiTurnAgenticRLVREngine`（读者可直接运行配套实验 `experiments/ch18/18-03` 验证全部锁定账本）：
+
+```python
+import math
+from dataclasses import dataclass
+
+@dataclass
+class AgentTurnSegment:
+    turn_id: int
+    action_logprobs_curr: list[float]
+    action_logprobs_behav: list[float]
+    obs_token_count: int
+    turn_reward: float = 0.0
+    value_est: float = 0.0
+
+class MultiTurnAgenticRLVREngine:
+    """
+    复现算例 18-10 (SWE-RL / DeepResearch-RL 多轮工具交互强化学习引擎)：
+    1. 容器快照 (OverlayFS + CRIU) 与 PagedAttention CoW 树状分叉账本核算
+    2. 外部环境观测词元掩码 (Observation Masking) 与轮次级子树回溯优势分配
+    3. V-trace (rho_bar=1.20, c_bar=1.00) 双重截断离策略修正，消除连乘方差爆炸
+    """
+    def __init__(self, rho_bar: float = 1.20, c_bar: float = 1.00, gamma: float = 1.0):
+        self.rho_bar = rho_bar
+        self.c_bar = c_bar
+        self.gamma = gamma
+
+    @staticmethod
+    def audit_tree_forking_savings(
+        branch_l1: int = 4,
+        branch_l2: int = 4,
+        root_init_sec: float = 18.0,
+        turn_tool_sec: float = 12.0,
+        prefix_turns: int = 2,
+        leaf_turns: int = 2,
+        root_tokens: int = 4096,
+        tokens_per_turn: int = 2048,
+    ) -> dict[str, float]:
+        """核算算例 18-10：16 条独立线性轨迹 vs. 1->4->16 树状分叉的沙箱耗时与前缀 KV 槽位."""
+        total_leaves = branch_l1 * branch_l2  # 16
+        prefix_sec_per_traj = root_init_sec + prefix_turns * turn_tool_sec  # 42.0 s
+        leaf_sec_per_traj = leaf_turns * turn_tool_sec  # 24.0 s
+
+        linear_prefix_cpu_sec = total_leaves * prefix_sec_per_traj  # 672.0 s
+        linear_total_cpu_sec = linear_prefix_cpu_sec + total_leaves * leaf_sec_per_traj  # 1,056.0 s
+
+        forked_prefix_cpu_sec = root_init_sec + branch_l1 * (prefix_turns * turn_tool_sec)  # 18 + 96 = 114.0 s
+        forked_total_cpu_sec = forked_prefix_cpu_sec + total_leaves * leaf_sec_per_traj  # 498.0 s
+
+        prefix_tokens_per_traj = root_tokens + prefix_turns * tokens_per_turn  # 8,192
+        linear_prefix_kv_slots = total_leaves * prefix_tokens_per_traj  # 131,072
+        forked_prefix_kv_slots = root_tokens + branch_l1 * (prefix_turns * tokens_per_turn)  # 4,096 + 16,384 = 20,480
+
+        return {
+            "total_leaves": total_leaves,
+            "linear_prefix_cpu_sec": round(linear_prefix_cpu_sec, 2),
+            "forked_prefix_cpu_sec": round(forked_prefix_cpu_sec, 2),
+            "prefix_cpu_speedup": round(linear_prefix_cpu_sec / forked_prefix_cpu_sec, 2),
+            "linear_total_cpu_sec": round(linear_total_cpu_sec, 2),
+            "forked_total_cpu_sec": round(forked_total_cpu_sec, 2),
+            "total_cpu_saving_pct": round((1.0 - forked_total_cpu_sec / linear_total_cpu_sec) * 100.0, 2),
+            "linear_prefix_kv_slots": linear_prefix_kv_slots,
+            "forked_prefix_kv_slots": forked_prefix_kv_slots,
+            "prefix_kv_saving_pct": round((1.0 - forked_prefix_kv_slots / linear_prefix_kv_slots) * 100.0, 2),
+        }
+
+    def compute_vtrace_targets(
+        self,
+        step_is_ratios: list[float],
+        step_rewards: list[float],
+        step_values: list[float],
+        bootstrap_value: float = 0.0,
+    ) -> dict[str, object]:
+        """计算算例 18-10 的 V-trace 递推目标 v_k 与未截断连乘重要性权重对比."""
+        h = len(step_is_ratios)
+        unclipped_prod = 1.0
+        for r in step_is_ratios:
+            unclipped_prod *= r
+
+        vtrace_targets = [0.0] * h
+        next_v_Est = bootstrap_value
+        next_vtrace = bootstrap_value
+
+        for k in range(h - 1, -1, -1):
+            r_k = step_is_ratios[k]
+            rho_k = min(self.rho_bar, r_k)
+            c_k = min(self.c_bar, r_k)
+            v_curr = step_values[k]
+            v_next = bootstrap_value if k == h - 1 else step_values[k + 1]
+
+            delta_v = rho_k * (step_rewards[k] + self.gamma * v_next - v_curr)
+            v_target = v_curr + delta_v + self.gamma * c_k * (next_vtrace - v_next)
+            vtrace_targets[k] = round(v_target, 6)
+            next_vtrace = v_target
+            next_v_Est = v_curr
+
+        return {
+            "unclipped_product_is": round(unclipped_prod, 4),
+            "vtrace_targets": vtrace_targets,
+            "vtrace_first_step_target": vtrace_targets[0],
+            "vtrace_last_step_target": vtrace_targets[-1],
+            "variance_amplification_reduction": round(unclipped_prod / max(vtrace_targets[0], 1e-6), 2),
+        }
+```
+
 ---
 
 ## 常见误区
@@ -1105,7 +1283,7 @@ class GeoRolloutAndRewardHackingBreaker:
 
 ## 练习与实验
 
-### 书面练习与实验（18-1 至 18-14）
+### 书面练习与实验（18-1 至 18-16）
 
 > **练习 18-1（70B 模型 PPO vs. GRPO 显存账本核算）：** 考察参数量 $\Psi = 70 \times 10^9$（70B）的稠密模型后训练。（a）按可训练模型 $16\Psi$、冻结模型 $2\Psi$ 核算，四模型 PPO 与无 Critic 的 GRPO（仅 Actor + Ref）各自的静态模型状态总显存是多少 $\mathrm{GB}$？（b）若部署在 80 GB H800 集群上，且要求静态模型状态最多占单卡显存的 $70\%$（即 $56\ \mathrm{GB}$/卡），两种算法最少分别需要多少张 GPU？
 
@@ -1135,11 +1313,15 @@ class GeoRolloutAndRewardHackingBreaker:
 
 > **实验 18-14（RLVR 奖励黑客双级统计熔断器仿真与 `experiments/ch18/18-02` 校验）：** 在某代码 RLVR 训练的连续监控步中，控制器设置软长度惩罚起点 $L_{\mathrm{start}} = 24{,}576$、最大长度 $L_{\max} = 32{,}768$，KL 软门限 $0.06$、硬红线 $0.25$，策略熵下界 $0.05\ \mathrm{nats}$，初始 $\beta_{\mathrm{KL}} = 0.01$。（a）若某条轨迹生成长度为 $L = 28{,}672$ 词元，求其分段线性软超长惩罚值 $r_{\mathrm{len}}(28{,}672)$；（b）若第 101 步遥测得 $\mathrm{KL} = 0.08, \mathcal{H} = 0.22\ \mathrm{nats}$，第 102 步遥测得 $\mathrm{KL} = 0.31, \mathcal{H} = 0.03\ \mathrm{nats}$，分别写出双级熔断器在两步触发的动作与更新后的 $\beta_{\mathrm{KL}}$，并运行 `python3 experiments/ch18/18-02/run.py && python3 experiments/ch18/18-02/verify.py` 验证实验通过。
 
-### 可运行实验（18-01 与 18-02）
+> **练习 18-15（SWE-RL 多轮工具交互容器环境快照与 Paged KV 树状分叉账本）：** 承接算例 18-10，针对单个代码仓库 Issue 需采样 $G = 16$ 条修复轨迹（根容器初始化耗时 $T_{\mathrm{init}} = 18.0\ \mathrm{s}$、占 $L_0 = 4{,}096$ 词元；后续共 $K = 4$ 轮工具调用，每轮容器执行耗时 $T_{\mathrm{tool}} = 12.0\ \mathrm{s}$、每轮新增 $L_{\mathrm{turn}} = 2{,}048$ 词元）。对比“16 条轨迹独立线性从头重跑”与“OverlayFS/CRIU 容器快照 + PagedAttention CoW 两级树分叉（$1 \to 4 \to 16$，前 2 轮在一级 4 分支上共享，后 2 轮在 16 叶分支上独立执行）”：（a）求两种方案在前缀阶段（根初始化 + 前 2 轮）的沙箱 CPU 耗时及加速比，以及全流程 4 轮总沙箱 CPU 耗时及节省百分比；（b）求两种方案在前 $8{,}192$ 词元前缀阶段占用的 KV 词元槽位数及显存节省率；（c）说明为何外部沙箱返回的工具输出词元 $o_k$ 必须从策略梯度损失与重要性采样比率中掩码剔除。
 
-- **实验目录**：`experiments/ch18/18-01` 与 `experiments/ch18/18-02`
-- **实验目标**：`18-01` 一键复现并校验 32B 模型下 PPO（$1{,}152\ \mathrm{GB}$）vs. GRPO（$576\ \mathrm{GB}$，省 $50\%$）显存账本、OSDI '26 `Weave` 互补作业共享（$216$ H20 / $152$ H800）、OSDI '26 `RobustRL` 训练容错净省 $300\ \mathrm{s}$（$790\ \mathrm{s} \to 490\ \mathrm{s}$）、NSDI '26 `RollPacker` 投机池（$1{,}600$ vs. $1{,}024$）、双槽位长度偏差（$1/2 \to 1/4$）、流式重叠（$60\ \mathrm{s} \to 55\ \mathrm{s}$）与微批归一化偏置（有偏微批均值 $2.0$ vs. 无偏全局归一化 $2.5$），以及 NSDI '26 `DistRS` 条件剩余时间（$90.0\ \mathrm{s}$ vs. $0.9\ \mathrm{s}$）与 $216{,}000$ 词元沉没工作量边界；`18-02` 复现跨地域异构异步采样池广域网带宽账本（$14{,}745.6\times\text{–}32{,}768.0\times$ 压缩）与 RLVR 奖励黑客双级统计熔断器。
-- **执行与校验命令**：在终端依次执行 `python3 experiments/ch18/18-01/run.py && python3 experiments/ch18/18-01/verify.py` 以及 `python3 experiments/ch18/18-02/run.py && python3 experiments/ch18/18-02/verify.py`。
+> **实验 18-16（异步离策略 V-trace 双重截断与多轮 Agentic RLVR 仿真，对应 `experiments/ch18/18-03`）：** 承接算例 18-10，设某条含 $H = 10$ 个动作段的异步陈旧轨迹（$\tau = 3$）在当前策略下每个动作段的原始重要性比率均为 $r_k = 1.25$（$k = 1, \dots, 10$），折扣因子 $\gamma = 1.0$，各段初始价值估计 $V(s_k) = 0$，仅末段获得终局验证奖励 $R_{10} = 1.0$。（a）求未截断轨迹连乘重要性权重 $W_{\mathrm{unclipped}} = (1.25)^{10}$（保留四位小数）；（b）在 V-trace 双重截断（$\bar{\rho} = 1.20, \bar{c} = 1.00$）下，求末段修正目标 $v_{10}$ 与传递回首段的修正目标 $v_1$，计算相对未截断连乘的方差放大削减比，并运行 `python3 experiments/ch18/18-03/run.py && python3 experiments/ch18/18-03/verify.py` 验证实验通过。
+
+### 可运行实验（18-01、18-02 与 18-03）
+
+- **实验目录**：`experiments/ch18/18-01`、`experiments/ch18/18-02` 与 `experiments/ch18/18-03`
+- **实验目标**：`18-01` 一键复现并校验 32B 模型下 PPO（$1{,}152\ \mathrm{GB}$）vs. GRPO（$576\ \mathrm{GB}$，省 $50\%$）显存账本、OSDI '26 `Weave` 互补作业共享（$216$ H20 / $152$ H800）、OSDI '26 `RobustRL` 训练容错净省 $300\ \mathrm{s}$（$790\ \mathrm{s} \to 490\ \mathrm{s}$）、NSDI '26 `RollPacker` 投机池（$1{,}600$ vs. $1{,}024$）、双槽位长度偏差（$1/2 \to 1/4$）、流式重叠（$60\ \mathrm{s} \to 55\ \mathrm{s}$）与微批归一化偏置（有偏微批均值 $2.0$ vs. 无偏全局归一化 $2.5$），以及 NSDI '26 `DistRS` 条件剩余时间（$90.0\ \mathrm{s}$ vs. $0.9\ \mathrm{s}$）与 $216{,}000$ 词元沉没工作量边界；`18-02` 复现跨地域异构异步采样池广域网带宽账本（$14{,}745.6\times\text{–}32{,}768.0\times$ 压缩）与 RLVR 奖励黑客双级统计熔断器；`18-03` 复现 `SWE-RL / DeepResearch-RL` 多轮工具交互树状检查点分叉（前缀沙箱耗时 $672.0\ \mathrm{s} \to 114.0\ \mathrm{s}$ 快 $5.89\times$，前缀 KV 省 $84.38\%$）与 V-trace（$\bar{\rho}=1.20, \bar{c}=1.00$）离策略截断修正。
+- **执行与校验命令**：在终端依次执行 `python3 experiments/ch18/18-01/run.py && python3 experiments/ch18/18-01/verify.py`、`python3 experiments/ch18/18-02/run.py && python3 experiments/ch18/18-02/verify.py` 以及 `python3 experiments/ch18/18-03/run.py && python3 experiments/ch18/18-03/verify.py`。
 
 ---
 
@@ -1227,9 +1409,25 @@ class GeoRolloutAndRewardHackingBreaker:
      - **第 102 步（$\mathrm{KL} = 0.31 \ge 0.25$ 且 $\mathcal{H} = 0.03 < 0.05$）**：触发**二级硬熔断（`HARD_ABORT_AND_ROLLBACK`）**，拒绝提交当前步权重更新，将异常提示词隔离至审计黑名单，回滚至最近健康检查点，并将 $\beta_{\mathrm{KL}}$ 加倍至 $0.015 \times 2.0 = \mathbf{0.030}$。
      - 执行 `python3 experiments/ch18/18-02/run.py && python3 experiments/ch18/18-02/verify.py` 可完整复核上述账本。
 
-表 18-8 给出了全章 14 道练习与实验的核心锁定数值速查索引：
+- **18-15 解答**：
+  1. **沙箱 CPU 耗时对比**：
+     - **16 条独立线性重跑**：前缀阶段（根初始化 $18.0\ \mathrm{s}$ + 前 2 轮工具 $24.0\ \mathrm{s}$）耗时 $16 \times 42.0 = \mathbf{672.0\ \mathrm{s}}$；算上后 2 轮（$16 \times 24.0 = 384.0\ \mathrm{s}$），全流程总耗时 $\mathbf{1{,}056.0\ \mathrm{s}}$。
+     - **OverlayFS/CRIU 两级树分叉（$1 \to 4 \to 16$）**：前缀阶段仅需 $1 \times 18.0 + 4 \times 24.0 = \mathbf{114.0\ \mathrm{s}}$（加速 $\frac{672.0}{114.0} \approx \mathbf{5.89\times}$，净省 $558.0\ \mathrm{s}$）；全流程总耗时降至 $114.0 + 384.0 = \mathbf{498.0\ \mathrm{s}}$（节省 **$\mathbf{52.84\%}$**）。
+  2. **前 $8{,}192$ 词元前缀 KV 槽位数对比**：
+     - 独立线性重跑：$16 \times 8{,}192 = \mathbf{131{,}072\ \text{个词元槽位}}$；
+     - CoW 树共享：$1 \times 4{,}096 + 4 \times 4{,}096 = \mathbf{20{,}480\ \text{个词元槽位}}$，显存节省率达 $1 - \frac{20{,}480}{131{,}072} = \mathbf{84.375\% \approx 84.38\%}$。
+  3. **环境观测词元掩码原因**：工具输出 $o_k$ 由外部确定性/随机容器环境生成，并非从策略分布 $\pi_\theta(\cdot \mid h_t)$ 采样所得；若不掩码剔除，模型会被迫拟合编译器报错文本的语言分布，且其虚假的 $\log \pi_\theta(o_k)$ 差值会严重污染重要性采样比率与 KL 散度估计。
 
-*表 18-8　第 18 章核心练习与实验锁定数值速查表*
+- **18-16 解答**：
+  1. **未截断 10 步连乘重要性权重**：
+     $$W_{\mathrm{unclipped}} = (1.25)^{10} \approx \mathbf{9.3132}$$
+  2. **V-trace（$\bar{\rho} = 1.20, \bar{c} = 1.00$）双重截断递推**：
+     每步有效更新权重截断为 $\rho_k = \min(1.20, 1.25) = \mathbf{1.20}$，回溯迹系数截断为 $c_k = \min(1.00, 1.25) = \mathbf{1.00}$。末段 $v_{10} = \rho_{10} R_{10} = \mathbf{1.20}$；向前递推 9 步后首段目标为 $v_1 = v_{10} \prod_{k=1}^9 c_k = 1.20 \times 1.00^9 = \mathbf{1.20}$，相对未截断连乘（$9.3132$）将离策略放大偏差削减了 $\frac{9.3132}{1.20} \approx \mathbf{7.76\times}$。
+  3. 执行 `python3 experiments/ch18/18-03/run.py && python3 experiments/ch18/18-03/verify.py` 可完整复核上述锁定账本。
+
+表 18-9 给出了全章 16 道练习与实验的核心锁定数值速查索引：
+
+*表 18-9　第 18 章核心练习与实验锁定数值速查表*
 
 | 练习编号 | 考查工程主题 | 核心锁定输入参数 | 精确复算输出基准 |
 | :--- | :--- | :--- | :--- |
@@ -1247,6 +1445,8 @@ class GeoRolloutAndRewardHackingBreaker:
 | **18-12** | Speculative ToT 投机越障 | $D = 20$, $t_{\mathrm{gen}} = 1.2\ \mathrm{s}$, $t_{\mathrm{prm}} = 0.8\ \mathrm{s}$ | 串行 $40.0\ \mathrm{s}$ vs. 投机越障 $29.6\ \mathrm{s}$（$80\%$ 命中率） |
 | **18-13** | 跨地域异步 Rollout 窄带回传 | 72B ($320\ \mathrm{KiB/tok}$), $2{,}048\times 32\mathrm{K}$, $20\ \mathrm{Gbps}$ | KV $21{,}990.23\ \mathrm{GB}$（$8{,}796.1\ \mathrm{s}$）$\to$ 三元组 $640.0\ \mathrm{MiB}$（$0.2684\ \mathrm{s}$，压 $32{,}768\times$） |
 | **18-14** | 奖励黑客双级统计熔断 (`18-02`) | $L=28{,}672 \in [24\mathrm{K}, 32\mathrm{K}]$；$\mathrm{KL}=0.08 \to 0.31$ | 软超长罚项 $-0.50$；101 步软制动 $\beta=0.015 \to 102$ 步硬熔断回滚 $\beta=0.030$ |
+| **18-15** | `SWE-RL` 容器+KV 树分叉 | $1\to 4\to 16$ 分支, 根 $18\ \mathrm{s}/4\mathrm{K}$, 每轮 $12\ \mathrm{s}/2\mathrm{K}$ | 前缀沙箱 $672.0\ \mathrm{s} \to 114.0\ \mathrm{s}$（快 $5.89\times$）；前缀 KV 省 $84.38\%$ |
+| **18-16** | `V-trace` 双重截断修正 (`18-03`) | $H=10$ 步, $r_k=1.25$, $\bar{\rho}=1.20, \bar{c}=1.00$ | 未截断连乘 $9.3132 \to$ V-trace 首末段目标锁定 $1.20$（削减 $7.76\times$） |
 
 ---
 
@@ -1255,12 +1455,24 @@ class GeoRolloutAndRewardHackingBreaker:
 1. **从四模型 PPO 到无 Critic 的 GRPO/DAPO 显存减半**：经典 PPO 需同时驻留 Actor、Critic、Ref、RM 四个模型（静态状态达 $36\Psi$，32B 模型占 $1{,}152\ \mathrm{GB}$）；GRPO 与 DAPO 利用组采样（$G$ 条轨迹）相对均值与标准差直接计算优势并结合规则验证沙箱，彻底砍掉 Critic 与神经 RM，将静态模型状态精准削减 $50\%$ 至 $18\Psi$（$576\ \mathrm{GB}$），同时将系统核心瓶颈推向占据 $70\%\text{–}90\%$ 墙钟时间的自回归 Rollout。
 2. **训推共置零冗余重分片（veRL）与异构错峰池化（Weave）**：在同构集群上，`veRL` 的 `3D-HybridEngine` 通过机内正交微分组局部 `AllGather` 消除了训练分片与推理小 TP 之间的拓扑冲突；在异构物理分离集群上，`HetRL` 按生成与训练吞吐比配比 H20 与 H800，而 OSDI '26 `Weave` 通过将互补作业（$360/120\ \mathrm{s}$ 与 $120/360\ \mathrm{s}$）在 $480\ \mathrm{s}$ 周期内反相编织，使两组作业共享同一套峰值资源池（**$216$ 张 H20 + $152$ 张 H800**，相对独立分池 $432$ 张 H20 + $304$ 张 H800 节省整整一半硬件池）。
 3. **长尾木桶治理与无偏异步强化学习**：NSDI '26 `RollPacker` 揭示了盲目先到先得截断引发的双槽位长度偏置（长解入库率从 $1/2$ 跌至 $1/4$）及不均等微批平均引发的梯度偏置（有偏微批均值平均 $2.0$ vs. 无偏全局归一化真值 $2.5$），确立了全局总词元归一化铁律；OSDI '26 `Seer` 利用组内同源轨迹后缀树实现免模型投机加速；陈旧度有界 Partial Rollout 配合逐词元真实行为概率记录与 OSDI '26 `RobustRL` 非对称容错（训练故障恢复从 $790\ \mathrm{s}$ 降至 $490\ \mathrm{s}$，净省 $300\ \mathrm{s}$），构建起高吞吐、强容错的后训练流水线。
-4. **重尾奖励沙箱调度（DistRS）、推理时搜索越障与跨地域采样/防黑客熔断**：NSDI '26 `DistRS` 证明了重尾验证分布下朴素剩余时间估计（$0.9\ \mathrm{s}$）与真实条件期望 $\mathbb{E}[S-10 \mid S>10] = 90.0\ \mathrm{s}$ 的百倍误差，并划定了 $216{,}000$ 词元沉没工作量红线；在推理时计算扩展中，PagedAttention 写时复制（CoW）页表与 OSDI '26 `Breaking the Reward Barrier` 投机思维树探索协同消除了树状搜索的显存膨胀与过程奖励等待屏障；而在超大规模跨区扩展中，仅回传 $10\ \mathrm{B/tok}$ 紧凑轨迹三元组（实现 $14{,}745.6\times$ 上行流量压缩）配合双级在线统计熔断器（软超长惩罚 + 硬 KL/熵坍缩回滚），保障了长周期无人值守 RLVR 的全球扩展能力与收敛安全。
+4. **重尾奖励沙箱调度（DistRS）、推理时搜索越障、跨区采样熔断与多轮 Agentic RLVR 树分叉**：NSDI '26 `DistRS` 证明了重尾验证分布下朴素剩余时间估计（$0.9\ \mathrm{s}$）与真实条件期望 $\mathbb{E}[S-10 \mid S>10] = 90.0\ \mathrm{s}$ 的百倍误差，并划定了 $216{,}000$ 词元沉没工作量红线；在推理时计算扩展中，PagedAttention 写时复制（CoW）页表与 OSDI '26 `Breaking the Reward Barrier` 投机思维树探索协同消除了树状搜索的显存膨胀与过程奖励等待屏障；而在超大规模跨区与多轮智能体（`SWE-RL / DeepResearch-RL`）扩展中，仅回传 $10\ \mathrm{B/tok}$ 紧凑轨迹三元组（$14{,}745.6\times$ 上行压缩）、双级在线奖励黑客熔断器、`OverlayFS/CRIU + CoW KV` 树状分叉（前缀沙箱加速 $5.89\times$、KV 省 $84.38\%$）以及 V-trace（$\bar{\rho}=1.20, \bar{c}=1.00$）离策略修正共同构筑起完整的工业级后训练底座。
 
 [^ch18-cases]: 本章算例 18-3 至算例 18-8 的锁定参数与推导均直接锚定自本书案例库：`case-studies/rl-scheduling-and-recovery.md`、`case-studies/rollout-tail-and-sampling.md` 与 `case-studies/reward-deadlines-and-feedback.md`。
+[^ch18-deepseek-r1-grpo]: DeepSeek-AI, "DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning," *arXiv:2501.12948, 2025*；以及 Shao et al., "DeepSeekMath: Pushing the Limits of Mathematical Reasoning in Open Language Models (GRPO)," *arXiv:2402.03300*。
+[^ch18-dapo]: Yu et al. (ByteDance Seed & Tsinghua AIR), "DAPO: An Open-Source LLM Reinforcement Learning System at Scale," *arXiv:2503.14476, 2025*（解耦上下裁剪 `Clip-Higher`、动态零方差过滤、全局词元级损失归一化与分段软超长惩罚）。
+[^ch18-schulman-kl]: Schulman, "Approximating KL Divergence (K1, K2, K3 Estimators)," *Technical Note, 2020*；以及 Schulman et al., "Proximal Policy Optimization Algorithms (PPO)," *arXiv:1707.06347*。
+[^ch18-verl-hybridflow]: Sheng et al. (ByteDance & HKU), "HybridFlow: A Flexible and Efficient RLHF Framework (veRL & 3D-HybridEngine)," *EuroSys 2025*（详见正交微分组零冗余权重重分片机制）。
+[^ch18-openrlhf-areal]: Hu et al., "OpenRLHF: An Easy-to-use, Scalable and High-performance RLHF Framework," *arXiv:2405.11143*；以及 Mei et al., "AReaL: A Large-Scale Asynchronous Reinforcement Learning System for Language Reasoning," *arXiv:2505.24298, 2025*。
+[^ch18-hetrl]: 关于带宽受限推理卡（如 H20）与算力密集训练卡（如 H800）在解耦 RL 集群中的吞吐匹配方程与异构池化，参见 `HetRL` 与 `StreamRL` 架构规范及本书 `case-studies/rl-scheduling-and-recovery.md`。
 [^ch18-weave]: 关于多 RL 作业在异构推理池与训练池上的互补时空错峰编织，参见 OSDI 2026 论文 `Weave`（详见 `research/2026-infra-survey/reading-osdi-2026.md` 与 `case-studies/rl-scheduling-and-recovery.md`）。
 [^ch18-rollpacker]: 关于投机提示词池、槽位竞争长度偏差、尾部重分批与微批梯度归一化无偏性证明，参见 NSDI 2026 论文 `RollPacker`（详见 `research/2026-infra-survey/reading-nsdi-2026.md` 与 `case-studies/rollout-tail-and-sampling.md`）。
 [^ch18-seer]: 关于分而治之上下文缓存与组内共享同源前缀免草稿模型投机解码，参见 OSDI 2026 论文 `Seer`（详见 `research/2026-infra-survey/reading-osdi-2026.md`）。
+[^ch18-kimi-k15-partial]: Kimi Team (Moonshot AI), "Kimi k1.5: Scaling Reinforcement Learning with LLMs," *arXiv:2501.12599, 2025*（陈旧度有界 Partial Rollout 跨步续生与长短思维链联合强化学习）。
 [^ch18-robustrl]: 关于区分无状态 Rollout 节点故障与有状态 Learner 节点故障的非对称容错恢复，参见 OSDI 2026 论文 `RobustRL`（详见 `case-studies/rl-scheduling-and-recovery.md`）。
 [^ch18-distrs]: 关于解耦奖励沙箱流式重叠与重尾验证分布的条件剩余时间调度（$\mathbb{E}[S-e \mid S>e]$），参见 NSDI 2026 论文 `DistRS`（详见 `case-studies/reward-deadlines-and-feedback.md`）。
+[^ch18-prm-lets-verify]: Lightman et al. (OpenAI), "Let's Verify Step by Step," *ICLR 2024*；以及 Snell et al., "Scaling LLM Test-Time Compute Optimally can be More Effective than Scaling Model Parameters," *ICLR 2025*。
 [^ch18-reward-barrier]: 关于在等待 PRM 过程奖励评分期间投机性预展开思维树子节点，参见 OSDI 2026 论文 `Breaking the Reward Barrier`（详见 `research/2026-infra-survey/reading-osdi-2026.md`）。
+[^ch18-prime-geo-rl]: Jaghouar et al. (Prime Intellect), "INTELLECT-1 / Prime-RL: Decentralized and Geo-Distributed Reinforcement Learning at Scale," *Technical Report 2025*。
+[^ch18-gspo-qwen]: Zheng et al. (Qwen Team), "Group Sequence Policy Optimization (GSPO): Stabilizing Long-Horizon Reinforcement Learning via Sequence-Level Geometric Importance Sampling," *Technical Report 2025*。
+[^ch18-swerl-deepresearch]: Wei et al. (Meta AI), "SWE-RL: Advancing LLM Reasoning via Reinforcement Learning on Open Software Evolution," *arXiv:2502.18449, 2025*；以及 Jin et al., "Search-R1: Training LLMs to Reason and Leverage Search Engines with Reinforcement Learning," *arXiv:2503.09516, 2025*。
+[^ch18-vtrace-impala]: Espeholt et al. (Google DeepMind), "IMPALA: Scalable Distributed Deep-RL with Importance Weighted Actor-Learner Architectures (V-trace)," *ICML 2018*（$\bar{\rho}$ 更新步幅截断与 $\bar{c}$ 跨步资格迹收缩截断的无偏不动点证明）。

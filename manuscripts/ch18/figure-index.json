@@ -288,5 +288,35 @@
     "TeachingRole": "建立基于 (KL 散度, 输出长度, 策略熵) 的两级在线奖励黑客制动与检查点回滚状态机",
     "figure": "18-20",
     "name": "ch18-rlvr-reward-hacking-kl-divergence-breaker"
+  },
+  {
+    "figure_id": "图 18-21",
+    "number": 21,
+    "file": "ch18-multi-turn-agentic-rlvr-trajectory-tree-forking.svg",
+    "asset": "ch18/ch18-multi-turn-agentic-rlvr-trajectory-tree-forking.svg",
+    "section": "18.4.3",
+    "caption": "多轮工具交互强化学习（SWE-RL / DeepResearch-RL）中容器环境快照（OverlayFS + CRIU）与 Paged KV 树状分叉架构（算例 18-10）",
+    "source_refs": [
+      "manuscripts/ch18/figure-data.json",
+      "experiments/ch18/18-03/run.py"
+    ],
+    "TeachingRole": "推导 16 条叶分支下容器+KV 树分叉将沙箱 CPU 耗时从 672.0 s 压至 114.0 s（5.89x）并省 84.38% 前缀 KV 的账本",
+    "figure": "18-21",
+    "name": "ch18-multi-turn-agentic-rlvr-trajectory-tree-forking"
+  },
+  {
+    "figure_id": "图 18-22",
+    "number": 22,
+    "file": "ch18-asynchronous-off-policy-importance-sampling-clipping.svg",
+    "asset": "ch18/ch18-asynchronous-off-policy-importance-sampling-clipping.svg",
+    "section": "18.4.3",
+    "caption": "异步离策略强化学习中连乘重要性采样爆炸与 V-trace（ρ̄, c̄ 双重截断）/ TIS 轨迹修正及环境观测掩码机制",
+    "source_refs": [
+      "manuscripts/ch18/figure-data.json",
+      "experiments/ch18/18-03/run.py"
+    ],
+    "TeachingRole": "对比 10 步未截断连乘 IS（9.31x 爆炸）与 V-trace 双重截断递推及环境观测掩码置零的收敛保障",
+    "figure": "18-22",
+    "name": "ch18-asynchronous-off-policy-importance-sampling-clipping"
   }
 ]

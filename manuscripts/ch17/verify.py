@@ -51,25 +51,25 @@ h2s = re.findall(r'^## (.+)$', s, re.M)
 check('last H2 is 本章小结', len(h2s) >= 6 and h2s[-1].strip() == '本章小结')
 
 exercises = re.findall(r'^>\s*\*\*(?:练习|实验) 17-(\d+)[：:（]', s, re.M)
-check('fourteen exercises 17-1 to 17-14 in order', exercises == [str(i) for i in range(1, 15)])
+check('sixteen exercises 17-1 to 17-16 in order', exercises == [str(i) for i in range(1, 17)])
 
 code_blocks = re.findall(r'```python\n.*?```', s, re.S)
-check('eight production Python code blocks', len(code_blocks) == 8 and len(re.findall(r'```', s)) == 16)
+check('nine production Python code blocks', len(code_blocks) == 9 and len(re.findall(r'```', s)) == 18)
 
 worked_examples = re.findall(r'^>\s*\*\*算例\s*17-', s, re.M)
-check('seven standardized blockquote worked examples', len(worked_examples) == 7)
+check('eight standardized blockquote worked examples', len(worked_examples) == 8)
 
 table_captions = re.findall(r'^\*表 17-(\d+)　', s, re.M)
-check('six standardized italic table captions 17-1 to 17-6', table_captions == [str(i) for i in range(1, 7)])
+check('seven standardized italic table captions 17-1 to 17-7', table_captions == [str(i) for i in range(1, 8)])
 
 fig_index = json.loads((HERE / 'figure-index.json').read_text())
 fig_count = len(fig_index)
-check('twenty figures in figure-index.json', fig_count == 20)
+check('twenty-two figures in figure-index.json', fig_count == 22)
 captions = re.findall(r'^\*图 17-(\d+)(?:：|　)', s, re.M)
-check('sequential captions 17-1 to 17-20', sorted(captions, key=int) == [str(i) for i in range(1, fig_count + 1)])
+check('sequential captions 17-1 to 17-22', sorted(captions, key=int) == [str(i) for i in range(1, fig_count + 1)])
 
 imgs = re.findall(r'!\[.+?\]\((ch17/[^)]+)\)', s)
-check('twenty active illustrations match figure-index.json', set(imgs) == {row.get('asset') or f"ch17/{row['file']}" for row in fig_index} and len(imgs) == 20)
+check('twenty-two active illustrations match figure-index.json', set(imgs) == {row.get('asset') or f"ch17/{row['file']}" for row in fig_index} and len(imgs) == 22)
 
 for rel in imgs:
     p = md.parent / rel
@@ -87,7 +87,7 @@ check('local links exist', not missing)
 
 defs = re.findall(r'^\[\^([^\]]+)\]:', s, re.M)
 refs = re.findall(r'\[\^([^\]]+)\](?!:)', s)
-check('all footnotes used and defined once', set(defs) == set(refs) and len(defs) == len(set(defs)) and len(defs) >= 3)
+check('all footnotes used and defined once', set(defs) == set(refs) and len(defs) == len(set(defs)) and len(defs) >= 15)
 
 for name, key in [('sources.json', 'sources'), ('manifest.json', 'outputs')]:
     data = json.loads((HERE / name).read_text())[key]
@@ -100,7 +100,7 @@ check('no formula errors', not math_val['errors'] and 'katex-error' not in page)
 layout_val = json.loads((HERE / 'teaching-layout-validation.json').read_text())
 check(
     'book-size figure layout',
-    len(layout_val) == 20 and all(r['width_pt'] == 420 and r['min_label_pt'] >= 11 and not r['text_extent_warnings'] for r in layout_val),
+    len(layout_val) == 22 and all(r['width_pt'] == 420 and r['min_label_pt'] >= 11 and not r['text_extent_warnings'] for r in layout_val),
 )
 
 d = json.loads((HERE / 'figure-data.json').read_text())
@@ -119,6 +119,16 @@ check(
     '3DGS + Video DiT world model latency and FPS arithmetic',
     close(round(wm['gs_raster_ms'] + wm['dit_4step_stream_ms'] + wm['tiled_vae_ms'], 2), wm['total_frame_ms'])
     and close(round(1000.0 / wm['total_frame_ms'], 2), wm['steady_fps']),
+)
+
+cwm = d['causal_streaming_world_model_20fps']
+check(
+    'example 17-8 causal streaming world model KV rolling and PAB/TeaCache FPS arithmetic',
+    cwm['total_active_chunks'] == cwm['sink_chunks'] + cwm['rolling_window_chunks'] == 6
+    and cwm['active_kv_tokens'] == 21600
+    and close(cwm['pab_teacache_dit_chunk_ms'] + cwm['causal_vae_chunk_ms'], cwm['total_chunk_ms'])
+    and close(cwm['total_chunk_ms'] / cwm['chunk_rgb_frames'], cwm['per_frame_latency_ms'])
+    and close(round(1000.0 / cwm['per_frame_latency_ms'], 2), cwm['streaming_fps']),
 )
 
 passed = sum(1 for c in checks if c['passed'])
