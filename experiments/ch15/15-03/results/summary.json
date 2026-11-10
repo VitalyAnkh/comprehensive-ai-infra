@@ -1,0 +1,32 @@
+{
+  "experiment_id": "15-03",
+  "in_silicon_microfluidics": {
+    "heat_flux_w_cm2": 277.78,
+    "d_h_um": 85.71,
+    "r_cal_kw": 0.004,
+    "r_micro_total_kw": 0.01,
+    "r_reduction_ratio": 2.8,
+    "t_j_coldplate_c": 115.0,
+    "t_j_micro_c": 70.0,
+    "t_in_max_coldplate_c": 15.0,
+    "t_in_max_micro_c": 60.0,
+    "pump_power_w": 1.65,
+    "pump_ratio_pct": 0.0658
+  },
+  "gw_microgrid_vsg": {
+    "h_phys_s": 3.0,
+    "h_with_vsg_s": 7.5,
+    "rocof_no_vsg_hz_s": 3.75,
+    "rocof_with_vsg_hz_s": 1.5,
+    "h_bess_min_s": 13.5,
+    "df_peak_no_vsg_hz": 2.874,
+    "df_peak_with_vsg_hz": 0.739
+  },
+  "electro_thermal_dvfs": {
+    "n_subclusters": 8,
+    "effective_step_mw": 144.0,
+    "p_chip_scaled_w": 2101.0,
+    "t_j_controlled_c": 66.01,
+    "step_overhead_pct": 1.43
+  }
+}

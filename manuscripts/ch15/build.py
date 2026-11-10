@@ -500,6 +500,46 @@ def fig_15_24_sofc_ere(ex: Exporter):
     ex.save(fig, 'ch15-sofc-microgrid-and-heat-recovery-ere-loop')
 
 
+def fig_15_25_in_silicon_microfluidic(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.04, 0.46, 0.92, 'A. 外贴铜冷板界面热阻墙', color='orange', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '2,500 W 芯片 · 9.0 cm²\n平均热流 277.8 W/cm²', 'orange', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '硅片 0.004 + TIM 0.016\n+ 冷板 0.008 = 0.028 K/W', 'orange', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, 'W45(45°C) 下结温达 115°C\n被迫退回 ≤15°C 深冷冰水', 'orange', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, 'TIM 界面热阻占总温升 > 57%', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'B. 硅内三维分水微通道直冷', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, 'DRIE 刻蚀 50×300 μm 微槽\n3D 歧管 12 段分水消除 TIM', 'teal', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '导热 0.0018 + 对流 0.0042\n+ 热容 0.0040 = 0.0100 K/W', 'blue', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, 'W45 下结温 70.0°C (降 2.80×)\n压降 38.4 kPa·泵功 1.65 W', 'purple', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '允许最高 60.0°C 温水全年免冷机', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch15-in-silicon-microfluidic-cooling-thermal-resistance')
+
+
+def fig_15_26_gw_microgrid_control(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.04, 0.46, 0.92, 'A. 1.2 GW 孤岛微网电源构成', color='blue', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '300 MW SMR 核电 (H=5.0 s)\n零碳基荷 + 蒸汽旁路稳态', 'blue', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '600 MW 航改燃机 (H=3.5 s)\n下垂 4.0% · 调速常数 0.45 s', 'purple', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '400 MW 构网型 BESS (VSG)\n注入虚拟惯量 H_syn = 13.5 s', 'teal', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '系统惯量从 3.00 s 升至 7.50 s', size=11, ha='center', weight='bold', color=BORDER_COL['blue'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'B. 450 MW 阶跃调频与电热闭环', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, 'AllReduce 卸载 450 MW 冲击\n无 VSG 时 RoCoF = 3.75 Hz/s', 'orange', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, 'VSG 瞬时支撑压至 1.50 Hz/s\n最大频偏从 2.87 降至 0.74 Hz', 'teal', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '8 子群错峰 + 0.92x 联合 DVFS\n结温 66.0°C · 步耗时仅 +1.43%', 'blue', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '毫秒逆变器—百毫秒算力协同阻尼', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch15-gw-campus-smr-gas-bess-microgrid-frequency-control')
+
+
 def main():
     ex = Exporter(HERE)
     fig_15_1_power_chain(ex)
@@ -526,6 +566,8 @@ def main():
     fig_15_22_master_ledger(ex)
     fig_15_23_hvdc_vpd(ex)
     fig_15_24_sofc_ere(ex)
+    fig_15_25_in_silicon_microfluidic(ex)
+    fig_15_26_gw_microgrid_control(ex)
     outputs = ex.finish()
 
     fig_index = [
@@ -768,6 +810,26 @@ def main():
             "caption": "吉瓦级 AI 园区现场 SOFC/燃气微网、BESS 储能与 60°C 液冷余热回收（ERE < 1.0）综合能量闭环",
             "source_refs": ["manuscripts/ch15/figure-data.json"],
             "TeachingRole": "建立现场 SOFC 微网直供与 60°C 液冷废热区域供暖回收（ERE = 0.43 < 1.0）的能量复用方程"
+        },
+        {
+            "figure_id": "图 15-25",
+            "number": 25,
+            "file": "ch15-in-silicon-microfluidic-cooling-thermal-resistance.svg",
+            "asset": "ch15/ch15-in-silicon-microfluidic-cooling-thermal-resistance.svg",
+            "section": "15.6.4",
+            "caption": "硅内三维分水微通道直冷（Direct-to-Silicon Microfluidics，热通量 277.8 W/cm²）截面流场与冷板界面热阻消融对比",
+            "source_refs": ["experiments/ch15/15-03/run.py", "manuscripts/ch15/figure-data.json"],
+            "TeachingRole": "量化 2,500 W 芯片在硅内三维分水微通道直冷下总热阻降至 0.0100 K/W（降 2.80×）与 1.65 W 泵功账本"
+        },
+        {
+            "figure_id": "图 15-26",
+            "number": 26,
+            "file": "ch15-gw-campus-smr-gas-bess-microgrid-frequency-control.svg",
+            "asset": "ch15/ch15-gw-campus-smr-gas-bess-microgrid-frequency-control.svg",
+            "section": "15.6.4",
+            "caption": "1.2 GW 园区孤岛微网（300 MW SMR + 600 MW 燃机 + 400 MW 构网型 BESS）在 450 MW 训练阶跃下的 RoCoF 与电热联合调频闭环",
+            "source_refs": ["experiments/ch15/15-03/run.py", "manuscripts/ch15/figure-data.json"],
+            "TeachingRole": "推导 1.2 GW 孤岛微网转子摇摆方程及构网型 BESS 虚拟惯量（13.5 s）压制 RoCoF 至 1.50 Hz/s 的整定准则"
         }
     ]
     (HERE / 'figure-index.json').write_text(json.dumps(fig_index, ensure_ascii=False, indent=2) + '\n')

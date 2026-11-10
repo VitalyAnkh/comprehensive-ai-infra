@@ -302,5 +302,31 @@
       "manuscripts/ch16/figure-data.json"
     ],
     "TeachingRole": "将密码学生成水印下沉至 GPU TEE 采样算子内部以阻断宿主机剥离，并推导 Z 分数检测最小词元数"
+  },
+  {
+    "figure_id": "图 16-25",
+    "number": 25,
+    "file": "ch16-tee-timing-side-channel-traffic-shaping.svg",
+    "asset": "ch16/ch16-tee-timing-side-channel-traffic-shaping.svg",
+    "section": "16.6.4",
+    "caption": "GPU TEE 恒定节拍词元释放（Tick-Locked Pacing）与 64-Token 分桶流量整形防御 PCIe/功耗侧信道",
+    "source_refs": [
+      "experiments/ch16/16-03/run.py",
+      "manuscripts/ch16/figure-data.json"
+    ],
+    "TeachingRole": "量化 25.0 ms 恒定节拍（延迟税 12.11%）与 64-Token 分桶填充（带宽税 39.13%）实现桶内零信息泄露"
+  },
+  {
+    "figure_id": "图 16-26",
+    "number": 26,
+    "file": "ch16-verifiable-inference-optimistic-and-zkml-proof.svg",
+    "asset": "ch16/ch16-verifiable-inference-optimistic-and-zkml-proof.svg",
+    "section": "16.6.4",
+    "caption": "三级可验证推理架构（TEE 实时签名 + Freivalds 投影抽检 + 触发式单算子 zkML 零知识故障证明）",
+    "source_refs": [
+      "experiments/ch16/16-03/run.py",
+      "manuscripts/ch16/figure-data.json"
+    ],
+    "TeachingRole": "建立 Freivalds 随机投影（2.23% 算力开销）与触发式单算子 zk-Fault-Proof（1.85 s 裁决，提速 24.32×）协同架构"
   }
 ]

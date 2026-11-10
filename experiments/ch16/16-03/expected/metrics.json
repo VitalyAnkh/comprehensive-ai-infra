@@ -1,0 +1,28 @@
+{
+  "experiment_id": "16-03",
+  "traffic_shaping": {
+    "raw_total_tokens": 506,
+    "padded_total_tokens": 704,
+    "dummy_tokens": 198,
+    "bw_tax_pct": 39.13,
+    "latency_tax_pct": 12.11,
+    "distinct_buckets": 4,
+    "raw_leakage_bits": 8.0,
+    "shaped_in_bucket_leakage_bits": 0.0,
+    "total_shaped_mib": 2.75
+  },
+  "freivalds_and_zkml": {
+    "gemm_gflops": 481.036,
+    "freivalds_mflops": 10737.418,
+    "freivalds_overhead_pct": 2.2321,
+    "soundness_error": 9.094947017729282e-13,
+    "sumcheck_speedup_vs_naive": 64.86
+  },
+  "hybrid_zk_fault_proof": {
+    "bisect_rounds": 9,
+    "interactive_dispute_s": 45.0,
+    "zk_fault_proof_s": 1.85,
+    "latency_speedup": 24.32,
+    "gas_saving_pct": 88.5
+  }
+}

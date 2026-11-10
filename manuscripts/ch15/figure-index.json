@@ -303,5 +303,31 @@
       "manuscripts/ch15/figure-data.json"
     ],
     "TeachingRole": "建立现场 SOFC 微网直供与 60°C 液冷废热区域供暖回收（ERE = 0.43 < 1.0）的能量复用方程"
+  },
+  {
+    "figure_id": "图 15-25",
+    "number": 25,
+    "file": "ch15-in-silicon-microfluidic-cooling-thermal-resistance.svg",
+    "asset": "ch15/ch15-in-silicon-microfluidic-cooling-thermal-resistance.svg",
+    "section": "15.6.4",
+    "caption": "硅内三维分水微通道直冷（Direct-to-Silicon Microfluidics，热通量 277.8 W/cm²）截面流场与冷板界面热阻消融对比",
+    "source_refs": [
+      "experiments/ch15/15-03/run.py",
+      "manuscripts/ch15/figure-data.json"
+    ],
+    "TeachingRole": "量化 2,500 W 芯片在硅内三维分水微通道直冷下总热阻降至 0.0100 K/W（降 2.80×）与 1.65 W 泵功账本"
+  },
+  {
+    "figure_id": "图 15-26",
+    "number": 26,
+    "file": "ch15-gw-campus-smr-gas-bess-microgrid-frequency-control.svg",
+    "asset": "ch15/ch15-gw-campus-smr-gas-bess-microgrid-frequency-control.svg",
+    "section": "15.6.4",
+    "caption": "1.2 GW 园区孤岛微网（300 MW SMR + 600 MW 燃机 + 400 MW 构网型 BESS）在 450 MW 训练阶跃下的 RoCoF 与电热联合调频闭环",
+    "source_refs": [
+      "experiments/ch15/15-03/run.py",
+      "manuscripts/ch15/figure-data.json"
+    ],
+    "TeachingRole": "推导 1.2 GW 孤岛微网转子摇摆方程及构网型 BESS 虚拟惯量（13.5 s）压制 RoCoF 至 1.50 Hz/s 的整定准则"
   }
 ]

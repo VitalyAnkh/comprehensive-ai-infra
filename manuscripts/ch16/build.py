@@ -515,6 +515,46 @@ def fig_16_24_fused_watermark(ex: Exporter):
     ex.save(fig, 'ch16-fused-cryptographic-logit-watermark-kernel')
 
 
+def fig_16_25_timing_shaping(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.04, 0.46, 0.92, 'A. 投机解码与变长侧信道泄露', color='orange', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '投机解码每步接受 1–5 词元\n包间隔 Δt_i 暴露领域词频', 'orange', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '微批真实长度 {19,47,83,142,215}\n总词元 506 · 泄露 8.0 bits', 'orange', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, 'PMIC 功耗阶跃与 TTFT 跳变\n暴露跨租户前缀缓存命中', 'orange', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '仅加密载荷无法掩盖时序包长指纹', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'B. 恒定节拍与 64-Token 分桶整形', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '节拍锁相 Δτ_tick = 25.0 ms\n相对平均 TPOT 延迟税 12.11%', 'teal', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '向上对齐 64 倍数 {64..256}\n填充后 704 词元 (带宽税 39.13%)', 'blue', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '尾部步注入等长 4 KB 哑元包\n桶内互信息泄露 = 0.0 bits', 'purple', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '时空双轴整形彻底阻断被动侧信道', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch16-tee-timing-side-channel-traffic-shaping')
+
+
+def fig_16_26_verifiable_zkml(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.04, 0.46, 0.92, 'A. 密码学算子校验与专用 zkML', color='blue', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, 'Freivalds 随机投影 (k=40)\n检验 A(Br)=Cr · 漏检 2^-40', 'blue', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '4096×4096×14336 FFN 层\n校验仅占 GEMM 算力 2.23%', 'teal', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, 'zkLLM Sumcheck + tlookup\n比通用电路提速 64.86× (185×)', 'purple', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '线性投影抽检 + 多线性扩展证明', size=11, ha='center', weight='bold', color=BORDER_COL['blue'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'B. 触发式单算子 zk-Fault-Proof', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '传统 OPML 320 算子二分交互\n需 9 轮 · 耗时 45.0 s (Gas $42)', 'orange', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '定位唯一争议算子后非交互证明\n生成 1.65 s + 链上验证 0.20 s', 'teal', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '裁决总延迟 1.85 s (快 24.32×)\n链上 Gas 降至 $4.83 (省 88.5%)', 'blue', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '兼具 TEE 实时性与零知识数学终局', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch16-verifiable-inference-optimistic-and-zkml-proof')
+
+
 def main():
     ex = Exporter(HERE)
     fig_16_1_threat_model(ex)
@@ -541,6 +581,8 @@ def main():
     fig_16_22_defense_in_depth(ex)
     fig_16_23_lease_bound_weights(ex)
     fig_16_24_fused_watermark(ex)
+    fig_16_25_timing_shaping(ex)
+    fig_16_26_verifiable_zkml(ex)
     outputs = ex.finish()
 
     fig_index = [
@@ -783,6 +825,26 @@ def main():
             "caption": "在 TEE 采样算子内原位融合伪随机锦标赛水印（SynthID/Gumbel Watermark）及统计验证检测边界",
             "source_refs": ["manuscripts/ch16/figure-data.json"],
             "TeachingRole": "将密码学生成水印下沉至 GPU TEE 采样算子内部以阻断宿主机剥离，并推导 Z 分数检测最小词元数"
+        },
+        {
+            "figure_id": "图 16-25",
+            "number": 25,
+            "file": "ch16-tee-timing-side-channel-traffic-shaping.svg",
+            "asset": "ch16/ch16-tee-timing-side-channel-traffic-shaping.svg",
+            "section": "16.6.4",
+            "caption": "GPU TEE 恒定节拍词元释放（Tick-Locked Pacing）与 64-Token 分桶流量整形防御 PCIe/功耗侧信道",
+            "source_refs": ["experiments/ch16/16-03/run.py", "manuscripts/ch16/figure-data.json"],
+            "TeachingRole": "量化 25.0 ms 恒定节拍（延迟税 12.11%）与 64-Token 分桶填充（带宽税 39.13%）实现桶内零信息泄露"
+        },
+        {
+            "figure_id": "图 16-26",
+            "number": 26,
+            "file": "ch16-verifiable-inference-optimistic-and-zkml-proof.svg",
+            "asset": "ch16/ch16-verifiable-inference-optimistic-and-zkml-proof.svg",
+            "section": "16.6.4",
+            "caption": "三级可验证推理架构（TEE 实时签名 + Freivalds 投影抽检 + 触发式单算子 zkML 零知识故障证明）",
+            "source_refs": ["experiments/ch16/16-03/run.py", "manuscripts/ch16/figure-data.json"],
+            "TeachingRole": "建立 Freivalds 随机投影（2.23% 算力开销）与触发式单算子 zk-Fault-Proof（1.85 s 裁决，提速 24.32×）协同架构"
         }
     ]
     (HERE / 'figure-index.json').write_text(json.dumps(fig_index, ensure_ascii=False, indent=2) + '\n')
