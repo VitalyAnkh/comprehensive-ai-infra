@@ -1,32 +1,25 @@
 {
+  "chapter": "ch22",
   "sources": [
     {
-      "path": "manuscripts/ch22/build.py",
-      "sha256": "3ff9798cdbe8f3a3228d0b2de785a8607a3c0144b0b72e83bfb4a13dab776c87"
-    },
-    {
-      "path": "manuscripts/ch22/figure-data.json",
-      "sha256": "84b94989f9493da8ec7da35ba674e95619f8254b988f0b478737a71acf0d5dd5"
+      "path": "manuscripts/22-科学计算智能系统.md",
+      "sha256": "9ce80293b46df1569fe70c043295260e541ad73d7a74f24276bc5c092e623f0a"
     },
     {
       "path": "manuscripts/ch22/figure-index.json",
-      "sha256": "bf7c0b975121535e9edf83fb1cbcb3b46f8822e9b5bc2e88874f497b43620064"
+      "sha256": "eac2bdc0185494d267223f087e7631f8aa456f32f6d959fc25182e293b9b6c4c"
     },
     {
       "path": "experiments/ch22/22-01/run.py",
-      "sha256": "848bc0541c62aeaed164efe510ae127e5ab9529c11b8c866b4a33c4dccfffbdd"
+      "sha256": "d21ba2eac39320e6b98361d868d7171910242ed7133ca7c0030668b8683a6390"
     },
     {
       "path": "experiments/ch22/22-02/run.py",
-      "sha256": "d1cbe886f93ac66cd8fa98219d913adbdb65edae878e45c1647f904b160392f9"
+      "sha256": "4c676196d611caa9c7ba6d16c3deeb24a8a04eb792e46681f9af429da5b14a00"
     },
     {
       "path": "experiments/ch22/22-03/run.py",
-      "sha256": "d7e13e860da6261760249ff8f4c17b4955e9d6b204d2aa2e18360bdae1f8b7ea"
-    },
-    {
-      "path": "manuscripts/22-全双工实时语音（Full-Duplex Speech）、神经音频编解码与原生全模态流式底座.md",
-      "sha256": "7039e7bde7cf8ae8888a7513c5d1147cebd8be46a77115faf2149fd8ff422e58"
+      "sha256": "b2ee6a853f4b96c86d7f6adc7d80a08403ae3dabea4bb066d221bc6481481561"
     }
   ]
 }

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Experiment 21-01: 40-turn Agentic WORM loop, Tool-Wait phase diagram, Four-Tier KV Router, and CacheGen streaming."""
+"""Experiment 21-01: Trillion-parameter DLRM three-tier embedding cache and TorchRec All-to-All overlap."""
 from __future__ import annotations
 
 import json
@@ -11,90 +11,73 @@ RESULTS_PATH = HERE / "results" / "summary.json"
 
 
 def compute_metrics() -> dict:
-    # 1. 40-turn Agentic WORM (Write-Once-Read-Many) context loop (Ex 21-1)
-    turns_k = 40
-    l0_tokens = 2000
-    act_tokens = 200
-    obs_tokens = 1800
-    delta_l = act_tokens + obs_tokens  # 2,000 tokens per turn
+    # 1. 10.0 TB Trillion-Parameter DLRM Three-Tier Embedding Cache (Ex 25-1)
+    num_rows = 20_000_000_000  # 2 x 10^10 feature IDs
+    embed_dim = 128
+    bytes_per_row = 500  # 256B FP16 weight + 230B quantized optimizer state + 14B metadata
+    total_table_tb = round((num_rows * bytes_per_row) / 1e12, 1)  # 10.0 TB
+    zipf_alpha = 1.12
+    temporal_drift = 0.038
 
-    turn_lengths = [l0_tokens + (k - 1) * delta_l for k in range(1, turns_k + 1)]
-    final_turn_tokens = turn_lengths[-1]  # 80,000 tokens
-    cumulative_prefill_tokens = sum(turn_lengths)  # 1,640,000 tokens
-    unique_written_tokens = final_turn_tokens  # 80,000 tokens
-    reread_worm_tokens = cumulative_prefill_tokens - unique_written_tokens  # 1,560,000 tokens
-    worm_reuse_ratio_pct = round(reread_worm_tokens / cumulative_prefill_tokens * 100.0, 2)  # 95.12%
-    total_decode_tokens = turns_k * act_tokens  # 8,000 tokens
-    prefill_to_decode_ratio = round(cumulative_prefill_tokens / total_decode_tokens, 1)  # 205.0
+    hbm_capacity_gb = 320.0
+    cxl_capacity_tb = 2.0
+    ssd_capacity_tb = 10.0
 
-    # 2. Tool-Wait Hiatus three-regime crossover at L = 65,536 tokens on Qwen3-8B (144 KiB/tok) (Ex 21-1)
-    prefix_tokens = 65536
-    kv_kib_per_token = 144.0
-    kv_size_gib = round(prefix_tokens * kv_kib_per_token / (1024.0 * 1024.0), 2)  # 9.00 GiB
-    prefill_rate_tok_s = 131072.0
-    recompute_ms = round(prefix_tokens / prefill_rate_tok_s * 1000.0, 2)  # 500.0 ms
-    pcie_bw_gib_s = 48.0
-    swap_in_ms = round(kv_size_gib / pcie_bw_gib_s * 1000.0, 2)  # 187.5 ms
-    roundtrip_swap_ms = round(2.0 * swap_in_ms, 2)  # 375.0 ms
-    crossover_wait_sec = 2.16
-    tool_wait_sec = 15.0
-    hbm_cost_saving_at_15s_pct = round((1.0 - crossover_wait_sec / tool_wait_sec) * 100.0, 2)  # 85.60%
-    ttft_speedup_vs_recompute_x = round(recompute_ms / swap_in_ms, 2)  # 2.67x
+    p_hbm = 0.820
+    p_cxl = 0.155
+    p_ssd = 0.025
+    t_hbm_us = 0.35
+    t_cxl_us = 1.80
+    t_ssd_us = 65.00
 
-    # 3. Four-Tier KV-Aware Global Radix Router (Dynamo / HiCache) (Ex 21-2)
-    # Candidate A: queue 120 ms, 90% HBM hit -> 50 ms prefill = 170 ms
-    # Candidate B (naive least-loaded): queue 10 ms, 0% hit -> 500 ms prefill = 510 ms
-    # Candidate C (remote RDMA hit): queue 20 ms, 80% RDMA hit (200 ms) + 20% miss (100 ms) = 320 ms
-    ttft_node_a_ms = 170.0
-    ttft_node_b_ms = 510.0
-    ttft_node_c_ms = 320.0
-    router_ttft_speedup_x = round(ttft_node_b_ms / ttft_node_a_ms, 2)  # 3.00x
+    weighted_latency_us = round(p_hbm * t_hbm_us + p_cxl * t_cxl_us + p_ssd * t_ssd_us, 2)  # 2.19 us
+    pure_ssd_speedup_x = round(t_ssd_us / weighted_latency_us, 1)  # 29.7x
 
-    # 4. CacheGen Anchor-Delta Entropy Streaming over 50 Gbps (5.81 GiB/s usable) cross-rack link (Ex 21-2)
-    orig_bits = 16.0
-    cachegen_bits = 3.80
-    cachegen_compression_x = round(orig_bits / cachegen_bits, 2)  # 4.21x
-    compressed_kv_gib = round(kv_size_gib * (cachegen_bits / orig_bits), 4)  # 2.1375 GiB
-    net_bw_gib_s = 5.81
-    decode_overhead_ms = 18.0
-    raw_transfer_ms = round(kv_size_gib / net_bw_gib_s * 1000.0, 1)  # 1549.1 ms
-    cachegen_transfer_ms = round(compressed_kv_gib / net_bw_gib_s * 1000.0 + decode_overhead_ms, 1)  # 385.9 ms
-    cachegen_speedup_vs_raw_x = round(raw_transfer_ms / cachegen_transfer_ms, 2)  # 4.01x
-    critical_raw_bw_gib_s = round(kv_size_gib / (recompute_ms / 1000.0), 2)  # 18.00 GiB/s
+    # 2. 64-GPU TorchRec Sparse All-to-All Sharding & Dense Overlap (Ex 25-2)
+    num_gpus = 64
+    batch_per_gpu = 2048
+    pooling_factor_l = 320
+    fp16_bytes = 2
+    per_gpu_send_mb = round(
+        (batch_per_gpu * pooling_factor_l * embed_dim * fp16_bytes * (num_gpus - 1) / num_gpus) / 1e6, 2
+    )  # 165.15 MB
+    naive_skew_factor = 2.85
+    balanced_skew_factor = 1.06
+    bw_per_gpu_gbs = 114.5
+    naive_a2a_ms = round((per_gpu_send_mb * naive_skew_factor) / bw_per_gpu_gbs, 2)  # 4.11 ms
+    balanced_a2a_ms = round((per_gpu_send_mb * balanced_skew_factor) / bw_per_gpu_gbs, 2)  # 1.53 ms
+    bottom_mlp_compute_ms = 1.85
+    exposed_naive_comm_ms = round(max(0.0, naive_a2a_ms - bottom_mlp_compute_ms), 2)  # 2.26 ms
+    exposed_balanced_comm_ms = round(max(0.0, balanced_a2a_ms - bottom_mlp_compute_ms), 2)  # 0.00 ms
 
     return {
         "experiment_id": "21-01",
-        "agentic_worm_40turns": {
-            "turns_k": turns_k,
-            "final_turn_tokens": final_turn_tokens,
-            "cumulative_prefill_tokens": cumulative_prefill_tokens,
-            "unique_written_tokens": unique_written_tokens,
-            "reread_worm_tokens": reread_worm_tokens,
-            "worm_reuse_ratio_pct": worm_reuse_ratio_pct,
-            "total_decode_tokens": total_decode_tokens,
-            "prefill_to_decode_ratio": prefill_to_decode_ratio,
+        "three_tier_embedding_cache": {
+            "num_rows": num_rows,
+            "embed_dim": embed_dim,
+            "bytes_per_row": bytes_per_row,
+            "total_table_tb": total_table_tb,
+            "zipf_alpha": zipf_alpha,
+            "temporal_drift": temporal_drift,
+            "hbm_capacity_gb": hbm_capacity_gb,
+            "cxl_capacity_tb": cxl_capacity_tb,
+            "ssd_capacity_tb": ssd_capacity_tb,
+            "p_hbm": p_hbm,
+            "p_cxl": p_cxl,
+            "p_ssd": p_ssd,
+            "weighted_latency_us": weighted_latency_us,
+            "pure_ssd_speedup_x": pure_ssd_speedup_x,
         },
-        "tool_wait_phase_diagram": {
-            "prefix_tokens": prefix_tokens,
-            "kv_size_gib": kv_size_gib,
-            "recompute_ms": recompute_ms,
-            "swap_in_ms": swap_in_ms,
-            "roundtrip_swap_ms": roundtrip_swap_ms,
-            "crossover_wait_sec": crossover_wait_sec,
-            "hbm_cost_saving_at_15s_pct": hbm_cost_saving_at_15s_pct,
-            "ttft_speedup_vs_recompute_x": ttft_speedup_vs_recompute_x,
-        },
-        "kv_global_router_and_cachegen": {
-            "ttft_node_a_ms": ttft_node_a_ms,
-            "ttft_node_b_ms": ttft_node_b_ms,
-            "ttft_node_c_ms": ttft_node_c_ms,
-            "router_ttft_speedup_x": router_ttft_speedup_x,
-            "cachegen_compression_x": cachegen_compression_x,
-            "compressed_kv_gib": compressed_kv_gib,
-            "raw_transfer_ms": raw_transfer_ms,
-            "cachegen_transfer_ms": cachegen_transfer_ms,
-            "cachegen_speedup_vs_raw_x": cachegen_speedup_vs_raw_x,
-            "critical_raw_bw_gib_s": critical_raw_bw_gib_s,
+        "torchrec_all_to_all_overlap": {
+            "num_gpus": num_gpus,
+            "per_gpu_send_mb": per_gpu_send_mb,
+            "naive_skew_factor": naive_skew_factor,
+            "balanced_skew_factor": balanced_skew_factor,
+            "naive_a2a_ms": naive_a2a_ms,
+            "balanced_a2a_ms": balanced_a2a_ms,
+            "bottom_mlp_compute_ms": bottom_mlp_compute_ms,
+            "exposed_naive_comm_ms": exposed_naive_comm_ms,
+            "exposed_balanced_comm_ms": exposed_balanced_comm_ms,
         },
     }
 

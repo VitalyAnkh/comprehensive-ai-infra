@@ -1,110 +1,116 @@
-[
-  {
-    "figure": "ch22-cascaded-asr-llm-tts-vs-native-full-duplex-s2s",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch22-full-duplex-dual-audio-streams-and-inner-monologue",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch22-rvq-neural-audio-codec-semantic-acoustic-hierarchy",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch22-delayed-codebook-pattern-vs-depth-transformer",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch22-temporal-and-depth-transformer-gpu-roofline-trap",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch22-webrtc-opus-aec-to-gpu-end-to-end-latency-budget",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch22-barge-in-playback-cursor-aligned-kv-rollback",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch22-streaming-causal-conv-vocoder-chunk-halo",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch22-live-video-1fps-and-audio-12hz-interleaved-pacing",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch22-acoustic-token-eviction-and-semantic-anchor-retention",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch22-dynamic-batching-under-strict-80ms-isochronous-tick",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch22-duplex-turn-taking-backchannel-and-overlap-state-machine",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch22-edge-vad-aec-wake-word-and-cloud-duplex-handover",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch22-voice-cloning-zero-shot-speaker-embedding-cache",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch22-full-duplex-gpu-concurrency-vs-p99-frame-underrun",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch22-full-duplex-omni-streaming-infrastructure-synthesis",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch22-realtime-avatar-lip-sync-audio-video-jitter-alignment",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch22-global-edge-webrtc-sfu-to-gpu-duplex-mesh",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  }
-]
+{
+  "chapter": "ch22",
+  "figure_count": 18,
+  "all_passed": true,
+  "total_warnings": 0,
+  "figures": [
+    {
+      "figure": "22-1",
+      "file": "ch22-llm-1d-tokens-vs-ai4science-four-structural-domains.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "22-2",
+      "file": "ch22-alphafold3-boltz1-two-stage-disaggregated-pipeline.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "22-3",
+      "file": "ch22-mmseqs2-gpu-kmer-prefilter-and-smith-waterman.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "22-4",
+      "file": "ch22-pairformer-triangle-multiplication-and-attention-o-n3.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "22-5",
+      "file": "ch22-chunked-triangle-attention-and-dynamic-axial-parallelism.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "22-6",
+      "file": "ch22-all-atom-diffusion-module-multi-sample-batching.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "22-7",
+      "file": "ch22-evo2-stripedhyena2-multi-scale-hyena-attention-backbone.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "22-8",
+      "file": "ch22-flashfftconv-monarch-decomposition-tensor-core.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "22-9",
+      "file": "ch22-sfno-spherical-harmonics-and-2d-grid-decomposition.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "22-10",
+      "file": "ch22-spatial-domain-halo-exchange-computation-overlap.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "22-11",
+      "file": "ch22-era5-petabyte-zarr-gds-direct-streaming-dataloader.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "22-12",
+      "file": "ch22-mace-equivariant-message-passing-and-verlet-neighbor-list.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "22-13",
+      "file": "ch22-ai-in-the-loop-hybrid-hpc-pde-solver-and-surrogate.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "22-14",
+      "file": "ch22-autonomous-wet-lab-active-learning-closed-loop.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "22-15",
+      "file": "ch22-tokamak-plasma-tearing-mode-sub-ms-rl-control.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "22-16",
+      "file": "ch22-single-cell-atlas-sparse-gene-expression-dataloader.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "22-17",
+      "file": "ch22-twenty-four-chapter-encyclopedia-knowledge-atlas.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "22-18",
+      "file": "ch22-unified-laws-across-all-24-chapters-synthesis.svg",
+      "passed": true,
+      "warnings": []
+    }
+  ]
+}

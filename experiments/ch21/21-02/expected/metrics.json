@@ -1,29 +1,24 @@
 {
   "experiment_id": "21-02",
-  "firecracker_cow_and_mcts_tree": {
-    "cold_boot_ms": 1500.0,
-    "cow_fork_ms": 12.0,
-    "fork_speedup_x": 125.0,
-    "mcts_branches": 16,
-    "full_clone_ram_mib": 8192.0,
-    "cow_tree_ram_mib": 896.0,
-    "ram_saving_pct": 89.06,
-    "total_sync_rollback_ms": 8.5
+  "hstu_stochastic_length": {
+    "full_seq_len": 8192,
+    "effective_seq_len": 5410,
+    "stochastic_beta": 0.75,
+    "quadratic_flop_reduction_pct": 56.2
   },
-  "locked_case_i19_telemetry_drain": {
-    "telemetry_rate_kib_s": 400.0,
-    "buffer_cap_mib": 32.0,
-    "time_to_overflow_sec": 81.92,
-    "outage_duration_sec": 120.0,
-    "accumulated_mib": 46.875,
-    "spilled_to_outbox_mib": 14.875,
-    "net_drain_rate_kib_s": 624.0,
-    "drain_time_sec": 76.92
-  },
-  "mcp_dynamic_tool_rag": {
-    "full_schema_tokens": 180000,
-    "rag_schema_tokens": 1440,
-    "schema_reduction_pct": 99.2,
-    "schema_compression_x": 125.0
+  "mfalcon_microbatch_amortization": {
+    "l_hist": 4096,
+    "m_candidates": 1024,
+    "d_model": 1024,
+    "num_layers": 16,
+    "effective_params_m": 168.0,
+    "prefix_flops_tflops": 1.376,
+    "naive_total_tflops": 1409.3,
+    "candidate_scoring_tflops": 30.084,
+    "mfalcon_total_tflops": 31.46,
+    "flop_reduction_x": 44.8,
+    "h100_qps": 485,
+    "items_scored_per_sec": 496640,
+    "p99_latency_ms": 11.8
   }
 }

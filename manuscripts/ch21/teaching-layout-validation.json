@@ -1,110 +1,136 @@
-[
-  {
-    "figure": "ch21-single-turn-chat-vs-multi-turn-agent-worm-loop",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch21-tool-wait-hbm-retain-recompute-offload-phase-diagram",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch21-four-tier-kv-cache-hierarchy-dynamo-lmcache",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch21-kv-aware-global-radix-router-ttft-tradeoff",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch21-cachegen-anchor-delta-entropy-kv-streaming",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch21-microvm-snapshot-cow-userfaultfd-12ms-fork",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch21-synchronized-kv-and-sandbox-mcts-tree-forking",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch21-computer-use-gui-webrtc-frame-diff-pipeline",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch21-mcp-gateway-dynamic-tool-rag-and-auth-isolation",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch21-idempotent-outbox-and-speculative-tool-prefetch",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch21-i19-telemetry-backlog-buffer-overflow-and-drain",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch21-prompt-injection-taint-tracking-dual-llm-firewall",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch21-hipporag2-graph-vector-episodic-memory-consolidation",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch21-multi-agent-dag-scheduler-and-token-budget-allocation",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch21-agentic-cluster-cpu-gpu-sandbox-pool-sizing",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch21-autonomous-agent-infrastructure-full-stack-map",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch21-speculative-tool-execution-and-rollback-dag",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch21-gui-incremental-region-of-interest-vision-token-cache",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  }
-]
+{
+  "chapter": 21,
+  "total_figures": 16,
+  "total_warnings": 0,
+  "all_passed": true,
+  "figures": [
+    {
+      "figure": "21-1",
+      "file": "ch21-trillion-param-dlrm-three-tier-hbm-cxl-ssd-embedding.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "21-2",
+      "file": "ch21-zipf-power-law-hot-embedding-cache-hit-curve.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "21-3",
+      "file": "ch21-torchrec-all-to-all-sparse-lookup-and-bucket-sharding.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "21-4",
+      "file": "ch21-cascade-dlrm-vs-generative-recommender-hstu-paradigm.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "21-5",
+      "file": "ch21-hstu-pointwise-aggregated-attention-and-stochastic-length.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "21-6",
+      "file": "ch21-m-falcon-candidate-microbatch-prefix-amortization.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "21-7",
+      "file": "ch21-hstu-online-event-streaming-and-delta-kv-update.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "21-8",
+      "file": "ch21-cpu-hnsw-vs-gpu-cuvs-cagra-graph-build-pipeline.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "21-9",
+      "file": "ch21-cagra-warp-splitting-distance-and-two-stage-pruning.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "21-10",
+      "file": "ch21-ivf-pq-shared-memory-lut-asymmetric-distance-kernel.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "21-11",
+      "file": "ch21-diskann-4kb-sector-aligned-vector-and-neighbor-layout.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "21-12",
+      "file": "ch21-diskann-io-uring-gds-beam-search-pipeline.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "21-13",
+      "file": "ch21-freshdiskann-streaming-insert-delete-consolidation.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "21-14",
+      "file": "ch21-graphrag-hierarchical-community-and-vector-hybrid-retrieval.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "21-15",
+      "file": "ch21-search-ads-rec-gpu-fleet-tco-and-sla-roofline.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "21-16",
+      "file": "ch21-generative-recommendation-and-vector-engine-synthesis.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    }
+  ]
+}

@@ -1,170 +1,164 @@
-[
-  {
-    "figure": "ch14-codesign-simultaneous-equations",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch14-v41-dual-track-context-scaling",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch14-v41-four-stage-attention-pipeline",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch14-digital-worker-v41-vs-k3-cost",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch14-opentallas-four-resource-and-wafer-hop",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch14-five-step-diagnostic-decision-tree",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch14-dflash-block-diffusion-role-reversal",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch14-beyond-chinchilla-lifecycle-compute-allocation",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch14-design-review-3candidate-kv-audit",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch14-datacenter-vs-consumer-gpu-crossover",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch14-preregistered-prediction-lifecycle",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch14-exp13-07-k96-counterexample-and-k192-ratios",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch14-exp13-07-commit-buffer-idempotence",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch14-four-double-counting-traps-matrix",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch14-2023-2026-cost-reduction-telescoping",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch14-dual-track-book-throughline-summary",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch14-rubin-v41-codesign-mapping-matrix",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch14-four-dimensional-codesign-closed-loop",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch14-chakra-execution-trace-graph-simulation",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch14-neusight-tile-roofline-calibration",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch14-farskip-collective-delayed-dependency",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch14-moe-granularity-vs-network-radix-co-design",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch14-kv-head-ratio-vs-tensor-parallel-limit",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch14-codesign-pre-silicon-to-production-loop",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch14-hardware-aware-hybrid-layer-allocation-pareto",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch14-sparse-upcycling-and-attention-distillation-pipeline",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch14-moe-granularity-vs-memory-bandwidth-pareto",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch14-hardware-aware-neural-architecture-search-loop",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  }
-]
+{
+  "chapter": "ch14",
+  "figure_count": 26,
+  "all_passed": true,
+  "total_warnings": 0,
+  "figures": [
+    {
+      "figure": "14-1",
+      "file": "ch14-gigawatt-ai-factory-power-chain.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "14-2",
+      "file": "ch14-physical-vs-economic-feasibility.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "14-3",
+      "file": "ch14-site-conditions-tco-sensitivity.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "14-4",
+      "file": "ch14-synchronous-training-power-swing.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "14-5",
+      "file": "ch14-rubin-power-smoothing-and-maxlps.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "14-6",
+      "file": "ch14-runtime-staggered-microbatch-power.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "14-7",
+      "file": "ch14-ashrae-w45-cdu-liquid-cooling-loop.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "14-8",
+      "file": "ch14-logicfolding-power-density-paradox.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "14-9",
+      "file": "ch14-thermal-throttling-straggler-amplification.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "14-10",
+      "file": "ch14-tapas-thermal-power-routing-breakeven.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "14-11",
+      "file": "ch14-multi-datacenter-dci-optical-latency.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "14-12",
+      "file": "ch14-cross-dc-pipeline-and-hierarchical-dp.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "14-13",
+      "file": "ch14-diloco-inner-outer-optimization.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "14-14",
+      "file": "ch14-streaming-diloco-chunked-sync.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "14-15",
+      "file": "ch14-single-campus-vs-multi-campus-decision.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "14-16",
+      "file": "ch14-power-thermal-wan-co-design-summary.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "14-17",
+      "file": "ch14-single-phase-vs-two-phase-microfluidics.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "14-18",
+      "file": "ch14-campus-bess-peak-shaving-and-arbitrage.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "14-19",
+      "file": "ch14-kareus-dynamic-static-energy-consolidation.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "14-20",
+      "file": "ch14-dips-wan-backbone-parameter-sync.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "14-21",
+      "file": "ch14-embodied-carbon-vs-operational-carbon-lifecycle.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "14-22",
+      "file": "ch14-gigawatt-campus-master-engineering-ledger.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "14-23",
+      "file": "ch14-48v-vs-800v-hvdc-and-vertical-power-delivery.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "14-24",
+      "file": "ch14-sofc-microgrid-and-heat-recovery-ere-loop.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "14-25",
+      "file": "ch14-in-silicon-microfluidic-cooling-thermal-resistance.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "14-26",
+      "file": "ch14-gw-campus-smr-gas-bess-microgrid-frequency-control.svg",
+      "passed": true,
+      "warnings": []
+    }
+  ]
+}

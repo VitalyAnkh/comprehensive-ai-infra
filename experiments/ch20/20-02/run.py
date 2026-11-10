@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Experiment 20-02: 100K-GPU Chaos GameDay fault injection, Arrival Skew Matrix straggler localization, TrainMover hot swap, and benchmark de-biasing."""
+"""Experiment 20-02: Three-tier humanoid WBC + visuotactile slip reflex, PTP sensor alignment, CBF shield, and FAST DCT action tokenizer."""
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -10,106 +11,158 @@ EXPECTED_PATH = HERE / "expected" / "metrics.json"
 RESULTS_PATH = HERE / "results" / "summary.json"
 
 
+def dct_ii_1d(signal: list[float]) -> list[float]:
+    """Orthonormal Type-II Discrete Cosine Transform (zero external dependencies)."""
+    n = len(signal)
+    out: list[float] = []
+    for k in range(n):
+        scale = math.sqrt(1.0 / n) if k == 0 else math.sqrt(2.0 / n)
+        acc = sum(signal[t] * math.cos(math.pi * (2 * t + 1) * k / (2.0 * n)) for t in range(n))
+        out.append(scale * acc)
+    return out
+
+
+def idct_ii_1d(coeffs: list[float]) -> list[float]:
+    """Orthonormal Inverse Type-II Discrete Cosine Transform."""
+    n = len(coeffs)
+    out: list[float] = []
+    for t in range(n):
+        acc = 0.0
+        for k in range(n):
+            scale = math.sqrt(1.0 / n) if k == 0 else math.sqrt(2.0 / n)
+            acc += scale * coeffs[k] * math.cos(math.pi * (2 * t + 1) * k / (2.0 * n))
+        out.append(acc)
+    return out
+
+
 def compute_metrics() -> dict:
-    # 1. 100K-GPU Chaos GameDay Fault Injection Audit (Ex 20-6 & Ex 20-12)
-    categories = {
-        "sdc_bitflip": {"injected": 50, "detected": 50, "mttd_sec": 0.042, "mttr_sec": 0.592},
-        "compute_pcie_straggler": {"injected": 50, "detected": 50, "mttd_sec": 3.20, "mttr_sec": 4.40},
-        "optical_fec_gray_failure": {"injected": 50, "detected": 49, "mttd_sec": 6.80, "mttr_sec": 9.0316},
-        "hbm_ecc_node_drop": {"injected": 50, "detected": 50, "mttd_sec": 0.84, "mttr_sec": 1.48},
-    }
-    total_injected = sum(c["injected"] for c in categories.values())  # 200
-    total_detected = sum(c["detected"] for c in categories.values())  # 199
-    overall_recall_pct = round(total_detected / total_injected * 100.0, 2)  # 99.50%
-    mean_mttd_sec = round(
-        sum(c["detected"] * c["mttd_sec"] for c in categories.values()) / total_detected, 2
-    )  # 2.70 s
-    mean_auto_mttr_sec = round(
-        sum(c["detected"] * c["mttr_sec"] for c in categories.values()) / total_detected, 2
-    )  # 3.85 s
-    manual_mttr_sec = 1500.0  # 25 min manual SRE intervention
-    mttr_speedup_x = round(manual_mttr_sec / mean_auto_mttr_sec, 2)  # 389.61x
+    # 1. Three-tier humanoid control hierarchy & 1,000 Hz visuotactile slip reflex (Ex 19-6)
+    tier1_vlm_hz = 2.0
+    tier2_flow_hz = 100.0
+    tier3_wbc_hz = 1000.0
+    tier3_period_us = 1000.0
 
-    # 2. 8-Rank Collective Arrival Skew Matrix Straggler Localization (Ex 20-6 & Ex 20-12)
-    enqueue_ts_ms = [10.0, 10.0, 10.0, 10.0, 10.0, 12.0, 10.0, 10.0]
-    ring_xfer_ms = 0.40
-    min_enqueue_ms = min(enqueue_ts_ms)
-    max_enqueue_ms = max(enqueue_ts_ms)
-    straggler_rank = enqueue_ts_ms.index(max_enqueue_ms)  # Rank 5
-    arrival_skew_ms = round(max_enqueue_ms - min_enqueue_ms, 2)  # 2.00 ms
-    completion_ts_ms = round(max_enqueue_ms + ring_xfer_ms, 2)  # 12.40 ms
-    healthy_observed_duration_ms = round(completion_ts_ms - min_enqueue_ms, 2)  # 2.40 ms
-    straggler_observed_duration_ms = round(completion_ts_ms - max_enqueue_ms, 2)  # 0.40 ms
-    healthy_wait_share_pct = round(arrival_skew_ms / healthy_observed_duration_ms * 100.0, 2)  # 83.33%
-    healthy_xfer_share_pct = round(ring_xfer_ms / healthy_observed_duration_ms * 100.0, 2)  # 16.67%
+    tactile_read_us = 180.0
+    slip_check_us = 40.0
+    wbc_qp_solve_us = 420.0
+    ethercat_tx_us = 160.0
+    tier3_wcet_us = round(tactile_read_us + slip_check_us + wbc_qp_solve_us + ethercat_tx_us, 2)  # 800.0 us
+    tier3_margin_us = round(tier3_period_us - tier3_wcet_us, 2)  # 200.0 us
 
-    # 3. TrainMover Virtual Rank Sub-Second Hot-Swap Latency Breakdown (Ex 20-6 & Ex 20-12)
-    qp_remap_sec = 0.08
-    rdma_state_push_sec = 0.60
-    trainmover_total_recovery_sec = round(qp_remap_sec + rdma_state_push_sec, 2)  # 0.68 s
-    global_restart_sec = 300.0
-    trainmover_speedup_x = round(global_restart_sec / trainmover_total_recovery_sec, 2)  # 441.18x
+    # Slip displacement at v_slip = 0.12 m/s: 15 ms visual loop vs 1.0 ms tactile loop
+    v_slip_m_s = 0.12
+    lag_visual_ms = 15.0
+    lag_tactile_ms = 1.0
+    slip_disp_100hz_mm = round(v_slip_m_s * lag_visual_ms, 2)  # 1.80 mm
+    slip_disp_1000hz_mm = round(v_slip_m_s * lag_tactile_ms, 2)  # 0.12 mm
+    slip_reduction_x = round(slip_disp_100hz_mm / slip_disp_1000hz_mm, 2)  # 15.0x
 
-    # 4. Four Benchmark Gaming De-biasing & Canary Gate Verifications (Ex 20-5, Ex 20-7, Ex 20-8 & Ex 20-12)
-    # (1) Candidate A=[10, 200], B=[50, 50] on Base=[100, 100]: 5.25x arith mean vs 0.9524x true equal-freq speedup
-    arith_speedup_a = round((100.0 / 10.0 + 100.0 / 200.0) / 2.0, 2)  # 5.25x
-    true_speedup_a_equal_freq = round((100.0 + 100.0) / (10.0 + 200.0), 4)  # 0.9524x (regression!)
-    # Exercise 20-7 variant: X=[10,240], Y=[40,60] on Base=[80,120]
-    arith_speedup_x = round((80.0 / 10.0 + 120.0 / 240.0) / 2.0, 2)  # 4.25x
-    arith_speedup_y = round((80.0 / 40.0 + 120.0 / 60.0) / 2.0, 2)  # 2.00x
-    true_speedup_x_equal_freq = round((80.0 + 120.0) / (10.0 + 240.0), 2)  # 0.80x
-    true_speedup_y_equal_freq = round((80.0 + 120.0) / (40.0 + 60.0), 2)  # 2.00x
-    crossover_p_x_beats_y = round(6.0 / 7.0, 4)  # 0.8571 (85.71%)
+    # 2. FAST (Frequency-space Action Sequence Tokenization) DCT-II compression (Ex 19-6 & Ex 19-11)
+    horizon_h = 50
+    action_dims = 14
+    naive_tokens = horizon_h * action_dims  # 700 tokens
+    retained_k = 8
+    fast_bpe_tokens = 80
+    compression_ratio_x = round(naive_tokens / fast_bpe_tokens, 2)  # 8.75x
+    token_reduction_pct = round((1.0 - fast_bpe_tokens / naive_tokens) * 100.0, 2)  # 88.57%
 
-    # (2) Linear thermal drift: delta = 8.0 us -> AABB bias = -16.0 us (and Ex 20-8 delta = 12.0 us -> -24.0 us) vs ABBA = 0.0 us
-    aabb_bias_8us_drift = round(-2.0 * 8.0, 2)  # -16.0 us
-    aabb_systematic_bias_us = round(-2.0 * 12.0, 2)  # -24.0 us
-    abba_systematic_bias_us = 0.0
+    per_token_ar_ms = 3.5
+    ar_decode_naive_ms = round(naive_tokens * per_token_ar_ms, 2)  # 2450.0 ms
+    ar_decode_fast_ms = round(fast_bpe_tokens * per_token_ar_ms, 2)  # 280.0 ms
 
-    # (3) Stage-2 Canary 5% traffic gate: +4.8% P99 regression (> +3.0% threshold) triggers automatic rollback
-    canary_p99_regression_pct = 4.8
-    canary_threshold_pct = 3.0
-    canary_auto_rollback_triggered = canary_p99_regression_pct > canary_threshold_pct
+    # Deterministic smooth 50-step x 14-DoF minimum-jerk trajectory DCT verification
+    total_energy = 0.0
+    low_freq_energy = 0.0
+    sq_err_sum = 0.0
+    for d in range(action_dims):
+        amp = 4.0 + 0.3 * d  # mm incremental displacement over 0.5 s action chunk
+        phase = 0.15 * d
+        traj = [
+            amp
+            * (
+                0.65 * math.cos(math.pi * t / horizon_h + phase)
+                + 0.25 * math.cos(2.0 * math.pi * t / horizon_h)
+                + 0.055 * math.cos(9.0 * math.pi * t / horizon_h)
+            )
+            for t in range(horizon_h)
+        ]
+        coeffs = dct_ii_1d(traj)
+        total_energy += sum(c * c for c in coeffs)
+        low_freq_energy += sum(c * c for c in coeffs[:retained_k])
+        # Truncate high frequencies k >= 8 and quantize with step q = 0.02
+        q_step = 0.02
+        quant_coeffs = [round(c / q_step) * q_step if k < retained_k else 0.0 for k, c in enumerate(coeffs)]
+        recon = idct_ii_1d(quant_coeffs)
+        sq_err_sum += sum((traj[t] - recon[t]) ** 2 for t in range(horizon_h))
+
+    energy_retention_pct = round(low_freq_energy / total_energy * 100.0, 2)  # > 99.4%
+    recon_rmse_mm = round(math.sqrt(sq_err_sum / (horizon_h * action_dims)), 4)  # < 0.35 mm
+
+    # 3. PTP hardware synchronization vs software arrival timestamp skew & closed-form CBF safety shield (Ex 19-6 & Ex 19-12)
+    arm_vel_m_s = 0.60
+    software_skew_ms = 27.0
+    ptp_interp_skew_ms = 0.018  # 18 us < 100 us
+    software_pos_err_mm = round(arm_vel_m_s * software_skew_ms, 2)  # 16.20 mm
+    ptp_pos_err_mm = round(arm_vel_m_s * ptp_interp_skew_ms, 3)  # 0.011 mm
+    sync_accuracy_gain_x = round(software_pos_err_mm / ptp_pos_err_mm, 1)  # 1472.7x
+
+    # Closed-form 1,000 Hz Zero-Order Hold CBF safety shield: v_safe <= gamma_cbf * h(x)
+    v_nom_m_s = 0.85
+    h_init_m = 0.015  # 15.0 mm from obstacle
+    gamma_cbf = 20.0
+    v_safe_at_15mm = round(min(v_nom_m_s, gamma_cbf * h_init_m), 2)  # 0.30 m/s
+    raw_margin = round(-v_nom_m_s + gamma_cbf * h_init_m, 4)  # -0.55 < 0 (unsafe without shield)
+    post_cbf_margin = round(-v_safe_at_15mm + gamma_cbf * h_init_m, 4)  # 0.0 >= 0 (safe)
+    # 500-step 1,000 Hz rollout with 1.20 mm hardware standoff floor
+    h_cur = h_init_m
+    dt_s = 0.001
+    h_standoff_m = 0.0012  # 1.20 mm safety buffer
+    safety_violations = 0
+    for _ in range(500):
+        v_cmd = min(v_nom_m_s, gamma_cbf * max(0.0, h_cur - h_standoff_m))
+        h_cur = h_cur - v_cmd * dt_s
+        if h_cur < 0.0:
+            safety_violations += 1
+    min_dist_mm = round(h_cur * 1000.0, 2)  # 1.20 mm > 0
 
     return {
         "experiment_id": "20-02",
-        "chaos_gameday_audit": {
-            "total_injected": total_injected,
-            "total_detected": total_detected,
-            "overall_recall_pct": overall_recall_pct,
-            "mean_mttd_sec": mean_mttd_sec,
-            "mean_auto_mttr_sec": mean_auto_mttr_sec,
-            "manual_mttr_sec": manual_mttr_sec,
-            "mttr_speedup_x": mttr_speedup_x,
+        "three_tier_humanoid_wbc": {
+            "tier1_vlm_hz": tier1_vlm_hz,
+            "tier2_flow_hz": tier2_flow_hz,
+            "tier3_wbc_hz": tier3_wbc_hz,
+            "tier3_period_us": tier3_period_us,
+            "tier3_wcet_us": tier3_wcet_us,
+            "tier3_margin_us": tier3_margin_us,
+            "slip_disp_100hz_mm": slip_disp_100hz_mm,
+            "slip_disp_1000hz_mm": slip_disp_1000hz_mm,
+            "slip_reduction_x": slip_reduction_x,
         },
-        "arrival_skew_8rank": {
-            "straggler_rank": straggler_rank,
-            "arrival_skew_ms": arrival_skew_ms,
-            "healthy_observed_duration_ms": healthy_observed_duration_ms,
-            "straggler_observed_duration_ms": straggler_observed_duration_ms,
-            "healthy_wait_share_pct": healthy_wait_share_pct,
-            "healthy_xfer_share_pct": healthy_xfer_share_pct,
+        "fast_dct_action_tokenizer": {
+            "horizon_h": horizon_h,
+            "action_dims": action_dims,
+            "naive_tokens": naive_tokens,
+            "retained_low_freqs": retained_k,
+            "fast_bpe_tokens": fast_bpe_tokens,
+            "compression_ratio_x": compression_ratio_x,
+            "token_reduction_pct": token_reduction_pct,
+            "ar_decode_naive_ms": ar_decode_naive_ms,
+            "ar_decode_fast_ms": ar_decode_fast_ms,
+            "energy_retention_pct": energy_retention_pct,
+            "recon_rmse_mm": recon_rmse_mm,
         },
-        "trainmover_hot_swap": {
-            "qp_remap_sec": qp_remap_sec,
-            "rdma_state_push_sec": rdma_state_push_sec,
-            "trainmover_total_recovery_sec": trainmover_total_recovery_sec,
-            "global_restart_sec": global_restart_sec,
-            "trainmover_speedup_x": trainmover_speedup_x,
-        },
-        "benchmark_debiasing": {
-            "arith_speedup_a": arith_speedup_a,
-            "true_speedup_a_equal_freq": true_speedup_a_equal_freq,
-            "arith_speedup_x": arith_speedup_x,
-            "arith_speedup_y": arith_speedup_y,
-            "true_speedup_x_equal_freq": true_speedup_x_equal_freq,
-            "true_speedup_y_equal_freq": true_speedup_y_equal_freq,
-            "crossover_p_x_beats_y": crossover_p_x_beats_y,
-            "aabb_bias_8us_drift": aabb_bias_8us_drift,
-            "aabb_systematic_bias_us": aabb_systematic_bias_us,
-            "abba_systematic_bias_us": abba_systematic_bias_us,
-            "canary_p99_regression_pct": canary_p99_regression_pct,
-            "canary_auto_rollback_triggered": canary_auto_rollback_triggered,
+        "ptp_alignment_and_cbf_shield": {
+            "software_skew_ms": software_skew_ms,
+            "ptp_interp_skew_ms": ptp_interp_skew_ms,
+            "software_pos_err_mm": software_pos_err_mm,
+            "ptp_pos_err_mm": ptp_pos_err_mm,
+            "sync_accuracy_gain_x": sync_accuracy_gain_x,
+            "v_nom_m_s": v_nom_m_s,
+            "v_safe_at_15mm": v_safe_at_15mm,
+            "raw_cbf_margin": raw_margin,
+            "post_cbf_margin": post_cbf_margin,
+            "safety_violations_500steps": safety_violations,
+            "min_dist_mm": min_dist_mm,
         },
     }
 

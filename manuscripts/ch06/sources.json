@@ -91,11 +91,11 @@
     },
     {
       "path": "references/files/papers/deepseek-v4.pdf",
-      "sha256": "55b2d72f772ac00de2e470b3ee08443c648d971c7f57c52d6202895665e5978d"
+      "sha256": "14ab56fc476ef121ff01016e52874e01ae55e68756718ad0967e6c64803fe0fe"
     },
     {
       "path": "references/files/papers/google-tpu-generations.pdf",
-      "sha256": "d1e5d21b9959afefe574a6de839f52c094b3b7d3d481c89cd48b2e2737214465"
+      "sha256": "547886cb908ef535eef59ef758a1b9a75fce48886f2231439f7e13cb9b1f6058"
     },
     {
       "path": "references/files/papers/kimi-k3.pdf",
@@ -107,7 +107,7 @@
     },
     {
       "path": "references/files/papers/tpu-v4.pdf",
-      "sha256": "94f08ac4cd041e46e5037876793761df8043296ac374aa5372af7afb0bdf3ce2"
+      "sha256": "a81d00a79bdd1be8e104eea17d115f2cc936e42b20d3de8a2aef80711e96fae6"
     },
     {
       "path": "references/files/papers/zero.pdf",
@@ -119,11 +119,11 @@
     },
     {
       "path": "references/files/specs/ascend-950-official.pdf",
-      "sha256": "ece3405e6a17fabdd462338fb94266558649a6407a2f28008403211387b3a927"
+      "sha256": "7d2657d61b0213a78c18514331c908a99ead54f94548b027f8a834d24c0724e0"
     },
     {
       "path": "references/files/specs/nvidia-a100.pdf",
-      "sha256": "3a800ad7668ec37037fa5870a8e3bb681b75f19668b3d11492ab9b0da0d58815"
+      "sha256": "84dc985c5e860c064809832de12a0b7852f58a48852c08df8d24f60a78e0dcd3"
     },
     {
       "path": "references/files/specs/nvidia-gb200.md",
@@ -131,7 +131,7 @@
     },
     {
       "path": "references/files/specs/nvidia-v100.pdf",
-      "sha256": "86ab6ff6b0d8633fc196f709810f20e185769af0698ec9274034119bf3feec8d"
+      "sha256": "d12b6cf337b83713c703b76193951388e673149bd0a26aae1d5dd4ccc850aa38"
     },
     {
       "path": "references/outline-checks/2026-09-07/scaling-history/qwen3-235b-config.json",
@@ -203,11 +203,11 @@
     },
     {
       "path": "references/files/documents/dgx-superpod-h100-ra.pdf",
-      "sha256": "2747e8b5d225c7177dca9cf5adc116c37e385a956383281824e79a542ef03877"
+      "sha256": "99463a055c99bb10fe3b71b23a2dda9132cd8c4f9c5fd30f5705aa5ac1d882d1"
     },
     {
       "path": "calculations/results/qwen235-placement-tp8-kv-replica.json",
-      "sha256": "4363e9b12ac8abadf0744beda897ec5546e3f0f7fa04fe6012c884663eb903f2"
+      "sha256": "853a2865440828742dbbe695dbf1db6ef323814c287ce9d2a0b96fb3d4327e35"
     },
     {
       "path": "calculations/results/qwen235-placement-tp8-kv-replica.md",
@@ -339,7 +339,7 @@
     },
     {
       "path": "references/proceedings/ASPLOS/2026/paper-034.pdf",
-      "sha256": "0bb31f7c059234c0b5ca8ffb8190da77a32c67845283e20e4884ad9539636388"
+      "sha256": "5337866f7bc1c1e3fb2f06714ec8f792b16cb34d133b926cb9dfea48ee2574f8"
     },
     {
       "path": "references/proceedings/ASPLOS/2026/paper-034.txt",
@@ -347,7 +347,7 @@
     },
     {
       "path": "references/files/specs/nvidia-h100.pdf",
-      "sha256": "3641614979809a027a8aabdc2e77639efb8fcd0f8dc7873a22ba2125489f5a27"
+      "sha256": "18561a23911ff24c2540030ae89b8ad3e04e74820ee0a03c416be017072b60f5"
     },
     {
       "path": "references/text/nvidia-h100.txt",
@@ -391,7 +391,7 @@
     },
     {
       "path": "references/files/specs/ualink-common.pdf",
-      "sha256": "d1431f080621c46b2df9b34bbeb2b7fe7bdc95b14785e717e17687fe37fcc8e6"
+      "sha256": "ccf76d1378bbaa3f8c52fc321acc405ff826f5913d05715ba3ba71a599119b6d"
     },
     {
       "path": "references/text/ualink-common.txt",

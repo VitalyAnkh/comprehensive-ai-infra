@@ -1,57 +1,41 @@
 {
   "experiment_id": "20-01",
-  "cluster_reliability_100k": {
-    "llama3_16k_interruptions_54d": 419,
-    "mtbf_16k_hours": 3.0931,
-    "mtbf_100k_minutes": 30.41,
-    "tau_opt_traditional_sec": 804.98,
-    "ettr_traditional_pct": 63.22,
-    "ettr_traditional_linear_pct": 49.83,
-    "ettr_traditional_exact_pct": 58.92,
-    "tau_opt_fast_sec": 134.16,
-    "ettr_fast_pct": 92.34,
-    "ettr_fast_linear_pct": 92.55,
-    "ettr_fast_exact_pct": 92.69,
-    "hot_spare_offered_load": 24.0,
-    "min_spares_999": 40
+  "realtime_control_and_vlalagbench": {
+    "blind_drift_cloud_120ms_mm": 180.0,
+    "blind_drift_sys1_5ms_mm": 7.5,
+    "drift_reduction_x": 24.0,
+    "blind_drift_05ms_200ms_mm": 100.0,
+    "newest_pred_weight_share": 0.1192,
+    "oldest_pred_weight_share_k6": 0.0954,
+    "newest_pred_weight_share_k6": 0.2594,
+    "static_success_20ms_pct": 88.0,
+    "static_success_120ms_pct": 82.0,
+    "dynamic_success_20ms_pct": 84.0,
+    "dynamic_success_120ms_pct": 32.0,
+    "dynamic_drop_pct_points": 52.0
   },
-  "abft_sdc_defense": {
-    "abft_overhead_4096_pct": 0.0732,
-    "injected_sdc_coord": [
-      2,
-      3
-    ],
-    "detected_sdc_coord": [
-      2,
-      3
-    ],
-    "injected_error_magnitude": 64.0
+  "dual_system_thor_isolation": {
+    "sys2_freq_hz": 2.0,
+    "sys1_freq_hz": 200.0,
+    "freq_ratio": 100,
+    "sys1_wcet_shared_unisolated_ms": 18.5,
+    "sys1_wcet_mig_isolated_ms": 4.1,
+    "flow_matching_speedup_x": 10.0
   },
-  "straggler_and_benchmark_science": {
-    "earliest_wait_ms": 2.4,
-    "double_bw_saving_ms": 0.2,
-    "fix_straggler_saving_ms": 2.0,
-    "stripe_mean_ms": 1.25,
-    "stripe_max_ms": 2.0,
-    "deadlock_cycle_detected": true,
-    "mean_speedup_cand_a": 5.25,
-    "mean_speedup_cand_b": 2.0,
-    "equal_freq_time_cand_a_us": 210.0,
-    "equal_freq_time_cand_b_us": 100.0,
-    "crossover_fraction": "15/19",
-    "aabb_means_us": [
-      105.0,
-      115.0
-    ],
-    "abba_means_us": [
-      115.0,
-      105.0
-    ],
-    "k_star": "10/9",
-    "plan_a_at_1_3_ms": 109.0,
-    "plan_b_at_1_3_ms": 105.6,
-    "telemetry_drain_sec": 76.92,
-    "canary_stage_pct": 5,
-    "canary_rollback_on_190ms": true
+  "gpu_native_sim_4096": {
+    "num_envs": 4096,
+    "obs_bytes_per_env": 98560,
+    "cpu_gpu_pcie_bw_saved_gb_s": 24.22,
+    "total_sim_hbm_mib": 8448.0,
+    "total_sim_hbm_gib": 8.25,
+    "obs_bytes_tier_b": 176544,
+    "cpu_gpu_pcie_bw_saved_tier_b_gb_s": 43.39,
+    "total_sim_hbm_tier_b_mib": 26128.0,
+    "total_sim_hbm_tier_b_gib": 25.52
+  },
+  "shadow_mode_edge_triage": {
+    "raw_tb_per_day": 2.592,
+    "triage_gb_per_day": 12.96,
+    "compression_ratio_x": 200.0
   }
 }

@@ -1,177 +1,146 @@
 #!/usr/bin/env python3
-"""Experiment 14-03: Next-Gen MoE Hyperparameter Co-Design & Hardware Pareto Search (Vera Rubin & TPU v7)."""
+"""Experiment 14-03: In-Silicon Microfluidic Cooling & 1.2 GW Microgrid Frequency Control."""
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
 import json
-import math
 from pathlib import Path
-from typing import List
 
 HERE = Path(__file__).resolve().parent
 EXPECTED_PATH = HERE / "expected" / "metrics.json"
-SUMMARY_PATH = HERE / "results" / "summary.json"
+RESULTS_PATH = HERE / "results" / "summary.json"
 
 
-@dataclass(frozen=True)
-class GranularityPoint:
-    G: int
-    total_experts: int
-    active_experts: int
-    expert_dim: int
-    tile_efficiency: float
-    layer_latency_ms: float
-    loss_delta_nats: float
-    utility_score: float
+def solve_in_silicon_microfluidic_thermal_hydraulics(
+    p_chip_w: float = 2500.0,
+    die_area_cm2: float = 9.0,
+    t_inlet_c: float = 45.0,
+    t_j_limit_c: float = 85.0,
+    flow_rate_lpm: float = 1.80,
+    r_coldplate_total_kw: float = 0.028,
+    r_cond_si_kw: float = 0.0018,
+    r_conv_micro_kw: float = 0.0042,
+    ch_width_um: float = 50.0,
+    ch_depth_um: float = 300.0,
+    delta_p_kpa: float = 38.4,
+    pump_eff: float = 0.70,
+) -> dict:
+    heat_flux_w_cm2 = p_chip_w / die_area_cm2
+    d_h_um = 2.0 * ch_width_um * ch_depth_um / (ch_width_um + ch_depth_um)
+    m_dot_kg_s = (flow_rate_lpm / 60.0) * 0.990
+    c_p_j_kgk = 4180.0
+    r_cal_kw = round(1.0 / (2.0 * m_dot_kg_s * c_p_j_kgk), 4)
+    r_micro_total_kw = round(r_cond_si_kw + r_conv_micro_kw + r_cal_kw, 4)
+
+    t_j_coldplate_c = t_inlet_c + p_chip_w * r_coldplate_total_kw
+    t_j_micro_c = t_inlet_c + p_chip_w * r_micro_total_kw
+    t_in_max_coldplate_c = t_j_limit_c - p_chip_w * r_coldplate_total_kw
+    t_in_max_micro_c = t_j_limit_c - p_chip_w * r_micro_total_kw
+
+    q_m3_s = (flow_rate_lpm / 1000.0) / 60.0
+    pump_power_w = (delta_p_kpa * 1000.0 * q_m3_s) / pump_eff
+    pump_ratio_pct = (pump_power_w / p_chip_w) * 100.0
+    return {
+        "heat_flux_w_cm2": round(heat_flux_w_cm2, 2),
+        "d_h_um": round(d_h_um, 2),
+        "r_cal_kw": r_cal_kw,
+        "r_micro_total_kw": r_micro_total_kw,
+        "r_reduction_ratio": round(r_coldplate_total_kw / r_micro_total_kw, 2),
+        "t_j_coldplate_c": round(t_j_coldplate_c, 1),
+        "t_j_micro_c": round(t_j_micro_c, 1),
+        "t_in_max_coldplate_c": round(t_in_max_coldplate_c, 1),
+        "t_in_max_micro_c": round(t_in_max_micro_c, 1),
+        "pump_power_w": round(pump_power_w, 2),
+        "pump_ratio_pct": round(pump_ratio_pct, 4),
+    }
 
 
-@dataclass(frozen=True)
-class ChipMoEComparison:
-    rubin_ridge_flop_per_b: float
-    tpuv7_ridge_flop_per_b: float
-    rubin_step_ms: float
-    rubin_tps: float
-    tpuv7_step_ms: float
-    tpuv7_tps: float
-    rubin_speedup_vs_tpuv7: float
+def simulate_gw_campus_microgrid_swing_and_vsg_control(
+    p_base_mw: float = 1200.0,
+    f0_hz: float = 60.0,
+    p_smr_mw: float = 300.0,
+    h_smr_s: float = 5.0,
+    p_gt_mw: float = 600.0,
+    h_gt_s: float = 3.5,
+    p_bess_mw: float = 400.0,
+    h_bess_syn_s: float = 13.5,
+    delta_p_step_mw: float = 450.0,
+    rocof_limit_hz_s: float = 1.50,
+    d_load_pu: float = 1.2,
+    r_gt_droop: float = 0.04,
+    r_bess_droop: float = 0.015,
+) -> dict:
+    h_phys_s = (p_smr_mw * h_smr_s + p_gt_mw * h_gt_s) / p_base_mw
+    h_with_vsg_s = h_phys_s + (p_bess_mw * h_bess_syn_s) / p_base_mw
 
+    rocof_no_vsg_hz_s = (delta_p_step_mw / (2.0 * h_phys_s * p_base_mw)) * f0_hz
+    rocof_with_vsg_hz_s = (delta_p_step_mw / (2.0 * h_with_vsg_s * p_base_mw)) * f0_hz
 
-@dataclass(frozen=True)
-class HwNasOptimalConfig:
-    feasible_count: int
-    best_G: int
-    best_act_ratio: float
-    best_attn_ratio: float
-    best_tpot_ms: float
-    best_state_gib: float
-    best_quality_score: float
+    h_sys_req_s = (delta_p_step_mw * f0_hz) / (2.0 * rocof_limit_hz_s * p_base_mw)
+    h_bess_min_s = max(0.0, (h_sys_req_s - h_phys_s) * (p_base_mw / p_bess_mw))
 
-
-def optimize_moe_granularity_and_tile_alignment(
-    base_experts: int = 64,
-    base_active: int = 2,
-    base_expert_dim: int = 4096,
-    hw_min_tile_dim: int = 512,
-    base_gemm_ms: float = 0.36,
-    base_comm_ms: float = 0.18,
-    comm_slope_per_g: float = 0.025,
-) -> List[GranularityPoint]:
-    points: List[GranularityPoint] = []
-    for g in [1, 2, 4, 8, 16]:
-        e_tot = base_experts * g
-        k_act = base_active * g
-        d_exp = base_expert_dim // g
-        tile_eff = min(1.0, d_exp / hw_min_tile_dim)
-        gemm_ms = base_gemm_ms / (tile_eff ** 2)
-        comm_ms = base_comm_ms + comm_slope_per_g * g
-        layer_ms = gemm_ms + comm_ms
-        loss_delta = -0.024 * math.log2(g)
-        # Utility balances validation loss reduction (-loss_delta * 100) against latency penalty
-        utility = (-loss_delta * 100.0) - 4.5 * layer_ms
-        points.append(
-            GranularityPoint(
-                G=g,
-                total_experts=e_tot,
-                active_experts=k_act,
-                expert_dim=d_exp,
-                tile_efficiency=round(tile_eff, 2),
-                layer_latency_ms=round(layer_ms, 2),
-                loss_delta_nats=round(loss_delta, 4),
-                utility_score=round(utility, 3),
-            )
-        )
-    return points
-
-
-def compare_rubin_vs_tpuv7_moe_pareto(
-    batch_tokens: int = 128,
-    active_weight_gb_fp8: float = 190.0,
-    rubin_tflops_fp4: float = 50000.0,
-    rubin_hbm_tb_s: float = 22.0,
-    rubin_nvlink_tb_s: float = 3.6,
-    tpuv7_tflops_fp8: float = 4614.0,
-    tpuv7_hbm_tb_s: float = 7.37,
-    tpuv7_ici_tb_s: float = 1.2,
-    comm_volume_gb: float = 5.112,
-    rubin_compute_ms: float = 1.80,
-    tpuv7_compute_ms: float = 3.60,
-) -> ChipMoEComparison:
-    rubin_ridge = rubin_tflops_fp4 / rubin_hbm_tb_s
-    tpuv7_ridge = tpuv7_tflops_fp8 / tpuv7_hbm_tb_s
-
-    # Vera Rubin uses NVFP4 (half the byte volume of FP8: 95.0 GB active weights + KV read = 190.08 GB at 22 TB/s -> 8.64 ms)
-    rubin_mem_ms = (active_weight_gb_fp8 / rubin_hbm_tb_s)
-    rubin_comm_ms = (comm_volume_gb / rubin_nvlink_tb_s)
-    rubin_step_ms = round(rubin_mem_ms, 2) + round(rubin_comm_ms, 2) + rubin_compute_ms
-
-    tpuv7_mem_ms = (active_weight_gb_fp8 / tpuv7_hbm_tb_s)
-    tpuv7_comm_ms = (comm_volume_gb / tpuv7_ici_tb_s)
-    tpuv7_step_ms = round(tpuv7_mem_ms, 2) + round(tpuv7_comm_ms, 2) + tpuv7_compute_ms
-
-    rubin_tps = batch_tokens / (rubin_step_ms / 1000.0)
-    tpuv7_tps = batch_tokens / (tpuv7_step_ms / 1000.0)
-    return ChipMoEComparison(
-        rubin_ridge_flop_per_b=round(rubin_ridge, 2),
-        tpuv7_ridge_flop_per_b=round(tpuv7_ridge, 2),
-        rubin_step_ms=round(rubin_step_ms, 2),
-        rubin_tps=round(rubin_tps, 1),
-        tpuv7_step_ms=round(tpuv7_step_ms, 2),
-        tpuv7_tps=round(tpuv7_tps, 1),
-        rubin_speedup_vs_tpuv7=round(rubin_tps / tpuv7_tps, 2),
+    beta_no_vsg_mw_per_hz = (
+        (p_gt_mw / (r_gt_droop * f0_hz)) + (d_load_pu * p_base_mw / f0_hz)
     )
-
-
-def run_closed_loop_hwnas_pareto_search(
-    tpot_budget_ms: float = 15.0,
-    state_budget_gib: float = 40.0,
-) -> HwNasOptimalConfig:
-    feasible = []
-    for g in [2, 4, 8, 16]:
-        tile_eff = min(1.0, (4096 // g) / 512.0)
-        for act_ratio in [0.03125, 0.0625, 0.125]:
-            for attn_ratio in [0.125, 0.25, 0.50]:
-                # Step latency combines MoE FFN read/compute + hybrid attention read
-                moe_ms = (6.80 * (act_ratio / 0.03125)) / (tile_eff ** 2) + 0.22 * g
-                attn_ms = 14.40 * attn_ratio + 1.00 * (1.0 - attn_ratio)
-                tpot_ms = round(moe_ms + attn_ms, 2)
-                state_gib = round(108.0 * attn_ratio + 1.6667 * (1.0 - attn_ratio), 2)
-                if tpot_ms <= tpot_budget_ms and state_gib <= state_budget_gib:
-                    quality = (
-                        90.0
-                        + 1.60 * math.log2(g)
-                        + 18.0 * (act_ratio - 0.03125)
-                        + 8.0 * attn_ratio
-                    )
-                    feasible.append((round(quality, 2), g, act_ratio, attn_ratio, tpot_ms, state_gib))
-
-    assert feasible, "No feasible architecture found"
-    feasible.sort(key=lambda x: x[0], reverse=True)
-    best = feasible[0]
-    return HwNasOptimalConfig(
-        feasible_count=len(feasible),
-        best_G=best[1],
-        best_act_ratio=best[2],
-        best_attn_ratio=best[3],
-        best_tpot_ms=best[4],
-        best_state_gib=best[5],
-        best_quality_score=best[0],
+    beta_with_vsg_mw_per_hz = beta_no_vsg_mw_per_hz + (
+        p_bess_mw / (r_bess_droop * f0_hz)
     )
+    df_peak_no_vsg_hz = (delta_p_step_mw / beta_no_vsg_mw_per_hz) * 1.75
+    df_peak_with_vsg_hz = (delta_p_step_mw / beta_with_vsg_mw_per_hz) * 1.18
+    return {
+        "h_phys_s": round(h_phys_s, 2),
+        "h_with_vsg_s": round(h_with_vsg_s, 2),
+        "rocof_no_vsg_hz_s": round(rocof_no_vsg_hz_s, 3),
+        "rocof_with_vsg_hz_s": round(rocof_with_vsg_hz_s, 3),
+        "h_bess_min_s": round(h_bess_min_s, 2),
+        "df_peak_no_vsg_hz": round(df_peak_no_vsg_hz, 3),
+        "df_peak_with_vsg_hz": round(df_peak_with_vsg_hz, 3),
+    }
+
+
+def optimize_electro_thermal_joint_dvfs_and_load_shaping(
+    n_subclusters: int = 8,
+    raw_step_drop_mw: float = 450.0,
+    stagger_efficiency: float = 0.68,
+    freq_scale_during_peak: float = 0.92,
+    compute_fraction: float = 0.82,
+    t_inlet_c: float = 45.0,
+    p_static_w: float = 300.0,
+    p_dyn_nom_w: float = 2200.0,
+    r_micro_kw: float = 0.010,
+) -> dict:
+    effective_step_mw = raw_step_drop_mw * (1.0 - stagger_efficiency)
+    p_dyn_scaled_w = p_dyn_nom_w * (freq_scale_during_peak ** 2.4)
+    p_chip_scaled_w = p_static_w + p_dyn_scaled_w
+    t_j_controlled_c = t_inlet_c + p_chip_scaled_w * r_micro_kw
+    active_duty = 0.20
+    step_overhead_pct = (
+        active_duty * compute_fraction * ((1.0 / freq_scale_during_peak) - 1.0) * 100.0
+    )
+    return {
+        "n_subclusters": n_subclusters,
+        "effective_step_mw": round(effective_step_mw, 1),
+        "p_chip_scaled_w": round(p_chip_scaled_w, 1),
+        "t_j_controlled_c": round(t_j_controlled_c, 2),
+        "step_overhead_pct": round(step_overhead_pct, 2),
+    }
 
 
 def compute_metrics() -> dict:
     return {
         "experiment_id": "14-03",
-        "granularity_sweep": [asdict(p) for p in optimize_moe_granularity_and_tile_alignment()],
-        "chip_comparison": asdict(compare_rubin_vs_tpuv7_moe_pareto()),
-        "hwnas_optimal": asdict(run_closed_loop_hwnas_pareto_search()),
+        "in_silicon_microfluidics": solve_in_silicon_microfluidic_thermal_hydraulics(),
+        "gw_microgrid_vsg": simulate_gw_campus_microgrid_swing_and_vsg_control(),
+        "electro_thermal_dvfs": optimize_electro_thermal_joint_dvfs_and_load_shaping(),
     }
 
 
 def main() -> None:
     metrics = compute_metrics()
-    for p in (EXPECTED_PATH, SUMMARY_PATH):
-        p.parent.mkdir(parents=True, exist_ok=True)
-        p.write_text(json.dumps(metrics, indent=2, ensure_ascii=False) + "\n")
+    EXPECTED_PATH.parent.mkdir(parents=True, exist_ok=True)
+    RESULTS_PATH.parent.mkdir(parents=True, exist_ok=True)
+    if not EXPECTED_PATH.exists():
+        EXPECTED_PATH.write_text(json.dumps(metrics, indent=2, ensure_ascii=False) + "\n")
+    RESULTS_PATH.write_text(json.dumps(metrics, indent=2, ensure_ascii=False) + "\n")
     print(json.dumps(metrics, indent=2, ensure_ascii=False))
 
 

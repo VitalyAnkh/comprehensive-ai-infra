@@ -1,260 +1,497 @@
 {
+  "chapter": "ch19",
   "outputs": [
     {
-      "path": "manuscripts/ch19/ch19-3dgs-neural-reconstruction-sim2real-loop.pdf",
-      "sha256": "6fa51bede8895b784114256a45071f1bd92bda695b38afc54047db9f1701118f"
+      "path": "manuscripts/ch19/ch19-1d-llm-vs-3d-spatiotemporal-dit-tokens.svg",
+      "sha256": "659de6638086e83c3946122846c950df166914ecd6cbb41b018bf8662e28167a"
     },
     {
-      "path": "manuscripts/ch19/ch19-3dgs-neural-reconstruction-sim2real-loop.png",
-      "sha256": "92c1863248925bfcfc88d98ba1a926fb82a961574d515ac5f5623e207475e0e2"
+      "path": "manuscripts/ch19/ch19-1d-llm-vs-3d-spatiotemporal-dit-tokens.png",
+      "sha256": "c5cb04f772e05bb50cda607fe471cb4e8e9e768cbea281f0d9a07360757d84d7"
     },
     {
-      "path": "manuscripts/ch19/ch19-3dgs-neural-reconstruction-sim2real-loop.svg",
-      "sha256": "942a791e041826dccefd989350643ab8268a0648bdf16284e6f3ea85a299748f"
+      "path": "manuscripts/ch19/ch19-1d-llm-vs-3d-spatiotemporal-dit-tokens.pdf",
+      "sha256": "65e292dea1165a218eca3285f9703ca8de344e55836888d450d116be825a9ceb"
     },
     {
-      "path": "manuscripts/ch19/ch19-3dgs-neural-sensor-closed-loop-re-simulation.pdf",
-      "sha256": "659b27537133b969a2a36ad92ee7acb5b31387eddb5ff984afdeeb1a673bb58e"
+      "path": "manuscripts/ch19/ch19-anyres-navit-dynamic-image-tiling.svg",
+      "sha256": "5f94244b8caa39faa929ad9254b72e8a628e18875ca428fb796c1b0e0c76d1fa"
     },
     {
-      "path": "manuscripts/ch19/ch19-3dgs-neural-sensor-closed-loop-re-simulation.png",
-      "sha256": "a13c79e66da9d505976fe9aeffd64046b180afe838508144af2c4c4307d32255"
+      "path": "manuscripts/ch19/ch19-anyres-navit-dynamic-image-tiling.png",
+      "sha256": "4f20b787fe30d16b7eaf6423c6e6aaff48d401f7822baa157360e5b2ea8c95c9"
     },
     {
-      "path": "manuscripts/ch19/ch19-3dgs-neural-sensor-closed-loop-re-simulation.svg",
-      "sha256": "3b6989b0a6244d5998f4d986b360c9dd5ceb4e50ef9240a60280a1063361104c"
+      "path": "manuscripts/ch19/ch19-anyres-navit-dynamic-image-tiling.pdf",
+      "sha256": "81eddeb6594736f5a098aca986cf649ce6c1c810bed412e7bba6d5bee68d88f7"
     },
     {
-      "path": "manuscripts/ch19/ch19-action-chunking-and-temporal-ensembling.pdf",
-      "sha256": "45743bde3fcecce7f4986f2afe43d82d60e7cb33fb49f1abcb00bebb066545e2"
+      "path": "manuscripts/ch19/ch19-3d-causal-vae-memory-spike-and-tiling.svg",
+      "sha256": "8466bf0a42e8ec250bb1da97f51e859f2918b67410b2973ec469d8e57e26b11c"
     },
     {
-      "path": "manuscripts/ch19/ch19-action-chunking-and-temporal-ensembling.png",
-      "sha256": "bc38ff5632b7e8ec911de26efa29dfa2b671c1d8fa256fd4d1d095fa18f909b1"
+      "path": "manuscripts/ch19/ch19-3d-causal-vae-memory-spike-and-tiling.png",
+      "sha256": "8db3aa9530cec7bda040082a2cb55dbc7c1d46802dcbe43bbf8a1dfc660a0d2e"
     },
     {
-      "path": "manuscripts/ch19/ch19-action-chunking-and-temporal-ensembling.svg",
-      "sha256": "ee9e49220ee76715990e977a8b070aae439b5efd2a4033d18b1de0215dee3280"
+      "path": "manuscripts/ch19/ch19-3d-causal-vae-memory-spike-and-tiling.pdf",
+      "sha256": "45c9827c3f5a6d9e135e09a37df9240b3fd1b30d2fe80b419558be1f62ef6210"
     },
     {
-      "path": "manuscripts/ch19/ch19-cloud-llm-slo-vs-embodied-hard-realtime.pdf",
-      "sha256": "bdeeab0666d627b1359197da6fe5ab03079dcb341066bc9d8c30ee73a097a6f5"
+      "path": "manuscripts/ch19/ch19-tp-vs-ulysses-vs-ring-attention-comm.svg",
+      "sha256": "0c390511afef3dd8ff6aad31ef426d3ed26e4d4c19229fc24099ee52a750da46"
     },
     {
-      "path": "manuscripts/ch19/ch19-cloud-llm-slo-vs-embodied-hard-realtime.png",
-      "sha256": "ec52c9c6affc649ebfe3f6d41f12595c7b1148b5f98de1e77306f139c34cb269"
+      "path": "manuscripts/ch19/ch19-tp-vs-ulysses-vs-ring-attention-comm.png",
+      "sha256": "e0279ca934c96aec2ab041cad85f219684fba55d419f11073f59229713e0a7f6"
     },
     {
-      "path": "manuscripts/ch19/ch19-cloud-llm-slo-vs-embodied-hard-realtime.svg",
-      "sha256": "c22851baaff6fa759f12c3e672fea40075b241d2f47a23bed5991f464a66f1be"
+      "path": "manuscripts/ch19/ch19-tp-vs-ulysses-vs-ring-attention-comm.pdf",
+      "sha256": "fa354edcba6aca1ed3cd642ec077e2f2800e38ed6947d543a900b4c36e447715"
     },
     {
-      "path": "manuscripts/ch19/ch19-contact-divergence-warp-inefficiency.pdf",
-      "sha256": "652fcc7022f97ea3c76d240e1f5eea75e24b5b861eb151921a925b2f52e97089"
+      "path": "manuscripts/ch19/ch19-2d-usp-hybrid-ulysses-ring-topology.svg",
+      "sha256": "957e7c4c626bc02e0aa5cfd997490e1ef84421f77bbe9ea6d432bf13e6001361"
     },
     {
-      "path": "manuscripts/ch19/ch19-contact-divergence-warp-inefficiency.png",
-      "sha256": "0602456e00f01300f876438812b49b1f9d9b2000fa9676b06f5e341dcf784c2a"
+      "path": "manuscripts/ch19/ch19-2d-usp-hybrid-ulysses-ring-topology.png",
+      "sha256": "c7b4b20806cc25fbe4845742550d3e447083f9b859c6d1c68c49a412be2e6b87"
     },
     {
-      "path": "manuscripts/ch19/ch19-contact-divergence-warp-inefficiency.svg",
-      "sha256": "5af43d96fabfb920c9294167692808ab7666d9ef0abe81d12ac0335702329ddb"
+      "path": "manuscripts/ch19/ch19-2d-usp-hybrid-ulysses-ring-topology.pdf",
+      "sha256": "ddd1b57e3a56510135a95c8cfc0e13a747a61e6394a15dd97504e832e8bd628e"
     },
     {
-      "path": "manuscripts/ch19/ch19-cpu-sim-pcie-bottleneck-vs-gpu-native-sim.pdf",
-      "sha256": "9e828d96424ef7940211b54952c81e00e983bdce15dfebdd8ef53c52918fe8ee"
+      "path": "manuscripts/ch19/ch19-dbsp-dual-balanced-sequence-parallelism.svg",
+      "sha256": "511a76f457f063e18b7537ca77f9e56f4a69c8595e7abfc0dc52ad7017c64df7"
     },
     {
-      "path": "manuscripts/ch19/ch19-cpu-sim-pcie-bottleneck-vs-gpu-native-sim.png",
-      "sha256": "7a48d99e7cfb3eaed0edc77d8fc2ad304b70cee55ad5962858b6289caa545f16"
+      "path": "manuscripts/ch19/ch19-dbsp-dual-balanced-sequence-parallelism.png",
+      "sha256": "6a570fcb2b4e373de42f3b8a0cbc11a098665d945d1d0d6477e5ef847ffa7c0a"
     },
     {
-      "path": "manuscripts/ch19/ch19-cpu-sim-pcie-bottleneck-vs-gpu-native-sim.svg",
-      "sha256": "8f635e856d310dde8a22b7187b239624026c4f64473c4b81242c08fd03577071"
+      "path": "manuscripts/ch19/ch19-dbsp-dual-balanced-sequence-parallelism.pdf",
+      "sha256": "1a0925d84d97059bdd83d952c778f51f87cb047848ca6ce3fcc8bf1962d05355"
     },
     {
-      "path": "manuscripts/ch19/ch19-dual-thor-soc-safety-fallback-watchdog-pipeline.pdf",
-      "sha256": "b1b423326b70c3b5451a41cd1a33f33d76dcad3b546abde92fe0266f57103d6b"
+      "path": "manuscripts/ch19/ch19-distrifusion-displaced-patch-parallelism.svg",
+      "sha256": "bec44c3922c7166300fee141d6fad4d76eb45ee38ec5e7d39839669a53154f9f"
     },
     {
-      "path": "manuscripts/ch19/ch19-dual-thor-soc-safety-fallback-watchdog-pipeline.png",
-      "sha256": "6cdfd568097bb978831aad88dee95233bdb4aa336bd820fdbc451e70a442f9c4"
+      "path": "manuscripts/ch19/ch19-distrifusion-displaced-patch-parallelism.png",
+      "sha256": "59a408ffae47ad35d2383120eed5e8025e7c3cdc2dde6d133d1834a951c11912"
     },
     {
-      "path": "manuscripts/ch19/ch19-dual-thor-soc-safety-fallback-watchdog-pipeline.svg",
-      "sha256": "2aa88834fe85cb20ac3179815b63659f1bfa3153c239fe79ec9d7d0d23937a13"
+      "path": "manuscripts/ch19/ch19-distrifusion-displaced-patch-parallelism.pdf",
+      "sha256": "f2411a41ce34b4275c2ee4862e7c9897b9c75ca55f9d497d45831792c9fbad6c"
     },
     {
-      "path": "manuscripts/ch19/ch19-embodied-ai-full-stack-infrastructure-map.pdf",
-      "sha256": "4ef778636de489f776480f269fcdf661c695a1785aaa313606d5d5b45a2c1c91"
+      "path": "manuscripts/ch19/ch19-pipefusion-step-patch-2d-pipeline.svg",
+      "sha256": "e93108e69eea3a1f25cea9464259aa41e1f5c1147cb80969ca28954956f1dfd5"
     },
     {
-      "path": "manuscripts/ch19/ch19-embodied-ai-full-stack-infrastructure-map.png",
-      "sha256": "4f53991df849a45127b9ba6995db29ac6691f549f74702dff6e52fabd657f115"
+      "path": "manuscripts/ch19/ch19-pipefusion-step-patch-2d-pipeline.png",
+      "sha256": "d36496394d5b564a4d39650cce3dbdc798ac95288d4be20cd8c2a4a860189ffe"
     },
     {
-      "path": "manuscripts/ch19/ch19-embodied-ai-full-stack-infrastructure-map.svg",
-      "sha256": "c9cbcf039c4d78afdf9181bc2e60f81269cce4dfb1a8fadde2e264c521df839d"
+      "path": "manuscripts/ch19/ch19-pipefusion-step-patch-2d-pipeline.pdf",
+      "sha256": "fcf596e8f537577ea9d4520754f3344db99c07de8118290ae54b767c5bd827c3"
     },
     {
-      "path": "manuscripts/ch19/ch19-fast-dct-frequency-action-tokenization.pdf",
-      "sha256": "3c97d04a47624bb30d03978f0f31d6980837c925d4682d841ba3fe190964a7cf"
+      "path": "manuscripts/ch19/ch19-teacache-timestep-residual-reuse.svg",
+      "sha256": "82d4afeb923ca6a0aaf880f445c4db8ffaf0433360ebd3c7d736943766badca0"
     },
     {
-      "path": "manuscripts/ch19/ch19-fast-dct-frequency-action-tokenization.png",
-      "sha256": "ffce466fa60f014279e9bdac9f09ddab2804237ee2c4b0558d076eece934e07c"
+      "path": "manuscripts/ch19/ch19-teacache-timestep-residual-reuse.png",
+      "sha256": "047a61dbb3f69f985fb6f80f5c707eaa80c627842dc4f7c0a045d4a387fe08cb"
     },
     {
-      "path": "manuscripts/ch19/ch19-fast-dct-frequency-action-tokenization.svg",
-      "sha256": "6ccbc63d47e6c50fec403018c531f70c5293f64368cd72048e06602be3cf59a3"
+      "path": "manuscripts/ch19/ch19-teacache-timestep-residual-reuse.pdf",
+      "sha256": "10f6175ae0375944976172e37e972d2c7c43a596032701c2e1a4be75f2b89c90"
     },
     {
-      "path": "manuscripts/ch19/ch19-flow-matching-ode-steps-vs-control-jitter.pdf",
-      "sha256": "1fa6b29fa712bb0ec4dc10641115f1de4c695b94a79b9afe87381cd9b1e5db62"
+      "path": "manuscripts/ch19/ch19-sageattention3-fp4-quantized-attention.svg",
+      "sha256": "0f079172f8a7da6709ac2869552b17e97022f18303157a6c901b122acd77630f"
     },
     {
-      "path": "manuscripts/ch19/ch19-flow-matching-ode-steps-vs-control-jitter.png",
-      "sha256": "6b86661eccbe42f79b66ae3f67c80f8d8e43afcd1c82dff8ce7819cb3de6bb1f"
+      "path": "manuscripts/ch19/ch19-sageattention3-fp4-quantized-attention.png",
+      "sha256": "f29067141a109a8ac42058eb036df6ec4c429793262af3da40a94217c0ca9d6b"
     },
     {
-      "path": "manuscripts/ch19/ch19-flow-matching-ode-steps-vs-control-jitter.svg",
-      "sha256": "540cdea8629e19be0e32343171bfa1116036db4d1df82fe755050177638f529d"
+      "path": "manuscripts/ch19/ch19-sageattention3-fp4-quantized-attention.pdf",
+      "sha256": "91261f3ce99c9c0308546e45ca0ab0589213c710c32f7cea8febb8942f09df2e"
     },
     {
-      "path": "manuscripts/ch19/ch19-jetson-thor-mig-rtos-deterministic-isolation.pdf",
-      "sha256": "16b829dc6ee283825e154237cb68ec4e6c5ef598889af769ffb237c6b9d4d826"
+      "path": "manuscripts/ch19/ch19-interactive-world-model-rolling-kv-30fps.svg",
+      "sha256": "b29b72ea48beac08ab53f7d0c9d3e8ad9e793e4549002ba5ac068d46b57a1148"
     },
     {
-      "path": "manuscripts/ch19/ch19-jetson-thor-mig-rtos-deterministic-isolation.png",
-      "sha256": "d874f596af94fb803a3546a96b751db257905f921e21bc4d6a62b6fc43c6ca35"
+      "path": "manuscripts/ch19/ch19-interactive-world-model-rolling-kv-30fps.png",
+      "sha256": "95e333a4cb4af6b6aebc88abfdb53e93a2aa9fa78e6b42aad009aeb7ecadc5b7"
     },
     {
-      "path": "manuscripts/ch19/ch19-jetson-thor-mig-rtos-deterministic-isolation.svg",
-      "sha256": "7081587611e410b38bd3e72655e8626237d225c827b631af4efcee4b62e78d2b"
+      "path": "manuscripts/ch19/ch19-interactive-world-model-rolling-kv-30fps.pdf",
+      "sha256": "72d9484811d595d2f5fd5eed804820b935429b49f8143e4fd1f471897335b165"
     },
     {
-      "path": "manuscripts/ch19/ch19-multi-camera-tiled-rendering-zero-copy-tensor.pdf",
-      "sha256": "4b4a1326ecaa5ee90a71b089a3012f5e4a4618932a34a7fd4266268a61ea2079"
+      "path": "manuscripts/ch19/ch19-epdg-four-stage-disaggregated-serving.svg",
+      "sha256": "8abd0d75a28a59407ab969b5f6cad8077e24258b8717d866f52139b5972dc284"
     },
     {
-      "path": "manuscripts/ch19/ch19-multi-camera-tiled-rendering-zero-copy-tensor.png",
-      "sha256": "55eaabbdd503450d4a795c8e1029316a30e1556ea44b32b037f5bc1af5013809"
+      "path": "manuscripts/ch19/ch19-epdg-four-stage-disaggregated-serving.png",
+      "sha256": "0e7c1b4f3c58682f0dd460eaeca47b0380162848dc1471921cad07d9134ae451"
     },
     {
-      "path": "manuscripts/ch19/ch19-multi-camera-tiled-rendering-zero-copy-tensor.svg",
-      "sha256": "3c6dc3363e5f700dcfbffa98c7ac4c6329a37b8cc1a369b124866fab4d1f2a93"
+      "path": "manuscripts/ch19/ch19-epdg-four-stage-disaggregated-serving.pdf",
+      "sha256": "a0af9d03168672ba9e5719074ef6a54d2b7a4ad7bea98b65a18afd4f43c8cbbd"
     },
     {
-      "path": "manuscripts/ch19/ch19-multi-sensor-ptp-hardware-trigger-alignment.pdf",
-      "sha256": "1f8fc3cfcde1815f5375aa683de4ffdc42f1a7c17b7cc023178795d621bac68c"
+      "path": "manuscripts/ch19/ch19-vit-embedding-cache-vs-llm-kv-cache.svg",
+      "sha256": "f8d1f8afccc0e4cf389a79bb9bd5d8ca742664024a044e63802024ef49e0d239"
     },
     {
-      "path": "manuscripts/ch19/ch19-multi-sensor-ptp-hardware-trigger-alignment.png",
-      "sha256": "e838c05d070ffae7be67f129a7e9c6ac879184a336a64a6f6b995c5ba8a02bdc"
+      "path": "manuscripts/ch19/ch19-vit-embedding-cache-vs-llm-kv-cache.png",
+      "sha256": "c430849abcf7352ebb7fcf201c88da76986508687be0bf4e799f5cedcc1ee0dd"
     },
     {
-      "path": "manuscripts/ch19/ch19-multi-sensor-ptp-hardware-trigger-alignment.svg",
-      "sha256": "701389ef631c3fd429865fbf20ce270464fa9632c1ad568f97ea6a82c7d77b2c"
+      "path": "manuscripts/ch19/ch19-vit-embedding-cache-vs-llm-kv-cache.pdf",
+      "sha256": "31d7896659a17b6f951013e2f4d75d83870c6a6a74b57b12c643199b887e604e"
     },
     {
-      "path": "manuscripts/ch19/ch19-onboard-vs-mec-edge-offload-safety-fallback.pdf",
-      "sha256": "5253a9ba9681b4f74de6e6097b0859c4b1822ff7a19241822156fccbdb33793e"
+      "path": "manuscripts/ch19/ch19-audio-video-text-interleaved-batching.svg",
+      "sha256": "0c5612cf49995d77bfb2bfeb8610430c41c163a228221bd30cec57dabd677af4"
     },
     {
-      "path": "manuscripts/ch19/ch19-onboard-vs-mec-edge-offload-safety-fallback.png",
-      "sha256": "1bc2073b574fe81f616fd2652991d801ff6c9872c52b22785d9e7b465d3d58fb"
+      "path": "manuscripts/ch19/ch19-audio-video-text-interleaved-batching.png",
+      "sha256": "08f611d783b4d91e72e6f0a8196a2b1c79cb73f26a0aeb421834872b0f634705"
     },
     {
-      "path": "manuscripts/ch19/ch19-onboard-vs-mec-edge-offload-safety-fallback.svg",
-      "sha256": "68ce806468e235ae2144114cf5042a0a90403fab3ec8457c14e772ccff939d78"
+      "path": "manuscripts/ch19/ch19-audio-video-text-interleaved-batching.pdf",
+      "sha256": "01563231d12047dc9d07f07f9aedc1612cac7f56e21a4a7c5e13d2843e99e1e0"
     },
     {
-      "path": "manuscripts/ch19/ch19-physics-renderer-policy-three-way-sm-budget.pdf",
-      "sha256": "e59a2e9eebdb0d38042badfb18e051776d8383c787c61575d4702074b52fbc6f"
+      "path": "manuscripts/ch19/ch19-multimodal-dataloader-gpu-decode-nvjpeg.svg",
+      "sha256": "83fca09a7153195a3e94293e4db09e1cd0c91e7a1ddeb136550c580b7102ecd0"
     },
     {
-      "path": "manuscripts/ch19/ch19-physics-renderer-policy-three-way-sm-budget.png",
-      "sha256": "d1e8ec43eaa7ab038fdef4dbfe423b75226137f8f163e4d99a3459645dd609dd"
+      "path": "manuscripts/ch19/ch19-multimodal-dataloader-gpu-decode-nvjpeg.png",
+      "sha256": "8059e5cdbfc3a6c08bc535ddc99593ca64b49f623bb18b56d2735b71b59a624f"
     },
     {
-      "path": "manuscripts/ch19/ch19-physics-renderer-policy-three-way-sm-budget.svg",
-      "sha256": "ccb0ec24a6273f17cd478014579ce7570291daa9c24fbb2cac14e0e4f020c7e5"
+      "path": "manuscripts/ch19/ch19-multimodal-dataloader-gpu-decode-nvjpeg.pdf",
+      "sha256": "85ab320400557f60d2efbaf9c92666f1d666b1b46195c4211bd0556ba610d893"
     },
     {
-      "path": "manuscripts/ch19/ch19-shadow-mode-disagreement-edge-trigger.pdf",
-      "sha256": "c09bb01c340ca530b2072a42f5bcfe8b78d7d2d3722202a2732b6d8f71f2b388"
+      "path": "manuscripts/ch19/ch19-dit-cfg-classifier-free-guidance-parallel.svg",
+      "sha256": "2b9d73091e7ae307b5e6974fa039a17fef0e891386464879fbcfc94969cb912c"
     },
     {
-      "path": "manuscripts/ch19/ch19-shadow-mode-disagreement-edge-trigger.png",
-      "sha256": "be5aa88a649c890b983a0065c0d9b672345be233b84cdcf3e422e1c312f06d13"
+      "path": "manuscripts/ch19/ch19-dit-cfg-classifier-free-guidance-parallel.png",
+      "sha256": "5f7f81fa7e9d9fdc8455faf5fd0ba790193ec78777b84c79c7da15181d1ca769"
     },
     {
-      "path": "manuscripts/ch19/ch19-shadow-mode-disagreement-edge-trigger.svg",
-      "sha256": "4c641bc126e3a7b7c22c1503b247768f8f287f708cbbffdae4d0eec6b77b020b"
+      "path": "manuscripts/ch19/ch19-dit-cfg-classifier-free-guidance-parallel.pdf",
+      "sha256": "87e7d969da147f45b5afd3c8b56b340b54d0c99fd98303fc38c416647d69dedf"
     },
     {
-      "path": "manuscripts/ch19/ch19-system2-vlm-system1-flow-matching-dual-loop.pdf",
-      "sha256": "d0474ebcad870bb5722ea9ffac3f6e28ceeb70d987168d37a9b06cb746e81e1b"
+      "path": "manuscripts/ch19/ch19-video-dit-end-to-end-latency-breakdown.svg",
+      "sha256": "96b4a88e7da12227d6a80b2baf340d053679953635d4cbeee3cd31b1b5ec9769"
     },
     {
-      "path": "manuscripts/ch19/ch19-system2-vlm-system1-flow-matching-dual-loop.png",
-      "sha256": "f715080f1813eb802891053b4c3c3be017c2d05108389dbdaaeb854ee9031653"
+      "path": "manuscripts/ch19/ch19-video-dit-end-to-end-latency-breakdown.png",
+      "sha256": "c5b68a79279fd2bb4ec9dd72c56a80019af10cc6d072e1bd9d66c061b14e3976"
     },
     {
-      "path": "manuscripts/ch19/ch19-system2-vlm-system1-flow-matching-dual-loop.svg",
-      "sha256": "8adf019f9548fff96498b32ba4e8a58b37f222c5b75fdb9b9d59a843cdb79457"
+      "path": "manuscripts/ch19/ch19-video-dit-end-to-end-latency-breakdown.pdf",
+      "sha256": "afb0d1dcf836c08165f5f94adfede4feec6e33e6cb601adc1bf2fd0b1b831dd8"
     },
     {
-      "path": "manuscripts/ch19/ch19-three-tier-vlm-flow-wbc-humanoid-control.pdf",
-      "sha256": "13529442fc992fd8d2121277fb5b8302f772a2a607a50933935ea3a77a765981"
+      "path": "manuscripts/ch19/ch19-multimodal-world-model-infra-synthesis.svg",
+      "sha256": "3969ccd3d1c4e6735177e3a1bbdf3afc88075d45b10212f8b10d7e885da8fe9e"
     },
     {
-      "path": "manuscripts/ch19/ch19-three-tier-vlm-flow-wbc-humanoid-control.png",
-      "sha256": "c23bed43d11bd7a748320f557380b459b144c39cefc242f30904b3d8f001feb4"
+      "path": "manuscripts/ch19/ch19-multimodal-world-model-infra-synthesis.png",
+      "sha256": "da17ba711768e10e3f529e687727cd92ee96d938d383e3c97d5d8166ba4d963e"
     },
     {
-      "path": "manuscripts/ch19/ch19-three-tier-vlm-flow-wbc-humanoid-control.svg",
-      "sha256": "c3ebd22f3f3afab690a4992f8d506741979047a881f98f70034c5b49fd8eb584"
+      "path": "manuscripts/ch19/ch19-multimodal-world-model-infra-synthesis.pdf",
+      "sha256": "69e0842418c88699927fada64db8b6c31fc8897a54bb654bbd27b23041cef52b"
     },
     {
-      "path": "manuscripts/ch19/ch19-vla-early-exit-and-token-pruning-wcet.pdf",
-      "sha256": "b3598007d8a55cc4d2bfd6c764f4e938ce93bf8e500211f25212a33f8005f46c"
+      "path": "manuscripts/ch19/ch19-transfusion-hybrid-causal-bidirectional-mask.svg",
+      "sha256": "aae06c6adfd978c0fcc60162cbc220912b30aeeb832cbd717e57754abb1a2dff"
     },
     {
-      "path": "manuscripts/ch19/ch19-vla-early-exit-and-token-pruning-wcet.png",
-      "sha256": "4ce2073b57cdfd9fdea61514e41d5617dbc47c5f2d791a804f15c28c37bb95f7"
+      "path": "manuscripts/ch19/ch19-transfusion-hybrid-causal-bidirectional-mask.png",
+      "sha256": "f493d1a3e7e0657d662eac6929b74392419b8ad55dbe66abc48042efc1d6e078"
     },
     {
-      "path": "manuscripts/ch19/ch19-vla-early-exit-and-token-pruning-wcet.svg",
-      "sha256": "4e97918e0e00ae830be1e35e022cd0be8ae3adf2b2c2c350715ed93ee9bfe7b4"
+      "path": "manuscripts/ch19/ch19-transfusion-hybrid-causal-bidirectional-mask.pdf",
+      "sha256": "fb5d56f279f0bfb8c718f5b619ce369ecbedd0f33b1ebdf83444f49e5e92f2c6"
     },
     {
-      "path": "manuscripts/ch19/ch19-vlalagbench-latency-vs-dynamic-grasp-success.pdf",
-      "sha256": "f5d362582fa0aacdf29b44835747772562df08371500cf9c780f080fd3d46e13"
+      "path": "manuscripts/ch19/ch19-3dgs-scaffold-guided-world-model-dit.svg",
+      "sha256": "bc649283e5346dbf70f5b5ebfbe18e7c3e5c189528a13c5f195d2dacd59de4ee"
     },
     {
-      "path": "manuscripts/ch19/ch19-vlalagbench-latency-vs-dynamic-grasp-success.png",
-      "sha256": "77ac566a1bf51110e298644285b60f70acdb7fac6a9d3a7e38e73a721660b433"
+      "path": "manuscripts/ch19/ch19-3dgs-scaffold-guided-world-model-dit.png",
+      "sha256": "936edabb1e94f28f8a9b078551e261220a56a53b8611cbc937458fecfafa6811"
     },
     {
-      "path": "manuscripts/ch19/ch19-vlalagbench-latency-vs-dynamic-grasp-success.svg",
-      "sha256": "3b20fe523360898aa9fb3fdb33212b1ef30bb05d9e4319d01861a3db9f9901bd"
+      "path": "manuscripts/ch19/ch19-3dgs-scaffold-guided-world-model-dit.pdf",
+      "sha256": "0d860dfffe9de5efb3dd6ca21bdd0d605b0da55c2a0dcbc734d9530de6775c86"
     },
     {
-      "path": "manuscripts/ch19/figure-data.json",
-      "sha256": "f1bb4e30d9fd82179224cfb45980b2ec3d17524a9b0eef2ff057f8dc1b878c18"
+      "path": "manuscripts/ch19/ch19-causal-streaming-world-model-20fps-kv-rolling.svg",
+      "sha256": "be88f9bd3b17fef4536ca73f6e479baf9de034dd664aaed5c7e70fc9728ec9b9"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-causal-streaming-world-model-20fps-kv-rolling.png",
+      "sha256": "def12ae47060f3cec3a1f9e7b6c36ef8f1202c3502045b51251ca83b6a6ba88b"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-causal-streaming-world-model-20fps-kv-rolling.pdf",
+      "sha256": "939e58aa138e19b8d56b85c4a948c99c0e9773c8ac408e03e55923752c87cd17"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-teacache-timestep-embedding-aware-activation-reuse.svg",
+      "sha256": "9daaa5fbd079c0c8b0261984f15c264529bfee93ffcc0b573aa4e804cd0f4f42"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-teacache-timestep-embedding-aware-activation-reuse.png",
+      "sha256": "486b3a78510653c2c671c526429e5496ddd2ff2de91a9b3af45e4676be65ad17"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-teacache-timestep-embedding-aware-activation-reuse.pdf",
+      "sha256": "849aad485b8f7c214ea3ec56fc3ba408f11f63485826f86082c612d542be88e7"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-cascaded-asr-llm-tts-vs-native-full-duplex-s2s.svg",
+      "sha256": "1005e196ab1860d4f10b93bd0d36740f94e4940c056e148a00018d1daa48d2dc"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-cascaded-asr-llm-tts-vs-native-full-duplex-s2s.png",
+      "sha256": "466996559481cdbb2702afa9e758ad113722238b0ca102a61dfed8d024bb109f"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-cascaded-asr-llm-tts-vs-native-full-duplex-s2s.pdf",
+      "sha256": "b31b415da7c4179a01f059e7367614a506795defd9e73fd1a56a156376ccee76"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-full-duplex-dual-audio-streams-and-inner-monologue.svg",
+      "sha256": "2903f694ed2f0a48e2a2ca669494a341d74a81d50219c6b393492715bc5c5690"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-full-duplex-dual-audio-streams-and-inner-monologue.png",
+      "sha256": "b2f0f64e3e4d65bbeefb5d86f373eb16963b37494b3e774c63a90890490bdea8"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-full-duplex-dual-audio-streams-and-inner-monologue.pdf",
+      "sha256": "5a5fcafcd0bb99617208e73d151a162b2bd069d6db9bca9fd331ebe009559236"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-rvq-neural-audio-codec-semantic-acoustic-hierarchy.svg",
+      "sha256": "d625f18140676feb3e206a79abf544c243f1d6bfd59156b8d1fbf863d8c13264"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-rvq-neural-audio-codec-semantic-acoustic-hierarchy.png",
+      "sha256": "5cd0529389215a624e5e86370ac18a9c3c998c1b842413b217864558d52e06a2"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-rvq-neural-audio-codec-semantic-acoustic-hierarchy.pdf",
+      "sha256": "7528e3f4d954efa5f864cf04792772ba1dcf69b55adb3f051e781367eee05c66"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-delayed-codebook-pattern-vs-depth-transformer.svg",
+      "sha256": "8335743b60b9c5914d3ee61490c0dfd6d2735e965ecf59b5e26a5e075e0bf279"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-delayed-codebook-pattern-vs-depth-transformer.png",
+      "sha256": "6f4b2f99d25bb4c0026ad86e82d4ce68b8108898625c95c990641165d924a8ac"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-delayed-codebook-pattern-vs-depth-transformer.pdf",
+      "sha256": "28466fde9a144be2c518a1369992f563b48ee816d909ce7069c6d566ff2378cc"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-temporal-and-depth-transformer-gpu-roofline-trap.svg",
+      "sha256": "6e1d5f73dae36627e4e21be943c53b4ae6fe20d02cd920f926483594b456d263"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-temporal-and-depth-transformer-gpu-roofline-trap.png",
+      "sha256": "2976e740408d8f09b5579f6f004b1eb066a373a32ef2eb9207a0b210a8a5b2a6"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-temporal-and-depth-transformer-gpu-roofline-trap.pdf",
+      "sha256": "8d5652bb0768f9661c38e0adeb8b276d607f5d2a928d4fb7acf8c978d4713bfc"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-webrtc-opus-aec-to-gpu-end-to-end-latency-budget.svg",
+      "sha256": "4c4ab1723346af285402b5bb9f17c17641330f926ee1c89d8507198a27e1f029"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-webrtc-opus-aec-to-gpu-end-to-end-latency-budget.png",
+      "sha256": "e1bd2f4c38c97afbf539ed76b3ff37aae315c4cefae29378eb43002153cccc84"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-webrtc-opus-aec-to-gpu-end-to-end-latency-budget.pdf",
+      "sha256": "31b0bc81aba0078400c658ce22f5f44ba4b130f8fffbf65d97ee21466eb2df39"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-barge-in-playback-cursor-aligned-kv-rollback.svg",
+      "sha256": "ec5248286c6dbbb9361083842483d84a997576e44045dd7c15752c2fb4c1a995"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-barge-in-playback-cursor-aligned-kv-rollback.png",
+      "sha256": "9023d2b2d3c11460ed8e6ac454a0560000f2fc9d6a82a5858d96e596a8413008"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-barge-in-playback-cursor-aligned-kv-rollback.pdf",
+      "sha256": "32c36961751ada27ac50bb0423a223dda7875ecab9f2f23638de646b84e04e50"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-streaming-causal-conv-vocoder-chunk-halo.svg",
+      "sha256": "0bb45aee2c4d03f84174e1346cd9c71193d3e0fb05e2332adc5283574be8fc45"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-streaming-causal-conv-vocoder-chunk-halo.png",
+      "sha256": "5a7f1bb05c98c85459a90b8f7e578ae5379600d29baf47be47d6697cdc035e62"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-streaming-causal-conv-vocoder-chunk-halo.pdf",
+      "sha256": "4afdc10e1a5550c17ccfa27715a6ad6e4f63120818ff279e1221dc669d481872"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-live-video-1fps-and-audio-12hz-interleaved-pacing.svg",
+      "sha256": "06a88f0b49cae066d7198a3a8d2a32e711bdaf9461d943d28c59d4a9617ccf3c"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-live-video-1fps-and-audio-12hz-interleaved-pacing.png",
+      "sha256": "0f1a38f254febba5d31aa0b76bb6491a6400436d170d1d8c46c227696384518a"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-live-video-1fps-and-audio-12hz-interleaved-pacing.pdf",
+      "sha256": "c913c6a801cf3a45f52bbdafcee94e8637c1a25551718c3bc7c82fa7f2489909"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-acoustic-token-eviction-and-semantic-anchor-retention.svg",
+      "sha256": "d43a8b3a2aa2e0a14a646beb8de229fcf003bc3e02ebe3de7818e045c1246696"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-acoustic-token-eviction-and-semantic-anchor-retention.png",
+      "sha256": "b6d05bc3d65b984abd156e6791383e73286e1cbc64759bd621d4b4ced7c54a1f"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-acoustic-token-eviction-and-semantic-anchor-retention.pdf",
+      "sha256": "a66995dca855ed3a49a2d74aa978bf8ee54df2e165a7c24e758a9c18dc172edc"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-dynamic-batching-under-strict-80ms-isochronous-tick.svg",
+      "sha256": "bc3fa3dfc51fbcfc58b2a0a7aa58564e8ef05482c340633a69c3e70e6e041a33"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-dynamic-batching-under-strict-80ms-isochronous-tick.png",
+      "sha256": "0f3aa72cf6a109f3931bfb1f620671aa3a766ac614e170aa101571e2e37df7e8"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-dynamic-batching-under-strict-80ms-isochronous-tick.pdf",
+      "sha256": "94e790c075d948ed8b519f25b14612f9e62f8e5c73a67b150c2ea918884e57ac"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-duplex-turn-taking-backchannel-and-overlap-state-machine.svg",
+      "sha256": "3bc8dd64f85adea172c4f74b8767e949681b95093ba6df041bf7ef7aeda6002c"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-duplex-turn-taking-backchannel-and-overlap-state-machine.png",
+      "sha256": "6e25cec065c4376a3d94f13c9baaeb8524d35e3b1471abd7bdba8b11db2615a8"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-duplex-turn-taking-backchannel-and-overlap-state-machine.pdf",
+      "sha256": "f98546584c29ed2917ba60debf7135558a8889867382a1eca22c3786d5a1d823"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-edge-vad-aec-wake-word-and-cloud-duplex-handover.svg",
+      "sha256": "c8c50029cbfd0c2baadce8b91c565ac2ff8f28951dae7d0d6d23a5f219a9f0de"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-edge-vad-aec-wake-word-and-cloud-duplex-handover.png",
+      "sha256": "ef3b2ab3f6ff11e4785159b82878706f85d232b5e9bf12bbbf289d683d01d0e4"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-edge-vad-aec-wake-word-and-cloud-duplex-handover.pdf",
+      "sha256": "794f8c981bbed2e3d624b27db8c80f7076881fdde67acf5582b8121c941e0cab"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-voice-cloning-zero-shot-speaker-embedding-cache.svg",
+      "sha256": "7c3d2221ff8a368698ac5db53d5aed52390901c0ecba52bf6e928079a448bb5a"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-voice-cloning-zero-shot-speaker-embedding-cache.png",
+      "sha256": "6c06ae2884c1306dedb32631b1326dca222f36fa7ccb3502776d9ea17fe1abfa"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-voice-cloning-zero-shot-speaker-embedding-cache.pdf",
+      "sha256": "727c79cd65655ef33f665c1046597f993cb0761297219c94b37a6c7811da96c9"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-full-duplex-gpu-concurrency-vs-p99-frame-underrun.svg",
+      "sha256": "7effb3abedf7fff6a6cc441c2187dee6ce3bb89fbf9d9305dc6bc88a282c2061"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-full-duplex-gpu-concurrency-vs-p99-frame-underrun.png",
+      "sha256": "d098f3429472ec9ccaf9ca4c25600ebbadc872fc313741244518cc5a8c078b52"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-full-duplex-gpu-concurrency-vs-p99-frame-underrun.pdf",
+      "sha256": "271709fc191bc66bfc51ffb98909205c8f18ca4c26111a699b46b2078d29c002"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-full-duplex-omni-streaming-infrastructure-synthesis.svg",
+      "sha256": "e6eae79082a796fe46ff793851ef4b02351237a7e5c0748385b41883159a81c2"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-full-duplex-omni-streaming-infrastructure-synthesis.png",
+      "sha256": "275368182bfa865b8d5aa4f651736858cfb29e6f29a1876e6ca04d0713af202c"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-full-duplex-omni-streaming-infrastructure-synthesis.pdf",
+      "sha256": "4546c5a454b782f38ea9cc2bc13a9ec6bce0aa49de860fcc8419762657277ac7"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-realtime-avatar-lip-sync-audio-video-jitter-alignment.svg",
+      "sha256": "d744b3ba0cbc51e9d057b8b0f30ade0604b16cb632c4e9a8993ea247dba68853"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-realtime-avatar-lip-sync-audio-video-jitter-alignment.png",
+      "sha256": "51b23f0f5286d5e5c3191e575e91c991411e49cc8ce79362e3e15944df22b8e9"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-realtime-avatar-lip-sync-audio-video-jitter-alignment.pdf",
+      "sha256": "55973615bf947a076d14de37b54759612b9925bc11444327aa1ca803b02f3357"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-global-edge-webrtc-sfu-to-gpu-duplex-mesh.svg",
+      "sha256": "7bae24bdaf81fa6e7ee2523f50254fbc3daf1fa9b85d6049c2903aaeebb83dd9"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-global-edge-webrtc-sfu-to-gpu-duplex-mesh.png",
+      "sha256": "c499969ab39ca40c492405a4523ad15f27a69cb719548cba2e483b51315d917a"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-global-edge-webrtc-sfu-to-gpu-duplex-mesh.pdf",
+      "sha256": "1c3bbf6fdbc15e6133642d604a41213ee6e62e502dc08fc6855e61175e57b26c"
     },
     {
       "path": "manuscripts/ch19/figure-index.json",
-      "sha256": "48cd247b4bbf199b3a482e7f65f6686f00487f8479e256acf0ab6a8d7489d231"
+      "sha256": "b158957d2f2bef6f08bf57cb9e176cc380b0ab3eaa4ffbac161c2a9d6ac7521f"
     },
     {
       "path": "manuscripts/ch19/teaching-layout-validation.json",
-      "sha256": "277d847a5babbafe862575fe114638301dd0627717aca777bb4c19ce9f6c0690"
+      "sha256": "02b75688e9aefef4a998e18295aef52136f48465b8ff25b3a708a3bac2c527cc"
     },
     {
       "path": "manuscripts/ch19/math-validation.json",
-      "sha256": "f37d71b7d46afd08539e6e4dc5e5eacf211b7345d0e78ce0f6c6ab0e7e9bdc84"
+      "sha256": "ef4d88fdce0382d4c34b5d4731587fa1469ff50dfd152a61d7b295027069e9f3"
     }
   ]
 }

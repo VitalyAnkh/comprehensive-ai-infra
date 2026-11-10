@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build Chapter 20 figures, locked calculations, and offline HTML preview."""
+"""Build Chapter 19 figures, locked calculations, and offline HTML preview."""
 import base64
 import hashlib
 import json
@@ -30,650 +30,655 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(raw).hexdigest()
 
 
-def fig_20_1_mtbf_scaling(ex: Exporter):
-    fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '集群 MTBF_cluster = MTBF_node / N 的反比坍缩（算例 20-1）', color='orange')
-    stages = [
-        (0.03, 0.58, 0.29, 0.24, '1,024 卡集群\nMTBF ≈ 49.4 小时\n约两天 1 次中断', 'teal'),
-        (0.355, 0.58, 0.29, 0.24, 'Meta 16,384 卡\n54 天 419 次中断\nMTBF = 3.09 小时', 'blue'),
-        (0.68, 0.58, 0.29, 0.24, '100,000 卡集群\nMTBF 跌至 30.4 分\n每半小时必发异常', 'orange'),
-    ]
-    for x, y, w, h, label, role in stages:
-        box(ax, x, y, w, h, label, role, size=11)
-    arrow(ax, (0.32, 0.70), (0.355, 0.70))
-    arrow(ax, (0.645, 0.70), (0.68, 0.70))
-
-    card(ax, 0.02, 0.03, 0.96, 0.42, 'Meta Llama 3 405B（16K 卡 54 天）真实中断账本：硬件占 78%', color='blue')
-    box(ax, 0.04, 0.13, 0.44, 0.20, 'GPU 与 HBM3 硬件故障（58.7%）\nHBM ECC 错、SRAM 奇偶错\nNVLink 与光模块闪断（19.3%）', 'orange', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '软件与基础设施故障（22.0%）\n内核崩溃、存储超时与供电抖动\n倒逼容错从分钟重启走向秒级自愈', 'teal', size=11)
-    arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '十万卡下故障不再是偶发异常，而是每 30 分钟必至的稳态过程', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch20-cluster-mtbf-scaling-and-llama3-failures')
-
-
-def fig_20_2_hot_spare_pool(ex: Exporter):
-    fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '热备节点池（Hot-Spare Pool）泊松维修队列模型（算例 20-2）', color='teal')
-    stages = [
-        (0.03, 0.58, 0.29, 0.24, '故障率 λ = 2.0 /h\n每小时坏 2 台节点\n立刻切入热备顶替', 'orange'),
-        (0.355, 0.58, 0.29, 0.24, '维修 MTTR = 12 h\n稳态在修节点均值\nL = λ·MTTR = 24 台', 'blue'),
-        (0.68, 0.58, 0.29, 0.24, '99.9% 不降级门限\nP(K ≤ S) ≥ 0.999\n最小热备 S = 40 台', 'teal'),
-    ]
-    for x, y, w, h, label, role in stages:
-        box(ax, x, y, w, h, label, role, size=11)
-    arrow(ax, (0.32, 0.70), (0.355, 0.70))
-    arrow(ax, (0.645, 0.70), (0.68, 0.70))
-
-    card(ax, 0.02, 0.03, 0.96, 0.42, '为什么只按均值配 24 台备机不可行？以及超节点局部性约束', color='blue')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '若仅配 S = L = 24 台热备节点\n泊松分布下 44.6% 时间备机耗尽\n备机枯竭将被迫降级或停机等待', 'orange', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '仅多配 16 台（占集群 < 0.4%）\n即可换取 99.91% 零降级可用率\n空闲热备平时可跑可抢占评测', 'teal', size=11)
-    arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '用 < 0.4% 热备容量吸收 12 小时维修延迟是维持满血拓扑的最优解', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch20-hot-spare-pool-queuing-dimensioning')
-
-
-def fig_20_3_sdc_contamination(ex: Exporter):
-    fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '静默数据损坏（SDC）逃逸 HBM ECC 并污染万卡权重的路径', color='orange')
-    stages = [
-        (0.03, 0.58, 0.29, 0.24, '① HBM3 读取正常\n权重离开显存时\nECC 校验完全通过', 'teal'),
-        (0.355, 0.58, 0.29, 0.24, '② Tensor 核内翻转\n电压跌落/时序违例\n无 ECC 累加器出错', 'orange'),
-        (0.68, 0.58, 0.29, 0.24, '③ 写回并 AllReduce\n赋予错误值合法 ECC\n1 次归约传染万卡', 'orange'),
-    ]
-    for x, y, w, h, label, role in stages:
-        box(ax, x, y, w, h, label, role, size=11)
-    arrow(ax, (0.32, 0.70), (0.355, 0.70))
-    arrow(ax, (0.645, 0.70), (0.68, 0.70))
-
-    card(ax, 0.02, 0.03, 0.96, 0.42, '两类 SDC 破坏形态：显式指数爆炸 vs. 隐式尾数漂移', color='blue')
-    box(ax, 0.04, 0.13, 0.44, 0.20, 'BF16 高位指数翻转（0 → 1）\n数值瞬间放大 2^64 倍\n数步后引发 Loss 尖峰与动量报废', 'orange', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '尾数位或符号位静默偏移（+64）\n不触发 NaN，训练曲线表面平稳\n持续拉偏收敛且无法事后抓坏卡', 'purple', size=11)
-    arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, 'HBM ECC 只能保护存储与传输，无法保护无纠错编码的算术单元', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch20-sdc-bitflip-allreduce-contamination')
-
-
-def fig_20_4_abft_checksum(ex: Exporter):
-    fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '算子级代数不变量校验（ABFT 行列校验和，算例 20-3）', color='teal')
-    stages = [
-        (0.03, 0.58, 0.29, 0.24, '① 构造行列校验和\nc_A^T = 1^T A\nr_B = B 1', 'blue'),
-        (0.355, 0.58, 0.29, 0.24, '② Tensor 核矩阵乘\n计算 C = A B\n附带算外围内积', 'teal'),
-        (0.68, 0.58, 0.29, 0.24, '③ 残差十字定位\nΔr_i≠0 且 Δc_j≠0\n锁定坏元素 C[i,j]', 'purple'),
-    ]
-    for x, y, w, h, label, role in stages:
-        box(ax, x, y, w, h, label, role, size=11)
-    arrow(ax, (0.32, 0.70), (0.355, 0.70))
-    arrow(ax, (0.645, 0.70), (0.68, 0.70))
-
-    card(ax, 0.02, 0.03, 0.96, 0.42, '为什么 ABFT 比双重执行冗余（DMR 100% 算力税）便宜 1,365 倍？', color='blue')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '对 M = N = K = 4,096 的 GEMM\n主矩阵乘需 137.44 GFLOPs\n外围校验仅需 100.66 MFLOPs', 'teal', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '附加开销仅 3/4096 = 0.0732%\n注入 (2,3) 处 +64.0 静默翻转\n凭残差立刻定位并原地减去 64', 'blue', size=11)
-    arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '利用线性结合律将 O(N^3) 校验降维成 O(N^2) 向量内积拦截 SDC', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch20-abft-checksum-matrix-multiplication')
-
-
-def fig_20_5_safeguarding_opguard(ex: Exporter):
-    fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '3,500 万卡时在线 SDC 拦截与 OpGuard 位级定位（OSDI 26）', color='blue')
-    stages = [
-        (0.03, 0.58, 0.29, 0.24, '第一道：归约前拦截\n跨 DP 秩比对梯度范数\n防异常污染全局', 'teal'),
-        (0.355, 0.58, 0.29, 0.24, '第二道：确定性对齐\n固定原子加与归约序\n健康卡位级一致', 'blue'),
-        (0.68, 0.58, 0.29, 0.24, '第三道：算子级重放\n跨卡比对位级哈希\n毫秒级揪出坏卡', 'purple'),
-    ]
-    for x, y, w, h, label, role in stages:
-        box(ax, x, y, w, h, label, role, size=11)
-    arrow(ax, (0.32, 0.70), (0.355, 0.70))
-    arrow(ax, (0.645, 0.70), (0.68, 0.70))
-
-    card(ax, 0.02, 0.03, 0.96, 0.42, '破解“浮点非确定性掩盖硬件真错误”的诊断死结', color='teal')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '传统痛点：原子加与乱序归约\n使两张正常卡输出本就不同\n无法靠哈希区分良性差异与 SDC', 'orange', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, 'OpGuard 强制确定性归约顺序\n使健康 GPU 输出 100% 位级相同\n任何 1 比特差异即确诊硬件 SDC', 'teal', size=11)
-    arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '先在 AllReduce 前守住全局权重，再用位级确定性重放指认坏卡', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch20-safeguarding-sdc-and-opguard-bitwise-debug')
-
-
-def fig_20_6_microbatch_rerun(ex: Exporter):
+def fig_19_1_cloud_vs_embodied(ex: Exporter):
     fig, ax = canvas(3.75)
-    card(ax, 0.02, 0.04, 0.46, 0.92, '全局检查点回滚（数小时）', color='orange', title_size=11)
-    box(ax, 0.04, 0.66, 0.42, 0.16, 'AllReduce 后才发现 Loss 突刺\n万卡权重与动量已被污染', 'orange', size=11)
-    box(ax, 0.04, 0.43, 0.42, 0.16, '回滚至 2 小时前落盘检查点\n且不知哪张卡发生静默翻转', 'orange', size=11)
-    box(ax, 0.04, 0.20, 0.42, 0.16, '若永久坏卡仍留在集群内\n恢复后再次污染全部万卡', 'orange', size=11)
+    card(ax, 0.02, 0.04, 0.46, 0.92, '云端对话（软实时 SLO）', color='blue', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, 'TTFT≤500 ms，TPOT≤50 ms\n偶发抖动仅影响打字体验', 'blue', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '数字环境可重放、可重试\n输出错误可由沙箱纠正', 'teal', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '目标：最大化批处理吞吐\n允许微批排队 20–100 ms', 'gray', size=11)
     arrow(ax, (0.25, 0.66), (0.25, 0.59))
     arrow(ax, (0.25, 0.43), (0.25, 0.36))
-    text(ax, 0.25, 0.10, '事后回滚既丢算力又抓不出真凶', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+    text(ax, 0.25, 0.10, '软实时容忍百毫秒尾部延迟', size=11, ha='center', weight='bold', color=BORDER_COL['blue'])
 
-    card(ax, 0.52, 0.04, 0.46, 0.92, '微批次重跑与热踢出（50 ms）', color='teal', title_size=11)
-    box(ax, 0.54, 0.66, 0.42, 0.16, '在优化器 step() 前拦截异常\nHBM 主权重与动量完好无损', 'teal', size=11)
-    box(ax, 0.54, 0.43, 0.42, 0.16, '耗时 50 ms 原地重算当前微批\n恢复一致则判为宇宙射线软错误', 'blue', size=11)
-    box(ax, 0.54, 0.20, 0.42, 0.16, '若重算仍错则锁定特定坏卡\n热踢出该卡切入热备，零回滚', 'purple', size=11)
+    card(ax, 0.52, 0.04, 0.46, 0.92, '具身控制（硬实时截止期）', color='orange', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '控制周期 5–20 ms（100 Hz）\n抖动 < 1 ms，单样本 B=1', 'orange', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '盲飞位移 Δx = v·Δt（19-1）\n0.5 m/s × 200 ms = 100 mm', 'orange', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '插孔公差 5 mm → Δt ≤ 10 ms\n物理碰撞不可回滚', 'purple', size=11)
     arrow(ax, (0.75, 0.66), (0.75, 0.59))
     arrow(ax, (0.75, 0.43), (0.75, 0.36))
-    text(ax, 0.75, 0.10, '50 ms 微批重算替代 2 小时回滚', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
-    ex.save(fig, 'ch20-microbatch-rerun-vs-checkpoint-rollback')
+    text(ax, 0.75, 0.10, '时间延迟直接化为空间碰撞误差', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+    ex.save(fig, 'ch19-cloud-llm-slo-vs-embodied-hard-realtime')
 
 
-def fig_20_7_trainmover(ex: Exporter):
+def fig_19_2_vlalagbench(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, 'VLALagBench：推理延迟对静态与动态操作成功率的冲击', color='orange')
+    stages = [
+        (0.03, 0.58, 0.29, 0.24, 'Δt_inf = 10 ms\n盲飞漂移 5 mm\n动态成功率 88%', 'teal'),
+        (0.355, 0.58, 0.29, 0.24, 'Δt_inf = 100 ms\n盲飞漂移 50 mm\n成功率跌至 56%', 'orange'),
+        (0.68, 0.58, 0.29, 0.24, 'Δt_inf = 200 ms\n盲飞漂移 100 mm\n成功率崩至 18%', 'orange'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.355, 0.70))
+    arrow(ax, (0.645, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '为什么静态抓取能容忍延迟而动态追踪在 100 ms 后崩溃？', color='blue')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '静态桌面抓取（v_obj = 0）\n延迟仅拉长任务总耗时\n成功率保持 > 75% 缓降', 'teal', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '动态接触操作（状态过时）\n动作基于 Δt 前旧图像算出\n闭合时目标已移出接触区', 'orange', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '观测过时是单环重型 VLA 无法用于高频动态控制的主因', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch19-vlalagbench-latency-vs-dynamic-grasp-success')
+
+
+def fig_19_3_action_chunking(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '动作块预测（Action Chunking, H=16）与时间集成平滑', color='teal')
+    stages = [
+        (0.03, 0.58, 0.29, 0.24, '① 一次吐 H=16 步\na_t ... a_{t+15}\n分摊单次前向开销', 'blue'),
+        (0.355, 0.58, 0.29, 0.24, '② 多周期重叠缓冲\n汇聚历史与当前周期\n对时刻 t 的预测', 'teal'),
+        (0.68, 0.58, 0.29, 0.24, '③ 指数时间集成\nw_k = exp(-m·k)\n抑制块间切换跳变', 'purple'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.355, 0.70))
+    arrow(ax, (0.645, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '动作块长度 H 的工程折中：平滑性 vs. 开环盲区', color='orange')
+    box(ax, 0.04, 0.13, 0.44, 0.20, 'H 过长（开环窗口过大）\n中途环境突变无法即时修正\n时间集成还会滞后避障指令', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '解耦方案：System 2 低频潜特征\n+ System 1 融合实时力觉反馈\n每 10 ms 闭环修正短动作块', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '动作块解决高频抖动，但需配合高频本体反馈消除开环盲区', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch19-action-chunking-and-temporal-ensembling')
+
+
+def fig_19_4_dual_loop(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, 'System 2（慢思考 VLM）+ System 1（快反射动作头）双频架构', color='blue')
+    stages = [
+        (0.03, 0.58, 0.29, 0.24, 'System 2：7B VLM\n频率 2 Hz（500 ms）\n融合多目图像与指令', 'blue'),
+        (0.355, 0.58, 0.29, 0.24, '无锁潜特征环形缓冲\n发布语义潜向量 z_t\n读写零阻塞最旧覆写', 'purple'),
+        (0.68, 0.58, 0.29, 0.24, 'System 1：150M 专家\n频率 100 Hz（10 ms）\n融合关节与六维力觉', 'teal'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.355, 0.70))
+    arrow(ax, (0.645, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '双系统频率比 50:1（π0 / Helix / GR00T 主流范式）', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, 'System 2 单次 500 ms 推理内\nSystem 1 读取最新潜特征 z_t\n连续完成 50 次 10 ms 闭环', 'teal', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '6 步欧拉 ODE 积分耗时 4.2 ms\n严格小于 10 ms 硬实时上限\n兼顾语义泛化与柔顺控制', 'blue', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '慢系统提供语义目标，快系统负责高频抗扰与接触闭环', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch19-system2-vlm-system1-flow-matching-dual-loop')
+
+
+def fig_19_5_jetson_thor(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '单颗机载 SoC（Jetson Thor）上的硬件级确定性隔离', color='teal')
+    stages = [
+        (0.03, 0.58, 0.29, 0.24, 'MIG 0（占 75% SM）\n跑 System 2 VLM\n大吞吐视觉预填充', 'blue'),
+        (0.355, 0.58, 0.29, 0.24, '共享内存 SeqLock\n双缓冲原子换指针\n零系统调用零锁', 'purple'),
+        (0.68, 0.58, 0.29, 0.24, 'MIG 1（占 25% SM）\n专供 System 1\n独立 L2 与带宽', 'teal'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.355, 0.70))
+    arrow(ax, (0.645, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '共置竞争抖动 vs. MIG + PREEMPT_RT 核绑定确定性保障', color='orange')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '无隔离同卡混跑（MPS/共享流）\n视觉矩阵乘挤占 L2 与带宽\nSystem 1 P99.9 飙至 > 35 ms', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '硬件 MIG + PREEMPT_RT 绑核\nCUDA Graph 固化动作头算子\nSystem 1 WCET 锁在 ≤ 4.2 ms', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '硬实时控制看最坏执行时间（WCET），必须切断缓存与带宽干扰', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch19-jetson-thor-mig-rtos-deterministic-isolation')
+
+
+def fig_19_6_flow_matching_ode(ex: Exporter):
     fig, ax = canvas(3.75)
-    card(ax, 0.02, 0.04, 0.46, 0.92, 'torchrun 全局销毁重启（300 s）', color='orange', title_size=11)
-    box(ax, 0.04, 0.66, 0.42, 0.16, '单卡掉线触发全网 SIGTERM\n九万九千张健康卡陪葬销毁', 'orange', size=11)
-    box(ax, 0.04, 0.43, 0.42, 0.16, '重新初始化 CUDA 与 NCCL 环\n万卡 TCP 握手耗 120–180 s', 'orange', size=11)
-    box(ax, 0.04, 0.20, 0.42, 0.16, '从远端存储重载数 TB 检查点\nETTR 跌至 63.22%（算例 20-1）', 'orange', size=11)
+    card(ax, 0.02, 0.04, 0.46, 0.92, '传统 DDPM 扩散（50 步）', color='orange', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '弯曲随机轨迹需 50–100 步\n串行调用动作网络 50 次', 'orange', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '单次生成耗时 40–120 ms\n无法满足 100 Hz 闭环周期', 'orange', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '每步注入随机高斯噪声\n引发力矩抖动与机械谐振', 'orange', size=11)
     arrow(ax, (0.25, 0.66), (0.25, 0.59))
     arrow(ax, (0.25, 0.43), (0.25, 0.36))
-    text(ax, 0.25, 0.10, '一卡故障、万卡陪葬重启', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+    text(ax, 0.25, 0.10, '步数多且含噪声，控制抖动大', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
 
-    card(ax, 0.52, 0.04, 0.46, 0.92, 'TrainMover 秒级热接管', color='teal', title_size=11)
-    box(ax, 0.54, 0.66, 0.42, 0.16, '热备常驻预初始化守护进程\n预建 CUDA 上下文与备用 QP', 'teal', size=11)
-    box(ax, 0.54, 0.43, 0.42, 0.16, '虚拟通信组局部替换故障 Rank\n仅重连邻居 QP，其余卡零感知', 'blue', size=11)
-    box(ax, 0.54, 0.20, 0.42, 0.16, '同 DP 邻居经 RDMA 推状态\n5 s 内恢复，ETTR 升至 92.34%', 'purple', size=11)
+    card(ax, 0.52, 0.04, 0.46, 0.92, '流匹配（Flow-Matching 6 步）', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '最优传输直线速度场 v_θ\n沿直线仅需 4–6 步欧拉积分', 'teal', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '静态展开为单个 CUDA Graph\n6 步总耗时 4.2 ms（零启动税）', 'blue', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '确定性常微分方程积分\n轨迹平滑，抖动 < 0.1 ms', 'purple', size=11)
     arrow(ax, (0.75, 0.66), (0.75, 0.59))
     arrow(ax, (0.75, 0.43), (0.75, 0.36))
-    text(ax, 0.75, 0.10, '保留健康进程上下文实现秒级接管', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
-    ex.save(fig, 'ch20-trainmover-subsecond-hot-migration')
+    text(ax, 0.75, 0.10, '少步确定性积分契合硬实时控制', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch19-flow-matching-ode-steps-vs-control-jitter')
 
 
-def fig_20_8_straggler_blame(ex: Exporter):
+def fig_19_7_gpu_native_sim(ex: Exporter):
+    fig, ax = canvas(3.75)
+    card(ax, 0.02, 0.04, 0.46, 0.92, 'CPU 仿真 + PCIe 往返瓶颈', color='orange', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, 'CPU 进程池跑物理步进\n受核数限制仅 64–256 环境', 'orange', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '每步跨 PCIe 传图像与状态\n4,096 环境需 43.39 GB/s', 'orange', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '打满 PCIe 5.0 x16 带宽上限\nGPU 策略 85% 时间空等 I/O', 'orange', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '跨总线搬移锁死大规模仿真吞吐', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'GPU 原生万级仿真（Isaac）', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '碰撞求解全编译为 GPU 核\n单卡并发 4,096–16,384 环境', 'teal', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '批量光追渲染直写 HBM 显存\n零拷贝映射为 PyTorch 张量', 'blue', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '物理→渲染→训练全在 HBM\nPCIe 流量=0，吞吐升 200x', 'purple', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '数据零出卡成就万级并发训练', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch19-cpu-sim-pcie-bottleneck-vs-gpu-native-sim')
+
+
+def fig_19_8_three_way_budget(ex: Exporter):
     fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, 'NCCL Flight Recorder 与到达偏斜矩阵（算例 20-4）', color='blue')
+    card(ax, 0.02, 0.50, 0.96, 0.46, '单卡 4,096 环境三合一显存账本（共 25.52 GiB，算例 19-4）', color='blue')
     stages = [
-        (0.03, 0.58, 0.29, 0.24, 'Rank 0,1,2 准时到\nt = 0.0 ms 入集合\n空转等待 2.0 ms', 'teal'),
-        (0.355, 0.58, 0.29, 0.24, 'Rank 3 慢节点根因\n降频致 t = 2.0 ms\n才启动集合算子', 'orange'),
-        (0.68, 0.58, 0.29, 0.24, '网络交换仅 0.4 ms\nt = 2.4 ms 全体完\n火焰图误显 2.4 ms', 'purple'),
+        (0.03, 0.58, 0.29, 0.24, '物理与接触缓冲\n状态 2,048 MiB\nBVH 资产 4,096 MiB', 'teal'),
+        (0.355, 0.58, 0.29, 0.24, '批量多目渲染缓冲\n4,096 × 双目相机\n占 3,600 MiB', 'blue'),
+        (0.68, 0.58, 0.29, 0.24, '策略与经验轨迹池\n权重+激活+Rollout\n占 16,384 MiB', 'purple'),
     ]
     for x, y, w, h, label, role in stages:
         box(ax, x, y, w, h, label, role, size=11)
     arrow(ax, (0.32, 0.70), (0.355, 0.70))
     arrow(ax, (0.645, 0.70), (0.68, 0.70))
 
-    card(ax, 0.02, 0.03, 0.96, 0.42, '为什么盲目升级网络带宽只省 0.2 ms，而定位慢节点能省 2.0 ms？', color='teal')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '误把等待当传输（算例 20-4）\n带宽翻倍仅把 0.4 压至 0.2 ms\n总墙钟 2.4 → 2.2 ms（省 8.3%）', 'orange', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '提取算子入队时间戳偏斜矩阵\n锁定最晚到达的根因 Rank 3\n剔除慢卡后降至 0.4 ms（省 83%）', 'teal', size=11)
+    card(ax, 0.02, 0.03, 0.96, 0.42, '单张 H100（132 SM）上的三方计算单元与 SM 分区协同', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '异构硬件单元流水交错\n物理吃 FP32 核（44 SM）\n渲染 48 SM + 策略 40 SM', 'teal', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '双缓冲环境批次（2,048×2）\n半数渲染时另半数跑策略推理\nRT 与 Tensor 核双双拉满', 'blue', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '同步通信耗时长往往是健康卡在等慢卡，而非网络拥塞', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch20-nccl-flight-recorder-straggler-blame')
+    text(ax, 0.50, 0.06, '物理、渲染与策略恰好对应 SIMT、RT Core 与 Tensor Core', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch19-physics-renderer-policy-three-way-sm-budget')
 
 
-def fig_20_9_optical_gray_failure(ex: Exporter):
+def fig_19_9_contact_divergence(ex: Exporter):
     fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '800G 光模块劣化引发 FEC 重传（灰故障）的演化特征', color='orange')
+    card(ax, 0.02, 0.50, 0.96, 0.46, '4,096 并行环境中稀疏碰撞引发的 SIMT Warp 分支发散', color='orange')
     stages = [
-        (0.03, 0.58, 0.29, 0.24, '① 光功率轻微衰减\nPre-FEC 升至 10^-5\nFEC 纠错掩盖异常', 'teal'),
-        (0.355, 0.58, 0.29, 0.24, '② 纠错码字近饱和\n不可纠帧触发重传\nAllReduce 现毛刺', 'orange'),
-        (0.68, 0.58, 0.29, 0.24, '③ 间歇性端口闪断\n未 Down 但重传风暴\n拖垮轨道平面吞吐', 'orange'),
+        (0.03, 0.58, 0.29, 0.24, '按环境静态映射线程\n1 个 Warp（32 线程）\n绑 32 个相邻环境', 'gray'),
+        (0.355, 0.58, 0.29, 0.24, '29 个环境无碰撞\n0 接触点 1 次迭代\n早早完成空转等待', 'teal'),
+        (0.68, 0.58, 0.29, 0.24, '3 个环境多点碰撞\n32 接触点迭代 20 轮\n拖慢全 Warp 跌 8x', 'orange'),
     ]
     for x, y, w, h, label, role in stages:
         box(ax, x, y, w, h, label, role, size=11)
     arrow(ax, (0.32, 0.70), (0.355, 0.70))
     arrow(ax, (0.645, 0.70), (0.68, 0.70))
 
-    card(ax, 0.02, 0.03, 0.96, 0.42, '基于光模块遥测与 FEC 纠错桶直方图的预测性隔离', color='blue')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '传统监控只看 Link Up/Down\n对“活着但慢 20%”的灰故障失明\n致万卡长期处于亚健康降速态', 'orange', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '采集 FEC 高阶纠错桶（Bin 7–15）\n在未丢包前提前标记劣化链路\n趁检查点间隙切换路由或备机', 'teal', size=11)
+    card(ax, 0.02, 0.03, 0.96, 0.42, 'MuJoCo Warp / Genesis 接触点流式紧缩（Stream Compaction）', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '碰撞检测后执行前缀和紧缩\n仅提取活跃接触对建任务队列\n跳过无碰撞环境的空转分支', 'teal', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '按活跃接触对分配线程束\nSIMT 占用率从 25% 升至 88%\n支撑灵巧手多指接触高速仿真', 'blue', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '监控 Pre-FEC 误码斜率是在灰故障拖垮集群前将其拦截的关键', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch20-optical-ber-fec-gray-failure-detection')
+    text(ax, 0.50, 0.06, '从“一环境一线程”改为“一活跃接触对一线程”消除分支发散', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch19-contact-divergence-warp-inefficiency')
 
 
-def fig_20_10_benchmark_traps(ex: Exporter):
+def fig_19_10_tiled_rendering(ex: Exporter):
     fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, 'AI 系统跑分五大失真陷阱与加速比悖论（算例 20-5）', color='orange')
+    card(ax, 0.02, 0.50, 0.96, 0.46, '多环境相机画布拼接渲染（Tiled Rendering）与零拷贝映射', color='teal')
     stages = [
-        (0.03, 0.58, 0.29, 0.24, '陷阱 ①–②：随机词元\n与无 SLO 极限吞吐\n掩盖投机与排队', 'orange'),
-        (0.355, 0.58, 0.29, 0.24, '陷阱 ③：加速比悖论\nA 平均 5.25x 却耗时\n210 μs 慢于基线', 'orange'),
-        (0.68, 0.58, 0.29, 0.24, '陷阱 ④–⑤：顺序时漂\n与静默精度退化\n误把节流当加速', 'orange'),
+        (0.03, 0.58, 0.29, 0.24, '① 实例化场景图\n4,096 环境享底模\n仅更新位姿矩阵', 'blue'),
+        (0.355, 0.58, 0.29, 0.24, '② 大画布拼接光追\n64×64 网格大纹理\n1 次 Kernel 全渲染', 'teal'),
+        (0.68, 0.58, 0.29, 0.24, '③ 显存零拷贝视图\n经 DLPack 映射为\n[4096,C,H,W] 张量', 'purple'),
     ]
     for x, y, w, h, label, role in stages:
         box(ax, x, y, w, h, label, role, size=11)
     arrow(ax, (0.32, 0.70), (0.355, 0.70))
     arrow(ax, (0.645, 0.70), (0.68, 0.70))
 
-    card(ax, 0.02, 0.03, 0.96, 0.42, '锁定反例复核：加速比翻转阈值与 ABBA 时漂抵消', color='teal')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '加速比翻转点 p* = 15/19 ≈ 0.7895\n仅短形状 > 78.95% 时候选 A 才赢\n等频下候选 B（100 μs）快 2.1x', 'teal', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '消除 [0, 10, 20, 30] μs 热漂移\nAABB 顺序误判 A 快 10 μs\nABBA 镜像顺序还原真实差 +10 μs', 'blue', size=11)
+    card(ax, 0.02, 0.03, 0.96, 0.42, '消除逐环境 DrawCall 风暴与 Vulkan-CUDA 双份拷贝', color='blue')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '朴素逐环境循环渲染\n每步触发 8,192 次微光追调用\nCPU 驱动提交耗达 35 ms/步', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '大画布批量光追 + 零拷贝视图\n4,096 双目渲染耗时压至 1.8 ms\n显存减半且零显存间复制', 'teal', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '严禁对不同形状加速比取算术平均，必须汇报真实分布加权耗时', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch20-five-benchmark-gaming-traps')
+    text(ax, 0.50, 0.06, '将数千微型相机合批为单次全屏光追是突破万帧每秒的前提', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch19-multi-camera-tiled-rendering-zero-copy-tensor')
 
 
-def fig_20_11_four_pillar_eval(ex: Exporter):
+def fig_19_11_ptp_alignment(ex: Exporter):
     fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '工业级 AI 基础设施四维评测与无偏性能剖析体系', color='blue')
+    card(ax, 0.02, 0.50, 0.96, 0.46, '机载多传感器硬件脉冲触发与 PTP 微秒级时间同步', color='blue')
     stages = [
-        (0.03, 0.58, 0.29, 0.24, '① 算子与通信基准\nFlashInfer + CCEval\n锁形状与影子流量', 'blue'),
-        (0.355, 0.58, 0.29, 0.24, '② 漂移与 SLO 基准\nDriftBench 合成流\n测突发下 Goodput', 'teal'),
-        (0.68, 0.58, 0.29, 0.24, '③ 可信剖析与门禁\nBlink 消采样失真\n+ KL 散度质量门禁', 'purple'),
+        (0.03, 0.58, 0.29, 0.24, '硬件主时钟 PTP\n30 Hz 硬同步脉冲\n统一相机曝光中心', 'blue'),
+        (0.355, 0.58, 0.29, 0.24, '高频 IMU 1,000 Hz\n与关节编码器 500 Hz\n打硬件单调时钟戳', 'teal'),
+        (0.68, 0.58, 0.29, 0.24, 'SE(3) 运动插值\n将点云与关节角对齐\n至相机曝光时刻', 'purple'),
     ]
     for x, y, w, h, label, role in stages:
         box(ax, x, y, w, h, label, role, size=11)
     arrow(ax, (0.32, 0.70), (0.355, 0.70))
     arrow(ax, (0.645, 0.70), (0.68, 0.70))
 
-    card(ax, 0.02, 0.03, 0.96, 0.42, '为什么传统 PMU 采样剖析在扁平运行时上失真？（Blink OSDI 26）', color='teal')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '短函数与关中断致采样失真\nPMU 采样点滑移与系统性漏采\n夸大长算子占比、漏报主机开销', 'orange', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, 'Blink 校准剖析 + 两阶段金丝雀\n先在影子流量验 KL 散度与 P99\n再按 ABBA 交错放量验端到端收益', 'teal', size=11)
+    card(ax, 0.02, 0.03, 0.96, 0.42, '为什么软件接收时间戳（ROS arrival time）会毒化模仿学习？', color='orange')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '软件时间戳受内核调度抖动\n图像与关节角偏移 15–40 ms\n模型学到错误的因果滞后映射', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '硬件曝光触发 + 环形缓冲对齐\n跨模态时间同步精度 < 100 μs\n精细操作学习成功率升 22%', 'teal', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '可信剖析工具（Blink）与质量门禁是防止优化沦为数字游戏的双保险', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch20-flashinfer-bench-cceval-and-blink-profiling')
+    text(ax, 0.50, 0.06, '时空未对齐的演示数据比噪音更危险，硬件同步是数据第一门禁', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch19-multi-sensor-ptp-hardware-trigger-alignment')
 
 
-def fig_20_12_ettr_surface(ex: Exporter):
+def fig_19_12_shadow_mode(ex: Exporter):
     fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '十万卡有效训练时间比（ETTR）与 Young-Daly 最优周期（算例 20-1）', color='teal')
+    card(ax, 0.02, 0.50, 0.96, 0.46, '真机车队影子模式（Shadow Mode）与难例触发（算例 19-5）', color='teal')
     stages = [
-        (0.03, 0.58, 0.29, 0.24, 'Young-Daly 公式\nτ = sqrt(2·C·M)\n平衡写盘与回滚', 'blue'),
-        (0.355, 0.58, 0.29, 0.24, '落盘 + 全量重启\nC=180s, T_rec=300s\nETTR = 63.22%', 'orange'),
-        (0.68, 0.58, 0.29, 0.24, '内存快照 + 热接管\nC=5s, T_rec=5s\nETTR = 92.34%', 'teal'),
+        (0.03, 0.58, 0.29, 0.24, '机载 60 s 环形黑匣子\n原始速率 180 MB/s\n全量达 2.592 TB/天', 'gray'),
+        (0.355, 0.58, 0.29, 0.24, '影子策略并行旁路\n实时算动作分歧 D_t\n或接管/超限触发', 'orange'),
+        (0.68, 0.58, 0.29, 0.24, '冻结前后 15 s 窗口\n0.5% 触发 12.96 GB\n回传带宽压 200 倍', 'teal'),
     ]
     for x, y, w, h, label, role in stages:
         box(ax, x, y, w, h, label, role, size=11)
     arrow(ax, (0.32, 0.70), (0.355, 0.70))
     arrow(ax, (0.645, 0.70), (0.68, 0.70))
 
-    card(ax, 0.02, 0.03, 0.96, 0.42, '十万卡集群损失的 36.78% 算力去哪了？如何夺回 29.12 个百分点？', color='blue')
-    box(ax, 0.04, 0.13, 0.44, 0.20, 'M = 1,800 s（30 分钟一次故障）\n传统方案花 300 s 重启 + 402 s 重算\n近四成算力在空转与重算中蒸发', 'orange', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, 'Checkmate 内存快照（5 s）叠加\nTrainMover 无重启接管（5 s）\n挽回 +29,120 张等效 GPU 算力', 'teal', size=11)
+    card(ax, 0.02, 0.03, 0.96, 0.42, '三大高价值边缘触发器（Edge Triage Triggers）', color='blue')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '① 策略分歧与流匹配方差触发\n在役与影子策略预测轨迹偏离\n或动作分布出现双峰高熵', 'blue', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '② 物理反常与人类接管触发\n遥操作紧急接管、力冲击超限\n或世界模型预测画面失配', 'teal', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '将检查点与恢复压至秒级等价于在十万卡集群白捡近三万张 GPU', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch20-effective-training-time-ratio-ettr-model')
+    text(ax, 0.50, 0.06, '丢弃 99.5% 平庸数据、捕获 0.5% 边界难例可百倍降低闭环成本', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch19-shadow-mode-disagreement-edge-trigger')
 
 
-def fig_20_13_burn_in_pipeline(ex: Exporter):
+def fig_19_13_3dgs_sim2real(ex: Exporter):
     fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '新节点入网与维修归队后的四阶自动化烤机（Burn-in）准入流水线', color='blue')
+    card(ax, 0.02, 0.50, 0.96, 0.46, '3D 高斯泼溅（3DGS）神经重建与可微闭环重仿真流水线', color='purple')
     stages = [
-        (0.03, 0.58, 0.29, 0.24, '① 满载热压测\n跑满 TDP 30 分钟\n筛查冷板与供电', 'blue'),
-        (0.355, 0.58, 0.29, 0.24, '② 确定性 SDC 压测\n多精度 GEMM+ABFT\n拦截静默翻转卡', 'teal'),
-        (0.68, 0.58, 0.29, 0.24, '③ 光链路裕量压测\n验 BER < 10^-8\n通过后入热备池', 'purple'),
+        (0.03, 0.58, 0.29, 0.24, '① 难例日志云端重建\nSLAM 位姿精化\n训 3DGS 辐射场', 'blue'),
+        (0.355, 0.58, 0.29, 0.24, '② 物理属性对齐导入\n碰撞网格入 Isaac\n前景物体独立受控', 'teal'),
+        (0.68, 0.58, 0.29, 0.24, '③ 闭环新视角合成\n策略偏离原采集路线\n3DGS 渲染对应视角', 'purple'),
     ]
     for x, y, w, h, label, role in stages:
         box(ax, x, y, w, h, label, role, size=11)
     arrow(ax, (0.32, 0.70), (0.355, 0.70))
     arrow(ax, (0.645, 0.70), (0.68, 0.70))
 
-    card(ax, 0.02, 0.03, 0.96, 0.42, '闭环机队健康自治状态机（Fleet Health State Machine）', color='teal')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '严禁未烤机节点直入训练主池\n维修节点常存松动光模块或老化\n直入会导致修好一台却炸停全网', 'orange', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '在役节点 → 热踢出 → 隔离诊断\n→ 维修 → 四阶烤机 → 回热备池\n全程零人工介入闭环运转', 'teal', size=11)
+    card(ax, 0.02, 0.03, 0.96, 0.42, '跨越 Sim-to-Real：开环日志回放 vs. 3DGS + 物理闭环重仿真', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '传统开环视频回放（Log Replay）\n新策略动作偏离原采集轨迹时\n相机画面无法改变，分布偏移', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '3DGS 渲染 + 刚体接触物理引擎\n兼具真实光照纹理与反事实交互\n1 个难例扩增 1,000 个变体', 'teal', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '把准入烤机挡在热备池门外是防带病节点二次感染集群的铁律', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch20-automated-burn-in-fleet-health-pipeline')
+    text(ax, 0.50, 0.06, '3DGS 消除视觉外观差距，GPU 物理引擎保证接触力学闭环', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch19-3dgs-neural-reconstruction-sim2real-loop')
 
 
-def fig_20_14_dual_track_ledger(ex: Exporter):
+def fig_19_14_edge_offload_safety(ex: Exporter):
     fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '全书二十章双轨贯穿主线（Dense 轨 vs. MoE 轨）收官总账本', color='blue')
+    card(ax, 0.02, 0.50, 0.96, 0.46, '机载端侧计算、边缘卸载（MEC）与本地安全护盾（CBF）', color='blue')
     stages = [
-        (0.03, 0.58, 0.29, 0.24, '第 1–7 章：算力互联\nQwen3-8B 单卡端侧\nvs 671B 双平面网', 'blue'),
-        (0.355, 0.58, 0.29, 0.24, '第 8–14 章：训推存储\nPD 分离、DeepEP\n过度训练百倍降本', 'teal'),
-        (0.68, 0.58, 0.29, 0.24, '第 15–20 章：六大前沿\n吉瓦供电、机密沙箱\nDiT/RLVR/VLA/容错', 'purple'),
+        (0.03, 0.58, 0.29, 0.24, '局域 5G/Wi-Fi 7 边缘\n卸载 30B+ System 2\n网络 P99 抖动 50 ms', 'blue'),
+        (0.355, 0.58, 0.29, 0.24, '机载 System 1 100 Hz\n无线闪断 200 ms 时\n凭潜特征维持控制', 'teal'),
+        (0.68, 0.58, 0.29, 0.24, '控制屏障护盾（CBF）\n运行于 1,000 Hz 核\n硬裁剪越界力矩', 'orange'),
     ]
     for x, y, w, h, label, role in stages:
         box(ax, x, y, w, h, label, role, size=11)
     arrow(ax, (0.32, 0.70), (0.355, 0.70))
     arrow(ax, (0.645, 0.70), (0.68, 0.70))
 
-    card(ax, 0.02, 0.03, 0.96, 0.42, '双轨模型贯穿二十章的核心物理尺度对比', color='teal')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '轨道 A：Qwen3-8B（36 层 GQA）\n权重 16.4 GB / INT4 4.6 GB\nKV 144 KB/tok，代表单卡与端侧', 'blue', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '轨道 B：DeepSeek 671B MoE\nMLA 压 KV 至 70.2 KB/tok\n代表超节点、EP 与 RLVR 旗舰', 'teal', size=11)
+    card(ax, 0.02, 0.03, 0.96, 0.42, '具身安全铁律：绝不允许无线网络处于高频闭环控制关键路径', color='orange')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '错误设计：边缘直接下发力矩\n无线重传抖动致机械臂剧烈抽搐\n断网瞬间处于无保护盲飞状态', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '正确设计：仅卸载慢规划 VLM\n端侧闭环 System 1 + CBF 护盾\n超时未获新目标自动平滑驻停', 'teal', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '一切系统架构抉择最终都还原为算力、显存、带宽、功耗与可靠性的账本', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch20-twenty-chapter-dual-track-master-ledger')
+    text(ax, 0.50, 0.06, '无论大模型多强，最后一层必须是确定性物理安全包络', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch19-onboard-vs-mec-edge-offload-safety-fallback')
 
 
-def fig_20_15_knowledge_graph(ex: Exporter):
+def fig_19_15_vla_token_pruning(ex: Exporter):
     fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '全书二十章知识体系全景图：三大部分与六大前沿底座', color='teal')
+    card(ax, 0.02, 0.50, 0.96, 0.46, '面向硬实时截止期的视觉词元剪枝（VLA-Pruner）与早退', color='teal')
     stages = [
-        (0.03, 0.58, 0.29, 0.24, '第一部分（1–3 章）\n模型与负载硬件视角\nMoE/MLA 与 SLO', 'blue'),
-        (0.355, 0.58, 0.29, 0.24, '第二部分（4–7 章）\n芯片算子与集群网络\n超节点与无损网', 'teal'),
-        (0.68, 0.58, 0.29, 0.24, '第三部分（8–20 章）\n训推、云边、供电安全\nDiT/RLVR/VLA/容错', 'purple'),
+        (0.03, 0.58, 0.29, 0.24, '① 4 路高清相机输入\n共 1,024 视觉词元\n全算耗尽 150 ms', 'orange'),
+        (0.355, 0.58, 0.29, 0.24, '② 时空差分剪枝\n复用静态背景 KV\n仅留夹爪周 256 词元', 'teal'),
+        (0.68, 0.58, 0.29, 0.24, '③ 截止期感知早退\n充裕跑 28 层，紧急时\n第 18 层提前输出', 'blue'),
     ]
     for x, y, w, h, label, role in stages:
         box(ax, x, y, w, h, label, role, size=11)
     arrow(ax, (0.32, 0.70), (0.355, 0.70))
     arrow(ax, (0.645, 0.70), (0.68, 0.70))
 
-    card(ax, 0.02, 0.03, 0.96, 0.42, '跨层协同设计（Cross-Layer Co-Design）的闭环脉络', color='blue')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '自顶向下：算法演进重塑系统负载\nGQA/MLA 救显存 → MoE 推高通信\n→ Long-CoT 与 3D DiT 改训推比', 'blue', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '自底向上：物理定律划定算法边界\nSRAM/HBM 容量、超节点域宽\n与 SDC 失效率反过来决定模型', 'teal', size=11)
+    card(ax, 0.02, 0.03, 0.96, 0.42, '将可变长视觉推理改造为硬实时确定性算子预算', color='blue')
+    box(ax, 0.04, 0.13, 0.44, 0.20, 'Top-K 固定配额（非动态阈值）\n强制保留词元数恒为 K = 256\n后续层张量形状 100% 静态', 'teal', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '静态形状兼容 CUDA Graph\n视觉 Prefill 从 145 压至 38 ms\n抖动 < 0.3 ms，成功率无损', 'blue', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '优秀架构师既懂顶层模型数学，又能一路向下推演到硅片与变压器', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch20-twenty-chapter-architecture-knowledge-graph')
+    text(ax, 0.50, 0.06, '用固定配额 Top-K 剪枝替代动态阈值，兼得加速与静态图确定性', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch19-vla-early-exit-and-token-pruning-wcet')
 
 
-def fig_20_16_ten_principles(ex: Exporter):
+def fig_19_16_full_stack_map(ex: Exporter):
     fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, 'AI 基础设施架构师的十条第一性原理铁律（第 1–5 条）', color='blue')
+    card(ax, 0.02, 0.50, 0.96, 0.46, '具身智能（VLA）全栈底座：万级仿真、机载硬实时与影子飞轮', color='blue')
     stages = [
-        (0.03, 0.58, 0.29, 0.24, '① 算术强度分界\n② 显存容量带宽双墙\n先算字节再谈算力', 'blue'),
-        (0.355, 0.58, 0.29, 0.24, '③ 通信域物理分层\nTP 留柜内、EP 走轨\nDP/PP 跨层重叠', 'teal'),
-        (0.68, 0.58, 0.29, 0.24, '④ 负载解耦与池化\nPD 分离、EPD 分离\n与 RLVR 异步分池', 'purple'),
+        (0.03, 0.58, 0.29, 0.24, '云端万级 GPU 仿真\n4,096 环境零拷贝\n25.52 GiB（19.3 节）', 'blue'),
+        (0.355, 0.58, 0.29, 0.24, '机载双频确定性推理\n2 Hz VLM + 100 Hz 流\nWCET ≤ 4.2 ms', 'teal'),
+        (0.68, 0.58, 0.29, 0.24, '车队影子与 3DGS\nPTP + 0.5% 触发\n省带宽 200 倍', 'purple'),
     ]
     for x, y, w, h, label, role in stages:
         box(ax, x, y, w, h, label, role, size=11)
     arrow(ax, (0.32, 0.70), (0.355, 0.70))
     arrow(ax, (0.645, 0.70), (0.68, 0.70))
 
-    card(ax, 0.02, 0.03, 0.96, 0.42, '十条第一性原理铁律（第 6–10 条：尾部、物理、容错与评测）', color='teal')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '⑤–⑦ 尾部气泡治理、全周期经济\n与机房供电/液冷/安全物理约束\n最大化每焦耳与每美元有效产出', 'teal', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '⑧–⑩ 硬实时 WCET、十万卡容错\n（防 SDC + 秒级接管）与评测科学\n只认真实分布与质量门禁下吞吐', 'blue', size=11)
+    card(ax, 0.02, 0.03, 0.96, 0.42, '第 19 章三大核心定量结论汇总', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '盲飞位移法则：Δx = v·Δt_inf\n0.5 m/s 下 200 ms 漂移 100 mm\n5 mm 插孔要求周期 ≤ 10 ms', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '仿真与飞轮：破 43.39 GB/s 墙\n单卡 HBM 融合求解光追与训练\n影子触发将 2.59 TB 压至 13 GB', 'teal', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '回归物理常识、坚持定量核算、敬畏生产现实——全书二十章收官', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch20-ten-first-principles-of-ai-infra')
+    text(ax, 0.50, 0.06, '具身底座的本质是跨越时间确定性（WCET）与空间多样性（Sim2Real）', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch19-embodied-ai-full-stack-infrastructure-map')
 
 
-def fig_20_17_chaos_fault_injection(ex: Exporter) -> None:
+def fig_19_17_three_tier_humanoid_control(ex: Exporter) -> None:
     fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '四维主动混沌故障注入演练（200 次注入，总召回率 99.5%）', color='orange')
-    faults = [
-        (0.03, 0.58, 0.29, 0.24, '① 算子 SDC 注入\n翻转 +32..+64\nABFT 100% 捕获\nMTTD = 0.042 s', 'orange'),
-        (0.355, 0.58, 0.29, 0.24, '② 慢卡与光模块\n+2.0 ms 偏斜/FEC\n偏斜阵 99% 定位\nMTTD = 3.2–6.8 s', 'purple'),
-        (0.68, 0.58, 0.29, 0.24, '③ 掉卡与金丝雀\nTrainMover 0.68 s\n>3% P99 熔断回滚\nMTTR = 3.85 s', 'teal'),
+    card(ax, 0.02, 0.50, 0.96, 0.46, '人形机器人三级异构频率解耦（2 Hz → 100 Hz → 1,000 Hz）', color='blue')
+    tiers = [
+        (0.03, 0.58, 0.29, 0.24, 'Tier 1：VLM 规划\n2 Hz 视觉语义推理\n发布潜特征 z_t', 'blue'),
+        (0.355, 0.58, 0.29, 0.24, 'Tier 2：流匹配头\n100 Hz (≤4.2 ms)\n输出 H=50 步轨迹', 'teal'),
+        (0.68, 0.58, 0.29, 0.24, 'Tier 3：WBC 力控\n1,000 Hz (800 μs)\n28维 QP+打滑补偿', 'orange'),
     ]
-    for x, y, w, h, label, role in faults:
+    for x, y, w, h, label, role in tiers:
         box(ax, x, y, w, h, label, role, size=11)
     arrow(ax, (0.32, 0.70), (0.355, 0.70))
     arrow(ax, (0.645, 0.70), (0.68, 0.70))
 
-    card(ax, 0.02, 0.03, 0.96, 0.42, '混沌演练 + 两阶段金丝雀门禁 vs. 传统被动排障收益对比', color='teal')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '传统被动运维（无 GameDay）\n告警链路失效、慢卡长期潜伏\n人工重启耗时 1,500 s（25 min）', 'orange', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '主动混沌检验 + 自治 SRE 闭环\n199/200 故障秒级自动拦截隔离\n恢复提速 389.6×，ETTR 92.34%', 'teal', size=11)
+    card(ax, 0.02, 0.03, 0.96, 0.42, 'Tier 3 (1,000 μs 硬实时周期) 预算拆解与初生打滑抑制', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '1,000 μs 周期 WCET = 800 μs\n触觉读取 180 + 打滑判定 40 μs\n+ WBC-QP 420 + 下发 160 μs', 'teal', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '初生打滑抑制（v = 0.12 m/s）\n100 Hz 环滑移 1.80 mm（失稳）\n1,000 Hz 触觉环滑移 0.12 mm', 'purple', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '未经受主动故障注入检验的容错状态机，在十万卡风暴中易发级联雪崩', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch20-chaos-fault-injection-and-canary-rollout-gate')
+    text(ax, 0.50, 0.06, '1,000 Hz 视触觉打滑反射与全身动力学平衡运行在实时核紧凑 QP 内', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch19-three-tier-vlm-flow-wbc-humanoid-control')
 
 
-def fig_20_18_frontier_bridge(ex: Exporter) -> None:
+def fig_19_18_fast_dct_tokenizer(ex: Exporter) -> None:
     fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '前 20 章通用训推与可靠性底座 → 第 21–24 章四大新兴战略疆域', color='blue')
-    box(ax, 0.04, 0.58, 0.44, 0.24, '第 21 章智能体与第 22 章全双工\n95% WORM KV + 12 ms CoW 沙箱\n<200 ms S2S + 游标对齐回滚', 'blue', size=11)
-    box(ax, 0.52, 0.58, 0.44, 0.24, '第 23 章数据厂与第 24 章科学终章\n0.5% 清洗漏斗 + 中训练配比\nO(N^3) 三角注意 + 24 章收束', 'purple', size=11)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '高频动作块（H=50 步 × D_a=14 维 = 700 元素）分词范式对比', color='orange')
+    box(ax, 0.04, 0.58, 0.44, 0.24, '传统时域逐帧分箱（256-Bin）\n50 × 14 = 700 个离散 Token\n相邻帧 Δa≈0 复读，需 2,450 ms', 'orange', size=11)
+    box(ax, 0.52, 0.58, 0.44, 0.24, 'FAST 频域动作分词（DCT+BPE）\n前 K=8 低频分量占能 99.47%\n压至 80 Token（8.75× 压缩）', 'teal', size=11)
     arrow(ax, (0.48, 0.70), (0.52, 0.70))
 
-    card(ax, 0.02, 0.03, 0.96, 0.42, '双枢纽收束结构：第 20 章（通用可靠性枢纽）↔ 第 24 章（全书终章）', color='teal')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '第一枢纽（第 1–20 章）：\n算术强度、超节点互联、PD 分离\n与十万卡防 SDC 构筑通用底座', 'blue', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '第二枢纽（第 21–24 章）：\n向长程环境状态、硬实时音频流、\n源头数据燃料与科学智能延伸', 'teal', size=11)
-    arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '第一性原理（字节、局部性、拓扑同构与尾延迟治理）贯穿全部二十四章', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch20-core-cluster-to-four-new-frontiers-bridge')
-
-
-def fig_20_19_oobleck_failover(ex: Exporter) -> None:
-    fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, 'Oobleck 预实例化异构流水线模板无重启容错（1.45 s 恢复）', color='blue')
+    card(ax, 0.02, 0.03, 0.96, 0.42, 'FAST 频域动作序列分词（DCT-II + BPE）三阶段压缩流水线', color='teal')
     steps = [
-        (0.03, 0.58, 0.29, 0.24, '① 预实例化双模板\n标准 8 阶 T_8 与\n紧凑 7 阶 T_7 域', 'blue'),
-        (0.355, 0.58, 0.29, 0.24, '② 局部层分片补齐\n检测 0.25+补齐 0.85s\nRDMA 拉取冗余分片', 'teal'),
-        (0.68, 0.58, 0.29, 0.24, '③ 异构微批重配额\n同步 0.35s 零重启\n30×T_8 + 2×T_7', 'purple'),
+        (0.03, 0.13, 0.29, 0.20, '① DCT-II 频域变换\n平滑轨迹转频域谱\n高频 k≥8 量化归零', 'blue'),
+        (0.355, 0.13, 0.29, 0.20, '② 游程与 BPE 编码\n稀疏矩阵压 80 词元\n序列缩短 88.57%', 'teal'),
+        (0.68, 0.13, 0.29, 0.20, '③ 跨本体统一训练\n兼容双臂与人形臂\nRMSE < 0.35 mm', 'purple'),
+    ]
+    for x, y, w, h, label, role in steps:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.23), (0.355, 0.23))
+    arrow(ax, (0.645, 0.23), (0.68, 0.23))
+    text(ax, 0.50, 0.06, '物理机械运动受低通惯性约束：在频域分词可消除 88.57% 的时域冗余', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch19-fast-dct-frequency-action-tokenization')
+
+
+def fig_19_19_3dgs_closed_loop(ex: Exporter) -> None:
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '动静态解耦 3DGS 场景图与全向视锥剔除（留 70 万活跃点）', color='blue')
+    stages = [
+        (0.03, 0.58, 0.29, 0.24, '① 动静态场景解耦\n静态街道+动态实例\nSE(3) 位姿更新', 'blue'),
+        (0.355, 0.58, 0.29, 0.24, '② 视锥+LOD 剔除\n剔除 72% 远场点\n留 70 万活跃高斯', 'teal'),
+        (0.68, 0.58, 0.29, 0.24, '③ 相机+雷达求交\n瓦片光栅+BVH 光追\n零拷贝直通闭环', 'purple'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.355, 0.70))
+    arrow(ax, (0.645, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '6 路 1080p 环视 + 128 线雷达单步闭环重渲染延迟对比', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '朴素串行渲染（75.00 ms）\n相机 51 ms + 雷达 24 ms\n仅 13.33 FPS（违背 30 Hz）', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '批量光栅+光追（16.80 ms）\n相机 11.4 ms + 雷达 5.4 ms\n达 59.52 FPS（提速 4.46×）', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '单张 GPU 同步合成 6 路环视与 128 线雷达仅需 16.80 ms', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch19-3dgs-neural-sensor-closed-loop-re-simulation')
+
+
+def fig_19_20_dual_thor_watchdog(ex: Exporter) -> None:
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '车载双 Thor 异构 Simplex 四阶段接管（12.50 ms ≤ 15 ms）', color='orange')
+    steps = [
+        (0.03, 0.58, 0.29, 0.24, '① 检测与硬件仲裁\n检测 5.0+切换 1.5ms\n锁步岛切断主通道', 'orange'),
+        (0.355, 0.58, 0.29, 0.24, '② 热备 MPC 锁存\nt_mpc = 4.00 ms\n100 Hz 安全走廊', 'blue'),
+        (0.68, 0.58, 0.29, 0.24, '③ 线控底盘生效\nt_act = 2.00 ms\n12.50 ms 接管达标', 'teal'),
     ]
     for x, y, w, h, label, role in steps:
         box(ax, x, y, w, h, label, role, size=11)
     arrow(ax, (0.32, 0.70), (0.355, 0.70))
     arrow(ax, (0.645, 0.70), (0.68, 0.70))
 
-    card(ax, 0.02, 0.03, 0.96, 0.42, '32 条 8 阶流水线（256 节点）掉线 2 台无备机时恢复对比', color='teal')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '传统全局销毁重启（300.00 s）\n销毁 2,048 卡进程并重载磁盘\n无备机时全集群阻塞停机', 'orange', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, 'Oobleck 模板切换（1.45 s）\n恢复提速 206.90×（零全局重启）\n保留 98.75% 稳态训练吞吐', 'teal', size=11)
+    card(ax, 0.02, 0.03, 0.96, 0.42, '120 km/h 高速巡航故障失控窗口横向车道偏离对比', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '单芯片软件重启（250.0 ms）\n纵向盲奔 8.33 m，违背红线\n失控偏离 Δy = 351.25 mm', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '双 Thor 看门狗（12.50 ms）\n满足 ASIL-D 15.0 ms FTTI\n横向偏离仅 3.02 mm（省116×）', 'teal', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '编译期预建立多阶流水线通信域可在热备池耗尽时实现秒级降级续训', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch20-oobleck-pre-instantiated-pipeline-template-failover')
-
-
-def fig_20_20_bursty_goodput(ex: Exporter) -> None:
-    fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, 'Kingman 排队近似公式与推理压测流量变异系数（CV）黑洞', color='orange')
-    stages = [
-        (0.03, 0.58, 0.29, 0.24, '作弊均匀定速压测\nC_a = 0, C_s = 0\n排队 W_q 恒为 0 ms', 'orange'),
-        (0.355, 0.58, 0.29, 0.24, '真实泊松长尾流量\nC_a = 1.0, C_s = 1.2\n变异因子达 1.22', 'purple'),
-        (0.68, 0.58, 0.29, 0.24, '高水位排队非线性爆炸\nρ/(1-ρ) 放大 5.67×\nW_q 飙至 829.60 ms', 'blue'),
-    ]
-    for x, y, w, h, label, role in stages:
-        box(ax, x, y, w, h, label, role, size=11)
-    arrow(ax, (0.32, 0.70), (0.355, 0.70))
-    arrow(ax, (0.645, 0.70), (0.68, 0.70))
-
-    card(ax, 0.02, 0.03, 0.96, 0.42, '利用率 ρ = 0.85 下 TTFT 与 SLO Goodput（≤500 ms）失真对比', color='teal')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '均匀发包虚报（TTFT=80.0ms）\n宣称 100% 达标（7.08 req/s）\n掩盖线上突发排队尾延迟', 'orange', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '泊松长尾实测（TTFT=909.6ms）\n膨胀 11.37×，仅 48.77% 达标\n真实 Goodput 仅 3.45 req/s', 'teal', size=11)
-    arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '满足平均 TTFT ≤ 300 ms 要求系统利用率 ρ ≤ 60.04%（预留 ~40% 水位）', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch20-goodput-sla-under-bursty-poisson-traffic')
+    text(ax, 0.50, 0.06, '端到端 VLA 大模型必须配对独立 ASIL-D 安全岛与 100 Hz MPC 热备', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch19-dual-thor-soc-safety-fallback-watchdog-pipeline')
 
 
 def build_chapter() -> None:
     ex = Exporter(HERE)
-    fig_20_1_mtbf_scaling(ex)
-    fig_20_2_hot_spare_pool(ex)
-    fig_20_3_sdc_contamination(ex)
-    fig_20_4_abft_checksum(ex)
-    fig_20_5_safeguarding_opguard(ex)
-    fig_20_6_microbatch_rerun(ex)
-    fig_20_7_trainmover(ex)
-    fig_20_8_straggler_blame(ex)
-    fig_20_9_optical_gray_failure(ex)
-    fig_20_10_benchmark_traps(ex)
-    fig_20_11_four_pillar_eval(ex)
-    fig_20_12_ettr_surface(ex)
-    fig_20_13_burn_in_pipeline(ex)
-    fig_20_14_dual_track_ledger(ex)
-    fig_20_15_knowledge_graph(ex)
-    fig_20_16_ten_principles(ex)
-    fig_20_17_chaos_fault_injection(ex)
-    fig_20_18_frontier_bridge(ex)
-    fig_20_19_oobleck_failover(ex)
-    fig_20_20_bursty_goodput(ex)
+    fig_19_1_cloud_vs_embodied(ex)
+    fig_19_2_vlalagbench(ex)
+    fig_19_3_action_chunking(ex)
+    fig_19_4_dual_loop(ex)
+    fig_19_5_jetson_thor(ex)
+    fig_19_6_flow_matching_ode(ex)
+    fig_19_7_gpu_native_sim(ex)
+    fig_19_8_three_way_budget(ex)
+    fig_19_9_contact_divergence(ex)
+    fig_19_10_tiled_rendering(ex)
+    fig_19_11_ptp_alignment(ex)
+    fig_19_12_shadow_mode(ex)
+    fig_19_13_3dgs_sim2real(ex)
+    fig_19_14_edge_offload_safety(ex)
+    fig_19_15_vla_token_pruning(ex)
+    fig_19_16_full_stack_map(ex)
+    fig_19_17_three_tier_humanoid_control(ex)
+    fig_19_18_fast_dct_tokenizer(ex)
+    fig_19_19_3dgs_closed_loop(ex)
+    fig_19_20_dual_thor_watchdog(ex)
     outputs = ex.finish()
 
     fig_index = [
         {
-            "figure_id": "图 20-1",
+            "figure_id": "图 19-1",
             "number": 1,
-            "file": "ch20-cluster-mtbf-scaling-and-llama3-failures.svg",
-            "asset": "ch20/ch20-cluster-mtbf-scaling-and-llama3-failures.svg",
-            "section": "20.1.1",
-            "caption": "集群规模从 1K 扩至 100K 卡时 MTBF_cluster 跌至 30.41 分钟的反比规律及 Meta 16,384 卡 419 次中断分类账本（算例 20-1）",
-            "source_refs": ["experiments/ch20/20-01/run.py", "manuscripts/ch20/figure-data.json"],
-            "TeachingRole": "展示十万卡规模下硬件故障从偶发异常演变为每半小时必至的稳态过程"
+            "file": "ch19-cloud-llm-slo-vs-embodied-hard-realtime.svg",
+            "asset": "ch19/ch19-cloud-llm-slo-vs-embodied-hard-realtime.svg",
+            "section": "19.1.1",
+            "caption": "云端对话软实时 SLO 与物理世界闭环控制硬实时截止期（盲飞位移 Δx = v·Δt_inf，算例 19-1）对比",
+            "source_refs": ["experiments/ch20/20-01/run.py", "manuscripts/ch19/figure-data.json"],
+            "TeachingRole": "建立时间延迟向物理空间碰撞误差转化的第一性原理公式"
         },
         {
-            "figure_id": "图 20-2",
+            "figure_id": "图 19-2",
             "number": 2,
-            "file": "ch20-hot-spare-pool-queuing-dimensioning.svg",
-            "asset": "ch20/ch20-hot-spare-pool-queuing-dimensioning.svg",
-            "section": "20.1.2",
-            "caption": "基于泊松修复队列模型（λ=2/h, MTTR=12h）的热备节点池（Hot-Spare Pool S_min=40）配置与可用性曲线（算例 20-2）",
-            "source_refs": ["experiments/ch20/20-01/run.py", "research/2026-infra-survey/reading-mlsys-2026.md"],
-            "TeachingRole": "推导以 99.9% 概率保证万卡训练不降级所需的最小热备节点数"
+            "file": "ch19-vlalagbench-latency-vs-dynamic-grasp-success.svg",
+            "asset": "ch19/ch19-vlalagbench-latency-vs-dynamic-grasp-success.svg",
+            "section": "19.1.2",
+            "caption": "VLALagBench 实证规律：静态操作 vs. 动态操作随推理延迟 Δt_inf 增大的成功率退化曲线",
+            "source_refs": ["experiments/ch20/20-01/run.py", "manuscripts/ch19/figure-data.json"],
+            "TeachingRole": "揭示观测过时（Observation Staleness）导致 100 ms 以上动态抓取成功率崩塌的机理"
         },
         {
-            "figure_id": "图 20-3",
+            "figure_id": "图 19-3",
             "number": 3,
-            "file": "ch20-sdc-bitflip-allreduce-contamination.svg",
-            "asset": "ch20/ch20-sdc-bitflip-allreduce-contamination.svg",
-            "section": "20.2.1",
-            "caption": "单颗 GPU Tensor Core 静默比特翻转（SDC）如何逃过 HBM ECC 并通过一次 AllReduce 瞬间污染万卡权重",
-            "source_refs": ["research/2026-infra-survey/reading-osdi-2026.md", "manuscripts/ch20/figure-data.json"],
-            "TeachingRole": "剖析无 ECC 保护的数据通路翻转如何被硬件赋予合法校验码并传染全集群"
+            "file": "ch19-action-chunking-and-temporal-ensembling.svg",
+            "asset": "ch19/ch19-action-chunking-and-temporal-ensembling.svg",
+            "section": "19.1.3",
+            "caption": "动作块预测（Action Chunking H 步）与滑动窗口指数加权时间集成（Temporal Ensembling）时序图",
+            "source_refs": ["manuscripts/ch19/figure-data.json"],
+            "TeachingRole": "剖析动作块长度在抑制高频抖动与引入开环盲区之间的工程权衡"
         },
         {
-            "figure_id": "图 20-4",
+            "figure_id": "图 19-4",
             "number": 4,
-            "file": "ch20-abft-checksum-matrix-multiplication.svg",
-            "asset": "ch20/ch20-abft-checksum-matrix-multiplication.svg",
-            "section": "20.2.2",
-            "caption": "基于代数不变量（ABFT 行列校验和）以 0.0732%（<0.5%）算力开销在线拦截并定位矩阵乘硬件错误（算例 20-3）",
-            "source_refs": ["experiments/ch20/20-01/run.py", "manuscripts/ch20/figure-data.json"],
-            "TeachingRole": "证明利用线性结合律可将 O(N^3) 矩阵乘校验降维至 O(N^2) 外围向量内积"
+            "file": "ch19-system2-vlm-system1-flow-matching-dual-loop.svg",
+            "asset": "ch19/ch19-system2-vlm-system1-flow-matching-dual-loop.svg",
+            "section": "19.2.1",
+            "caption": "System 2（2 Hz 多模态 VLM 慢思考）+ System 1（100 Hz Flow-Matching 动作头快反射）双频异步架构",
+            "source_refs": ["experiments/ch20/20-01/run.py", "manuscripts/ch19/figure-data.json"],
+            "TeachingRole": "展示 50:1 双频异步协同如何兼顾大模型语义泛化与 10 ms 硬实时闭环控制"
         },
         {
-            "figure_id": "图 20-5",
+            "figure_id": "图 19-5",
             "number": 5,
-            "file": "ch20-safeguarding-sdc-and-opguard-bitwise-debug.svg",
-            "asset": "ch20/ch20-safeguarding-sdc-and-opguard-bitwise-debug.svg",
-            "section": "20.2.2",
-            "caption": "3,500 万 GPU 小时在线 SDC 感知隔离（Safeguarding LLM Training OSDI '26）与控制良性非确定性的位级对齐定位（OpGuard OSDI '26）",
-            "source_refs": ["research/2026-infra-survey/reading-osdi-2026.md"],
-            "TeachingRole": "结合 AllReduce 前统计拦截与确定性重放解决浮点非确定性掩盖 SDC 的难题"
+            "file": "ch19-jetson-thor-mig-rtos-deterministic-isolation.svg",
+            "asset": "ch19/ch19-jetson-thor-mig-rtos-deterministic-isolation.svg",
+            "section": "19.2.2",
+            "caption": "NVIDIA Jetson Thor / Drive Thor 上利用 GPU MIG 分区与无锁共享内存隔离 System 2 干扰的 WCET 保障",
+            "source_refs": ["experiments/ch20/20-01/run.py"],
+            "TeachingRole": "解析硬件级缓存/带宽隔离与 PREEMPT_RT 核绑定如何锁定 WCET ≤ 4.2 ms"
         },
         {
-            "figure_id": "图 20-6",
+            "figure_id": "图 19-6",
             "number": 6,
-            "file": "ch20-microbatch-rerun-vs-checkpoint-rollback.svg",
-            "asset": "ch20/ch20-microbatch-rerun-vs-checkpoint-rollback.svg",
-            "section": "20.2.2",
-            "caption": "检测到异常后原地重跑当前微批次（耗时 50 ms）区分瞬态软错误与永久硬件故障 vs. 盲目回滚数小时全局检查点",
-            "source_refs": ["research/2026-infra-survey/reading-osdi-2026.md", "manuscripts/ch20/figure-data.json"],
-            "TeachingRole": "展示在优化器更新前拦截异常并重算微批次如何避免回滚数小时进度"
+            "file": "ch19-flow-matching-ode-steps-vs-control-jitter.svg",
+            "asset": "ch19/ch19-flow-matching-ode-steps-vs-control-jitter.svg",
+            "section": "19.2.1",
+            "caption": "动作生成头中 DDPM 多步采样 vs. Flow-Matching 少步确定性 ODE 积分的周期稳定性对比",
+            "source_refs": ["experiments/ch20/20-01/run.py"],
+            "TeachingRole": "说明最优传输直线流匹配与静态 CUDA Graph 如何消除扩散采样抖动"
         },
         {
-            "figure_id": "图 20-7",
+            "figure_id": "图 19-7",
             "number": 7,
-            "file": "ch20-trainmover-subsecond-hot-migration.svg",
-            "asset": "ch20/ch20-trainmover-subsecond-hot-migration.svg",
-            "section": "20.3.1",
-            "caption": "传统全局销毁重启（torchrun 耗时 300 s）vs. TrainMover（OSDI '26）利用预热备用进程与 RDMA 重映射实现秒级无重启接管",
-            "source_refs": ["research/2026-infra-survey/reading-osdi-2026.md", "experiments/ch20/20-01/run.py"],
-            "TeachingRole": "解析虚拟通信域局部重连如何消除九万九千张健康卡的陪葬重启开销"
+            "file": "ch19-cpu-sim-pcie-bottleneck-vs-gpu-native-sim.svg",
+            "asset": "ch19/ch19-cpu-sim-pcie-bottleneck-vs-gpu-native-sim.svg",
+            "section": "19.3.1",
+            "caption": "传统 CPU 物理仿真 + PCIe 往返（43.39 GB/s 瓶颈）vs. GPU 原生万级并行仿真的数据零搬移闭环",
+            "source_refs": ["experiments/ch20/20-01/run.py", "manuscripts/ch19/figure-data.json"],
+            "TeachingRole": "定量证明 4,096 环境跨 PCIe 传输观测必撞带宽墙，必须全驻留 GPU 显存"
         },
         {
-            "figure_id": "图 20-8",
+            "figure_id": "图 19-8",
             "number": 8,
-            "file": "ch20-nccl-flight-recorder-straggler-blame.svg",
-            "asset": "ch20/ch20-nccl-flight-recorder-straggler-blame.svg",
-            "section": "20.3.2",
-            "caption": "利用 NCCL Flight Recorder 与集合通信到达时间偏斜矩阵（Arrival Skew，算例 20-4）从全网阻塞假象中揪出唯一根因慢节点",
-            "source_refs": ["case-studies/collective-paths-and-diagnosis.md", "experiments/ch20/20-01/run.py"],
-            "TeachingRole": "证明同步集合通信中升级带宽仅省 0.2 ms、而消除 2.0 ms 入队偏斜才是正解"
+            "file": "ch19-physics-renderer-policy-three-way-sm-budget.svg",
+            "asset": "ch19/ch19-physics-renderer-policy-three-way-sm-budget.svg",
+            "section": "19.3.2",
+            "caption": "单张 GPU 内刚体接触求解器、批量光线追踪渲染器与 VLA 策略网络的三方显存（25.52 GiB）与 SM 分配",
+            "source_refs": ["experiments/ch20/20-01/run.py", "manuscripts/ch19/figure-data.json"],
+            "TeachingRole": "核算 4,096 并行环境在 HBM 与 132 个 SM（CUDA/RT/Tensor Core）上的协同账本"
         },
         {
-            "figure_id": "图 20-9",
+            "figure_id": "图 19-9",
             "number": 9,
-            "file": "ch20-optical-ber-fec-gray-failure-detection.svg",
-            "asset": "ch20/ch20-optical-ber-fec-gray-failure-detection.svg",
-            "section": "20.3.2",
-            "caption": "光模块劣化引发 FEC 纠错重传（灰故障 Gray Failure）导致通信有效带宽周期性塌陷的特征识别",
-            "source_refs": ["manuscripts/ch20/figure-data.json"],
-            "TeachingRole": "通过监控 Pre-FEC 误码率与高阶纠错符号桶在链路彻底断连前主动隔离灰故障"
+            "file": "ch19-contact-divergence-warp-inefficiency.svg",
+            "asset": "ch19/ch19-contact-divergence-warp-inefficiency.svg",
+            "section": "19.3.2",
+            "caption": "4,096 个并行仿真环境中稀疏多点碰撞导致的 SIMT Warp 分支发散与流式紧缩重排序",
+            "source_refs": ["manuscripts/ch19/figure-data.json"],
+            "TeachingRole": "展示按活跃接触对流式紧缩（Stream Compaction）如何解决 GPU 物理求解分支发散"
         },
         {
-            "figure_id": "图 20-10",
+            "figure_id": "图 19-10",
             "number": 10,
-            "file": "ch20-five-benchmark-gaming-traps.svg",
-            "asset": "ch20/ch20-five-benchmark-gaming-traps.svg",
-            "section": "20.4.1",
-            "caption": "AI 系统跑分中的五大失真陷阱与算术平均加速比悖论（候选 A 5.25x 反慢于候选 B 2.0x，算例 20-5）",
-            "source_refs": ["case-studies/optimization-evaluation-and-deployment.md", "experiments/ch20/20-01/run.py"],
-            "TeachingRole": "复算加速比平均悖论（p*=15/19）与 AABB/ABBA 线性时漂抵消实验"
+            "file": "ch19-multi-camera-tiled-rendering-zero-copy-tensor.svg",
+            "asset": "ch19/ch19-multi-camera-tiled-rendering-zero-copy-tensor.svg",
+            "section": "19.3.1",
+            "caption": "多环境相机画布拼接渲染（Tiled Rendering）直接映射为 PyTorch 张量避免逐环境小 Kernel 启动",
+            "source_refs": ["manuscripts/ch19/figure-data.json"],
+            "TeachingRole": "通过单次大画布光追与 DLPack 零拷贝映射消除 8,192 次微调用开销"
         },
         {
-            "figure_id": "图 20-11",
+            "figure_id": "图 19-11",
             "number": 11,
-            "file": "ch20-flashinfer-bench-cceval-and-blink-profiling.svg",
-            "asset": "ch20/ch20-flashinfer-bench-cceval-and-blink-profiling.svg",
-            "section": "20.4.2",
-            "caption": "FlashInfer-Bench（算子基准）、CCEval（集合通信基准）、DriftBench（负载漂移）与 Blink（OSDI '26 消除采样失真）的四维评测体系",
-            "source_refs": ["research/2026-infra-survey/reading-osdi-2026.md", "research/2026-infra-survey/reading-mlsys-2026.md"],
-            "TeachingRole": "建立从无偏硬件剖析（Blink）到影子流量质量门禁的工业级评测标准"
+            "file": "ch19-multi-sensor-ptp-hardware-trigger-alignment.svg",
+            "asset": "ch19/ch19-multi-sensor-ptp-hardware-trigger-alignment.svg",
+            "section": "19.4.1",
+            "caption": "多目相机曝光、激光雷达扫描、IMU 与关节力矩传感器的微秒级硬件 PTP 时间戳对齐",
+            "source_refs": ["manuscripts/ch19/figure-data.json"],
+            "TeachingRole": "对比软件接收时间戳抖动与硬件曝光触发 + SE(3) 插值对齐的精度差异"
         },
         {
-            "figure_id": "图 20-12",
+            "figure_id": "图 19-12",
             "number": 12,
-            "file": "ch20-effective-training-time-ratio-ettr-model.svg",
-            "asset": "ch20/ch20-effective-training-time-ratio-ettr-model.svg",
-            "section": "20.1.1",
-            "caption": "十万卡集群有效训练时间比（ETTR）对检查点周期 τ_ckpt、恢复时间 T_rec 与故障率 λ 的响应对比（63.22% vs. 92.34%）",
-            "source_refs": ["experiments/ch20/20-01/run.py", "manuscripts/ch20/figure-data.json"],
-            "TeachingRole": "量化展示内存检查点与秒级热恢复如何为十万卡集群挽回 29.12% 的有效算力"
+            "file": "ch19-shadow-mode-disagreement-edge-trigger.svg",
+            "asset": "ch19/ch19-shadow-mode-disagreement-edge-trigger.svg",
+            "section": "19.4.2",
+            "caption": "真机影子模式（Shadow Mode）：利用策略动作分歧度触发 0.5% 难例切片回传（省带宽 200 倍，算例 19-5）",
+            "source_refs": ["experiments/ch20/20-01/run.py", "manuscripts/ch19/figure-data.json"],
+            "TeachingRole": "核算机载环形黑匣子与边缘难例触发将单机日传数据从 2.592 TB 压至 12.96 GB"
         },
         {
-            "figure_id": "图 20-13",
+            "figure_id": "图 19-13",
             "number": 13,
-            "file": "ch20-automated-burn-in-fleet-health-pipeline.svg",
-            "asset": "ch20/ch20-automated-burn-in-fleet-health-pipeline.svg",
-            "section": "20.3.1",
-            "caption": "新节点入网与故障修复后的自动化烤机（Burn-in：满载热压测 + 确定性 SDC 校验 + 光链路裕量扫描）准入流水线",
-            "source_refs": ["manuscripts/ch20/figure-data.json"],
-            "TeachingRole": "设计闭环机队健康状态机防止维修后带病节点重新污染在役训练集群"
+            "file": "ch19-3dgs-neural-reconstruction-sim2real-loop.svg",
+            "asset": "ch19/ch19-3dgs-neural-reconstruction-sim2real-loop.svg",
+            "section": "19.4.2",
+            "caption": "利用真机难例日志构建 3D 高斯泼溅（3DGS）可微数字孪生场景并用于闭环重仿真的完整流水线",
+            "source_refs": ["manuscripts/ch19/figure-data.json"],
+            "TeachingRole": "结合 3DGS 新视角合成与物理碰撞网格实现照片级反事实闭环重仿真"
         },
         {
-            "figure_id": "图 20-14",
+            "figure_id": "图 19-14",
             "number": 14,
-            "file": "ch20-twenty-chapter-dual-track-master-ledger.svg",
-            "asset": "ch20/ch20-twenty-chapter-dual-track-master-ledger.svg",
-            "section": "20.5.1",
-            "caption": "全书 20 章双轨贯穿案例（Qwen3-8B Dense 轨与 DeepSeek V4.1 / MoE 轨）从第 1 章到第 20 章的完整工程参数演进总表",
-            "source_refs": ["manuscripts/ch20/figure-data.json"],
-            "TeachingRole": "横向串联全书二十章双轨模型在算力、显存、通信、能耗、安全与容错维度的定量参数"
+            "file": "ch19-onboard-vs-mec-edge-offload-safety-fallback.svg",
+            "asset": "ch19/ch19-onboard-vs-mec-edge-offload-safety-fallback.svg",
+            "section": "19.2.2",
+            "caption": "机载端侧计算与局域 5G/Wi-Fi 7 边缘卸载的抖动边界及本地控制屏障安全护盾（CBF）",
+            "source_refs": ["manuscripts/ch19/figure-data.json"],
+            "TeachingRole": "确立仅卸载慢速语义规划、端侧保留高频闭环与 1,000 Hz 安全护盾的容错边界"
         },
         {
-            "figure_id": "图 20-15",
+            "figure_id": "图 19-15",
             "number": 15,
-            "file": "ch20-twenty-chapter-architecture-knowledge-graph.svg",
-            "asset": "ch20/ch20-twenty-chapter-architecture-knowledge-graph.svg",
-            "section": "20.5.1",
-            "caption": "全书 20 章“模型与负载 → 芯片与系统 → 推理、训练与六大前沿底座”的知识体系全景图",
-            "source_refs": ["manuscripts/ch20/figure-data.json"],
-            "TeachingRole": "建立自顶向下算法负载与自底向上物理定律双向耦合的全书知识坐标系"
+            "file": "ch19-vla-early-exit-and-token-pruning-wcet.svg",
+            "asset": "ch19/ch19-vla-early-exit-and-token-pruning-wcet.svg",
+            "section": "19.2.2",
+            "caption": "面向硬实时截止期的多视角视觉词元固定配额剪枝（VLA-Pruner）与层早退机制",
+            "source_refs": ["manuscripts/ch19/figure-data.json"],
+            "TeachingRole": "说明为何必须采用固定 Top-K 词元配额才能保持静态张量形状与 CUDA Graph 兼容性"
         },
         {
-            "figure_id": "图 20-16",
+            "figure_id": "图 19-16",
             "number": 16,
-            "file": "ch20-ten-first-principles-of-ai-infra.svg",
-            "asset": "ch20/ch20-ten-first-principles-of-ai-infra.svg",
-            "section": "20.5.2",
-            "caption": "AI 基础设施架构师的十条第一性原理终极法则总结图",
-            "source_refs": ["manuscripts/ch20/figure-data.json"],
-            "TeachingRole": "提炼贯穿全书二十章的十条第一性原理与定量工程铁律"
+            "file": "ch19-embodied-ai-full-stack-infrastructure-map.svg",
+            "asset": "ch19/ch19-embodied-ai-full-stack-infrastructure-map.svg",
+            "section": "19.4.3",
+            "caption": "具身智能从万级 GPU 物理仿真、双频实时机载推理到车队影子数据飞轮的全栈基础设施总图",
+            "source_refs": ["experiments/ch20/20-01/run.py"],
+            "TeachingRole": "收束第 19 章硬实时控制、GPU 原生仿真与 Sim-to-Real 数据闭环的工程总账本"
         },
         {
-            "figure_id": "图 20-17",
+            "figure_id": "图 19-17",
             "number": 17,
-            "file": "ch20-chaos-fault-injection-and-canary-rollout-gate.svg",
-            "asset": "ch20/ch20-chaos-fault-injection-and-canary-rollout-gate.svg",
-            "section": "20.5.3",
-            "caption": "面向十万卡集群的混沌故障注入（SDC 比特翻转 / RoCE 灰丢包 / 慢节点）与金丝雀灰度发布验证闭环",
-            "source_refs": ["experiments/ch20/20-02/run.py", "manuscripts/ch20/figure-data.json"],
-            "TeachingRole": "通过 200 次主动混沌演练（99.5% 召回率，MTTR = 3.85 s）验证十万卡自愈闭环"
+            "file": "ch19-three-tier-vlm-flow-wbc-humanoid-control.svg",
+            "asset": "ch19/ch19-three-tier-vlm-flow-wbc-humanoid-control.svg",
+            "section": "19.4.4",
+            "caption": "人形机器人三级实时控制架构（2 Hz VLM 语义规划 → 100 Hz Flow-Matching 末端轨迹 → 1,000 Hz WBC/MPC 全身力矩平衡与触觉反射）",
+            "source_refs": ["experiments/ch20/20-02/run.py", "manuscripts/ch19/figure-data.json"],
+            "TeachingRole": "剖析 1,000 Hz 视触觉初生打滑反射与 28-DoF 全身动力学二次规划（WCET = 800 μs）的三级解耦"
         },
         {
-            "figure_id": "图 20-18",
+            "figure_id": "图 19-18",
             "number": 18,
-            "file": "ch20-core-cluster-to-four-new-frontiers-bridge.svg",
-            "asset": "ch20/ch20-core-cluster-to-four-new-frontiers-bridge.svg",
-            "section": "20.5.3",
-            "caption": "从前 20 章通用大模型训练/推理底座迈向第 21–24 章（自主智能体、全双工语音、百亿亿次数据工厂、AI for Science）的架构映射桥接图",
-            "source_refs": ["manuscripts/ch20/figure-data.json"],
-            "TeachingRole": "构建第 20 章与第 24 章前后呼应的双枢纽结构，自然引出四大新兴基础设施疆域"
+            "file": "ch19-fast-dct-frequency-action-tokenization.svg",
+            "asset": "ch19/ch19-fast-dct-frequency-action-tokenization.svg",
+            "section": "19.4.4",
+            "caption": "时域逐帧离散化动作 Token 在高频采样下的边际信息坍缩 vs. FAST（离散余弦变换 DCT + BPE）频域动作压缩",
+            "source_refs": ["experiments/ch20/20-02/run.py", "manuscripts/ch19/figure-data.json"],
+            "TeachingRole": "证明利用机械轨迹低通特性将 700 个时域动作值压缩为 80 个频域词元（8.75× 压缩）的机理"
         },
         {
-            "figure_id": "图 20-19",
+            "figure_id": "图 19-19",
             "number": 19,
-            "file": "ch20-oobleck-pre-instantiated-pipeline-template-failover.svg",
-            "asset": "ch20/ch20-oobleck-pre-instantiated-pipeline-template-failover.svg",
-            "section": "20.5.3",
-            "caption": "Oobleck / Parachute 预实例化异构流水线模板无重启容错重配置（1.45 s 恢复 vs. 300 s 全局重启，算例 20-7）",
-            "source_refs": ["experiments/ch20/20-03/run.py", "manuscripts/ch20/figure-data.json"],
-            "TeachingRole": "展示编译期预建立多阶流水线模板如何在无热备顶替时以 1.45 s 切换实现 98.75% 算力保持"
+            "file": "ch19-3dgs-neural-sensor-closed-loop-re-simulation.svg",
+            "asset": "ch19/ch19-3dgs-neural-sensor-closed-loop-re-simulation.svg",
+            "section": "19.4.4",
+            "caption": "端到端自动驾驶 3D 高斯泼溅（3DGS）动静态解耦与相机+激光雷达闭环重渲染流水线（算例 19-7）",
+            "source_refs": ["experiments/ch20/20-03/run.py", "manuscripts/ch19/figure-data.json"],
+            "TeachingRole": "剖析动静态高斯图解耦、72% 视锥剔除与批量瓦片光栅+RT Core 激光求交实现 16.80 ms (59.52 FPS) 闭环仿真的架构"
         },
         {
-            "figure_id": "图 20-20",
+            "figure_id": "图 19-20",
             "number": 20,
-            "file": "ch20-goodput-sla-under-bursty-poisson-traffic.svg",
-            "asset": "ch20/ch20-goodput-sla-under-bursty-poisson-traffic.svg",
-            "section": "20.5.3",
-            "caption": "推理系统在作弊式均匀到达（CV=0）与真实泊松突发长尾流量（CV≥1）下的排队膨胀与 SLO Goodput 崩塌曲线",
-            "source_refs": ["experiments/ch20/20-03/run.py", "manuscripts/ch20/figure-data.json"],
-            "TeachingRole": "用排队论 Kingman 公式揭露均匀定速压测掩盖 11.37× TTFT 膨胀与 51.27% Goodput 缩水的机理"
+            "file": "ch19-dual-thor-soc-safety-fallback-watchdog-pipeline.svg",
+            "asset": "ch19/ch19-dual-thor-soc-safety-fallback-watchdog-pipeline.svg",
+            "section": "19.4.4",
+            "caption": "车载双 Orin/Thor 异构 SoC 的 ASIL-D Simplex 安全降级接管（Safety Fallback Watchdog，12.50 ms 闭环）流水线",
+            "source_refs": ["experiments/ch20/20-03/run.py", "manuscripts/ch19/figure-data.json"],
+            "TeachingRole": "对比 12.50 ms 双芯片 ASIL-D 看门狗热备接管（横向偏离 3.02 mm）与 250 ms 软件重启（偏离 351.25 mm）的安全边界"
         }
     ]
     for row in fig_index:
-        row['figure'] = f"20-{row['number']}"
+        row['figure'] = f"19-{row['number']}"
         row['name'] = Path(row['file']).stem
     (HERE / 'figure-index.json').write_text(json.dumps(fig_index, ensure_ascii=False, indent=2) + '\n')
 
-    md = HERE.parent / '20-十万卡集群可靠性工程、静默数据损坏（SDC）防御与基准评测科学.md'
+    md = HERE.parent / '19-具身智能（VLA）、实时控制与大规模物理仿真底座.md'
     if md.exists():
         text_md = md.read_text()
         display = re.findall(r'\$\$(.+?)\$\$', text_md, re.S)
@@ -711,9 +716,9 @@ def build_chapter() -> None:
             b64 = base64.b64encode(p.read_bytes()).decode()
             return f'<figure><img alt="{alt}" src="data:image/png;base64,{b64}"><figcaption>{alt}</figcaption></figure>'
 
-        work = re.sub(r'!\[([^\]]*)\]\((ch20/[^)]+)\)', repl_img, text_md)
+        work = re.sub(r'!\[([^\]]*)\]\((ch19/[^)]+)\)', repl_img, text_md)
         body = markdown.markdown(work, extensions=['tables', 'fenced_code', 'footnotes', 'toc'])
-        html = f'<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>第 20 章：十万卡集群可靠性工程、静默数据损坏（SDC）防御与基准评测科学</title></head><body>{body}</body></html>\n'
+        html = f'<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>第 19 章：具身智能（VLA）、实时控制与大规模物理仿真底座</title></head><body>{body}</body></html>\n'
         out_html = preview_path(md)
         out_html.write_text(html)
 
@@ -721,8 +726,6 @@ def build_chapter() -> None:
         HERE / 'build.py',
         HERE / 'figure-data.json',
         HERE / 'figure-index.json',
-        ROOT / 'case-studies/collective-paths-and-diagnosis.md',
-        ROOT / 'case-studies/optimization-evaluation-and-deployment.md',
         ROOT / 'experiments/ch20/20-01/run.py',
         ROOT / 'experiments/ch20/20-02/run.py',
         ROOT / 'experiments/ch20/20-03/run.py',
@@ -752,7 +755,7 @@ def build_chapter() -> None:
         )
         + '\n'
     )
-    print(f'Built {len(outputs)} figure files for Chapter 20; 0 layout warnings.')
+    print(f'Built {len(outputs)} figure files for Chapter 19; 0 layout warnings.')
 
 
 if __name__ == '__main__':

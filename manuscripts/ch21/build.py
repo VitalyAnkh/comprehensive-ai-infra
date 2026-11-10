@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build all 16 publication-grade figures (420pt) and validation manifests for Chapter 21."""
+"""Build all 16 publication-grade figures (420pt) and validation manifests for Chapter 25."""
 from __future__ import annotations
 
 import base64
@@ -79,528 +79,477 @@ def build_chapter() -> None:
 
     draw_dual_band(
         ex,
-        'ch21-single-turn-chat-vs-multi-turn-agent-worm-loop',
-        '单轮对话（Read-Once）vs. 40 轮自主智能体（WORM 95.12% 复用）',
+        'ch25-trillion-param-dlrm-three-tier-hbm-cxl-ssd-embedding',
+        '10.0 TB 万亿稀疏嵌入表三级分层存储架构（HBM-CXL-NVMe）',
         'blue',
         [
-            ('单轮对话（Read-Once KV）\n提示 2,000 + 生成 500 词元\n结束后 KV 立即释放归零', 'orange'),
-            ('40 轮编程智能体（WORM）\n每轮 +2,000 词元至 80,000\n累计预填充 164 万词元', 'teal'),
+            ('① HBM 热表 320 GB\n拦截 82.0% 查表\n0.35 us (24 TB/s)', 'blue'),
+            ('② CXL 温表 2.0 TB\n拦截 15.5% 查表\n1.80 us (1.2 TB/s)', 'purple'),
+            ('③ NVMe 冷表 10 TB\n穿透 2.5% 长尾\nGDS 延迟 65.0 us', 'teal'),
         ],
-        '40 轮智能体算力与时间轴解剖（算例 21-1）',
+        '纯 SSD 查表（65.0 us）vs. 三级缓存（加权 2.19 us，提速 29.7 倍）',
         'teal',
         [
-            ('① 历史前缀重复读\n156 万 / 164 万词元\n复用率 95.12%', 'blue'),
-            ('② 预填充/解码悬殊\n164 万 vs. 8,000\n比值高达 205 : 1', 'purple'),
-            ('③ 工具等待空窗\n每轮阻塞 5–45 s\nGPU 显存空转风险', 'orange'),
+            ('无分层纯 NVMe 直读瓶颈：\n每次查表均受限于 65.0 us\n矩阵引擎空转率超过 95%', 'orange'),
+            ('LFU 热表 + 无锁哈希缓存：\n97.5% 请求在微秒内完成命中\n加权延迟 2.19 us（29.7 倍）', 'teal'),
         ],
-        '智能体负载由“预填充历史前缀复用”与“长工具等待空窗”双重支配',
+        '利用 3.2% HBM 容量捕获 82.0% 幂律流量，打破 10 TB 稀疏表容量墙',
     )
 
     draw_dual_band(
         ex,
-        'ch21-tool-wait-hbm-retain-recompute-offload-phase-diagram',
-        '工具等待期（t_wait）与前缀长度（L_prefix）三维决策相图',
-        'teal',
-        [
-            ('相区 I：t < 2.16 s\n驻留 GPU HBM3e\n零换出，立即续跑', 'blue'),
-            ('相区 II：t >= 2.16 s\n换出至 DRAM/RDMA\n15 s 省 85.6% 租金', 'teal'),
-            ('相区 III：前缀 < 2K\n直接丢弃 HBM 块\n返回后重算最快', 'orange'),
-        ],
-        '64K 前缀（9.00 GiB KV）恢复延迟与租金对比（算例 21-1）',
-        'blue',
-        [
-            ('丢弃重算（Recompute）\n65,536 词元重算需 500 ms\n浪费算力且拉长每轮延迟', 'orange'),
-            ('PCIe 5.0 换入（48 GiB/s）\n单向换入仅需 187.5 ms\n比重算快 2.67 倍', 'teal'),
-        ],
-        '以 t* = 2.16 s 为分界执行异步分层换出，兼顾显存成本与恢复速度',
-    )
-
-    draw_dual_band(
-        ex,
-        'ch21-four-tier-kv-cache-hierarchy-dynamo-lmcache',
-        '四级分层 KV 缓存池（Dynamo / LMCache / Mooncake）金字塔',
-        'blue',
-        [
-            ('Tier 1: GPU HBM3e\n80–192 GB 容量\n微秒级热块命中', 'blue'),
-            ('Tier 2: Host DRAM\n512 GB | 48 GiB/s\n毫秒级无损换入', 'teal'),
-            ('Tier 3/4: NVMe/RDMA\n100 TB | 36 GiB/s\n跨节点共享记忆池', 'purple'),
-        ],
-        '块级 SHA-256 前缀哈希索引与零拷贝 DMA/RDMA 流水',
-        'teal',
-        [
-            ('前缀块链式哈希（Chunk Hash）\n每 64 词元生成唯一指纹\n支持跨会话全局去重共享', 'blue'),
-            ('逐层异步预取（Layer Prefetch）\n计算 l 层时 DMA 拉取 l+1 层\n掩盖 85% 以上 PCIe/RDMA 延迟', 'teal'),
-        ],
-        '四级存储池将单机显存上限扩展百倍，支撑百万级并发长程智能体',
-    )
-
-    draw_dual_band(
-        ex,
-        'ch21-kv-aware-global-radix-router-ttft-tradeoff',
-        '全局基数树路由器（Global Radix Router）排队与命中联合寻优',
+        'ch25-zipf-power-law-hot-embedding-cache-hit-curve',
+        '搜广推特征幂律分布（alpha=1.12）与时间漂移（eta=0.038）',
         'purple',
         [
-            ('节点 A（高命中）\n排队120ms | 90%命中\nTTFT = 170.0 ms', 'teal'),
-            ('节点 B（最少排队）\n排队10ms | 0%命中\nTTFT = 510.0 ms', 'orange'),
-            ('节点 C（RDMA 命中）\n排队20ms | 80%远端\nTTFT = 320.0 ms', 'blue'),
+            ('① 静态 Zipf 幂律\n前 3.2% 热门 ID\n理论聚焦 85.2%', 'blue'),
+            ('② 15 min 窗口漂移\n突发热点轮动 3.8%\n实测 HBM 达 82.0%', 'purple'),
+            ('③ 异步预取与晋升\n后台流式替换温冷行\n消除同步换页卡顿', 'teal'),
         ],
-        '联合代价函数：排队 + 本地 DMA + 远端 RDMA + 重算（算例 21-2）',
-        'teal',
-        [
-            ('传统最少连接路由\n盲目派往空闲节点 B\n触发 64K 全量重算（500 ms）', 'orange'),
-            ('KV 感知全局路由（Dynamo）\n精准派往热缓存节点 A\n首字延迟缩短 3.00 倍', 'teal'),
-        ],
-        '在长上下文智能体场景下，KV 缓存位置权重远高于瞬时队列长度',
-    )
-
-    draw_dual_band(
-        ex,
-        'ch21-cachegen-anchor-delta-entropy-kv-streaming',
-        'CacheGen 锚点差分量化与算术熵编码流式传输（算例 21-2）',
-        'teal',
-        [
-            ('① 锚点帧残差差分\n利用相邻词元高余弦相似\n提取层内局部残差 ΔK, ΔV', 'blue'),
-            ('② 分层量化 + 算术编码\n浅层高精度、深层激进量化\n16-bit 压至 3.80 bits（4.21×）', 'teal'),
-        ],
-        '50 Gbps（5.81 GiB/s）跨机架网络传输 vs. 本地重算回本线',
-        'orange',
-        [
-            ('原始 9.00 GiB KV 跨网传输\n耗时 1,549.1 ms > 重算 500 ms\n受制于 18 GiB/s 临界带宽墙', 'orange'),
-            ('CacheGen 压缩至 2.1375 GiB\n传输 367.9 ms + 解压 18.0 ms\n总计 385.9 ms（快 4.01 倍）', 'teal'),
-        ],
-        '当跨机架带宽低于 18 GiB/s 时，必须结合流式熵编码才能击败重算',
-    )
-
-    draw_dual_band(
-        ex,
-        'ch21-microvm-snapshot-cow-userfaultfd-12ms-fork',
-        '容器/虚机冷启动（1,500 ms）vs. Firecracker 12 ms 快照克隆',
+        '静态锁死缓存 vs. 滑动窗口衰减 LFU 动态晋升机制对比',
         'blue',
         [
-            ('传统虚机冷启动\n内核引导+环境加载\n耗时 1,500 ms', 'orange'),
-            ('Firecracker 快照\nMAP_PRIVATE 映射\n克隆仅 3.2 ms', 'blue'),
-            ('userfaultfd 缺页\n拉取 5.5 MiB 工作集\n总计 12.0 ms', 'teal'),
+            ('静态词频表锁死 HBM 退化：\n短视频实时热点在数分钟漂移\n数小时后命中率跌破 60%', 'orange'),
+            ('指数衰减计数动态换入换出：\n每步后台仅交换 0.15% 边界行\n长期稳态维持 82.0% 命中率', 'teal'),
         ],
-        '微虚机硬件虚拟化隔离（KVM）与极速弹性并发（算例 21-3）',
-        'teal',
-        [
-            ('强安全边界（独立 Guest 内核）\n阻断容器逃逸与宿主机污染\n支持任意 root 编译与测试', 'purple'),
-            ('启动提速 125 倍（1.5 s → 12 ms）\n每分支仅增 24 MiB 私有脏页\n单机可并发驻留上千沙箱', 'teal'),
-        ],
-        '微虚机 CoW 快照兼具硬件级虚拟化隔离与毫秒级函数式克隆速度',
+        '兼顾长周期幂律聚集与短周期突发漂移，守住微秒级查表有效带宽',
     )
 
     draw_dual_band(
         ex,
-        'ch21-synchronized-kv-and-sandbox-mcts-tree-forking',
-        '面向智能体树搜索（MCTS）的 KV 块表与沙箱快照同步分叉',
+        'ch25-torchrec-all-to-all-sparse-lookup-and-bucket-sharding',
+        '64 卡 TorchRec 稀疏嵌入表热度分桶切分与 All-to-All 通信',
+        'teal',
+        [
+            ('① 热度感知分桶切分\n倾斜 2.85->1.06\n均衡各卡网卡流量', 'blue'),
+            ('② 稀疏 All-to-All\n单卡发 165.15 MB\n通信耗时 1.53 ms', 'purple'),
+            ('③ 底端 MLP 双流掩盖\n计算耗时 1.85 ms\n暴露通信 0.00 ms', 'teal'),
+        ],
+        '随机哈希分片（阻塞 2.26 ms）vs. 热度均衡双流掩盖（0.00 ms）',
+        'blue',
+        [
+            ('朴素随机取模分片（倾斜 2.85）：\n超热门特征集中打爆单卡带宽\nAll-to-All 达 4.11 ms 暴露', 'orange'),
+            ('贪心装箱 + 热门表局部复制：\n64 卡通信水位线严密对齐\n1.53 ms 通信藏入 1.85 ms 计算', 'teal'),
+        ],
+        '消灭跨卡热度木桶效应，让稀疏全互换通信完全隐藏于稠密矩阵计算之下',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch25-cascade-dlrm-vs-generative-recommender-hstu-paradigm',
+        '传统多级级联漏斗（DLRM）vs. 生成式推荐（Meta HSTU / OneRec）',
+        'blue',
+        [
+            ('① 传统级联漏斗\n召回->粗排->精排\n特征占 90% 耗时', 'orange'),
+            ('② 算力碎片化困局\n上百个异构小算子\nMFU 长期低于 12%', 'purple'),
+            ('③ 生成式序列转导\n统一自回归 Token\nMFU 跃升至 48%+', 'teal'),
+        ],
+        '推荐系统从“带宽受限特征工程”向“算力扩展定律”的范式跃迁',
+        'teal',
+        [
+            ('级联 DLRM 的性能天花板：\n增加参数仅增大稀疏表体积\n难以带来长序列推理增益', 'orange'),
+            ('HSTU 统一生成式序列架构：\n将物品与动作交织为万级序列\n遵循 Scaling Law 持续提效', 'teal'),
+        ],
+        '把碎片化搜广推漏斗收敛为高算术强度序列转导器，彻底释放 Tensor Core',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch25-hstu-pointwise-aggregated-attention-and-stochastic-length',
+        'Meta HSTU 非归一化点积聚合注意力与随机序列长度压缩',
         'purple',
         [
-            ('父节点 (S_t, KV_t)\n只读基快照 512 MiB\n共享前缀 KV 块', 'blue'),
-            ('16 路并发试错分支\n每分支 24 MiB 脏页\n总计 896 MiB', 'teal'),
-            ('破坏分支（rm -rf）\n丢弃分支 Upperdir\n零副作用回退父节点', 'orange'),
+            ('① 摒弃 Softmax 归一\nSiLU 点积聚合\n保留活跃度幅值', 'blue'),
+            ('② 随机序列长度压缩\n8,192->5,410 词元\n近期全留+远期采样', 'purple'),
+            ('③ 二次方算力减半\n注意力省 56.2%\n精度损 < 0.04%', 'teal'),
         ],
-        '模型记忆（KV Cache）与外部世界状态（Sandbox FS/RAM）原子回滚',
-        'teal',
-        [
-            ('GPU 侧：KV 块表引用减一\n重置块指针耗时 0.15 ms\n无需物理擦除显存数据', 'blue'),
-            ('CPU 侧：OverlayFS 页表回退\n卸载差异层耗时 8.35 ms\n同步回滚共 8.50 ms < 10 ms', 'teal'),
-        ],
-        '唯有让外部沙箱具备与 KV 缓存同构的 CoW 树状语义，MCTS 才能闭环',
-    )
-
-    draw_dual_band(
-        ex,
-        'ch21-computer-use-gui-webrtc-frame-diff-pipeline',
-        'Computer-Use 桌面 GUI 沙箱脏矩形差分流与 DOM 混合感知',
+        '为什么推荐序列必须用非归一化点积注意力替代标准 Softmax？',
         'blue',
         [
-            ('① 虚拟帧缓冲 Xvfb\n仅捕获变化像素块\n省 92% 像素带宽', 'blue'),
-            ('② 多模态混合提取\n截图 + 无障碍树\n消除小图标漂移', 'teal'),
-            ('③ 亚毫秒动作注入\nxdotool 内核事件\n步进延迟 < 25 ms', 'purple'),
+            ('标准 Softmax 概率归一缺陷：\n强行将总权重归一为 1.0\n抹杀重度与冷启动用户强度差', 'orange'),
+            ('SiLU 点积 + 融合内核优势：\n省去行级最大值与指数和同步\n单核吞吐较标准提升 1.45 倍', 'teal'),
         ],
-        'GUI 视觉词元预算控制与高分辨率局部放大（Crop-and-Zoom）',
-        'teal',
-        [
-            ('全屏粗粒度概览（256 词元）\n快速锁定目标窗口与控件区域\n避免每步灌入 4,096 视觉词元', 'blue'),
-            ('焦点区域原图裁剪（+128 词元）\n对准按钮/输入框做像素级点击\n坐标定位精度提升至 98.4%', 'teal'),
-        ],
-        '脏矩形差分与无障碍树融合将 GUI 智能体单步视觉开销压降 85%',
+        '非归一化点积兼顾推荐偏好幅值表达与片上核融合效率，SL 削减过半算力',
     )
 
     draw_dual_band(
         ex,
-        'ch21-mcp-gateway-dynamic-tool-rag-and-auth-isolation',
-        '模型上下文协议（MCP）安全网关与按需工具语义检索（算例 21-5）',
+        'ch25-m-falcon-candidate-microbatch-prefix-amortization',
+        'M-FALCON 千级候选物品微批前缀摊销架构（算例 25-4）',
         'teal',
         [
-            ('企业级万级工具库挑战\n挂载 1,000 个工具 Schema\n每轮白白吞噬 180,000 词元', 'orange'),
-            ('动态工具检索（Tool RAG）\n稠密向量召回 Top-8 相关工具\n仅占 1,440 词元（省 99.20%）', 'teal'),
+            ('① 历史前缀编码\nL=4,096 仅算 1 次\n耗 1.376 TFLOPs', 'blue'),
+            ('② 千级候选掩码\nM=1,024 共享 KV\n互不可见并行打分', 'purple'),
+            ('③ 算力降 44.80 倍\n共 31.46 TFLOPs\n单卡达 485 QPS', 'teal'),
         ],
-        '零信任租户级 OAuth 凭据注入与细粒度 RBAC 权限沙箱',
+        '逐物品打分（1,409.3 TFLOPs）vs. M-FALCON 摊销（31.46 TFLOPs）',
+        'blue',
+        [
+            ('朴素逐候选拼接（M=1,024）：\n重复编码 1,024 次相同历史\n算力达 1,409.3 TFLOPs 难上线', 'orange'),
+            ('M-FALCON 前缀固化 + 微批：\n候选阶段仅需 30.084 TFLOPs\n每秒打分 49.7 万物品 (11.8 ms)', 'teal'),
+        ],
+        '一次历史编码摊销千个候选打分，将生成式推荐单请求算力暴降 44.80 倍',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch25-hstu-online-event-streaming-and-delta-kv-update',
+        '在线实时行为流（Kafka/Flink）与用户历史 KV 缓存增量追加',
+        'blue',
+        [
+            ('① 毫秒级点击流\n事件产生 < 50 ms\n实时触发特征编码', 'blue'),
+            ('② 仅算 Delta KV\n追加 4~8 个新事件\n免除 4,096 重算', 'purple'),
+            ('③ 分层 KV 原位更新\n跨请求复用前缀块\n重算率 < 3.0%', 'teal'),
+        ],
+        '全量历史重编码 vs. 增量 Delta KV 追加的在线推理算力对比',
+        'teal',
+        [
+            ('无状态全量重算模式：\n每次刷屏均重算 4,096 词元\n75% 预填充算力被重复吞噬', 'orange'),
+            ('有状态会话 KV 增量追加：\n仅对最新产生的行为计算 K/V\n预填充开销降低 18.5 倍', 'teal'),
+        ],
+        '利用因果注意力的单向依赖性，以增量 KV 追加实现秒级兴趣实时捕获',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch25-cpu-hnsw-vs-gpu-cuvs-cagra-graph-build-pipeline',
+        '十亿级 768 维向量（1.536 TB）建图：CPU HNSW vs. GPU CAGRA',
         'purple',
         [
-            ('模型对凭据零可见（Zero-Trust）\nLLM 仅输出符号化调用参数\n网关在出境瞬间注入短效 Token', 'blue'),
-            ('Schema 语法约束（XGrammar）\n将 JSON Schema 转为自动机\n100% 杜绝非法字段与类型幻觉', 'purple'),
+            ('① 10 亿向量分片\n768 维 1.536 TB\nIVF-PQ 粗筛候选', 'blue'),
+            ('② GPU 并行建图\n无跳表锁竞争\n两阶段剪枝定度', 'purple'),
+            ('③ 40.8 min 收敛\n提速 16.91 倍\n小时级全量刷新', 'teal'),
         ],
-        '动态工具检索实现 125 倍上下文压缩，同时消除多工具注意力稀释',
-    )
-
-    draw_dual_band(
-        ex,
-        'ch21-idempotent-outbox-and-speculative-tool-prefetch',
-        '只读工具投机预取 vs. 写操作工具幂等事务外发箱（Outbox）',
-        'orange',
-        [
-            ('只读工具（搜索 / 查库 / 读文件）\n在解码生成参数中途投机预热\n掩盖 60%–80% 外部 API 往返时延', 'teal'),
-            ('写操作工具（转账 / 下单 / 删库）\n严禁投机执行，强制绑定幂等键\nKey = Hash(Session, Step)', 'orange'),
-        ],
-        '两阶段事务外发箱（Outbox）保障精确一次（Exactly-Once）执行',
+        '双路 128 核 CPU HNSW（11.50 h）vs. 8 卡 H100 CAGRA（0.68 h）',
         'blue',
         [
-            ('① 本地持久化写前日志（WAL）\n先将工具调用意图落盘至 Outbox\n防止推理节点崩溃导致状态丢失', 'blue'),
-            ('② 远端幂等去重网关校验\n网络超时重试携带相同幂等键\n直接返回首次结果，零重复扣款', 'teal'),
+            ('CPU HNSW 增量插入瓶颈：\n逐点贪心搜索触发亿次随机访存\n多层图细粒度锁使扩展受阻', 'orange'),
+            ('GPU cuVS CAGRA 原生构建：\n批量距离矩阵乘 + 并行拓扑优化\n40.8 分钟完成十亿级高召回图', 'teal'),
         ],
-        '区分只读投机与有副作用写操作，是智能体进入金融/生产系统的底线',
+        '抛弃面向 CPU 设计的分层跳表，以扁平固定度图释放 GPU 并行吞吐',
     )
 
     draw_dual_band(
         ex,
-        'ch21-i19-telemetry-backlog-buffer-overflow-and-drain',
-        '锁定算例 I19：审计遥测断网积压与 81.92 s 内存缓冲触顶',
-        'orange',
-        [
-            ('断网产生速率 400 KiB/s\n本地内存缓冲 32 MiB\nt = 81.92 s 时内存达到满溢', 'orange'),
-            ('120 s 断网总积压 46.875 MiB\n超出内存的 14.875 MiB 溢写至\n本地 NVMe 外发箱（零丢失）', 'purple'),
-        ],
-        '网络恢复后 1.0 MiB/s 上行并发排空动力学（算例 21-4）',
+        'ch25-cagra-warp-splitting-distance-and-two-stage-pruning',
+        'cuVS CAGRA 核心算法：Warp 切分距离计算与两阶段图剪枝',
         'teal',
         [
-            ('上行带宽 1,024 KiB/s\n扣除持续新增流 400 KiB/s\n净排空速率 = 624 KiB/s', 'blue'),
-            ('排空 48,000 KiB 积压耗时：\nT_drain = 48,000 / 624\n= 76.92 s 完全恢复稳态', 'teal'),
+            ('① Warp-Split 距离\n8 线程协算 1 向量\n合并访存消除发散', 'blue'),
+            ('② 两阶段绕行剪枝\n剔除二跳可达冗余\n度数 128 压至 64', 'purple'),
+            ('③ 反向边注入连通\n修补有向图死胡同\nRecall 达 98.2%', 'teal'),
         ],
-        '算例 I19 定律：排空时间取决于（上行带宽 - 持续产生率）的净差值',
-    )
-
-    draw_dual_band(
-        ex,
-        'ch21-prompt-injection-taint-tracking-dual-llm-firewall',
-        '防御间接提示词注入（Indirect Prompt Injection）双流隔离',
+        '为什么两阶段剪枝 + 反向边注入能兼顾低度数与高召回率？',
         'purple',
         [
-            ('非受信外部数据流（Tainted）\n网页正文 / 邮件 / 外部文档\n由受限隔离模型解析提取变量', 'orange'),
-            ('特权控制流（Privileged）\n仅接收用户意图与符号化变量\n由规划主模型生成工具调用', 'blue'),
+            ('单纯截断最近邻的连通退化：\n簇边缘节点极易沦为无入边孤岛\n贪心波束搜索陷入局部极小', 'orange'),
+            ('三角绕行剪枝 + 反向边修复：\n用远程桥接边替代同向冗余近邻\n搜索跳数省 35% 且召回不降', 'teal'),
         ],
-        '动态信息流污点追踪（Taint Tracking）与数据—指令边界门禁',
-        'teal',
-        [
-            ('污点标签传播（Taint Tagging）\n源自外部检索的变量均打上污点位\n严禁直接拼接到高危系统命令', 'purple'),
-            ('能力令牌（Capability Token）\n高危写操作需匹配初始授权策略图\n100% 阻断隐藏指令越权转账/泄密', 'teal'),
-        ],
-        '将控制面指令与数据面内容物理隔离，从根源阻断间接提示词注入',
+        '细粒度 Warp 距离核与两阶段图拓扑整形协同，铸就 GPU 原生图检索引擎',
     )
 
     draw_dual_band(
         ex,
-        'ch21-hipporag2-graph-vector-episodic-memory-consolidation',
-        '突破窗口极限的长期记忆底座：HippoRAG 2 + Mem0 双层巩固',
+        'ch25-ivf-pq-shared-memory-lut-asymmetric-distance-kernel',
+        '乘积量化（IVF-PQ）非对称距离查找表（LUT）片上共享内存融合',
         'blue',
         [
-            ('海马体索引层（图谱 + 向量）\n实体—关系三元组 + 稠密嵌入\n个性化 PageRank 跨跳关联召回', 'blue'),
-            ('新皮层记忆巩固（Mem0 流水）\n异步提取用户偏好与排障经验\n冲突消解后更新长期事实库', 'teal'),
+            ('① 768 维切 64 子空间\n每空间 256 中心\n1,536 B 压为 64 B', 'blue'),
+            ('② 距离表驻 SRAM\n64x256 占 32 KB\n32-Bank 交错无冲突', 'purple'),
+            ('③ 寄存器查表累加\n省去高维浮点乘加\n扫描超 1.8 TB/s', 'teal'),
         ],
-        '百万词元历史全量塞入 vs. 图谱—向量混合检索的成本与精度',
+        'HBM 向量解压计算 vs. 片上 Shared Memory LUT 查表对比',
         'teal',
         [
-            ('全量塞入 1M 上下文窗口\n每轮预填充耗费海量算力与 HBM\n且受“中间迷失”效应困扰', 'orange'),
-            ('HippoRAG 2 召回 Top-4K 锚点\n多跳问答准确率提升 +14.2%\n长程会话显存开销降低 96%', 'teal'),
+            ('显式反量化回 FP16 再算内积：\n产生 24 倍中间显存带宽膨胀\n立刻撞上 HBM 物理带宽墙', 'orange'),
+            ('ADC 距离表常驻片上 SRAM：\nHBM 仅流式读取 64 B 紧凑码\n距离估算化为纳秒级片上查表', 'teal'),
         ],
-        '短期工作记忆靠分层 KV 缓存，跨会话长期记忆靠图谱—向量混合巩固',
+        '将高维内积压缩为 32 KB 片上查找表累加，实现 24 倍带宽放大',
     )
 
     draw_dual_band(
         ex,
-        'ch21-multi-agent-dag-scheduler-and-token-budget-allocation',
-        '多智能体（Planner-Coder-Tester）DAG 拓扑调度与死锁熔断',
-        'teal',
-        [
-            ('Planner 规划器\n拆解任务依赖 DAG\n分配节点词元预算', 'blue'),
-            ('Coder 编码工作池\n共享代码库前缀 KV\nCoW 沙箱并发修改', 'teal'),
-            ('Tester 验证网关\n运行单测返回报错\n触发通过或回滚重修', 'purple'),
-        ],
-        '防无限争论循环（Infinite Chatter Loop）的词元经济学熔断器',
-        'orange',
-        [
-            ('边际信息增益监控\n连续 3 轮修改未减少报错数时\n立即终止局部自修并升级路由', 'orange'),
-            ('拓扑级共享前缀广播\n子智能体复用 85% 公共仓库 KV\n避免 M 个智能体重复编码', 'teal'),
-        ],
-        '多智能体编排必须绑定有向无环图预算与早停熔断，防止词元风暴',
-    )
-
-    draw_dual_band(
-        ex,
-        'ch21-agentic-cluster-cpu-gpu-sandbox-pool-sizing',
-        '大规模 Agentic 云平台三池解耦配比（GPU : DRAM : CPU 沙箱）',
-        'blue',
-        [
-            ('GPU 推理池\n专注高频预填充/解码\n不苦等工具与 I/O', 'blue'),
-            ('DRAM/NVMe 记忆池\n承接等待期换出 KV\n容量达 HBM 30 倍', 'teal'),
-            ('CPU 微虚机沙箱池\n运行万级并发沙箱\n12 ms 克隆与销毁', 'purple'),
-        ],
-        '基于 Little 定律 L = λ × W 的三池容量黄金配比公式',
-        'teal',
-        [
-            ('单次推理活跃期 W_gpu ≈ 1.2 s\n工具沙箱执行期 W_sbx ≈ 14.4 s\n在途会话驻留比 = 1 : 12', 'orange'),
-            ('1 张 H100 推理卡配对：\n512 GB 远端 KV 缓存池 +\n96 核高密 CPU 沙箱节点', 'teal'),
-        ],
-        '按在途驻留时间比解耦 GPU 推理池与 CPU 沙箱池，消除异构资源木桶等待',
-    )
-
-    draw_dual_band(
-        ex,
-        'ch21-autonomous-agent-infrastructure-full-stack-map',
-        '第 21 章自主智能体基础设施全栈全景图（记忆 · 沙箱 · 网关）',
-        'teal',
-        [
-            ('记忆：四级 KV 池\n95.12% 复用换出\n路由 3× | 压缩 4.2×', 'blue'),
-            ('执行：12 ms 微虚机\nFirecracker 快照克隆\nMCTS 回滚 8.50 ms', 'teal'),
-            ('控制：MCP 幂等网关\nTool RAG 省 99.2%\n算例 I19 排空 76.92 s', 'purple'),
-        ],
-        '从“无状态词元生成”向“有状态、可回溯、防注入自主系统”跃迁',
-        'blue',
-        [
-            ('核心瓶颈：高复用前缀占满 HBM\n沙箱冷启动慢、重试引发副作用', 'orange'),
-            ('系统解法：分层 KV 池、CoW 沙箱\n事务外发箱与双流污点防火墙', 'teal'),
-        ],
-        '第 21 章收束：记忆分层、环境分叉与工具幂等构成智能体三大支柱',
-    )
-
-    draw_dual_band(
-        ex,
-        'ch21-speculative-tool-execution-and-rollback-dag',
-        '多智能体 DAG 关键路径投机工具预执行（算例 21-7）',
-        'teal',
-        [
-            ('传统串行等待基线\n600 ms 模型 + 1,400 ms 工具\n4 阶段累计 8,000.0 ms', 'orange'),
-            ('Draft 100 ms 投机预启动\n命中占 80%，净耗时 1,050 ms\n4 阶段期望 4,969.6 ms（1.61×）', 'teal'),
-        ],
-        '12.0 ms CoW 快照回滚兜底与 1.25% 超低盈亏平衡线',
+        'ch25-diskann-4kb-sector-aligned-vector-and-neighbor-layout',
+        'DiskANN 4,096 B 物理扇区对齐布局（算例 25-6：每扇区 2 节点）',
         'purple',
         [
-            ('命中（p = 0.80）：直接提交\n掩盖 950 ms 关键路径等待\n下游节点流水线无缝衔接', 'blue'),
-            ('误判（p = 0.20）：12 ms 回滚\nFirecracker 快照瞬时复位\n命中率 > 1.25% 即稳赚加速', 'purple'),
+            ('① 内存常驻 PQ 码\n10 亿 x 64 B=64 GB\n零磁盘 I/O 导航', 'blue'),
+            ('② 同扇区紧凑打包\n1536+256=1792 B\n单 4 KB 装 2 节点', 'purple'),
+            ('③ 512 B 对齐填充\n消除跨页双倍读取\n单跳对应 1 次 I/O', 'teal'),
         ],
-        '12 ms 微虚机快照赋予投机工具执行廉价反悔权，削减 37.88% 端到端时延',
+        '向量与邻接表分离存储（2x IOPS）vs. 同扇区物理对齐（1x IOPS）',
+        'blue',
+        [
+            ('分离存储或跨扇区未对齐：\n读向量与读邻居触发 2~3 次读\nNVMe IOPS 被无效读放大耗尽', 'orange'),
+            ('4,096 B 扇区耦合打包布局：\n1 次 4 KB 读拿回向量与出边\n单次查询仅 W*S = 24 次随机读', 'teal'),
+        ],
+        '顺应 NVMe 4 KB 最小读写粒度，以同页耦合布局消灭磁盘随机读放大',
     )
 
     draw_dual_band(
         ex,
-        'ch21-gui-incremental-region-of-interest-vision-token-cache',
-        'GUI 智能体增量脏矩形 ROI 视觉缓存与 DOM 剪枝（算例 21-6）',
-        'blue',
-        [
-            ('全量重编码基线（30 步）\n2,400 视觉 + 3,600 DOM/步\n累计 180,000 词元 | 1,350 ms', 'orange'),
-            ('脏矩形 ROI 视觉块复用\n仅编码 12.5% 变化瓦片（300）\n87.5% 静态背景直接复用 KV', 'teal'),
-        ],
-        'Set-of-Marks 可交互 DOM 剪枝与双通道坐标一致性门禁',
+        'ch25-diskann-io-uring-gds-beam-search-pipeline',
+        'DiskANN 基于 io_uring / GDS 的异步波束搜索（W=4, S=6）',
         'teal',
         [
-            ('视口可交互 DOM 子树提取\n3,600 词元压至 450 词元/步\n30 步总词元 24,600（省 86.33%）', 'blue'),
-            ('30 步 ViT 总耗时 251.62 ms\n视觉编码加速 5.37×\n词元上下文压缩 7.32×', 'purple'),
+            ('① 内存 PQ 贪心选点\n每轮选 W=4 候选\n耗时仅 1.5 us', 'blue'),
+            ('② io_uring 并发读\n4 个 4 KB 扇区齐发\n隐藏 85 us 延迟', 'purple'),
+            ('③ 6 跳收敛精确重排\n24 次读达 21 万 QPS\nRecall 达 95.4%', 'teal'),
         ],
-        '结合脏矩形视觉块哈希复用与可交互 DOM 剪枝，根治 GUI 智能体上下文爆炸',
+        '同步阻塞 pread（延迟叠加）vs. 异步波束并发 I/O（延迟掩盖）',
+        'blue',
+        [
+            ('单路同步阻塞磁盘读取：\n24 次串行读耗时 2.04 ms\n单队列无法喂饱 PCIe 5.0 SSD', 'orange'),
+            ('波束宽度 W=4 异步并发提交：\n每跳 4 次 I/O 合并为 1 周期\n4 盘达 21 万 QPS (P99 2.85 ms)', 'teal'),
+        ],
+        '用内存 PQ 距离导航规避盲目读盘，用异步波束并发压满 6.0M NVMe IOPS',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch25-freshdiskann-streaming-insert-delete-consolidation',
+        'FreshDiskANN 实时流式写入、墓碑删除与后台无锁邻居重连',
+        'blue',
+        [
+            ('① 写入内存增量图\nFreshVamana 接收\n秒级可见 5 万写/s', 'blue'),
+            ('② 墓碑位图标记\n查询动态过滤失效点\n避免锁死 SSD 图', 'purple'),
+            ('③ 后台流式合并\n修补被删节点邻居\nI/O 占用 < 15%', 'teal'),
+        ],
+        '全量重建停机反模式 vs. LSM 式流式增量合并（FreshDiskANN）',
+        'teal',
+        [
+            ('直接删除图节点的拓扑断裂：\n枢纽节点被删导致近邻不可达\n数轮更新后 Recall 暴跌 12%', 'orange'),
+            ('Vamana 鲁棒重连合并（Stitch）：\n将被删节点出边嫁接给入边前驱\n7x24 小时持续写入召回零退化', 'teal'),
+        ],
+        '借鉴 LSM-Tree 增量合并与图拓扑缝合，攻克十亿向量索引实时更新难题',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch25-graphrag-hierarchical-community-and-vector-hybrid-retrieval',
+        'GraphRAG 多跳实体关系社区摘要与 GPU 向量混合检索流水线',
+        'purple',
+        [
+            ('① 稠密向量锚点\nTop-32 种子文档块\nCAGRA 耗 1.2 ms', 'blue'),
+            ('② 二跳图谱遍历\nCSR 邻接子图扩展\n提 Leiden 社区摘要', 'purple'),
+            ('③ RRF 倒数秩融合\n去重合并注入上下文\n总检索仅 8.4 ms', 'teal'),
+        ],
+        '纯扁平向量分块检索 vs. GraphRAG 图谱—向量混合检索对比',
+        'blue',
+        [
+            ('纯 Top-K 扁平向量检索盲区：\n无法回答跨文档全局归纳推理\n碎片化段落丢失跨实体因果链', 'orange'),
+            ('局部向量锚定 + 社区摘要协同：\n兼顾细粒度事实与宏观脉络完整\n复杂多跳问答准确率升 34.0%', 'teal'),
+        ],
+        '向量检索提供亚毫秒级局部语义锚点，图谱遍历补齐跨文档多跳拓扑关系',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch25-search-ads-rec-gpu-fleet-tco-and-sla-roofline',
+        '搜广推与向量检索 GPU 机队全链路 SLA（50 ms）预算拆解',
+        'teal',
+        [
+            ('① 多路向量召回\nCAGRA + DiskANN\n耗时 3.5 ms (7%)', 'blue'),
+            ('② 三级稀疏查表\nHBM+CXL+GDS\n耗时 2.5 ms (5%)', 'purple'),
+            ('③ HSTU 微批精排\n千级候选并行打分\n11.8 ms (共 17.8 ms)', 'teal'),
+        ],
+        '搜广推机队从 CPU+级联小模型向“全栈 GPU 生成式底座”演进',
+        'purple',
+        [
+            ('传统万台 CPU 检索 + 级联卡池：\n跨机房 RPC 序列化耗去 25 ms\n机柜功耗高且利用率不足 15%', 'orange'),
+            ('同机柜 GPU 检索 + HSTU 部署：\n端到端 P99 仅 17.8 ms (< 50 ms)\n单瓦特 GMV 产出提升 3.4 倍', 'teal'),
+        ],
+        '打通向量召回、三级稀疏查表与生成式精排，重塑互联网核心现金流底座',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch25-generative-recommendation-and-vector-engine-synthesis',
+        '第 21 章全景：万亿稀疏表、生成式推荐与十亿向量检索（上）',
+        'blue',
+        [
+            ('25.1 万亿稀疏表底座：\nHBM-CXL-SSD 缓存 (2.19 us)\nTorchRec 分桶与双流掩盖', 'blue'),
+            ('25.2 生成式推荐 HSTU：\nSiLU 点积 + 随机长度压缩\nM-FALCON 微批减负 44.80 倍', 'purple'),
+        ],
+        '第 21 章全景：GPU 图索引、SSD 扇区对齐与混合检索（下）',
+        'teal',
+        [
+            ('25.3 GPU 向量图引擎：\ncuVS CAGRA 提速 16.91 倍\nIVF-PQ 32 KB 片上 LUT 查表', 'blue'),
+            ('25.4 百亿 SSD 与 GraphRAG：\nDiskANN 4 KB 扇区双节点对齐\nFreshDiskANN 与社区摘要融合', 'teal'),
+        ],
+        '以分级局部性驯服 10 TB 稀疏状态，以微批前缀共享释放生成式推荐算力',
     )
 
     outputs = ex.finish()
 
     fig_index = [
         {
-            "figure_id": "图 21-1",
+            "figure_id": "图 25-1",
             "number": 1,
-            "file": "ch21-single-turn-chat-vs-multi-turn-agent-worm-loop.svg",
-            "asset": "ch21/ch21-single-turn-chat-vs-multi-turn-agent-worm-loop.svg",
-            "section": "21.1.1",
-            "caption": "单轮对话（Read-Once）与 40 轮自主智能体（WORM 95.12% 前缀复用 + 长工具等待空窗）的显存与算力时间线对比（算例 21-1）",
-            "source_refs": ["experiments/ch21/21-01/run.py", "manuscripts/ch21/figure-data.json"],
-            "TeachingRole": "揭示多轮智能体 95.12% 预填充词元为历史前缀重读且预填充/解码比达 205:1 的物理特征"
+            "file": "ch25-trillion-param-dlrm-three-tier-hbm-cxl-ssd-embedding.svg",
+            "asset": "ch25/ch25-trillion-param-dlrm-three-tier-hbm-cxl-ssd-embedding.svg",
+            "section": "25.1.1",
+            "caption": "10.0 TB 万亿参数 DLRM 稀疏嵌入表三级分层存储架构（HBM 320 GB 热表 + CXL 2.0 TB 温表 + NVMe 10.0 TB 冷表），加权查表延迟降至 2.19 us（算例 25-1）",
+            "source_refs": ["experiments/ch21/21-01/run.py", "manuscripts/ch25/figure-data.json"],
+            "TeachingRole": "展示如何利用 3.2% HBM 热缓存捕获 82.0% 幂律访问，将加权延迟较纯 SSD 提升 29.7 倍"
         },
         {
-            "figure_id": "图 21-2",
+            "figure_id": "图 25-2",
             "number": 2,
-            "file": "ch21-tool-wait-hbm-retain-recompute-offload-phase-diagram.svg",
-            "asset": "ch21/ch21-tool-wait-hbm-retain-recompute-offload-phase-diagram.svg",
-            "section": "21.1.2",
-            "caption": "工具等待时长 t_wait 与前缀长度 L_prefix 构成的“HBM 驻留 vs. 分层换出 vs. 丢弃重算”三维最优决策相图（t* = 2.16 s）",
-            "source_refs": ["experiments/ch21/21-01/run.py", "manuscripts/ch21/figure-data.json"],
-            "TeachingRole": "推导工具等待期 HBM 租金与 PCIe 换入/重算耗时的三段式切换边界"
+            "file": "ch25-zipf-power-law-hot-embedding-cache-hit-curve.svg",
+            "asset": "ch25/ch25-zipf-power-law-hot-embedding-cache-hit-curve.svg",
+            "section": "25.1.1",
+            "caption": "搜广推稀疏特征 Zipf 幂律分布（alpha=1.12）与 15 分钟滑动窗口时间漂移（eta=0.038）下的三级缓存命中率曲线与无锁 Cuckoo 哈希晋升机制（算例 25-1）",
+            "source_refs": ["experiments/ch21/21-01/run.py", "manuscripts/ch25/figure-data.json"],
+            "TeachingRole": "量化静态幂律聚集与在线突发热点漂移对多级缓存未命中率的耦合影响"
         },
         {
-            "figure_id": "图 21-3",
+            "figure_id": "图 25-3",
             "number": 3,
-            "file": "ch21-four-tier-kv-cache-hierarchy-dynamo-lmcache.svg",
-            "asset": "ch21/ch21-four-tier-kv-cache-hierarchy-dynamo-lmcache.svg",
-            "section": "21.2.1",
-            "caption": "GPU HBM ↔ Host DRAM ↔ Local NVMe ↔ Remote RDMA Pool 四级分层 KV 缓存架构与块级哈希去重",
-            "source_refs": ["manuscripts/ch21/figure-data.json"],
-            "TeachingRole": "构建跨节点共享的四级 KV 记忆存储池与逐层异步 DMA 预取流水"
+            "file": "ch25-torchrec-all-to-all-sparse-lookup-and-bucket-sharding.svg",
+            "asset": "ch25/ch25-torchrec-all-to-all-sparse-lookup-and-bucket-sharding.svg",
+            "section": "25.1.2",
+            "caption": "64 卡 TorchRec 稀疏嵌入表热度感知分桶切分（倾斜度从 2.85 降至 1.06）与底端 MLP 计算完全掩盖 All-to-All 通信（暴露延迟 0.00 ms）（算例 25-2）",
+            "source_refs": ["experiments/ch21/21-01/run.py", "manuscripts/ch25/figure-data.json"],
+            "TeachingRole": "阐明如何通过按访问热度分桶消除 All-to-All 木桶效应并实现双流零暴露重叠"
         },
         {
-            "figure_id": "图 21-4",
+            "figure_id": "图 25-4",
             "number": 4,
-            "file": "ch21-kv-aware-global-radix-router-ttft-tradeoff.svg",
-            "asset": "ch21/ch21-kv-aware-global-radix-router-ttft-tradeoff.svg",
-            "section": "21.2.1",
-            "caption": "KV 感知全局路由器（NVIDIA Dynamo / SGLang HiCache）在节点排队延迟与前缀缓存命中率之间的联合寻优（算例 21-2）",
-            "source_refs": ["experiments/ch21/21-01/run.py", "manuscripts/ch21/figure-data.json"],
-            "TeachingRole": "证明综合排队与命中率的全局路由可将 64K 智能体请求 TTFT 从 510 ms 压至 170 ms（快 3.00 倍）"
+            "file": "ch25-cascade-dlrm-vs-generative-recommender-hstu-paradigm.svg",
+            "asset": "ch25/ch25-cascade-dlrm-vs-generative-recommender-hstu-paradigm.svg",
+            "section": "25.2.1",
+            "caption": "传统多阶段级联推荐漏斗（DLRM 碎片化特征工程，MFU < 12%）向统一生成式推荐序列转导器（Meta HSTU / OneRec，MFU > 48%）的范式跃迁",
+            "source_refs": ["manuscripts/ch25/figure-data.json"],
+            "TeachingRole": "揭示搜广推如何从访存受限的浅层交叉网络演进为遵循扩展定律的自回归序列生成模型"
         },
         {
-            "figure_id": "图 21-5",
+            "figure_id": "图 25-5",
             "number": 5,
-            "file": "ch21-cachegen-anchor-delta-entropy-kv-streaming.svg",
-            "asset": "ch21/ch21-cachegen-anchor-delta-entropy-kv-streaming.svg",
-            "section": "21.2.2",
-            "caption": "CacheGen 利用锚点残差量化与算术编码实现 4.21 倍流式压缩并在 50 Gbps 网络上击败本地重算（算例 21-2）",
-            "source_refs": ["experiments/ch21/21-01/run.py", "manuscripts/ch21/figure-data.json"],
-            "TeachingRole": "确立跨机架传输 KV 缓存战胜本地 GPU 重算的临界带宽阈值与熵编码收益"
+            "file": "ch25-hstu-pointwise-aggregated-attention-and-stochastic-length.svg",
+            "asset": "ch25/ch25-hstu-pointwise-aggregated-attention-and-stochastic-length.svg",
+            "section": "25.2.1",
+            "caption": "层次化序列转导单元（HSTU）的非归一化 SiLU 点积聚合注意力内核与随机序列长度压缩（Stochastic Length，beta=0.75 削减 56.2% 注意力算力）（算例 25-3）",
+            "source_refs": ["experiments/ch21/21-02/run.py", "manuscripts/ch25/figure-data.json"],
+            "TeachingRole": "解释为何推荐系统必须摒弃概率归一 Softmax 以保留用户偏好强度并利用幂律稀疏采样压缩长序列"
         },
         {
-            "figure_id": "图 21-6",
+            "figure_id": "图 25-6",
             "number": 6,
-            "file": "ch21-microvm-snapshot-cow-userfaultfd-12ms-fork.svg",
-            "asset": "ch21/ch21-microvm-snapshot-cow-userfaultfd-12ms-fork.svg",
-            "section": "21.3.1",
-            "caption": "传统容器/虚机冷启动（1,500 ms）vs. Firecracker 内存快照 + userfaultfd 惰性缺页加载实现 12.0 ms 极速克隆（算例 21-3）",
-            "source_refs": ["experiments/ch21/21-02/run.py", "manuscripts/ch21/figure-data.json"],
-            "TeachingRole": "拆解微虚机写时复制快照与按需工作集预取实现 125 倍启动加速的内核机理"
+            "file": "ch25-m-falcon-candidate-microbatch-prefix-amortization.svg",
+            "asset": "ch25/ch25-m-falcon-candidate-microbatch-prefix-amortization.svg",
+            "section": "25.2.2",
+            "caption": "M-FALCON 候选集微批前缀摊销算法：单次编码 L=4,096 用户历史前缀并共享 KV 状态并行打分 M=1,024 个候选物品，算力缩减 44.80 倍（1,409.3 -> 31.46 TFLOPs）（算例 25-4）",
+            "source_refs": ["experiments/ch21/21-02/run.py", "manuscripts/ch25/figure-data.json"],
+            "TeachingRole": "通过前缀 KV 共享与候选对角注意力掩码攻克生成式推荐在线打分千级候选物品的算力墙"
         },
         {
-            "figure_id": "图 21-7",
+            "figure_id": "图 25-7",
             "number": 7,
-            "file": "ch21-synchronized-kv-and-sandbox-mcts-tree-forking.svg",
-            "asset": "ch21/ch21-synchronized-kv-and-sandbox-mcts-tree-forking.svg",
-            "section": "21.3.2",
-            "caption": "面向智能体树搜索（Tree-of-Actions）的 PagedAttention KV 块表与沙箱 OverlayFS/内存快照同步分叉与 8.50 ms 回滚",
-            "source_refs": ["experiments/ch21/21-02/run.py", "manuscripts/ch21/figure-data.json"],
-            "TeachingRole": "实现模型内部 KV 记忆与外部沙箱文件系统/内存状态的原子级同步树状回溯"
+            "file": "ch25-hstu-online-event-streaming-and-delta-kv-update.svg",
+            "asset": "ch25/ch25-hstu-online-event-streaming-and-delta-kv-update.svg",
+            "section": "25.2.2",
+            "caption": "在线实时行为事件流（Kafka / Flink）驱动的用户历史序列增量 Delta KV 缓存追加与跨请求前缀复用流水线",
+            "source_refs": ["manuscripts/ch25/figure-data.json"],
+            "TeachingRole": "消除同一用户连续刷屏时的 4,096 历史序列重复预填充开销"
         },
         {
-            "figure_id": "图 21-8",
+            "figure_id": "图 25-8",
             "number": 8,
-            "file": "ch21-computer-use-gui-webrtc-frame-diff-pipeline.svg",
-            "asset": "ch21/ch21-computer-use-gui-webrtc-frame-diff-pipeline.svg",
-            "section": "21.3.2",
-            "caption": "Computer-Use 桌面沙箱的脏矩形帧差分流（Dirty-Rect Streaming）、无障碍树（AXTree）混合提取与焦点放大流水线",
-            "source_refs": ["manuscripts/ch21/figure-data.json"],
-            "TeachingRole": "通过脏矩形编码与 DOM/AXTree 结构化锚点将 GUI 智能体单步视觉开销压降 85%"
+            "file": "ch25-cpu-hnsw-vs-gpu-cuvs-cagra-graph-build-pipeline.svg",
+            "asset": "ch25/ch25-cpu-hnsw-vs-gpu-cuvs-cagra-graph-build-pipeline.svg",
+            "section": "25.3.1",
+            "caption": "十亿级 768 维向量（1.536 TB）图索引构建对比：双路 128 核 CPU HNSW（11.50 小时）vs. 8 卡 H100 cuVS CAGRA（40.8 分钟，提速 16.91 倍）（算例 25-5）",
+            "source_refs": ["experiments/ch21/21-03/run.py", "manuscripts/ch25/figure-data.json"],
+            "TeachingRole": "剖析 CPU HNSW 层级锁竞争与随机访存瓶颈，展示 GPU 原生扁平固定度图的并行建图优势"
         },
         {
-            "figure_id": "图 21-9",
+            "figure_id": "图 25-9",
             "number": 9,
-            "file": "ch21-mcp-gateway-dynamic-tool-rag-and-auth-isolation.svg",
-            "asset": "ch21/ch21-mcp-gateway-dynamic-tool-rag-and-auth-isolation.svg",
-            "section": "21.4.1",
-            "caption": "模型上下文协议（MCP）安全网关：按需语义检索挂载 Top-8 工具 Schema（省 99.20% 词元）与零信任凭据隔离（算例 21-5）",
-            "source_refs": ["experiments/ch21/21-02/run.py", "manuscripts/ch21/figure-data.json"],
-            "TeachingRole": "解决万级企业工具全量挂载引发的 18 万词元上下文膨胀与凭据泄露风险"
+            "file": "ch25-cagra-warp-splitting-distance-and-two-stage-pruning.svg",
+            "asset": "ch25/ch25-cagra-warp-splitting-distance-and-two-stage-pruning.svg",
+            "section": "25.3.1",
+            "caption": "NVIDIA cuVS CAGRA 的 Warp-Split 协同距离计算内核、两阶段二跳绕行路径剪枝与反向边注入拓扑优化",
+            "source_refs": ["experiments/ch21/21-03/run.py", "manuscripts/ch25/figure-data.json"],
+            "TeachingRole": "拆解 GPU 图索引如何在精简一半出边度数的同时维持 98.2% 以上的全局强连通召回率"
         },
         {
-            "figure_id": "图 21-10",
+            "figure_id": "图 25-10",
             "number": 10,
-            "file": "ch21-idempotent-outbox-and-speculative-tool-prefetch.svg",
-            "asset": "ch21/ch21-idempotent-outbox-and-speculative-tool-prefetch.svg",
-            "section": "21.4.1",
-            "caption": "只读工具投机预取与写操作工具基于幂等键（Idempotency Key）和事务外发箱（Outbox）的精确一次执行保障",
-            "source_refs": ["manuscripts/ch21/figure-data.json"],
-            "TeachingRole": "防止智能体超时重试或投机执行在外部世界引发重复扣款或重复下单事故"
+            "file": "ch25-ivf-pq-shared-memory-lut-asymmetric-distance-kernel.svg",
+            "asset": "ch25/ch25-ivf-pq-shared-memory-lut-asymmetric-distance-kernel.svg",
+            "section": "25.3.2",
+            "caption": "乘积量化（IVF-PQ）非对称距离查找表（32 KB ADC-LUT）在 GPU 片上共享内存中的无 Bank 冲突交错布局与寄存器级累加内核",
+            "source_refs": ["manuscripts/ch25/figure-data.json"],
+            "TeachingRole": "利用 32 KB 片上 SRAM 查找表消除 24 倍显存解压带宽膨胀"
         },
         {
-            "figure_id": "图 21-11",
+            "figure_id": "图 25-11",
             "number": 11,
-            "file": "ch21-i19-telemetry-backlog-buffer-overflow-and-drain.svg",
-            "asset": "ch21/ch21-i19-telemetry-backlog-buffer-overflow-and-drain.svg",
-            "section": "21.4.1",
-            "caption": "锁定算例 I19：审计遥测断网期间 400 KiB/s 积压曲线（81.92 s 触顶 32 MiB、120 s 累积 46.875 MiB）与恢复后 76.92 s 排空过程（算例 21-4）",
-            "source_refs": ["experiments/ch21/21-02/run.py", "manuscripts/ch21/figure-data.json"],
-            "TeachingRole": "精确复算断网期间内存缓冲触顶时刻、外发箱溢写体积与净排空速率下的恢复时长"
+            "file": "ch25-diskann-4kb-sector-aligned-vector-and-neighbor-layout.svg",
+            "asset": "ch25/ch25-diskann-4kb-sector-aligned-vector-and-neighbor-layout.svg",
+            "section": "25.4.1",
+            "caption": "DiskANN 物理扇区对齐存储布局：主机 DRAM 常驻 64.0 GB PQ 码 + NVMe 4,096 B 扇区紧凑封装 2 个完整图节点（1,792 B/节点）（算例 25-6）",
+            "source_refs": ["experiments/ch21/21-03/run.py", "manuscripts/ch25/figure-data.json"],
+            "TeachingRole": "通过将全精度向量与 64 个邻居 ID 同页打包，确保每跳遍历严格只消耗 1 次 4 KB 随机读"
         },
         {
-            "figure_id": "图 21-12",
+            "figure_id": "图 25-12",
             "number": 12,
-            "file": "ch21-prompt-injection-taint-tracking-dual-llm-firewall.svg",
-            "asset": "ch21/ch21-prompt-injection-taint-tracking-dual-llm-firewall.svg",
-            "section": "21.4.1",
-            "caption": "防御间接提示词注入（Indirect Prompt Injection）的特权控制流与非受信数据流双 LLM 污点追踪防火墙",
-            "source_refs": ["manuscripts/ch21/figure-data.json"],
-            "TeachingRole": "通过动态污点标签与控制面/数据面物理隔离阻断外部网页或邮件中的隐藏越权指令"
+            "file": "ch25-diskann-io-uring-gds-beam-search-pipeline.svg",
+            "asset": "ch25/ch25-diskann-io-uring-gds-beam-search-pipeline.svg",
+            "section": "25.4.1",
+            "caption": "DiskANN 基于 io_uring / GDS 的异步波束搜索（W=4, S=6，单查询 24 次随机读）在 4 块 PCIe 5.0 SSD 上实现 210,000 QPS 与 2.85 ms P99 延迟（算例 25-6）",
+            "source_refs": ["experiments/ch21/21-03/run.py", "manuscripts/ch25/figure-data.json"],
+            "TeachingRole": "用内存 PQ 粗排导航结合多路异步 I/O 并发隐藏闪存读取延迟"
         },
         {
-            "figure_id": "图 21-13",
+            "figure_id": "图 25-13",
             "number": 13,
-            "file": "ch21-hipporag2-graph-vector-episodic-memory-consolidation.svg",
-            "asset": "ch21/ch21-hipporag2-graph-vector-episodic-memory-consolidation.svg",
-            "section": "21.4.2",
-            "caption": "HippoRAG 2 / Mem0 结合向量检索、知识图谱个性化 PageRank 与后台异步记忆提炼的长期记忆底座",
-            "source_refs": ["manuscripts/ch21/figure-data.json"],
-            "TeachingRole": "利用海马体图谱索引与新皮层异步巩固突破上下文窗口限制并降低 96% 预填充开销"
+            "file": "ch25-freshdiskann-streaming-insert-delete-consolidation.svg",
+            "asset": "ch25/ch25-freshdiskann-streaming-insert-delete-consolidation.svg",
+            "section": "25.4.2",
+            "caption": "FreshDiskANN 在线流式增量图写入、墓碑删除标记与后台鲁棒重连合并（Robust Stitch Consolidation）双缓冲架构",
+            "source_refs": ["manuscripts/ch25/figure-data.json"],
+            "TeachingRole": "解决静态图索引无法支持每秒数万次实时增删而导致拓扑断裂的工业界痛点"
         },
         {
-            "figure_id": "图 21-14",
+            "figure_id": "图 25-14",
             "number": 14,
-            "file": "ch21-multi-agent-dag-scheduler-and-token-budget-allocation.svg",
-            "asset": "ch21/ch21-multi-agent-dag-scheduler-and-token-budget-allocation.svg",
-            "section": "21.4.2",
-            "caption": "复杂软件工程任务中 Planner—Coder—Tester 多智能体 DAG 拓扑调度、公共前缀广播与动态词元预算熔断",
-            "source_refs": ["manuscripts/ch21/figure-data.json"],
-            "TeachingRole": "通过边际增益监控与 DAG 预算熔断消除多智能体无限循环空谈风暴"
+            "file": "ch25-graphrag-hierarchical-community-and-vector-hybrid-retrieval.svg",
+            "asset": "ch25/ch25-graphrag-hierarchical-community-and-vector-hybrid-retrieval.svg",
+            "section": "25.4.2",
+            "caption": "GraphRAG 多跳知识图谱社区摘要（Leiden 层次聚类）与 GPU 稠密向量检索的并发执行及倒数秩融合（RRF）流水线",
+            "source_refs": ["manuscripts/ch25/figure-data.json"],
+            "TeachingRole": "在 8.4 ms 预算内协同完成细粒度向量语义命中与跨文档全局关系图谱召回"
         },
         {
-            "figure_id": "图 21-15",
+            "figure_id": "图 25-15",
             "number": 15,
-            "file": "ch21-agentic-cluster-cpu-gpu-sandbox-pool-sizing.svg",
-            "asset": "ch21/ch21-agentic-cluster-cpu-gpu-sandbox-pool-sizing.svg",
-            "section": "21.3.2",
-            "caption": "大规模 Agentic 云平台中 GPU 推理池、大容量 DRAM/NVMe KV 缓存池与高密 CPU 沙箱池的 Little 定律配比模型",
-            "source_refs": ["manuscripts/ch21/figure-data.json"],
-            "TeachingRole": "依据推理活跃期与工具执行期的 1:12 驻留比指导异构计算与存储池容量规划"
+            "file": "ch25-search-ads-rec-gpu-fleet-tco-and-sla-roofline.svg",
+            "asset": "ch25/ch25-search-ads-rec-gpu-fleet-tco-and-sla-roofline.svg",
+            "section": "25.4.2",
+            "caption": "互联网搜广推与混合检索全链路 50 ms SLA 延迟分解（向量召回 3.5 ms + 三级查表 2.5 ms + HSTU 精排 11.8 ms = 17.8 ms）与 GPU 机队 TCO 收益",
+            "source_refs": ["manuscripts/ch25/figure-data.json"],
+            "TeachingRole": "从数据中心机队视角算清全栈 GPU 化替代传统 CPU 级联集群的延迟裕度与投资回报率"
         },
         {
-            "figure_id": "图 21-16",
+            "figure_id": "图 25-16",
             "number": 16,
-            "file": "ch21-autonomous-agent-infrastructure-full-stack-map.svg",
-            "asset": "ch21/ch21-autonomous-agent-infrastructure-full-stack-map.svg",
-            "section": "21.4.2",
-            "caption": "自主智能体基础设施从四级分层 KV 记忆、12 ms CoW 微虚机沙箱到幂等安全网关的全栈总图",
-            "source_refs": ["experiments/ch21/21-01/run.py", "experiments/ch21/21-02/run.py", "manuscripts/ch21/figure-data.json"],
-            "TeachingRole": "收束第 21 章记忆分层化、环境可分叉化与工具执行幂等化的完整工程体系"
-        },
-        {
-            "figure_id": "图 21-17",
-            "number": 17,
-            "file": "ch21-speculative-tool-execution-and-rollback-dag.svg",
-            "asset": "ch21/ch21-speculative-tool-execution-and-rollback-dag.svg",
-            "section": "21.4.2",
-            "caption": "多智能体工作流 DAG 关键路径投机工具预执行（Speculative Tool Execution）与 CoW 沙箱毫秒级误判回滚流水线（算例 21-7）",
-            "source_refs": ["experiments/ch21/21-03/run.py", "manuscripts/ch21/figure-data.json"],
-            "TeachingRole": "展示 Draft 投机预启动工具与 12 ms CoW 回滚如何将 4 阶段 DAG 延迟从 8,000 ms 压至 4,969.6 ms（1.61x）"
-        },
-        {
-            "figure_id": "图 21-18",
-            "number": 18,
-            "file": "ch21-gui-incremental-region-of-interest-vision-token-cache.svg",
-            "asset": "ch21/ch21-gui-incremental-region-of-interest-vision-token-cache.svg",
-            "section": "21.4.2",
-            "caption": "GUI 智能体（OSWorld / WebArena）增量脏矩形 ROI 视觉块哈希复用与 Set-of-Marks 可交互 DOM 剪枝流水线（算例 21-6）",
-            "source_refs": ["experiments/ch21/21-03/run.py", "manuscripts/ch21/figure-data.json"],
-            "TeachingRole": "证明 12.5% 脏矩形视觉缓存与可交互 DOM 剪枝实现 7.32 倍词元压缩与 5.37 倍 ViT 编码提速"
+            "file": "ch25-generative-recommendation-and-vector-engine-synthesis.svg",
+            "asset": "ch25/ch25-generative-recommendation-and-vector-engine-synthesis.svg",
+            "section": "25.4.2",
+            "caption": "第 21 章系统工程全景图：从 10 TB 三级稀疏嵌入表、HSTU + M-FALCON 生成式推荐到 cuVS CAGRA / DiskANN 十亿级向量检索引擎",
+            "source_refs": ["manuscripts/ch25/figure-data.json"],
+            "TeachingRole": "收束本章四大模块，归纳状态分级局部性与前缀共享摊销两大核心设计准则"
         }
     ]
     for row in fig_index:
-        row['figure'] = f"21-{row['number']}"
+        row['figure'] = f"25-{row['number']}"
         row['name'] = Path(row['file']).stem
     (HERE / 'figure-index.json').write_text(json.dumps(fig_index, ensure_ascii=False, indent=2) + '\n')
 
-    md = HERE.parent / '21-自主智能体基础设施（Agentic Infra）、Computer Use 沙箱与分层 KV 记忆底座.md'
+    md = HERE.parent / '25-生成式推荐系统（Generative Recommenders）、万亿参数稀疏表（DLRM）与十亿级 GPU 向量检索引擎.md'
     if md.exists():
         text_md = md.read_text()
         display = re.findall(r'\$\$(.+?)\$\$', text_md, re.S)
@@ -638,9 +587,9 @@ def build_chapter() -> None:
             b64 = base64.b64encode(p.read_bytes()).decode()
             return f'<figure><img alt="{alt}" src="data:image/png;base64,{b64}"><figcaption>{alt}</figcaption></figure>'
 
-        work = re.sub(r'!\[([^\]]*)\]\((ch21/[^)]+)\)', repl_img, text_md)
+        work = re.sub(r'!\[([^\]]*)\]\((ch25/[^)]+)\)', repl_img, text_md)
         body = markdown.markdown(work, extensions=['tables', 'fenced_code', 'footnotes', 'toc'])
-        html = f'<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>第 21 章：自主智能体基础设施（Agentic Infra）、Computer Use 沙箱与分层 KV 记忆底座</title></head><body>{body}</body></html>\n'
+        html = f'<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>第 21 章：生成式推荐系统（Generative Recommenders）、万亿参数稀疏表（DLRM）与十亿级 GPU 向量检索引擎</title></head><body>{body}</body></html>\n'
         out_html = preview_path(md)
         out_html.write_text(html)
 
@@ -677,7 +626,7 @@ def build_chapter() -> None:
         )
         + '\n'
     )
-    print(f'Built {len(outputs)} figure files for Chapter 21; 0 layout warnings.')
+    print(f'Built {len(outputs)} figure files for Chapter 25; 0 layout warnings.')
 
 
 if __name__ == '__main__':

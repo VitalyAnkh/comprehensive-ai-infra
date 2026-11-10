@@ -1,122 +1,128 @@
-[
-  {
-    "figure": "ch20-cluster-mtbf-scaling-and-llama3-failures",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch20-hot-spare-pool-queuing-dimensioning",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch20-sdc-bitflip-allreduce-contamination",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch20-abft-checksum-matrix-multiplication",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch20-safeguarding-sdc-and-opguard-bitwise-debug",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch20-microbatch-rerun-vs-checkpoint-rollback",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch20-trainmover-subsecond-hot-migration",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch20-nccl-flight-recorder-straggler-blame",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch20-optical-ber-fec-gray-failure-detection",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch20-five-benchmark-gaming-traps",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch20-flashinfer-bench-cceval-and-blink-profiling",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch20-effective-training-time-ratio-ettr-model",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch20-automated-burn-in-fleet-health-pipeline",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch20-twenty-chapter-dual-track-master-ledger",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch20-twenty-chapter-architecture-knowledge-graph",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch20-ten-first-principles-of-ai-infra",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch20-chaos-fault-injection-and-canary-rollout-gate",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch20-core-cluster-to-four-new-frontiers-bridge",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch20-oobleck-pre-instantiated-pipeline-template-failover",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch20-goodput-sla-under-bursty-poisson-traffic",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  }
-]
+{
+  "chapter": "ch20",
+  "figure_count": 20,
+  "all_passed": true,
+  "total_warnings": 0,
+  "figures": [
+    {
+      "figure": "20-1",
+      "file": "ch20-cloud-llm-slo-vs-embodied-hard-realtime.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "20-2",
+      "file": "ch20-vlalagbench-latency-vs-dynamic-grasp-success.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "20-3",
+      "file": "ch20-action-chunking-and-temporal-ensembling.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "20-4",
+      "file": "ch20-system2-vlm-system1-flow-matching-dual-loop.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "20-5",
+      "file": "ch20-jetson-thor-mig-rtos-deterministic-isolation.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "20-6",
+      "file": "ch20-flow-matching-ode-steps-vs-control-jitter.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "20-7",
+      "file": "ch20-cpu-sim-pcie-bottleneck-vs-gpu-native-sim.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "20-8",
+      "file": "ch20-physics-renderer-policy-three-way-sm-budget.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "20-9",
+      "file": "ch20-contact-divergence-warp-inefficiency.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "20-10",
+      "file": "ch20-multi-camera-tiled-rendering-zero-copy-tensor.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "20-11",
+      "file": "ch20-multi-sensor-ptp-hardware-trigger-alignment.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "20-12",
+      "file": "ch20-shadow-mode-disagreement-edge-trigger.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "20-13",
+      "file": "ch20-3dgs-neural-reconstruction-sim2real-loop.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "20-14",
+      "file": "ch20-onboard-vs-mec-edge-offload-safety-fallback.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "20-15",
+      "file": "ch20-vla-early-exit-and-token-pruning-wcet.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "20-16",
+      "file": "ch20-embodied-ai-full-stack-infrastructure-map.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "20-17",
+      "file": "ch20-three-tier-vlm-flow-wbc-humanoid-control.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "20-18",
+      "file": "ch20-fast-dct-frequency-action-tokenization.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "20-19",
+      "file": "ch20-3dgs-neural-sensor-closed-loop-re-simulation.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "20-20",
+      "file": "ch20-dual-thor-soc-safety-fallback-watchdog-pipeline.svg",
+      "passed": true,
+      "warnings": []
+    }
+  ]
+}

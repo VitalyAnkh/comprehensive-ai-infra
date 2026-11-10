@@ -1,0 +1,20 @@
+{
+  "experiment_id": "16-05",
+  "byzantine_and_dht": {
+    "poisoned_fraction_f": 0.15,
+    "spot_check_rate_p": 0.05,
+    "detection_prob_10rounds_pct": 99.97,
+    "geometric_median_breakdown": 0.5,
+    "spot_hourly_preemption_rate": 0.08,
+    "dht_ettr_pct": 96.8
+  },
+  "guardrail_and_sae_steering": {
+    "serial_ttft_overhead_ms": 45.0,
+    "serial_tail_blocking_ms": 180.0,
+    "speculative_window_k": 8,
+    "sidecar_check_ms": 3.2,
+    "exposed_guardrail_latency_ms": 3.2,
+    "in_situ_layer_latency_us": 3.6,
+    "in_situ_overhead_pct": 0.08
+  }
+}

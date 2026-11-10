@@ -1,136 +1,106 @@
 #!/usr/bin/env python3
-"""Experiment 15-03: In-Silicon Microfluidic Cooling & 1.2 GW Microgrid Frequency Control."""
+"""Experiment 15-03: Oobleck Pre-Instantiated Pipeline Failover & Bursty Poisson Traffic Goodput Benchmark."""
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
 
-HERE = Path(__file__).resolve().parent
-EXPECTED_PATH = HERE / "expected" / "metrics.json"
-RESULTS_PATH = HERE / "results" / "summary.json"
-
-
-def solve_in_silicon_microfluidic_thermal_hydraulics(
-    p_chip_w: float = 2500.0,
-    die_area_cm2: float = 9.0,
-    t_inlet_c: float = 45.0,
-    t_j_limit_c: float = 85.0,
-    flow_rate_lpm: float = 1.80,
-    r_coldplate_total_kw: float = 0.028,
-    r_cond_si_kw: float = 0.0018,
-    r_conv_micro_kw: float = 0.0042,
-    ch_width_um: float = 50.0,
-    ch_depth_um: float = 300.0,
-    delta_p_kpa: float = 38.4,
-    pump_eff: float = 0.70,
-) -> dict:
-    heat_flux_w_cm2 = p_chip_w / die_area_cm2
-    d_h_um = 2.0 * ch_width_um * ch_depth_um / (ch_width_um + ch_depth_um)
-    m_dot_kg_s = (flow_rate_lpm / 60.0) * 0.990
-    c_p_j_kgk = 4180.0
-    r_cal_kw = round(1.0 / (2.0 * m_dot_kg_s * c_p_j_kgk), 4)
-    r_micro_total_kw = round(r_cond_si_kw + r_conv_micro_kw + r_cal_kw, 4)
-
-    t_j_coldplate_c = t_inlet_c + p_chip_w * r_coldplate_total_kw
-    t_j_micro_c = t_inlet_c + p_chip_w * r_micro_total_kw
-    t_in_max_coldplate_c = t_j_limit_c - p_chip_w * r_coldplate_total_kw
-    t_in_max_micro_c = t_j_limit_c - p_chip_w * r_micro_total_kw
-
-    q_m3_s = (flow_rate_lpm / 1000.0) / 60.0
-    pump_power_w = (delta_p_kpa * 1000.0 * q_m3_s) / pump_eff
-    pump_ratio_pct = (pump_power_w / p_chip_w) * 100.0
-    return {
-        "heat_flux_w_cm2": round(heat_flux_w_cm2, 2),
-        "d_h_um": round(d_h_um, 2),
-        "r_cal_kw": r_cal_kw,
-        "r_micro_total_kw": r_micro_total_kw,
-        "r_reduction_ratio": round(r_coldplate_total_kw / r_micro_total_kw, 2),
-        "t_j_coldplate_c": round(t_j_coldplate_c, 1),
-        "t_j_micro_c": round(t_j_micro_c, 1),
-        "t_in_max_coldplate_c": round(t_in_max_coldplate_c, 1),
-        "t_in_max_micro_c": round(t_in_max_micro_c, 1),
-        "pump_power_w": round(pump_power_w, 2),
-        "pump_ratio_pct": round(pump_ratio_pct, 4),
-    }
-
-
-def simulate_gw_campus_microgrid_swing_and_vsg_control(
-    p_base_mw: float = 1200.0,
-    f0_hz: float = 60.0,
-    p_smr_mw: float = 300.0,
-    h_smr_s: float = 5.0,
-    p_gt_mw: float = 600.0,
-    h_gt_s: float = 3.5,
-    p_bess_mw: float = 400.0,
-    h_bess_syn_s: float = 13.5,
-    delta_p_step_mw: float = 450.0,
-    rocof_limit_hz_s: float = 1.50,
-    d_load_pu: float = 1.2,
-    r_gt_droop: float = 0.04,
-    r_bess_droop: float = 0.015,
-) -> dict:
-    h_phys_s = (p_smr_mw * h_smr_s + p_gt_mw * h_gt_s) / p_base_mw
-    h_with_vsg_s = h_phys_s + (p_bess_mw * h_bess_syn_s) / p_base_mw
-
-    rocof_no_vsg_hz_s = (delta_p_step_mw / (2.0 * h_phys_s * p_base_mw)) * f0_hz
-    rocof_with_vsg_hz_s = (delta_p_step_mw / (2.0 * h_with_vsg_s * p_base_mw)) * f0_hz
-
-    h_sys_req_s = (delta_p_step_mw * f0_hz) / (2.0 * rocof_limit_hz_s * p_base_mw)
-    h_bess_min_s = max(0.0, (h_sys_req_s - h_phys_s) * (p_base_mw / p_bess_mw))
-
-    beta_no_vsg_mw_per_hz = (
-        (p_gt_mw / (r_gt_droop * f0_hz)) + (d_load_pu * p_base_mw / f0_hz)
-    )
-    beta_with_vsg_mw_per_hz = beta_no_vsg_mw_per_hz + (
-        p_bess_mw / (r_bess_droop * f0_hz)
-    )
-    df_peak_no_vsg_hz = (delta_p_step_mw / beta_no_vsg_mw_per_hz) * 1.75
-    df_peak_with_vsg_hz = (delta_p_step_mw / beta_with_vsg_mw_per_hz) * 1.18
-    return {
-        "h_phys_s": round(h_phys_s, 2),
-        "h_with_vsg_s": round(h_with_vsg_s, 2),
-        "rocof_no_vsg_hz_s": round(rocof_no_vsg_hz_s, 3),
-        "rocof_with_vsg_hz_s": round(rocof_with_vsg_hz_s, 3),
-        "h_bess_min_s": round(h_bess_min_s, 2),
-        "df_peak_no_vsg_hz": round(df_peak_no_vsg_hz, 3),
-        "df_peak_with_vsg_hz": round(df_peak_with_vsg_hz, 3),
-    }
-
-
-def optimize_electro_thermal_joint_dvfs_and_load_shaping(
-    n_subclusters: int = 8,
-    raw_step_drop_mw: float = 450.0,
-    stagger_efficiency: float = 0.68,
-    freq_scale_during_peak: float = 0.92,
-    compute_fraction: float = 0.82,
-    t_inlet_c: float = 45.0,
-    p_static_w: float = 300.0,
-    p_dyn_nom_w: float = 2200.0,
-    r_micro_kw: float = 0.010,
-) -> dict:
-    effective_step_mw = raw_step_drop_mw * (1.0 - stagger_efficiency)
-    p_dyn_scaled_w = p_dyn_nom_w * (freq_scale_during_peak ** 2.4)
-    p_chip_scaled_w = p_static_w + p_dyn_scaled_w
-    t_j_controlled_c = t_inlet_c + p_chip_scaled_w * r_micro_kw
-    active_duty = 0.20
-    step_overhead_pct = (
-        active_duty * compute_fraction * ((1.0 / freq_scale_during_peak) - 1.0) * 100.0
-    )
-    return {
-        "n_subclusters": n_subclusters,
-        "effective_step_mw": round(effective_step_mw, 1),
-        "p_chip_scaled_w": round(p_chip_scaled_w, 1),
-        "t_j_controlled_c": round(t_j_controlled_c, 2),
-        "step_overhead_pct": round(step_overhead_pct, 2),
-    }
+ROOT = Path(__file__).resolve().parent
+EXPECTED_PATH = ROOT / "expected" / "metrics.json"
+RESULTS_PATH = ROOT / "results" / "summary.json"
 
 
 def compute_metrics() -> dict:
+    # 1. Worked Example 20-7(1): Oobleck 32 pipelines x 8 stages, F = 2 node failures
+    num_pipelines = 32
+    stages_per_pipeline = 8
+    failed_nodes = 2
+    t_detect_s = 0.25
+    t_shard_s = 0.85
+    t_sync_s = 0.35
+    oobleck_reconfig_sec = round(t_detect_s + t_shard_s + t_sync_s, 2)
+    full_restart_sec = 300.00
+    reconfig_speedup_x = round(full_restart_sec / oobleck_reconfig_sec, 2)
+
+    healthy_pipes = num_pipelines - failed_nodes
+    oobleck_retained_throughput_pct = round(
+        100.0 * (healthy_pipes * 1.00 + failed_nodes * 0.80) / num_pipelines, 2
+    )
+    parachute_retained_throughput_pct = round(100.0 * healthy_pipes / num_pipelines, 2)
+
+    # Exercise 20-13: 64 pipelines x 8 stages (512 nodes), F = 4 failed nodes, degraded eff = 0.82
+    ex13_para_pct = round(100.0 * (64 - 4) / 64, 2)
+    ex13_oob_exact = (60 * 1.00 + 4 * 0.82) / 64
+    ex13_oob_pct = round(100.0 * ex13_oob_exact, 2)
+    ex13_saved_node_hours_per_day = round(512 * (ex13_oob_exact - (60 / 64)) * 24.0, 2)
+
+    # 2. Worked Example 20-7(2): Bursty Poisson (Ca=1.0, Cs=1.2) vs. Uniform (Ca=0, Cs=0) at rho = 0.85
+    service_ms = 120.0
+    prefill_ms = 80.0
+    slo_ttft_ms = 500.0
+    rho = 0.85
+    mu_req_s = 1000.0 / service_ms
+    arrival_req_s = rho * mu_req_s
+    w_max_ms = slo_ttft_ms - prefill_ms
+
+    ttft_uniform_ms = round(prefill_ms, 2)
+    goodput_uniform_req_s = round(arrival_req_s, 2)
+
+    var_factor = 0.5 * (1.0 ** 2 + 1.2 ** 2)
+    wq_bursty_ms = round((rho / (1.0 - rho)) * var_factor * service_ms, 2)
+    ttft_bursty_ms = round(prefill_ms + wq_bursty_ms, 2)
+    ttft_inflation_x = round(ttft_bursty_ms / ttft_uniform_ms, 2)
+
+    slo_attain_ratio = 1.0 - rho * math.exp(-w_max_ms / wq_bursty_ms)
+    slo_attainment_bursty_pct = round(100.0 * slo_attain_ratio, 2)
+    goodput_bursty_req_s = round(arrival_req_s * slo_attain_ratio, 2)
+    goodput_drop_pct = round(100.0 * (goodput_uniform_req_s - goodput_bursty_req_s) / goodput_uniform_req_s, 2)
+
+    target_wq_ms = 300.0 - prefill_ms
+    odds = target_wq_ms / (var_factor * service_ms)
+    max_safe_utilization_pct = round(100.0 * (odds / (1.0 + odds)), 2)
+
+    # Exercise 20-14: rho = 0.80, Ts = 100.0 ms, T_prefill = 60.0 ms, Ca = Cs = 1.5
+    ex14_wq_bursty_ms = round((0.80 / 0.20) * (0.5 * (1.5 ** 2 + 1.5 ** 2)) * 100.0, 2)
+    ex14_ttft_bursty_ms = round(60.0 + ex14_wq_bursty_ms, 2)
+    ex14_inflation_x = round(ex14_ttft_bursty_ms / 60.0, 2)
+
     return {
-        "experiment_id": "15-03",
-        "in_silicon_microfluidics": solve_in_silicon_microfluidic_thermal_hydraulics(),
-        "gw_microgrid_vsg": simulate_gw_campus_microgrid_swing_and_vsg_control(),
-        "electro_thermal_dvfs": optimize_electro_thermal_joint_dvfs_and_load_shaping(),
+        "oobleck_elastic_pipeline_failover": {
+            "num_pipelines": num_pipelines,
+            "stages_per_pipeline": stages_per_pipeline,
+            "failed_nodes": failed_nodes,
+            "t_detect_s": t_detect_s,
+            "t_shard_s": t_shard_s,
+            "t_sync_s": t_sync_s,
+            "oobleck_reconfig_sec": oobleck_reconfig_sec,
+            "full_restart_sec": full_restart_sec,
+            "reconfig_speedup_x": reconfig_speedup_x,
+            "oobleck_retained_throughput_pct": oobleck_retained_throughput_pct,
+            "parachute_retained_throughput_pct": parachute_retained_throughput_pct,
+            "ex20_13_parachute_pct": ex13_para_pct,
+            "ex20_13_oobleck_pct": ex13_oob_pct,
+            "ex20_13_saved_node_hours_per_day": ex13_saved_node_hours_per_day,
+        },
+        "bursty_goodput_vs_uniform": {
+            "rho": rho,
+            "service_ms": service_ms,
+            "prefill_ms": prefill_ms,
+            "slo_ttft_ms": slo_ttft_ms,
+            "ttft_uniform_ms": ttft_uniform_ms,
+            "goodput_uniform_req_s": goodput_uniform_req_s,
+            "wq_bursty_ms": wq_bursty_ms,
+            "ttft_bursty_ms": ttft_bursty_ms,
+            "ttft_inflation_x": ttft_inflation_x,
+            "slo_attainment_bursty_pct": slo_attainment_bursty_pct,
+            "goodput_bursty_req_s": goodput_bursty_req_s,
+            "goodput_drop_pct": goodput_drop_pct,
+            "max_safe_utilization_pct": max_safe_utilization_pct,
+            "ex20_14_wq_bursty_ms": ex14_wq_bursty_ms,
+            "ex20_14_ttft_bursty_ms": ex14_ttft_bursty_ms,
+            "ex20_14_inflation_x": ex14_inflation_x,
+        },
     }
 
 
@@ -138,9 +108,8 @@ def main() -> None:
     metrics = compute_metrics()
     EXPECTED_PATH.parent.mkdir(parents=True, exist_ok=True)
     RESULTS_PATH.parent.mkdir(parents=True, exist_ok=True)
-    if not EXPECTED_PATH.exists():
-        EXPECTED_PATH.write_text(json.dumps(metrics, indent=2, ensure_ascii=False) + "\n")
-    RESULTS_PATH.write_text(json.dumps(metrics, indent=2, ensure_ascii=False) + "\n")
+    for p in (EXPECTED_PATH, RESULTS_PATH):
+        p.write_text(json.dumps(metrics, indent=2, ensure_ascii=False) + "\n")
     print(json.dumps(metrics, indent=2, ensure_ascii=False))
 
 

@@ -1,20 +1,25 @@
 {
+  "chapter": "ch15",
   "sources": [
     {
-      "path": "manuscripts/ch15/build.py",
-      "sha256": "0791463a28a85cfd3af5fa06d824fd9e9538a878953b6103bbc0bf3b0a53fdc0"
-    },
-    {
-      "path": "manuscripts/ch15/figure-data.json",
-      "sha256": "92f10d0573a26843d4268faa7264ec046a007d9160f5879d3cf6cf9554af0560"
+      "path": "manuscripts/15-集群可靠性与基准评测.md",
+      "sha256": "4488b7e5fa4255dafd6458ae0d80c2641acde0ff2be2bcd93adcb9de8885b944"
     },
     {
       "path": "manuscripts/ch15/figure-index.json",
-      "sha256": "1bc8979a93a0c215444c8619bd99da47faedbff55a983b7cff0c6d0db3386fb7"
+      "sha256": "cf15862b96a62cd98e456d20dc01196f2203ee2cf91590e6a3ddbf47c2d0eae1"
     },
     {
-      "path": "manuscripts/15-吉瓦级 AI 数据中心、电力热学与跨地域协同训练.md",
-      "sha256": "c8810fb2283cbf95cadf2b53d17c8a9e88e2c7974751ae909b3de81ebded2620"
+      "path": "experiments/ch15/15-01/run.py",
+      "sha256": "1578709dfc6b68d5213170b2add43450a19018ecf61d7dc2003a2a587763a9a4"
+    },
+    {
+      "path": "experiments/ch15/15-02/run.py",
+      "sha256": "349d1b3868918b93a2d188153acc48cb74499dff0a4fc2ad8175e5082420f9b4"
+    },
+    {
+      "path": "experiments/ch15/15-03/run.py",
+      "sha256": "be7571cb84021beda51cb7dcbc854a8979201826fea86984f33f6152ac5430b1"
     }
   ]
 }

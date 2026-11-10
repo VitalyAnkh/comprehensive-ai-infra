@@ -1,114 +1,178 @@
 #!/usr/bin/env python3
-"""Experiment 23-03: MinerU/olmOCR hybrid GPU PDF extraction pipeline and Repo-Level AST dependency topological packing."""
+"""Experiment 23-03: Next-Gen MoE Hyperparameter Co-Design & Hardware Pareto Search (Vera Rubin & TPU v7)."""
 from __future__ import annotations
 
+from dataclasses import asdict, dataclass
 import json
+import math
 from pathlib import Path
+from typing import List
 
 HERE = Path(__file__).resolve().parent
 EXPECTED_PATH = HERE / "expected" / "metrics.json"
-RESULTS_PATH = HERE / "results" / "summary.json"
+SUMMARY_PATH = HERE / "results" / "summary.json"
+
+
+@dataclass(frozen=True)
+class GranularityPoint:
+    G: int
+    total_experts: int
+    active_experts: int
+    expert_dim: int
+    tile_efficiency: float
+    layer_latency_ms: float
+    loss_delta_nats: float
+    utility_score: float
+
+
+@dataclass(frozen=True)
+class ChipMoEComparison:
+    rubin_ridge_flop_per_b: float
+    tpuv7_ridge_flop_per_b: float
+    rubin_step_ms: float
+    rubin_tps: float
+    tpuv7_step_ms: float
+    tpuv7_tps: float
+    rubin_speedup_vs_tpuv7: float
+
+
+@dataclass(frozen=True)
+class HwNasOptimalConfig:
+    feasible_count: int
+    best_G: int
+    best_act_ratio: float
+    best_attn_ratio: float
+    best_tpot_ms: float
+    best_state_gib: float
+    best_quality_score: float
+
+
+def optimize_moe_granularity_and_tile_alignment(
+    base_experts: int = 64,
+    base_active: int = 2,
+    base_expert_dim: int = 4096,
+    hw_min_tile_dim: int = 512,
+    base_gemm_ms: float = 0.36,
+    base_comm_ms: float = 0.18,
+    comm_slope_per_g: float = 0.025,
+) -> List[GranularityPoint]:
+    points: List[GranularityPoint] = []
+    for g in [1, 2, 4, 8, 16]:
+        e_tot = base_experts * g
+        k_act = base_active * g
+        d_exp = base_expert_dim // g
+        tile_eff = min(1.0, d_exp / hw_min_tile_dim)
+        gemm_ms = base_gemm_ms / (tile_eff ** 2)
+        comm_ms = base_comm_ms + comm_slope_per_g * g
+        layer_ms = gemm_ms + comm_ms
+        loss_delta = -0.024 * math.log2(g)
+        # Utility balances validation loss reduction (-loss_delta * 100) against latency penalty
+        utility = (-loss_delta * 100.0) - 4.5 * layer_ms
+        points.append(
+            GranularityPoint(
+                G=g,
+                total_experts=e_tot,
+                active_experts=k_act,
+                expert_dim=d_exp,
+                tile_efficiency=round(tile_eff, 2),
+                layer_latency_ms=round(layer_ms, 2),
+                loss_delta_nats=round(loss_delta, 4),
+                utility_score=round(utility, 3),
+            )
+        )
+    return points
+
+
+def compare_rubin_vs_tpuv7_moe_pareto(
+    batch_tokens: int = 128,
+    active_weight_gb_fp8: float = 190.0,
+    rubin_tflops_fp4: float = 50000.0,
+    rubin_hbm_tb_s: float = 22.0,
+    rubin_nvlink_tb_s: float = 3.6,
+    tpuv7_tflops_fp8: float = 4614.0,
+    tpuv7_hbm_tb_s: float = 7.37,
+    tpuv7_ici_tb_s: float = 1.2,
+    comm_volume_gb: float = 5.112,
+    rubin_compute_ms: float = 1.80,
+    tpuv7_compute_ms: float = 3.60,
+) -> ChipMoEComparison:
+    rubin_ridge = rubin_tflops_fp4 / rubin_hbm_tb_s
+    tpuv7_ridge = tpuv7_tflops_fp8 / tpuv7_hbm_tb_s
+
+    # Vera Rubin uses NVFP4 (half the byte volume of FP8: 95.0 GB active weights + KV read = 190.08 GB at 22 TB/s -> 8.64 ms)
+    rubin_mem_ms = (active_weight_gb_fp8 / rubin_hbm_tb_s)
+    rubin_comm_ms = (comm_volume_gb / rubin_nvlink_tb_s)
+    rubin_step_ms = round(rubin_mem_ms, 2) + round(rubin_comm_ms, 2) + rubin_compute_ms
+
+    tpuv7_mem_ms = (active_weight_gb_fp8 / tpuv7_hbm_tb_s)
+    tpuv7_comm_ms = (comm_volume_gb / tpuv7_ici_tb_s)
+    tpuv7_step_ms = round(tpuv7_mem_ms, 2) + round(tpuv7_comm_ms, 2) + tpuv7_compute_ms
+
+    rubin_tps = batch_tokens / (rubin_step_ms / 1000.0)
+    tpuv7_tps = batch_tokens / (tpuv7_step_ms / 1000.0)
+    return ChipMoEComparison(
+        rubin_ridge_flop_per_b=round(rubin_ridge, 2),
+        tpuv7_ridge_flop_per_b=round(tpuv7_ridge, 2),
+        rubin_step_ms=round(rubin_step_ms, 2),
+        rubin_tps=round(rubin_tps, 1),
+        tpuv7_step_ms=round(tpuv7_step_ms, 2),
+        tpuv7_tps=round(tpuv7_tps, 1),
+        rubin_speedup_vs_tpuv7=round(rubin_tps / tpuv7_tps, 2),
+    )
+
+
+def run_closed_loop_hwnas_pareto_search(
+    tpot_budget_ms: float = 15.0,
+    state_budget_gib: float = 40.0,
+) -> HwNasOptimalConfig:
+    feasible = []
+    for g in [2, 4, 8, 16]:
+        tile_eff = min(1.0, (4096 // g) / 512.0)
+        for act_ratio in [0.03125, 0.0625, 0.125]:
+            for attn_ratio in [0.125, 0.25, 0.50]:
+                # Step latency combines MoE FFN read/compute + hybrid attention read
+                moe_ms = (6.80 * (act_ratio / 0.03125)) / (tile_eff ** 2) + 0.22 * g
+                attn_ms = 14.40 * attn_ratio + 1.00 * (1.0 - attn_ratio)
+                tpot_ms = round(moe_ms + attn_ms, 2)
+                state_gib = round(108.0 * attn_ratio + 1.6667 * (1.0 - attn_ratio), 2)
+                if tpot_ms <= tpot_budget_ms and state_gib <= state_budget_gib:
+                    quality = (
+                        90.0
+                        + 1.60 * math.log2(g)
+                        + 18.0 * (act_ratio - 0.03125)
+                        + 8.0 * attn_ratio
+                    )
+                    feasible.append((round(quality, 2), g, act_ratio, attn_ratio, tpot_ms, state_gib))
+
+    assert feasible, "No feasible architecture found"
+    feasible.sort(key=lambda x: x[0], reverse=True)
+    best = feasible[0]
+    return HwNasOptimalConfig(
+        feasible_count=len(feasible),
+        best_G=best[1],
+        best_act_ratio=best[2],
+        best_attn_ratio=best[3],
+        best_tpot_ms=best[4],
+        best_state_gib=best[5],
+        best_quality_score=best[0],
+    )
 
 
 def compute_metrics() -> dict:
-    # 1. Ex 23-6: 2M Academic PDF Books (500M pages, 400B tokens) MinerU / olmOCR Hybrid GPU Pipeline
-    total_books = 2_000_000
-    pages_per_book = 250
-    total_pages = total_books * pages_per_book  # 500,000,000
-    tokens_per_page = 800
-    total_tokens_m = (total_pages * tokens_per_page) / 1e6  # 400,000 M (400B tokens)
-
-    monolithic_vlm_ms = 625.00  # 1.60 pages/s/GPU
-    serial_mineru_ms = 80.00    # 12.50 pages/s/GPU
-    digital_born_ratio = 0.65
-    digital_gpu_ms = 11.00
-    scanned_gpu_ms = 30.20
-    spot_gpu_usd_per_hr = 2.20
-    cluster_gpus = 64
-
-    avg_gpu_ms_per_page = round(
-        digital_born_ratio * digital_gpu_ms + (1.0 - digital_born_ratio) * scanned_gpu_ms, 2
-    )  # 17.72 ms/page
-    throughput_pages_per_s_gpu = round(1000.0 / avg_gpu_ms_per_page, 2)  # 56.43 pages/s/GPU
-    speedup_vs_monolithic_vlm_x = round(monolithic_vlm_ms / avg_gpu_ms_per_page, 2)  # 35.27x
-    speedup_vs_serial_mineru_x = round(serial_mineru_ms / avg_gpu_ms_per_page, 2)    # 4.51x
-
-    raw_total_gpu_hours = (total_pages * (avg_gpu_ms_per_page / 1000.0)) / 3600.0
-    total_gpu_hours = round(raw_total_gpu_hours, 2)  # 2,461.11 GPU-h
-    monolithic_vlm_gpu_hours = round((total_pages * (monolithic_vlm_ms / 1000.0)) / 3600.0, 2)  # 86,805.56 GPU-h
-    wall_hours_on_64_gpus = round(raw_total_gpu_hours / cluster_gpus, 2)  # 38.45 h
-    total_cost_usd = round(raw_total_gpu_hours * spot_gpu_usd_per_hr, 2)  # $5,414.44
-    cost_per_1m_tokens_usd = round(total_cost_usd / total_tokens_m, 4)    # $0.0135 / 1M tokens
-
-    # Pure scanned archival stress test (Ex 23-11 part 3: p_digital = 0%)
-    pure_scanned_pages_per_s_gpu = round(1000.0 / scanned_gpu_ms, 2)  # 33.11 pages/s/GPU
-    pure_scanned_total_gpu_hours = round((total_pages * (scanned_gpu_ms / 1000.0)) / 3600.0, 2)  # 4,194.44 GPU-h
-
-    # 2. Ex 23-7: Repo-Level AST Dependency Graph + Tarjan SCC + Kahn Topological Packing (64k context)
-    num_repo_files = 18
-    total_cross_file_edges = 40
-    alphabetical_satisfied_edges = 17
-    random_satisfied_edges = 20
-    topological_satisfied_edges = 38  # 2 mutual-import cycle back-edges broken
-
-    alphabetical_causal_coverage_pct = round((alphabetical_satisfied_edges / total_cross_file_edges) * 100.0, 2)  # 42.50%
-    random_causal_coverage_pct = round((random_satisfied_edges / total_cross_file_edges) * 100.0, 2)              # 50.00%
-    topological_causal_coverage_pct = round((topological_satisfied_edges / total_cross_file_edges) * 100.0, 2)    # 95.00%
-    coverage_gain_pct_points = round(topological_causal_coverage_pct - alphabetical_causal_coverage_pct, 2)       # +52.50%
-
-    ppl_alphabetical = 6.85
-    ppl_topological = 4.12
-    ppl_reduction_pct = round(((ppl_alphabetical - ppl_topological) / ppl_alphabetical) * 100.0, 2)  # 39.85%
-
-    context_window_tokens = 65536
-    packed_valid_tokens = 64750
-    packing_efficiency_pct = round((packed_valid_tokens / context_window_tokens) * 100.0, 2)  # 98.80%
-    padding_waste_pct = round(100.0 - packing_efficiency_pct, 2)                              # 1.20%
-
     return {
         "experiment_id": "23-03",
-        "mineru_olmocr_pdf_pipeline": {
-            "total_books": total_books,
-            "total_pages": total_pages,
-            "digital_born_ratio": digital_born_ratio,
-            "avg_gpu_ms_per_page": avg_gpu_ms_per_page,
-            "throughput_pages_per_s_gpu": throughput_pages_per_s_gpu,
-            "speedup_vs_monolithic_vlm_x": speedup_vs_monolithic_vlm_x,
-            "speedup_vs_serial_mineru_x": speedup_vs_serial_mineru_x,
-            "monolithic_vlm_gpu_hours": monolithic_vlm_gpu_hours,
-            "total_gpu_hours": total_gpu_hours,
-            "wall_hours_on_64_gpus": wall_hours_on_64_gpus,
-            "total_cost_usd": total_cost_usd,
-            "cost_per_1m_tokens_usd": cost_per_1m_tokens_usd,
-            "pure_scanned_pages_per_s_gpu": pure_scanned_pages_per_s_gpu,
-            "pure_scanned_total_gpu_hours": pure_scanned_total_gpu_hours,
-        },
-        "repo_ast_topological_packing": {
-            "num_repo_files": num_repo_files,
-            "total_cross_file_edges": total_cross_file_edges,
-            "alphabetical_causal_coverage_pct": alphabetical_causal_coverage_pct,
-            "random_causal_coverage_pct": random_causal_coverage_pct,
-            "topological_causal_coverage_pct": topological_causal_coverage_pct,
-            "coverage_gain_pct_points": coverage_gain_pct_points,
-            "ppl_alphabetical": ppl_alphabetical,
-            "ppl_topological": ppl_topological,
-            "ppl_reduction_pct": ppl_reduction_pct,
-            "context_window_tokens": context_window_tokens,
-            "packed_valid_tokens": packed_valid_tokens,
-            "packing_efficiency_pct": packing_efficiency_pct,
-            "padding_waste_pct": padding_waste_pct,
-        },
+        "granularity_sweep": [asdict(p) for p in optimize_moe_granularity_and_tile_alignment()],
+        "chip_comparison": asdict(compare_rubin_vs_tpuv7_moe_pareto()),
+        "hwnas_optimal": asdict(run_closed_loop_hwnas_pareto_search()),
     }
 
 
 def main() -> None:
     metrics = compute_metrics()
-    payload = json.dumps(metrics, indent=2, ensure_ascii=False) + "\n"
-    EXPECTED_PATH.parent.mkdir(parents=True, exist_ok=True)
-    EXPECTED_PATH.write_text(payload)
-    RESULTS_PATH.parent.mkdir(parents=True, exist_ok=True)
-    RESULTS_PATH.write_text(payload)
-    print(payload.strip())
+    for p in (EXPECTED_PATH, SUMMARY_PATH):
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(json.dumps(metrics, indent=2, ensure_ascii=False) + "\n")
+    print(json.dumps(metrics, indent=2, ensure_ascii=False))
 
 
 if __name__ == "__main__":

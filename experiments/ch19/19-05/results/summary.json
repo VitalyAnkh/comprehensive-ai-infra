@@ -1,0 +1,28 @@
+{
+  "experiment_id": "19-05",
+  "barge_in_kv_rollback": {
+    "server_gen_frame": 65,
+    "client_playback_frame": 54,
+    "unplayed_lookahead_frames": 11,
+    "unplayed_lookahead_ms": 880.0,
+    "rolled_back_kv_tokens": 187,
+    "resume_frame_index": 55,
+    "kv_pointer_rollback_ms": 0.12
+  },
+  "interleaved_video_audio_pacing": {
+    "naive_peak_frame_ms": 83.5,
+    "deadline_violated_naive": true,
+    "vis_tokens_per_tick": 32,
+    "interleaved_peak_frame_ms": 20.5,
+    "peak_frame_reduction_x": 4.07
+  },
+  "one_hour_acoustic_eviction": {
+    "total_frames": 45000,
+    "full_audio_text_tokens": 765000,
+    "full_multimodal_tokens": 1686600,
+    "retained_audio_text_tokens": 136750,
+    "retained_multimodal_tokens": 139310,
+    "audio_kv_saving_pct": 82.12,
+    "multimodal_kv_saving_pct": 91.74
+  }
+}

@@ -1,102 +1,98 @@
 #!/usr/bin/env python3
-"""Experiment 23-01: 100 PB CommonCrawl 7-stage funnel, MinHash LSH (b=16, r=8) S-curve, and 64-GPU NeMo Curator connected components."""
-from __future__ import annotations
-
+"""Experiment 23-01: Beyond-Chinchilla Lifecycle Allocation, K192 Preregistration Audit & NeuSight Calibration."""
 import json
-from pathlib import Path
+import pathlib
+import statistics
 
-HERE = Path(__file__).resolve().parent
-EXPECTED_PATH = HERE / "expected" / "metrics.json"
-RESULTS_PATH = HERE / "results" / "summary.json"
-
-
-def minhash_lsh_prob(s: float, b: int = 16, r: int = 8) -> float:
-    return 1.0 - (1.0 - (s ** r)) ** b
+HERE = pathlib.Path(__file__).resolve().parent
+RESULTS_DIR = HERE / "results"
 
 
-def compute_metrics() -> dict:
-    # 1. 100 PB CommonCrawl 7-Stage Curation Funnel (Ex 23-1)
-    raw_warc_pb = 100.0
-    after_html_extract_pb = 18.0       # Trafilatura / Resiliparse (18.0% byte yield)
-    after_langid_url_pb = 13.5         # FastText LangID + URL blocklist (75.0% retained)
-    after_heuristic_pb = 9.0           # Gopher / C4 / FineWeb line rules (66.67% retained)
-    after_fuzzy_dedup_pb = 3.0         # Global MinHash + Suffix Array (33.33% unique retained)
-    after_quality_tier_pb = 2.424      # Model-based quality classifier + synthetic rephrasing
-    after_decontam_pb = 2.40           # 13-gram + dense embedding decontamination
+def compute_beyond_chinchilla():
+    # Compare 32B Chinchilla-baseline vs 8B over-trained (20T tokens)
+    c_train_32b_usd = 600_000.0
+    c_inf_32b_per_m_usd = 0.45
+    c_train_8b_usd = 1_500_000.0
+    c_inf_8b_per_m_usd = 0.15
 
-    snapshots_merged = 25
-    tokens_per_snapshot_t = 0.60
-    final_curated_tokens_t = round(snapshots_merged * tokens_per_snapshot_t, 2)  # 15.0 T tokens
-    overall_warc_byte_yield_pct = round((after_decontam_pb / raw_warc_pb) * 100.0, 2)  # 2.40%
-    extracted_text_token_yield_pct = round((after_decontam_pb / after_html_extract_pb) * 100.0, 2)  # 13.33%
+    delta_train_usd = c_train_8b_usd - c_train_32b_usd  # 900,000 USD
+    delta_inf_per_m_usd = c_inf_32b_per_m_usd - c_inf_8b_per_m_usd  # 0.30 USD / M tokens
+    breakeven_m_tokens = delta_train_usd / delta_inf_per_m_usd  # 3,000,000 M = 3.0T tokens
+    breakeven_t_tokens = breakeven_m_tokens / 1e6
 
-    # 2. MinHash + LSH (M=128, b=16, r=8) S-Curve Collision Probability (Ex 23-2)
-    b_bands = 16
-    r_rows = 8
-    num_hashes_m = b_bands * r_rows  # 128
-    threshold_s_star = round((1.0 / b_bands) ** (1.0 / r_rows), 4)  # 0.7071
-    prob_at_s_050 = round(minhash_lsh_prob(0.50, b_bands, r_rows) * 100.0, 2)  # 6.07%
-    prob_at_s_070 = round(minhash_lsh_prob(0.70, b_bands, r_rows) * 100.0, 2)  # 61.33%
-    prob_at_s_080 = round(minhash_lsh_prob(0.80, b_bands, r_rows) * 100.0, 2)  # 94.70%
-    prob_at_s_090 = round(minhash_lsh_prob(0.90, b_bands, r_rows) * 100.0, 2)  # 99.99%
-
-    # 3. 5 Billion Docs Distributed GPU MinHash Shuffle & cuGraph Connected Components (Ex 23-3)
-    num_docs = 5_000_000_000
-    bytes_per_hash = 4
-    sig_bytes_per_doc = num_hashes_m * bytes_per_hash  # 512 B/doc
-    total_signature_gb = round(num_docs * sig_bytes_per_doc / 1e9, 2)  # 2560.0 GB (2.56 TB)
-    num_gpus = 64
-    all_to_all_shuffle_gb = round(total_signature_gb * (num_gpus - 1) / num_gpus, 2)  # 2520.0 GB
-
-    cpu_cluster_hours = 148.0
-    gpu_curator_hours = 1.85
-    dedup_speedup_x = round(cpu_cluster_hours / gpu_curator_hours, 2)  # 80.0x
-    cpu_cloud_cost_usd = 42600.0
-    gpu_cloud_cost_usd = 9472.0
-    tco_reduction_x = round(cpu_cloud_cost_usd / gpu_cloud_cost_usd, 2)  # 4.50x
+    daily_tokens = 2.0e10  # 20B tokens/day = 20,000 M tokens/day
+    breakeven_days = (breakeven_m_tokens * 1e6) / daily_tokens  # 150.0 days
+    two_year_m_tokens = (730 * daily_tokens) / 1e6  # 14,600,000 M tokens
+    net_savings_2yr_usd = two_year_m_tokens * delta_inf_per_m_usd - delta_train_usd
 
     return {
-        "experiment_id": "23-01",
-        "curation_funnel": {
-            "raw_warc_pb": raw_warc_pb,
-            "after_html_extract_pb": after_html_extract_pb,
-            "after_fuzzy_dedup_pb": after_fuzzy_dedup_pb,
-            "after_decontam_pb": after_decontam_pb,
-            "final_curated_tokens_t": final_curated_tokens_t,
-            "overall_warc_byte_yield_pct": overall_warc_byte_yield_pct,
-            "extracted_text_token_yield_pct": extracted_text_token_yield_pct,
-        },
-        "minhash_lsh_scurve": {
-            "num_hashes_m": num_hashes_m,
-            "b_bands": b_bands,
-            "r_rows": r_rows,
-            "threshold_s_star": threshold_s_star,
-            "prob_at_s_050_pct": prob_at_s_050,
-            "prob_at_s_070_pct": prob_at_s_070,
-            "prob_at_s_080_pct": prob_at_s_080,
-            "prob_at_s_090_pct": prob_at_s_090,
-        },
-        "gpu_fuzzy_dedup_cluster": {
-            "num_docs": num_docs,
-            "sig_bytes_per_doc": sig_bytes_per_doc,
-            "total_signature_gb": total_signature_gb,
-            "all_to_all_shuffle_gb": all_to_all_shuffle_gb,
-            "cpu_cluster_hours": cpu_cluster_hours,
-            "gpu_curator_hours": gpu_curator_hours,
-            "dedup_speedup_x": dedup_speedup_x,
-            "tco_reduction_x": tco_reduction_x,
-        },
+        "delta_train_usd": round(delta_train_usd, 2),
+        "delta_inf_per_m_usd": round(delta_inf_per_m_usd, 4),
+        "breakeven_t_tokens": round(breakeven_t_tokens, 4),
+        "breakeven_days": round(breakeven_days, 2),
+        "net_savings_2yr_usd": round(net_savings_2yr_usd, 2),
     }
 
 
-def main() -> None:
-    metrics = compute_metrics()
-    payload = json.dumps(metrics, indent=2, ensure_ascii=False) + "\n"
-    EXPECTED_PATH.parent.mkdir(parents=True, exist_ok=True)
-    EXPECTED_PATH.write_text(payload)
-    RESULTS_PATH.parent.mkdir(parents=True, exist_ok=True)
-    RESULTS_PATH.write_text(payload)
-    print(payload.strip())
+def audit_k192_preregistration():
+    paired_ratios = [
+        0.7661106575310103,
+        0.6374560811931168,
+        0.7039580198331323,
+        0.9502700026584732,
+        0.9372772983445644,
+        0.3734699482077529,
+        0.5814393631102742,
+        0.6823231258495099,
+        0.653319634253581,
+        0.7242621041727667,
+    ]
+    median_r = round(statistics.median(paired_ratios), 6)
+    interval_low, interval_high = 0.70, 1.00
+    in_interval = interval_low <= median_r <= interval_high
+    status = "supported_in_scope" if in_interval else "refuted_in_scope"
+    return {
+        "count": len(paired_ratios),
+        "paired_ratios": paired_ratios,
+        "median_r": median_r,
+        "preregistered_interval": [interval_low, interval_high],
+        "in_interval": in_interval,
+        "verdict": status,
+    }
+
+
+def audit_neusight_stage_calibration():
+    pred_ms = [8.0, 2.0]
+    actual_ms = [6.0, 4.0]
+    pred_total = sum(pred_ms)
+    actual_total = sum(actual_ms)
+    agg_ape = abs(pred_total - actual_total) / actual_total
+    stage_apes = [round(abs(p - a) / a, 6) for p, a in zip(pred_ms, actual_ms)]
+    halving_stage1_pred_ms = pred_ms[0] / 2.0 + pred_ms[1]
+    halving_stage1_actual_ms = actual_ms[0] / 2.0 + actual_ms[1]
+    return {
+        "predicted_stage_ms": pred_ms,
+        "actual_stage_ms": actual_ms,
+        "aggregate_ape": round(agg_ape, 6),
+        "stage_apes": stage_apes,
+        "stage2_predicted_share": round(pred_ms[1] / pred_total, 4),
+        "stage2_actual_share": round(actual_ms[1] / actual_total, 4),
+        "halving_stage1_predicted_total_ms": halving_stage1_pred_ms,
+        "halving_stage1_actual_total_ms": halving_stage1_actual_ms,
+    }
+
+
+def main():
+    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    payload = {
+        "experiment": "23-01",
+        "beyond_chinchilla": compute_beyond_chinchilla(),
+        "k192_preregistration": audit_k192_preregistration(),
+        "neusight_stage_calibration": audit_neusight_stage_calibration(),
+    }
+    out_path = RESULTS_DIR / "lifecycle_and_preregistration.json"
+    out_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
+    print(f"Wrote {out_path}")
 
 
 if __name__ == "__main__":

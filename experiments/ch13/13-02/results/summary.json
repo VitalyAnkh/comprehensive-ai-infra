@@ -1,0 +1,32 @@
+{
+  "experiment_id": "13-02",
+  "curation_funnel": {
+    "raw_warc_pb": 100.0,
+    "after_html_extract_pb": 18.0,
+    "after_fuzzy_dedup_pb": 3.0,
+    "after_decontam_pb": 2.4,
+    "final_curated_tokens_t": 15.0,
+    "overall_warc_byte_yield_pct": 2.4,
+    "extracted_text_token_yield_pct": 13.33
+  },
+  "minhash_lsh_scurve": {
+    "num_hashes_m": 128,
+    "b_bands": 16,
+    "r_rows": 8,
+    "threshold_s_star": 0.7071,
+    "prob_at_s_050_pct": 6.07,
+    "prob_at_s_070_pct": 61.33,
+    "prob_at_s_080_pct": 94.7,
+    "prob_at_s_090_pct": 99.99
+  },
+  "gpu_fuzzy_dedup_cluster": {
+    "num_docs": 5000000000,
+    "sig_bytes_per_doc": 512,
+    "total_signature_gb": 2560.0,
+    "all_to_all_shuffle_gb": 2520.0,
+    "cpu_cluster_hours": 148.0,
+    "gpu_curator_hours": 1.85,
+    "dedup_speedup_x": 80.0,
+    "tco_reduction_x": 4.5
+  }
+}

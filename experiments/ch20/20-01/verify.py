@@ -12,28 +12,22 @@ def main() -> None:
     expected = json.loads(Path(EXPECTED_PATH).read_text())
     results = json.loads(Path(RESULTS_PATH).read_text())
     assert actual == expected == results, f"Mismatch:\nactual={actual}\nexpected={expected}\nresults={results}"
-    assert actual["cluster_reliability_100k"]["llama3_16k_interruptions_54d"] == 419
-    assert actual["cluster_reliability_100k"]["mtbf_100k_minutes"] == 30.41
-    assert actual["cluster_reliability_100k"]["ettr_traditional_pct"] == 63.22
-    assert actual["cluster_reliability_100k"]["ettr_fast_pct"] == 92.34
-    assert actual["cluster_reliability_100k"]["ettr_traditional_linear_pct"] == 49.83
-    assert actual["cluster_reliability_100k"]["ettr_fast_linear_pct"] == 92.55
-    assert actual["cluster_reliability_100k"]["ettr_traditional_exact_pct"] == 58.92
-    assert actual["cluster_reliability_100k"]["ettr_fast_exact_pct"] == 92.69
-    assert actual["cluster_reliability_100k"]["min_spares_999"] == 40
-    assert actual["abft_sdc_defense"]["abft_overhead_4096_pct"] < 0.5
-    assert actual["abft_sdc_defense"]["detected_sdc_coord"] == [2, 3]
-    assert actual["straggler_and_benchmark_science"]["stripe_mean_ms"] == 1.25
-    assert actual["straggler_and_benchmark_science"]["stripe_max_ms"] == 2.0
-    assert actual["straggler_and_benchmark_science"]["deadlock_cycle_detected"] is True
-    assert actual["straggler_and_benchmark_science"]["mean_speedup_cand_a"] == 5.25
-    assert actual["straggler_and_benchmark_science"]["equal_freq_time_cand_a_us"] == 210.0
-    assert actual["straggler_and_benchmark_science"]["aabb_means_us"] == [105.0, 115.0]
-    assert actual["straggler_and_benchmark_science"]["abba_means_us"] == [115.0, 105.0]
-    assert actual["straggler_and_benchmark_science"]["plan_a_at_1_3_ms"] == 109.0
-    assert actual["straggler_and_benchmark_science"]["plan_b_at_1_3_ms"] == 105.6
-    assert actual["straggler_and_benchmark_science"]["telemetry_drain_sec"] == 76.92
-    assert actual["straggler_and_benchmark_science"]["canary_rollback_on_190ms"] is True
+    assert actual["realtime_control_and_vlalagbench"]["blind_drift_cloud_120ms_mm"] == 180.0
+    assert actual["realtime_control_and_vlalagbench"]["blind_drift_sys1_5ms_mm"] == 7.5
+    assert actual["realtime_control_and_vlalagbench"]["blind_drift_05ms_200ms_mm"] == 100.0
+    assert actual["realtime_control_and_vlalagbench"]["newest_pred_weight_share"] == 0.1192
+    assert actual["realtime_control_and_vlalagbench"]["oldest_pred_weight_share_k6"] == 0.0954
+    assert actual["realtime_control_and_vlalagbench"]["newest_pred_weight_share_k6"] == 0.2594
+    assert actual["realtime_control_and_vlalagbench"]["dynamic_success_120ms_pct"] == 32.0
+    assert actual["dual_system_thor_isolation"]["sys1_wcet_mig_isolated_ms"] == 4.1
+    assert actual["gpu_native_sim_4096"]["cpu_gpu_pcie_bw_saved_gb_s"] == 24.22
+    assert actual["gpu_native_sim_4096"]["total_sim_hbm_mib"] == 8448.0
+    assert actual["gpu_native_sim_4096"]["total_sim_hbm_gib"] == 8.25
+    assert actual["gpu_native_sim_4096"]["cpu_gpu_pcie_bw_saved_tier_b_gb_s"] == 43.39
+    assert actual["gpu_native_sim_4096"]["total_sim_hbm_tier_b_gib"] == 25.52
+    assert actual["shadow_mode_edge_triage"]["raw_tb_per_day"] == 2.592
+    assert actual["shadow_mode_edge_triage"]["triage_gb_per_day"] == 12.96
+    assert actual["shadow_mode_edge_triage"]["compression_ratio_x"] == 200.0
     print("Experiment 20-01 verified successfully.")
 
 

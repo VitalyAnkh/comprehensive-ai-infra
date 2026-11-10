@@ -12,19 +12,17 @@ def main() -> None:
     expected = json.loads(Path(EXPECTED_PATH).read_text())
     results = json.loads(Path(RESULTS_PATH).read_text())
     assert actual == expected == results, f"Mismatch:\nactual={actual}\nexpected={expected}\nresults={results}"
-    assert actual["avatar_lipsync_alignment_ex22_6"]["raw_steady_skew_ms"] == 44.0
-    assert actual["avatar_lipsync_alignment_ex22_6"]["aligned_steady_skew_ms"] == 18.0
-    assert actual["avatar_lipsync_alignment_ex22_6"]["aligned_p99_skew_ms"] == 33.0
-    assert actual["avatar_lipsync_alignment_ex22_6"]["skew_reduction_pct"] == 59.09
-    assert actual["avatar_lipsync_alignment_ex22_6"]["avatar_ttfa_ms"] == 190.0
-    assert actual["global_edge_sfu_mesh_ex22_7"]["net_edge_ms"] == 98.5
-    assert actual["global_edge_sfu_mesh_ex22_7"]["net_reduction_pct"] == 43.71
-    assert actual["global_edge_sfu_mesh_ex22_7"]["ttfa_edge_ms"] == 181.5
-    assert actual["global_edge_sfu_mesh_ex22_7"]["ttfa_speedup_x"] == 1.67
-    assert actual["global_edge_sfu_mesh_ex22_7"]["bw_compression_x"] == 43.64
-    assert actual["global_edge_sfu_mesh_ex22_7"]["bw_saving_pct"] == 97.71
-    assert actual["exercises_22_11_and_22_12"]["p11_aligned_steady_skew_ms"] == 16.0
-    assert actual["exercises_22_11_and_22_12"]["p12_ttfa_edge_ms"] == 185.5
+    assert actual["tokamak_sub_ms_rl_control"]["unopt_total_us"] == 435.0
+    assert actual["tokamak_sub_ms_rl_control"]["opt_total_us"] == 68.5
+    assert actual["tokamak_sub_ms_rl_control"]["speedup_x"] == 6.35
+    assert actual["tokamak_sub_ms_rl_control"]["budget_util_pct"] == 34.25
+    assert actual["tokamak_sub_ms_rl_control"]["p999_latency_us"] == 74.0
+    assert actual["tokamak_sub_ms_rl_control"]["actuation_margin_ms"] == 16.5
+    assert actual["single_cell_csr_sparse_atlas"]["dense_storage_gb"] == 4096.0
+    assert actual["single_cell_csr_sparse_atlas"]["csr_storage_gb"] == 615.2
+    assert actual["single_cell_csr_sparse_atlas"]["storage_compression_x"] == 6.66
+    assert actual["single_cell_csr_sparse_atlas"]["attn_flop_reduction_x"] == 177.78
+    assert actual["single_cell_csr_sparse_atlas"]["e2e_training_speedup_x"] == 20.0
     print("Experiment 22-03 verified successfully.")
 
 

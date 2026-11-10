@@ -1,33 +1,29 @@
 {
   "experiment_id": "18-02",
-  "distrs_and_heavy_tail": {
-    "unconditional_mean_s": 10.9,
-    "naive_rem_10s": 0.9,
-    "cond_rem_10s": 90.0,
-    "estimation_error_ratio": 100.0,
-    "sunk_work_tokens": 216000,
-    "trimodal_mean_s": 14.6,
-    "trimodal_cond_rem_15s": 50.0,
-    "trimodal_cond_rem_25s": 175.0
+  "firecracker_cow_and_mcts_tree": {
+    "cold_boot_ms": 1500.0,
+    "cow_fork_ms": 12.0,
+    "fork_speedup_x": 125.0,
+    "mcts_branches": 16,
+    "full_clone_ram_mib": 8192.0,
+    "cow_tree_ram_mib": 896.0,
+    "ram_saving_pct": 89.06,
+    "total_sync_rollback_ms": 8.5
   },
-  "geo_distributed_async_rl": {
-    "total_tokens": 16777216,
-    "kv_payload_gb": 2473.9,
-    "compact_payload_mb": 167.77216,
-    "compact_payload_mib": 160.0,
-    "uplink_compression_ratio": 14745.6,
-    "kv_upload_sec": 1979.1,
-    "compact_upload_ms": 134.2,
-    "fp8_delta_sync_sec": 6.4,
-    "seq_geom_is_ratio": 1.0833
+  "locked_case_i19_telemetry_drain": {
+    "telemetry_rate_kib_s": 400.0,
+    "buffer_cap_mib": 32.0,
+    "time_to_overflow_sec": 81.92,
+    "outage_duration_sec": 120.0,
+    "accumulated_mib": 46.875,
+    "spilled_to_outbox_mib": 14.875,
+    "net_drain_rate_kib_s": 624.0,
+    "drain_time_sec": 76.92
   },
-  "prm_cow_tree_search": {
-    "full_copy_token_slots": 81920,
-    "cow_shared_token_slots": 12288,
-    "cow_memory_saving_pct": 85.0,
-    "full_copy_gib": 11.25,
-    "cow_shared_gib": 1.6875,
-    "serial_tot_sec": 40.0,
-    "spec_tot_sec": 29.6
+  "mcp_dynamic_tool_rag": {
+    "full_schema_tokens": 180000,
+    "rag_schema_tokens": 1440,
+    "schema_reduction_pct": 99.2,
+    "schema_compression_x": 125.0
   }
 }

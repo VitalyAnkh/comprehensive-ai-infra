@@ -1,40 +1,25 @@
 {
+  "chapter": "ch20",
   "sources": [
     {
-      "path": "manuscripts/ch20/build.py",
-      "sha256": "34b5658971e0b1c86f9051bf1e59ec20c62fc5e95df9a34401e89f607d3ae109"
-    },
-    {
-      "path": "manuscripts/ch20/figure-data.json",
-      "sha256": "8a9702836b61f17953cdf6011a875b5e70f5da7a3535395b88e746eb83f9a887"
+      "path": "manuscripts/20-具身智能与物理仿真.md",
+      "sha256": "f622cf659ccd60da72e1d7860db5c97bfbd3656b36d3a9f2a4bb47f9d6c9216b"
     },
     {
       "path": "manuscripts/ch20/figure-index.json",
-      "sha256": "f21f47f6f21a9156541d663028b8e5e2edd2bf6c708da74a3b8752f207634e0a"
-    },
-    {
-      "path": "case-studies/collective-paths-and-diagnosis.md",
-      "sha256": "6b6e75e04cc76dffb7ef114a3d0dd3aa2b084b58f8527396432ad57ca4513e99"
-    },
-    {
-      "path": "case-studies/optimization-evaluation-and-deployment.md",
-      "sha256": "3bc4fcaa406a7413546dff1f7545ef1463cc832bea955583db299d2132dd1031"
+      "sha256": "a901291684c6808901c7fd66be23ea0ed6f84af4f4a10881312b97edb2922eed"
     },
     {
       "path": "experiments/ch20/20-01/run.py",
-      "sha256": "4499460335404024bb1fc16018696cb85d0e39e76cc90332dfe6e3806db18350"
+      "sha256": "319559845df9255e27198b82fcf2ca7cce973c71caceb81dc7bccd7d21118438"
     },
     {
       "path": "experiments/ch20/20-02/run.py",
-      "sha256": "375f09a9ed4bb7efadadedb5e8ac3a099ceacee415205d72083a0676b4d608b9"
+      "sha256": "069aa6127f1f0acd922ebf6d4cd5d5738665dacd84e3319b13c7163be1a656d2"
     },
     {
       "path": "experiments/ch20/20-03/run.py",
-      "sha256": "8afb8a162086b6cbc86692dff03442a30993451c2d6253cfb57eadb08b645e4a"
-    },
-    {
-      "path": "manuscripts/20-十万卡集群可靠性工程、静默数据损坏（SDC）防御与基准评测科学.md",
-      "sha256": "9417928c5dc886c4edd494ad12ec68b3a3768e6e4b4f2503419ee8305ff46710"
+      "sha256": "67d1f80609aef14717bf294a0403088e6c5ab3285bc4d478b5dc8956991a02f9"
     }
   ]
 }

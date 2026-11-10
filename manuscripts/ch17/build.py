@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build Chapter 17 figures, locked calculations, and offline HTML preview."""
+"""Build Chapter 18 figures, locked calculations, and offline HTML preview."""
 import base64
 import hashlib
 import json
@@ -30,360 +30,362 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(raw).hexdigest()
 
 
-def fig_17_1_1d_vs_3d_tokens(ex: Exporter):
+def fig_18_1_ppo_vs_grpo(ex: Exporter):
     fig, ax = canvas(3.75)
-    card(ax, 0.02, 0.04, 0.46, 0.92, '一维语言模型（1D LLM）', color='blue', title_size=11)
-    box(ax, 0.04, 0.66, 0.42, 0.16, '一维离散词元序列 L\n典型窗口 4K–128K 词元', 'blue', size=11)
-    box(ax, 0.04, 0.43, 0.42, 0.16, '因果下三角掩码（Causal）\nPrefill 1 次 + Decode 逐词元', 'teal', size=11)
-    box(ax, 0.04, 0.20, 0.42, 0.16, 'Decode 阶段受限于 HBM 带宽\n算术强度 ~1–4 FLOP/B', 'purple', size=11)
+    card(ax, 0.02, 0.04, 0.46, 0.92, '经典 PPO 四模型架构', color='orange', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, 'Actor（16Ψ）+ Critic（16Ψ）\n双训练模型均含优化器状态', 'orange', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, 'Ref（2Ψ）+ Reward（2Ψ）\n双前向打分模型常驻显存', 'orange', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '总状态 36Ψ（32B 占 1,152 GB）\n跨四套异构并行图频繁通信', 'orange', size=11)
     arrow(ax, (0.25, 0.66), (0.25, 0.59))
     arrow(ax, (0.25, 0.43), (0.25, 0.36))
-    text(ax, 0.25, 0.10, '一维自回归：访存墙主导', size=11, ha='center', weight='bold', color=BORDER_COL['blue'])
+    text(ax, 0.25, 0.10, 'Critic 吃掉近半训练显存与算力', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
 
-    card(ax, 0.52, 0.04, 0.46, 0.92, '三维视频生成（3D DiT）', color='orange', title_size=11)
-    box(ax, 0.54, 0.66, 0.42, 0.16, '10s·24fps·1080p 视频潜空间\n60×68×120 = 489,600 词元', 'orange', size=11)
-    box(ax, 0.54, 0.43, 0.42, 0.16, '三维全双向自注意力 O(N²d)\n单步计算量超文本百倍', 'orange', size=11)
-    box(ax, 0.54, 0.20, 0.42, 0.16, '还需迭代去噪 K = 20–50 步\n尾端叠加 3D VAE 显存洪峰', 'purple', size=11)
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'GRPO / DAPO 组相对优势', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '彻底砍掉 Critic 与神经 RM\n仅留 Actor（16Ψ）+ Ref（2Ψ）', 'teal', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '每提示词组采样 G=8–64 条轨迹\n用组内均值/标准差算相对优势', 'blue', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '模型状态省 50%（降至 576 GB）\n但自回归 Rollout 膨胀 G 倍', 'purple', size=11)
     arrow(ax, (0.75, 0.66), (0.75, 0.59))
     arrow(ax, (0.75, 0.43), (0.75, 0.36))
-    text(ax, 0.75, 0.10, '三维迭代去噪：算力与通信墙', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
-    ex.save(fig, 'ch17-1d-llm-vs-3d-spatiotemporal-dit-tokens')
+    text(ax, 0.75, 0.10, '省掉训练态显存，压力转嫁 Rollout', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch18-ppo-four-model-vs-grpo-memory-ledger')
 
 
-def fig_17_2_anyres_navit_qwen3vl(ex: Exporter):
+def fig_18_2_rollout_dominance(ex: Exporter):
     fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, 'AnyRes 动态切片与 Qwen3-VL-4B 视觉词元生成（算例 17-1）', color='blue')
+    card(ax, 0.02, 0.50, 0.96, 0.46, 'RLVR（可验证奖励强化学习）单步迭代时间线分解', color='blue')
     stages = [
-        (0.04, 0.58, 0.28, 0.24, '① 图像网格切片\n640×640 像素\n切成 1600 块', 'blue'),
-        (0.36, 0.58, 0.28, 0.24, '② 2×2 空间合并\n1600 / 4 = 400 词元\nNaViT 变长打包', 'teal'),
-        (0.68, 0.58, 0.28, 0.24, '③ DeepStack 特征\n末层+3 中间层\n[400, 10240] BF16', 'purple'),
+        (0.03, 0.58, 0.36, 0.24, '① 自回归 Rollout 生成\n长思维链 16K–64K 词元\n占单步墙钟 70%–90%', 'orange'),
+        (0.42, 0.58, 0.26, 0.24, '② 沙箱规则验证\n代码单测 / Lean4\n占单步 5%–15%', 'teal'),
+        (0.71, 0.58, 0.26, 0.24, '③ Ref 前向 + 训练\n计算密集高 MFU\n占单步 10%–20%', 'blue'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.39, 0.70), (0.42, 0.70))
+    arrow(ax, (0.68, 0.70), (0.71, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '为何 Rollout 主导 RLVR 墙钟时间？（算术强度反差）', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '阶段 ①：Decode 逐词元生成\n每吐 1 词元需搬移全量权重与 KV\n算术强度极低，卡在 HBM 带宽', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '阶段 ③：Prefill 与反向传播\n全序列并行矩阵乘吃满 Tensor 核\n同词元量吞吐比 Decode 快 10–30x', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '加速 RLVR 的核心在于削减长尾 Rollout 气泡与提升生成吞吐', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch18-rlvr-iteration-timeline-rollout-dominance')
+
+
+def fig_18_3_verl_hybrid_engine(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, 'veRL（HybridFlow）3D-HybridEngine 训推共置零冗余重分片', color='teal')
+    stages = [
+        (0.04, 0.58, 0.28, 0.24, '① 训练态 3D 切分\nTP×PP×DP 并行\nZeRO 分片省显存', 'blue'),
+        (0.36, 0.58, 0.28, 0.24, '② 微分组 AllGather\n仅在小重组域 g 内\n微秒级重组推理权', 'teal'),
+        (0.68, 0.58, 0.28, 0.24, '③ 生成态并发引擎\n小 TP 跑多路实例\n生成完释放完整权', 'purple'),
     ]
     for x, y, w, h, label, role in stages:
         box(ax, x, y, w, h, label, role, size=11)
     arrow(ax, (0.32, 0.70), (0.36, 0.70))
     arrow(ax, (0.64, 0.70), (0.68, 0.70))
 
-    card(ax, 0.02, 0.03, 0.96, 0.42, '跨阶段传输账本：编码器输出（EC）vs. 36 层主干 KV 缓存', color='teal')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '视觉编码器输出（EC 缓存）\n400×10240×2 B = 8,192,000 B\n精确体积仅 7.8125 MiB', 'teal', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '36 层 LLM 主干 KV 缓存\n400×147,456 B = 58,982,400 B\n体积膨胀至 56.25 MiB（7.2x）', 'orange', size=11)
+    card(ax, 0.02, 0.03, 0.96, 0.42, '消除训练态与推理态的并行拓扑冲突（零双份权重常驻）', color='blue')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '朴素共置或全网广播重分片\n要么常驻两份权重撑爆显存\n要么跨全集群广播阻塞数秒', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '3D-HybridEngine 正交子网格对齐\n重分片通信局限在节点内 NVLink\n切换耗时压低 70%–90%', 'teal', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '在 E→P 边界传输或缓存 EC 比在 P→D 边界搬移 KV 省 7.2 倍容量', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch17-anyres-navit-dynamic-image-tiling')
+    text(ax, 0.50, 0.06, '用瞬态 NVLink 组内 AllGather 取代常驻冗余副本', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch18-verl-3d-hybrid-engine-zero-redundancy-reshard')
 
 
-def fig_17_3_3d_vae_tiling(ex: Exporter):
+def fig_18_4_colocated_vs_disagg(ex: Exporter):
     fig, ax = canvas(3.75)
-    card(ax, 0.02, 0.04, 0.46, 0.92, '未分块全量 3D VAE 解码', color='orange', title_size=11)
-    box(ax, 0.04, 0.66, 0.42, 0.16, '潜变量 [60, 135, 240] 经\n4×8×8 3D 因果卷积上采样', 'orange', size=11)
-    box(ax, 0.04, 0.43, 0.42, 0.16, '全分辨率 240×1080×1920\n128 通道 FP16 达 118.65 GiB', 'orange', size=11)
-    box(ax, 0.04, 0.20, 0.42, 0.16, '远超单张 80 GB 显存上限\n在去噪最后一步触发 OOM', 'orange', size=11)
+    card(ax, 0.02, 0.04, 0.46, 0.92, '训推共置（veRL 同池切换）', color='blue', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '同一批同构 GPU 分时复用\n先跑 Rollout 再切回 Learner', 'blue', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '优势：无跨池全量权重搬移\n适合同构算力与中等长度生成', 'teal', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '局限：长尾生成期全集群陪等\n且推理/训练阶段互斥无法重叠', 'orange', size=11)
     arrow(ax, (0.25, 0.66), (0.25, 0.59))
     arrow(ax, (0.25, 0.43), (0.25, 0.36))
-    text(ax, 0.25, 0.10, '像素还原阶段激活洪峰致命', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+    text(ax, 0.25, 0.10, '时分复用：受制于同步长尾气泡', size=11, ha='center', weight='bold', color=BORDER_COL['blue'])
 
-    card(ax, 0.52, 0.04, 0.46, 0.92, '时空分块解码（Tiled VAE）', color='teal', title_size=11)
-    box(ax, 0.54, 0.66, 0.42, 0.16, '空间 4×4 分块 + 16 帧滑窗\n保留因果时间卷积历史缓存', 'teal', size=11)
-    box(ax, 0.54, 0.43, 0.42, 0.16, '分块边界加 12.5% 重叠 Halo\n余弦羽化融合消除接缝伪影', 'blue', size=11)
-    box(ax, 0.54, 0.20, 0.42, 0.16, '单缓冲激活降至 0.63 GiB\n显存峰值压缩超 90 倍', 'purple', size=11)
+    card(ax, 0.52, 0.04, 0.46, 0.92, '训推分离与错峰池化（Weave）', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '推理池(H20)与训练池(H800)\n按算术强度物理分池扩展', 'teal', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, 'Weave (OSDI 26) 互补错峰\nA(360/120s) 配 B(120/360s)', 'blue', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '峰值仅 216 H20 + 152 H800\n异步流水消除跨阶段空等', 'purple', size=11)
     arrow(ax, (0.75, 0.66), (0.75, 0.59))
     arrow(ax, (0.75, 0.43), (0.75, 0.36))
-    text(ax, 0.75, 0.10, '以 Halo 重算换百倍省显存', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
-    ex.save(fig, 'ch17-3d-causal-vae-memory-spike-and-tiling')
+    text(ax, 0.75, 0.10, '空分异步 + 多作业互补压平波峰', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch18-colocated-vs-disaggregated-rl-architecture')
 
 
-def fig_17_4_tp_ulysses_ring(ex: Exporter):
+def fig_18_5_long_cot_bubble(ex: Exporter):
+    fig, ax = canvas(3.75)
+    card(ax, 0.02, 0.04, 0.46, 0.92, '长思维链（Long-CoT）幂律分布', color='orange', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '简单数学/代码题 1K–2K 词元\n在首段 15% 时间内快速结束', 'teal', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '困难反思回溯轨迹达 32K–64K\n仅占批次 5% 却拖延 10 倍时长', 'orange', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '批次完成时间由最慢轨迹决定\nT_batch = max T_decode(L_i)', 'orange', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '5% 极长轨迹主导 80% 墙钟耗时', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, '同步批次尾部的 GPU 算力坍塌', color='purple', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '随 90% 短轨迹陆续吐出 EOS\n各 DP 实例活跃 Batch 跌至 1–2', 'orange', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '已完成实例受同步屏障阻塞\n数千张 GPU 空转等待尾轨迹', 'orange', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '全集群有效 MFU 跌破 10%–15%\n成为长思维链 RL 头号杀手', 'purple', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '世代尾气泡吞噬逾半集群算力', size=11, ha='center', weight='bold', color=BORDER_COL['purple'])
+    ex.save(fig, 'ch18-long-cot-power-law-straggler-bubble')
+
+
+def fig_18_6_rollpacker(ex: Exporter):
     fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '长序列 DiT 三类并行范式的通信量与扩展度边界（算例 17-4）', color='blue')
-    modes = [
-        (0.04, 0.58, 0.28, 0.24, '① 张量并行 TP\n切分权重列/行\n通信 O(Nd) 不降', 'orange'),
-        (0.36, 0.58, 0.28, 0.24, '② Ulysses 并行\nAll-to-All 转置头\n每层 4Nd / P', 'teal'),
-        (0.68, 0.58, 0.28, 0.24, '③ Ring 注意力\n环路传 KV 分块\n全环流量约 2Nd', 'blue'),
-    ]
-    for x, y, w, h, label, role in modes:
-        box(ax, x, y, w, h, label, role, size=11)
-
-    card(ax, 0.02, 0.03, 0.96, 0.42, 'N = 489,600, d = 4,096, P = 64 卡下的定量对比', color='teal')
-    box(ax, 0.04, 0.13, 0.44, 0.20, 'Ulysses：每层 239.06 MiB\n通信随 1/P 下降，但受限于\n并行度 P ≤ 注意力头数', 'teal', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, 'Ring：全环 63 步共 7,530 MiB\n突破头数上限，但纯跨机环路\n易受慢链路与分块延迟拖累', 'blue', size=11)
-    arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, 'Ulysses 省总流量但受限于头数；Ring 无头数上限但总流量不随 P 衰减', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch17-tp-vs-ulysses-vs-ring-attention-comm')
-
-
-def fig_17_5_2d_usp(ex: Exporter):
-    fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '2D 统一序列并行（USP：P_Ulysses × P_Ring = 8 × 8 = 64 卡）', color='teal')
+    card(ax, 0.02, 0.50, 0.96, 0.46, 'RollPacker（NSDI 26）：尾部轨迹重分批、流式训练与无偏归一化', color='teal')
     stages = [
-        (0.04, 0.58, 0.28, 0.24, '① 节点内 NVLink\nP_Ulysses = 8 卡\nAll-to-All 切头', 'teal'),
-        (0.36, 0.58, 0.28, 0.24, '② 节点间 RoCE\nP_Ring = 8 节点环\n传 1/8 头维 KV 块', 'blue'),
-        (0.68, 0.58, 0.28, 0.24, '③ 算通双重叠\nFlashAttn 分块核\n掩盖 RDMA P2P', 'purple'),
+        (0.04, 0.58, 0.28, 0.24, '① 尾部拼箱与扩并行\n跨实例归拢长尾轨迹\n闲置卡转 TP/CP 加速', 'teal'),
+        (0.36, 0.58, 0.28, 0.24, '② 严防投机长度偏置\n双槽竞争使长解率\n从 1/2 跌至 1/4', 'orange'),
+        (0.68, 0.58, 0.28, 0.24, '③ 流式训练重叠\n就绪块提前送训\n60s 周期缩至 55s', 'blue'),
     ]
     for x, y, w, h, label, role in stages:
         box(ax, x, y, w, h, label, role, size=11)
     arrow(ax, (0.32, 0.70), (0.36, 0.70))
     arrow(ax, (0.64, 0.70), (0.68, 0.70))
 
-    card(ax, 0.02, 0.03, 0.96, 0.42, '纯 64 卡 Ring vs. 8×8 2D-USP 的跨节点 RDMA 流量对比', color='blue')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '纯 64 卡 Ring Attention\n63 步均跨越节点间网络\n单卡跨机流量 7,530.47 MiB', 'orange', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '8×8 2D-USP 混合拓扑\n跨机 Ring 仅 7 步×119.53 MiB\n跨机 RDMA 降至 836.72 MiB', 'teal', size=11)
+    card(ax, 0.02, 0.03, 0.96, 0.42, '算例 18-6：不均等微批下“按微批均值平均”vs.“按总词元归一化”', color='blue')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '错误：按微批独立求均值再平均\n微批 1(1项:1) · 微批 2(3项:3)\n(1 + 3)/2 = 2.0（放大微批 1）', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '正确：按全局总词元数加权归一化\n汇总 4 项梯度和 (1 + 9) 除以 4\n(1 + 9)/4 = 2.5（严格无偏真值）', 'teal', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '节点内 NVLink 吸收 All-to-All，将跨节点 RDMA 流量压缩 9.0 倍', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch17-2d-usp-hybrid-ulysses-ring-topology')
+    text(ax, 0.50, 0.06, '动态拼箱改变微批词元数时，必须用全局有效总词元数做梯度分母', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch18-rollpacker-tail-migration-and-cp-scaling')
 
 
-def fig_17_6_dbsp(ex: Exporter):
-    fig, ax = canvas(3.75)
-    card(ax, 0.02, 0.04, 0.46, 0.92, '朴素均匀序列切分（负载失衡）', color='orange', title_size=11)
-    box(ax, 0.04, 0.66, 0.42, 0.16, '多模态交错流含双向图像块\n与单向因果掩码文本/视频帧', 'orange', size=11)
-    box(ax, 0.04, 0.43, 0.42, 0.16, '按位置顺序等长切分序列\n前卡仅算短前缀·末卡算全长', 'orange', size=11)
-    box(ax, 0.04, 0.20, 0.42, 0.16, '最快卡与最慢卡 FLOPs 差 2x\n同步屏障产生严重木桶空泡', 'orange', size=11)
-    arrow(ax, (0.25, 0.66), (0.25, 0.59))
-    arrow(ax, (0.25, 0.43), (0.25, 0.36))
-    text(ax, 0.25, 0.10, '掩码稀疏与变长导致算力倾斜', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
-
-    card(ax, 0.52, 0.04, 0.46, 0.92, 'db-SP（MLSys 26）双均衡切分', color='teal', title_size=11)
-    box(ax, 0.54, 0.66, 0.42, 0.16, '第一级：模态内首尾对称折返\n（ZigZag 配对首块与末块）', 'teal', size=11)
-    box(ax, 0.54, 0.43, 0.42, 0.16, '第二级：跨样本与跨模态重排\n对齐每张 GPU 有效注意力面积', 'blue', size=11)
-    box(ax, 0.54, 0.20, 0.42, 0.16, '同时消除计算倾斜与通信偏斜\n长序列多模态吞吐提升 1.4x+', 'purple', size=11)
-    arrow(ax, (0.75, 0.66), (0.75, 0.59))
-    arrow(ax, (0.75, 0.43), (0.75, 0.36))
-    text(ax, 0.75, 0.10, '有效非零注意力块数跨卡严格对齐', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
-    ex.save(fig, 'ch17-dbsp-dual-balanced-sequence-parallelism')
-
-
-def fig_17_7_distrifusion(ex: Exporter):
-    fig, ax = canvas(3.75)
-    card(ax, 0.02, 0.04, 0.46, 0.92, '同步序列并行（通信阻塞）', color='orange', title_size=11)
-    box(ax, 0.04, 0.66, 0.42, 0.16, '第 t 去噪步计算局部 QKV 后\n必须等待全量远端 KV 到达', 'orange', size=11)
-    box(ax, 0.04, 0.43, 0.42, 0.16, '高分辨率图像/短视频 Batch=1\n单步计算短，难掩盖跨卡通信', 'orange', size=11)
-    box(ax, 0.04, 0.20, 0.42, 0.16, '50 步迭代累加数百次同步等待\n多卡扩展效率随卡数骤降', 'orange', size=11)
-    arrow(ax, (0.25, 0.66), (0.25, 0.59))
-    arrow(ax, (0.25, 0.43), (0.25, 0.36))
-    text(ax, 0.25, 0.10, '当前步强同步屏障卡死低延迟', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
-
-    card(ax, 0.52, 0.04, 0.46, 0.92, 'DistriFusion 异步位移并行', color='teal', title_size=11)
-    box(ax, 0.54, 0.66, 0.42, 0.16, '利用相邻去噪步激活缓变特性\n||x_t - x_{t-1}|| << ||x_t||', 'teal', size=11)
-    box(ax, 0.54, 0.43, 0.42, 0.16, '本地 Patch 用第 t 步最新 KV\n远端 Patch 直接读 t-1 步缓存', 'blue', size=11)
-    box(ax, 0.54, 0.20, 0.42, 0.16, '第 t 步通信与第 t 步计算全重叠\n零同步暴露实现近线性降延迟', 'purple', size=11)
-    arrow(ax, (0.75, 0.66), (0.75, 0.59))
-    arrow(ax, (0.75, 0.43), (0.75, 0.36))
-    text(ax, 0.75, 0.10, '用一阶时间步平滑性换零通信暴露', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
-    ex.save(fig, 'ch17-distrifusion-displaced-patch-parallelism')
-
-
-def fig_17_8_pipefusion(ex: Exporter):
+def fig_18_7_seer_speculative(ex: Exporter):
     fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, 'PipeFusion：空间 Patch 分块 × 去噪时间步二维交错流水', color='blue')
+    card(ax, 0.02, 0.50, 0.96, 0.46, 'Seer（OSDI 26）：分而治之上下文缓存与组内同源投机解码', color='blue')
     stages = [
-        (0.04, 0.58, 0.28, 0.24, '① 模型层切分\nL 层 DiT 切入 P 卡\n免除全量权重冗余', 'blue'),
-        (0.36, 0.58, 0.28, 0.24, '② 空间切 M 个块\n单步内 M 个 Patch\n充当流水微批次', 'teal'),
-        (0.68, 0.58, 0.28, 0.24, '③ 跨步无缝衔接\n第 t-1 步末块后\n紧接第 t 步首块', 'purple'),
+        (0.04, 0.58, 0.28, 0.24, '① 细粒度分段生成\n长轨迹按固定块切分\n均衡各卡 KV 水位', 'blue'),
+        (0.36, 0.58, 0.28, 0.24, '② 组内后缀字典树\n同提示词已完短轨迹\n构建免模型草稿树', 'teal'),
+        (0.68, 0.58, 0.28, 0.24, '③ 尾部自适应投机\n对剩余长尾轨迹开启\n多步树验证加速吐词', 'purple'),
     ]
     for x, y, w, h, label, role in stages:
         box(ax, x, y, w, h, label, role, size=11)
     arrow(ax, (0.32, 0.70), (0.36, 0.70))
     arrow(ax, (0.64, 0.70), (0.68, 0.70))
 
-    card(ax, 0.02, 0.03, 0.96, 0.42, '传统每步排空流水线 vs. PipeFusion 跨步连续流水的气泡率', color='teal')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '传统步内同步流水线\n每个去噪步末尾均需排空重填\n50 步累计产生 50 × (P-1) 气泡', 'orange', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, 'PipeFusion 异步跨步流水\n仅在第 1 步启动与第 50 步结束\n产生 1 次排空，气泡压缩 50 倍', 'teal', size=11)
+    card(ax, 0.02, 0.03, 0.96, 0.42, '利用 GRPO 组采样（G=8–64）天然同源性实现零额外显存投机加速', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '传统独立草稿模型投机\n需额外部署并同步训练 Draft 模型\n初期大 Batch 下反而拖慢吞吐', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, 'Seer / DAS 自适应尾部投机\n仅在尾部小 Batch 期启用组内草稿\n长尾生成延迟削减 40%–60%', 'teal', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '仅传输层边界 Patch 激活（远小于全层 QKV），适配 PCIe 与普通以太网', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch17-pipefusion-step-patch-2d-pipeline')
+    text(ax, 0.50, 0.06, '利用同组兄弟轨迹的高重合步骤，为尾部 5% 慢轨迹提供免模型草稿', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch18-seer-divided-and-conquered-speculative-rollout')
 
 
-def fig_17_9_teacache(ex: Exporter):
-    fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, 'TeaCache / AdaCache：免训练时间步特征缓存与自适应跳步', color='teal')
-    stages = [
-        (0.04, 0.58, 0.28, 0.24, '① 时间步嵌入探测\n计算调制输入差分\n多项式标定变化', 'teal'),
-        (0.36, 0.58, 0.28, 0.24, '② 累积误差门限\n若漂移 δ_acc < ε\n跳过整座 DiT', 'blue'),
-        (0.68, 0.58, 0.28, 0.24, '③ 残差特征复用\nx_{t-1} = x_t + ΔF\n越过平缓去噪步', 'purple'),
-    ]
-    for x, y, w, h, label, role in stages:
-        box(ax, x, y, w, h, label, role, size=11)
-    arrow(ax, (0.32, 0.70), (0.36, 0.70))
-    arrow(ax, (0.64, 0.70), (0.68, 0.70))
-
-    card(ax, 0.02, 0.03, 0.96, 0.42, '算例 17-5：50 步视频 DiT 去噪跳过 28 步的端到端加速账本', color='blue')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '50 步全量计算基线\n50 × 1.20 s + 3.60 s（编码解码）\n端到端生成耗时 = 63.60 s', 'orange', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, 'TeaCache 动态保留 22 个关键步\n22 × 1.20 s + 3.60 s = 30.00 s\n视觉无损下端到端加速 2.12x', 'teal', size=11)
-    arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '首尾剧变期密集计算、中段平缓期跳步复用，零训练成本砍半计算量', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch17-teacache-timestep-residual-reuse')
-
-
-def fig_17_10_sageattention(ex: Exporter):
+def fig_18_8_partial_rollout(ex: Exporter):
     fig, ax = canvas(3.75)
-    card(ax, 0.02, 0.04, 0.46, 0.92, '直接低比特量化注意力失真', color='orange', title_size=11)
-    box(ax, 0.04, 0.66, 0.42, 0.16, 'DiT 键张量 K 存在通道离群值\n部分通道偏置高达均值 10–50x', 'orange', size=11)
-    box(ax, 0.04, 0.43, 0.42, 0.16, '直接做 INT8/FP4 对称块量化\n有效尾数位被离群通道吞噬', 'orange', size=11)
-    box(ax, 0.04, 0.20, 0.42, 0.16, 'Softmax 概率分布严重畸变\n生成视频出现雪花伪影与崩坏', 'orange', size=11)
+    card(ax, 0.02, 0.04, 0.46, 0.92, '全同步屏障 Rollout', color='orange', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '第 v 步必须集齐当前批次全部\nN 条完整轨迹才可启动训练', 'orange', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '长尾未完轨迹阻塞整轮迭代\n或被强行截断沦为无效废样本', 'orange', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '训练池与推理池交替空置\n端到端硬件利用率 < 45%', 'orange', size=11)
     arrow(ax, (0.25, 0.66), (0.25, 0.59))
     arrow(ax, (0.25, 0.43), (0.25, 0.36))
-    text(ax, 0.25, 0.10, '通道直流偏置摧毁低位宽精度', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+    text(ax, 0.25, 0.10, '全同步屏障与长思维链天然冲突', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
 
-    card(ax, 0.52, 0.04, 0.46, 0.92, 'SageAttention-3 平滑微缩放', color='teal', title_size=11)
-    box(ax, 0.54, 0.66, 0.42, 0.16, '利用 Q·(K - μ_K)^T 等价变形\n先减去序列均值平滑 K 离群值', 'teal', size=11)
-    box(ax, 0.54, 0.43, 0.42, 0.16, 'QK^T 用 FP8/FP4 硬件块乘\nPV 采用两级缩放防下溢累加', 'blue', size=11)
-    box(ax, 0.54, 0.20, 0.42, 0.16, 'Blackwell 获 3–4x 算子加速\n生成视频 PSNR/VBench 零退化', 'purple', size=11)
+    card(ax, 0.52, 0.04, 0.46, 0.92, '陈旧度有界异步部分采样', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '攒够 B 条完成轨迹即刻送训\n未完长轨迹保留 KV 跨步续生', 'teal', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '轨迹携带生成策略版本标签\n控制偏移 τ = v - v_old ≤ τ_max', 'blue', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '完整保留 64K 长轨迹且零气泡\n集群有效利用率跃升至 > 88%', 'purple', size=11)
     arrow(ax, (0.75, 0.66), (0.75, 0.59))
     arrow(ax, (0.75, 0.43), (0.75, 0.36))
-    text(ax, 0.75, 0.10, '均值平滑离群值，释放 FP4 算力', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
-    ex.save(fig, 'ch17-sageattention3-fp4-quantized-attention')
+    text(ax, 0.75, 0.10, '跨步续生 + 有界陈旧度消除尾气泡', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch18-staleness-bounded-partial-rollout-pipeline')
 
 
-def fig_17_11_world_model_30fps(ex: Exporter):
+def fig_18_9_importance_sampling(ex: Exporter):
     fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '交互式世界模型（StreamDiffusionV2 / CausVid）30 FPS 实时流水', color='blue')
+    card(ax, 0.02, 0.50, 0.96, 0.46, '异步偏离策略（Off-Policy）下的重要性采样比率与近端截断', color='blue')
     stages = [
-        (0.04, 0.58, 0.28, 0.24, '① 因果自回归改造\n块级因果注意力\n按帧块流式吐出', 'blue'),
-        (0.36, 0.58, 0.28, 0.24, '② 分布匹配蒸馏\n50 步浓缩为 1–4 步\n砍掉 CFG 双倍分支', 'teal'),
-        (0.68, 0.58, 0.28, 0.24, '③ 滚动 KV 缓存池\n固定窗口复用历史帧\n淘汰过期帧防溢出', 'purple'),
+        (0.04, 0.58, 0.28, 0.24, '① 策略版本漂移\n旧策略采样轨迹\n送交新策略训练', 'orange'),
+        (0.36, 0.58, 0.28, 0.24, '② 逐词元重要性比\nr_t = π_θ / π_old\n修正行为分布偏移', 'blue'),
+        (0.68, 0.58, 0.28, 0.24, '③ 双重安全护栏\nclip(r_t, 1±ε)\n滤除 τ > τ_max 样本', 'teal'),
     ]
     for x, y, w, h, label, role in stages:
         box(ax, x, y, w, h, label, role, size=11)
     arrow(ax, (0.32, 0.70), (0.36, 0.70))
     arrow(ax, (0.64, 0.70), (0.68, 0.70))
 
-    card(ax, 0.02, 0.03, 0.96, 0.42, '步间小批次流水（Stream Batching）：在 33.3 ms 红线内响应动作', color='teal')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '传统整段双向扩散\n必须等 240 帧全部去噪 50 步\n首帧响应延迟 > 30,000 ms', 'orange', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '4 步因果流式 + 跨帧去噪步拼批\n4 个相邻帧分处去噪步 s=4,3,2,1\n每 ≤ 33.3 ms 稳定输出 1 帧新画面', 'teal', size=11)
+    card(ax, 0.02, 0.03, 0.96, 0.42, '分段跨版本轨迹（Partial Rollout）的逐段旧概率记录铁律', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '跨步续生轨迹由多版本拼接而成\n前段由 v-1 生成，后段由 v 生成\n严禁用单一旧模型统一重算 π_old', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '必须在生成每个词元当下同步记录\n真实行为对数概率 log π_behav\n确保重要性比率 r_t 分母绝对真实', 'teal', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '用因果块注意力 + 滚动 KV + 4 步流式拼批跨越实时交互生死线', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch17-interactive-world-model-rolling-kv-30fps')
+    text(ax, 0.50, 0.06, '随词元流持久化真实行为 logprob 是异步 Partial Rollout 收敛的命脉', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch18-off-policy-importance-sampling-clipping')
 
 
-def fig_17_12_epdg_disaggregation(ex: Exporter):
+def fig_18_10_robustrl(ex: Exporter):
     fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '原生全模态服务四池解耦架构（E-P-D-G：vLLM-Omni / ModServe）', color='blue')
-    pools = [
-        (0.03, 0.58, 0.21, 0.24, '① Encode 池\nViT/音频编码\n计算密·小显存', 'teal'),
-        (0.27, 0.58, 0.21, 0.24, '② Prefill 池\n多模态预填充\n注意力算力密', 'blue'),
-        (0.51, 0.58, 0.21, 0.24, '③ Decode 池\n自回归解码\nHBM 带宽受限', 'purple'),
-        (0.75, 0.58, 0.22, 0.24, '④ Generate 池\n图像/视频 DiT\n高算力密度', 'orange'),
+    card(ax, 0.02, 0.50, 0.96, 0.46, 'RobustRL（OSDI 26）：面向训推异构角色的非对称容错恢复', color='teal')
+    roles = [
+        (0.04, 0.58, 0.44, 0.24, '① Rollout 节点故障（无状态）\n无需回滚检查点，仅替换故障机\n从保存的工具轮次轨迹续接', 'teal'),
+        (0.52, 0.58, 0.44, 0.24, '② Learner 节点故障（有状态）\n严禁丢弃本轮已耗时 300s 轨迹\n仅检测恢复并重算 60s 更新步', 'blue'),
     ]
-    for x, y, w, h, label, role in pools:
+    for x, y, w, h, label, role in roles:
+        box(ax, x, y, w, h, label, role, size=11)
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '算例 18-7（锁定真值）：训练侧故障下整步重做 vs. 保留轨迹重做更新', color='blue')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '整步重做（丢弃已生成 Rollout）\n300s 采样 + 30s 失败 + 100s 检复\n+ 300s 重采 + 60s 更新 = 790 s', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, 'RobustRL 保留已完成 300s 轨迹\n300s 采样 + 30s 失败 + 100s 检复\n+ 60s 更新 = 490 s（净省 300 s）', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '将耗时的 Rollout 轨迹持久化为事务边界，阻断训练侧故障向上游蔓延', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch18-robustrl-role-based-fault-isolation')
+
+
+def fig_18_11_distrs(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, 'DistRS（NSDI 26）：解耦奖励验证流式重叠与条件剩余时间调度', color='blue')
+    stages = [
+        (0.04, 0.58, 0.28, 0.24, '① 生成验证流式重叠\n短轨迹一吐出 EOS\n即刻异步送沙箱判题', 'teal'),
+        (0.36, 0.58, 0.28, 0.24, '② 条件剩余时间预测\n用 E[S - e | S > e]\n替代朴素 E[S] - e', 'blue'),
+        (0.68, 0.58, 0.28, 0.24, '③ 超期死循环裁剪\n守住 216,000 词元\n沉没工作量红线', 'purple'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.36, 0.70))
+    arrow(ax, (0.64, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '算例 18-8：9 个 1s 任务 + 1 个 100s 任务在 e=10s 时的剩余时间反差', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '错误朴素估计 max(E[S] - e, 0)\n无条件均值 E[S] = 10.9 s\n在 e=10 s 时误判仅剩 0.9 s', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '真实条件剩余 E[S - 10 | S > 10]\n存活过 10s 必为 100s 重尾任务\n真实剩余高达 90.0 s（差 100x）', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '重尾验证分布具有“越老越慢”特性，必须按条件生存分布调度与抢占', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch18-distrs-disaggregated-reward-sandbox-streaming')
+
+
+def fig_18_12_prm_tree_cow(ex: Exporter):
+    fig, ax = canvas(3.75)
+    card(ax, 0.02, 0.04, 0.46, 0.92, '独立复制分支 KV（显存爆炸）', color='orange', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '推理时树搜索（MCTS / Beam）\n从父节点派生 B 个候选推理步', 'orange', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '为每条子分支物理深拷贝整段\n历史前缀与中间步骤 KV 缓存', 'orange', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '64 分支搜索使显存占用膨胀 8x+\n且大量带宽浪费于 Memcpy', 'orange', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '物理深拷贝扼杀宽分支搜索', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'PagedAttention 写时复制树', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '树节点分支时仅复制逻辑页表\n物理 KV 块引用计数 ref_cnt += B', 'teal', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '新生成词元写入独立新页帧\n剪枝淘汰分支直接递减 ref_cnt', 'blue', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '叠加树注意力单次扫过公共祖先\n显存与带宽开销双双降低 70%+', 'purple', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '零拷贝分支派发 + 引用计数瞬时回收', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch18-test-time-scaling-prm-tree-search-cow-kv')
+
+
+def fig_18_13_reward_barrier(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, 'Breaking the Reward Barrier（OSDI 26）：投机思维树探索', color='blue')
+    stages = [
+        (0.04, 0.58, 0.28, 0.24, '① 过程奖励屏障\n每步扩展后需等待\n重型 PRM 评分返回', 'orange'),
+        (0.36, 0.58, 0.28, 0.24, '② 策略先验预判\n用 Actor 置信度\n预挑高潜子节点', 'teal'),
+        (0.68, 0.58, 0.28, 0.24, '③ 投机并行展开\n与 PRM 打分并发\n分出后原地剪枝', 'blue'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.36, 0.70))
+    arrow(ax, (0.64, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '串行“生成—等分—再生成”vs. 投机重叠树搜索的端到端延迟', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '传统同步 PRM 树搜索\n每层思维步均被 PRM 前向打断\n搜索深度 D 层累加 D 次评分停顿', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '投机思维树（Speculative ToT）\n将 PRM 评分隐藏在下层生成后\n树搜索端到端延迟降 1.8x–2.6x', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '把算子级的投机解码思想上升到思维树节点级的异步超前展开', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch18-speculative-tot-reward-barrier-bypass')
+
+
+def fig_18_14_multi_turn_tool_rl(ex: Exporter):
+    fig, ax = canvas(3.75)
+    card(ax, 0.02, 0.04, 0.46, 0.92, '阻塞占卡等待外部工具', color='orange', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, 'SWE-bench / 搜索智能体在生成\n工具调用后等待沙箱编译或网页', 'orange', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '外部环境响应长达 2–30 秒\n期间数万词元 KV 死占 GPU 显存', 'orange', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, 'GPU 因显存满载无法接纳新轨迹\n算力在 I/O 等待中白白空转', 'orange', size=11)
+    arrow(ax, (0.25, 0.66), (0.25, 0.59))
+    arrow(ax, (0.25, 0.43), (0.25, 0.36))
+    text(ax, 0.25, 0.10, '慢速环境交互冻死昂贵 HBM', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+
+    card(ax, 0.52, 0.04, 0.46, 0.92, '状态挂起换出与协程复用', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '触发工具调用瞬间挂起会话\n经 PCIe 异步将 KV 卸至 DRAM', 'teal', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '立即释放 HBM 页帧给就绪轨迹\n单卡并发活跃环境数扩大 5–10x', 'blue', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '沙箱返回结果时预取回填 KV\n追加环境观测无缝续跑下一轮', 'purple', size=11)
+    arrow(ax, (0.75, 0.66), (0.75, 0.59))
+    arrow(ax, (0.75, 0.43), (0.75, 0.36))
+    text(ax, 0.75, 0.10, '将多轮工具交互改造为无阻塞协程', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch18-multi-turn-tool-env-rl-state-suspension')
+
+
+def fig_18_15_hetrl(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, 'HetRL：面向异构推理卡与训练卡的最优算力配比方程', color='blue')
+    stages = [
+        (0.04, 0.58, 0.28, 0.24, '① 带宽型推理池\nH20 / L40S 等卡\n高容量比跑生成', 'teal'),
+        (0.36, 0.58, 0.28, 0.24, '② 算力型训练池\nH800 / B200 超节点\n高 FLOPS 跑反向更新', 'blue'),
+        (0.68, 0.58, 0.28, 0.24, '③ 流水节拍精准匹配\nT_rollout(N_inf) ≈\nT_train(N_tr) 零互等', 'purple'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.36, 0.70))
+    arrow(ax, (0.64, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '异构配比准则：N_inf / N_tr = (W_inf / η_inf) / (W_tr / η_tr)', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '全用旗舰训练卡跑同步 RL\n80% 时间在跑低算术强度 Decode\n昂贵 Tensor Core 长期闲置', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '按吞吐速率比配置 3:1–5:1 异构池\n训练卡 100% 满载跑密集矩阵乘\n单次 RL 迭代硬件 TCO 降低 35%+', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '让高带宽比卡做生成、高算力比卡做更新，消除硬件特性的错配税', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch18-hetrl-heterogeneous-inference-training-matching')
+
+
+def fig_18_16_dapo_filter(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, 'DAPO 动态采样过滤：消除全对（r=1）与全错（r=0）零梯度浪费', color='teal')
+    groups = [
+        (0.04, 0.58, 0.28, 0.24, '① 过易提示词(全对)\nG 条轨迹全 r=1\n方差 σ=0 → A=0', 'orange'),
+        (0.36, 0.58, 0.28, 0.24, '② 过难提示词(全错)\nG 条轨迹全 r=0\n方差 σ=0 → A=0', 'orange'),
+        (0.68, 0.58, 0.28, 0.24, '③ 有效区分提示词\n0 < 正确数 < G\n提供有效策略梯度', 'teal'),
+    ]
+    for x, y, w, h, label, role in groups:
+        box(ax, x, y, w, h, label, role, size=11)
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, 'RollPacker 投机超采（160×10 = 1,600 选 1,024）保障有效微批满载', color='blue')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '静态采样 128 提示词 × 8 = 1,024\n剔除 30% 零方差组后仅剩 ~716 条\n训练微批不满载且梯度方差剧增', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '投机超采 160×10 = 1,600 (+56%)\n在线滤除零方差组并凑齐 1,024 条\n每步训练 100% 皆为有效非零梯度', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '结合投机超额采样与在线方差过滤，但须控制槽位竞争避免长度偏置', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch18-dapo-dynamic-sampling-zero-variance-filter')
+
+
+def fig_18_17_throughput_waterfall(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '大规模 RLVR 系统四阶有效吞吐跃迁瀑布图', color='blue')
+    steps = [
+        (0.03, 0.58, 0.21, 0.24, '① 朴素同步基线\n双份权+长尾等\n1.0x 基准吞吐', 'orange'),
+        (0.27, 0.58, 0.21, 0.24, '② 零冗余重分片\nveRL 混合引擎\n跃升至 ~1.8x', 'blue'),
+        (0.51, 0.58, 0.21, 0.24, '③ 尾部拼箱投机\n拼箱+同源投机\n跃升至 ~3.2x', 'teal'),
+        (0.75, 0.58, 0.22, 0.24, '④ 异步部分采样\nPartial+DistRS\n达 5.0x–6.5x', 'purple'),
+    ]
+    for x, y, w, h, label, role in steps:
         box(ax, x, y, w, h, label, role, size=11)
     arrow(ax, (0.24, 0.70), (0.27, 0.70))
     arrow(ax, (0.48, 0.70), (0.51, 0.70))
     arrow(ax, (0.72, 0.70), (0.75, 0.70))
 
-    card(ax, 0.02, 0.03, 0.96, 0.42, 'TriInfer（MLSys 26 #127）动态合并 vs. 独立建池的临界准则', color='teal')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '何时分离 E 与 PD？（算例 17-6）\n4 卡下 (1 E, 3 PD) 吞吐 12 req/s\n75% EC 缓存命中使 E 需求降 4x', 'teal', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, 'TriInfer 路由（c_attn / c_ffn）\n长图像序列走独立 E+P 防干扰\n短图低负载走融合节点省传输', 'blue', size=11)
+    card(ax, 0.02, 0.03, 0.96, 0.42, '系统加速与数学等价性的双重铁律', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '系统优化潜藏的统计偏置陷阱\n• 槽位竞争偏向短解 (1/2→1/4)\n• 微批均值直接平均偏置 (2.0)', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '无偏收敛保障三件套\n• 全局总词元归一化（真值 2.5）\n• 逐词元行为概率 + 陈旧门限', 'teal', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '按各阶段 Roofline 瓶颈与缓存命中率 h 动态配比四类异构 GPU 池', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch17-epdg-four-stage-disaggregated-serving')
+    text(ax, 0.50, 0.06, '脱离无偏梯度与重要性采样校准的“工程提速”只会加速策略崩溃', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch18-rl-post-training-throughput-roofline')
 
 
-def fig_17_13_ec_vs_kv_cache(ex: Exporter):
-    fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '多轮视觉对话的三级缓存形态对比（Qwen3-VL-4B 单图 400 词元）', color='teal')
-    tiers = [
-        (0.04, 0.58, 0.28, 0.24, '① 仅存原始图像\n约 0.2–0.5 MiB\n每轮重算 ViT', 'orange'),
-        (0.36, 0.58, 0.28, 0.24, '② 缓存编码特征 EC\n体积 7.8125 MiB\n免除 ViT 重算', 'teal'),
-        (0.68, 0.58, 0.28, 0.24, '③ 缓存全层 KV\n体积 56.25 MiB\n膨胀达 7.2 倍', 'blue'),
-    ]
-    for x, y, w, h, label, role in tiers:
-        box(ax, x, y, w, h, label, role, size=11)
-
-    card(ax, 0.02, 0.03, 0.96, 0.42, '分层多模态缓存策略：热轮次留 KV，温会话退回 EC（省 86.1% 容量）', color='blue')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '单层投影特征 [400, 2560]\nEC 体积可压至 1.953125 MiB\n相比 56.25 MiB KV 省 28.8 倍', 'teal', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '含 3 层 DeepStack（7.8125 MiB）\n将温冷会话从 KV 降级为 EC 缓存\n释放 86.1% 内存并省 7.2x 带宽', 'purple', size=11)
-    arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, 'EC 缓存是多模态服务独有的“高压缩比中间态检查点”', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch17-vit-embedding-cache-vs-llm-kv-cache')
-
-
-def fig_17_14_interleaved_batching(ex: Exporter):
-    fig, ax = canvas(3.75)
-    card(ax, 0.02, 0.04, 0.46, 0.92, '串行锁步执行（异构气泡）', color='orange', title_size=11)
-    box(ax, 0.04, 0.66, 0.42, 0.16, '同一批次内混杂纯文本请求、\n多图请求与长音频片段请求', 'orange', size=11)
-    box(ax, 0.04, 0.43, 0.42, 0.16, '主干 LLM 停下等待 ViT 与\nWhisper 编码器串行跑完', 'orange', size=11)
-    box(ax, 0.04, 0.20, 0.42, 0.16, '纯文本请求被重型视觉编码拖累\n首词元延迟 TTFT 暴涨 3–8 倍', 'orange', size=11)
-    arrow(ax, (0.25, 0.66), (0.25, 0.59))
-    arrow(ax, (0.25, 0.43), (0.25, 0.36))
-    text(ax, 0.25, 0.10, '模态耦合阻塞纯文本快路径', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
-
-    card(ax, 0.52, 0.04, 0.46, 0.92, '模态微批聚合与异步对齐', color='teal', title_size=11)
-    box(ax, 0.54, 0.66, 0.42, 0.16, '按模态拆分图像/音频子张量\n在专属 CUDA Stream 攒批编码', 'teal', size=11)
-    box(ax, 0.54, 0.43, 0.42, 0.16, '纯文本请求零等待直入主干\n多模态请求待 EC 就绪后注入', 'blue', size=11)
-    box(ax, 0.54, 0.20, 0.42, 0.16, '通过散射索引将 EC 嵌回占位符\n消除跨模态气泡并吃满 Tensor 核', 'purple', size=11)
-    arrow(ax, (0.75, 0.66), (0.75, 0.59))
-    arrow(ax, (0.75, 0.43), (0.75, 0.36))
-    text(ax, 0.75, 0.10, '异构编码流与主干连续批处理解耦', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
-    ex.save(fig, 'ch17-audio-video-text-interleaved-batching')
-
-
-def fig_17_15_gpu_decode_dataloader(ex: Exporter):
-    fig, ax = canvas(3.75)
-    card(ax, 0.02, 0.04, 0.46, 0.92, '传统 CPU 软解码（GPU 饥饿）', color='orange', title_size=11)
-    box(ax, 0.04, 0.66, 0.42, 0.16, 'H.264/HEVC 视频与高分 JPEG\n由宿主机 CPU FFmpeg/PIL 解码', 'orange', size=11)
-    box(ax, 0.04, 0.43, 0.42, 0.16, '解压后 RGB 体积暴涨 20–50 倍\n撑爆主机内存带宽与 PCIe 通道', 'orange', size=11)
-    box(ax, 0.04, 0.20, 0.42, 0.16, '128 核 CPU 满载仍供不上 8 卡\nGPU 算力利用率跌至 < 45%', 'orange', size=11)
-    arrow(ax, (0.25, 0.66), (0.25, 0.59))
-    arrow(ax, (0.25, 0.43), (0.25, 0.36))
-    text(ax, 0.25, 0.10, '在 PCIe 上游解压是灾难性反模式', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
-
-    card(ax, 0.52, 0.04, 0.46, 0.92, 'DALI + NVDEC/nvJPEG 硬件卸载', color='teal', title_size=11)
-    box(ax, 0.54, 0.66, 0.42, 0.16, '压缩码流直接经 PCIe DMA\n传入 GPU 显存（省 25x 带宽）', 'teal', size=11)
-    box(ax, 0.54, 0.43, 0.42, 0.16, '调用 GPU 独立硬件引擎 NVDEC\n与 nvJPEG 零 SM 占用硬解码', 'blue', size=11)
-    box(ax, 0.54, 0.20, 0.42, 0.16, '显存内原位完成缩放与归一化\n直供 ViT/VAE，GPU 满载 > 92%', 'purple', size=11)
-    arrow(ax, (0.75, 0.66), (0.75, 0.59))
-    arrow(ax, (0.75, 0.43), (0.75, 0.36))
-    text(ax, 0.75, 0.10, '贴近算力侧解压 + 专用硅片硬解码', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
-    ex.save(fig, 'ch17-multimodal-dataloader-gpu-decode-nvjpeg')
-
-
-def fig_17_16_dit_cfg(ex: Exporter):
-    fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '分类器自由引导（Classifier-Free Guidance, CFG）的算力翻倍与优化', color='blue')
-    modes = [
-        (0.04, 0.58, 0.28, 0.24, '① 标准双分支 CFG\n每步跑条件+无条件\n计算与显存翻 2 倍', 'orange'),
-        (0.36, 0.58, 0.28, 0.24, '② CFG 并行 (CFG-P)\n2 组 GPU 分跑两路\n步末仅同步潜变量', 'teal'),
-        (0.68, 0.58, 0.28, 0.24, '③ 引导蒸馏与截断\n后半程关停无条件\n或蒸馏入单路嵌入', 'blue'),
-    ]
-    for x, y, w, h, label, role in modes:
-        box(ax, x, y, w, h, label, role, size=11)
-
-    card(ax, 0.02, 0.03, 0.96, 0.42, 'CFG 双路组合与跨组通信优化（ε = ε_u + w·(ε_c - ε_u)）', color='teal')
-    box(ax, 0.04, 0.13, 0.44, 0.20, 'CFG-Parallel 跨组通信极轻\n每去噪步仅 AllGather 1 次输出\n比扩 2 倍 Ulysses 省 L 层通信', 'teal', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '动态 CFG 截断（后 40% 步停跑）\n构图已定型后省去无条件分支\n直接削减 20% 总去噪 FLOPs', 'purple', size=11)
-    arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '优先将首级并行度 2 分配给 CFG-Parallel，再叠加 2D-USP', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch17-dit-cfg-classifier-free-guidance-parallel')
-
-
-def fig_17_17_end_to_end_breakdown(ex: Exporter):
-    fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '1080p 10s 视频生成端到端三阶段延迟与显存水位解剖', color='blue')
-    stages = [
-        (0.04, 0.58, 0.28, 0.24, '① 文本与图编码\nT5-XXL + ViT\n耗时 0.4s (<2%)', 'blue'),
-        (0.36, 0.58, 0.28, 0.24, '② 3D DiT 去噪\n48.96 万词元×50步\n耗时 60s (94%)', 'orange'),
-        (0.68, 0.58, 0.28, 0.24, '③ 3D VAE 解码\n耗时 3.2s (~5%)\n触发显存洪峰', 'purple'),
-    ]
-    for x, y, w, h, label, role in stages:
-        box(ax, x, y, w, h, label, role, size=11)
-    arrow(ax, (0.32, 0.70), (0.36, 0.70))
-    arrow(ax, (0.64, 0.70), (0.68, 0.70))
-
-    card(ax, 0.02, 0.03, 0.96, 0.42, '阶段错位规律：去噪期霸占 94% 时间，解码期触发 118 GiB 显存洪峰', color='teal')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '优化时间轴盯紧阶段 ②（DiT）\n用 2D-USP + TeaCache + FP4\n将 60 s 去噪压缩至 8–15 s', 'teal', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '优化显存峰值盯紧阶段 ③（VAE）\n卸载 T5 权重 + 时空分块 Tiled VAE\n将 118.65 GiB 峰值压至 < 2 GiB', 'blue', size=11)
-    arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '时间瓶颈在 DiT 二次方注意力，空间峰值在 3D VAE 像素上采样', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch17-video-dit-end-to-end-latency-breakdown')
-
-
-def fig_17_18_synthesis(ex: Exporter):
+def fig_18_18_closed_loop(ex: Exporter):
     fig, ax = canvas(4.15)
-    card(ax, 0.02, 0.03, 0.96, 0.94, '第 17 章多模态、视频 DiT 与世界模型基础设施工程总账本', color='blue')
+    card(ax, 0.02, 0.03, 0.96, 0.94, '第 18 章 RLVR 后训练与推理时计算扩展工程总账本', color='blue')
     grid = [
-        (0.05, 0.66, 0.42, 0.20, '① 时空表示与分块（17.1）\n489,600 视频词元·EC 7.81 MiB\nTiled VAE 消解 118 GiB 洪峰', 'blue'),
-        (0.53, 0.66, 0.42, 0.20, '② 序列并行体系（17.2）\nUlysses 4Nd/P 与 Ring 2Nd\n2D-USP 降跨机流量 9.0x', 'teal'),
-        (0.53, 0.37, 0.42, 0.20, '③ 时间步冗余与蒸馏（17.3）\nDistriFusion 异步掩盖通信\nTeaCache 2.12x 与 30 FPS 流', 'purple'),
-        (0.05, 0.37, 0.42, 0.20, '④ 四池解耦服务（17.4）\nTriInfer 扩展至 E-P-D-G 四池\n缓存 EC 省 7.2x 带宽与容量', 'orange'),
+        (0.05, 0.66, 0.42, 0.20, '① 算法与显存账本（18.1）\nGRPO 省 50% 状态(576 GB)\nRollout 占 70%–90% 耗时', 'blue'),
+        (0.53, 0.66, 0.42, 0.20, '② 训推拓扑与池化（18.2）\nveRL 零冗余重分片引擎\nWeave 错峰(216 H20/152 H800)', 'teal'),
+        (0.53, 0.37, 0.42, 0.20, '③ 攻克长尾木桶（18.3）\nRollPacker 归一化(2.5 vs 2.0)\nSeer 投机·RobustRL 省 300s', 'purple'),
+        (0.05, 0.37, 0.42, 0.20, '④ 验证与推理扩展（18.4）\nDistRS 条件剩余(90s vs 0.9s)\nCoW 树搜索与投机越障', 'orange'),
     ]
     for x, y, w, h, label, role in grid:
         box(ax, x, y, w, h, label, role, size=11)
@@ -391,348 +393,346 @@ def fig_17_18_synthesis(ex: Exporter):
     arrow(ax, (0.74, 0.66), (0.74, 0.57))
     arrow(ax, (0.53, 0.47), (0.47, 0.47))
     arrow(ax, (0.26, 0.57), (0.26, 0.66))
-    box(ax, 0.05, 0.08, 0.90, 0.21, '实验验证：experiments/ch17/17-01 & 17-02（Qwen3-VL 7.2x 膨胀、\n2D-USP 9.0x 减流、TeaCache 2.12x、Transfusion 62.5% 混合掩码）', 'teal', size=11)
-    ex.save(fig, 'ch17-multimodal-world-model-infra-synthesis')
+    box(ax, 0.05, 0.08, 0.90, 0.21, '实验：experiments/ch17/17-01 & 18-02（GRPO 省 50% 状态、\nRobustRL 省 300s、DistRS 216K 词元、跨洲 14,745x 压流）', 'teal', size=11)
+    ex.save(fig, 'ch18-rlvr-and-test-time-compute-closed-loop')
 
 
-def fig_17_19_transfusion_hybrid_mask(ex: Exporter):
+def fig_18_19_geo_async_rollout(ex: Exporter):
     fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, 'Transfusion 统一主干：分段因果—双向混合掩码（算例 17-7）', color='blue')
+    card(ax, 0.02, 0.50, 0.96, 0.46, 'Prime-RL：跨地域闲置算力异步 Rollout 收割（算例 18-9）', color='blue')
     stages = [
-        (0.04, 0.58, 0.28, 0.24, '① 文本前缀 T1\n1024 词元因果掩码\n36 个活跃块', 'blue'),
-        (0.36, 0.58, 0.28, 0.24, '② 图像潜块 I1\n2048 词元块内双向\n384 个满载块', 'teal'),
-        (0.68, 0.58, 0.28, 0.24, '③ 文本续写 T2\n1024 词元见全前缀\n228 个活跃块', 'purple'),
+        (0.04, 0.58, 0.28, 0.24, '① 跨洲异构推理池\n收割闲置 H20/4090\n异步跑长尾生成', 'teal'),
+        (0.36, 0.58, 0.28, 0.24, '② 10 B/tok 窄带回传\n传词元 ID 与概率\n全批仅 160.0 MiB', 'blue'),
+        (0.68, 0.58, 0.28, 0.24, '③ 中心训练池过滤\n校验陈旧度 τ ≤ 2\n与序列几何 IS 比', 'purple'),
     ]
     for x, y, w, h, label, role in stages:
         box(ax, x, y, w, h, label, role, size=11)
     arrow(ax, (0.32, 0.70), (0.36, 0.70))
     arrow(ax, (0.64, 0.70), (0.68, 0.70))
 
-    card(ax, 0.02, 0.03, 0.96, 0.42, '块稀疏跳过与 <boi> 触发 D→G 跨池零阻塞切换', color='teal')
-    box(ax, 0.04, 0.13, 0.44, 0.20, 'FlashAttn 分块掩码跳过\n仅算 648/1024 块（省 36.7%）\n执行块内有效利用率 98.77%', 'teal', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '遇 <boi> 算术强度升 2048x\n2.88 ms 迁出 144 MiB KV\n移交 G 池跑 20 步扩散去噪', 'orange', size=11)
+    card(ax, 0.02, 0.03, 0.96, 0.42, '10 Gbps 广域网下传激活/KV vs. 传紧凑轨迹元数据的百倍反差', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '错误：跨机房回传 36 层 KV\n1,024×16K 词元达 2,473.9 GB\n10 Gbps 专线阻塞 1,979.1 s', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '正确：回传 10 B/tok 紧凑三元组\n全批 160.0 MiB（134.2 ms 传完）\n配 FP8 差分权重广播零暴露', 'teal', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '有效注意力面积 10,485,760 对（占全矩阵 62.5%），模式切换须跨池隔离', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch17-transfusion-hybrid-causal-bidirectional-mask')
+    text(ax, 0.50, 0.06, '用 14,745.6x 上行压缩 + 序列几何均值 IS 过滤打通全球异构算力 RL', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch18-geo-distributed-async-rollout-harvester')
 
 
-def fig_17_20_3dgs_world_model(ex: Exporter):
+def fig_18_20_reward_hacking_breaker(ex: Exporter):
     fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '3DGS 显式几何脚手架 + 视频 DiT 混合世界模型管线', color='teal')
+    card(ax, 0.02, 0.50, 0.96, 0.46, 'RLVR 奖励黑客（Reward Hacking）的三维异常症状相图', color='orange')
+    symptoms = [
+        (0.04, 0.58, 0.28, 0.24, '① 长度失控膨胀\n堆砌无意义伪代码\n均长破 28K 词元', 'orange'),
+        (0.36, 0.58, 0.28, 0.24, '② 策略熵断崖坍缩\n退化为高频复读机\n熵跌破 0.05 nats', 'orange'),
+        (0.68, 0.58, 0.28, 0.24, '③ KL 散度突增\n偏离参考模型流形\n突破 0.25 熔断线', 'orange'),
+    ]
+    for x, y, w, h, label, role in symptoms:
+        box(ax, x, y, w, h, label, role, size=11)
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '双级在线统计制动器：软边界超长惩罚 + 硬熔断回滚机制', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '一级软制动（KL > 0.06 或超长）\n倍增 β_KL 并加分段长度罚项\n抑制无信息量的凑字数行为', 'teal', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '二级硬熔断（KL > 0.25 且低熵）\n中止当前步并回滚健康检查点\n隔离污染提示词并调高温度', 'blue', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '监控 (KL, 长度, 策略熵) 联合轨迹是长周期无人值守 RLVR 防崩溃底线', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch18-rlvr-reward-hacking-kl-divergence-breaker')
+
+
+def fig_18_21_multi_turn_tree_fork(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, 'SWE-RL 多轮环境状态与 KV 树状检查点分叉（算例 18-10）', color='blue')
     stages = [
-        (0.04, 0.58, 0.28, 0.24, '① 显式 3DGS 光栅\n120 万三维高斯点\n2.4 ms 渲染深度图', 'teal'),
-        (0.36, 0.58, 0.28, 0.24, '② 4 步受控视频 DiT\n注入几何防视角漂移\n流式拼批 24.0 ms', 'blue'),
-        (0.68, 0.58, 0.28, 0.24, '③ 分块因果 VAE\n还原光影与非刚体\n耗时 4.5 ms 吐帧', 'purple'),
+        (0.04, 0.58, 0.28, 0.24, '① 根容器镜像快照\nOverlayFS + CRIU\n18 s 初始化仅跑1次', 'blue'),
+        (0.36, 0.58, 0.28, 0.24, '② 轮次级状态分叉\n4 个中间工具节点\n共享 CoW 内存与页', 'teal'),
+        (0.68, 0.58, 0.28, 0.24, '③ 叶节点并行验证\n16 条叶轨迹跑单测\n分段计算轮次优势', 'purple'),
     ]
     for x, y, w, h, label, role in stages:
         box(ax, x, y, w, h, label, role, size=11)
     arrow(ax, (0.32, 0.70), (0.36, 0.70))
     arrow(ax, (0.64, 0.70), (0.68, 0.70))
 
-    card(ax, 0.02, 0.03, 0.96, 0.42, '纯隐式视频 DiT vs. 3DGS—DiT 混合管线的几何一致性与实时帧率', color='blue')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '纯隐式视频 DiT 世界模型\n视角大角度旋转后三维坍塌\n闭环重投影误差 > 15 cm', 'orange', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '3DGS 刚性几何 + DiT 光影\n总耗时 2.4+24.0+4.5 = 30.9 ms\n稳定达成 32.36 FPS 零漂移', 'teal', size=11)
+    card(ax, 0.02, 0.03, 0.96, 0.42, '16 条独立线性重跑 vs. 容器+KV 树分叉的沙箱与显存收益', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '16 条独立线性重跑\n沙箱耗时 672.0 s（重复克隆）\n前缀 KV 占 131,072 槽位', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, 'OverlayFS + CoW 树分叉\n沙箱耗时 114.0 s（快 5.89x）\n前缀 KV 降为 20,480（省84.4%）', 'teal', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '用 3DGS 锁定欧氏空间几何守恒，用少步 DiT 补齐动态物理交互与材质', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch17-3dgs-scaffold-guided-world-model-dit')
+    text(ax, 0.50, 0.06, '将容器文件系统快照与 Paged KV 页表同步分叉，消除多轮环境重复执行', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch18-multi-turn-agentic-rlvr-trajectory-tree-forking')
 
 
-def fig_17_21_causal_streaming_20fps(ex: Exporter):
+def fig_18_22_async_vtrace_tis(ex: Exporter):
     fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, 'CausVid / Matrix-Game 块因果滚动 KV 窗口架构（算例 17-8）', color='blue')
+    card(ax, 0.02, 0.50, 0.96, 0.46, '异步离策略 V-trace 与截断重要性采样（TIS）修正', color='teal')
     stages = [
-        (0.04, 0.58, 0.28, 0.24, '① 首块注意力锚点\n1 个 Sink 块（3帧）\n3600 词元常驻不驱逐', 'blue'),
-        (0.36, 0.58, 0.28, 0.24, '② 环形滚动 KV 窗\n5 个近期块（15帧）\n18000 词元 FIFO 覆写', 'teal'),
-        (0.68, 0.58, 0.28, 0.24, '③ 当前去噪生成块\n块内双向 + 块间因果\n4 步 DMD 吐出 3 帧', 'purple'),
+        (0.04, 0.58, 0.28, 0.24, '① 词元级连乘爆炸\n10 步 r=1.25 连乘\n膨胀至 9.31x 失稳', 'orange'),
+        (0.36, 0.58, 0.28, 0.24, '② V-trace 双重截断\nρ_t ≤ 1.20 控更新幅\nc_t ≤ 1.00 控回溯迹', 'teal'),
+        (0.68, 0.58, 0.28, 0.24, '③ 轮次双层优势\n环境观测掩码置零\n动作段无偏信用分配', 'blue'),
     ]
     for x, y, w, h, label, role in stages:
         box(ax, x, y, w, h, label, role, size=11)
     arrow(ax, (0.32, 0.70), (0.36, 0.70))
     arrow(ax, (0.64, 0.70), (0.68, 0.70))
 
-    card(ax, 0.02, 0.03, 0.96, 0.42, '全历史线性增长 vs. 6 块滚动 KV 池的显存与延迟边界', color='teal')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '无界历史 KV 累积\n10 分钟达 1440 万词元\n显存爆表 > 878 GiB 且掉帧', 'orange', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '1 Sink + 5 滑窗（21600 词元）\n28 层 KV 恒定 1.3184 GiB\n无限时长稳定 > 20 FPS', 'teal', size=11)
+    card(ax, 0.02, 0.03, 0.96, 0.42, '无截断连乘 IS vs. V-trace / TIS 在陈旧度 τ=3 下的方差控制', color='blue')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '未截断轨迹连乘 IS\n随序列长度指数级发散\n单条离群样本炸毁梯度', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, 'V-trace (ρ̄=1.2, c̄=1.0) + 掩码\n严格有界递推价值目标\n支撑 τ ≤ 4 异步多轮收敛', 'teal', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '块因果掩码将离线双向扩散转化为 O(1) 显存复杂度的无限流式世界模型', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch17-causal-streaming-world-model-20fps-kv-rolling')
-
-
-def fig_17_22_teacache_pab_reuse(ex: Exporter):
-    fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '金字塔注意力广播（PAB）与 TeaCache 跨帧/跨步特征复用', color='teal')
-    stages = [
-        (0.04, 0.58, 0.28, 0.24, '① 空间自注意力\n高频细节变化最快\n间隔 2 步广播复用', 'blue'),
-        (0.36, 0.58, 0.28, 0.24, '② 时间因果注意力\n中频运动轨迹平滑\n间隔 3 步跨步复用', 'teal'),
-        (0.68, 0.58, 0.28, 0.24, '③ 条件交叉注意力\n低频控制语义最稳\n4 步仅首步算 1 次', 'purple'),
-    ]
-    for x, y, w, h, label, role in stages:
-        box(ax, x, y, w, h, label, role, size=11)
-    arrow(ax, (0.32, 0.70), (0.36, 0.70))
-    arrow(ax, (0.64, 0.70), (0.68, 0.70))
-
-    card(ax, 0.02, 0.03, 0.96, 0.42, '4 步块因果去噪下未复用 vs. PAB + TeaCache 复用延迟账本', color='blue')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '4 步全量块因果计算\nDiT 168 ms + VAE 18 ms\n单帧 62.0 ms（仅 16.13 FPS）', 'orange', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, 'PAB + TeaCache 跨步复用\nDiT 压至 96 ms + VAE 18 ms\n单帧 38.0 ms（达 26.32 FPS）', 'teal', size=11)
-    arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '按空间/时间/条件特征频谱分层复用，单块耗时从 186 ms 降至 114 ms', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch17-teacache-timestep-embedding-aware-activation-reuse')
+    text(ax, 0.50, 0.06, '外部环境返回词元必须从损失与 IS 比率中掩码剔除，仅对策略动作算梯度', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch18-asynchronous-off-policy-importance-sampling-clipping')
 
 
 def main():
     ex = Exporter(HERE)
-    fig_17_1_1d_vs_3d_tokens(ex)
-    fig_17_2_anyres_navit_qwen3vl(ex)
-    fig_17_3_3d_vae_tiling(ex)
-    fig_17_4_tp_ulysses_ring(ex)
-    fig_17_5_2d_usp(ex)
-    fig_17_6_dbsp(ex)
-    fig_17_7_distrifusion(ex)
-    fig_17_8_pipefusion(ex)
-    fig_17_9_teacache(ex)
-    fig_17_10_sageattention(ex)
-    fig_17_11_world_model_30fps(ex)
-    fig_17_12_epdg_disaggregation(ex)
-    fig_17_13_ec_vs_kv_cache(ex)
-    fig_17_14_interleaved_batching(ex)
-    fig_17_15_gpu_decode_dataloader(ex)
-    fig_17_16_dit_cfg(ex)
-    fig_17_17_end_to_end_breakdown(ex)
-    fig_17_18_synthesis(ex)
-    fig_17_19_transfusion_hybrid_mask(ex)
-    fig_17_20_3dgs_world_model(ex)
-    fig_17_21_causal_streaming_20fps(ex)
-    fig_17_22_teacache_pab_reuse(ex)
+    fig_18_1_ppo_vs_grpo(ex)
+    fig_18_2_rollout_dominance(ex)
+    fig_18_3_verl_hybrid_engine(ex)
+    fig_18_4_colocated_vs_disagg(ex)
+    fig_18_5_long_cot_bubble(ex)
+    fig_18_6_rollpacker(ex)
+    fig_18_7_seer_speculative(ex)
+    fig_18_8_partial_rollout(ex)
+    fig_18_9_importance_sampling(ex)
+    fig_18_10_robustrl(ex)
+    fig_18_11_distrs(ex)
+    fig_18_12_prm_tree_cow(ex)
+    fig_18_13_reward_barrier(ex)
+    fig_18_14_multi_turn_tool_rl(ex)
+    fig_18_15_hetrl(ex)
+    fig_18_16_dapo_filter(ex)
+    fig_18_17_throughput_waterfall(ex)
+    fig_18_18_closed_loop(ex)
+    fig_18_19_geo_async_rollout(ex)
+    fig_18_20_reward_hacking_breaker(ex)
+    fig_18_21_multi_turn_tree_fork(ex)
+    fig_18_22_async_vtrace_tis(ex)
     outputs = ex.finish()
 
     fig_index = [
         {
-            "figure_id": "图 17-1",
+            "figure_id": "图 18-1",
             "number": 1,
-            "file": "ch17-1d-llm-vs-3d-spatiotemporal-dit-tokens.svg",
-            "asset": "ch17/ch17-1d-llm-vs-3d-spatiotemporal-dit-tokens.svg",
-            "section": "17.1.1",
-            "caption": "一维文本 Token 序列与 3D 视频扩散模型（T×H×W 潜空间分块，489,600 Tokens）的规模与算术强度对比",
-            "source_refs": ["manuscripts/ch17/figure-data.json", "experiments/ch17/17-01/run.py"],
-            "TeachingRole": "对比 1D LLM 自回归访存受限与 3D DiT 489,600 时空词元双向注意力算力墙"
+            "file": "ch18-ppo-four-model-vs-grpo-memory-ledger.svg",
+            "asset": "ch18/ch18-ppo-four-model-vs-grpo-memory-ledger.svg",
+            "section": "18.1.1",
+            "caption": "PPO 四模型（Actor/Critic/Ref/RM）与 GRPO/DAPO（消去 Critic + 组采样 G 条轨迹）的显存与计算量对比（算例 18-1）",
+            "source_refs": ["manuscripts/ch18/figure-data.json", "experiments/ch17/17-01/run.py"],
+            "TeachingRole": "量化 32B 模型下 PPO 1,152 GB（36Ψ）与 GRPO 576 GB（18Ψ）的 50% 状态显存削减"
         },
         {
-            "figure_id": "图 17-2",
+            "figure_id": "图 18-2",
             "number": 2,
-            "file": "ch17-anyres-navit-dynamic-image-tiling.svg",
-            "asset": "ch17/ch17-anyres-navit-dynamic-image-tiling.svg",
-            "section": "17.1.1",
-            "caption": "AnyRes 动态高分辨率切片、NaViT 序列打包与 Qwen3-VL-4B DeepStack 特征（7.8125 MiB EC → 56.25 MiB KV，7.2x 放大）演化（算例 17-1）",
-            "source_refs": ["case-studies/multimodal-stage-placement.md", "experiments/ch17/17-01/run.py"],
-            "TeachingRole": "复算 Qwen3-VL-4B 单图 400 词元从 7.8125 MiB 编码特征膨胀为 56.25 MiB KV 缓存的 7.2 倍比值"
+            "file": "ch18-rlvr-iteration-timeline-rollout-dominance.svg",
+            "asset": "ch18/ch18-rlvr-iteration-timeline-rollout-dominance.svg",
+            "section": "18.1.2",
+            "caption": "RLVR 单步训练时间线分解——为何自回归 Rollout 占据 70%–90% 墙钟时间且算术强度极低",
+            "source_refs": ["manuscripts/ch18/figure-data.json"],
+            "TeachingRole": "从 Decode 访存带宽受限与 Prefill/Backward 算力密集的反差解释 Rollout 主导现象"
         },
         {
-            "figure_id": "图 17-3",
+            "figure_id": "图 18-3",
             "number": 3,
-            "file": "ch17-3d-causal-vae-memory-spike-and-tiling.svg",
-            "asset": "ch17/ch17-3d-causal-vae-memory-spike-and-tiling.svg",
-            "section": "17.1.3",
-            "caption": "3D 因果 VAE 解码阶段的特征图显存洪峰（突破 80 GB）与带重叠 Halo 的时空分块（Spatial-Temporal Tiling）解码（算例 17-3）",
-            "source_refs": ["manuscripts/ch17/figure-data.json", "experiments/ch17/17-01/run.py"],
-            "TeachingRole": "揭示视频去噪尾端 3D VAE 118.65 GiB 特征图洪峰及带 Halo 时空分块的百倍显存压缩"
+            "file": "ch18-verl-3d-hybrid-engine-zero-redundancy-reshard.svg",
+            "asset": "ch18/ch18-verl-3d-hybrid-engine-zero-redundancy-reshard.svg",
+            "section": "18.2.1",
+            "caption": "veRL（HybridFlow）3D-HybridEngine 训练态（ZeRO+TP+PP）与生成态（微张量并行）的零冗余内存重分片机制",
+            "source_refs": ["manuscripts/ch18/figure-data.json"],
+            "TeachingRole": "解析子网格微分组 AllGather 如何消除训练态与推理态的并行拓扑冲突"
         },
         {
-            "figure_id": "图 17-4",
+            "figure_id": "图 18-4",
             "number": 4,
-            "file": "ch17-tp-vs-ulysses-vs-ring-attention-comm.svg",
-            "asset": "ch17/ch17-tp-vs-ulysses-vs-ring-attention-comm.svg",
-            "section": "17.2.2",
-            "caption": "张量并行（TP）、DeepSpeed-Ulysses（每层 4Nd/P，P ≤ n_head）与 Ring Attention（单步 2Nd/P、全环 2(P-1)Nd/P ≈ 2Nd，无头数限制）对比（算例 17-4）",
-            "source_refs": ["manuscripts/ch17/figure-data.json", "experiments/ch17/17-01/run.py"],
-            "TeachingRole": "精确对比 Ulysses 与 Ring Attention 的单步/全环通信公式及注意力头数上限约束"
+            "file": "ch18-colocated-vs-disaggregated-rl-architecture.svg",
+            "asset": "ch18/ch18-colocated-vs-disaggregated-rl-architecture.svg",
+            "section": "18.2.2",
+            "caption": "训推共置（veRL）与物理训推分离及互补错峰池化（Weave OSDI '26，算例 18-3）对比",
+            "source_refs": ["case-studies/rl-scheduling-and-recovery.md", "experiments/ch17/17-01/run.py"],
+            "TeachingRole": "复算 Weave 互补作业（360/120 s 与 120/360 s）共享 216 H20 与 152 H800 的削峰收益"
         },
         {
-            "figure_id": "图 17-5",
+            "figure_id": "图 18-5",
             "number": 5,
-            "file": "ch17-2d-usp-hybrid-ulysses-ring-topology.svg",
-            "asset": "ch17/ch17-2d-usp-hybrid-ulysses-ring-topology.svg",
-            "section": "17.2.3",
-            "caption": "2D 统一序列并行（USP）：节点内 NVLink 跑 Ulysses All-to-All + 跨节点 RoCE 跑 Ring Attention P2P 重叠流水",
-            "source_refs": ["manuscripts/ch17/figure-data.json", "experiments/ch17/17-01/run.py"],
-            "TeachingRole": "证明 8×8 2D-USP 可将跨节点 RDMA 流量从 7,530.47 MiB 压缩 9.0 倍至 836.72 MiB"
+            "file": "ch18-long-cot-power-law-straggler-bubble.svg",
+            "asset": "ch18/ch18-long-cot-power-law-straggler-bubble.svg",
+            "section": "18.3.1",
+            "caption": "长思维链（Long-CoT）输出长度幂律分布引发的同步 Rollout 尾部巨大 GPU 空泡",
+            "source_refs": ["case-studies/rollout-tail-and-sampling.md"],
+            "TeachingRole": "揭示 5% 超长推理轨迹如何通过同步屏障迫使 90% 已完成 GPU 空转等待"
         },
         {
-            "figure_id": "图 17-6",
+            "figure_id": "图 18-6",
             "number": 6,
-            "file": "ch17-dbsp-dual-balanced-sequence-parallelism.svg",
-            "asset": "ch17/ch17-dbsp-dual-balanced-sequence-parallelism.svg",
-            "section": "17.2.3",
-            "caption": "db-SP（MLSys '26）面向变长多模态与因果掩码的双均衡序列切分",
-            "source_refs": ["research/2026-infra-survey/reading-mlsys-2026.md"],
-            "TeachingRole": "解析模态内折返配对与跨样本重排如何消除因果/双向混合掩码导致的算力倾斜"
+            "file": "ch18-rollpacker-tail-migration-and-cp-scaling.svg",
+            "asset": "ch18/ch18-rollpacker-tail-migration-and-cp-scaling.svg",
+            "section": "18.3.2",
+            "caption": "RollPacker（NSDI '26）尾部存活请求紧缩迁移、双槽位长度偏差（1/2 → 1/4）与微批均值平均（2.0）vs. 全局总词元归一化（2.5）对比（算例 18-5 & 18-6）",
+            "source_refs": ["case-studies/rollout-tail-and-sampling.md", "experiments/ch17/17-01/run.py"],
+            "TeachingRole": "严格证明不均等微批下按微批均值平均会产生 2.0 vs 2.5 的梯度偏置"
         },
         {
-            "figure_id": "图 17-7",
+            "figure_id": "图 18-7",
             "number": 7,
-            "file": "ch17-distrifusion-displaced-patch-parallelism.svg",
-            "asset": "ch17/ch17-distrifusion-displaced-patch-parallelism.svg",
-            "section": "17.3.1",
-            "caption": "DistriFusion 异步位移 Patch 并行——利用第 t-1 步陈旧激活掩盖第 t 步跨卡通信",
-            "source_refs": ["manuscripts/ch17/figure-data.json"],
-            "TeachingRole": "利用相邻扩散步激活缓变性将跨卡 KV 传输彻底移出当前步关键路径"
+            "file": "ch18-seer-divided-and-conquered-speculative-rollout.svg",
+            "asset": "ch18/ch18-seer-divided-and-conquered-speculative-rollout.svg",
+            "section": "18.3.2",
+            "caption": "Seer（OSDI '26）分段征服长尾 Rollout 与组内共享前缀投机解码加速",
+            "source_refs": ["research/2026-infra-survey/reading-osdi-2026.md", "case-studies/rollout-tail-and-sampling.md"],
+            "TeachingRole": "展示如何利用同组已完成短轨迹构建免模型草稿树加速剩余长尾轨迹"
         },
         {
-            "figure_id": "图 17-8",
+            "figure_id": "图 18-8",
             "number": 8,
-            "file": "ch17-pipefusion-step-patch-2d-pipeline.svg",
-            "asset": "ch17/ch17-pipefusion-step-patch-2d-pipeline.svg",
-            "section": "17.3.1",
-            "caption": "PipeFusion 将空间分块与去噪时间步交错流水化的气泡消除时序图",
-            "source_refs": ["manuscripts/ch17/figure-data.json"],
-            "TeachingRole": "展示空间分块与时间步二维交错流水如何将 50 次流水线排空气泡压缩为 1 次"
+            "file": "ch18-staleness-bounded-partial-rollout-pipeline.svg",
+            "asset": "ch18/ch18-staleness-bounded-partial-rollout-pipeline.svg",
+            "section": "18.3.3",
+            "caption": "同步屏障 Rollout vs. 陈旧度有界（τ ≤ τ_max）异步部分采样（Partial Rollout）的流水线吞吐跃升",
+            "source_refs": ["case-studies/rollout-tail-and-sampling.md"],
+            "TeachingRole": "允许未完长轨迹保留 KV 跨训练步续生，将集群有效利用率推高至 >88%"
         },
         {
-            "figure_id": "图 17-9",
+            "figure_id": "图 18-9",
             "number": 9,
-            "file": "ch17-teacache-timestep-residual-reuse.svg",
-            "asset": "ch17/ch17-teacache-timestep-residual-reuse.svg",
-            "section": "17.3.2",
-            "caption": "TeaCache / AdaCache 基于时间步特征差分的自适应跳步复用与质量—延迟帕累托曲线（算例 17-5）",
-            "source_refs": ["manuscripts/ch17/figure-data.json", "experiments/ch17/17-01/run.py"],
-            "TeachingRole": "量化免训练时间步残差复用跳过 28/50 步实现的 2.12x 端到端视频生成加速"
+            "file": "ch18-off-policy-importance-sampling-clipping.svg",
+            "asset": "ch18/ch18-off-policy-importance-sampling-clipping.svg",
+            "section": "18.3.3",
+            "caption": "异步 RL 中策略版本偏移 Δv = τ 下的重要性采样比率波动与逐词元真实行为概率记录准则",
+            "source_refs": ["case-studies/rollout-tail-and-sampling.md"],
+            "TeachingRole": "阐明跨版本拼接轨迹必须随词元流持久化生成当下的真实 logprob"
         },
         {
-            "figure_id": "图 17-10",
+            "figure_id": "图 18-10",
             "number": 10,
-            "file": "ch17-sageattention3-fp4-quantized-attention.svg",
-            "asset": "ch17/ch17-sageattention3-fp4-quantized-attention.svg",
-            "section": "17.3.2",
-            "caption": "SageAttention 平滑均值抑制离群值与 FP8/FP4 块量化注意力的硬件加速路径",
-            "source_refs": ["manuscripts/ch17/figure-data.json"],
-            "TeachingRole": "阐明减去 K 通道序列均值如何消除离群偏置并释放 FP8/FP4 Tensor Core 吞吐"
+            "file": "ch18-robustrl-role-based-fault-isolation.svg",
+            "asset": "ch18/ch18-robustrl-role-based-fault-isolation.svg",
+            "section": "18.3.3",
+            "caption": "RobustRL（OSDI '26）区分无状态 Rollout 故障与有状态 Learner 故障的非对称容错（790 s vs. 490 s，净省 300 s，算例 18-7）",
+            "source_refs": ["case-studies/rl-scheduling-and-recovery.md", "experiments/ch17/17-01/run.py"],
+            "TeachingRole": "复算保留已完成 Rollout 轨迹将训练侧故障恢复耗时从 790 s 压至 490 s 的锁定账本"
         },
         {
-            "figure_id": "图 17-11",
+            "figure_id": "图 18-11",
             "number": 11,
-            "file": "ch17-interactive-world-model-rolling-kv-30fps.svg",
-            "asset": "ch17/ch17-interactive-world-model-rolling-kv-30fps.svg",
-            "section": "17.3.3",
-            "caption": "交互式世界模型（StreamDiffusionV2 / CausVid）的因果少步蒸馏与 <33.3 ms 滚动 KV 帧生成流水线",
-            "source_refs": ["manuscripts/ch17/figure-data.json"],
-            "TeachingRole": "剖析块因果扩散、1–4 步蒸馏、滚动 KV 缓存与步间流式拼批如何达成 30 FPS 实时交互"
+            "file": "ch18-distrs-disaggregated-reward-sandbox-streaming.svg",
+            "asset": "ch18/ch18-distrs-disaggregated-reward-sandbox-streaming.svg",
+            "section": "18.4.1",
+            "caption": "DistRS（NSDI '26）将沙箱验证与长尾生成流式重叠及基于条件剩余时间 E[S-e | S>e]（90 s vs. 0.9 s）与 216,000 词元阈值的超期裁剪（算例 18-8）",
+            "source_refs": ["case-studies/reward-deadlines-and-feedback.md", "experiments/ch17/17-01/run.py"],
+            "TeachingRole": "证明重尾验证分布下朴素剩余时间估计（0.9 s）与真实条件期望（90.0 s）的百倍误差"
         },
         {
-            "figure_id": "图 17-12",
+            "figure_id": "图 18-12",
             "number": 12,
-            "file": "ch17-epdg-four-stage-disaggregated-serving.svg",
-            "asset": "ch17/ch17-epdg-four-stage-disaggregated-serving.svg",
-            "section": "17.4.1",
-            "caption": "从 TriInfer（MLSys '26）混合 EPD 解耦到 vLLM-Omni 原生全模态 E-P-D-G 四阶段异构池化架构（算例 17-6）",
-            "source_refs": ["case-studies/multimodal-stage-placement.md", "research/2026-infra-survey/reading-mlsys-2026.md"],
-            "TeachingRole": "建立 Encode、Prefill、Decode、Generate 四池分离与 TriInfer 动态放置准则"
+            "file": "ch18-test-time-scaling-prm-tree-search-cow-kv.svg",
+            "asset": "ch18/ch18-test-time-scaling-prm-tree-search-cow-kv.svg",
+            "section": "18.4.2",
+            "caption": "推理时扩展（Best-of-N / PRM 树搜索）利用 PagedAttention 写时复制（CoW）共享父节点 KV 缓存",
+            "source_refs": ["manuscripts/ch18/figure-data.json"],
+            "TeachingRole": "解析页表引用计数 CoW 与树注意力如何消除树状搜索的物理拷贝与显存膨胀"
         },
         {
-            "figure_id": "图 17-13",
+            "figure_id": "图 18-13",
             "number": 13,
-            "file": "ch17-vit-embedding-cache-vs-llm-kv-cache.svg",
-            "asset": "ch17/ch17-vit-embedding-cache-vs-llm-kv-cache.svg",
-            "section": "17.4.2",
-            "caption": "多轮多模态对话中缓存原始图片、缓存 ViT 视觉特征（7.8125 MiB）与缓存 LLM 全层 KV（56.25 MiB）的体积与重算延迟折中",
-            "source_refs": ["case-studies/multimodal-stage-placement.md", "experiments/ch17/17-01/run.py"],
-            "TeachingRole": "证明在多轮对话温冷层缓存 EC 而非 KV 可节省 86.1% 内存并消除 ViT 重算"
+            "file": "ch18-speculative-tot-reward-barrier-bypass.svg",
+            "asset": "ch18/ch18-speculative-tot-reward-barrier-bypass.svg",
+            "section": "18.4.2",
+            "caption": "Breaking the Reward Barrier（OSDI '26）在等待 PRM 评分期间投机性预展开高置信分支的时序对比",
+            "source_refs": ["research/2026-infra-survey/reading-osdi-2026.md", "case-studies/reward-deadlines-and-feedback.md"],
+            "TeachingRole": "通过超前投机展开子节点将重型 PRM 评分延迟隐藏在树搜索关键路径之外"
         },
         {
-            "figure_id": "图 17-14",
+            "figure_id": "图 18-14",
             "number": 14,
-            "file": "ch17-audio-video-text-interleaved-batching.svg",
-            "asset": "ch17/ch17-audio-video-text-interleaved-batching.svg",
-            "section": "17.4.2",
-            "caption": "图文音交错流（Omni-modal）中模态专属编码器微批聚合与主干对齐调度",
-            "source_refs": ["case-studies/multimodal-stage-placement.md"],
-            "TeachingRole": "解决图文音混合批次中重型模态编码阻塞纯文本快路径的异构气泡难题"
+            "file": "ch18-multi-turn-tool-env-rl-state-suspension.svg",
+            "asset": "ch18/ch18-multi-turn-tool-env-rl-state-suspension.svg",
+            "section": "18.4.1",
+            "caption": "多轮工具调用 / SWE-bench 强化学习中等待外部环境返回时的 KV 换出挂起与高并发复用",
+            "source_refs": ["case-studies/rl-scheduling-and-recovery.md"],
+            "TeachingRole": "消除慢速外部沙箱执行期间巨量 KV 缓存死占 HBM 导致的算力饥饿"
         },
         {
-            "figure_id": "图 17-15",
+            "figure_id": "图 18-15",
             "number": 15,
-            "file": "ch17-multimodal-dataloader-gpu-decode-nvjpeg.svg",
-            "asset": "ch17/ch17-multimodal-dataloader-gpu-decode-nvjpeg.svg",
-            "section": "17.1.3",
-            "caption": "多模态预训练中 CPU 解码饥饿瓶颈与 DALI / nvJPEG / NVDEC 硬件视频解码卸载流水线",
-            "source_refs": ["manuscripts/ch17/figure-data.json"],
-            "TeachingRole": "阐明为何必须在 PCIe 下游利用 GPU NVDEC/nvJPEG 硬解码消除 CPU 与总线瓶颈"
+            "file": "ch18-hetrl-heterogeneous-inference-training-matching.svg",
+            "asset": "ch18/ch18-hetrl-heterogeneous-inference-training-matching.svg",
+            "section": "18.2.2",
+            "caption": "HetRL 在带宽型推理卡与算力型训练卡之间的最优配比曲线",
+            "source_refs": ["case-studies/rl-scheduling-and-recovery.md"],
+            "TeachingRole": "建立按生成吞吐与训练吞吐匹配异构卡数的定量公式"
         },
         {
-            "figure_id": "图 17-16",
+            "figure_id": "图 18-16",
             "number": 16,
-            "file": "ch17-dit-cfg-classifier-free-guidance-parallel.svg",
-            "asset": "ch17/ch17-dit-cfg-classifier-free-guidance-parallel.svg",
-            "section": "17.2.3",
-            "caption": "分类器自由引导（CFG 双分支）与条件/无条件批量合并及尾部蒸馏对比",
-            "source_refs": ["manuscripts/ch17/figure-data.json"],
-            "TeachingRole": "解析 CFG-Parallel 跨组单次通信优势及后段去噪关停无条件分支的算力节省"
+            "file": "ch18-dapo-dynamic-sampling-zero-variance-filter.svg",
+            "asset": "ch18/ch18-dapo-dynamic-sampling-zero-variance-filter.svg",
+            "section": "18.3.2",
+            "caption": "DAPO 动态过滤全对（r=1）与全错（r=0）零梯度提示词及 RollPacker 1,600 选 1,024 投机池",
+            "source_refs": ["case-studies/rollout-tail-and-sampling.md", "experiments/ch17/17-01/run.py"],
+            "TeachingRole": "结合 +56.25% 投机超采池与在线零方差过滤确保训练微批 100% 满载有效梯度"
         },
         {
-            "figure_id": "图 17-17",
+            "figure_id": "图 18-17",
             "number": 17,
-            "file": "ch17-video-dit-end-to-end-latency-breakdown.svg",
-            "asset": "ch17/ch17-video-dit-end-to-end-latency-breakdown.svg",
-            "section": "17.3.2",
-            "caption": "1080p 视频生成从文本编码、50 步 DiT 去噪到 3D VAE 解码的端到端延迟与显存水位全貌",
-            "source_refs": ["manuscripts/ch17/figure-data.json", "experiments/ch17/17-01/run.py"],
-            "TeachingRole": "建立时间瓶颈在 DiT 去噪（94% 耗时）而显存尖峰在 3D VAE 解码（118 GiB）的正交视图"
+            "file": "ch18-rl-post-training-throughput-roofline.svg",
+            "asset": "ch18/ch18-rl-post-training-throughput-roofline.svg",
+            "section": "18.3.3",
+            "caption": "大规模 RLVR 系统从朴素同步共置到异步分池+尾部拼箱的四阶有效吞吐跃迁瀑布图",
+            "source_refs": ["case-studies/rollout-tail-and-sampling.md"],
+            "TeachingRole": "汇总零冗余重分片、尾部拼箱投机与异步部分采样的阶梯收益及无偏性条件"
         },
         {
-            "figure_id": "图 17-18",
+            "figure_id": "图 18-18",
             "number": 18,
-            "file": "ch17-multimodal-world-model-infra-synthesis.svg",
-            "asset": "ch17/ch17-multimodal-world-model-infra-synthesis.svg",
-            "section": "17.4.2",
-            "caption": "多模态与世界模型基础设施的算法—并行—缓存—解耦四维总架构图",
-            "source_refs": ["case-studies/multimodal-stage-placement.md", "experiments/ch17/17-01/run.py"],
-            "TeachingRole": "收束第 17 章三维潜空间、2D-USP、时间步复用与 E-P-D-G 四池解耦的工程总账本"
+            "file": "ch18-rlvr-and-test-time-compute-closed-loop.svg",
+            "asset": "ch18/ch18-rlvr-and-test-time-compute-closed-loop.svg",
+            "section": "18.4.2",
+            "caption": "测试时搜索合成高价值轨迹 → 沙箱验证 → 异步 RLVR 更新 → 蒸馏回直觉模型的自我演进总账本",
+            "source_refs": ["experiments/ch17/17-01/run.py"],
+            "TeachingRole": "收束第 18 章 RLVR 显存账本、训推池化、长尾治理与推理时搜索的工程总图"
         },
         {
-            "figure_id": "图 17-19",
+            "figure_id": "图 18-19",
             "number": 19,
-            "file": "ch17-transfusion-hybrid-causal-bidirectional-mask.svg",
-            "asset": "ch17/ch17-transfusion-hybrid-causal-bidirectional-mask.svg",
-            "section": "17.4.3",
-            "caption": "统一多模态模型（Transfusion / Show-o / Bagel）中文本因果掩码与图像块双向扩散掩码的混合排布及模式切换状态机（算例 17-7）",
-            "source_refs": ["manuscripts/ch17/figure-data.json", "experiments/ch17/17-02/run.py"],
-            "TeachingRole": "推导混合掩码 62.5% 有效面积、648/1024 分块跳过及 <boi> 触发 D→G 跨池迁移的定量准则"
+            "file": "ch18-geo-distributed-async-rollout-harvester.svg",
+            "asset": "ch18/ch18-geo-distributed-async-rollout-harvester.svg",
+            "section": "18.4.3",
+            "caption": "跨地域闲置推理算力异步收割 Rollout 轨迹、Token ID 极窄带宽回传与中心 Learner 重要性采样过滤架构（算例 18-9）",
+            "source_refs": ["manuscripts/ch18/figure-data.json", "experiments/ch17/17-02/run.py"],
+            "TeachingRole": "复算 10 B/tok 紧凑回传将 1,024×16K 轨迹从 2,473.9 GB 压缩 14,745.6x 至 160.0 MiB 的广域网账本"
         },
         {
-            "figure_id": "图 17-20",
+            "figure_id": "图 18-20",
             "number": 20,
-            "file": "ch17-3dgs-scaffold-guided-world-model-dit.svg",
-            "asset": "ch17/ch17-3dgs-scaffold-guided-world-model-dit.svg",
-            "section": "17.4.3",
-            "caption": "显式 3DGS 几何光栅化提供深度/法线控制条件与视频 DiT 生成逼真物理交互画面的混合世界模型管线",
-            "source_refs": ["manuscripts/ch17/figure-data.json", "experiments/ch17/17-02/run.py"],
-            "TeachingRole": "剖析 2.4 ms 3DGS 光栅化 + 24.0 ms 4 步视频 DiT + 4.5 ms VAE 达成 32.36 FPS 零几何漂移的管线账本"
+            "file": "ch18-rlvr-reward-hacking-kl-divergence-breaker.svg",
+            "asset": "ch18/ch18-rlvr-reward-hacking-kl-divergence-breaker.svg",
+            "section": "18.4.3",
+            "caption": "RLVR 训练中奖励黑客（长度失控与熵坍缩）的在线监控指标相图与自适应 KL 制动熔断机制",
+            "source_refs": ["manuscripts/ch18/figure-data.json", "experiments/ch17/17-02/run.py"],
+            "TeachingRole": "建立基于 (KL 散度, 输出长度, 策略熵) 的两级在线奖励黑客制动与检查点回滚状态机"
         },
         {
-            "figure_id": "图 17-21",
+            "figure_id": "图 18-21",
             "number": 21,
-            "file": "ch17-causal-streaming-world-model-20fps-kv-rolling.svg",
-            "asset": "ch17/ch17-causal-streaming-world-model-20fps-kv-rolling.svg",
-            "section": "17.4.3",
-            "caption": "自回归流式因果视频世界模型（CausVid / Oasis / Matrix-Game）的块因果滚动 KV 缓存池（1 Sink + 5 滑窗，恒定 1.3184 GiB）架构（算例 17-8）",
-            "source_refs": ["manuscripts/ch17/figure-data.json", "experiments/ch17/17-03/run.py"],
-            "TeachingRole": "推导 1 Sink + 5 滑窗（21,600 词元）将无限时长世界模型 KV 显存锁定在 1.3184 GiB 的定量账本"
+            "file": "ch18-multi-turn-agentic-rlvr-trajectory-tree-forking.svg",
+            "asset": "ch18/ch18-multi-turn-agentic-rlvr-trajectory-tree-forking.svg",
+            "section": "18.4.3",
+            "caption": "多轮工具交互强化学习（SWE-RL / DeepResearch-RL）中容器环境快照（OverlayFS + CRIU）与 Paged KV 树状分叉架构（算例 18-10）",
+            "source_refs": ["manuscripts/ch18/figure-data.json", "experiments/ch17/17-03/run.py"],
+            "TeachingRole": "推导 16 条叶分支下容器+KV 树分叉将沙箱 CPU 耗时从 672.0 s 压至 114.0 s（5.89x）并省 84.38% 前缀 KV 的账本"
         },
         {
-            "figure_id": "图 17-22",
+            "figure_id": "图 18-22",
             "number": 22,
-            "file": "ch17-teacache-timestep-embedding-aware-activation-reuse.svg",
-            "asset": "ch17/ch17-teacache-timestep-embedding-aware-activation-reuse.svg",
-            "section": "17.4.3",
-            "caption": "金字塔注意力广播（PAB）与 TeaCache 时间步嵌入感知特征复用在流式世界模型中的跨步/跨帧加速路径",
-            "source_refs": ["manuscripts/ch17/figure-data.json", "experiments/ch17/17-03/run.py"],
-            "TeachingRole": "解析空间/时间/交叉注意力金字塔广播与 TeaCache 如何将单帧延迟从 62.0 ms 压至 38.0 ms（26.32 FPS）"
+            "file": "ch18-asynchronous-off-policy-importance-sampling-clipping.svg",
+            "asset": "ch18/ch18-asynchronous-off-policy-importance-sampling-clipping.svg",
+            "section": "18.4.3",
+            "caption": "异步离策略强化学习中连乘重要性采样爆炸与 V-trace（ρ̄, c̄ 双重截断）/ TIS 轨迹修正及环境观测掩码机制",
+            "source_refs": ["manuscripts/ch18/figure-data.json", "experiments/ch17/17-03/run.py"],
+            "TeachingRole": "对比 10 步未截断连乘 IS（9.31x 爆炸）与 V-trace 双重截断递推及环境观测掩码置零的收敛保障"
         }
     ]
     for row in fig_index:
-        row['figure'] = f"17-{row['number']}"
+        row['figure'] = f"18-{row['number']}"
         row['name'] = Path(row['file']).stem
     (HERE / 'figure-index.json').write_text(json.dumps(fig_index, ensure_ascii=False, indent=2) + '\n')
 
-    md = HERE.parent / '17-多模态、视频生成（DiT）与世界模型基础设施.md'
+    md = HERE.parent / '18-大规模后训练（RLVR）、异步强化学习与推理时扩展系统.md'
     if md.exists():
         text_md = md.read_text()
         display = re.findall(r'\$\$(.+?)\$\$', text_md, re.S)
@@ -769,9 +769,9 @@ def main():
             b64 = base64.b64encode(p.read_bytes()).decode()
             return f'<figure><img alt="{alt}" src="data:image/png;base64,{b64}"><figcaption>{alt}</figcaption></figure>'
 
-        work = re.sub(r'!\[([^\]]*)\]\((ch17/[^)]+)\)', repl_img, text_md)
+        work = re.sub(r'!\[([^\]]*)\]\((ch18/[^)]+)\)', repl_img, text_md)
         body = markdown.markdown(work, extensions=['tables', 'fenced_code', 'footnotes', 'toc'])
-        html = f'<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>第 17 章：多模态、视频生成（DiT）与世界模型基础设施</title></head><body>{body}</body></html>\n'
+        html = f'<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>第 18 章：大规模后训练（RLVR）、异步强化学习与推理时扩展系统</title></head><body>{body}</body></html>\n'
         out_html = preview_path(md)
         out_html.write_text(html)
 
@@ -801,7 +801,7 @@ def main():
         )
         + '\n'
     )
-    print(f'Built {len(outputs)} figure files for Chapter 17; 0 layout warnings.')
+    print(f'Built {len(outputs)} figure files for Chapter 18; 0 layout warnings.')
 
 
 if __name__ == '__main__':

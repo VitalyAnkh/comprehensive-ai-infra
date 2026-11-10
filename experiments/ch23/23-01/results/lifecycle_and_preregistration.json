@@ -1,0 +1,51 @@
+{
+  "experiment": "23-01",
+  "beyond_chinchilla": {
+    "delta_train_usd": 900000.0,
+    "delta_inf_per_m_usd": 0.3,
+    "breakeven_t_tokens": 3.0,
+    "breakeven_days": 150.0,
+    "net_savings_2yr_usd": 3480000.0
+  },
+  "k192_preregistration": {
+    "count": 10,
+    "paired_ratios": [
+      0.7661106575310103,
+      0.6374560811931168,
+      0.7039580198331323,
+      0.9502700026584732,
+      0.9372772983445644,
+      0.3734699482077529,
+      0.5814393631102742,
+      0.6823231258495099,
+      0.653319634253581,
+      0.7242621041727667
+    ],
+    "median_r": 0.693141,
+    "preregistered_interval": [
+      0.7,
+      1.0
+    ],
+    "in_interval": false,
+    "verdict": "refuted_in_scope"
+  },
+  "neusight_stage_calibration": {
+    "predicted_stage_ms": [
+      8.0,
+      2.0
+    ],
+    "actual_stage_ms": [
+      6.0,
+      4.0
+    ],
+    "aggregate_ape": 0.0,
+    "stage_apes": [
+      0.333333,
+      0.5
+    ],
+    "stage2_predicted_share": 0.2,
+    "stage2_actual_share": 0.4,
+    "halving_stage1_predicted_total_ms": 6.0,
+    "halving_stage1_actual_total_ms": 7.0
+  }
+}

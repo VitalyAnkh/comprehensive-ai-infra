@@ -1,31 +1,16 @@
 {
   "experiment_id": "24-02",
-  "evo2_flashfftconv_1m": {
-    "seq_len_l": 1048576,
-    "hidden_dim_d": 8192,
-    "quadratic_attn_tflops": 36028.8,
-    "flash_fft_conv_gflops": 1735.17,
-    "seq_mixer_flop_reduction_x": 20763.8,
-    "end_to_end_layer_speedup_x": 28.5
+  "deepep": {
+    "normal_mode_sm_count": 24,
+    "normal_mode_bw_gbs": 153.0,
+    "low_latency_dispatch_us": 163.0,
+    "low_latency_combine_us": 194.0,
+    "low_latency_sm_occupied": 0
   },
-  "sfno_2d_halo_overlap": {
-    "sub_lat": 450,
-    "sub_lon": 900,
-    "halo_perimeter_cells": 10800,
-    "halo_volume_mb": 5.53,
-    "interior_compute_ms": 14.2,
-    "halo_transfer_ms": 0.18,
-    "comm_to_comp_ratio_pct": 1.27,
-    "exposed_halo_ms": 0.0
-  },
-  "grand_encyclopedia_ledger": {
-    "total_chapters": 24,
-    "total_parts": 4,
-    "total_chapter_figures": 883,
-    "total_production_code_blocks": 166,
-    "total_worked_examples": 192,
-    "total_exercise_blocks": 432,
-    "total_unique_exercise_ids": 431,
-    "total_experiment_suites": 147
+  "dualpipe": {
+    "pp_stages": 16,
+    "bidirectional_microbatches": 32,
+    "exposed_alltoall_stall_pct": 0.0,
+    "bubble_reduction_vs_1f1b_x": 2.0
   }
 }

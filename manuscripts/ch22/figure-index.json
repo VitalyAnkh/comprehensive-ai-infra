@@ -2,265 +2,265 @@
   {
     "figure_id": "图 22-1",
     "number": 1,
-    "file": "ch22-cascaded-asr-llm-tts-vs-native-full-duplex-s2s.svg",
-    "asset": "ch22/ch22-cascaded-asr-llm-tts-vs-native-full-duplex-s2s.svg",
+    "file": "ch22-llm-1d-tokens-vs-ai4science-four-structural-domains.svg",
+    "asset": "ch22/ch22-llm-1d-tokens-vs-ai4science-four-structural-domains.svg",
     "section": "22.1.1",
-    "caption": "传统四级串联语音管线（1,280 ms 延迟 + 副语言丢失）与原生全双工 S2S（164 ms 双流并行，快 7.80 倍）架构对比（算例 22-1）",
+    "caption": "一维文本 Token 与四大科学智能领域（生物大分子 2D 对表示、基因组 1M 核苷酸序列、地球球面 PDE 网格、三维原子截断半径图）的计算图与复杂度对比",
     "source_refs": [
-      "experiments/ch22/22-01/run.py",
-      "manuscripts/ch22/figure-data.json"
+      "manuscripts/ch24/figure-data.json"
     ],
-    "TeachingRole": "定量拆解 VAD 等待与级联缓冲如何导致延迟破秒，以及原生全双工如何突破 200 ms 阈值",
+    "TeachingRole": "揭示科学基础模型参数量适中但高阶几何激活张量呈二次/三次方爆炸且伴随严重异构 I/O 失配的共性特征",
     "figure": "22-1",
-    "name": "ch22-cascaded-asr-llm-tts-vs-native-full-duplex-s2s"
+    "name": "ch22-llm-1d-tokens-vs-ai4science-four-structural-domains"
   },
   {
     "figure_id": "图 22-2",
     "number": 2,
-    "file": "ch22-full-duplex-dual-audio-streams-and-inner-monologue.svg",
-    "asset": "ch22/ch22-full-duplex-dual-audio-streams-and-inner-monologue.svg",
-    "section": "22.1.2",
-    "caption": "全双工模型在 80 ms 时钟节拍（12.5 Hz）下同时处理用户音频流、系统音频流与内心独白文本流（每步 17 词元）的联合状态转移",
+    "file": "ch22-alphafold3-boltz1-two-stage-disaggregated-pipeline.svg",
+    "asset": "ch22/ch22-alphafold3-boltz1-two-stage-disaggregated-pipeline.svg",
+    "section": "22.2.1",
+    "caption": "生物大分子预测两阶段异构解耦架构：Stage 1（MMseqs2-GPU 序列检索池，1.20 s）与 Stage 2（Pairformer + 扩散生成池，48.0 s）独立扩缩容实现 55.85 倍端到端提速（算例 22-1）",
     "source_refs": [
-      "experiments/ch22/22-01/run.py",
-      "manuscripts/ch22/figure-data.json"
+      "experiments/ch24/24-01/run.py",
+      "manuscripts/ch24/figure-data.json"
     ],
-    "TeachingRole": "阐明 Inner Monologue 文本锚点如何在保持全双工声学交互的同时防止语义退化",
+    "TeachingRole": "解决传统同机串行部署中 45 分钟 CPU MSA 搜索导致 H100/B200 空转 98.25% 的资源错配难题",
     "figure": "22-2",
-    "name": "ch22-full-duplex-dual-audio-streams-and-inner-monologue"
+    "name": "ch22-alphafold3-boltz1-two-stage-disaggregated-pipeline"
   },
   {
     "figure_id": "图 22-3",
     "number": 3,
-    "file": "ch22-rvq-neural-audio-codec-semantic-acoustic-hierarchy.svg",
-    "asset": "ch22/ch22-rvq-neural-audio-codec-semantic-acoustic-hierarchy.svg",
+    "file": "ch22-mmseqs2-gpu-kmer-prefilter-and-smith-waterman.svg",
+    "asset": "ch22/ch22-mmseqs2-gpu-kmer-prefilter-and-smith-waterman.svg",
     "section": "22.2.1",
-    "caption": "神经音频编解码器（Mimi / EnCodec）中语义首码本（q_1）与 7 层声学残差码本（q_2..q_8）的 RVQ 量化流水线（1.10 kbps，349.09 倍压缩，算例 22-2）",
+    "caption": "MMseqs2-GPU 利用片上共享内存 k-mer 查表与硬件 DPX 动态规划指令将 MSA 搜索从 2,700 秒压降至 1.20 秒（2,250.0 倍加速）的核内流水（算例 22-1）",
     "source_refs": [
-      "experiments/ch22/22-01/run.py",
-      "manuscripts/ch22/figure-data.json"
+      "experiments/ch24/24-01/run.py",
+      "manuscripts/ch24/figure-data.json"
     ],
-    "TeachingRole": "推导帧率、码本层数与词表大小对词元速率（100 tok/s）与比特率（1.10 kbps）的支配关系",
+    "TeachingRole": "拆解片上 SRAM 预过滤与 Hopper/Blackwell 原生 DPX 动态规划指令在序列同源检索中的硬件加速机理",
     "figure": "22-3",
-    "name": "ch22-rvq-neural-audio-codec-semantic-acoustic-hierarchy"
+    "name": "ch22-mmseqs2-gpu-kmer-prefilter-and-smith-waterman"
   },
   {
     "figure_id": "图 22-4",
     "number": 4,
-    "file": "ch22-delayed-codebook-pattern-vs-depth-transformer.svg",
-    "asset": "ch22/ch22-delayed-codebook-pattern-vs-depth-transformer.svg",
+    "file": "ch22-pairformer-triangle-multiplication-and-attention-o-n3.svg",
+    "asset": "ch22/ch22-pairformer-triangle-multiplication-and-attention-o-n3.svg",
     "section": "22.2.2",
-    "caption": "RVQ 多码本生成的两种范式对比：时间步错位延迟模式（Delayed Pattern）vs. 时间—深度双层 Transformer（RQ-Transformer）",
+    "caption": "AlphaFold 3 / Boltz-1 Pairformer 中残基对表示 Z_ij（4.00 GiB）的三角乘法更新与 O(N_res^3) 三角自注意力（朴素物化达 512.00 GiB）几何依赖图（算例 22-2）",
     "source_refs": [
-      "manuscripts/ch22/figure-data.json"
+      "experiments/ch24/24-01/run.py",
+      "manuscripts/ch24/figure-data.json"
     ],
-    "TeachingRole": "解释为何 12.5 Hz 超低帧率语音模型需要步内 Depth Transformer 显式建模同帧码本依赖",
+    "TeachingRole": "阐明三维空间三角不等式约束如何导致 N_res=4,096 时单层激活张量突破 512 GiB 物理显存上限",
     "figure": "22-4",
-    "name": "ch22-delayed-codebook-pattern-vs-depth-transformer"
+    "name": "ch22-pairformer-triangle-multiplication-and-attention-o-n3"
   },
   {
     "figure_id": "图 22-5",
     "number": 5,
-    "file": "ch22-temporal-and-depth-transformer-gpu-roofline-trap.svg",
-    "asset": "ch22/ch22-temporal-and-depth-transformer-gpu-roofline-trap.svg",
+    "file": "ch22-chunked-triangle-attention-and-dynamic-axial-parallelism.svg",
+    "asset": "ch22/ch22-chunked-triangle-attention-and-dynamic-axial-parallelism.svg",
     "section": "22.2.2",
-    "caption": "单帧 80 ms 内 Temporal 7B（3.50 ms）与 Depth 100M（384 个微算子朴素发射 35.04 ms vs. 整步 CUDA Graph + L2 常驻 8.00 ms）性能对比（算例 22-3）",
+    "caption": "分块三角注意力核融合（B=64 压至 1.00 GiB）与 4 卡动态轴向并行（DAP 行列正交切分 + All-to-All 转置，工作区压至 0.25 GiB，缩减 2,048 倍）（算例 22-2）",
     "source_refs": [
-      "experiments/ch22/22-01/run.py",
-      "manuscripts/ch22/figure-data.json"
+      "experiments/ch24/24-01/run.py",
+      "manuscripts/ch24/figure-data.json"
     ],
-    "TeachingRole": "揭示小模型串行循环的微算子启动风暴，并证明整步 CUDA Graph 融合带来的 3.35 倍加速",
+    "TeachingRole": "通过内核级在线 Softmax 融合与正交轴向切分彻底攻克万残基生物复合物的显存墙",
     "figure": "22-5",
-    "name": "ch22-temporal-and-depth-transformer-gpu-roofline-trap"
+    "name": "ch22-chunked-triangle-attention-and-dynamic-axial-parallelism"
   },
   {
     "figure_id": "图 22-6",
     "number": 6,
-    "file": "ch22-webrtc-opus-aec-to-gpu-end-to-end-latency-budget.svg",
-    "asset": "ch22/ch22-webrtc-opus-aec-to-gpu-end-to-end-latency-budget.svg",
-    "section": "22.3.1",
-    "caption": "从端侧麦克风 AEC（25 ms）、WebRTC/RTP 抖动缓冲（35 ms）到服务端 GPU 双层推理与声码器还原的 164.0 ms 全链路时延拆解",
+    "file": "ch22-all-atom-diffusion-module-multi-sample-batching.svg",
+    "asset": "ch22/ch22-all-atom-diffusion-module-multi-sample-batching.svg",
+    "section": "22.2.2",
+    "caption": "全原子三维坐标扩散模块（All-Atom Diffusion）在共享同一躯干 Pairformer 特征下并行生成 K=16 个候选构象的算术强度倍增",
     "source_refs": [
-      "experiments/ch22/22-01/run.py",
-      "manuscripts/ch22/figure-data.json"
+      "manuscripts/ch24/figure-data.json"
     ],
-    "TeachingRole": "论证为何全双工实时语音必须采用无队头阻塞的 WebRTC/UDP 协议栈",
+    "TeachingRole": "利用一躯干对多扩散头的非对称批处理将结构去噪推入 Tensor Core 计算饱和区",
     "figure": "22-6",
-    "name": "ch22-webrtc-opus-aec-to-gpu-end-to-end-latency-budget"
+    "name": "ch22-all-atom-diffusion-module-multi-sample-batching"
   },
   {
     "figure_id": "图 22-7",
     "number": 7,
-    "file": "ch22-barge-in-playback-cursor-aligned-kv-rollback.svg",
-    "asset": "ch22/ch22-barge-in-playback-cursor-aligned-kv-rollback.svg",
-    "section": "22.3.2",
-    "caption": "用户打断（Barge-in）时的核心状态同步：清空网关 11 帧（880 ms）未播缓冲 + 按客户端播放游标（第 54 帧）精确回滚 187 个超前 KV 词元（算例 22-4）",
+    "file": "ch22-evo2-stripedhyena2-multi-scale-hyena-attention-backbone.svg",
+    "asset": "ch22/ch22-evo2-stripedhyena2-multi-scale-hyena-attention-backbone.svg",
+    "section": "22.3.1",
+    "caption": "百万碱基基因组模型（Evo 2 40B）的 StripedHyena 2（短/中/长三级门控卷积 + 稀疏旋转注意力）混合主干架构（算例 22-3）",
     "source_refs": [
-      "experiments/ch22/22-02/run.py",
-      "manuscripts/ch22/figure-data.json"
+      "experiments/ch24/24-02/run.py",
+      "manuscripts/ch24/figure-data.json"
     ],
-    "TeachingRole": "解决服务端超前生成与客户端真实听觉进度失配导致的上下文幻觉污染",
+    "TeachingRole": "解释单核苷酸分辨率（L=1,048,576 bp）下为何必须用亚二次长卷积替代 36,028.8 TFLOPs 的二次自注意力",
     "figure": "22-7",
-    "name": "ch22-barge-in-playback-cursor-aligned-kv-rollback"
+    "name": "ch22-evo2-stripedhyena2-multi-scale-hyena-attention-backbone"
   },
   {
     "figure_id": "图 22-8",
     "number": 8,
-    "file": "ch22-streaming-causal-conv-vocoder-chunk-halo.svg",
-    "asset": "ch22/ch22-streaming-causal-conv-vocoder-chunk-halo.svg",
+    "file": "ch22-flashfftconv-monarch-decomposition-tensor-core.svg",
+    "asset": "ch22/ch22-flashfftconv-monarch-decomposition-tensor-core.svg",
     "section": "22.3.2",
-    "caption": "流式因果卷积声码器（Causal Vocoder）的帧间历史感受野环形缓存（Conv Halo Cache）与零爆音连续波形拼接",
+    "caption": "FlashFFTConv 利用 Monarch 矩阵分解将长序列快速傅里叶变换（FFT）映射为 Tensor Core 矩阵乘并驻留 SRAM（单层提速 28.5 倍）（算例 22-3）",
     "source_refs": [
-      "manuscripts/ch22/figure-data.json"
+      "experiments/ch24/24-02/run.py",
+      "manuscripts/ch24/figure-data.json"
     ],
-    "TeachingRole": "展示如何在 80 ms 分块流式合成中消除帧边界相位不连续引起的咔哒爆音",
+    "TeachingRole": "揭示如何通过二维矩阵重排与 Monarch 分解将访存受限的 FFT 转化为片上高密矩阵乘流水",
     "figure": "22-8",
-    "name": "ch22-streaming-causal-conv-vocoder-chunk-halo"
+    "name": "ch22-flashfftconv-monarch-decomposition-tensor-core"
   },
   {
     "figure_id": "图 22-9",
     "number": 9,
-    "file": "ch22-live-video-1fps-and-audio-12hz-interleaved-pacing.svg",
-    "asset": "ch22/ch22-live-video-1fps-and-audio-12hz-interleaved-pacing.svg",
+    "file": "ch22-sfno-spherical-harmonics-and-2d-grid-decomposition.svg",
+    "asset": "ch22/ch22-sfno-spherical-harmonics-and-2d-grid-decomposition.svg",
     "section": "22.4.1",
-    "caption": "实时视频通话中将 1 FPS（256 词元）视觉帧拆分为 8 个微块（每拍 32 词元）交错插入 12.5 Hz 音频节拍，将峰值帧耗时从 83.5 ms 压至 20.5 ms（算例 22-5）",
+    "caption": "全球气象大模型（FourCastNet 3 / Aurora）的球面傅里叶神经算子（SFNO）与 64 卡（8x8）经纬度二维空间域切分（算例 22-4）",
     "source_refs": [
-      "experiments/ch22/22-02/run.py",
-      "manuscripts/ch22/figure-data.json"
+      "experiments/ch24/24-02/run.py",
+      "manuscripts/ch24/figure-data.json"
     ],
-    "TeachingRole": "防止整帧视觉 Prefill 刺穿 80 ms 音频硬实时截止期引发周期性语音卡顿",
+    "TeachingRole": "在 3,600x7,200 全球高分网格上实现极区无畸变球谐变换与最小周长二维分块",
     "figure": "22-9",
-    "name": "ch22-live-video-1fps-and-audio-12hz-interleaved-pacing"
+    "name": "ch22-sfno-spherical-harmonics-and-2d-grid-decomposition"
   },
   {
     "figure_id": "图 22-10",
     "number": 10,
-    "file": "ch22-acoustic-token-eviction-and-semantic-anchor-retention.svg",
-    "asset": "ch22/ch22-acoustic-token-eviction-and-semantic-anchor-retention.svg",
-    "section": "22.4.2",
-    "caption": "1 小时连续通话的分层记忆修剪：剥离 10 s 滑窗外的高阶声学码本与视觉帧、仅保留语义首码本与文本锚点（总 KV 显存节省 91.74%，算例 22-5）",
+    "file": "ch22-spatial-domain-halo-exchange-computation-overlap.svg",
+    "asset": "ch22/ch22-spatial-domain-halo-exchange-computation-overlap.svg",
+    "section": "22.4.1",
+    "caption": "物理网格并行中内部格点计算（14.20 ms）与边界幽灵区光环交换（Halo Exchange，5.53 MB / 0.18 ms，占比 1.27%）的双流完全掩盖时序（算例 22-4）",
     "source_refs": [
-      "experiments/ch22/22-02/run.py",
-      "manuscripts/ch22/figure-data.json"
+      "experiments/ch24/24-02/run.py",
+      "manuscripts/ch24/figure-data.json"
     ],
-    "TeachingRole": "突破长时全模态通话的显存线性增长墙，将 1 小时常驻词元从 168.66 万压至 13.93 万",
+    "TeachingRole": "证明表面积/体积比定律下优先计算边界壳层可使跨卡 Halo 通信暴露延迟归零",
     "figure": "22-10",
-    "name": "ch22-acoustic-token-eviction-and-semantic-anchor-retention"
+    "name": "ch22-spatial-domain-halo-exchange-computation-overlap"
   },
   {
     "figure_id": "图 22-11",
     "number": 11,
-    "file": "ch22-dynamic-batching-under-strict-80ms-isochronous-tick.svg",
-    "asset": "ch22/ch22-dynamic-batching-under-strict-80ms-isochronous-tick.svg",
-    "section": "22.3.1",
-    "caption": "等时硬节拍（Isochronous 80 ms Tick）下多路并发全双工会话的槽位对齐批处理、截止期看门狗与迟到包隐藏策略",
+    "file": "ch22-era5-petabyte-zarr-gds-direct-streaming-dataloader.svg",
+    "asset": "ch22/ch22-era5-petabyte-zarr-gds-direct-streaming-dataloader.svg",
+    "section": "22.4.1",
+    "caption": "面向 PB 级多维气象场（ERA5 Zarr/HDF5 分块存储）的 GPUDirect Storage 零拷贝按需切片与 nvCOMP 硬件解压流水线",
     "source_refs": [
-      "manuscripts/ch22/figure-data.json"
+      "manuscripts/ch24/figure-data.json"
     ],
-    "TeachingRole": "在保证 GPU 批处理效率的同时阻断单路弱网抖动对同批健康会话的连坐阻塞",
+    "TeachingRole": "消除高分辨率科学场训练中的 CPU 页缓存拷贝与单线程解压瓶颈",
     "figure": "22-11",
-    "name": "ch22-dynamic-batching-under-strict-80ms-isochronous-tick"
+    "name": "ch22-era5-petabyte-zarr-gds-direct-streaming-dataloader"
   },
   {
     "figure_id": "图 22-12",
     "number": 12,
-    "file": "ch22-duplex-turn-taking-backchannel-and-overlap-state-machine.svg",
-    "asset": "ch22/ch22-duplex-turn-taking-backchannel-and-overlap-state-machine.svg",
-    "section": "22.1.2",
-    "caption": "原生全双工对话中的四态交互（专注倾听、自然附和 Backchannel、正常讲述、碰撞退让）内生状态机",
+    "file": "ch22-mace-equivariant-message-passing-and-verlet-neighbor-list.svg",
+    "asset": "ch22/ch22-mace-equivariant-message-passing-and-verlet-neighbor-list.svg",
+    "section": "22.4.2",
+    "caption": "等变神经原子势函数（MACE）在亿级原子分子动力学中的三维空间块分解、动态 Verlet 皮肤缓冲邻居表与球谐核融合",
     "source_refs": [
-      "manuscripts/ch22/figure-data.json"
+      "manuscripts/ch24/figure-data.json"
     ],
-    "TeachingRole": "对比僵硬外部 VAD 误打断与原生双流模型区分善意附和与真实抢话的机制",
+    "TeachingRole": "攻克分子动力学百万飞秒顺序步长下的微秒级单步启动与邻居重构开销",
     "figure": "22-12",
-    "name": "ch22-duplex-turn-taking-backchannel-and-overlap-state-machine"
+    "name": "ch22-mace-equivariant-message-passing-and-verlet-neighbor-list"
   },
   {
     "figure_id": "图 22-13",
     "number": 13,
-    "file": "ch22-edge-vad-aec-wake-word-and-cloud-duplex-handover.svg",
-    "asset": "ch22/ch22-edge-vad-aec-wake-word-and-cloud-duplex-handover.svg",
-    "section": "22.3.1",
-    "caption": "端侧超低功耗声学回声消除（AEC）/唤醒预处理与云端全双工大模型零冷启热接管协同架构",
+    "file": "ch22-ai-in-the-loop-hybrid-hpc-pde-solver-and-surrogate.svg",
+    "asset": "ch22/ch22-ai-in-the-loop-hybrid-hpc-pde-solver-and-surrogate.svg",
+    "section": "22.4.2",
+    "caption": "传统 HPC 偏微分方程求解器与 AI 神经代理模型（Neural Surrogate）在同一个超算作业内经 DLPack/IPC 零拷贝原位耦合的混合仿真架构",
     "source_refs": [
-      "manuscripts/ch22/figure-data.json"
+      "manuscripts/ch24/figure-data.json"
     ],
-    "TeachingRole": "解决免提外放场景下扬声器回声引发模型自我打断的工程难题",
+    "TeachingRole": "结合数值求解器的严格物理守恒律与深度学习代理模型在亚网格微观过程上的千倍加速",
     "figure": "22-13",
-    "name": "ch22-edge-vad-aec-wake-word-and-cloud-duplex-handover"
+    "name": "ch22-ai-in-the-loop-hybrid-hpc-pde-solver-and-surrogate"
   },
   {
     "figure_id": "图 22-14",
     "number": 14,
-    "file": "ch22-voice-cloning-zero-shot-speaker-embedding-cache.svg",
-    "asset": "ch22/ch22-voice-cloning-zero-shot-speaker-embedding-cache.svg",
+    "file": "ch22-autonomous-wet-lab-active-learning-closed-loop.svg",
+    "asset": "ch22/ch22-autonomous-wet-lab-active-learning-closed-loop.svg",
     "section": "22.4.2",
-    "caption": "零样本音色克隆中说话人参考声纹前缀（Speaker Conditioning KV）的跨会话共享与帧级内嵌防伪水印（AudioSeal）",
+    "caption": "AI4Science 闭环发现工厂：生成式分子/材料设计（MatterGen/Boltz-1）-> 多级物理仿真筛选 -> 自动化机器人湿实验验证 -> 主动学习回流",
     "source_refs": [
-      "manuscripts/ch22/figure-data.json"
+      "manuscripts/ch24/figure-data.json"
     ],
-    "TeachingRole": "兼顾多音色定制的零重复编码开销与实时合成语音的防伪溯源安全",
+    "TeachingRole": "构建从数字生成仿真到真实物理实验室机器人验证的主动学习飞轮",
     "figure": "22-14",
-    "name": "ch22-voice-cloning-zero-shot-speaker-embedding-cache"
+    "name": "ch22-autonomous-wet-lab-active-learning-closed-loop"
   },
   {
     "figure_id": "图 22-15",
     "number": 15,
-    "file": "ch22-full-duplex-gpu-concurrency-vs-p99-frame-underrun.svg",
-    "asset": "ch22/ch22-full-duplex-gpu-concurrency-vs-p99-frame-underrun.svg",
+    "file": "ch22-tokamak-plasma-tearing-mode-sub-ms-rl-control.svg",
+    "asset": "ch22/ch22-tokamak-plasma-tearing-mode-sub-ms-rl-control.svg",
     "section": "22.4.2",
-    "caption": "单张 GPU 上并发全双工语音流路数 B_stream 与 P99 音频帧断流率（Frame Underrun Rate < 0.05%）的容量边界曲线",
+    "caption": "托卡马克核聚变等离子体磁流体（MHD）撕裂模 4,000 Hz（200.0 us 预算）实时强化学习控制推理底座：GPUDirect RDMA + 静态 CUDA Graph + L2 缓存驻留将延迟从 435.0 us 压至 68.5 us（提速 6.35 倍，预算占用 34.25%）（算例 22-5）",
     "source_refs": [
-      "manuscripts/ch22/figure-data.json"
+      "experiments/ch24/24-03/run.py",
+      "manuscripts/ch24/figure-data.json"
     ],
-    "TeachingRole": "建立以 P99.9 单帧耗时不越过 80 ms 为硬约束的流式服务容量规划模型",
+    "TeachingRole": "阐明硬实时科学控制回路如何消灭主机 PCIe 往返与 HBM 读取抖动，以 68.5 us 确定性延迟抑制撕裂模破裂",
     "figure": "22-15",
-    "name": "ch22-full-duplex-gpu-concurrency-vs-p99-frame-underrun"
+    "name": "ch22-tokamak-plasma-tearing-mode-sub-ms-rl-control"
   },
   {
     "figure_id": "图 22-16",
     "number": 16,
-    "file": "ch22-full-duplex-omni-streaming-infrastructure-synthesis.svg",
-    "asset": "ch22/ch22-full-duplex-omni-streaming-infrastructure-synthesis.svg",
+    "file": "ch22-single-cell-atlas-sparse-gene-expression-dataloader.svg",
+    "asset": "ch22/ch22-single-cell-atlas-sparse-gene-expression-dataloader.svg",
     "section": "22.4.2",
-    "caption": "全双工实时语音与原生全模态流式基础设施从 RVQ 编解码、双层图融合到播放游标回滚的全景架构图",
+    "caption": "亿级单细胞转录组图谱（scGPT / Geneformer，1 亿细胞 x 20,480 基因，非零率 7.5%）的 CSR 稀疏压缩存储（4,096 -> 615.20 GB，6.66 倍）与动态非零序列打包（二次方注意力降低 177.78 倍，端到端训练提速 20.00 倍）（算例 22-6）",
     "source_refs": [
-      "experiments/ch22/22-01/run.py",
-      "experiments/ch22/22-02/run.py",
-      "manuscripts/ch22/figure-data.json"
+      "experiments/ch24/24-03/run.py",
+      "manuscripts/ch24/figure-data.json"
     ],
-    "TeachingRole": "收束第 22 章等时节拍、Temporal+Depth 图融合与打断游标对齐的完整技术闭环",
+    "TeachingRole": "利用 CSR 稀疏块直读与变长非零基因 Token 拼包彻底消除 92.5% 零表达基因的二次方算力浪费",
     "figure": "22-16",
-    "name": "ch22-full-duplex-omni-streaming-infrastructure-synthesis"
+    "name": "ch22-single-cell-atlas-sparse-gene-expression-dataloader"
   },
   {
     "figure_id": "图 22-17",
     "number": 17,
-    "file": "ch22-realtime-avatar-lip-sync-audio-video-jitter-alignment.svg",
-    "asset": "ch22/ch22-realtime-avatar-lip-sync-audio-video-jitter-alignment.svg",
-    "section": "22.4.2",
-    "caption": "实时 3D 数字人唇形渲染管线与基于 RTP 绝对时间戳的 < 40 ms 音画同步抖动缓冲对齐（算例 22-6）",
+    "file": "ch22-twenty-four-chapter-encyclopedia-knowledge-atlas.svg",
+    "asset": "ch22/ch22-twenty-four-chapter-encyclopedia-knowledge-atlas.svg",
+    "section": "22.5.1",
+    "caption": "前四部分 24 章（基础与硬件篇、训推系统篇、智能体与模态底座篇、数据/科学/机队工程篇）百科全书知识全景图（算例 22-7）",
     "source_refs": [
-      "experiments/ch22/22-03/run.py",
-      "manuscripts/ch22/figure-data.json"
+      "experiments/ch24/24-02/run.py",
+      "manuscripts/ch24/figure-data.json"
     ],
-    "TeachingRole": "展示 26 ms 客户端音频补偿延迟如何将数字人音画偏斜从 44/59 ms 压至 18/33 ms（< 40 ms）",
+    "TeachingRole": "宏观鸟瞰前四部分 24 章、883 幅章节配图、432 道习题与 147 个可运行实验的系统工程坐标系，并承前启后引出第五部分（第 23–24 章）",
     "figure": "22-17",
-    "name": "ch22-realtime-avatar-lip-sync-audio-video-jitter-alignment"
+    "name": "ch22-twenty-four-chapter-encyclopedia-knowledge-atlas"
   },
   {
     "figure_id": "图 22-18",
     "number": 18,
-    "file": "ch22-global-edge-webrtc-sfu-to-gpu-duplex-mesh.svg",
-    "asset": "ch22/ch22-global-edge-webrtc-sfu-to-gpu-duplex-mesh.svg",
-    "section": "22.4.2",
-    "caption": "全球 Anycast 边缘 WebRTC SFU 就近终结、边缘 RVQ 词元卸载与跨洋骨干专线全双工媒体网格（算例 22-7）",
+    "file": "ch22-unified-laws-across-all-24-chapters-synthesis.svg",
+    "asset": "ch22/ch22-unified-laws-across-all-24-chapters-synthesis.svg",
+    "section": "22.5.2",
+    "caption": "贯穿全书的统一物理底座——从单个矩阵乘法的算术强度，到驾驭语言、全模态、机器人与科学发现的四大智能计算铁律",
     "source_refs": [
-      "experiments/ch22/22-03/run.py",
-      "manuscripts/ch22/figure-data.json"
+      "experiments/ch24/24-02/run.py",
+      "manuscripts/ch24/figure-data.json"
     ],
-    "TeachingRole": "证明全球边缘 SFU 卸载与跨洋专线 RVQ 中继将跨洲 TTFA 从 304 ms 压至 181.5 ms 并省 97.71% 干线带宽",
+    "TeachingRole": "以算术强度、状态局部性、通信掩盖与北极星可验证有效产出收束前四部分二十四章主线并衔接第五部分",
     "figure": "22-18",
-    "name": "ch22-global-edge-webrtc-sfu-to-gpu-duplex-mesh"
+    "name": "ch22-unified-laws-across-all-24-chapters-synthesis"
   }
 ]

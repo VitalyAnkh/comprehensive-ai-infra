@@ -1,32 +1,21 @@
 {
+  "chapter": 21,
   "sources": [
     {
-      "path": "manuscripts/ch21/build.py",
-      "sha256": "9e347cde57fa2cd640c4546fc411f6d0e0776376a075e0c3333adfb171cad497"
-    },
-    {
-      "path": "manuscripts/ch21/figure-data.json",
-      "sha256": "53eaa03233c8560d68b978408052254bd59923b6961f33f60b659f58c64ee0a8"
+      "path": "manuscripts/21-推荐检索与向量数据库.md",
+      "sha256": "1d31cbc64b1a0722d46ce90d697f61d778d588a9635ed4b57ad63a47d7423cd2"
     },
     {
       "path": "manuscripts/ch21/figure-index.json",
-      "sha256": "73e5e4d4ccc751853e6731e5d89f8eeb78e9578292e06f5c695f67ad5c4bd2b1"
+      "sha256": "a907119ffa5f89a7303356306c7b4b0bc28b14212d9aa2f5c89fd59b2f0b74d9"
     },
     {
-      "path": "experiments/ch21/21-01/run.py",
-      "sha256": "01371bad6a129ab581cca7a51eebc67cc05eaa8e50f86380a28b73a50d28c7be"
+      "path": "manuscripts/ch21/math-validation.json",
+      "sha256": "a14a0e441f9d9310501f4ffaeda07825b3487a4948565c0c03a071beedb87349"
     },
     {
-      "path": "experiments/ch21/21-02/run.py",
-      "sha256": "d811ad90c97321c2b4159b390d74a5d62b38ce97ad9c2ac5a570cd05c111dc3f"
-    },
-    {
-      "path": "experiments/ch21/21-03/run.py",
-      "sha256": "d710d02497701e03fe0751eeaf274ec422e261a92d5d8ca60555a38b1880df32"
-    },
-    {
-      "path": "manuscripts/21-自主智能体基础设施（Agentic Infra）、Computer Use 沙箱与分层 KV 记忆底座.md",
-      "sha256": "52f5ee7edc9b83ad594596e355f80d1d8ee425788ee7991da093af9ebff4de04"
+      "path": "manuscripts/ch21/teaching-layout-validation.json",
+      "sha256": "0b880ffc7d184f1f9c06c932e2a6f6c65dc53815693deec63b0c3737f3643947"
     }
   ]
 }

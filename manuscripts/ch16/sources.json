@@ -1,20 +1,37 @@
 {
+  "chapter": "ch16",
   "sources": [
     {
-      "path": "manuscripts/ch16/build.py",
-      "sha256": "a4ce856696113d98fc7edeecef1841faf5381073fdf6e6ab5c6260fd7c57ae8c"
-    },
-    {
-      "path": "manuscripts/ch16/figure-data.json",
-      "sha256": "12856346fc0034a8884996a94b3d91829c0c34747879704cad2c56c676c59a18"
+      "path": "manuscripts/16-机密计算与可信安全系统.md",
+      "sha256": "1e16fda322dc0e7f5e320c50fcaf9c2a8c1d05b964f6e37e9995fc1c925f607b"
     },
     {
       "path": "manuscripts/ch16/figure-index.json",
-      "sha256": "bc13b1bd39e68523d60efcd99a26e6aea4275b5745a7eb434d0dd4e641c3cf46"
+      "sha256": "edcc434eb2dc7ced81322937c2e9611179330dd91d06c48872d49647c640d9c2"
     },
     {
-      "path": "manuscripts/16-机密 AI 计算、可信执行环境与安全沙箱底座.md",
-      "sha256": "bfebd3dcbff2c28ae7194388c6f34955ef4648a7e12c16f48d29326911c5bf34"
+      "path": "experiments/ch16/16-01/run.py",
+      "sha256": "b1f4b62f76e9e6baa632abf76be2fe9ae6a709e707fc9852b684d2e2b2e94289"
+    },
+    {
+      "path": "experiments/ch16/16-02/run.py",
+      "sha256": "44c173e84e3b01be1045124713214b4ab1bcc80bbdd57c1ea749e05d1a9b81c6"
+    },
+    {
+      "path": "experiments/ch16/16-03/run.py",
+      "sha256": "8a4d392bc0b297d903a4919109372bce7f6d6805f08aab681f4ce2e16c105276"
+    },
+    {
+      "path": "experiments/ch16/16-04/run.py",
+      "sha256": "93278b3679169b9c4827c75780c3c3cf0aa52ae063934c2ad497d5e6f0f45c2b"
+    },
+    {
+      "path": "experiments/ch16/16-05/run.py",
+      "sha256": "d52ad1dab458e93769937748b04f6967b774f9e0d1de92ca17f9aaa499ce6b5d"
+    },
+    {
+      "path": "experiments/ch16/16-06/run.py",
+      "sha256": "0a895ddf7d8e7b71d447efff084c48ecc5d21f8548ae29476061a0876df0d61a"
     }
   ]
 }

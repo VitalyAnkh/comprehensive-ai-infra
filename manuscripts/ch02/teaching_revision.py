@@ -713,7 +713,7 @@ def draw(here, data):
             card(a, mx, 0.175, 0.29, 0.21, mtitle, mbody, mcol, title_size=11, body_size=11)
         box(
             a, 0.045, 0.05, 0.91, 0.095,
-            '向后桥接（第 29 章 FlashMLA）：[512+64] 头维跑出 3,000 GB/s 带宽',
+            '向后桥接（第 24 章 FlashMLA）：[512+64] 头维跑出 3,000 GB/s 带宽',
             'gray', size=11
         )
         out.save(f, 'ch02-mla-matrix-absorption-tensor-contraction-datapath')

@@ -1,11 +1,14 @@
-# Experiment 22-03: Real-Time 3D Avatar Lip-Sync (< 40 ms Jitter Alignment) & Global Edge WebRTC SFU Mesh
+# 实验 22-03：托卡马克等离子体撕裂模 4,000 Hz 亚毫秒 RL 控制与亿级单细胞 CSR 稀疏图谱加载
 
-Reproduces:
-- **Worked Example 22-6**: Real-time 3D Gaussian Avatar lip-sync rendering (`28.50 ms` rendering + `4.00 ms` NVENC = `32.50 ms` vs. `6.50 ms` causal vocoder + `18.00 ms` steady video RTP jitter skew), where dual-stream RTP `abs-capture-time` alignment buffer (`26.00 ms` audio hold delay) reduces steady audio-lead skew from `44.00 ms` to `18.00 ms` (`59.09%` reduction) and P99 skew from `59.00 ms` to `33.00 ms < 40.0 ms`, keeping end-to-end synchronized avatar TTFA at `190.00 ms < 200.0 ms`.
-- **Worked Example 22-7**: Global Anycast edge WebRTC SFU termination (`12.0 ms` metro RTT + `10.0 ms` JB + `4.5 ms` spatial separation & Mimi RVQ encode) + transoceanic private fiber backbone (`68.0 ms` RTT + `4.0 ms` JB), reducing network & jitter path latency from `175.00 ms` to `98.50 ms` (`43.71%` reduction), reducing end-to-end cross-continental TTFA from `304.00 ms` to `181.50 ms` (`1.67x` speedup), and compressing bidirectional backbone bandwidth from `96.00 kbps` Opus to `2.20 kbps` RVQ tokens (`43.64x` compression, `97.71%` saving).
-- **Exercises 22-11 & 22-12**: Holographic avatar lip-sync (`38.0 -> 16.0 ms` steady skew, `50.0 -> 28.0 ms` P99 skew, `182.00 ms` TTFA) and Tokyo-to-Oregon transpacific edge SFU mesh (`319.00 -> 185.50 ms` TTFA, `1.72x` speedup).
+本实验对应第 22 章 24.4.2 节算例 24-6、算例 24-7、练习 24-11 与实验 24-12，验证：
+1. **托卡马克核聚变等离子体磁流体（MHD）撕裂模 4,000 Hz（200.0 us 预算）实时控制推理底座**：
+   - 未优化主机中转 + 逐算子 HBM 读写流水线：`435.0 us`（违背 200.0 us 硬实时预算）；
+   - GPUDirect RDMA 零拷贝 + 静态 CUDA Graph + L2 持久化缓存流水线：`68.5 us`（提速 `6.35x`，占 200.0 us 预算的 `34.25%`，P99.9 尾延迟 `74.0 us`），提前 `28.5 ms` 预警撕裂模失稳并留出 `16.5 ms` 执行器响应裕度。
+2. **亿级单细胞转录组图谱（scGPT / Geneformer，1 亿细胞 x 20,480 基因，非零密度 7.50%）CSR 稀疏压缩与动态非零序列打包**：
+   - 稠密 FP16 矩阵磁盘体积 `4,096.0 GB` vs. CSR 稀疏块压缩（FP16 值 + uint16 列索引 + int64 行指针）`615.20 GB`（`6.66x` 存储压缩比）；
+   - 有效序列长度从 `20,480` 压降至平均非零基因数 `1,536`（`13.33x` 序列压缩，二次方自注意力 FLOPs 降低 `177.78x`，端到端训练吞吐提升 `20.00x`）。
 
-## Run & Verify
+## 运行与验证
 
 ```bash
 python3 experiments/ch22/22-03/run.py

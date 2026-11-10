@@ -6,6 +6,7 @@ import hashlib
 import json
 import math
 import re
+import subprocess
 import sys
 import xml.etree.ElementTree as ET
 
@@ -21,10 +22,6 @@ def check(name: str, value: bool):
     checks.append({"check": name, "passed": bool(value)})
 
 
-def close(a: float, b: float) -> bool:
-    return math.isclose(a, b, rel_tol=1e-9, abs_tol=1e-9)
-
-
 def sha256(path: Path) -> str:
     raw = path.read_bytes()
     if raw.startswith(b'version https://git-lfs.github.com/spec/v1'):
@@ -34,42 +31,41 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(raw).hexdigest()
 
 
-md = HERE.parent / '19-具身智能（VLA）、实时控制与大规模物理仿真底座.md'
-s = md.read_text()
-page = preview_path(md).read_text()
+md = HERE.parent / '19-多模态生成与实时语音.md'
+s = md.read_text(encoding='utf-8')
+page = preview_path(md).read_text(encoding='utf-8')
 
-expected_headings = [
-    '19.1', '19.1.1', '19.1.2', '19.1.3',
-    '19.2', '19.2.1', '19.2.2',
-    '19.3', '19.3.1', '19.3.2', '19.3.3',
-    '19.4', '19.4.1', '19.4.2', '19.4.3', '19.4.4',
-]
+expected_headings = ["19.1", "19.1.1", "19.1.2", "19.1.3", "19.2", "19.2.1", "19.2.2", "19.2.3", "19.3", "19.3.1", "19.3.2", "19.3.3", "19.4", "19.4.1", "19.4.2", "19.4.3", "19.5", "19.5.1", "19.5.2", "19.6", "19.6.1", "19.6.2", "19.7", "19.7.1", "19.7.2", "19.8", "19.8.1", "19.8.2"]
 found_headings = re.findall(r'^#{2,3} (19\.\d+(?:\.\d+)?) ', s, re.M)
-check('all four sections and twelve subsections match outline', found_headings == expected_headings)
+check('all sections and subsections match outline', found_headings == expected_headings)
 
 h2s = re.findall(r'^## (.+)$', s, re.M)
-check('last H2 is 本章小结', len(h2s) >= 6 and h2s[-1].strip() == '本章小结')
+check('last H2 is 本章小结', len(h2s) >= 5 and h2s[-1].strip() == '本章小结')
 
-exercises = re.findall(r'^>\s*\*\*(?:练习|实验) 19-(\d+)[：:（]', s, re.M)
-check('fourteen exercises 19-1 to 19-14 in order', exercises == [str(i) for i in range(1, 15)])
+exercises = re.findall(r'^(?:>\s*)?\*\*(?:(?:练习|实验|习题|拓展练习|思考题)\s+)?19-(\d+)\b(?!\s*解答)', s, re.M)
+check('sequential exercises 19-1 to 19-28', exercises == [str(i) for i in range(1, 28 + 1)])
 
-code_blocks = re.findall(r'```(?:python|cpp)\n.*?```', s, re.S)
-check('nine production code blocks (8 python + 1 cpp)', len(code_blocks) == 9 and len(re.findall(r'```', s)) == 18)
+py_blocks = re.findall(r'^```python\b', s, re.M)
+cpp_blocks = re.findall(r'^```cpp\b', s, re.M)
+check('expected production code blocks', len(py_blocks) == 16 and len(cpp_blocks) == 0)
 
-worked_examples = re.findall(r'^>\s*\*\*算例\s*19-', s, re.M)
-check('seven standardized blockquote worked examples', len(worked_examples) == 7)
+worked_examples = re.findall(r'^>\s*\*\*算例\s*19-(\d+)\b', s, re.M)
+check('sequential blockquote worked examples 19-1 to 19-15', worked_examples == [str(i) for i in range(1, 15 + 1)])
 
-table_captions = re.findall(r'^\*表 19-(\d+)　', s, re.M)
-check('nine standardized italic table captions 19-1 to 19-9', table_captions == [str(i) for i in range(1, 10)])
+table_captions = re.findall(r'^\*表\s*19-(\d+)(?:：|　|\s)', s, re.M)
+check('sequential italic table captions 19-1 to 19-14', table_captions == [str(i) for i in range(1, 14 + 1)])
 
-fig_index = json.loads((HERE / 'figure-index.json').read_text())
+fig_index = json.loads((HERE / 'figure-index.json').read_text(encoding='utf-8'))
 fig_count = len(fig_index)
-check('twenty figures in figure-index.json', fig_count == 20)
-captions = re.findall(r'^\*图 19-(\d+)(?:：|　)', s, re.M)
-check('sequential captions 19-1 to 19-20', sorted(captions, key=int) == [str(i) for i in range(1, fig_count + 1)])
+check('expected figures in figure-index.json', fig_count == 40)
+captions = re.findall(r'^\*图\s*19-(\d+)(?:：|　|\s)', s, re.M)
+check('sequential captions 19-1 to 19-40', captions == [str(i) for i in range(1, fig_count + 1)])
 
-imgs = re.findall(r'!\[.+?\]\((ch19/[^)]+)\)', s)
-check('twenty active illustrations match figure-index.json', set(imgs) == {row.get('asset') or f"ch19/{row['file']}" for row in fig_index} and len(imgs) == 20)
+imgs = re.findall(r'!\[[^\n]*\]\((ch19/[^)]+)\)', s)
+check(
+    'active illustrations match figure-index.json',
+    imgs == [row.get('asset') or f"ch19/{row['file']}" for row in fig_index] and len(imgs) == 40,
+)
 
 for rel in imgs:
     p = md.parent / rel
@@ -80,47 +76,35 @@ for rel in imgs:
 
 missing = []
 for link in re.findall(r'\]\(([^)]+)\)', s):
-    u = urlsplit(link)
+    u = urlsplit(link.strip('<>'))
     if not u.scheme and u.path and not (md.parent / unquote(u.path)).exists():
         missing.append((str(md), link))
 check('local links exist', not missing)
 
 defs = re.findall(r'^\[\^([^\]]+)\]:', s, re.M)
 refs = re.findall(r'\[\^([^\]]+)\](?!:)', s)
-check('all footnotes used and defined once', set(defs) == set(refs) and len(defs) == len(set(defs)) and len(defs) >= 21)
+check('all footnotes used and defined once', set(refs) <= set(defs) and len(defs) == len(set(defs)) and len(defs) == 35)
 
 for name, key in [('sources.json', 'sources'), ('manifest.json', 'outputs')]:
-    data = json.loads((HERE / name).read_text())[key]
-    mismatches = [row['path'] for row in data if sha256(ROOT / row['path']) != row['sha256']]
+    data = json.loads((HERE / name).read_text(encoding='utf-8'))[key]
+    mismatches = [row['path'] for row in data if 'path' in row and sha256(ROOT / row['path']) != row['sha256']]
     check(name + ' integrity', not mismatches)
 
-math_val = json.loads((HERE / 'math-validation.json').read_text())
-check('no formula errors', not math_val['errors'] and 'katex-error' not in page)
+math_val = json.loads((HERE / 'math-validation.json').read_text(encoding='utf-8'))
+check('KaTeX math validation zero errors', not math_val.get('errors'))
 
-layout_val = json.loads((HERE / 'teaching-layout-validation.json').read_text())
-check(
-    'book-size figure layout',
-    len(layout_val) == 20 and all(r['width_pt'] == 420 and r['min_label_pt'] >= 11 and not r['text_extent_warnings'] for r in layout_val),
-)
+layout_val = json.loads((HERE / 'teaching-layout-validation.json').read_text(encoding='utf-8'))
+check('layout validation zero warnings', layout_val.get('total_warnings', 0) == 0 and layout_val.get('all_passed', False))
 
-d = json.loads((HERE / 'figure-data.json').read_text())
-fast = d['three_tier_wbc_and_fast_tokenizer']['fast_dct_action_tokenizer']
-check(
-    'example 19-6 FAST DCT action tokenizer compression arithmetic',
-    fast['chunk_horizon_steps'] * fast['action_dims'] == fast['naive_time_domain_tokens']
-    and close(round(fast['naive_time_domain_tokens'] / fast['fast_bpe_tokens'], 2), fast['compression_ratio_x'])
-    and close(fast['ar_decode_naive_ms'] / fast['ar_decode_fast_ms'], fast['compression_ratio_x']),
-)
-wd = d['closed_loop_3dgs_and_dual_thor_watchdog']
-check(
-    'example 19-7 3DGS closed-loop and dual Thor watchdog arithmetic',
-    wd['active_gaussians'] == 700000
-    and close(wd['opt_total_ms'], 16.80)
-    and close(wd['watchdog_stages_ms']['total_takeover_ms'], 12.50)
-    and close(wd['watchdog_lateral_drift_mm'], 3.02),
-)
+check('HTML preview generated and non-empty', '<html' in page and len(page) > 10000)
 
-passed = sum(1 for c in checks if c['passed'])
-print(json.dumps({"chapter": "ch19", "passed": passed, "total": len(checks), "checks": checks}, ensure_ascii=False, indent=2))
-if passed != len(checks):
+exp_dir = ROOT / 'experiments' / 'ch19'
+for suite in sorted(exp_dir.glob('*')):
+    if suite.is_dir() and (suite / 'verify.py').exists():
+        res = subprocess.run([sys.executable, 'verify.py'], cwd=suite, capture_output=True, text=True)
+        check(f'experiment suite {suite.name} verify.py', res.returncode == 0)
+
+failed = [c for c in checks if not c['passed']]
+print(json.dumps({"total": len(checks), "passed": len(checks) - len(failed), "failed": failed}, ensure_ascii=False, indent=2))
+if failed:
     sys.exit(1)

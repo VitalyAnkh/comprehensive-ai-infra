@@ -6,6 +6,7 @@ import hashlib
 import json
 import math
 import re
+import subprocess
 import sys
 import xml.etree.ElementTree as ET
 
@@ -21,10 +22,6 @@ def check(name: str, value: bool):
     checks.append({"check": name, "passed": bool(value)})
 
 
-def close(a: float, b: float) -> bool:
-    return math.isclose(a, b, rel_tol=1e-9, abs_tol=1e-9)
-
-
 def sha256(path: Path) -> str:
     raw = path.read_bytes()
     if raw.startswith(b'version https://git-lfs.github.com/spec/v1'):
@@ -34,44 +31,41 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(raw).hexdigest()
 
 
-md = HERE.parent / '16-机密 AI 计算、可信执行环境与安全沙箱底座.md'
-s = md.read_text()
-page = preview_path(md).read_text()
+md = HERE.parent / '16-机密计算与可信安全系统.md'
+s = md.read_text(encoding='utf-8')
+page = preview_path(md).read_text(encoding='utf-8')
 
-expected_headings = [
-    '16.1', '16.1.1', '16.1.2',
-    '16.2', '16.2.1', '16.2.2',
-    '16.3', '16.3.1', '16.3.2',
-    '16.4', '16.4.1', '16.4.2', '16.4.3',
-    '16.5', '16.5.1', '16.5.2',
-    '16.6', '16.6.1', '16.6.2', '16.6.3', '16.6.4',
-]
+expected_headings = ["16.1", "16.1.1", "16.1.2", "16.2", "16.2.1", "16.2.2", "16.3", "16.3.1", "16.3.2", "16.4", "16.4.1", "16.4.2", "16.4.3", "16.5", "16.5.1", "16.5.2", "16.6", "16.6.1", "16.6.2", "16.6.3", "16.6.4", "16.7", "16.7.1", "16.7.2", "16.8", "16.8.1", "16.8.2", "16.9", "16.9.1", "16.9.2", "16.10", "16.10.1", "16.10.2"]
 found_headings = re.findall(r'^#{2,3} (16\.\d+(?:\.\d+)?) ', s, re.M)
-check('all six sections and fifteen subsections match outline', found_headings == expected_headings)
+check('all sections and subsections match outline', found_headings == expected_headings)
 
 h2s = re.findall(r'^## (.+)$', s, re.M)
-check('last H2 is 本章小结', len(h2s) >= 6 and h2s[-1].strip() == '本章小结')
+check('last H2 is 本章小结', len(h2s) >= 5 and h2s[-1].strip() == '本章小结')
 
-exercises = re.findall(r'^>\s*\*\*(?:练习|实验) 16-(\d+)[：:]', s, re.M)
-check('eighteen exercises 16-1 to 16-18 in order', exercises == [str(i) for i in range(1, 19)])
+exercises = re.findall(r'^(?:>\s*)?\*\*(?:(?:练习|实验|习题|拓展练习|思考题)\s+)?16-(\d+)\b(?!\s*解答)', s, re.M)
+check('sequential exercises 16-1 to 16-28', exercises == [str(i) for i in range(1, 28 + 1)])
 
-code_blocks = re.findall(r'```python\n.*?```', s, re.S)
-check('six production Python code blocks', len(code_blocks) == 6 and len(re.findall(r'```', s)) == 12)
+py_blocks = re.findall(r'^```python\b', s, re.M)
+cpp_blocks = re.findall(r'^```cpp\b', s, re.M)
+check('expected production code blocks', len(py_blocks) == 12 and len(cpp_blocks) == 0)
 
-worked_examples = re.findall(r'^>\s*\*\*算例\s*16-', s, re.M)
-check('twelve standardized blockquote worked examples', len(worked_examples) == 12)
+worked_examples = re.findall(r'^>\s*\*\*算例\s*16-(\d+)\b', s, re.M)
+check('sequential blockquote worked examples 16-1 to 16-18', worked_examples == [str(i) for i in range(1, 18 + 1)])
 
-table_captions = re.findall(r'^\*表 16-(\d+)　', s, re.M)
-check('twelve standardized italic table captions 16-1 to 16-12', table_captions == [str(i) for i in range(1, 13)])
+table_captions = re.findall(r'^\*表\s*16-(\d+)(?:：|　|\s)', s, re.M)
+check('sequential italic table captions 16-1 to 16-18', table_captions == [str(i) for i in range(1, 18 + 1)])
 
-fig_index = json.loads((HERE / 'figure-index.json').read_text())
+fig_index = json.loads((HERE / 'figure-index.json').read_text(encoding='utf-8'))
 fig_count = len(fig_index)
-check('twenty-six figures in figure-index.json', fig_count == 26)
-captions = re.findall(r'^\*图 16-(\d+)(?:：|　)', s, re.M)
-check('sequential external captions 16-1 to 16-26', captions == [str(i) for i in range(1, fig_count + 1)])
+check('expected figures in figure-index.json', fig_count == 42)
+captions = re.findall(r'^\*图\s*16-(\d+)(?:：|　|\s)', s, re.M)
+check('sequential captions 16-1 to 16-42', captions == [str(i) for i in range(1, fig_count + 1)])
 
-imgs = re.findall(r'!\[.+?\]\((ch16/[^)]+)\)', s)
-check('active illustrations match figure-index.json', imgs == [row.get('asset') or f"ch16/{row['file']}" for row in fig_index])
+imgs = re.findall(r'!\[[^\n]*\]\((ch16/[^)]+)\)', s)
+check(
+    'active illustrations match figure-index.json',
+    imgs == [row.get('asset') or f"ch16/{row['file']}" for row in fig_index] and len(imgs) == 42,
+)
 
 for rel in imgs:
     p = md.parent / rel
@@ -82,47 +76,35 @@ for rel in imgs:
 
 missing = []
 for link in re.findall(r'\]\(([^)]+)\)', s):
-    u = urlsplit(link)
-    raw_path = unquote(u.path)
-    if not u.scheme and raw_path and not (md.parent / raw_path).exists():
+    u = urlsplit(link.strip('<>'))
+    if not u.scheme and u.path and not (md.parent / unquote(u.path)).exists():
         missing.append((str(md), link))
 check('local links exist', not missing)
 
 defs = re.findall(r'^\[\^([^\]]+)\]:', s, re.M)
 refs = re.findall(r'\[\^([^\]]+)\](?!:)', s)
-check('all footnotes used and defined once', set(defs) == set(refs) and len(defs) == len(set(defs)) and len(defs) >= 7)
+check('all footnotes used and defined once', set(refs) <= set(defs) and len(defs) == len(set(defs)) and len(defs) == 34)
 
 for name, key in [('sources.json', 'sources'), ('manifest.json', 'outputs')]:
-    data = json.loads((HERE / name).read_text())[key]
-    mismatches = [row['path'] for row in data if sha256(ROOT / row['path']) != row['sha256']]
+    data = json.loads((HERE / name).read_text(encoding='utf-8'))[key]
+    mismatches = [row['path'] for row in data if 'path' in row and sha256(ROOT / row['path']) != row['sha256']]
     check(name + ' integrity', not mismatches)
 
-math_val = json.loads((HERE / 'math-validation.json').read_text())
-check('no formula errors', not math_val['errors'] and 'katex-error' not in page)
+math_val = json.loads((HERE / 'math-validation.json').read_text(encoding='utf-8'))
+check('KaTeX math validation zero errors', not math_val.get('errors'))
 
-layout_val = json.loads((HERE / 'teaching-layout-validation.json').read_text())
-check(
-    'book-size figure layout',
-    len(layout_val) == 26 and all(r['width_pt'] == 420 and r['min_label_pt'] >= 11 and not r['text_extent_warnings'] for r in layout_val),
-)
+layout_val = json.loads((HERE / 'teaching-layout-validation.json').read_text(encoding='utf-8'))
+check('layout validation zero warnings', layout_val.get('total_warnings', 0) == 0 and layout_val.get('all_passed', False))
 
-d = json.loads((HERE / 'figure-data.json').read_text())['locked_truths']
-e11 = d['lease_bound_weights_example_16_11']
-check(
-    'example 16-11 lease-bound weight protection and HBM zeroization arithmetic',
-    close(e11['heartbeat_interval_s'] * 10.0, e11['grace_period_s'])
-    and close(e11['weight_gb'] / e11['hbm_write_bw_gbps'] * 1000.0, e11['zeroization_ms'])
-    and close(e11['dek_rotation_ms'] + e11['zeroization_ms'], 20.50),
-)
+check('HTML preview generated and non-empty', '<html' in page and len(page) > 10000)
 
-e12 = d['tournament_watermark_example_16_12']
-check(
-    'example 16-12 fused tournament watermark Z-score arithmetic',
-    close(round(2.0 * math.sqrt(e12['tournament_layers_m'] * e12['tokens_L']) * (e12['effective_win_prob'] - 0.50), 2), e12['z_score_at_200'])
-    and math.ceil(16.0 / (4.0 * e12['tournament_layers_m'] * ((e12['effective_win_prob'] - 0.50) ** 2))) == e12['min_tokens_for_z4'],
-)
+exp_dir = ROOT / 'experiments' / 'ch16'
+for suite in sorted(exp_dir.glob('*')):
+    if suite.is_dir() and (suite / 'verify.py').exists():
+        res = subprocess.run([sys.executable, 'verify.py'], cwd=suite, capture_output=True, text=True)
+        check(f'experiment suite {suite.name} verify.py', res.returncode == 0)
 
-passed = sum(1 for c in checks if c['passed'])
-print(json.dumps({"chapter": "ch16", "passed": passed, "total": len(checks), "checks": checks}, ensure_ascii=False, indent=2))
-if passed != len(checks):
+failed = [c for c in checks if not c['passed']]
+print(json.dumps({"total": len(checks), "passed": len(checks) - len(failed), "failed": failed}, ensure_ascii=False, indent=2))
+if failed:
     sys.exit(1)

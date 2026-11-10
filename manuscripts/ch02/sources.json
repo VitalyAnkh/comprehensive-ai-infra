@@ -83,11 +83,11 @@
     },
     {
       "path": "calculations/results/qwen235-granularity-baseline.json",
-      "sha256": "9641e445338948606e827355b71c743566400b8f44565690b1315d1704b11599"
+      "sha256": "f02d1423866b8a27296595708a4e47b4b957b065b9581a0b71ebe4ad88ceccf0"
     },
     {
       "path": "calculations/results/qwen235-granularity-baseline.md",
-      "sha256": "a59a20f6c34ff8f0fe0c12b229e15ae17b71b47d361d9d91a7e190933aad3f57"
+      "sha256": "333c06b5f40091d8569dc03f0f85d43aa22c97f90a3ffe99646f0a3dbe825223"
     },
     {
       "path": "calculations/results/qwen3-8b-decode-b1-s8192.json",
@@ -131,7 +131,7 @@
     },
     {
       "path": "calculations/results/request-four-models-book.json",
-      "sha256": "f8dc9442276c2decc742b724fc7ae504872a19812b31b3b5b9df1baf10196392"
+      "sha256": "8ccef90eed6677f4ddf8bda5b3e869f2ce60be81231fbc2f5169dcb97054a172"
     },
     {
       "path": "calculations/results/request-four-models-book.md",
@@ -179,11 +179,11 @@
     },
     {
       "path": "calculations/results/v4-prefix-flash-6144-2048.json",
-      "sha256": "7d95058464b0a6ad4b6016a5a3b390f78c08df54d482c0fe4ec980f4734ea475"
+      "sha256": "18a38f40b5fae4e5dbe57134f74a5f40cec81dc27cd9943f7764fc37008c1ce4"
     },
     {
       "path": "calculations/results/v4-prefix-flash-6144-2048.md",
-      "sha256": "5568f74de15dff4690e95052d7e455ba2214e13cbd89d30c5dbae19488d21e2f"
+      "sha256": "6d0851afece161d9531fdb7e0900602a909e21aac7e83cbecb51828f3278f266"
     },
     {
       "path": "case-studies/generative-multimodal-models.md",
@@ -211,7 +211,7 @@
     },
     {
       "path": "references/files/papers/deepseek-v4.pdf",
-      "sha256": "55b2d72f772ac00de2e470b3ee08443c648d971c7f57c52d6202895665e5978d"
+      "sha256": "14ab56fc476ef121ff01016e52874e01ae55e68756718ad0967e6c64803fe0fe"
     },
     {
       "path": "references/files/papers/gated-delta.pdf",
@@ -247,7 +247,7 @@
     },
     {
       "path": "references/files/papers/transformer.pdf",
-      "sha256": "bdfaa68d8984f0dc02beaca527b76f207d99b666d31d1da728ee0728182df697"
+      "sha256": "9371d9e7f287c2df4ee48bc2277d125afd1533dbe27f443048d68eeffdae3bcd"
     },
     {
       "path": "calculations/results/v3-forward-prefill.json",

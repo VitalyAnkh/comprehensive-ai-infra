@@ -26,7 +26,7 @@ def main():
     directory = args.directory
     edition = EDITIONS[args.edition]
     report = json.loads((directory / f"{edition['name']}-build.json").read_text())
-    expected_chapters = list(range(1, 31)) if args.edition == 'zh' else list(range(1, 13))
+    expected_chapters = list(range(1, 25)) if args.edition == 'zh' else list(range(1, 13))
     if report['chapters'] != expected_chapters:
         raise SystemExit(f'Expected all {len(expected_chapters)} chapters')
     doc = fitz.open(directory / f"{edition['name']}.pdf")

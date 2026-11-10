@@ -1,32 +1,37 @@
 {
+  "chapter": "ch19",
   "sources": [
     {
-      "path": "manuscripts/ch19/build.py",
-      "sha256": "653696779cf610d3063d8839f43ce768b15a303c660526431e041e3fb049adff"
-    },
-    {
-      "path": "manuscripts/ch19/figure-data.json",
-      "sha256": "f1bb4e30d9fd82179224cfb45980b2ec3d17524a9b0eef2ff057f8dc1b878c18"
+      "path": "manuscripts/19-多模态生成与实时语音.md",
+      "sha256": "90a913725aab64e747f32291c82f5adeb30c0dad40853a2ea69e4a5def07f8a1"
     },
     {
       "path": "manuscripts/ch19/figure-index.json",
-      "sha256": "48cd247b4bbf199b3a482e7f65f6686f00487f8479e256acf0ab6a8d7489d231"
+      "sha256": "b158957d2f2bef6f08bf57cb9e176cc380b0ab3eaa4ffbac161c2a9d6ac7521f"
     },
     {
       "path": "experiments/ch19/19-01/run.py",
-      "sha256": "58cb3195e24b4e10c3b25c129e37f3756cc99b45e2bc98fe7133414ad3cb0ec5"
+      "sha256": "4a8f01d8d6da97d1777e61b5c025dd22319975025734d2c63374daff9d0a044f"
     },
     {
       "path": "experiments/ch19/19-02/run.py",
-      "sha256": "1f6e262be634ce7dd1a87111849a5c6df25055e49de7d2e19387c8789d0ca00f"
+      "sha256": "9c78288e0de88125840011cb5852eb232e444d9593994f3597c555767fedae77"
     },
     {
       "path": "experiments/ch19/19-03/run.py",
-      "sha256": "00d89076613efa51ef8fca2a2aa9286e96190ab84d97be0089ca158f91373bb1"
+      "sha256": "72932f9d5324ffcb9e90d377ceb0cb9abc6f4541d11c8911dd74e2bb5762266b"
     },
     {
-      "path": "manuscripts/19-具身智能（VLA）、实时控制与大规模物理仿真底座.md",
-      "sha256": "37d047b0796585e69112a6add38029419b407a255bd43260d84e3dd12822d8b5"
+      "path": "experiments/ch19/19-04/run.py",
+      "sha256": "09ddb11515aca2bdd2caf35e1e129746053c183331f499a0b36c189538ea075c"
+    },
+    {
+      "path": "experiments/ch19/19-05/run.py",
+      "sha256": "e9eba3eda2f82339a8aa9b0938332e4374aaebf9890a28ea09500b82bed6e003"
+    },
+    {
+      "path": "experiments/ch19/19-06/run.py",
+      "sha256": "2ee56605c924a3013f4caba7733f7f37a0ea1cef0e3466be2be889f8fab2af0f"
     }
   ]
 }

@@ -1,158 +1,128 @@
-[
-  {
-    "figure": "ch15-gigawatt-ai-factory-power-chain",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch15-physical-vs-economic-feasibility",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch15-site-conditions-tco-sensitivity",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch15-synchronous-training-power-swing",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch15-rubin-power-smoothing-and-maxlps",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch15-runtime-staggered-microbatch-power",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch15-ashrae-w45-cdu-liquid-cooling-loop",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch15-logicfolding-power-density-paradox",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch15-thermal-throttling-straggler-amplification",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch15-tapas-thermal-power-routing-breakeven",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch15-multi-datacenter-dci-optical-latency",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch15-cross-dc-pipeline-and-hierarchical-dp",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch15-diloco-inner-outer-optimization",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch15-streaming-diloco-chunked-sync",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch15-single-campus-vs-multi-campus-decision",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch15-power-thermal-wan-co-design-summary",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch15-single-phase-vs-two-phase-microfluidics",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch15-campus-bess-peak-shaving-and-arbitrage",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch15-kareus-dynamic-static-energy-consolidation",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch15-dips-wan-backbone-parameter-sync",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch15-embodied-carbon-vs-operational-carbon-lifecycle",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch15-gigawatt-campus-master-engineering-ledger",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch15-48v-vs-800v-hvdc-and-vertical-power-delivery",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch15-sofc-microgrid-and-heat-recovery-ere-loop",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch15-in-silicon-microfluidic-cooling-thermal-resistance",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch15-gw-campus-smr-gas-bess-microgrid-frequency-control",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  }
-]
+{
+  "chapter": "ch15",
+  "figure_count": 20,
+  "all_passed": true,
+  "total_warnings": 0,
+  "figures": [
+    {
+      "figure": "15-1",
+      "file": "ch15-cluster-mtbf-scaling-and-llama3-failures.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "15-2",
+      "file": "ch15-hot-spare-pool-queuing-dimensioning.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "15-3",
+      "file": "ch15-sdc-bitflip-allreduce-contamination.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "15-4",
+      "file": "ch15-abft-checksum-matrix-multiplication.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "15-5",
+      "file": "ch15-safeguarding-sdc-and-opguard-bitwise-debug.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "15-6",
+      "file": "ch15-microbatch-rerun-vs-checkpoint-rollback.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "15-7",
+      "file": "ch15-trainmover-subsecond-hot-migration.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "15-8",
+      "file": "ch15-nccl-flight-recorder-straggler-blame.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "15-9",
+      "file": "ch15-optical-ber-fec-gray-failure-detection.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "15-10",
+      "file": "ch15-five-benchmark-gaming-traps.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "15-11",
+      "file": "ch15-flashinfer-bench-cceval-and-blink-profiling.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "15-12",
+      "file": "ch15-effective-training-time-ratio-ettr-model.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "15-13",
+      "file": "ch15-automated-burn-in-fleet-health-pipeline.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "15-14",
+      "file": "ch15-twenty-chapter-dual-track-master-ledger.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "15-15",
+      "file": "ch15-twenty-chapter-architecture-knowledge-graph.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "15-16",
+      "file": "ch15-ten-first-principles-of-ai-infra.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "15-17",
+      "file": "ch15-chaos-fault-injection-and-canary-rollout-gate.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "15-18",
+      "file": "ch15-core-cluster-to-four-new-frontiers-bridge.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "15-19",
+      "file": "ch15-oobleck-pre-instantiated-pipeline-template-failover.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "15-20",
+      "file": "ch15-goodput-sla-under-bursty-poisson-traffic.svg",
+      "passed": true,
+      "warnings": []
+    }
+  ]
+}

@@ -1,32 +1,36 @@
 {
-  "experiment_id": "15-03",
-  "in_silicon_microfluidics": {
-    "heat_flux_w_cm2": 277.78,
-    "d_h_um": 85.71,
-    "r_cal_kw": 0.004,
-    "r_micro_total_kw": 0.01,
-    "r_reduction_ratio": 2.8,
-    "t_j_coldplate_c": 115.0,
-    "t_j_micro_c": 70.0,
-    "t_in_max_coldplate_c": 15.0,
-    "t_in_max_micro_c": 60.0,
-    "pump_power_w": 1.65,
-    "pump_ratio_pct": 0.0658
+  "oobleck_elastic_pipeline_failover": {
+    "num_pipelines": 32,
+    "stages_per_pipeline": 8,
+    "failed_nodes": 2,
+    "t_detect_s": 0.25,
+    "t_shard_s": 0.85,
+    "t_sync_s": 0.35,
+    "oobleck_reconfig_sec": 1.45,
+    "full_restart_sec": 300.0,
+    "reconfig_speedup_x": 206.9,
+    "oobleck_retained_throughput_pct": 98.75,
+    "parachute_retained_throughput_pct": 93.75,
+    "ex20_13_parachute_pct": 93.75,
+    "ex20_13_oobleck_pct": 98.88,
+    "ex20_13_saved_node_hours_per_day": 629.76
   },
-  "gw_microgrid_vsg": {
-    "h_phys_s": 3.0,
-    "h_with_vsg_s": 7.5,
-    "rocof_no_vsg_hz_s": 3.75,
-    "rocof_with_vsg_hz_s": 1.5,
-    "h_bess_min_s": 13.5,
-    "df_peak_no_vsg_hz": 2.874,
-    "df_peak_with_vsg_hz": 0.739
-  },
-  "electro_thermal_dvfs": {
-    "n_subclusters": 8,
-    "effective_step_mw": 144.0,
-    "p_chip_scaled_w": 2101.0,
-    "t_j_controlled_c": 66.01,
-    "step_overhead_pct": 1.43
+  "bursty_goodput_vs_uniform": {
+    "rho": 0.85,
+    "service_ms": 120.0,
+    "prefill_ms": 80.0,
+    "slo_ttft_ms": 500.0,
+    "ttft_uniform_ms": 80.0,
+    "goodput_uniform_req_s": 7.08,
+    "wq_bursty_ms": 829.6,
+    "ttft_bursty_ms": 909.6,
+    "ttft_inflation_x": 11.37,
+    "slo_attainment_bursty_pct": 48.77,
+    "goodput_bursty_req_s": 3.45,
+    "goodput_drop_pct": 51.27,
+    "max_safe_utilization_pct": 60.04,
+    "ex20_14_wq_bursty_ms": 900.0,
+    "ex20_14_ttft_bursty_ms": 960.0,
+    "ex20_14_inflation_x": 16.0
   }
 }

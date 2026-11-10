@@ -1,35 +1,30 @@
 {
   "experiment_id": "21-01",
-  "agentic_worm_40turns": {
-    "turns_k": 40,
-    "final_turn_tokens": 80000,
-    "cumulative_prefill_tokens": 1640000,
-    "unique_written_tokens": 80000,
-    "reread_worm_tokens": 1560000,
-    "worm_reuse_ratio_pct": 95.12,
-    "total_decode_tokens": 8000,
-    "prefill_to_decode_ratio": 205.0
+  "three_tier_embedding_cache": {
+    "num_rows": 20000000000,
+    "embed_dim": 128,
+    "bytes_per_row": 500,
+    "total_table_tb": 10.0,
+    "zipf_alpha": 1.12,
+    "temporal_drift": 0.038,
+    "hbm_capacity_gb": 320.0,
+    "cxl_capacity_tb": 2.0,
+    "ssd_capacity_tb": 10.0,
+    "p_hbm": 0.82,
+    "p_cxl": 0.155,
+    "p_ssd": 0.025,
+    "weighted_latency_us": 2.19,
+    "pure_ssd_speedup_x": 29.7
   },
-  "tool_wait_phase_diagram": {
-    "prefix_tokens": 65536,
-    "kv_size_gib": 9.0,
-    "recompute_ms": 500.0,
-    "swap_in_ms": 187.5,
-    "roundtrip_swap_ms": 375.0,
-    "crossover_wait_sec": 2.16,
-    "hbm_cost_saving_at_15s_pct": 85.6,
-    "ttft_speedup_vs_recompute_x": 2.67
-  },
-  "kv_global_router_and_cachegen": {
-    "ttft_node_a_ms": 170.0,
-    "ttft_node_b_ms": 510.0,
-    "ttft_node_c_ms": 320.0,
-    "router_ttft_speedup_x": 3.0,
-    "cachegen_compression_x": 4.21,
-    "compressed_kv_gib": 2.1375,
-    "raw_transfer_ms": 1549.1,
-    "cachegen_transfer_ms": 385.9,
-    "cachegen_speedup_vs_raw_x": 4.01,
-    "critical_raw_bw_gib_s": 18.0
+  "torchrec_all_to_all_overlap": {
+    "num_gpus": 64,
+    "per_gpu_send_mb": 165.15,
+    "naive_skew_factor": 2.85,
+    "balanced_skew_factor": 1.06,
+    "naive_a2a_ms": 4.11,
+    "balanced_a2a_ms": 1.53,
+    "bottom_mlp_compute_ms": 1.85,
+    "exposed_naive_comm_ms": 2.26,
+    "exposed_balanced_comm_ms": 0.0
   }
 }

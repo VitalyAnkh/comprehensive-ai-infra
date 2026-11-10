@@ -12,17 +12,14 @@ def main() -> None:
     expected = json.loads(Path(EXPECTED_PATH).read_text())
     results = json.loads(Path(RESULTS_PATH).read_text())
     assert actual == expected == results, f"Mismatch:\nactual={actual}\nexpected={expected}\nresults={results}"
-    assert actual["gui_incremental_roi_cache_ex21_6"]["opt_total_tokens"] == 24600
-    assert actual["gui_incremental_roi_cache_ex21_6"]["token_compression_x"] == 7.32
-    assert actual["gui_incremental_roi_cache_ex21_6"]["token_saving_pct"] == 86.33
-    assert actual["gui_incremental_roi_cache_ex21_6"]["opt_vit_total_ms"] == 251.62
-    assert actual["gui_incremental_roi_cache_ex21_6"]["vit_speedup_x"] == 5.37
-    assert actual["speculative_dag_execution_ex21_7"]["expected_total_ms"] == 4969.60
-    assert actual["speculative_dag_execution_ex21_7"]["dag_speedup_x"] == 1.61
-    assert actual["speculative_dag_execution_ex21_7"]["latency_reduction_pct"] == 37.88
-    assert actual["speculative_dag_execution_ex21_7"]["breakeven_hit_prob_pct"] == 1.25
-    assert actual["exercises_21_11_and_21_12"]["p11_opt_tokens"] == 35680
-    assert actual["exercises_21_11_and_21_12"]["p12_expected_total_ms"] == 6643.75
+    assert actual["cuvs_cagra_vs_hnsw"]["raw_vectors_tb"] == 1.536
+    assert actual["cuvs_cagra_vs_hnsw"]["gpu_cagra_minutes"] == 40.8
+    assert actual["cuvs_cagra_vs_hnsw"]["build_speedup_x"] == 16.91
+    assert actual["diskann_sector_aligned_search"]["dram_pq_gb"] == 64.0
+    assert actual["diskann_sector_aligned_search"]["node_bytes"] == 1792
+    assert actual["diskann_sector_aligned_search"]["nodes_per_sector"] == 2
+    assert actual["diskann_sector_aligned_search"]["random_reads_per_query"] == 24
+    assert actual["diskann_sector_aligned_search"]["sustainable_qps"] == 210000
     print("Experiment 21-03 verified successfully.")
 
 

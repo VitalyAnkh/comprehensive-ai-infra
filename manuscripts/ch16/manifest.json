@@ -1,332 +1,521 @@
 {
+  "chapter": "ch16",
   "outputs": [
     {
-      "path": "manuscripts/ch16/ch16-aes-ctr-otp-speculative-encryption.pdf",
-      "sha256": "df92b9f08192b1575e5772e975f96698802cae8a10bba62d31ad324a8140100e"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-aes-ctr-otp-speculative-encryption.png",
-      "sha256": "d2a40417f36c0c2ef1d3b095751ba1fcca0c7a5a2d2bc56abf1ac4d717abbdbc"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-aes-ctr-otp-speculative-encryption.svg",
-      "sha256": "5fd776cd14a0457f483bc0b240f7c99b9962138c62c0c98325c959834b4efe95"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-agent-audit-log-outage-and-drain.pdf",
-      "sha256": "eb7b0a0b0357ef115793063f5166ed693d21317c5fcd85ab09594ef1b4b5cbe0"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-agent-audit-log-outage-and-drain.png",
-      "sha256": "157b622035319dac4d5a3f9d9d665ed420ba84cf46f92cc4fc4bd40dd73f8e65"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-agent-audit-log-outage-and-drain.svg",
-      "sha256": "c8cf51e1611d4521bdafb647af68329a919b4df713f65764efed6c76b82992fd"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-agent-container-escape-failure-modes.pdf",
-      "sha256": "7526082bfce7c54c8b6cdc3b0063f28b8dca3d92474b6868b5f38dbec7ed98f3"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-agent-container-escape-failure-modes.png",
-      "sha256": "1dcbc64b6ba288e3e0456fc8f9b02c059cf009ef6195124a7b8db33123f809e4"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-agent-container-escape-failure-modes.svg",
-      "sha256": "e5c9cb913ada62427e97fc7df87a2e5f678bddace31c5e0728de8ceedf25b2f3"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-ai-infra-architect-master-checklist.pdf",
-      "sha256": "4491b65450695aa147f7031f50d10fe150c29ace0afd23f0464e1981f1c7aba8"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-ai-infra-architect-master-checklist.png",
-      "sha256": "77c9cafd6e4dd3e8b94fb96ef65c9277901573a85d40353738ad7a939d78cd67"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-ai-infra-architect-master-checklist.svg",
-      "sha256": "9342b898afaf8c3395e2374f3541399d8a59291408c6046dd3fb2f0c235712ee"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-blowfish-elastic-sandbox-memory-pool.pdf",
-      "sha256": "d68f386be0d834e7f05b2b4fc36d5f822c390f9ff31a6b6c5609be15e3cb173f"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-blowfish-elastic-sandbox-memory-pool.png",
-      "sha256": "f35c65d42d888e65aa4cffee230e8252d2453be99e8b1be67483f47b835a8bff"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-blowfish-elastic-sandbox-memory-pool.svg",
-      "sha256": "a1b6a92adf305bd4f7472c186533a635e0baa8e5e6cb48e89ccc0e1402845805"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-bounce-buffer-vs-rubin-tee-io.pdf",
-      "sha256": "14b7acb08696f8b11682cf611c7290f1af1f71f5a2d7b638d1e0b69923258f21"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-bounce-buffer-vs-rubin-tee-io.png",
-      "sha256": "490a934991b62584779f00d4912de2d3d992ae1ecad43510d24145cf8f189fc5"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-bounce-buffer-vs-rubin-tee-io.svg",
-      "sha256": "c30e6ad88a2032d5ee483dc73557661ac3ec5ce39e6002460c0070a2e3833535"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-confidential-ai-vs-sandbox-threat-model.pdf",
-      "sha256": "29b036efc8d7febfbe5ebc58c5f79436e0fc56f72b20738326cf01779934f07c"
+      "path": "manuscripts/ch16/ch16-confidential-ai-vs-sandbox-threat-model.svg",
+      "sha256": "a4bee7d23f504053fabd7f4fad705ed4ab872b4b253a3633412077be236b67af"
     },
     {
       "path": "manuscripts/ch16/ch16-confidential-ai-vs-sandbox-threat-model.png",
       "sha256": "e569911eda4007c3e1ea53741224659067ea9d54a6f34f40a86529ef0d270ed6"
     },
     {
-      "path": "manuscripts/ch16/ch16-confidential-ai-vs-sandbox-threat-model.svg",
-      "sha256": "a4bee7d23f504053fabd7f4fad705ed4ab872b4b253a3633412077be236b67af"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-cpu-gpu-tee-remote-attestation.pdf",
-      "sha256": "b98ec5e45c6f8c5901c5badf2fe3d9a1e93c5d7ce92ed787a0c6b3ae75c0f515"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-cpu-gpu-tee-remote-attestation.png",
-      "sha256": "30dfe8116527f8292007dd2b3935872af10ff750244696eace0ff9659e8d9cdc"
+      "path": "manuscripts/ch16/ch16-confidential-ai-vs-sandbox-threat-model.pdf",
+      "sha256": "29b036efc8d7febfbe5ebc58c5f79436e0fc56f72b20738326cf01779934f07c"
     },
     {
       "path": "manuscripts/ch16/ch16-cpu-gpu-tee-remote-attestation.svg",
       "sha256": "68eb99adec85bfb4a4d067339a566c5ec8339c8da937ee82cca40940f6e2db53"
     },
     {
-      "path": "manuscripts/ch16/ch16-damon-ept-balloon-reclaim.pdf",
-      "sha256": "65de98039ba62eb964ba803c987a4effb908b0085eb4ea6ba4f4891930d62e80"
+      "path": "manuscripts/ch16/ch16-cpu-gpu-tee-remote-attestation.png",
+      "sha256": "30dfe8116527f8292007dd2b3935872af10ff750244696eace0ff9659e8d9cdc"
     },
     {
-      "path": "manuscripts/ch16/ch16-damon-ept-balloon-reclaim.png",
-      "sha256": "52a17d39e5d3bbe13728d714912433872afa1f3219ce4753295638e0fd99b2fc"
+      "path": "manuscripts/ch16/ch16-cpu-gpu-tee-remote-attestation.pdf",
+      "sha256": "b98ec5e45c6f8c5901c5badf2fe3d9a1e93c5d7ce92ed787a0c6b3ae75c0f515"
     },
     {
-      "path": "manuscripts/ch16/ch16-damon-ept-balloon-reclaim.svg",
-      "sha256": "a8d4fc93dacb350eb9e776f800b68c6c0eba093fd813d04d96961c61bf47d614"
+      "path": "manuscripts/ch16/ch16-bounce-buffer-vs-rubin-tee-io.svg",
+      "sha256": "c30e6ad88a2032d5ee483dc73557661ac3ec5ce39e6002460c0070a2e3833535"
     },
     {
-      "path": "manuscripts/ch16/ch16-dsec-firecracker-microvm-architecture.pdf",
-      "sha256": "10f6f32f5189cc04205bfc7919f426ac39d514698e499aa2a00727b6f1a4f5bc"
+      "path": "manuscripts/ch16/ch16-bounce-buffer-vs-rubin-tee-io.png",
+      "sha256": "490a934991b62584779f00d4912de2d3d992ae1ecad43510d24145cf8f189fc5"
     },
     {
-      "path": "manuscripts/ch16/ch16-dsec-firecracker-microvm-architecture.png",
-      "sha256": "94e4aa8fe8fd9cc6d358835aeb37a9eba7ec205608551496c2744fb6be2a5c7c"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-dsec-firecracker-microvm-architecture.svg",
-      "sha256": "1c4e3aa95c777f7dc2fdbed3ed81378fa2264d361abbbf0f578e6b480005b3ee"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-ebpf-cgroup-network-allowlist.pdf",
-      "sha256": "f90eb51f28f93e9f6331005cad791f33ad089054ffdfe9f31688e6a0318f64d2"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-ebpf-cgroup-network-allowlist.png",
-      "sha256": "975b0b35eda36f97f4474b2eebccbe923add6116272d6ab6c79663e7f48679b8"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-ebpf-cgroup-network-allowlist.svg",
-      "sha256": "a0943f87393be04f54b4ce012e99ca829ce59dfb84713b71e6e9808882cd5673"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-fused-cryptographic-logit-watermark-kernel.pdf",
-      "sha256": "f5f9fecec7cb2505304239b6aea3fcd61608b4b741d62f683ac166ed79b7cf29"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-fused-cryptographic-logit-watermark-kernel.png",
-      "sha256": "913b92484c503c736eb7b33bdbed3f2cb031e989e1f9fffafa306c4234a8e6c7"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-fused-cryptographic-logit-watermark-kernel.svg",
-      "sha256": "7d83cc7140f87e73dc4b3e4c3756ba24b1cd2de205a7d2f5ff7fe60cda73f344"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-idempotent-tool-commit-and-replay.pdf",
-      "sha256": "54620a34e5ab302bf4439a3fbf1c88f47d210cb15a4abeffb879901b101fef33"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-idempotent-tool-commit-and-replay.png",
-      "sha256": "6b341c1442fa7b6d8c2b83959542201eb61bd2110c6268d6c0224803817d1747"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-idempotent-tool-commit-and-replay.svg",
-      "sha256": "45a6dae2922461ae1c9e509582e8104bf85c61a49b733a9ed47e01c5dd8a6d36"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-janus-nested-virtualization-fast-path.pdf",
-      "sha256": "72d6834d6c7808459132f224213fd3b2a5784aff3935eb2b7a61b0202c126e3b"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-janus-nested-virtualization-fast-path.png",
-      "sha256": "cbe727a57eb7f44d5ceab17b319de512f7fc990b52741623dc31d71b8bc0bebe"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-janus-nested-virtualization-fast-path.svg",
-      "sha256": "02f2d6f0cda4e83ccfc7a8cb5708f5bd980f7704a90a95b630dfc2f3cf864b33"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-lease-bound-encrypted-weight-distribution.pdf",
-      "sha256": "03955d75ea8cbfffc42edb6e92b857f307aea3bed6ecbbd9c77a0aa5489ba85d"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-lease-bound-encrypted-weight-distribution.png",
-      "sha256": "834963f5802a5f40120d39580c446d9d6e8cdc9ff94549a63552c448cc096dcf"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-lease-bound-encrypted-weight-distribution.svg",
-      "sha256": "2f58566a1a02f097aa2b7e274a3b61cc8112cd021da1c4682f91a014e10e606c"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-moe-routing-traffic-side-channel-and-padding.pdf",
-      "sha256": "aedc5aba0fce387549ee1c603252964fea8f372e265c2c155b4881ec8cd401f9"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-moe-routing-traffic-side-channel-and-padding.png",
-      "sha256": "003807544fbff092de8c9049a96939c6aa077df737002faddc84dfd5264bceb0"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-moe-routing-traffic-side-channel-and-padding.svg",
-      "sha256": "4937bbe44f33411a0ff00cc4e33942e254e18d4a4470481153fb6097c6cdeeb5"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-optimistic-verification-slashing-game.pdf",
-      "sha256": "3fcecec27f9f8b0ed74bcbb0f1ff4d42c378560f428417082c096c7067a8c18f"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-optimistic-verification-slashing-game.png",
-      "sha256": "fe7f5d1554c31334271af09e191c23f3c912d28eedd19348172565f6470c4c59"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-optimistic-verification-slashing-game.svg",
-      "sha256": "305981cde7331166a47b550fabd0e347cc7f0a8981bee4003d1bdea293233ce5"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-pipellm-five-stage-confidential-pipeline.pdf",
-      "sha256": "08900171ab1b55b6bef2b10ac97a7883cb4691102187410c5db0c9c4282b5ba2"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-pipellm-five-stage-confidential-pipeline.png",
-      "sha256": "eb93d73ef5bd015717ffe364d2f5dbea65d52653b8459252a7857e76e7c510d0"
+      "path": "manuscripts/ch16/ch16-bounce-buffer-vs-rubin-tee-io.pdf",
+      "sha256": "14b7acb08696f8b11682cf611c7290f1af1f71f5a2d7b638d1e0b69923258f21"
     },
     {
       "path": "manuscripts/ch16/ch16-pipellm-five-stage-confidential-pipeline.svg",
       "sha256": "495b1a26d9db7a426fd2a8a8bc0373f68ca35271280e84de5a3b74b39e6ba958"
     },
     {
-      "path": "manuscripts/ch16/ch16-sched-idle-and-core-scheduling.pdf",
-      "sha256": "7f0a655ba54e6a0b119c0cbfb52f1eb51592d07960d2a17bebd642f4d8cda8e5"
+      "path": "manuscripts/ch16/ch16-pipellm-five-stage-confidential-pipeline.png",
+      "sha256": "eb93d73ef5bd015717ffe364d2f5dbea65d52653b8459252a7857e76e7c510d0"
     },
     {
-      "path": "manuscripts/ch16/ch16-sched-idle-and-core-scheduling.png",
-      "sha256": "797941c7c4446efc856348f3e2553f28a1d8afba34748ece1cfe665859d9843e"
+      "path": "manuscripts/ch16/ch16-pipellm-five-stage-confidential-pipeline.pdf",
+      "sha256": "08900171ab1b55b6bef2b10ac97a7883cb4691102187410c5db0c9c4282b5ba2"
     },
     {
-      "path": "manuscripts/ch16/ch16-sched-idle-and-core-scheduling.svg",
-      "sha256": "d25fce980f8cd98b80d5be2db72b764de4834f55a1d78beb815f29e55787ab10"
+      "path": "manuscripts/ch16/ch16-aes-ctr-otp-speculative-encryption.svg",
+      "sha256": "5fd776cd14a0457f483bc0b240f7c99b9962138c62c0c98325c959834b4efe95"
     },
     {
-      "path": "manuscripts/ch16/ch16-sixteen-chapter-full-stack-map.pdf",
-      "sha256": "f306306001a77e36b81d32e1d2e9677c176f036e1528f5675ef9269029ac8280"
+      "path": "manuscripts/ch16/ch16-aes-ctr-otp-speculative-encryption.png",
+      "sha256": "d2a40417f36c0c2ef1d3b095751ba1fcca0c7a5a2d2bc56abf1ac4d717abbdbc"
     },
     {
-      "path": "manuscripts/ch16/ch16-sixteen-chapter-full-stack-map.png",
-      "sha256": "aeca885dcf5cda7aba9cd81a351f7c0cea146c9934519941bc65a695f94d5caa"
+      "path": "manuscripts/ch16/ch16-aes-ctr-otp-speculative-encryption.pdf",
+      "sha256": "df92b9f08192b1575e5772e975f96698802cae8a10bba62d31ad324a8140100e"
     },
     {
-      "path": "manuscripts/ch16/ch16-sixteen-chapter-full-stack-map.svg",
-      "sha256": "12d96bd785cadd2b94e33e1873e4328e822a124fb7e3963518e652784ecc8f8b"
+      "path": "manuscripts/ch16/ch16-agent-container-escape-failure-modes.svg",
+      "sha256": "e5c9cb913ada62427e97fc7df87a2e5f678bddace31c5e0728de8ceedf25b2f3"
     },
     {
-      "path": "manuscripts/ch16/ch16-tee-timing-side-channel-traffic-shaping.pdf",
-      "sha256": "cd5f82d80200d430d55ae19837c78ed66944a430c92240e180222347bbeec220"
+      "path": "manuscripts/ch16/ch16-agent-container-escape-failure-modes.png",
+      "sha256": "1dcbc64b6ba288e3e0456fc8f9b02c059cf009ef6195124a7b8db33123f809e4"
     },
     {
-      "path": "manuscripts/ch16/ch16-tee-timing-side-channel-traffic-shaping.png",
-      "sha256": "a56441ac7fa6250908a9049e24195b084164da3f0908430f0f8dc33a9b8fe53e"
+      "path": "manuscripts/ch16/ch16-agent-container-escape-failure-modes.pdf",
+      "sha256": "7526082bfce7c54c8b6cdc3b0063f28b8dca3d92474b6868b5f38dbec7ed98f3"
     },
     {
-      "path": "manuscripts/ch16/ch16-tee-timing-side-channel-traffic-shaping.svg",
-      "sha256": "d1436a4613674515ee891779063338fc790aa466044560db4e7ebbe4f74063fa"
+      "path": "manuscripts/ch16/ch16-dsec-firecracker-microvm-architecture.svg",
+      "sha256": "1c4e3aa95c777f7dc2fdbed3ed81378fa2264d361abbbf0f578e6b480005b3ee"
     },
     {
-      "path": "manuscripts/ch16/ch16-telemetry-sampling-vs-billing-ledger.pdf",
-      "sha256": "2d32f352af7da65411cab4fb9bc90ce685dcb10298010f3d46523fa2b59edb3c"
+      "path": "manuscripts/ch16/ch16-dsec-firecracker-microvm-architecture.png",
+      "sha256": "94e4aa8fe8fd9cc6d358835aeb37a9eba7ec205608551496c2744fb6be2a5c7c"
     },
     {
-      "path": "manuscripts/ch16/ch16-telemetry-sampling-vs-billing-ledger.png",
-      "sha256": "66f1c5b699b76af62d35e34a87e4406aac52da371377673feb25be3298c8936b"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-telemetry-sampling-vs-billing-ledger.svg",
-      "sha256": "3300c615e52f229f2a6d848a391a8f277cf032fc8d192bb9a50b0b655616bec9"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-trusted-ai-infrastructure-defense-in-depth.pdf",
-      "sha256": "3860801fcb10541f520711fc6233e7e4dd68c296b86aa74622b707b001c446b4"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-trusted-ai-infrastructure-defense-in-depth.png",
-      "sha256": "193e50c47b520522adb213b0f588843e1123a37cb251da7edda589b78a69df56"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-trusted-ai-infrastructure-defense-in-depth.svg",
-      "sha256": "53b8e55b3436194c109e4051d67aac2601c5261f34b23e508e10927a240803dd"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-verifiable-inference-optimistic-and-zkml-proof.pdf",
-      "sha256": "07ed009ad5b747c10aa55bc116dd199b97aa54b6555bcd4eb42f38ec1b8b4a82"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-verifiable-inference-optimistic-and-zkml-proof.png",
-      "sha256": "099d6733ddae97f63e3c604d5cf92759192463633a4a2a8f8151bd93dea3455d"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-verifiable-inference-optimistic-and-zkml-proof.svg",
-      "sha256": "eeb31e2893b022b578e607abc758f235393aa7cda28c0ed94dab62f29da874d9"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-verifiable-inference-tee-zkml-opml-triangle.pdf",
-      "sha256": "6c726a7103a6a423dad2dcc828372ce87b52feae421a333c35f8770f345e1ee4"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-verifiable-inference-tee-zkml-opml-triangle.png",
-      "sha256": "b42778e3576ee66612b79541adad1119ece7fab8b2465c49029862a3713beec8"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-verifiable-inference-tee-zkml-opml-triangle.svg",
-      "sha256": "8b3d4fa026d376cb5a671c6f79b6d1d5e8854f8456da3d35eb67d0d5c49b6b6b"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-virtio-pmem-dax-vs-struct-page-tax.pdf",
-      "sha256": "b74cc5df90750408fc4cb7ce684fe509d53a72a7a09228e6072de39f1f493b11"
-    },
-    {
-      "path": "manuscripts/ch16/ch16-virtio-pmem-dax-vs-struct-page-tax.png",
-      "sha256": "cbbf6f712a1622ae757a68f2f6e2efe0608e0f0a3291a9c52b33d3c9c3758d1a"
+      "path": "manuscripts/ch16/ch16-dsec-firecracker-microvm-architecture.pdf",
+      "sha256": "10f6f32f5189cc04205bfc7919f426ac39d514698e499aa2a00727b6f1a4f5bc"
     },
     {
       "path": "manuscripts/ch16/ch16-virtio-pmem-dax-vs-struct-page-tax.svg",
       "sha256": "e3bd88d6f5af32d9e5623da95d4248f89156ba52c14cc4d94a0e230d01445cbf"
     },
     {
-      "path": "manuscripts/ch16/figure-data.json",
-      "sha256": "12856346fc0034a8884996a94b3d91829c0c34747879704cad2c56c676c59a18"
+      "path": "manuscripts/ch16/ch16-virtio-pmem-dax-vs-struct-page-tax.png",
+      "sha256": "cbbf6f712a1622ae757a68f2f6e2efe0608e0f0a3291a9c52b33d3c9c3758d1a"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-virtio-pmem-dax-vs-struct-page-tax.pdf",
+      "sha256": "b74cc5df90750408fc4cb7ce684fe509d53a72a7a09228e6072de39f1f493b11"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-damon-ept-balloon-reclaim.svg",
+      "sha256": "a8d4fc93dacb350eb9e776f800b68c6c0eba093fd813d04d96961c61bf47d614"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-damon-ept-balloon-reclaim.png",
+      "sha256": "52a17d39e5d3bbe13728d714912433872afa1f3219ce4753295638e0fd99b2fc"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-damon-ept-balloon-reclaim.pdf",
+      "sha256": "65de98039ba62eb964ba803c987a4effb908b0085eb4ea6ba4f4891930d62e80"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-sched-idle-and-core-scheduling.svg",
+      "sha256": "d25fce980f8cd98b80d5be2db72b764de4834f55a1d78beb815f29e55787ab10"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-sched-idle-and-core-scheduling.png",
+      "sha256": "797941c7c4446efc856348f3e2553f28a1d8afba34748ece1cfe665859d9843e"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-sched-idle-and-core-scheduling.pdf",
+      "sha256": "7f0a655ba54e6a0b119c0cbfb52f1eb51592d07960d2a17bebd642f4d8cda8e5"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-ebpf-cgroup-network-allowlist.svg",
+      "sha256": "a0943f87393be04f54b4ce012e99ca829ce59dfb84713b71e6e9808882cd5673"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-ebpf-cgroup-network-allowlist.png",
+      "sha256": "975b0b35eda36f97f4474b2eebccbe923add6116272d6ab6c79663e7f48679b8"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-ebpf-cgroup-network-allowlist.pdf",
+      "sha256": "f90eb51f28f93e9f6331005cad791f33ad089054ffdfe9f31688e6a0318f64d2"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-agent-audit-log-outage-and-drain.svg",
+      "sha256": "c8cf51e1611d4521bdafb647af68329a919b4df713f65764efed6c76b82992fd"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-agent-audit-log-outage-and-drain.png",
+      "sha256": "157b622035319dac4d5a3f9d9d665ed420ba84cf46f92cc4fc4bd40dd73f8e65"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-agent-audit-log-outage-and-drain.pdf",
+      "sha256": "eb7b0a0b0357ef115793063f5166ed693d21317c5fcd85ab09594ef1b4b5cbe0"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-idempotent-tool-commit-and-replay.svg",
+      "sha256": "45a6dae2922461ae1c9e509582e8104bf85c61a49b733a9ed47e01c5dd8a6d36"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-idempotent-tool-commit-and-replay.png",
+      "sha256": "6b341c1442fa7b6d8c2b83959542201eb61bd2110c6268d6c0224803817d1747"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-idempotent-tool-commit-and-replay.pdf",
+      "sha256": "54620a34e5ab302bf4439a3fbf1c88f47d210cb15a4abeffb879901b101fef33"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-telemetry-sampling-vs-billing-ledger.svg",
+      "sha256": "3300c615e52f229f2a6d848a391a8f277cf032fc8d192bb9a50b0b655616bec9"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-telemetry-sampling-vs-billing-ledger.png",
+      "sha256": "66f1c5b699b76af62d35e34a87e4406aac52da371377673feb25be3298c8936b"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-telemetry-sampling-vs-billing-ledger.pdf",
+      "sha256": "2d32f352af7da65411cab4fb9bc90ce685dcb10298010f3d46523fa2b59edb3c"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-sixteen-chapter-full-stack-map.svg",
+      "sha256": "12d96bd785cadd2b94e33e1873e4328e822a124fb7e3963518e652784ecc8f8b"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-sixteen-chapter-full-stack-map.png",
+      "sha256": "aeca885dcf5cda7aba9cd81a351f7c0cea146c9934519941bc65a695f94d5caa"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-sixteen-chapter-full-stack-map.pdf",
+      "sha256": "f306306001a77e36b81d32e1d2e9677c176f036e1528f5675ef9269029ac8280"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-ai-infra-architect-master-checklist.svg",
+      "sha256": "9342b898afaf8c3395e2374f3541399d8a59291408c6046dd3fb2f0c235712ee"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-ai-infra-architect-master-checklist.png",
+      "sha256": "77c9cafd6e4dd3e8b94fb96ef65c9277901573a85d40353738ad7a939d78cd67"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-ai-infra-architect-master-checklist.pdf",
+      "sha256": "4491b65450695aa147f7031f50d10fe150c29ace0afd23f0464e1981f1c7aba8"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-moe-routing-traffic-side-channel-and-padding.svg",
+      "sha256": "4937bbe44f33411a0ff00cc4e33942e254e18d4a4470481153fb6097c6cdeeb5"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-moe-routing-traffic-side-channel-and-padding.png",
+      "sha256": "003807544fbff092de8c9049a96939c6aa077df737002faddc84dfd5264bceb0"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-moe-routing-traffic-side-channel-and-padding.pdf",
+      "sha256": "aedc5aba0fce387549ee1c603252964fea8f372e265c2c155b4881ec8cd401f9"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-verifiable-inference-tee-zkml-opml-triangle.svg",
+      "sha256": "8b3d4fa026d376cb5a671c6f79b6d1d5e8854f8456da3d35eb67d0d5c49b6b6b"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-verifiable-inference-tee-zkml-opml-triangle.png",
+      "sha256": "b42778e3576ee66612b79541adad1119ece7fab8b2465c49029862a3713beec8"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-verifiable-inference-tee-zkml-opml-triangle.pdf",
+      "sha256": "6c726a7103a6a423dad2dcc828372ce87b52feae421a333c35f8770f345e1ee4"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-optimistic-verification-slashing-game.svg",
+      "sha256": "305981cde7331166a47b550fabd0e347cc7f0a8981bee4003d1bdea293233ce5"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-optimistic-verification-slashing-game.png",
+      "sha256": "fe7f5d1554c31334271af09e191c23f3c912d28eedd19348172565f6470c4c59"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-optimistic-verification-slashing-game.pdf",
+      "sha256": "3fcecec27f9f8b0ed74bcbb0f1ff4d42c378560f428417082c096c7067a8c18f"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-janus-nested-virtualization-fast-path.svg",
+      "sha256": "02f2d6f0cda4e83ccfc7a8cb5708f5bd980f7704a90a95b630dfc2f3cf864b33"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-janus-nested-virtualization-fast-path.png",
+      "sha256": "cbe727a57eb7f44d5ceab17b319de512f7fc990b52741623dc31d71b8bc0bebe"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-janus-nested-virtualization-fast-path.pdf",
+      "sha256": "72d6834d6c7808459132f224213fd3b2a5784aff3935eb2b7a61b0202c126e3b"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-blowfish-elastic-sandbox-memory-pool.svg",
+      "sha256": "a1b6a92adf305bd4f7472c186533a635e0baa8e5e6cb48e89ccc0e1402845805"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-blowfish-elastic-sandbox-memory-pool.png",
+      "sha256": "f35c65d42d888e65aa4cffee230e8252d2453be99e8b1be67483f47b835a8bff"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-blowfish-elastic-sandbox-memory-pool.pdf",
+      "sha256": "d68f386be0d834e7f05b2b4fc36d5f822c390f9ff31a6b6c5609be15e3cb173f"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-trusted-ai-infrastructure-defense-in-depth.svg",
+      "sha256": "53b8e55b3436194c109e4051d67aac2601c5261f34b23e508e10927a240803dd"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-trusted-ai-infrastructure-defense-in-depth.png",
+      "sha256": "193e50c47b520522adb213b0f588843e1123a37cb251da7edda589b78a69df56"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-trusted-ai-infrastructure-defense-in-depth.pdf",
+      "sha256": "3860801fcb10541f520711fc6233e7e4dd68c296b86aa74622b707b001c446b4"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-lease-bound-encrypted-weight-distribution.svg",
+      "sha256": "2f58566a1a02f097aa2b7e274a3b61cc8112cd021da1c4682f91a014e10e606c"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-lease-bound-encrypted-weight-distribution.png",
+      "sha256": "834963f5802a5f40120d39580c446d9d6e8cdc9ff94549a63552c448cc096dcf"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-lease-bound-encrypted-weight-distribution.pdf",
+      "sha256": "03955d75ea8cbfffc42edb6e92b857f307aea3bed6ecbbd9c77a0aa5489ba85d"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-fused-cryptographic-logit-watermark-kernel.svg",
+      "sha256": "7d83cc7140f87e73dc4b3e4c3756ba24b1cd2de205a7d2f5ff7fe60cda73f344"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-fused-cryptographic-logit-watermark-kernel.png",
+      "sha256": "913b92484c503c736eb7b33bdbed3f2cb031e989e1f9fffafa306c4234a8e6c7"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-fused-cryptographic-logit-watermark-kernel.pdf",
+      "sha256": "f5f9fecec7cb2505304239b6aea3fcd61608b4b741d62f683ac166ed79b7cf29"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-tee-timing-side-channel-traffic-shaping.svg",
+      "sha256": "d1436a4613674515ee891779063338fc790aa466044560db4e7ebbe4f74063fa"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-tee-timing-side-channel-traffic-shaping.png",
+      "sha256": "a56441ac7fa6250908a9049e24195b084164da3f0908430f0f8dc33a9b8fe53e"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-tee-timing-side-channel-traffic-shaping.pdf",
+      "sha256": "cd5f82d80200d430d55ae19837c78ed66944a430c92240e180222347bbeec220"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-verifiable-inference-optimistic-and-zkml-proof.svg",
+      "sha256": "eeb31e2893b022b578e607abc758f235393aa7cda28c0ed94dab62f29da874d9"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-verifiable-inference-optimistic-and-zkml-proof.png",
+      "sha256": "099d6733ddae97f63e3c604d5cf92759192463633a4a2a8f8151bd93dea3455d"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-verifiable-inference-optimistic-and-zkml-proof.pdf",
+      "sha256": "07ed009ad5b747c10aa55bc116dd199b97aa54b6555bcd4eb42f38ec1b8b4a82"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-wan-allreduce-bottleneck-vs-diloco-two-level-optimizer.svg",
+      "sha256": "ac530e1b8127ab74566c7b8e0a51b9aeca88db0d318b7a6a85dff91fb95c5b8d"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-wan-allreduce-bottleneck-vs-diloco-two-level-optimizer.png",
+      "sha256": "7816f0e461164331bfa924697c9a29a815bce495eacaa2cb9631b1887e997605"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-wan-allreduce-bottleneck-vs-diloco-two-level-optimizer.pdf",
+      "sha256": "1478ab9a0aa40df1ab8d3a4b0f65c256d7c4382fad95d84d61953547128733e5"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-streaming-diloco-fragment-pipeline-and-fp4-outer-delta.svg",
+      "sha256": "6346b32ae547ca933fb3cb899d56341950e57b374720be066cb00f8c2508f213"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-streaming-diloco-fragment-pipeline-and-fp4-outer-delta.png",
+      "sha256": "4624f85f2e3c8e821f3a3fb6f65583ffe4103cf7ee83d34a4b253e1315805a71"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-streaming-diloco-fragment-pipeline-and-fp4-outer-delta.pdf",
+      "sha256": "311543c74ebd720298f252423c44e4a4d79da74c1604bb20e6e29cb29c5c7e49"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-diloco-inner-step-h-vs-validation-loss-and-bandwidth.svg",
+      "sha256": "4f40bc38082c5f8b708286ad0b0c7a0066ecfc3f883695352b96c22cf129789a"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-diloco-inner-step-h-vs-validation-loss-and-bandwidth.png",
+      "sha256": "6e876fe7ed8bf3ddf037749f71e5b699d72bf966f7237cd9142ed73b3477adab"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-diloco-inner-step-h-vs-validation-loss-and-bandwidth.pdf",
+      "sha256": "619b54a3b62cf543c6baa2f17a40727233f522d0a34fbc8f0c48013135149897"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-proof-of-learning-spot-check-and-byzantine-median.svg",
+      "sha256": "e9ed6e2934d85232580e0254d7d3816de4a3b736a65afd70d2dce50556a4754f"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-proof-of-learning-spot-check-and-byzantine-median.png",
+      "sha256": "ace1c70be7013d07c6697209574bda76f95a075f0915254f9084762a0af7d920"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-proof-of-learning-spot-check-and-byzantine-median.pdf",
+      "sha256": "41ffd71973afcd39a846e66a145653c6f6b1e476be01dda18f5f631748d84d73"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-dht-hivemind-elastic-optimizer-sharding-spot-recovery.svg",
+      "sha256": "0ff8d9904d43027ee92a7f0752ad8330aed2ad7a6e4a48411a811ade5be7c0ab"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-dht-hivemind-elastic-optimizer-sharding-spot-recovery.png",
+      "sha256": "dc5b09c61c7bcfe64b60454b9e5c411bcb3a8762849fea48d5d630122ddc1c59"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-dht-hivemind-elastic-optimizer-sharding-spot-recovery.pdf",
+      "sha256": "82666813d65e406703491f224c1a3c3ab6a1844ce2f3d6e37434508b925cabcd"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-serial-guardrail-blocking-vs-async-speculative-sidecar.svg",
+      "sha256": "0ce92dcb1be39f97828a884d08e8f934023450c85b594c60af4eb37d4f8703ad"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-serial-guardrail-blocking-vs-async-speculative-sidecar.png",
+      "sha256": "e5c9fce99bc5bbb10ee2bb7218bc8062d218b4c01b3ee40c4669f5c84da1e31f"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-serial-guardrail-blocking-vs-async-speculative-sidecar.pdf",
+      "sha256": "a9313aea5e550fdb2a4aaf96496eac308ce4c0fa7824abb5fd30edf2066ac7fd"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-sliding-window-token-stream-guardrail-rollback.svg",
+      "sha256": "5fd5a40e6531440e5a26456e543e007a658dc0c242840233d727c36dce9f21f6"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-sliding-window-token-stream-guardrail-rollback.png",
+      "sha256": "198d6c7ba9b7c6144ff6f4e7c8a208950e87f41b18642792fa78abe4b7979035"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-sliding-window-token-stream-guardrail-rollback.pdf",
+      "sha256": "a8bb8d7246ae5755f6e857cc078564972fb5be6a612fd6a4530486c4f06dd1b6"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-in-situ-residual-stream-sae-feature-clamping.svg",
+      "sha256": "1c2fa72047a6cd04a1a2660941beecaafbefb55b5ae2297e63fe85c6f744b04f"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-in-situ-residual-stream-sae-feature-clamping.png",
+      "sha256": "074aaed8c74612f80671b261017b96a5d40842f57ec9d5be56155ad45703a727"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-in-situ-residual-stream-sae-feature-clamping.pdf",
+      "sha256": "a0adee1fb791efe612235351d5d0492b6fc8efcbb2407631fc46046c15868482"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-representation-engineering-harmful-subspace-projection.svg",
+      "sha256": "00711e2d8db7def91627071a085d02c498d91ebb005a9034ee92861a0e3ae23a"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-representation-engineering-harmful-subspace-projection.png",
+      "sha256": "c5d8bd3e5d49c3962bb759c80554806ddf43f6bddb6dd12b42d6c6d8b3b2ecb7"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-representation-engineering-harmful-subspace-projection.pdf",
+      "sha256": "83a0e8de85b3242c8cfeb2893d0859eacc2e3f190f79e83d1154208eb853fb56"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-synthid-text-tournament-sampling-tree-mechanism.svg",
+      "sha256": "f3eb7e70fb86e7f619b8544ebac381a50d2ef3415a7be86ae46fa1059ca995ca"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-synthid-text-tournament-sampling-tree-mechanism.png",
+      "sha256": "1f6c4f4aeb22cba50d2cef6687d82c022c3c80651cc21b9153dec0ee03db5768"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-synthid-text-tournament-sampling-tree-mechanism.pdf",
+      "sha256": "7a495b92cae8e6947a8e87a9f61a2a7902c862a1d5e3383d6fb3caa36b18c383"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-distributed-tp-prng-seed-synchronization-for-watermark.svg",
+      "sha256": "090dd53c92fa31e522f6ec1d8092f715e339a6c5eb5ce6dbb373e77eedf853c6"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-distributed-tp-prng-seed-synchronization-for-watermark.png",
+      "sha256": "7a048387405cd5fda017a29e0cce15e004eb72bfec992aeb194848a4badde45d"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-distributed-tp-prng-seed-synchronization-for-watermark.pdf",
+      "sha256": "ad01d25fc88607bfdd02cb37dc900243ae22794c02738a686dcb8b6325806935"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-watermark-token-length-vs-detection-tpr-at-low-fpr.svg",
+      "sha256": "19e9258c14d77c1fcb0cc801391789487bae533deb767f8634aa1cd0c4ee26ad"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-watermark-token-length-vs-detection-tpr-at-low-fpr.png",
+      "sha256": "51194ea29b1d1d16fa88e88b9f7b3ab29ca53b6b7e2a24783df68af1d62ef8c1"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-watermark-token-length-vs-detection-tpr-at-low-fpr.pdf",
+      "sha256": "8d4d0cfaa9f1358e1d9bda9cf958f613b3766a274333a32ddef9019044554cf5"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-pickle-arbitrary-code-exploit-vs-safetensors-zero-copy-mmap.svg",
+      "sha256": "222ca60df786b52bcb03ddeb0c86bb8d881d10904bcbfcc1c3965b5944272ba8"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-pickle-arbitrary-code-exploit-vs-safetensors-zero-copy-mmap.png",
+      "sha256": "f0f0d8a9309970d6ff11f18a370a83e44943c4b6ae442afe7ba0eba99a1b29a4"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-pickle-arbitrary-code-exploit-vs-safetensors-zero-copy-mmap.pdf",
+      "sha256": "d60f59eebbf46dd1eacc6b74b1b62a9ce73de888de9e1adddaf1f03c76d55c1d"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-merkle-tree-weight-signature-and-tee-attestation-boot.svg",
+      "sha256": "d505c91fcec42e9a735ad163e9c7a210553dd0ef706a5c00d3b08defbfd49155"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-merkle-tree-weight-signature-and-tee-attestation-boot.png",
+      "sha256": "98ecc1995b53b3a7425f2ec7b2d1168a8b069b9103eb699a2739c957b2716f5f"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-merkle-tree-weight-signature-and-tee-attestation-boot.pdf",
+      "sha256": "a0d269ef4c2d2d7837b136612198cda88e0423757c22b53c43061703fe3bc33b"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-sovereign-ai-multi-region-compliance-and-audit-architecture.svg",
+      "sha256": "8e1f347e6fd691e52cb7c5e16bef2b865634aa7978633daeacc90331e7e18b4d"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-sovereign-ai-multi-region-compliance-and-audit-architecture.png",
+      "sha256": "4712820fb380a01509eb806ba1d61d05444237ae6d3e51c069942471f26aea73"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-sovereign-ai-multi-region-compliance-and-audit-architecture.pdf",
+      "sha256": "2ac19139f6ff6a91e6f0cfa60f7ac2a7568f4f4551aa160507ad16fbaf172473"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-decentralized-training-and-trustworthy-ai-infra-synthesis.svg",
+      "sha256": "a9ceb7ef353baf98d2044c839e3bafe7bba398b267cd60c53aabc438b04d6b16"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-decentralized-training-and-trustworthy-ai-infra-synthesis.png",
+      "sha256": "b3372873b12e5abd9e6ca6a847fe75397179905fffcde0d67ae3f1532232ff26"
+    },
+    {
+      "path": "manuscripts/ch16/ch16-decentralized-training-and-trustworthy-ai-infra-synthesis.pdf",
+      "sha256": "050e85abd8589f94a1afd89c185dd4bce2cf8325ee5c28cfb3f0c0dea3597b1f"
     },
     {
       "path": "manuscripts/ch16/figure-index.json",
-      "sha256": "bc13b1bd39e68523d60efcd99a26e6aea4275b5745a7eb434d0dd4e641c3cf46"
+      "sha256": "edcc434eb2dc7ced81322937c2e9611179330dd91d06c48872d49647c640d9c2"
     },
     {
       "path": "manuscripts/ch16/teaching-layout-validation.json",
-      "sha256": "b68f70db6ce6b26c04383de20b4356c9d2fd098af5d7b6aed947db7a7d2fc035"
+      "sha256": "b3e9263e265a91779018bcf649534a4cb8942a610b6543c74c2df326b42adb3f"
     },
     {
       "path": "manuscripts/ch16/math-validation.json",
-      "sha256": "750c73282338cdf6b80f3192c736682ace0a81ff373448234398b4bd70696441"
+      "sha256": "6308996e400ebdc58774df7078f1974ddec8b3494bcc1e8a391559479173a74d"
     }
   ]
 }

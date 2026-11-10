@@ -1,27 +1,38 @@
 #!/usr/bin/env python3
-"""Verify deterministic outputs for Experiment 23-01."""
-from __future__ import annotations
-
+"""Verification script for Experiment 23-01."""
 import json
-from pathlib import Path
-from run import compute_metrics, EXPECTED_PATH, RESULTS_PATH
+import pathlib
+import sys
+
+HERE = pathlib.Path(__file__).resolve().parent
+RES = HERE / "results" / "lifecycle_and_preregistration.json"
 
 
-def main() -> None:
-    actual = compute_metrics()
-    expected = json.loads(Path(EXPECTED_PATH).read_text())
-    results = json.loads(Path(RESULTS_PATH).read_text())
-    assert actual == expected == results, f"Mismatch:\nactual={actual}\nexpected={expected}\nresults={results}"
-    assert actual["curation_funnel"]["final_curated_tokens_t"] == 15.0
-    assert actual["curation_funnel"]["overall_warc_byte_yield_pct"] == 2.4
-    assert actual["minhash_lsh_scurve"]["threshold_s_star"] == 0.7071
-    assert actual["minhash_lsh_scurve"]["prob_at_s_080_pct"] == 94.7
-    assert actual["minhash_lsh_scurve"]["prob_at_s_050_pct"] == 6.07
-    assert actual["gpu_fuzzy_dedup_cluster"]["total_signature_gb"] == 2560.0
-    assert actual["gpu_fuzzy_dedup_cluster"]["all_to_all_shuffle_gb"] == 2520.0
-    assert actual["gpu_fuzzy_dedup_cluster"]["dedup_speedup_x"] == 80.0
-    assert actual["gpu_fuzzy_dedup_cluster"]["tco_reduction_x"] == 4.5
-    print("Experiment 23-01 verified successfully.")
+def main():
+    if not RES.exists():
+        print("ERROR: results file missing; run run.py first.", file=sys.stderr)
+        sys.exit(1)
+    data = json.loads(RES.read_text())
+
+    bc = data["beyond_chinchilla"]
+    assert abs(bc["breakeven_t_tokens"] - 3.0) < 1e-6, f"Unexpected breakeven: {bc}"
+    assert abs(bc["breakeven_days"] - 150.0) < 1e-6, f"Unexpected days: {bc}"
+    assert abs(bc["net_savings_2yr_usd"] - 3_480_000.0) < 1e-2, f"Unexpected savings: {bc}"
+
+    k192 = data["k192_preregistration"]
+    assert k192["count"] == 10
+    assert abs(k192["median_r"] - 0.693141) < 1e-6, f"Unexpected median_r: {k192}"
+    assert k192["in_interval"] is False
+    assert k192["verdict"] == "refuted_in_scope"
+
+    ns = data["neusight_stage_calibration"]
+    assert ns["aggregate_ape"] == 0.0
+    assert abs(ns["stage_apes"][0] - 0.333333) < 1e-5
+    assert abs(ns["stage_apes"][1] - 0.5) < 1e-6
+    assert ns["halving_stage1_predicted_total_ms"] == 6.0
+    assert ns["halving_stage1_actual_total_ms"] == 7.0
+
+    print("PASS: Experiment 23-01 verified successfully.")
 
 
 if __name__ == "__main__":

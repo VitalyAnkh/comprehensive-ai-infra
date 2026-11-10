@@ -1,32 +1,21 @@
 {
+  "chapter": 24,
   "sources": [
     {
-      "path": "manuscripts/ch24/build.py",
-      "sha256": "df6bd392b2c351b59eef5b5de69d793d980edbb58d9fcefc0864151187bf339d"
-    },
-    {
-      "path": "manuscripts/ch24/figure-data.json",
-      "sha256": "0615087fb2135404922d5e337613172757689712badc6342dcafa6d6f4c0c8e4"
+      "path": "manuscripts/24-全栈跨层优化与自演进系统.md",
+      "sha256": "69733d4a1616b58884de681d19ba9e230f0603f0d8fd73adb2eccf817f2b5f68"
     },
     {
       "path": "manuscripts/ch24/figure-index.json",
-      "sha256": "0a73f57ea88046802f37949cd45e17fefee640d52769dc10accd4c4978baf7a5"
+      "sha256": "c655cb16fcb6856a17a4221a00c66baf0c03edd9c814d1c7b707f35304728b45"
     },
     {
-      "path": "experiments/ch24/24-01/run.py",
-      "sha256": "b4765b2bbeae494178e15d0d4cee4654ecd03ec93dc71c36731b1e1b2731f518"
+      "path": "manuscripts/ch24/math-validation.json",
+      "sha256": "19ad3be8c0396276efed32a2b36c6eec3499669e2e21bd4cfa5b2d9e4e2a08ca"
     },
     {
-      "path": "experiments/ch24/24-02/run.py",
-      "sha256": "a68303034c2f862c26fb31f4c59feb66f8f5561fcab1a2f92ddb0d299aa17634"
-    },
-    {
-      "path": "experiments/ch24/24-03/run.py",
-      "sha256": "87b4673c8cb7419c66fa85aad62a193d3c0a1a381379718f04dca3b35566cb31"
-    },
-    {
-      "path": "manuscripts/24-科学智能（AI for Science）基础设施：生物大分子、百万碱基基因组与物理场网格系统.md",
-      "sha256": "a205abe7ae6b467419afcfc58a2c236f0551de969f9b5b11bc2410618ad5578b"
+      "path": "manuscripts/ch24/teaching-layout-validation.json",
+      "sha256": "b0bf6cf458532bf95b0d9f818854bb628f740551118cd55f1daa6a13eb65e299"
     }
   ]
 }

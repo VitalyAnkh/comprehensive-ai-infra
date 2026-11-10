@@ -1,104 +1,107 @@
 #!/usr/bin/env python3
-"""Experiment 19-03: Closed-Loop 3DGS Neural Sensor Re-Simulation & Dual Drive Thor ASIL-D Safety Watchdog."""
+"""Experiment 19-03: Block-causal KV rolling window and PAB/TeaCache reuse for >20 FPS streaming world models."""
 from __future__ import annotations
 
 import json
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
-EXPECTED_PATH = ROOT / "expected" / "metrics.json"
-RESULTS_PATH = ROOT / "results" / "summary.json"
+HERE = Path(__file__).resolve().parent
+EXPECTED_PATH = HERE / "expected" / "metrics.json"
+SUMMARY_PATH = HERE / "results" / "summary.json"
 
 
 def compute_metrics() -> dict:
-    # 1. Worked Example 19-7(1): 6-camera 1080p + 128-beam LiDAR 3DGS closed-loop sensor simulation
-    total_gaussians = 2_500_000
-    cull_ratio = 0.72
-    active_gaussians = int(round(total_gaussians * (1.0 - cull_ratio)))
-    naive_6cam_ms = 6 * 8.50
-    naive_1lidar_ms = 24.00
-    naive_total_ms = round(naive_6cam_ms + naive_1lidar_ms, 2)
-    naive_fps = round(1000.0 / naive_total_ms, 2)
+    # 1. Block-causal rolling KV cache pool (Example 17-8 & Exercise 17-15)
+    chunk_rgb_frames = 3
+    tokens_per_chunk = 3600  # (720/16) * (1280/16) = 45 * 80
+    sink_chunks = 1
+    window_chunks = 5
+    active_chunks = sink_chunks + window_chunks  # 6
+    active_kv_tokens = active_chunks * tokens_per_chunk  # 21,600
 
-    batched_6cam_ms = 11.40
-    rtcore_1lidar_ms = 5.40
-    opt_total_ms = round(batched_6cam_ms + rtcore_1lidar_ms, 2)
-    opt_fps = round(1000.0 / opt_total_ms, 2)
-    render_speedup_x = round(naive_total_ms / opt_total_ms, 2)
+    dit_layers = 28
+    cross_chunk_layers = 8
+    kv_heads = 16
+    head_dim = 128
+    dtype_bytes = 2
+    bytes_per_tok_per_layer = 2 * kv_heads * head_dim * dtype_bytes  # 8,192 B
+    bytes_per_tok_28l = dit_layers * bytes_per_tok_per_layer  # 229,376 B
 
-    # Exercise 19-13: 8-camera 1080p + dual 128-beam LiDAR
-    ex13_naive_ms = round(8 * 8.50 + 2 * 18.00, 2)
-    ex13_naive_fps = round(1000.0 / ex13_naive_ms, 2)
-    ex13_opt_ms = round(14.20 + 7.80, 2)
-    ex13_opt_fps = round(1000.0 / ex13_opt_ms, 2)
-    ex13_speedup_x = round(ex13_naive_ms / ex13_opt_ms, 2)
+    hybrid_8l_rolling_kv_gib = round(
+        (active_kv_tokens * cross_chunk_layers * bytes_per_tok_per_layer) / (1024 ** 3), 4
+    )  # 1.3184 GiB
+    full_28l_rolling_kv_gib = round(
+        (active_kv_tokens * bytes_per_tok_28l) / (1024 ** 3), 4
+    )  # 4.6143 GiB
 
-    # 2. Worked Example 19-7(2): Dual Drive Thor ASIL-D Simplex Watchdog takeover at 120 km/h
-    t_detect_ms = 5.00
-    t_switch_ms = 1.50
-    t_mpc_ms = 4.00
-    t_act_ms = 2.00
-    takeover_latency_ms = round(t_detect_ms + t_switch_ms + t_mpc_ms + t_act_ms, 2)
-    asil_d_ftti_ms = 15.0
+    ten_min_chunks = 4000  # 10 min * 60 s * 20 FPS / 3 frames
+    unbounded_10min_8l_gib = round(
+        (ten_min_chunks * tokens_per_chunk * cross_chunk_layers * bytes_per_tok_per_layer) / (1024 ** 3), 2
+    )  # 878.91 GiB
+    unbounded_10min_28l_gib = round(
+        (ten_min_chunks * tokens_per_chunk * bytes_per_tok_28l) / (1024 ** 3), 2
+    )  # 3076.17 GiB
+    kv_compression_ratio_10min = round(ten_min_chunks / active_chunks, 2)  # 666.67x
 
-    dt_wd = takeover_latency_ms / 1000.0
-    dt_sw = 250.0 / 1000.0
-    v_y0 = 0.18
-    a_y_fault = 9.80
-    drift_wd_mm = round((v_y0 * dt_wd + 0.5 * a_y_fault * (dt_wd ** 2)) * 1000.0, 2)
-    drift_sw_mm = round((v_y0 * dt_sw + 0.5 * a_y_fault * (dt_sw ** 2)) * 1000.0, 2)
-    drift_reduction_x = round(drift_sw_mm / drift_wd_mm, 2)
+    # 2. 4-step DMD block-causal latency with PAB + TeaCache (Example 17-8 & Exercise 17-16)
+    dmd_steps = 4
+    spatial_ffn_ms = 18.0
+    temporal_causal_ms = 16.0
+    cross_cond_ms = 8.0
+    step_full_ms = spatial_ffn_ms + temporal_causal_ms + cross_cond_ms  # 42.0 ms
+    vae_chunk_ms = 18.0
 
-    # Exercise 19-14: 90 km/h (25.0 m/s), v_y0 = 0.15 m/s, a_y_fault = 8.0 m/s^2, restart = 200.0 ms
-    dt_sw_ex14 = 200.0 / 1000.0
-    ex14_drift_wd_mm = round((0.15 * dt_wd + 0.5 * 8.0 * (dt_wd ** 2)) * 1000.0, 2)
-    ex14_drift_sw_mm = round((0.15 * dt_sw_ex14 + 0.5 * 8.0 * (dt_sw_ex14 ** 2)) * 1000.0, 2)
-    ex14_reduction_x = round(ex14_drift_sw_mm / ex14_drift_wd_mm, 2)
+    uncached_dit_chunk_ms = round(dmd_steps * step_full_ms, 2)  # 168.0 ms
+    uncached_total_chunk_ms = round(uncached_dit_chunk_ms + vae_chunk_ms, 2)  # 186.0 ms
+    uncached_frame_ms = round(uncached_total_chunk_ms / chunk_rgb_frames, 2)  # 62.0 ms
+    uncached_fps = round(1000.0 / uncached_frame_ms, 2)  # 16.13 FPS
+
+    # Step breakdown: s=4 (42.0 ms), s=3 (18.0 ms), s=2 (2.0 ms TeaCache), s=1 (34.0 ms)
+    step_latencies_ms = [42.0, 18.0, 2.0, 34.0]
+    pab_teacache_dit_chunk_ms = round(sum(step_latencies_ms), 2)  # 96.0 ms
+    opt_total_chunk_ms = round(pab_teacache_dit_chunk_ms + vae_chunk_ms, 2)  # 114.0 ms
+    opt_frame_ms = round(opt_total_chunk_ms / chunk_rgb_frames, 2)  # 38.0 ms
+    streaming_fps = round(1000.0 / opt_frame_ms, 2)  # 26.32 FPS
+    fps_speedup = round(streaming_fps / uncached_fps, 2)  # 1.63x
 
     return {
-        "closed_loop_3dgs_sensor_sim": {
-            "total_gaussians": total_gaussians,
-            "cull_ratio": cull_ratio,
-            "active_gaussians": active_gaussians,
-            "naive_6cam_ms": naive_6cam_ms,
-            "naive_1lidar_ms": naive_1lidar_ms,
-            "naive_total_ms": naive_total_ms,
-            "naive_fps": naive_fps,
-            "batched_6cam_ms": batched_6cam_ms,
-            "rtcore_1lidar_ms": rtcore_1lidar_ms,
-            "opt_total_ms": opt_total_ms,
-            "opt_fps": opt_fps,
-            "render_speedup_x": render_speedup_x,
-            "meets_30hz_hil_sla": opt_total_ms <= 33.33,
-            "ex19_13_8cam_2lidar_naive_ms": ex13_naive_ms,
-            "ex19_13_8cam_2lidar_naive_fps": ex13_naive_fps,
-            "ex19_13_8cam_2lidar_opt_ms": ex13_opt_ms,
-            "ex19_13_8cam_2lidar_opt_fps": ex13_opt_fps,
-            "ex19_13_speedup_x": ex13_speedup_x,
+        "experiment_id": "19-03",
+        "rolling_kv_pool": {
+            "chunk_rgb_frames": chunk_rgb_frames,
+            "tokens_per_chunk": tokens_per_chunk,
+            "sink_chunks": sink_chunks,
+            "window_chunks": window_chunks,
+            "active_chunks": active_chunks,
+            "active_kv_tokens": active_kv_tokens,
+            "bytes_per_tok_28l": bytes_per_tok_28l,
+            "hybrid_8l_rolling_kv_gib": hybrid_8l_rolling_kv_gib,
+            "full_28l_rolling_kv_gib": full_28l_rolling_kv_gib,
+            "unbounded_10min_8l_gib": unbounded_10min_8l_gib,
+            "unbounded_10min_28l_gib": unbounded_10min_28l_gib,
+            "kv_compression_ratio_10min": kv_compression_ratio_10min,
         },
-        "dual_thor_safety_watchdog": {
-            "t_detect_ms": t_detect_ms,
-            "t_switch_ms": t_switch_ms,
-            "t_mpc_ms": t_mpc_ms,
-            "t_act_ms": t_act_ms,
-            "takeover_latency_ms": takeover_latency_ms,
-            "asil_d_ftti_ms": asil_d_ftti_ms,
-            "meets_asil_d_ftti": takeover_latency_ms <= asil_d_ftti_ms,
-            "watchdog_lateral_drift_mm": drift_wd_mm,
-            "restart_250ms_lateral_drift_mm": drift_sw_mm,
-            "drift_reduction_x": drift_reduction_x,
-            "ex19_14_watchdog_drift_mm": ex14_drift_wd_mm,
-            "ex19_14_restart_200ms_drift_mm": ex14_drift_sw_mm,
-            "ex19_14_reduction_x": ex14_reduction_x,
+        "pab_teacache_streaming": {
+            "dmd_steps": dmd_steps,
+            "uncached_dit_chunk_ms": uncached_dit_chunk_ms,
+            "uncached_total_chunk_ms": uncached_total_chunk_ms,
+            "uncached_frame_ms": uncached_frame_ms,
+            "uncached_fps": uncached_fps,
+            "step_latencies_ms": step_latencies_ms,
+            "pab_teacache_dit_chunk_ms": pab_teacache_dit_chunk_ms,
+            "vae_chunk_ms": vae_chunk_ms,
+            "opt_total_chunk_ms": opt_total_chunk_ms,
+            "opt_frame_ms": opt_frame_ms,
+            "streaming_fps": streaming_fps,
+            "fps_speedup": fps_speedup,
+            "meets_20fps_sla": streaming_fps >= 20.0,
         },
     }
 
 
 def main() -> None:
     metrics = compute_metrics()
-    EXPECTED_PATH.parent.mkdir(parents=True, exist_ok=True)
-    RESULTS_PATH.parent.mkdir(parents=True, exist_ok=True)
-    for p in (EXPECTED_PATH, RESULTS_PATH):
+    for p in (EXPECTED_PATH, SUMMARY_PATH):
+        p.parent.mkdir(parents=True, exist_ok=True)
         p.write_text(json.dumps(metrics, indent=2, ensure_ascii=False) + "\n")
     print(json.dumps(metrics, indent=2, ensure_ascii=False))
 

@@ -1,0 +1,26 @@
+{
+  "experiment_id": "23-04",
+  "block_diffusion_roofline": {
+    "model_params_b": 32.0,
+    "gen_tokens": 512,
+    "ar_steps": 512,
+    "ar_total_sec": 5.12,
+    "ar_tok_per_sec": 100.0,
+    "block_size_k": 64,
+    "denoise_steps_t": 10,
+    "dllm_forwards": 80,
+    "weight_read_reduction_x": 6.4,
+    "dllm_total_sec": 0.864,
+    "dllm_tok_per_sec": 592.6,
+    "speedup_vs_ar_x": 5.93,
+    "dllm_8b_tok_per_sec": 1420.0
+  },
+  "confidence_remasking_early_exit": {
+    "confidence_gamma": 0.92,
+    "step_saving_pct": 35.0,
+    "avg_steps_per_block": 6.5,
+    "early_stop_forwards": 52,
+    "early_stop_tok_per_sec": 911.7,
+    "early_stop_speedup_x": 9.12
+  }
+}

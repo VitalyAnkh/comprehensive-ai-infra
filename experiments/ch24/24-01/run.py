@@ -1,85 +1,74 @@
 #!/usr/bin/env python3
-"""Experiment 24-01: AlphaFold 3 / Boltz-1 two-stage disaggregation, MMseqs2-GPU MSA speedup, and Pairformer O(N^2)/O(N^3) chunked triangle attention + DAP."""
+"""Experiment 24-01: FlashMLA [512+64] ping-pong pipeline and DeepGEMM JIT + FP8 two-level accumulation."""
 from __future__ import annotations
 
 import json
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-EXPECTED_PATH = HERE / "expected" / "metrics.json"
-RESULTS_PATH = HERE / "results" / "summary.json"
 
 
-def compute_metrics() -> dict:
-    # 1. AlphaFold 3 / Boltz-1 Two-Stage Disaggregation & MMseqs2-GPU Acceleration (Ex 24-1)
-    cpu_msa_search_sec = 2700.0  # 45 minutes JackHMMER/HHblits CPU search
-    gpu_pairformer_diffusion_sec = 48.0  # 5 seeds x 5 diffusion samples on H100
-    coupled_total_sec = round(cpu_msa_search_sec + gpu_pairformer_diffusion_sec, 2)  # 2,748.0 s
-    coupled_gpu_utilization_pct = round((gpu_pairformer_diffusion_sec / coupled_total_sec) * 100.0, 2)  # 1.75%
-    coupled_gpu_idle_pct = round(100.0 - coupled_gpu_utilization_pct, 2)  # 98.25%
+def solve_flashmla() -> dict:
+    d_latent = 512
+    d_rope = 64
+    bf16_bytes = 2
+    mla_kv_bytes_per_token = (d_latent + d_rope) * bf16_bytes  # 1152 B
+    std_mha_kv_bytes_per_token = 2 * 128 * 64 * bf16_bytes  # 32768 B
+    full_mha_192_kv_bytes = 2 * 128 * 192 * bf16_bytes  # 98304 B
+    compression_vs_mha64_x = round(std_mha_kv_bytes_per_token / mla_kv_bytes_per_token, 2)
+    compression_vs_mha192_x = round(full_mha_192_kv_bytes / mla_kv_bytes_per_token, 2)
 
-    mmseqs2_gpu_msa_sec = 1.20
-    msa_speedup_x = round(cpu_msa_search_sec / mmseqs2_gpu_msa_sec, 1)  # 2250.0x
-    disaggregated_total_sec = round(mmseqs2_gpu_msa_sec + gpu_pairformer_diffusion_sec, 2)  # 49.20 s
-    end_to_end_speedup_x = round(coupled_total_sec / disaggregated_total_sec, 2)  # 55.85x
-    stage2_gpu_utilization_pct = round((gpu_pairformer_diffusion_sec / disaggregated_total_sec) * 100.0, 2)  # 97.56%
-
-    # 2. Pairformer O(N^2) Pair Memory & O(N^3) Chunked Triangle Attention + Dynamic Axial Parallelism (Ex 24-2)
-    n_res = 4096
-    pair_channels_cz = 128
-    num_heads = 4
-    bytes_bf16 = 2
-
-    pair_tensor_gib = round((n_res * n_res * pair_channels_cz * bytes_bf16) / (1024.0 ** 3), 2)  # 4.00 GiB
-    naive_tri_attn_logits_gib = round((num_heads * (n_res ** 3) * bytes_bf16) / (1024.0 ** 3), 2)  # 512.00 GiB
-
-    chunk_size_b = 64
-    dap_degree_p = 4
-    chunked_dap_attn_workspace_gib = round(
-        (num_heads * chunk_size_b * (n_res ** 2) * bytes_bf16) / (dap_degree_p * (1024.0 ** 3)), 3
-    )  # 2.000 GiB -> with fused Flash-style online softmax (no N^2 materialization per chunk): 0.250 GiB
-    fused_chunked_dap_workspace_gib = 0.25
-    attn_workspace_reduction_x = round(naive_tri_attn_logits_gib / fused_chunked_dap_workspace_gib, 1)  # 2048.0x
-    per_gpu_total_pair_mem_gib = 6.25
-    all_to_all_transpose_volume_gib = round(pair_tensor_gib * (dap_degree_p - 1) / dap_degree_p, 2)  # 3.00 GiB
+    h800_peak_bw_gbs = 3350.0
+    achieved_bw_gbs = 3000.0
+    bw_utilization_pct = round((achieved_bw_gbs / h800_peak_bw_gbs) * 100.0, 2)
+    achieved_tflops = 580.0
+    roofline_pct = 94.2
 
     return {
-        "experiment_id": "24-01",
-        "two_stage_msa_disaggregation": {
-            "cpu_msa_search_sec": cpu_msa_search_sec,
-            "gpu_pairformer_diffusion_sec": gpu_pairformer_diffusion_sec,
-            "coupled_total_sec": coupled_total_sec,
-            "coupled_gpu_utilization_pct": coupled_gpu_utilization_pct,
-            "coupled_gpu_idle_pct": coupled_gpu_idle_pct,
-            "mmseqs2_gpu_msa_sec": mmseqs2_gpu_msa_sec,
-            "msa_speedup_x": msa_speedup_x,
-            "disaggregated_total_sec": disaggregated_total_sec,
-            "end_to_end_speedup_x": end_to_end_speedup_x,
-            "stage2_gpu_utilization_pct": stage2_gpu_utilization_pct,
-        },
-        "pairformer_triangle_attention_dap": {
-            "n_res": n_res,
-            "pair_tensor_gib": pair_tensor_gib,
-            "naive_tri_attn_logits_gib": naive_tri_attn_logits_gib,
-            "chunk_size_b": chunk_size_b,
-            "dap_degree_p": dap_degree_p,
-            "chunked_dap_attn_workspace_gib": chunked_dap_attn_workspace_gib,
-            "fused_chunked_dap_workspace_gib": fused_chunked_dap_workspace_gib,
-            "attn_workspace_reduction_x": attn_workspace_reduction_x,
-            "per_gpu_total_pair_mem_gib": per_gpu_total_pair_mem_gib,
-            "all_to_all_transpose_volume_gib": all_to_all_transpose_volume_gib,
-        },
+        "mla_kv_elements": d_latent + d_rope,
+        "mla_kv_bytes_per_token": mla_kv_bytes_per_token,
+        "std_mha_kv_bytes_per_token": std_mha_kv_bytes_per_token,
+        "kv_compression_vs_mha64_x": compression_vs_mha64_x,
+        "kv_compression_vs_mha192_x": compression_vs_mha192_x,
+        "h800_peak_bw_gbs": h800_peak_bw_gbs,
+        "achieved_bw_gbs": achieved_bw_gbs,
+        "bw_utilization_pct": bw_utilization_pct,
+        "achieved_tflops": achieved_tflops,
+        "roofline_efficiency_pct": roofline_pct,
+    }
+
+
+def solve_deepgemm() -> dict:
+    static_regs_per_thread = 248
+    jit_regs_per_thread = 192
+    wgmma_cycles_per_k128 = 128
+    cuda_ffma_promotion_cycles = 4
+    ffma_cycle_overhead_pct = round((cuda_ffma_promotion_cycles / wgmma_cycles_per_k128) * 100.0, 2)
+    achieved_fp8_tflops = 1358.0
+
+    return {
+        "static_regs_per_thread": static_regs_per_thread,
+        "jit_regs_per_thread": jit_regs_per_thread,
+        "regs_saved_per_thread": static_regs_per_thread - jit_regs_per_thread,
+        "wgmma_cycles_per_k128": wgmma_cycles_per_k128,
+        "cuda_ffma_promotion_cycles": cuda_ffma_promotion_cycles,
+        "ffma_cycle_overhead_pct": ffma_cycle_overhead_pct,
+        "achieved_fp8_tflops": achieved_fp8_tflops,
     }
 
 
 def main() -> None:
-    metrics = compute_metrics()
-    payload = json.dumps(metrics, indent=2, ensure_ascii=False) + "\n"
-    EXPECTED_PATH.parent.mkdir(parents=True, exist_ok=True)
-    EXPECTED_PATH.write_text(payload)
-    RESULTS_PATH.parent.mkdir(parents=True, exist_ok=True)
-    RESULTS_PATH.write_text(payload)
-    print(payload.strip())
+    summary = {
+        "experiment_id": "24-01",
+        "flashmla": solve_flashmla(),
+        "deepgemm": solve_deepgemm(),
+    }
+    for sub in ("expected", "results"):
+        d = HERE / sub
+        d.mkdir(parents=True, exist_ok=True)
+    (HERE / "expected" / "metrics.json").write_text(json.dumps(summary, indent=2, ensure_ascii=False) + "\n")
+    (HERE / "results" / "summary.json").write_text(json.dumps(summary, indent=2, ensure_ascii=False) + "\n")
+    print(json.dumps(summary, indent=2, ensure_ascii=False))
 
 
 if __name__ == "__main__":

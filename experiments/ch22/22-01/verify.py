@@ -12,15 +12,12 @@ def main() -> None:
     expected = json.loads(Path(EXPECTED_PATH).read_text())
     results = json.loads(Path(RESULTS_PATH).read_text())
     assert actual == expected == results, f"Mismatch:\nactual={actual}\nexpected={expected}\nresults={results}"
-    assert actual["latency_comparison"]["cascaded_total_ttfa_ms"] == 1280.0
-    assert actual["latency_comparison"]["duplex_total_ttfa_ms"] == 164.0
-    assert actual["latency_comparison"]["ttfa_speedup_x"] == 7.8
-    assert actual["rvq_codec_ledger"]["rvq_bitrate_kbps"] == 1.1
-    assert actual["rvq_codec_ledger"]["codec_compression_x"] == 349.09
-    assert actual["temporal_depth_cudagraph"]["total_frame_eager_ms"] == 38.54
-    assert actual["temporal_depth_cudagraph"]["total_frame_cudagraph_ms"] == 11.5
-    assert actual["temporal_depth_cudagraph"]["depth_speedup_x"] == 4.38
-    assert actual["temporal_depth_cudagraph"]["full_step_speedup_x"] == 3.35
+    assert actual["two_stage_msa_disaggregation"]["msa_speedup_x"] == 2250.0
+    assert actual["two_stage_msa_disaggregation"]["end_to_end_speedup_x"] == 55.85
+    assert actual["two_stage_msa_disaggregation"]["stage2_gpu_utilization_pct"] == 97.56
+    assert actual["pairformer_triangle_attention_dap"]["pair_tensor_gib"] == 4.0
+    assert actual["pairformer_triangle_attention_dap"]["naive_tri_attn_logits_gib"] == 512.0
+    assert actual["pairformer_triangle_attention_dap"]["attn_workspace_reduction_x"] == 2048.0
     print("Experiment 22-01 verified successfully.")
 
 

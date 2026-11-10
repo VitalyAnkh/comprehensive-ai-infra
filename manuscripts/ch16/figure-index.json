@@ -10,7 +10,9 @@
       "case-studies/dsec-sandbox-platform.md",
       "manuscripts/ch16/figure-data.json"
     ],
-    "TeachingRole": "建立机密计算（宿主机不可信）与安全沙箱（工作负载不可信）的正交双向威胁模型"
+    "TeachingRole": "建立机密计算（宿主机不可信）与安全沙箱（工作负载不可信）的正交双向威胁模型",
+    "name": "ch16-confidential-ai-vs-sandbox-threat-model",
+    "figure": "16-1"
   },
   {
     "figure_id": "图 16-2",
@@ -23,7 +25,9 @@
       "references/text/nvidia-rubin-arch.txt",
       "manuscripts/ch16/figure-data.json"
     ],
-    "TeachingRole": "展示硬件信任根如何确保模型解密密钥仅在通过度量核验的可信执行环境内部释放"
+    "TeachingRole": "展示硬件信任根如何确保模型解密密钥仅在通过度量核验的可信执行环境内部释放",
+    "name": "ch16-cpu-gpu-tee-remote-attestation",
+    "figure": "16-2"
   },
   {
     "figure_id": "图 16-3",
@@ -36,7 +40,9 @@
       "references/text/nvidia-rubin-arch.txt",
       "manuscripts/ch16/figure-data.json"
     ],
-    "TeachingRole": "量化消除主机弹跳缓冲与 CPU AES-GCM 瓶颈后 64 MiB 机密传输 22 倍的延迟压缩"
+    "TeachingRole": "量化消除主机弹跳缓冲与 CPU AES-GCM 瓶颈后 64 MiB 机密传输 22 倍的延迟压缩",
+    "name": "ch16-bounce-buffer-vs-rubin-tee-io",
+    "figure": "16-3"
   },
   {
     "figure_id": "图 16-4",
@@ -49,7 +55,9 @@
       "research/2026-infra-survey/reading-asplos-2025.md",
       "references/proceedings/ASPLOS/2025/pipellm-reading.json"
     ],
-    "TeachingRole": "拆解机密卸载中用 3 × 64 MiB = 192 MiB 显存三缓冲换取加解密与传输重叠的流水机制"
+    "TeachingRole": "拆解机密卸载中用 3 × 64 MiB = 192 MiB 显存三缓冲换取加解密与传输重叠的流水机制",
+    "name": "ch16-pipellm-five-stage-confidential-pipeline",
+    "figure": "16-4"
   },
   {
     "figure_id": "图 16-5",
@@ -62,7 +70,9 @@
       "research/2026-infra-survey/reading-asplos-2025.md",
       "references/proceedings/ASPLOS/2025/pipellm-reading.json"
     ],
-    "TeachingRole": "阐明在线异或加速的原理，并指出投机未命中时的额外主机拷贝与总线带宽并非免费"
+    "TeachingRole": "阐明在线异或加速的原理，并指出投机未命中时的额外主机拷贝与总线带宽并非免费",
+    "name": "ch16-aes-ctr-otp-speculative-encryption",
+    "figure": "16-5"
   },
   {
     "figure_id": "图 16-6",
@@ -75,7 +85,9 @@
       "case-studies/dsec-sandbox-platform.md",
       "manuscripts/ch16/figure-data.json"
     ],
-    "TeachingRole": "用 XFS_IOC_SWAPEXT、/proc/kpagecgroup 与 chronus 伪造实证为何裸容器无法隔离强化学习 Agent"
+    "TeachingRole": "用 XFS_IOC_SWAPEXT、/proc/kpagecgroup 与 chronus 伪造实证为何裸容器无法隔离强化学习 Agent",
+    "name": "ch16-agent-container-escape-failure-modes",
+    "figure": "16-6"
   },
   {
     "figure_id": "图 16-7",
@@ -88,7 +100,9 @@
       "case-studies/dsec-sandbox-platform.md",
       "manuscripts/ch16/figure-data.json"
     ],
-    "TeachingRole": "展示工业级百万并发 Agent 沙箱如何按任务形态匹配四类虚拟化后端与高密度超卖"
+    "TeachingRole": "展示工业级百万并发 Agent 沙箱如何按任务形态匹配四类虚拟化后端与高密度超卖",
+    "name": "ch16-dsec-firecracker-microvm-architecture",
+    "figure": "16-7"
   },
   {
     "figure_id": "图 16-8",
@@ -101,7 +115,9 @@
       "case-studies/dsec-sandbox-platform.md",
       "manuscripts/ch16/figure-data.json"
     ],
-    "TeachingRole": "精确核算 64 B / 4 KiB = 1/64 的 Guest 内核描述符税，解释为何仅对只读镜像层启用 DAX"
+    "TeachingRole": "精确核算 64 B / 4 KiB = 1/64 的 Guest 内核描述符税，解释为何仅对只读镜像层启用 DAX",
+    "name": "ch16-virtio-pmem-dax-vs-struct-page-tax",
+    "figure": "16-8"
   },
   {
     "figure_id": "图 16-9",
@@ -114,7 +130,9 @@
       "case-studies/dsec-sandbox-platform.md",
       "manuscripts/ch16/figure-data.json"
     ],
-    "TeachingRole": "揭示针对大容量可写虚拟磁盘与客户机堆内存的动态冷页回收流水线"
+    "TeachingRole": "揭示针对大容量可写虚拟磁盘与客户机堆内存的动态冷页回收流水线",
+    "name": "ch16-damon-ept-balloon-reclaim",
+    "figure": "16-9"
   },
   {
     "figure_id": "图 16-10",
@@ -127,7 +145,9 @@
       "case-studies/dsec-sandbox-platform.md",
       "manuscripts/ch16/figure-data.json"
     ],
-    "TeachingRole": "证明仅调低优先级不足以消除同物理核 SMT 超线程争用，必须开启 prctl(PR_SCHED_CORE)"
+    "TeachingRole": "证明仅调低优先级不足以消除同物理核 SMT 超线程争用，必须开启 prctl(PR_SCHED_CORE)",
+    "name": "ch16-sched-idle-and-core-scheduling",
+    "figure": "16-10"
   },
   {
     "figure_id": "图 16-11",
@@ -140,7 +160,9 @@
       "case-studies/dsec-sandbox-platform.md",
       "manuscripts/ch16/figure-data.json"
     ],
-    "TeachingRole": "展示如何在宿主机内核态阻断沙箱对集群内网的横向扫描与评测作弊连接"
+    "TeachingRole": "展示如何在宿主机内核态阻断沙箱对集群内网的横向扫描与评测作弊连接",
+    "name": "ch16-ebpf-cgroup-network-allowlist",
+    "figure": "16-11"
   },
   {
     "figure_id": "图 16-12",
@@ -153,7 +175,9 @@
       "case-studies/evaluation-and-agent-records.md",
       "manuscripts/ch16/figure-data.json"
     ],
-    "TeachingRole": "通过排队论净排空方程纠正忽略持续新到达流量的工程误算"
+    "TeachingRole": "通过排队论净排空方程纠正忽略持续新到达流量的工程误算",
+    "name": "ch16-agent-audit-log-outage-and-drain",
+    "figure": "16-12"
   },
   {
     "figure_id": "图 16-13",
@@ -166,7 +190,9 @@
       "case-studies/evaluation-and-agent-records.md",
       "manuscripts/ch16/figure-data.json"
     ],
-    "TeachingRole": "确保网络抖动或沙箱抢占恢复时绝不触发重复扣款或脏外部写入，并支持离线确定性回放"
+    "TeachingRole": "确保网络抖动或沙箱抢占恢复时绝不触发重复扣款或脏外部写入，并支持离线确定性回放",
+    "name": "ch16-idempotent-tool-commit-and-replay",
+    "figure": "16-13"
   },
   {
     "figure_id": "图 16-14",
@@ -179,7 +205,9 @@
       "case-studies/evaluation-and-agent-records.md",
       "manuscripts/ch16/figure-data.json"
     ],
-    "TeachingRole": "划清诊断可观测性与严谨财务/训练证据链的系统边界"
+    "TeachingRole": "划清诊断可观测性与严谨财务/训练证据链的系统边界",
+    "name": "ch16-telemetry-sampling-vs-billing-ledger",
+    "figure": "16-14"
   },
   {
     "figure_id": "图 16-15",
@@ -187,11 +215,13 @@
     "file": "ch16-sixteen-chapter-full-stack-map.svg",
     "asset": "ch16/ch16-sixteen-chapter-full-stack-map.svg",
     "section": "16.5.2",
-    "caption": "全书十六章全栈知识坐标系：以“五个第一性追问”贯穿模型、芯片、网络、推理/训练、存储、电热与可信安全",
+    "caption": "从算子硬件到可信安全底座的十六章体系全栈知识坐标系：以“五个第一性追问”贯穿模型、芯片、网络、推理/训练、存储、电热与可信安全",
     "source_refs": [
       "manuscripts/ch16/figure-data.json"
     ],
-    "TeachingRole": "收束全书十六章四大部分的演进脉络与统一分析方法论"
+    "TeachingRole": "收束前十六章体系四大部分的演进脉络与统一分析方法论",
+    "name": "ch16-sixteen-chapter-full-stack-map",
+    "figure": "16-15"
   },
   {
     "figure_id": "图 16-16",
@@ -203,7 +233,9 @@
     "source_refs": [
       "manuscripts/ch16/figure-data.json"
     ],
-    "TeachingRole": "为读者提供跨层系统评审与容量规划的随身工程指南"
+    "TeachingRole": "为读者提供跨层系统评审与容量规划的随身工程指南",
+    "name": "ch16-ai-infra-architect-master-checklist",
+    "figure": "16-16"
   },
   {
     "figure_id": "图 16-17",
@@ -215,7 +247,9 @@
     "source_refs": [
       "experiments/ch16/16-01/run.py"
     ],
-    "TeachingRole": "揭示即使开启 TEE-I/O 载荷加密，专家路由包计数仍构成侧信道，并量化 (1+α) 哑元填充带宽税"
+    "TeachingRole": "揭示即使开启 TEE-I/O 载荷加密，专家路由包计数仍构成侧信道，并量化 (1+α) 哑元填充带宽税",
+    "name": "ch16-moe-routing-traffic-side-channel-and-padding",
+    "figure": "16-17"
   },
   {
     "figure_id": "图 16-18",
@@ -227,7 +261,9 @@
     "source_refs": [
       "experiments/ch16/16-01/run.py"
     ],
-    "TeachingRole": "对比 TEE 签名（<5% 开销）、zkML（10³–10⁵x 膨胀）与 OPML 乐观抽检的适用边界"
+    "TeachingRole": "对比 TEE 签名（<5% 开销）、zkML（10³–10⁵x 膨胀）与 OPML 乐观抽检的适用边界",
+    "name": "ch16-verifiable-inference-tee-zkml-opml-triangle",
+    "figure": "16-18"
   },
   {
     "figure_id": "图 16-19",
@@ -239,7 +275,9 @@
     "source_refs": [
       "experiments/ch16/16-01/run.py"
     ],
-    "TeachingRole": "导出激励相容条件 p·S_slash > (1-p)·Δc，证明高额质押金可将验证抽检率压至 10⁻⁵ 量级"
+    "TeachingRole": "导出激励相容条件 p·S_slash > (1-p)·Δc，证明高额质押金可将验证抽检率压至 10⁻⁵ 量级",
+    "name": "ch16-optimistic-verification-slashing-game",
+    "figure": "16-19"
   },
   {
     "figure_id": "图 16-20",
@@ -251,7 +289,9 @@
     "source_refs": [
       "research/2026-infra-survey/reading-osdi-2026.md"
     ],
-    "TeachingRole": "解析公有云虚拟机内部运行轻量微虚机时的二维 EPT 页表税与 JANUS 跨世界扁平化机制"
+    "TeachingRole": "解析公有云虚拟机内部运行轻量微虚机时的二维 EPT 页表税与 JANUS 跨世界扁平化机制",
+    "name": "ch16-janus-nested-virtualization-fast-path",
+    "figure": "16-20"
   },
   {
     "figure_id": "图 16-21",
@@ -264,7 +304,9 @@
       "research/2026-infra-survey/reading-osdi-2026.md",
       "experiments/ch16/16-02/run.py"
     ],
-    "TeachingRole": "将 CPU 侧跨虚机解耦内存弹性气球（Blowfish）与 GPU 侧跨模型显存气球（Prism）纳入统一池化视图"
+    "TeachingRole": "将 CPU 侧跨虚机解耦内存弹性气球（Blowfish）与 GPU 侧跨模型显存气球（Prism）纳入统一池化视图",
+    "name": "ch16-blowfish-elastic-sandbox-memory-pool",
+    "figure": "16-21"
   },
   {
     "figure_id": "图 16-22",
@@ -277,7 +319,9 @@
       "experiments/ch16/16-01/run.py",
       "experiments/ch16/16-02/run.py"
     ],
-    "TeachingRole": "收束第 16 章硬件机密底座、侧信道与可验证层、高密微虚机沙箱与可恢复审计账本的四层纵深防御"
+    "TeachingRole": "收束第 16 章硬件机密底座、侧信道与可验证层、高密微虚机沙箱与可恢复审计账本的四层纵深防御",
+    "name": "ch16-trusted-ai-infrastructure-defense-in-depth",
+    "figure": "16-22"
   },
   {
     "figure_id": "图 16-23",
@@ -289,7 +333,9 @@
     "source_refs": [
       "manuscripts/ch16/figure-data.json"
     ],
-    "TeachingRole": "展示如何通过周期性远程证明心跳与硬件熔断显存清零保护私有化部署的百亿美金模型权重"
+    "TeachingRole": "展示如何通过周期性远程证明心跳与硬件熔断显存清零保护私有化部署的百亿美金模型权重",
+    "name": "ch16-lease-bound-encrypted-weight-distribution",
+    "figure": "16-23"
   },
   {
     "figure_id": "图 16-24",
@@ -301,7 +347,9 @@
     "source_refs": [
       "manuscripts/ch16/figure-data.json"
     ],
-    "TeachingRole": "将密码学生成水印下沉至 GPU TEE 采样算子内部以阻断宿主机剥离，并推导 Z 分数检测最小词元数"
+    "TeachingRole": "将密码学生成水印下沉至 GPU TEE 采样算子内部以阻断宿主机剥离，并推导 Z 分数检测最小词元数",
+    "name": "ch16-fused-cryptographic-logit-watermark-kernel",
+    "figure": "16-24"
   },
   {
     "figure_id": "图 16-25",
@@ -314,7 +362,9 @@
       "experiments/ch16/16-03/run.py",
       "manuscripts/ch16/figure-data.json"
     ],
-    "TeachingRole": "量化 25.0 ms 恒定节拍（延迟税 12.11%）与 64-Token 分桶填充（带宽税 39.13%）实现桶内零信息泄露"
+    "TeachingRole": "量化 25.0 ms 恒定节拍（延迟税 12.11%）与 64-Token 分桶填充（带宽税 39.13%）实现桶内零信息泄露",
+    "name": "ch16-tee-timing-side-channel-traffic-shaping",
+    "figure": "16-25"
   },
   {
     "figure_id": "图 16-26",
@@ -327,6 +377,244 @@
       "experiments/ch16/16-03/run.py",
       "manuscripts/ch16/figure-data.json"
     ],
-    "TeachingRole": "建立 Freivalds 随机投影（2.23% 算力开销）与触发式单算子 zk-Fault-Proof（1.85 s 裁决，提速 24.32×）协同架构"
+    "TeachingRole": "建立 Freivalds 随机投影（2.23% 算力开销）与触发式单算子 zk-Fault-Proof（1.85 s 裁决，提速 24.32×）协同架构",
+    "name": "ch16-verifiable-inference-optimistic-and-zkml-proof",
+    "figure": "16-26"
+  },
+  {
+    "figure_id": "图 16-27",
+    "number": 27,
+    "file": "ch16-wan-allreduce-bottleneck-vs-diloco-two-level-optimizer.svg",
+    "asset": "ch16/ch16-wan-allreduce-bottleneck-vs-diloco-two-level-optimizer.svg",
+    "section": "16.7.1",
+    "caption": "跨 4 个地理区域（RTT=85 ms）联合训练 70B 模型对比：标准每步 Ring AllReduce（需 700.0 Gbps 专线）vs. DiLoCo 双层优化器（本地 AdamW H=500 步 + 外循环 Nesterov 动量，通信频率降低 500 倍）（算例 16-13）",
+    "source_refs": [
+      "experiments/ch28/28-01/run.py",
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "揭示如何通过内外双层优化器解耦打破跨地域广域网的高延迟与低带宽枷锁",
+    "figure": "16-27",
+    "name": "ch16-wan-allreduce-bottleneck-vs-diloco-two-level-optimizer"
+  },
+  {
+    "figure_id": "图 16-28",
+    "number": 28,
+    "file": "ch16-streaming-diloco-fragment-pipeline-and-fp4-outer-delta.svg",
+    "asset": "ch16/ch16-streaming-diloco-fragment-pipeline-and-fp4-outer-delta.svg",
+    "section": "16.7.2",
+    "caption": "Streaming DiLoCo 分片流水线（M=25 个分片，每 20 步后台传输 1 片）与 FP4 E2M1 伪梯度量化：将广域网带宽需求压至 350.0 Mbps（压缩 2,000 倍）且暴露等待为 0.0 s（算例 16-13）",
+    "source_refs": [
+      "experiments/ch28/28-01/run.py",
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "展示如何消除第 500 步末尾的突发同步尖峰并实现 99.4% 的算力有效利用率",
+    "figure": "16-28",
+    "name": "ch16-streaming-diloco-fragment-pipeline-and-fp4-outer-delta"
+  },
+  {
+    "figure_id": "图 16-29",
+    "number": 29,
+    "file": "ch16-diloco-inner-step-h-vs-validation-loss-and-bandwidth.svg",
+    "asset": "ch16/ch16-diloco-inner-step-h-vs-validation-loss-and-bandwidth.svg",
+    "section": "16.7.2",
+    "caption": "DiLoCo 内循环步数 H 与外循环 Nesterov 动量对验证集困惑度（Perplexity）及广域网带宽需求的帕累托权衡曲线",
+    "source_refs": [
+      "experiments/ch28/28-01/run.py",
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "阐明外循环 Nesterov 伪梯度动量为何能在 H=500 大步长下避免简单权重平均的鞍点坍塌",
+    "figure": "16-29",
+    "name": "ch16-diloco-inner-step-h-vs-validation-loss-and-bandwidth"
+  },
+  {
+    "figure_id": "图 16-30",
+    "number": 30,
+    "file": "ch16-proof-of-learning-spot-check-and-byzantine-median.svg",
+    "asset": "ch16/ch16-proof-of-learning-spot-check-and-byzantine-median.svg",
+    "section": "16.8.1",
+    "caption": "开放不可信算力池的双层防御：随机重放抽检（Proof-of-Learning，p=5% 抽检率 10 轮捕获率 99.97%）与 Weiszfeld 几何中位数鲁棒聚合（崩溃点 50%）（算例 16-14）",
+    "source_refs": [
+      "experiments/ch28/28-02/run.py",
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "解决开放算力网络中恶意节点伪造梯度或投毒攻击的博弈与数学过滤难题",
+    "figure": "16-30",
+    "name": "ch16-proof-of-learning-spot-check-and-byzantine-median"
+  },
+  {
+    "figure_id": "图 16-31",
+    "number": 31,
+    "file": "ch16-dht-hivemind-elastic-optimizer-sharding-spot-recovery.svg",
+    "asset": "ch16/ch16-dht-hivemind-elastic-optimizer-sharding-spot-recovery.svg",
+    "section": "16.8.2",
+    "caption": "基于 Kademlia 分布式哈希表（DHT / Hivemind）的优化器状态分片与抢占式 Spot 实例（每小时中断率 8%）秒级对等自愈（ETTR = 96.8%）（算例 16-15）",
+    "source_refs": [
+      "experiments/ch28/28-02/run.py",
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "展示无中心元数据节点下如何实现优化器状态分片的毫秒级发现与热恢复",
+    "figure": "16-31",
+    "name": "ch16-dht-hivemind-elastic-optimizer-sharding-spot-recovery"
+  },
+  {
+    "figure_id": "图 16-32",
+    "number": 32,
+    "file": "ch16-serial-guardrail-blocking-vs-async-speculative-sidecar.svg",
+    "asset": "ch16/ch16-serial-guardrail-blocking-vs-async-speculative-sidecar.svg",
+    "section": "16.9.1",
+    "caption": "大模型在线安全护栏对比：传统串行前后置阻塞（增加 45 ms TTFT 与 180 ms 尾阻塞）vs. 异步流式伴飞护栏（Speculative Guardrail Sidecar，暴露延迟 3.2 ms）（算例 16-16）",
+    "source_refs": [
+      "experiments/ch28/28-02/run.py",
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "量化双流异步伴飞架构如何将安全审查从主推理关键路径上剥离",
+    "figure": "16-32",
+    "name": "ch16-serial-guardrail-blocking-vs-async-speculative-sidecar"
+  },
+  {
+    "figure_id": "图 16-33",
+    "number": 33,
+    "file": "ch16-sliding-window-token-stream-guardrail-rollback.svg",
+    "asset": "ch16/ch16-sliding-window-token-stream-guardrail-rollback.svg",
+    "section": "16.9.1",
+    "caption": "K=8 词元块粒度滑动窗口投机放行与违规检出时的客户端流式撤回及 KV 缓存熔断回收机制",
+    "source_refs": [
+      "experiments/ch28/28-02/run.py",
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "揭示如何在保持流式输出丝滑体验的同时将护栏模型调用频率降低 8 倍",
+    "figure": "16-33",
+    "name": "ch16-sliding-window-token-stream-guardrail-rollback"
+  },
+  {
+    "figure_id": "图 16-34",
+    "number": 34,
+    "file": "ch16-in-situ-residual-stream-sae-feature-clamping.svg",
+    "asset": "ch16/ch16-in-situ-residual-stream-sae-feature-clamping.svg",
+    "section": "16.9.2",
+    "caption": "推理残差流原位稀疏自编码器（SAE）特征监控与有害方向正交投影钳位（每层耗时 3.6 us，端到端开销仅 0.08%）（算例 16-17）",
+    "source_refs": [
+      "experiments/ch28/28-02/run.py",
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "展示如何在模型内部激活空间以微秒级代价实现零延迟安全免疫",
+    "figure": "16-34",
+    "name": "ch16-in-situ-residual-stream-sae-feature-clamping"
+  },
+  {
+    "figure_id": "图 16-35",
+    "number": 35,
+    "file": "ch16-representation-engineering-harmful-subspace-projection.svg",
+    "asset": "ch16/ch16-representation-engineering-harmful-subspace-projection.svg",
+    "section": "16.9.2",
+    "caption": "表示工程（Representation Engineering）单边门控正交子空间投影：精准剥离有害概念分量且正交补空间正常语义零退化",
+    "source_refs": [
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "从线性代数正交补空间原理解释为何单边投影不会造成良性请求过度拒答",
+    "figure": "16-35",
+    "name": "ch16-representation-engineering-harmful-subspace-projection"
+  },
+  {
+    "figure_id": "图 16-36",
+    "number": 36,
+    "file": "ch16-synthid-text-tournament-sampling-tree-mechanism.svg",
+    "asset": "ch16/ch16-synthid-text-tournament-sampling-tree-mechanism.svg",
+    "section": "16.10.1",
+    "caption": "SynthID-Text 深度 m=30 锦标赛水印采样树（Tournament Sampling）：通过多轮伪随机对决嵌入强统计水印并保持期望输出分布严格无偏（算例 16-18）",
+    "source_refs": [
+      "experiments/ch28/28-03/run.py",
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "对比失真型 Logit 偏置水印与非失真型锦标赛采样水印的数学机制",
+    "figure": "16-36",
+    "name": "ch16-synthid-text-tournament-sampling-tree-mechanism"
+  },
+  {
+    "figure_id": "图 16-37",
+    "number": 37,
+    "file": "ch16-distributed-tp-prng-seed-synchronization-for-watermark.svg",
+    "asset": "ch16/ch16-distributed-tp-prng-seed-synchronization-for-watermark.svg",
+    "section": "16.10.1",
+    "caption": "分布式张量并行（TP=8）采样下的滑动窗口上下文 HMAC 种子（8 Bytes）自同步与跨卡词表分片锦标赛归约",
+    "source_refs": [
+      "experiments/ch28/28-03/run.py",
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "解决多卡分布式并行采样时伪随机数发生器状态一致性的工程关键点",
+    "figure": "16-37",
+    "name": "ch16-distributed-tp-prng-seed-synchronization-for-watermark"
+  },
+  {
+    "figure_id": "图 16-38",
+    "number": 38,
+    "file": "ch16-watermark-token-length-vs-detection-tpr-at-low-fpr.svg",
+    "asset": "ch16/ch16-watermark-token-length-vs-detection-tpr-at-low-fpr.svg",
+    "section": "16.10.1",
+    "caption": "SynthID-Text（m=30）在假阳性率 FPR = 10^-6 下随生成词元长度变化的真阳性检出率曲线（200 词元达 99.2% TPR，困惑度偏差 < 0.01）（算例 16-18）",
+    "source_refs": [
+      "experiments/ch28/28-03/run.py",
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "用中心极限定理推导 30 层锦标赛得分均值在短文本下的高信噪比收敛特性",
+    "figure": "16-38",
+    "name": "ch16-watermark-token-length-vs-detection-tpr-at-low-fpr"
+  },
+  {
+    "figure_id": "图 16-39",
+    "number": 39,
+    "file": "ch16-pickle-arbitrary-code-exploit-vs-safetensors-zero-copy-mmap.svg",
+    "asset": "ch16/ch16-pickle-arbitrary-code-exploit-vs-safetensors-zero-copy-mmap.svg",
+    "section": "16.10.2",
+    "caption": "模型权重序列化对比：存在远程代码执行漏洞与双倍内存拷贝的 Pickle（42.5 s）vs. 4,096 B 页对齐零拷贝 mmap 的 Safetensors（3.4 s，提速 12.5 倍）",
+    "source_refs": [
+      "experiments/ch28/28-03/run.py",
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "剖析 Safetensors 格式如何同时解决模型供应链投毒与百 GB 权重极速加载",
+    "figure": "16-39",
+    "name": "ch16-pickle-arbitrary-code-exploit-vs-safetensors-zero-copy-mmap"
+  },
+  {
+    "figure_id": "图 16-40",
+    "number": 40,
+    "file": "ch16-merkle-tree-weight-signature-and-tee-attestation-boot.svg",
+    "asset": "ch16/ch16-merkle-tree-weight-signature-and-tee-attestation-boot.svg",
+    "section": "16.10.2",
+    "caption": "基于张量分块 Merkle 哈希树签名与 GPU TEE 硬件远程证明的可信模型加载及防篡改启动流水线",
+    "source_refs": [
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "构建从静态磁盘权重文件到运行期 GPU 显存的密码学完整性闭环",
+    "figure": "16-40",
+    "name": "ch16-merkle-tree-weight-signature-and-tee-attestation-boot"
+  },
+  {
+    "figure_id": "图 16-41",
+    "number": 41,
+    "file": "ch16-sovereign-ai-multi-region-compliance-and-audit-architecture.svg",
+    "asset": "ch16/ch16-sovereign-ai-multi-region-compliance-and-audit-architecture.svg",
+    "section": "16.10.2",
+    "caption": "主权 AI 跨管辖区合规基础设施：原始数据不出境、广域网 DiLoCo 伪梯度协同、在线护栏拦截与生成内容水印溯源",
+    "source_refs": [
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "展示主权 AI 架构如何在地缘法规约束下实现跨域协同训练与全生命周期可信治理",
+    "figure": "16-41",
+    "name": "ch16-sovereign-ai-multi-region-compliance-and-audit-architecture"
+  },
+  {
+    "figure_id": "图 16-42",
+    "number": 42,
+    "file": "ch16-decentralized-training-and-trustworthy-ai-infra-synthesis.svg",
+    "asset": "ch16/ch16-decentralized-training-and-trustworthy-ai-infra-synthesis.svg",
+    "section": "16.10.2",
+    "caption": "第 16 章系统工程全景图：从广域网 Streaming DiLoCo 低通信训练、拜占庭容错弹性算力池到异步伴飞/原位护栏与密码学水印安全底座",
+    "source_refs": [
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "收束全章四大模块，凝练去中心化训练与内生可信 AI 基础设施的统一设计范式",
+    "figure": "16-42",
+    "name": "ch16-decentralized-training-and-trustworthy-ai-infra-synthesis"
   }
 ]

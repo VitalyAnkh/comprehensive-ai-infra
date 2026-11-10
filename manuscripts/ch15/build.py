@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build Chapter 15 figures, locked calculations, and offline HTML preview."""
+"""Build Chapter 20 figures, locked calculations, and offline HTML preview."""
 import base64
 import hashlib
 import json
@@ -30,811 +30,650 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(raw).hexdigest()
 
 
-def fig_15_1_power_chain(ex: Exporter):
-    fig, ax = canvas(3.75)
-    card(ax, 0.02, 0.52, 0.96, 0.44, '吉瓦级 AI 工厂（1 GW）四级供电链路与损耗分解', color='blue')
+def fig_20_1_mtbf_scaling(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '集群 MTBF_cluster = MTBF_node / N 的反比坍缩（算例 20-1）', color='orange')
     stages = [
-        (0.04, 0.60, 0.21, 0.22, '① 高压变电\n110–220 kV\n损耗 ~0.8%', 'blue'),
-        (0.28, 0.60, 0.21, 0.22, '② 中压配电\n10–35 kV\n损耗 ~1.2%', 'teal'),
-        (0.52, 0.60, 0.21, 0.22, '③ 变压/UPS\nSST 固态变压\n损耗 ~2.5%', 'purple'),
-        (0.76, 0.60, 0.20, 0.22, '④ 机柜母排\n800 VDC\n直供 NVL72', 'orange'),
+        (0.03, 0.58, 0.29, 0.24, '1,024 卡集群\nMTBF ≈ 49.4 小时\n约两天 1 次中断', 'teal'),
+        (0.355, 0.58, 0.29, 0.24, 'Meta 16,384 卡\n54 天 419 次中断\nMTBF = 3.09 小时', 'blue'),
+        (0.68, 0.58, 0.29, 0.24, '100,000 卡集群\nMTBF 跌至 30.4 分\n每半小时必发异常', 'orange'),
     ]
     for x, y, w, h, label, role in stages:
         box(ax, x, y, w, h, label, role, size=11)
-    arrow(ax, (0.25, 0.71), (0.28, 0.71))
-    arrow(ax, (0.49, 0.71), (0.52, 0.71))
-    arrow(ax, (0.73, 0.71), (0.76, 0.71))
+    arrow(ax, (0.32, 0.70), (0.355, 0.70))
+    arrow(ax, (0.645, 0.70), (0.68, 0.70))
 
-    card(ax, 0.02, 0.03, 0.96, 0.43, '算例 15-1：132 kW 机柜 48 VDC vs. 800 VDC 母排铜损', color='teal')
-    box(ax, 0.04, 0.14, 0.44, 0.21, '传统 48 VDC 机柜铜母排\nI = 132 kW / 48 V = 2,750 A\n母排厚重且 I²R 发热剧烈', 'orange', size=11)
-    box(ax, 0.52, 0.14, 0.44, 0.21, '新一代 800 VDC 高压母排\nI = 165 A（电流降 16.7x）\n同阻值 I²R 铜损骤降 277.8x', 'teal', size=11)
-    arrow(ax, (0.48, 0.245), (0.52, 0.245))
-    text(ax, 0.50, 0.07, '电压升 16.67 倍 → 电流降为 1/16.7 → 同阻值铜损降为 1/278', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch15-gigawatt-ai-factory-power-chain')
-
-
-def fig_15_2_feasibility(ex: Exporter):
-    fig, ax = canvas(3.65)
-    card(ax, 0.02, 0.04, 0.46, 0.92, '口径错配陷阱（高估容量）', color='orange', title_size=11)
-    box(ax, 0.04, 0.66, 0.42, 0.16, '分子分母错位（D11-08）\n整柜功率直乘单卡 GB/W', 'orange', size=11)
-    box(ax, 0.04, 0.43, 0.42, 0.16, '漏扣非 GPU 功耗 28%\nCPU·交换机·PSU·水泵', 'orange', size=11)
-    box(ax, 0.04, 0.20, 0.42, 0.16, '漏扣显存运行预留 20%\n激活·通信缓冲·页碎片', 'orange', size=11)
-    arrow(ax, (0.25, 0.66), (0.25, 0.59))
-    arrow(ax, (0.25, 0.43), (0.25, 0.36))
-    text(ax, 0.25, 0.10, '纸面高估显存 40%–70%', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
-
-    card(ax, 0.52, 0.04, 0.46, 0.92, '物理与经济可行双边界', color='teal', title_size=11)
-    box(ax, 0.54, 0.66, 0.42, 0.16, '正确物理容量方程\nM = P·η_gpu·(GB/W)·u', 'teal', size=11)
-    box(ax, 0.54, 0.43, 0.42, 0.16, '物理可行：装得下供得上\n结温与机柜功率不越界', 'blue', size=11)
-    box(ax, 0.54, 0.20, 0.42, 0.16, '经济可行：SLO 下最优\n单词元成本低于商业线', 'purple', size=11)
-    arrow(ax, (0.75, 0.66), (0.75, 0.59))
-    arrow(ax, (0.75, 0.43), (0.75, 0.36))
-    text(ax, 0.75, 0.10, '经济域严格内嵌于物理域', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
-    ex.save(fig, 'ch15-physical-vs-economic-feasibility')
+    card(ax, 0.02, 0.03, 0.96, 0.42, 'Meta Llama 3 405B（16K 卡 54 天）真实中断账本：硬件占 78%', color='blue')
+    box(ax, 0.04, 0.13, 0.44, 0.20, 'GPU 与 HBM3 硬件故障（58.7%）\nHBM ECC 错、SRAM 奇偶错\nNVLink 与光模块闪断（19.3%）', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '软件与基础设施故障（22.0%）\n内核崩溃、存储超时与供电抖动\n倒逼容错从分钟重启走向秒级自愈', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '十万卡下故障不再是偶发异常，而是每 30 分钟必至的稳态过程', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-cluster-mtbf-scaling-and-llama3-failures')
 
 
-def fig_15_3_site_tco(ex: Exporter):
-    fig, ax = canvas(3.65)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '站点条件作为一等设计输入（D11-09）：四大核心变量', color='blue')
-    vars_box = [
-        (0.04, 0.58, 0.21, 0.24, '① 工业电价\n0.04–0.12\n美元/kWh', 'blue'),
-        (0.28, 0.58, 0.21, 0.24, '② 供电配额\n变电站上限\nPUE 1.08+', 'teal'),
-        (0.52, 0.58, 0.21, 0.24, '③ 并网工期\n等 6–18 月\n技术折旧', 'orange'),
-        (0.76, 0.58, 0.20, 0.24, '④ 机柜热限\n风冷 20 kW\n液冷 130 kW', 'purple'),
+def fig_20_2_hot_spare_pool(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '热备节点池（Hot-Spare Pool）泊松维修队列模型（算例 20-2）', color='teal')
+    stages = [
+        (0.03, 0.58, 0.29, 0.24, '故障率 λ = 2.0 /h\n每小时坏 2 台节点\n立刻切入热备顶替', 'orange'),
+        (0.355, 0.58, 0.29, 0.24, '维修 MTTR = 12 h\n稳态在修节点均值\nL = λ·MTTR = 24 台', 'blue'),
+        (0.68, 0.58, 0.29, 0.24, '99.9% 不降级门限\nP(K ≤ S) ≥ 0.999\n最小热备 S = 40 台', 'teal'),
     ]
-    for x, y, w, h, label, role in vars_box:
+    for x, y, w, h, label, role in stages:
         box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.355, 0.70))
+    arrow(ax, (0.645, 0.70), (0.68, 0.70))
 
-    card(ax, 0.02, 0.03, 0.96, 0.42, '算例 15-3：100 MW 园区电价差与并网延期 6 个月折旧', color='orange')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '电价差 0.04 vs 0.12 美元\n100 MW 三年差 2.10 亿美元\n高电价区须优先压每瓦吞吐', 'blue', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '36 个月寿命下延期 6 个月\n20 亿美元硬件折旧 3.33 亿\n远超跨园区分建或自备电费', 'orange', size=11)
-    text(ax, 0.50, 0.06, '并网工期（Time-to-Power）的折旧代价往往压倒单纯电价差', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch15-site-conditions-tco-sensitivity')
+    card(ax, 0.02, 0.03, 0.96, 0.42, '为什么只按均值配 24 台备机不可行？以及超节点局部性约束', color='blue')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '若仅配 S = L = 24 台热备节点\n泊松分布下 44.6% 时间备机耗尽\n备机枯竭将被迫降级或停机等待', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '仅多配 16 台（占集群 < 0.4%）\n即可换取 99.91% 零降级可用率\n空闲热备平时可跑可抢占评测', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '用 < 0.4% 热备容量吸收 12 小时维修延迟是维持满血拓扑的最优解', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-hot-spare-pool-queuing-dimensioning')
 
 
-def fig_15_4_power_swing(ex: Exporter):
-    fig, ax = canvas(3.65)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '十万卡同步训练 Step 边界的周期性功率阶跃（Power Swing）', color='orange')
-    phases = [
-        (0.04, 0.58, 0.28, 0.24, '前反向 GEMM\n10 万卡满载\n功率 100 MW', 'orange'),
-        (0.36, 0.58, 0.28, 0.24, 'AllReduce 屏障\n矩阵单元停顿\n跌至 35 MW', 'blue'),
-        (0.68, 0.58, 0.28, 0.24, '下一 Step 拉满\n毫秒级重满载\n爬升 +65 MW', 'orange'),
+def fig_20_3_sdc_contamination(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '静默数据损坏（SDC）逃逸 HBM ECC 并污染万卡权重的路径', color='orange')
+    stages = [
+        (0.03, 0.58, 0.29, 0.24, '① HBM3 读取正常\n权重离开显存时\nECC 校验完全通过', 'teal'),
+        (0.355, 0.58, 0.29, 0.24, '② Tensor 核内翻转\n电压跌落/时序违例\n无 ECC 累加器出错', 'orange'),
+        (0.68, 0.58, 0.29, 0.24, '③ 写回并 AllReduce\n赋予错误值合法 ECC\n1 次归约传染万卡', 'orange'),
     ]
-    for x, y, w, h, label, role in phases:
+    for x, y, w, h, label, role in stages:
         box(ax, x, y, w, h, label, role, size=11)
-    arrow(ax, (0.32, 0.70), (0.36, 0.70))
-    arrow(ax, (0.64, 0.70), (0.68, 0.70))
+    arrow(ax, (0.32, 0.70), (0.355, 0.70))
+    arrow(ax, (0.645, 0.70), (0.68, 0.70))
 
-    card(ax, 0.02, 0.03, 0.96, 0.42, '65 MW / 10 ms 阶跃斜率（6,500 MW/s）对电网的冲击', color='purple')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '50 ms–1 s 周期次同步谐振\n超出燃气轮机与变压器调速\n引发母线电压闪变与跳闸', 'orange', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '训练故障急停（Job Crash）\n100 MW 负载数毫秒内归零\n导致园区母线过压与频升', 'purple', size=11)
-    text(ax, 0.50, 0.06, '同步训练呈现出传统互联网机房从未有过的强相干方波冲击', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch15-synchronous-training-power-swing')
-
-
-def fig_15_5_rubin_smoothing(ex: Exporter):
-    fig, ax = canvas(3.65)
-    card(ax, 0.02, 0.04, 0.46, 0.92, 'Rubin 机架智能功率平滑', color='teal', title_size=11)
-    box(ax, 0.04, 0.66, 0.42, 0.16, '电源架内置储能单元\n按荷电状态 SoC 反馈控制', 'teal', size=11)
-    box(ax, 0.04, 0.43, 0.42, 0.16, '高峰放电 · 通信低谷充电\n削平约 20% 的 50 ms 脉冲', 'blue', size=11)
-    box(ax, 0.04, 0.20, 0.42, 0.16, '消除防尖峰预留裕量浪费\n降低约 10% 机架平均功耗', 'purple', size=11)
-    arrow(ax, (0.25, 0.66), (0.25, 0.59))
-    arrow(ax, (0.25, 0.43), (0.25, 0.36))
-    text(ax, 0.25, 0.10, '将尖锐方波过滤为平滑负载', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
-
-    card(ax, 0.52, 0.04, 0.46, 0.92, 'DSX MaxLPS 功率超配', color='blue', title_size=11)
-    box(ax, 0.54, 0.66, 0.42, 0.16, '传统按铭牌峰值刚性配电\n100 MW 配额仅装 750 柜', 'orange', size=11)
-    box(ax, 0.54, 0.43, 0.42, 0.16, '软硬件封顶与储能缓冲\n将持续功率包络压低 28%', 'teal', size=11)
-    box(ax, 0.54, 0.20, 0.42, 0.16, '同一 100 MW 变电配额下\n安全超配最高 +40% GPU', 'blue', size=11)
-    arrow(ax, (0.75, 0.66), (0.75, 0.59))
-    arrow(ax, (0.75, 0.43), (0.75, 0.36))
-    text(ax, 0.75, 0.10, '固定电力内多产 40% 算力', size=11, ha='center', weight='bold', color=BORDER_COL['blue'])
-    ex.save(fig, 'ch15-rubin-power-smoothing-and-maxlps')
+    card(ax, 0.02, 0.03, 0.96, 0.42, '两类 SDC 破坏形态：显式指数爆炸 vs. 隐式尾数漂移', color='blue')
+    box(ax, 0.04, 0.13, 0.44, 0.20, 'BF16 高位指数翻转（0 → 1）\n数值瞬间放大 2^64 倍\n数步后引发 Loss 尖峰与动量报废', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '尾数位或符号位静默偏移（+64）\n不触发 NaN，训练曲线表面平稳\n持续拉偏收敛且无法事后抓坏卡', 'purple', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, 'HBM ECC 只能保护存储与传输，无法保护无纠错编码的算术单元', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-sdc-bitflip-allreduce-contamination')
 
 
-def fig_15_6_runtime_stagger(ex: Exporter):
-    fig, ax = canvas(3.60)
-    card(ax, 0.02, 0.04, 0.46, 0.92, '未协同基线：全群相位锁死', color='orange', title_size=11)
-    box(ax, 0.04, 0.66, 0.42, 0.16, '所有并行组在同一时刻\n齐步进出 GEMM 或屏障', 'orange', size=11)
-    box(ax, 0.04, 0.43, 0.42, 0.16, '峰值叠加至 N · P_max\n谷值跌落至 N · P_idle', 'orange', size=11)
-    box(ax, 0.04, 0.20, 0.42, 0.16, 'dP/dt 极大且储能电容\n须按全群满幅跌落设计', 'orange', size=11)
-    arrow(ax, (0.25, 0.66), (0.25, 0.59))
-    arrow(ax, (0.25, 0.43), (0.25, 0.36))
-    text(ax, 0.25, 0.10, '同步屏障成电网谐振放大器', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+def fig_20_4_abft_checksum(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '算子级代数不变量校验（ABFT 行列校验和，算例 20-3）', color='teal')
+    stages = [
+        (0.03, 0.58, 0.29, 0.24, '① 构造行列校验和\nc_A^T = 1^T A\nr_B = B 1', 'blue'),
+        (0.355, 0.58, 0.29, 0.24, '② Tensor 核矩阵乘\n计算 C = A B\n附带算外围内积', 'teal'),
+        (0.68, 0.58, 0.29, 0.24, '③ 残差十字定位\nΔr_i≠0 且 Δc_j≠0\n锁定坏元素 C[i,j]', 'purple'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.355, 0.70))
+    arrow(ax, (0.645, 0.70), (0.68, 0.70))
 
-    card(ax, 0.52, 0.04, 0.46, 0.92, '运行时软件协同抑峰三机制', color='teal', title_size=11)
-    box(ax, 0.54, 0.66, 0.42, 0.16, '① 流水微批次交错相位\n子群通信窗口错峰互补', 'teal', size=11)
-    box(ax, 0.54, 0.43, 0.42, 0.16, '② 功率爬升斜率限制器\n启停过程按 5 MW/s 缓变', 'blue', size=11)
-    box(ax, 0.54, 0.20, 0.42, 0.16, '③ 通信期动态 DVFS 降频\n或注入低功耗校验填谷', 'purple', size=11)
-    arrow(ax, (0.75, 0.66), (0.75, 0.59))
-    arrow(ax, (0.75, 0.43), (0.75, 0.36))
-    text(ax, 0.75, 0.10, '零硬件改动消减 60%+ 摆幅', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
-    ex.save(fig, 'ch15-runtime-staggered-microbatch-power')
+    card(ax, 0.02, 0.03, 0.96, 0.42, '为什么 ABFT 比双重执行冗余（DMR 100% 算力税）便宜 1,365 倍？', color='blue')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '对 M = N = K = 4,096 的 GEMM\n主矩阵乘需 137.44 GFLOPs\n外围校验仅需 100.66 MFLOPs', 'teal', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '附加开销仅 3/4096 = 0.0732%\n注入 (2,3) 处 +64.0 静默翻转\n凭残差立刻定位并原地减去 64', 'blue', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '利用线性结合律将 O(N^3) 校验降维成 O(N^2) 向量内积拦截 SDC', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-abft-checksum-matrix-multiplication')
 
 
-def fig_15_7_ashrae_w45(ex: Exporter):
+def fig_20_5_safeguarding_opguard(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '3,500 万卡时在线 SDC 拦截与 OpGuard 位级定位（OSDI 26）', color='blue')
+    stages = [
+        (0.03, 0.58, 0.29, 0.24, '第一道：归约前拦截\n跨 DP 秩比对梯度范数\n防异常污染全局', 'teal'),
+        (0.355, 0.58, 0.29, 0.24, '第二道：确定性对齐\n固定原子加与归约序\n健康卡位级一致', 'blue'),
+        (0.68, 0.58, 0.29, 0.24, '第三道：算子级重放\n跨卡比对位级哈希\n毫秒级揪出坏卡', 'purple'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.355, 0.70))
+    arrow(ax, (0.645, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '破解“浮点非确定性掩盖硬件真错误”的诊断死结', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '传统痛点：原子加与乱序归约\n使两张正常卡输出本就不同\n无法靠哈希区分良性差异与 SDC', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, 'OpGuard 强制确定性归约顺序\n使健康 GPU 输出 100% 位级相同\n任何 1 比特差异即确诊硬件 SDC', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '先在 AllReduce 前守住全局权重，再用位级确定性重放指认坏卡', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-safeguarding-sdc-and-opguard-bitwise-debug')
+
+
+def fig_20_6_microbatch_rerun(ex: Exporter):
     fig, ax = canvas(3.75)
-    card(ax, 0.02, 0.52, 0.96, 0.44, 'ASHRAE W45（45 °C 进水）芯片冷板与无冷机自然冷却回路', color='teal')
-    loop = [
-        (0.04, 0.60, 0.21, 0.22, '① 芯片冷板\n1.0–1.5 kW\n45→57 °C', 'orange'),
-        (0.28, 0.60, 0.21, 0.22, '② 分集水器\nManifold\n汇集 132 kW', 'purple'),
-        (0.52, 0.60, 0.21, 0.22, '③ 液冷 CDU\n板式换热器\n一二次隔离', 'blue'),
-        (0.76, 0.60, 0.20, 0.22, '④ 室外干冷\n免除压缩机\n全年自然冷', 'teal'),
-    ]
-    for x, y, w, h, label, role in loop:
-        box(ax, x, y, w, h, label, role, size=11)
-    arrow(ax, (0.25, 0.71), (0.28, 0.71))
-    arrow(ax, (0.49, 0.71), (0.52, 0.71))
-    arrow(ax, (0.73, 0.71), (0.76, 0.71))
-
-    card(ax, 0.02, 0.03, 0.96, 0.43, 'ASHRAE 风冷极限（1,900 CFM/砖）vs. 算例 15-4 液冷流量', color='blue')
-    box(ax, 0.04, 0.14, 0.44, 0.21, '传统高密风冷极限（TC 9.9）\n单块地板砖 1,900 CFM（19U）\n风扇功耗反扑至整机 10%–20%', 'orange', size=11)
-    box(ax, 0.52, 0.14, 0.44, 0.21, '算例 15-4：132 kW 液冷柜\n温差 12 °C 仅需 2.63 L/s 流量\n折合 157.8 L/min 冷却水流量', 'teal', size=11)
-    text(ax, 0.50, 0.07, '水体积热容约为空气 3,500 倍 · W45 温水直冷将 PUE 压至 ≤1.08', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch15-ashrae-w45-cdu-liquid-cooling-loop')
-
-
-def fig_15_8_logicfolding(ex: Exporter):
-    fig, ax = canvas(3.65)
-    card(ax, 0.02, 0.04, 0.46, 0.92, '降压与三维折叠的功耗收益', color='teal', title_size=11)
-    box(ax, 0.04, 0.66, 0.42, 0.16, '动态功耗 P ∝ C · V² · f\n电压 0.85 V 降至 0.55 V', 'teal', size=11)
-    box(ax, 0.04, 0.43, 0.42, 0.16, '电压平方项降至 0.419\n节省约 58% 动态功耗', 'blue', size=11)
-    box(ax, 0.04, 0.20, 0.42, 0.16, '三维堆叠缩短互连电容\n折叠 DSP 总功耗 0.75x', 'purple', size=11)
+    card(ax, 0.02, 0.04, 0.46, 0.92, '全局检查点回滚（数小时）', color='orange', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, 'AllReduce 后才发现 Loss 突刺\n万卡权重与动量已被污染', 'orange', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '回滚至 2 小时前落盘检查点\n且不知哪张卡发生静默翻转', 'orange', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '若永久坏卡仍留在集群内\n恢复后再次污染全部万卡', 'orange', size=11)
     arrow(ax, (0.25, 0.66), (0.25, 0.59))
     arrow(ax, (0.25, 0.43), (0.25, 0.36))
-    text(ax, 0.25, 0.10, '总功耗降 25%（NPU 降 66%）', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    text(ax, 0.25, 0.10, '事后回滚既丢算力又抓不出真凶', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
 
-    card(ax, 0.52, 0.04, 0.46, 0.92, '功率密度悖论（热流 +25%）', color='orange', title_size=11)
-    box(ax, 0.54, 0.66, 0.42, 0.16, '三维折叠缩减投影面积 40%\n散热底面积降至 0.60x', 'orange', size=11)
-    box(ax, 0.54, 0.43, 0.42, 0.16, '面积缩减快于功耗下降：\n热流密度 0.75/0.60 = 1.25x', 'orange', size=11)
-    box(ax, 0.54, 0.20, 0.42, 0.16, '结温 T_j = T_f + P · Ψ_ca\n层间热阻叠加易局部过热', 'purple', size=11)
+    card(ax, 0.52, 0.04, 0.46, 0.92, '微批次重跑与热踢出（50 ms）', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '在优化器 step() 前拦截异常\nHBM 主权重与动量完好无损', 'teal', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '耗时 50 ms 原地重算当前微批\n恢复一致则判为宇宙射线软错误', 'blue', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '若重算仍错则锁定特定坏卡\n热踢出该卡切入热备，零回滚', 'purple', size=11)
     arrow(ax, (0.75, 0.66), (0.75, 0.59))
     arrow(ax, (0.75, 0.43), (0.75, 0.36))
-    text(ax, 0.75, 0.10, '更省电芯片反而需更强液冷', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
-    ex.save(fig, 'ch15-logicfolding-power-density-paradox')
+    text(ax, 0.75, 0.10, '50 ms 微批重算替代 2 小时回滚', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch20-microbatch-rerun-vs-checkpoint-rollback')
 
 
-def fig_15_9_straggler(ex: Exporter):
-    fig, ax = canvas(3.65)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '热节流（Thermal Throttling）在同步训练中的木桶放大效应', color='orange')
-    nodes = [
-        (0.04, 0.58, 0.28, 0.24, '1,023 张正常卡\n结温 72 °C 达标\n耗时 100 ms', 'teal'),
-        (0.36, 0.58, 0.28, 0.24, '1 张微堵过热卡\n触碰 88 °C 节流\n延至 117.6 ms', 'orange'),
-        (0.68, 0.58, 0.28, 0.24, 'AllReduce 屏障\n千卡空等 17.6 ms\n算力跌 15%', 'purple'),
-    ]
-    for x, y, w, h, label, role in nodes:
-        box(ax, x, y, w, h, label, role, size=11)
-    arrow(ax, (0.32, 0.70), (0.36, 0.70))
-    arrow(ax, (0.64, 0.70), (0.68, 0.70))
-
-    card(ax, 0.02, 0.03, 0.96, 0.42, '单卡过热代价 = 单卡降频比例 × 同步并行域总卡数 N', color='blue')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '浪费算力 = 1,023 卡 × 17.6 ms\n相当于白白空转 153 张满载卡\n却不产生任何额外训练进度', 'orange', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '工程根治：监测 Ψ_ca 热阻漂移\n主动将高热卡切出同步环替换\n或缩减该卡微批次计算配额', 'teal', size=11)
-    text(ax, 0.50, 0.06, '在万卡同步集群中，液冷均匀性直接决定有效算力利用率（MFU）', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch15-thermal-throttling-straggler-amplification')
-
-
-def fig_15_10_tapas(ex: Exporter):
+def fig_20_7_trainmover(ex: Exporter):
     fig, ax = canvas(3.75)
-    card(ax, 0.02, 0.52, 0.96, 0.44, '算例 15-6：TAPAS 功率封顶（100 kW）与延迟（1.0 s）双重约束', color='orange')
-    box(ax, 0.04, 0.59, 0.44, 0.24, '候选排 Row 0（功率违约）\n96 + 6 = 102 kW > 100 kW\n延迟 0.8 s 达标但功率越界', 'orange', size=11)
-    box(ax, 0.52, 0.59, 0.44, 0.24, '候选排 Row 1（SLO 违约）\n80 + 6 = 86 kW ≤ 100 kW\n功率达标但延迟 1.3 s > 1.0 s', 'purple', size=11)
-
-    card(ax, 0.02, 0.03, 0.96, 0.44, '热感知重配置（耗时 3.0 s，单请求省 0.1 s）的 30 请求回本线', color='teal')
-    box(ax, 0.04, 0.14, 0.44, 0.21, '静态：feasible=[1], admitted=[]\n两排均无法同时满足双约束\n被迫拒绝请求或触发断路器', 'orange', size=11)
-    box(ax, 0.52, 0.14, 0.44, 0.21, '动态重配置：付 3.0 s 串行迁移\n将单请求延迟压缩 Δt = 0.1 s\nN* = 3.0 / 0.1 = 30 请求回本', 'teal', size=11)
-    arrow(ax, (0.48, 0.245), (0.52, 0.245))
-    text(ax, 0.50, 0.07, '重配置须跨过 N ≥ 30 请求的稳态窗口方能摊平 3.0 s 迁移停顿', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch15-tapas-thermal-power-routing-breakeven')
-
-
-def fig_15_11_dci_latency(ex: Exporter):
-    fig, ax = canvas(3.65)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '跨 1,000 km 广域光网（DCI）的物理延迟与带宽时延积（BDP）', color='blue')
-    dci = [
-        (0.04, 0.58, 0.28, 0.24, '光纤折射率极限\n光速约 20 万 km/s\n每公里 ~5 μs', 'blue'),
-        (0.36, 0.58, 0.28, 0.24, '1,000 km 双园区\nRTT ≈ 10 ms\n慢于 NVLink 万倍', 'orange'),
-        (0.68, 0.58, 0.28, 0.24, '1.6 Tbps 专线\n200 GB/s × 10 ms\n在途 BDP 2.0 GB', 'purple'),
-    ]
-    for x, y, w, h, label, role in dci:
-        box(ax, x, y, w, h, label, role, size=11)
-    arrow(ax, (0.32, 0.70), (0.36, 0.70))
-    arrow(ax, (0.64, 0.70), (0.68, 0.70))
-
-    card(ax, 0.02, 0.03, 0.96, 0.42, '五维并行策略对广域网延迟的容忍度阶梯', color='teal')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '严禁跨城：TP 与 EP 全对全\n80 层每步需 160 次跨城 RTT\n仅光速延迟即空耗 1.6 s/Step', 'orange', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '可跨城：Cross-DC PP / 分层 DP\n及低频外循环同步（DiLoCo）\n每微批传激活或 500 步传伪梯度', 'teal', size=11)
-    text(ax, 0.50, 0.06, '跨城铁律：高敏通信留园区内，长延迟光纤只走低频大块传输', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch15-multi-datacenter-dci-optical-latency')
-
-
-def fig_15_12_cross_dc_pp(ex: Exporter):
-    fig, ax = canvas(3.65)
-    card(ax, 0.02, 0.04, 0.46, 0.92, '跨园区流水线（Cross-DC PP）', color='blue', title_size=11)
-    box(ax, 0.04, 0.66, 0.42, 0.16, '园区 A 驻留第 1–40 层\n园区 B 驻留第 41–80 层', 'blue', size=11)
-    box(ax, 0.04, 0.43, 0.42, 0.16, '跨城仅传边界激活张量\n单次仅几十 MiB 数据量', 'teal', size=11)
-    box(ax, 0.04, 0.20, 0.42, 0.16, '掩盖条件：微批计算耗时\n≥ 跨城传输 + 5 ms 延迟', 'purple', size=11)
+    card(ax, 0.02, 0.04, 0.46, 0.92, 'torchrun 全局销毁重启（300 s）', color='orange', title_size=11)
+    box(ax, 0.04, 0.66, 0.42, 0.16, '单卡掉线触发全网 SIGTERM\n九万九千张健康卡陪葬销毁', 'orange', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '重新初始化 CUDA 与 NCCL 环\n万卡 TCP 握手耗 120–180 s', 'orange', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '从远端存储重载数 TB 检查点\nETTR 跌至 63.22%（算例 20-1）', 'orange', size=11)
     arrow(ax, (0.25, 0.66), (0.25, 0.59))
     arrow(ax, (0.25, 0.43), (0.25, 0.36))
-    text(ax, 0.25, 0.10, '用充足微批数 m 摊薄气泡', size=11, ha='center', weight='bold', color=BORDER_COL['blue'])
+    text(ax, 0.25, 0.10, '一卡故障、万卡陪葬重启', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
 
-    card(ax, 0.52, 0.04, 0.46, 0.92, '两级分层数据并行（分层 DP）', color='teal', title_size=11)
-    box(ax, 0.54, 0.66, 0.42, 0.16, '第一级：园区内高速网络\n先完成园内万卡规约散射', 'teal', size=11)
-    box(ax, 0.54, 0.43, 0.42, 0.16, '第二级：跨城 DWDM 光纤\n仅在园区代表间交换分片', 'blue', size=11)
-    box(ax, 0.54, 0.20, 0.42, 0.16, '配合梯度累积步数 ≥ 32\n将跨城规约与反向相重叠', 'purple', size=11)
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'TrainMover 秒级热接管', color='teal', title_size=11)
+    box(ax, 0.54, 0.66, 0.42, 0.16, '热备常驻预初始化守护进程\n预建 CUDA 上下文与备用 QP', 'teal', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '虚拟通信组局部替换故障 Rank\n仅重连邻居 QP，其余卡零感知', 'blue', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '同 DP 邻居经 RDMA 推状态\n5 s 内恢复，ETTR 升至 92.34%', 'purple', size=11)
     arrow(ax, (0.75, 0.66), (0.75, 0.59))
     arrow(ax, (0.75, 0.43), (0.75, 0.36))
-    text(ax, 0.75, 0.10, '跨城流量与园内卡数解耦', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
-    ex.save(fig, 'ch15-cross-dc-pipeline-and-hierarchical-dp')
+    text(ax, 0.75, 0.10, '保留健康进程上下文实现秒级接管', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
+    ex.save(fig, 'ch20-trainmover-subsecond-hot-migration')
 
 
-def fig_15_13_diloco(ex: Exporter):
-    fig, ax = canvas(3.65)
-    card(ax, 0.02, 0.50, 0.96, 0.46, 'DiLoCo 双循环优化：内循环 H=500 步独立更新 + 外循环伪梯度', color='teal')
+def fig_20_8_straggler_blame(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, 'NCCL Flight Recorder 与到达偏斜矩阵（算例 20-4）', color='blue')
+    stages = [
+        (0.03, 0.58, 0.29, 0.24, 'Rank 0,1,2 准时到\nt = 0.0 ms 入集合\n空转等待 2.0 ms', 'teal'),
+        (0.355, 0.58, 0.29, 0.24, 'Rank 3 慢节点根因\n降频致 t = 2.0 ms\n才启动集合算子', 'orange'),
+        (0.68, 0.58, 0.29, 0.24, '网络交换仅 0.4 ms\nt = 2.4 ms 全体完\n火焰图误显 2.4 ms', 'purple'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.355, 0.70))
+    arrow(ax, (0.645, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '为什么盲目升级网络带宽只省 0.2 ms，而定位慢节点能省 2.0 ms？', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '误把等待当传输（算例 20-4）\n带宽翻倍仅把 0.4 压至 0.2 ms\n总墙钟 2.4 → 2.2 ms（省 8.3%）', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '提取算子入队时间戳偏斜矩阵\n锁定最晚到达的根因 Rank 3\n剔除慢卡后降至 0.4 ms（省 83%）', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '同步通信耗时长往往是健康卡在等慢卡，而非网络拥塞', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-nccl-flight-recorder-straggler-blame')
+
+
+def fig_20_9_optical_gray_failure(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '800G 光模块劣化引发 FEC 重传（灰故障）的演化特征', color='orange')
+    stages = [
+        (0.03, 0.58, 0.29, 0.24, '① 光功率轻微衰减\nPre-FEC 升至 10^-5\nFEC 纠错掩盖异常', 'teal'),
+        (0.355, 0.58, 0.29, 0.24, '② 纠错码字近饱和\n不可纠帧触发重传\nAllReduce 现毛刺', 'orange'),
+        (0.68, 0.58, 0.29, 0.24, '③ 间歇性端口闪断\n未 Down 但重传风暴\n拖垮轨道平面吞吐', 'orange'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.355, 0.70))
+    arrow(ax, (0.645, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '基于光模块遥测与 FEC 纠错桶直方图的预测性隔离', color='blue')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '传统监控只看 Link Up/Down\n对“活着但慢 20%”的灰故障失明\n致万卡长期处于亚健康降速态', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '采集 FEC 高阶纠错桶（Bin 7–15）\n在未丢包前提前标记劣化链路\n趁检查点间隙切换路由或备机', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '监控 Pre-FEC 误码斜率是在灰故障拖垮集群前将其拦截的关键', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-optical-ber-fec-gray-failure-detection')
+
+
+def fig_20_10_benchmark_traps(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, 'AI 系统跑分五大失真陷阱与加速比悖论（算例 20-5）', color='orange')
+    stages = [
+        (0.03, 0.58, 0.29, 0.24, '陷阱 ①–②：随机词元\n与无 SLO 极限吞吐\n掩盖投机与排队', 'orange'),
+        (0.355, 0.58, 0.29, 0.24, '陷阱 ③：加速比悖论\nA 平均 5.25x 却耗时\n210 μs 慢于基线', 'orange'),
+        (0.68, 0.58, 0.29, 0.24, '陷阱 ④–⑤：顺序时漂\n与静默精度退化\n误把节流当加速', 'orange'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.355, 0.70))
+    arrow(ax, (0.645, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '锁定反例复核：加速比翻转阈值与 ABBA 时漂抵消', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '加速比翻转点 p* = 15/19 ≈ 0.7895\n仅短形状 > 78.95% 时候选 A 才赢\n等频下候选 B（100 μs）快 2.1x', 'teal', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '消除 [0, 10, 20, 30] μs 热漂移\nAABB 顺序误判 A 快 10 μs\nABBA 镜像顺序还原真实差 +10 μs', 'blue', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '严禁对不同形状加速比取算术平均，必须汇报真实分布加权耗时', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-five-benchmark-gaming-traps')
+
+
+def fig_20_11_four_pillar_eval(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '工业级 AI 基础设施四维评测与无偏性能剖析体系', color='blue')
+    stages = [
+        (0.03, 0.58, 0.29, 0.24, '① 算子与通信基准\nFlashInfer + CCEval\n锁形状与影子流量', 'blue'),
+        (0.355, 0.58, 0.29, 0.24, '② 漂移与 SLO 基准\nDriftBench 合成流\n测突发下 Goodput', 'teal'),
+        (0.68, 0.58, 0.29, 0.24, '③ 可信剖析与门禁\nBlink 消采样失真\n+ KL 散度质量门禁', 'purple'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.355, 0.70))
+    arrow(ax, (0.645, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '为什么传统 PMU 采样剖析在扁平运行时上失真？（Blink OSDI 26）', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '短函数与关中断致采样失真\nPMU 采样点滑移与系统性漏采\n夸大长算子占比、漏报主机开销', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, 'Blink 校准剖析 + 两阶段金丝雀\n先在影子流量验 KL 散度与 P99\n再按 ABBA 交错放量验端到端收益', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '可信剖析工具（Blink）与质量门禁是防止优化沦为数字游戏的双保险', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-flashinfer-bench-cceval-and-blink-profiling')
+
+
+def fig_20_12_ettr_surface(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '十万卡有效训练时间比（ETTR）与 Young-Daly 最优周期（算例 20-1）', color='teal')
+    stages = [
+        (0.03, 0.58, 0.29, 0.24, 'Young-Daly 公式\nτ = sqrt(2·C·M)\n平衡写盘与回滚', 'blue'),
+        (0.355, 0.58, 0.29, 0.24, '落盘 + 全量重启\nC=180s, T_rec=300s\nETTR = 63.22%', 'orange'),
+        (0.68, 0.58, 0.29, 0.24, '内存快照 + 热接管\nC=5s, T_rec=5s\nETTR = 92.34%', 'teal'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.355, 0.70))
+    arrow(ax, (0.645, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '十万卡集群损失的 36.78% 算力去哪了？如何夺回 29.12 个百分点？', color='blue')
+    box(ax, 0.04, 0.13, 0.44, 0.20, 'M = 1,800 s（30 分钟一次故障）\n传统方案花 300 s 重启 + 402 s 重算\n近四成算力在空转与重算中蒸发', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, 'Checkmate 内存快照（5 s）叠加\nTrainMover 无重启接管（5 s）\n挽回 +29,120 张等效 GPU 算力', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '将检查点与恢复压至秒级等价于在十万卡集群白捡近三万张 GPU', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-effective-training-time-ratio-ettr-model')
+
+
+def fig_20_13_burn_in_pipeline(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '新节点入网与维修归队后的四阶自动化烤机（Burn-in）准入流水线', color='blue')
+    stages = [
+        (0.03, 0.58, 0.29, 0.24, '① 满载热压测\n跑满 TDP 30 分钟\n筛查冷板与供电', 'blue'),
+        (0.355, 0.58, 0.29, 0.24, '② 确定性 SDC 压测\n多精度 GEMM+ABFT\n拦截静默翻转卡', 'teal'),
+        (0.68, 0.58, 0.29, 0.24, '③ 光链路裕量压测\n验 BER < 10^-8\n通过后入热备池', 'purple'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.355, 0.70))
+    arrow(ax, (0.645, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '闭环机队健康自治状态机（Fleet Health State Machine）', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '严禁未烤机节点直入训练主池\n维修节点常存松动光模块或老化\n直入会导致修好一台却炸停全网', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '在役节点 → 热踢出 → 隔离诊断\n→ 维修 → 四阶烤机 → 回热备池\n全程零人工介入闭环运转', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '把准入烤机挡在热备池门外是防带病节点二次感染集群的铁律', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-automated-burn-in-fleet-health-pipeline')
+
+
+def fig_20_14_dual_track_ledger(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '全书二十章双轨贯穿主线（Dense 轨 vs. MoE 轨）收官总账本', color='blue')
+    stages = [
+        (0.03, 0.58, 0.29, 0.24, '第 1–7 章：算力互联\nQwen3-8B 单卡端侧\nvs 671B 双平面网', 'blue'),
+        (0.355, 0.58, 0.29, 0.24, '第 8–14 章：训推存储\nPD 分离、DeepEP\n过度训练百倍降本', 'teal'),
+        (0.68, 0.58, 0.29, 0.24, '第 15–20 章：六大前沿\n吉瓦供电、机密沙箱\nDiT/RLVR/VLA/容错', 'purple'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.355, 0.70))
+    arrow(ax, (0.645, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '双轨模型贯穿二十章的核心物理尺度对比', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '轨道 A：Qwen3-8B（36 层 GQA）\n权重 16.4 GB / INT4 4.6 GB\nKV 144 KB/tok，代表单卡与端侧', 'blue', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '轨道 B：DeepSeek 671B MoE\nMLA 压 KV 至 70.2 KB/tok\n代表超节点、EP 与 RLVR 旗舰', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '一切系统架构抉择最终都还原为算力、显存、带宽、功耗与可靠性的账本', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-twenty-chapter-dual-track-master-ledger')
+
+
+def fig_20_15_knowledge_graph(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '全书二十章知识体系全景图：三大部分与六大前沿底座', color='teal')
+    stages = [
+        (0.03, 0.58, 0.29, 0.24, '第一部分（1–3 章）\n模型与负载硬件视角\nMoE/MLA 与 SLO', 'blue'),
+        (0.355, 0.58, 0.29, 0.24, '第二部分（4–7 章）\n芯片算子与集群网络\n超节点与无损网', 'teal'),
+        (0.68, 0.58, 0.29, 0.24, '第三部分（8–20 章）\n训推、云边、供电安全\nDiT/RLVR/VLA/容错', 'purple'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.355, 0.70))
+    arrow(ax, (0.645, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '跨层协同设计（Cross-Layer Co-Design）的闭环脉络', color='blue')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '自顶向下：算法演进重塑系统负载\nGQA/MLA 救显存 → MoE 推高通信\n→ Long-CoT 与 3D DiT 改训推比', 'blue', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '自底向上：物理定律划定算法边界\nSRAM/HBM 容量、超节点域宽\n与 SDC 失效率反过来决定模型', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '优秀架构师既懂顶层模型数学，又能一路向下推演到硅片与变压器', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-twenty-chapter-architecture-knowledge-graph')
+
+
+def fig_20_16_ten_principles(ex: Exporter):
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, 'AI 基础设施架构师的十条第一性原理铁律（第 1–5 条）', color='blue')
+    stages = [
+        (0.03, 0.58, 0.29, 0.24, '① 算术强度分界\n② 显存容量带宽双墙\n先算字节再谈算力', 'blue'),
+        (0.355, 0.58, 0.29, 0.24, '③ 通信域物理分层\nTP 留柜内、EP 走轨\nDP/PP 跨层重叠', 'teal'),
+        (0.68, 0.58, 0.29, 0.24, '④ 负载解耦与池化\nPD 分离、EPD 分离\n与 RLVR 异步分池', 'purple'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.355, 0.70))
+    arrow(ax, (0.645, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '十条第一性原理铁律（第 6–10 条：尾部、物理、容错与评测）', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '⑤–⑦ 尾部气泡治理、全周期经济\n与机房供电/液冷/安全物理约束\n最大化每焦耳与每美元有效产出', 'teal', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '⑧–⑩ 硬实时 WCET、十万卡容错\n（防 SDC + 秒级接管）与评测科学\n只认真实分布与质量门禁下吞吐', 'blue', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '回归物理常识、坚持定量核算、敬畏生产现实——全书二十章收官', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-ten-first-principles-of-ai-infra')
+
+
+def fig_20_17_chaos_fault_injection(ex: Exporter) -> None:
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '四维主动混沌故障注入演练（200 次注入，总召回率 99.5%）', color='orange')
+    faults = [
+        (0.03, 0.58, 0.29, 0.24, '① 算子 SDC 注入\n翻转 +32..+64\nABFT 100% 捕获\nMTTD = 0.042 s', 'orange'),
+        (0.355, 0.58, 0.29, 0.24, '② 慢卡与光模块\n+2.0 ms 偏斜/FEC\n偏斜阵 99% 定位\nMTTD = 3.2–6.8 s', 'purple'),
+        (0.68, 0.58, 0.29, 0.24, '③ 掉卡与金丝雀\nTrainMover 0.68 s\n>3% P99 熔断回滚\nMTTR = 3.85 s', 'teal'),
+    ]
+    for x, y, w, h, label, role in faults:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.355, 0.70))
+    arrow(ax, (0.645, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '混沌演练 + 两阶段金丝雀门禁 vs. 传统被动排障收益对比', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '传统被动运维（无 GameDay）\n告警链路失效、慢卡长期潜伏\n人工重启耗时 1,500 s（25 min）', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '主动混沌检验 + 自治 SRE 闭环\n199/200 故障秒级自动拦截隔离\n恢复提速 389.6×，ETTR 92.34%', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '未经受主动故障注入检验的容错状态机，在十万卡风暴中易发级联雪崩', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-chaos-fault-injection-and-canary-rollout-gate')
+
+
+def fig_20_18_frontier_bridge(ex: Exporter) -> None:
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '前 20 章通用训推与可靠性底座 → 第 21–24 章四大新兴战略疆域', color='blue')
+    box(ax, 0.04, 0.58, 0.44, 0.24, '第 21 章智能体与第 22 章全双工\n95% WORM KV + 12 ms CoW 沙箱\n<200 ms S2S + 游标对齐回滚', 'blue', size=11)
+    box(ax, 0.52, 0.58, 0.44, 0.24, '第 23 章数据厂与第 24 章科学终章\n0.5% 清洗漏斗 + 中训练配比\nO(N^3) 三角注意 + 24 章收束', 'purple', size=11)
+    arrow(ax, (0.48, 0.70), (0.52, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '双枢纽收束结构：第 20 章（通用可靠性枢纽）↔ 第 24 章（全书终章）', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '第一枢纽（第 1–20 章）：\n算术强度、超节点互联、PD 分离\n与十万卡防 SDC 构筑通用底座', 'blue', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '第二枢纽（第 21–24 章）：\n向长程环境状态、硬实时音频流、\n源头数据燃料与科学智能延伸', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '第一性原理（字节、局部性、拓扑同构与尾延迟治理）贯穿全部二十四章', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-core-cluster-to-four-new-frontiers-bridge')
+
+
+def fig_20_19_oobleck_failover(ex: Exporter) -> None:
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, 'Oobleck 预实例化异构流水线模板无重启容错（1.45 s 恢复）', color='blue')
     steps = [
-        (0.04, 0.58, 0.28, 0.24, '① 园内 H=500 步\nAdamW 独立训练\n跨城通信为 0', 'teal'),
-        (0.36, 0.58, 0.28, 0.24, '② 算伪梯度 Δθ\nθ^(0) - θ^(H)\n仅跨城规约一次', 'blue'),
-        (0.68, 0.58, 0.28, 0.24, '③ 外循环动量\n更新全局主权重\n带宽直降 500x', 'purple'),
+        (0.03, 0.58, 0.29, 0.24, '① 预实例化双模板\n标准 8 阶 T_8 与\n紧凑 7 阶 T_7 域', 'blue'),
+        (0.355, 0.58, 0.29, 0.24, '② 局部层分片补齐\n检测 0.25+补齐 0.85s\nRDMA 拉取冗余分片', 'teal'),
+        (0.68, 0.58, 0.29, 0.24, '③ 异构微批重配额\n同步 0.35s 零重启\n30×T_8 + 2×T_7', 'purple'),
     ]
     for x, y, w, h, label, role in steps:
         box(ax, x, y, w, h, label, role, size=11)
-    arrow(ax, (0.32, 0.70), (0.36, 0.70))
-    arrow(ax, (0.64, 0.70), (0.68, 0.70))
+    arrow(ax, (0.32, 0.70), (0.355, 0.70))
+    arrow(ax, (0.645, 0.70), (0.68, 0.70))
 
-    card(ax, 0.02, 0.03, 0.96, 0.42, '算例 15-7：100B 模型跨城同步带宽压缩与外循环显存代价', color='orange')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '传统每步跨城 DP（2 s/Step）\n每步传 400 GB 需 1,600 Gbps\nDiLoCo (H=500) 均值 3.2 Gbps', 'teal', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '外循环显存代价（非免费午餐）\n需保存初始快照与外动量状态\n每参数多占 4–8 B（可分片）', 'orange', size=11)
-    text(ax, 0.50, 0.06, '用园区内充裕的存储空间置换稀缺昂贵的跨地域广域网带宽', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch15-diloco-inner-outer-optimization')
-
-
-def fig_15_14_streaming_diloco(ex: Exporter):
-    fig, ax = canvas(3.60)
-    card(ax, 0.02, 0.04, 0.46, 0.92, '标准 DiLoCo（第 H 步阻塞）', color='orange', title_size=11)
-    box(ax, 0.04, 0.66, 0.42, 0.16, '前 499 步跨城光纤闲置\n广域网链路利用率 = 0%', 'orange', size=11)
-    box(ax, 0.04, 0.43, 0.42, 0.16, '第 500 步突发全量传输\n400 GB 伪梯度阻塞训练', 'orange', size=11)
-    box(ax, 0.04, 0.20, 0.42, 0.16, '在 10 Gbps 慢速链路上\n单次同步停顿长达 320 s', 'orange', size=11)
-    arrow(ax, (0.25, 0.66), (0.25, 0.59))
-    arrow(ax, (0.25, 0.43), (0.25, 0.36))
-    text(ax, 0.25, 0.10, '均值虽低但峰值仍阻塞', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
-
-    card(ax, 0.52, 0.04, 0.46, 0.92, 'Streaming DiLoCo（分片流水）', color='teal', title_size=11)
-    box(ax, 0.54, 0.66, 0.42, 0.16, '将模型切为 M 个参数分片\n每分片错开 H/M 步同步', 'teal', size=11)
-    box(ax, 0.54, 0.43, 0.42, 0.16, '分片 p 在后台跨城传输时\nGPU 正常跑其余分片训练', 'blue', size=11)
-    box(ax, 0.54, 0.20, 0.42, 0.16, '叠加 FP4 伪梯度压缩 4x\n跨城通信暴露趋近于 0', 'purple', size=11)
-    arrow(ax, (0.75, 0.66), (0.75, 0.59))
-    arrow(ax, (0.75, 0.43), (0.75, 0.36))
-    text(ax, 0.75, 0.10, '将尖峰抹平为恒定背景流', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
-    ex.save(fig, 'ch15-streaming-diloco-chunked-sync')
-
-
-def fig_15_15_decision_tree(ex: Exporter):
-    fig, ax = canvas(3.95)
-    card(ax, 0.02, 0.03, 0.96, 0.94, '单园区等待变电站扩容 vs. 多园区跨城协同训练决策树', color='blue')
-    box(ax, 0.05, 0.72, 0.90, 0.14, '目标：部署 300 MW 训练集群（单站点现成可用电力仅 100 MW）', 'blue', size=11)
-    box(ax, 0.05, 0.40, 0.42, 0.24, '方案 A：单园区等变电扩容\n等待 9 个月 · 训练零跨城损耗\n承担 9 个月硬件闲置折旧', 'orange', size=11)
-    box(ax, 0.53, 0.40, 0.42, 0.24, '方案 B：3 座 100 MW 即刻并网\n零等待 · 分层 DP 与 DiLoCo\n仅付 4%–7% 跨城效率折损', 'teal', size=11)
-    arrow(ax, (0.26, 0.72), (0.26, 0.64))
-    arrow(ax, (0.74, 0.72), (0.74, 0.64))
-    box(ax, 0.05, 0.09, 0.90, 0.23, '工期翻转判据：当并网延期 ΔT_wait > T_job · (1/η - 1) 时多园区胜出\n对 90 天训练任务，即使跨城折损 10%，电网延期超 10 天即应选多园区', 'purple', size=11)
-    ex.save(fig, 'ch15-single-campus-vs-multi-campus-decision')
-
-
-def fig_15_16_summary(ex: Exporter):
-    fig, ax = canvas(4.10)
-    card(ax, 0.02, 0.03, 0.96, 0.94, '吉瓦级 AI 基础设施全景：结温—液冷—电网平滑—广域光网协同', color='teal')
-    layers = [
-        (0.05, 0.66, 0.42, 0.20, '① 硅片热流层（mm² 尺度）\nLogicFolding 1.25x 密度悖论\n控热阻防热节流木桶效应', 'orange'),
-        (0.53, 0.66, 0.42, 0.20, '② 机柜液冷母排层（m 尺度）\n800 VDC 母排降铜损 278x\nASHRAE W45 温水免冷机', 'teal'),
-        (0.53, 0.37, 0.42, 0.20, '③ 园区变电储能层（km 尺度）\nRubin 削平 20% 峰值脉冲\nDSX MaxLPS 超配 +40% 卡', 'blue'),
-        (0.05, 0.37, 0.42, 0.20, '④ 跨城光网层（千公里尺度）\nTAPAS 路由 30 请求回本\nDiLoCo 压缩跨城带宽 500x', 'purple'),
-    ]
-    for x, y, w, h, label, role in layers:
-        box(ax, x, y, w, h, label, role, size=11)
-    arrow(ax, (0.47, 0.76), (0.53, 0.76))
-    arrow(ax, (0.74, 0.66), (0.74, 0.57))
-    arrow(ax, (0.53, 0.47), (0.47, 0.47))
-    arrow(ax, (0.26, 0.57), (0.26, 0.66))
-    box(ax, 0.05, 0.08, 0.90, 0.21, '吉瓦时代恒等式：Token/s/MW = (单瓦有效算力 ÷ 每词元算力) ÷ PUE\n供电拓扑、液冷热学与广域光网已内化为 AI 体系结构的一等公民', 'blue', size=11)
-    ex.save(fig, 'ch15-power-thermal-wan-co-design-summary')
-
-
-def fig_15_17_microfluidics(ex: Exporter):
-    fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '单相冷板、两相相变冷却与硅背面微通道直冷的热阻对比', color='blue')
-    modes = [
-        (0.04, 0.58, 0.28, 0.24, '① 单相水冷板\n显热温升受限\n含 R_TIM 界面', 'orange'),
-        (0.36, 0.58, 0.28, 0.24, '② 两相沸腾冷\n汽化潜热恒温\n仍受 R_TIM 限', 'blue'),
-        (0.68, 0.58, 0.28, 0.24, '③ 硅背微流道\n蚀刻晶圆背面\n消除 R_TIM 层', 'teal'),
-    ]
-    for x, y, w, h, label, role in modes:
-        box(ax, x, y, w, h, label, role, size=11)
-    arrow(ax, (0.32, 0.70), (0.36, 0.70))
-    arrow(ax, (0.64, 0.70), (0.68, 0.70))
-
-    card(ax, 0.02, 0.03, 0.96, 0.42, '2,000 W 芯片消除 R_TIM=0.02 °C/W 的进水温度红利', color='teal')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '传统冷板（R_TIM=0.02 °C/W）\n仅界面层即产生 40 °C 温差\n2 kW 下最高进水压至 21 °C', 'orange', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '硅背面微通道直冷（R_TIM=0）\n消除 40 °C 界面温差瓶颈\n允许进液温度提升 +40.0 °C', 'teal', size=11)
+    card(ax, 0.02, 0.03, 0.96, 0.42, '32 条 8 阶流水线（256 节点）掉线 2 台无备机时恢复对比', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '传统全局销毁重启（300.00 s）\n销毁 2,048 卡进程并重载磁盘\n无备机时全集群阻塞停机', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, 'Oobleck 模板切换（1.45 s）\n恢复提速 206.90×（零全局重启）\n保留 98.75% 稳态训练吞吐', 'teal', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '当芯片迈向 2–3 kW 时，消除 R_TIM 是维持 W45 免冷机散热的关键', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch15-single-phase-vs-two-phase-microfluidics')
+    text(ax, 0.50, 0.06, '编译期预建立多阶流水线通信域可在热备池耗尽时实现秒级降级续训', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-oobleck-pre-instantiated-pipeline-template-failover')
 
 
-def fig_15_18_campus_bess(ex: Exporter):
+def fig_20_20_bursty_goodput(ex: Exporter) -> None:
     fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '百兆瓦时园区储能（100 MWh BESS）的三重时间尺度调度', color='teal')
-    tiers = [
-        (0.04, 0.58, 0.28, 0.24, '① 毫秒级平抑\n削平 50 ms 方波\n抑制功率斜率', 'teal'),
-        (0.36, 0.58, 0.28, 0.24, '② 分钟级调频\n电网一次调频\n虚拟转动惯量', 'blue'),
-        (0.68, 0.58, 0.28, 0.24, '③ 小时级套利\n谷电 0.04 充入\n峰电 0.12 放出', 'purple'),
-    ]
-    for x, y, w, h, label, role in tiers:
-        box(ax, x, y, w, h, label, role, size=11)
-    arrow(ax, (0.32, 0.70), (0.36, 0.70))
-    arrow(ax, (0.64, 0.70), (0.68, 0.70))
-
-    card(ax, 0.02, 0.03, 0.96, 0.42, '100 MWh 储能系统峰谷套利与调频收益账本（练习 15-13）', color='blue')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '日内一充一放（η_rt = 88%）\n有效放电 88 MWh · 价差 0.08\n年峰谷套利 239–257 万美元', 'teal', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '叠加调频与需量削峰（+350 万）\n综合年收益 589–607 万美元\n静态投资回收期缩至 3.6–3.7 年', 'blue', size=11)
-    text(ax, 0.50, 0.06, '将单用途备电 UPS 升级为跨时间尺度复用的收益型电网资产', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch15-campus-bess-peak-shaving-and-arbitrage')
-
-
-def fig_15_19_kareus_energy(ex: Exporter):
-    fig, ax = canvas(3.75)
-    card(ax, 0.02, 0.04, 0.46, 0.92, '均匀分摊（高静态漏电）', color='orange', title_size=11)
-    box(ax, 0.04, 0.66, 0.42, 0.16, '集群负载率 u = 40% 时\n所有 GPU 均保持唤醒态', 'orange', size=11)
-    box(ax, 0.04, 0.43, 0.42, 0.16, '单卡静态漏电 P_s = 180 W\n动态功耗 0.4×520 = 208 W', 'orange', size=11)
-    box(ax, 0.04, 0.20, 0.42, 0.16, '单卡总功耗 = 388 W\n静态漏电占比达 46.4%', 'orange', size=11)
-    arrow(ax, (0.25, 0.66), (0.25, 0.59))
-    arrow(ax, (0.25, 0.43), (0.25, 0.36))
-    text(ax, 0.25, 0.10, '浅度降频难消静态漏电', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
-
-    card(ax, 0.52, 0.04, 0.46, 0.92, 'Kareus 动静态能耗合并', color='teal', title_size=11)
-    box(ax, 0.54, 0.66, 0.42, 0.16, 'Kareus（OSDI 26 #63）\n频率调控与实例紧缩合并', 'teal', size=11)
-    box(ax, 0.54, 0.43, 0.42, 0.16, '40% 活跃卡满载（700 W）\n60% 空闲卡休眠（15 W）', 'blue', size=11)
-    box(ax, 0.54, 0.20, 0.42, 0.16, '等效单卡均功降至 289 W\n整群节电 25.5%–27.8%', 'purple', size=11)
-    arrow(ax, (0.75, 0.66), (0.75, 0.59))
-    arrow(ax, (0.75, 0.43), (0.75, 0.36))
-    text(ax, 0.75, 0.10, '压缩活跃卡数扑灭漏电', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
-    ex.save(fig, 'ch15-kareus-dynamic-static-energy-consolidation')
-
-
-def fig_15_20_dips_wan(ex: Exporter):
-    fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, 'Di-PS（NSDI 26 #21）异构跨集群异步参数服务器训练', color='blue')
+    card(ax, 0.02, 0.50, 0.96, 0.46, 'Kingman 排队近似公式与推理压测流量变异系数（CV）黑洞', color='orange')
     stages = [
-        (0.04, 0.58, 0.28, 0.24, '① 异构算力园\n不同代 NPU/GPU\n按算力定步频', 'blue'),
-        (0.36, 0.58, 0.28, 0.24, '② 分片参数服\n算完第 l 层后\n异步推广域网', 'teal'),
-        (0.68, 0.58, 0.28, 0.24, '③ 陈旧度阻尼\n伪梯度加修正\n防慢卡拖收敛', 'purple'),
+        (0.03, 0.58, 0.29, 0.24, '作弊均匀定速压测\nC_a = 0, C_s = 0\n排队 W_q 恒为 0 ms', 'orange'),
+        (0.355, 0.58, 0.29, 0.24, '真实泊松长尾流量\nC_a = 1.0, C_s = 1.2\n变异因子达 1.22', 'purple'),
+        (0.68, 0.58, 0.29, 0.24, '高水位排队非线性爆炸\nρ/(1-ρ) 放大 5.67×\nW_q 飙至 829.60 ms', 'blue'),
     ]
     for x, y, w, h, label, role in stages:
         box(ax, x, y, w, h, label, role, size=11)
-    arrow(ax, (0.32, 0.70), (0.36, 0.70))
-    arrow(ax, (0.64, 0.70), (0.68, 0.70))
+    arrow(ax, (0.32, 0.70), (0.355, 0.70))
+    arrow(ax, (0.645, 0.70), (0.68, 0.70))
 
-    card(ax, 0.02, 0.03, 0.96, 0.42, '同步跨城 AllReduce vs. Di-PS 层间流式参数服务吞吐', color='teal')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '同步跨城集合通信（木桶受限）\n最快园区须等最慢园区与 RTT\n异构代差使快集群闲置 >30%', 'orange', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, 'Di-PS 异步分片推送 + 阻尼对齐\n通信与前反向计算全时段重叠\n百毫秒 WAN 下保持 >90% 效率', 'teal', size=11)
+    card(ax, 0.02, 0.03, 0.96, 0.42, '利用率 ρ = 0.85 下 TTFT 与 SLO Goodput（≤500 ms）失真对比', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '均匀发包虚报（TTFT=80.0ms）\n宣称 100% 达标（7.08 req/s）\n掩盖线上突发排队尾延迟', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '泊松长尾实测（TTFT=909.6ms）\n膨胀 11.37×，仅 48.77% 达标\n真实 Goodput 仅 3.45 req/s', 'teal', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '解耦异构园区的硬件步调，用算法阻尼吸收广域网抖动', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch15-dips-wan-backbone-parameter-sync')
+    text(ax, 0.50, 0.06, '满足平均 TTFT ≤ 300 ms 要求系统利用率 ρ ≤ 60.04%（预留 ~40% 水位）', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-goodput-sla-under-bursty-poisson-traffic')
 
 
-def fig_15_21_carbon_lifecycle(ex: Exporter):
-    fig, ax = canvas(3.75)
-    card(ax, 0.02, 0.04, 0.46, 0.92, '隐含碳（Embodied）', color='purple', title_size=11)
-    box(ax, 0.04, 0.66, 0.42, 0.16, '3nm/2nm 极紫外光刻晶圆\nCoWoS 封装与 HBM4 制造', 'purple', size=11)
-    box(ax, 0.04, 0.43, 0.42, 0.16, '变电站·液冷管网·储能柜\n混凝土与铜母排基建碳排', 'blue', size=11)
-    box(ax, 0.04, 0.20, 0.42, 0.16, '通电前已一次性锁定支出\n需靠高利用率满载摊薄', 'orange', size=11)
-    arrow(ax, (0.25, 0.66), (0.25, 0.59))
-    arrow(ax, (0.25, 0.43), (0.25, 0.36))
-    text(ax, 0.25, 0.10, '闲置等待推高单词元隐含碳', size=11, ha='center', weight='bold', color=BORDER_COL['purple'])
-
-    card(ax, 0.52, 0.04, 0.46, 0.92, '运行碳（Operational）', color='teal', title_size=11)
-    box(ax, 0.54, 0.66, 0.42, 0.16, '取决于电网碳强度 CI(t)\n煤电 ~800 vs 水核风 <50', 'teal', size=11)
-    box(ax, 0.54, 0.43, 0.42, 0.16, '3 年满载耗电约 26.3 亿度\n火电区运行碳占比 > 75%', 'orange', size=11)
-    box(ax, 0.54, 0.20, 0.42, 0.16, '绿电直供 + BESS 错峰消纳\n跨园区追逐风光富余电力', 'teal', size=11)
-    arrow(ax, (0.75, 0.66), (0.75, 0.59))
-    arrow(ax, (0.75, 0.43), (0.75, 0.36))
-    text(ax, 0.75, 0.10, '绿电区隐含碳与运行碳并重', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
-    ex.save(fig, 'ch15-embodied-carbon-vs-operational-carbon-lifecycle')
-
-
-def fig_15_22_master_ledger(ex: Exporter):
-    fig, ax = canvas(4.15)
-    card(ax, 0.02, 0.03, 0.96, 0.94, '吉瓦级 AI 算力园区工程总账本（从并网到跨洲协同）', color='blue')
-    grid = [
-        (0.05, 0.66, 0.42, 0.20, '① 供电与母排（15.1–2）\n800 VDC 母排降铜损 278x\nRubin 平滑 +40% 超配', 'blue'),
-        (0.53, 0.66, 0.42, 0.20, '② 热学与微流道（15.3/6）\nW45 温水免冷机 PUE≤1.08\n硅背面微流道消除 R_TIM', 'teal'),
-        (0.53, 0.37, 0.42, 0.20, '③ 储能与能效（15.6.2–3）\n100 MWh BESS 峰谷套利\nKareus 合并休眠省电 25%', 'purple'),
-        (0.05, 0.37, 0.42, 0.20, '④ 跨地域训练（15.4 & 6）\nStreaming DiLoCo 零暴露\nDi-PS 异步容忍百毫秒 WAN', 'orange'),
-    ]
-    for x, y, w, h, label, role in grid:
-        box(ax, x, y, w, h, label, role, size=11)
-    arrow(ax, (0.47, 0.76), (0.53, 0.76))
-    arrow(ax, (0.74, 0.66), (0.74, 0.57))
-    arrow(ax, (0.53, 0.47), (0.47, 0.47))
-    arrow(ax, (0.26, 0.57), (0.26, 0.66))
-    box(ax, 0.05, 0.08, 0.90, 0.21, '实验验证：ch15/15-01（微通道热阻·LogicFolding·TAPAS）\n与 ch15/15-02（DiLoCo·Kareus·100 MWh BESS 峰谷套利）', 'teal', size=11)
-    ex.save(fig, 'ch15-gigawatt-campus-master-engineering-ledger')
-
-
-def fig_15_23_hvdc_vpd(ex: Exporter):
-    fig, ax = canvas(3.75)
-    card(ax, 0.02, 0.04, 0.46, 0.92, 'A. 传统 48V 铜排与横向供电瓶颈', color='orange', title_size=11)
-    box(ax, 0.04, 0.66, 0.42, 0.16, '140 kW 机柜 @ 48 VDC 母线\n电流 2,916.7 A · 铜排 1,458 mm²', 'orange', size=11)
-    box(ax, 0.04, 0.43, 0.42, 0.16, '回路电阻 0.8 mΩ 下 I²R 损耗\n高达 6,805.6 W (占整柜 4.86%)', 'orange', size=11)
-    box(ax, 0.04, 0.20, 0.42, 0.16, '板级横向供电 (35 μΩ, 2,400 A)\n单芯损 201.6 W · 压降 84 mV', 'orange', size=11)
-    arrow(ax, (0.25, 0.66), (0.25, 0.59))
-    arrow(ax, (0.25, 0.43), (0.25, 0.36))
-    text(ax, 0.25, 0.10, '120–250 kW 机柜撞上 48V 物理墙', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
-
-    card(ax, 0.52, 0.04, 0.46, 0.92, 'B. 800V HVDC 与垂直供电 (VPD)', color='teal', title_size=11)
-    box(ax, 0.54, 0.66, 0.42, 0.16, '±400V / 800V HVDC 高压母线\n电流 175.0 A · 铜排仅 87.5 mm²', 'teal', size=11)
-    box(ax, 0.54, 0.43, 0.42, 0.16, '同阻值母线 I²R 损耗仅 24.50 W\n焦耳热损耗骤降 277.78×', 'blue', size=11)
-    box(ax, 0.54, 0.20, 0.42, 0.16, '背面垂直供电 VPD (3.5 μΩ)\n单芯损 20.16 W · 整柜省 13.1 kW', 'purple', size=11)
-    arrow(ax, (0.75, 0.66), (0.75, 0.59))
-    arrow(ax, (0.75, 0.43), (0.75, 0.36))
-    text(ax, 0.75, 0.10, '支撑 Rubin NVL72 / Ultra 高密机架', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
-    ex.save(fig, 'ch15-48v-vs-800v-hvdc-and-vertical-power-delivery')
-
-
-def fig_15_24_sofc_ere(ex: Exporter):
-    fig, ax = canvas(3.75)
-    card(ax, 0.02, 0.04, 0.46, 0.92, 'A. 现场 SOFC 微网绕过并网排队', color='blue', title_size=11)
-    box(ax, 0.04, 0.66, 0.42, 0.16, '市政高压并网排队 3–5 年\nSOFC 燃料电池微网先行投产', 'blue', size=11)
-    box(ax, 0.04, 0.43, 0.42, 0.16, '电化学直转效率 η_e ≈ 60–65%\n原生输出 800V 直流并入母线', 'teal', size=11)
-    box(ax, 0.04, 0.20, 0.42, 0.16, '配合园区 BESS 吸收 50 ms 尖峰\n构筑零并网冲击独立微网', 'purple', size=11)
-    arrow(ax, (0.25, 0.66), (0.25, 0.59))
-    arrow(ax, (0.25, 0.43), (0.25, 0.36))
-    text(ax, 0.25, 0.10, '破解园区并网排队 Time-to-Power', size=11, ha='center', weight='bold', color=BORDER_COL['blue'])
-
-    card(ax, 0.52, 0.04, 0.46, 0.92, 'B. 算例 15-12：60°C 余热回收 ERE', color='teal', title_size=11)
-    box(ax, 0.54, 0.66, 0.42, 0.16, '100 MW 液冷中心 (PUE = 1.08)\n总输入功率 108.0 MW', 'orange', size=11)
-    box(ax, 0.54, 0.43, 0.42, 0.16, 'W45/微流道输出 60°C 高温回水\n回收 65% 热能 (65.0 MW) 供暖', 'teal', size=11)
-    box(ax, 0.54, 0.20, 0.42, 0.16, 'ERE = (108-65)/100 = 0.43\n年供热 569.4 GWh·减碳 11.4 万t', 'blue', size=11)
-    arrow(ax, (0.75, 0.66), (0.75, 0.59))
-    arrow(ax, (0.75, 0.43), (0.75, 0.36))
-    text(ax, 0.75, 0.10, '从单纯耗能中心进化为区域热电枢纽', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
-    ex.save(fig, 'ch15-sofc-microgrid-and-heat-recovery-ere-loop')
-
-
-def fig_15_25_in_silicon_microfluidic(ex: Exporter):
-    fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.04, 0.46, 0.92, 'A. 外贴铜冷板界面热阻墙', color='orange', title_size=11)
-    box(ax, 0.04, 0.66, 0.42, 0.16, '2,500 W 芯片 · 9.0 cm²\n平均热流 277.8 W/cm²', 'orange', size=11)
-    box(ax, 0.04, 0.43, 0.42, 0.16, '硅片 0.004 + TIM 0.016\n+ 冷板 0.008 = 0.028 K/W', 'orange', size=11)
-    box(ax, 0.04, 0.20, 0.42, 0.16, 'W45(45°C) 下结温达 115°C\n被迫退回 ≤15°C 深冷冰水', 'orange', size=11)
-    arrow(ax, (0.25, 0.66), (0.25, 0.59))
-    arrow(ax, (0.25, 0.43), (0.25, 0.36))
-    text(ax, 0.25, 0.10, 'TIM 界面热阻占总温升 > 57%', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
-
-    card(ax, 0.52, 0.04, 0.46, 0.92, 'B. 硅内三维分水微通道直冷', color='teal', title_size=11)
-    box(ax, 0.54, 0.66, 0.42, 0.16, 'DRIE 刻蚀 50×300 μm 微槽\n3D 歧管 12 段分水消除 TIM', 'teal', size=11)
-    box(ax, 0.54, 0.43, 0.42, 0.16, '导热 0.0018 + 对流 0.0042\n+ 热容 0.0040 = 0.0100 K/W', 'blue', size=11)
-    box(ax, 0.54, 0.20, 0.42, 0.16, 'W45 下结温 70.0°C (降 2.80×)\n压降 38.4 kPa·泵功 1.65 W', 'purple', size=11)
-    arrow(ax, (0.75, 0.66), (0.75, 0.59))
-    arrow(ax, (0.75, 0.43), (0.75, 0.36))
-    text(ax, 0.75, 0.10, '允许最高 60.0°C 温水全年免冷机', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
-    ex.save(fig, 'ch15-in-silicon-microfluidic-cooling-thermal-resistance')
-
-
-def fig_15_26_gw_microgrid_control(ex: Exporter):
-    fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.04, 0.46, 0.92, 'A. 1.2 GW 孤岛微网电源构成', color='blue', title_size=11)
-    box(ax, 0.04, 0.66, 0.42, 0.16, '300 MW SMR 核电 (H=5.0 s)\n零碳基荷 + 蒸汽旁路稳态', 'blue', size=11)
-    box(ax, 0.04, 0.43, 0.42, 0.16, '600 MW 航改燃机 (H=3.5 s)\n下垂 4.0% · 调速常数 0.45 s', 'purple', size=11)
-    box(ax, 0.04, 0.20, 0.42, 0.16, '400 MW 构网型 BESS (VSG)\n注入虚拟惯量 H_syn = 13.5 s', 'teal', size=11)
-    arrow(ax, (0.25, 0.66), (0.25, 0.59))
-    arrow(ax, (0.25, 0.43), (0.25, 0.36))
-    text(ax, 0.25, 0.10, '系统惯量从 3.00 s 升至 7.50 s', size=11, ha='center', weight='bold', color=BORDER_COL['blue'])
-
-    card(ax, 0.52, 0.04, 0.46, 0.92, 'B. 450 MW 阶跃调频与电热闭环', color='teal', title_size=11)
-    box(ax, 0.54, 0.66, 0.42, 0.16, 'AllReduce 卸载 450 MW 冲击\n无 VSG 时 RoCoF = 3.75 Hz/s', 'orange', size=11)
-    box(ax, 0.54, 0.43, 0.42, 0.16, 'VSG 瞬时支撑压至 1.50 Hz/s\n最大频偏从 2.87 降至 0.74 Hz', 'teal', size=11)
-    box(ax, 0.54, 0.20, 0.42, 0.16, '8 子群错峰 + 0.92x 联合 DVFS\n结温 66.0°C · 步耗时仅 +1.43%', 'blue', size=11)
-    arrow(ax, (0.75, 0.66), (0.75, 0.59))
-    arrow(ax, (0.75, 0.43), (0.75, 0.36))
-    text(ax, 0.75, 0.10, '毫秒逆变器—百毫秒算力协同阻尼', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
-    ex.save(fig, 'ch15-gw-campus-smr-gas-bess-microgrid-frequency-control')
-
-
-def main():
+def build_chapter() -> None:
     ex = Exporter(HERE)
-    fig_15_1_power_chain(ex)
-    fig_15_2_feasibility(ex)
-    fig_15_3_site_tco(ex)
-    fig_15_4_power_swing(ex)
-    fig_15_5_rubin_smoothing(ex)
-    fig_15_6_runtime_stagger(ex)
-    fig_15_7_ashrae_w45(ex)
-    fig_15_8_logicfolding(ex)
-    fig_15_9_straggler(ex)
-    fig_15_10_tapas(ex)
-    fig_15_11_dci_latency(ex)
-    fig_15_12_cross_dc_pp(ex)
-    fig_15_13_diloco(ex)
-    fig_15_14_streaming_diloco(ex)
-    fig_15_15_decision_tree(ex)
-    fig_15_16_summary(ex)
-    fig_15_17_microfluidics(ex)
-    fig_15_18_campus_bess(ex)
-    fig_15_19_kareus_energy(ex)
-    fig_15_20_dips_wan(ex)
-    fig_15_21_carbon_lifecycle(ex)
-    fig_15_22_master_ledger(ex)
-    fig_15_23_hvdc_vpd(ex)
-    fig_15_24_sofc_ere(ex)
-    fig_15_25_in_silicon_microfluidic(ex)
-    fig_15_26_gw_microgrid_control(ex)
+    fig_20_1_mtbf_scaling(ex)
+    fig_20_2_hot_spare_pool(ex)
+    fig_20_3_sdc_contamination(ex)
+    fig_20_4_abft_checksum(ex)
+    fig_20_5_safeguarding_opguard(ex)
+    fig_20_6_microbatch_rerun(ex)
+    fig_20_7_trainmover(ex)
+    fig_20_8_straggler_blame(ex)
+    fig_20_9_optical_gray_failure(ex)
+    fig_20_10_benchmark_traps(ex)
+    fig_20_11_four_pillar_eval(ex)
+    fig_20_12_ettr_surface(ex)
+    fig_20_13_burn_in_pipeline(ex)
+    fig_20_14_dual_track_ledger(ex)
+    fig_20_15_knowledge_graph(ex)
+    fig_20_16_ten_principles(ex)
+    fig_20_17_chaos_fault_injection(ex)
+    fig_20_18_frontier_bridge(ex)
+    fig_20_19_oobleck_failover(ex)
+    fig_20_20_bursty_goodput(ex)
     outputs = ex.finish()
 
     fig_index = [
         {
-            "figure_id": "图 15-1",
+            "figure_id": "图 20-1",
             "number": 1,
-            "file": "ch15-gigawatt-ai-factory-power-chain.svg",
-            "asset": "ch15/ch15-gigawatt-ai-factory-power-chain.svg",
-            "section": "15.1.1",
-            "caption": "吉瓦级 AI 工厂从 220 kV 变电站到机柜 800 VDC 母排与液冷 CDU 的全链路供电及铜损分解（算例 15-1）",
-            "source_refs": ["references/files/specs/nvidia-rubin-system.md", "manuscripts/ch15/figure-data.json"],
-            "TeachingRole": "建立从高压电网到机柜 800 VDC 直流母排的四级转换链路与铜损缩减 277.8 倍账本"
+            "file": "ch20-cluster-mtbf-scaling-and-llama3-failures.svg",
+            "asset": "ch20/ch20-cluster-mtbf-scaling-and-llama3-failures.svg",
+            "section": "20.1.1",
+            "caption": "集群规模从 1K 扩至 100K 卡时 MTBF_cluster 跌至 30.41 分钟的反比规律及 Meta 16,384 卡 419 次中断分类账本（算例 20-1）",
+            "source_refs": ["experiments/ch15/15-01/run.py", "manuscripts/ch20/figure-data.json"],
+            "TeachingRole": "展示十万卡规模下硬件故障从偶发异常演变为每半小时必至的稳态过程"
         },
         {
-            "figure_id": "图 15-2",
+            "figure_id": "图 20-2",
             "number": 2,
-            "file": "ch15-physical-vs-economic-feasibility.svg",
-            "asset": "ch15/ch15-physical-vs-economic-feasibility.svg",
-            "section": "15.1.2",
-            "caption": "物理可行域与经济可行域双边界及 P_domain × GB/W 口径错配高估警示图（算例 15-2，D11-08）",
-            "source_refs": ["research/draft11-outline-audit/report.md", "manuscripts/ch15/figure-data.json"],
-            "TeachingRole": "揭示漏扣 28% 非 GPU 固定功耗与 20% 显存运行余量导致的容量虚胖"
+            "file": "ch20-hot-spare-pool-queuing-dimensioning.svg",
+            "asset": "ch20/ch20-hot-spare-pool-queuing-dimensioning.svg",
+            "section": "20.1.2",
+            "caption": "基于泊松修复队列模型（λ=2/h, MTTR=12h）的热备节点池（Hot-Spare Pool S_min=40）配置与可用性曲线（算例 20-2）",
+            "source_refs": ["experiments/ch15/15-01/run.py", "research/2026-infra-survey/reading-mlsys-2026.md"],
+            "TeachingRole": "推导以 99.9% 概率保证万卡训练不降级所需的最小热备节点数"
         },
         {
-            "figure_id": "图 15-3",
+            "figure_id": "图 20-3",
             "number": 3,
-            "file": "ch15-site-conditions-tco-sensitivity.svg",
-            "asset": "ch15/ch15-site-conditions-tco-sensitivity.svg",
-            "section": "15.1.3",
-            "caption": "站点条件（电价、供电上限、并网延期折旧与散热阈值）作为一等设计输入的 TCO 敏感性矩阵（算例 15-3，D11-09）",
-            "source_refs": ["research/draft11-outline-audit/report.md", "manuscripts/ch15/figure-data.json"],
-            "TeachingRole": "量化电价差（2.10 亿美元）与并网延期 6 个月（3.33 亿美元折旧）对集群选址的决定性影响"
+            "file": "ch20-sdc-bitflip-allreduce-contamination.svg",
+            "asset": "ch20/ch20-sdc-bitflip-allreduce-contamination.svg",
+            "section": "20.2.1",
+            "caption": "单颗 GPU Tensor Core 静默比特翻转（SDC）如何逃过 HBM ECC 并通过一次 AllReduce 瞬间污染万卡权重",
+            "source_refs": ["research/2026-infra-survey/reading-osdi-2026.md", "manuscripts/ch20/figure-data.json"],
+            "TeachingRole": "剖析无 ECC 保护的数据通路翻转如何被硬件赋予合法校验码并传染全集群"
         },
         {
-            "figure_id": "图 15-4",
+            "figure_id": "图 20-4",
             "number": 4,
-            "file": "ch15-synchronous-training-power-swing.svg",
-            "asset": "ch15/ch15-synchronous-training-power-swing.svg",
-            "section": "15.2.1",
-            "caption": "十万卡同步训练在 GEMM 计算期与 AllReduce 通信期周期性切换引发的 85 MW 电网阶跃冲击波形",
-            "source_refs": ["references/files/specs/nvidia-rubin-system.md", "manuscripts/ch15/figure-data.json"],
-            "TeachingRole": "展示毫秒级同步屏障如何将微观算子切换放大为宏观电网频率冲击"
+            "file": "ch20-abft-checksum-matrix-multiplication.svg",
+            "asset": "ch20/ch20-abft-checksum-matrix-multiplication.svg",
+            "section": "20.2.2",
+            "caption": "基于代数不变量（ABFT 行列校验和）以 0.0732%（<0.5%）算力开销在线拦截并定位矩阵乘硬件错误（算例 20-3）",
+            "source_refs": ["experiments/ch15/15-01/run.py", "manuscripts/ch20/figure-data.json"],
+            "TeachingRole": "证明利用线性结合律可将 O(N^3) 矩阵乘校验降维至 O(N^2) 外围向量内积"
         },
         {
-            "figure_id": "图 15-5",
+            "figure_id": "图 20-5",
             "number": 5,
-            "file": "ch15-rubin-power-smoothing-and-maxlps.svg",
-            "asset": "ch15/ch15-rubin-power-smoothing-and-maxlps.svg",
-            "section": "15.2.2",
-            "caption": "Vera Rubin 机架级储能 SoC 功率平滑（削峰 20%、均功降 10%）与 DSX MaxLPS 同配额 +40% GPU 超配机制",
-            "source_refs": ["references/files/specs/nvidia-rubin-system.md", "references/text/nvidia-rubin-arch.txt"],
-            "TeachingRole": "解析机架级储能反馈控制与 DSX MaxLPS 如何在固定兆瓦配额下多塞入 40% 算力"
+            "file": "ch20-safeguarding-sdc-and-opguard-bitwise-debug.svg",
+            "asset": "ch20/ch20-safeguarding-sdc-and-opguard-bitwise-debug.svg",
+            "section": "20.2.2",
+            "caption": "3,500 万 GPU 小时在线 SDC 感知隔离（Safeguarding LLM Training OSDI '26）与控制良性非确定性的位级对齐定位（OpGuard OSDI '26）",
+            "source_refs": ["research/2026-infra-survey/reading-osdi-2026.md"],
+            "TeachingRole": "结合 AllReduce 前统计拦截与确定性重放解决浮点非确定性掩盖 SDC 的难题"
         },
         {
-            "figure_id": "图 15-6",
+            "figure_id": "图 20-6",
             "number": 6,
-            "file": "ch15-runtime-staggered-microbatch-power.svg",
-            "asset": "ch15/ch15-runtime-staggered-microbatch-power.svg",
-            "section": "15.2.3",
-            "caption": "运行时软件协同抑峰：流水线微批次错峰注入、斜坡限幅器与空闲期受控保底核时序对比",
-            "source_refs": ["references/files/specs/nvidia-rubin-system.md", "manuscripts/ch15/figure-data.json"],
-            "TeachingRole": "展示软件调度如何与硬件储能协同平抑集群级 dP/dt 斜率"
+            "file": "ch20-microbatch-rerun-vs-checkpoint-rollback.svg",
+            "asset": "ch20/ch20-microbatch-rerun-vs-checkpoint-rollback.svg",
+            "section": "20.2.2",
+            "caption": "检测到异常后原地重跑当前微批次（耗时 50 ms）区分瞬态软错误与永久硬件故障 vs. 盲目回滚数小时全局检查点",
+            "source_refs": ["research/2026-infra-survey/reading-osdi-2026.md", "manuscripts/ch20/figure-data.json"],
+            "TeachingRole": "展示在优化器更新前拦截异常并重算微批次如何避免回滚数小时进度"
         },
         {
-            "figure_id": "图 15-7",
+            "figure_id": "图 20-7",
             "number": 7,
-            "file": "ch15-ashrae-w45-cdu-liquid-cooling-loop.svg",
-            "asset": "ch15/ch15-ashrae-w45-cdu-liquid-cooling-loop.svg",
-            "section": "15.3.1",
-            "caption": "ASHRAE TC 9.9 W45（45°C 温水进液）冷板—分集水器—CDU—干冷器无冷机换热回路与流量核算（算例 15-4）",
-            "source_refs": ["references/text/ashrae-liquid-cooling.txt", "references/files/specs/nvidia-rubin-system.md"],
-            "TeachingRole": "建立风冷物理极限（1,900 CFM/砖）与 132 kW 液冷机柜 Q = m_dot·c_p·ΔT 流量账本"
+            "file": "ch20-trainmover-subsecond-hot-migration.svg",
+            "asset": "ch20/ch20-trainmover-subsecond-hot-migration.svg",
+            "section": "20.3.1",
+            "caption": "传统全局销毁重启（torchrun 耗时 300 s）vs. TrainMover（OSDI '26）利用预热备用进程与 RDMA 重映射实现秒级无重启接管",
+            "source_refs": ["research/2026-infra-survey/reading-osdi-2026.md", "experiments/ch15/15-01/run.py"],
+            "TeachingRole": "解析虚拟通信域局部重连如何消除九万九千张健康卡的陪葬重启开销"
         },
         {
-            "figure_id": "图 15-8",
+            "figure_id": "图 20-8",
             "number": 8,
-            "file": "ch15-logicfolding-power-density-paradox.svg",
-            "asset": "ch15/ch15-logicfolding-power-density-paradox.svg",
-            "section": "15.3.2",
-            "caption": "LogicFolding 降压节能（0.85 V → 0.55 V）与面积缩减更快导致的功率密度反升（0.75/0.60 = 1.25x，算例 15-5）",
-            "source_refs": ["case-studies/logicfolding-energy.md", "manuscripts/ch15/figure-data.json"],
-            "TeachingRole": "阐明总功耗下降不等于散热变易：投影面积压缩 40% 会将单位面积热流密度推高 25%"
+            "file": "ch20-nccl-flight-recorder-straggler-blame.svg",
+            "asset": "ch20/ch20-nccl-flight-recorder-straggler-blame.svg",
+            "section": "20.3.2",
+            "caption": "利用 NCCL Flight Recorder 与集合通信到达时间偏斜矩阵（Arrival Skew，算例 20-4）从全网阻塞假象中揪出唯一根因慢节点",
+            "source_refs": ["case-studies/collective-paths-and-diagnosis.md", "experiments/ch15/15-01/run.py"],
+            "TeachingRole": "证明同步集合通信中升级带宽仅省 0.2 ms、而消除 2.0 ms 入队偏斜才是正解"
         },
         {
-            "figure_id": "图 15-9",
+            "figure_id": "图 20-9",
             "number": 9,
-            "file": "ch15-thermal-throttling-straggler-amplification.svg",
-            "asset": "ch15/ch15-thermal-throttling-straggler-amplification.svg",
-            "section": "15.3.3",
-            "caption": "单颗过热 GPU 触发降频 15% 如何通过同步 AllReduce 屏障拖慢整组 1,024 张卡的有效吞吐",
-            "source_refs": ["research/2026-infra-survey/verify_tapas_reading.py", "manuscripts/ch15/figure-data.json"],
-            "TeachingRole": "揭示局部冷板微水道堵塞或进液偏温如何经集合通信屏障放大为全局 15% 算力损失"
+            "file": "ch20-optical-ber-fec-gray-failure-detection.svg",
+            "asset": "ch20/ch20-optical-ber-fec-gray-failure-detection.svg",
+            "section": "20.3.2",
+            "caption": "光模块劣化引发 FEC 纠错重传（灰故障 Gray Failure）导致通信有效带宽周期性塌陷的特征识别",
+            "source_refs": ["manuscripts/ch20/figure-data.json"],
+            "TeachingRole": "通过监控 Pre-FEC 误码率与高阶纠错符号桶在链路彻底断连前主动隔离灰故障"
         },
         {
-            "figure_id": "图 15-10",
+            "figure_id": "图 20-10",
             "number": 10,
-            "file": "ch15-tapas-thermal-power-routing-breakeven.svg",
-            "asset": "ch15/ch15-tapas-thermal-power-routing-breakeven.svg",
-            "section": "15.3.3",
-            "caption": "TAPAS（ASPLOS '25）热感知与功率封顶重配置（[102, 86] kW 削峰至 ≤ 100 kW，3.0 s 停顿在 30 请求处回本，算例 15-6）",
-            "source_refs": ["research/2026-infra-survey/verify_tapas_reading.py", "manuscripts/ch15/figure-data.json"],
-            "TeachingRole": "用受控算例验证功率/温度与延迟双约束下的路由可行集及重配置回本阈值"
+            "file": "ch20-five-benchmark-gaming-traps.svg",
+            "asset": "ch20/ch20-five-benchmark-gaming-traps.svg",
+            "section": "20.4.1",
+            "caption": "AI 系统跑分中的五大失真陷阱与算术平均加速比悖论（候选 A 5.25x 反慢于候选 B 2.0x，算例 20-5）",
+            "source_refs": ["case-studies/optimization-evaluation-and-deployment.md", "experiments/ch15/15-01/run.py"],
+            "TeachingRole": "复算加速比平均悖论（p*=15/19）与 AABB/ABBA 线性时漂抵消实验"
         },
         {
-            "figure_id": "图 15-11",
+            "figure_id": "图 20-11",
             "number": 11,
-            "file": "ch15-multi-datacenter-dci-optical-latency.svg",
-            "asset": "ch15/ch15-multi-datacenter-dci-optical-latency.svg",
-            "section": "15.4.1",
-            "caption": "跨 1,000 km 广域光网（RTT = 10 ms，BDP = 2.0 GB）的传播延迟与四类并行维度的跨城可迁移性边界",
-            "source_refs": ["manuscripts/ch15/figure-data.json"],
-            "TeachingRole": "从光纤折射率物理极限推导为何 TP/EP 严禁跨城而 PP/低频 DP 可以跨城"
+            "file": "ch20-flashinfer-bench-cceval-and-blink-profiling.svg",
+            "asset": "ch20/ch20-flashinfer-bench-cceval-and-blink-profiling.svg",
+            "section": "20.4.2",
+            "caption": "FlashInfer-Bench（算子基准）、CCEval（集合通信基准）、DriftBench（负载漂移）与 Blink（OSDI '26 消除采样失真）的四维评测体系",
+            "source_refs": ["research/2026-infra-survey/reading-osdi-2026.md", "research/2026-infra-survey/reading-mlsys-2026.md"],
+            "TeachingRole": "建立从无偏硬件剖析（Blink）到影子流量质量门禁的工业级评测标准"
         },
         {
-            "figure_id": "图 15-12",
+            "figure_id": "图 20-12",
             "number": 12,
-            "file": "ch15-cross-dc-pipeline-and-hierarchical-dp.svg",
-            "asset": "ch15/ch15-cross-dc-pipeline-and-hierarchical-dp.svg",
-            "section": "15.4.2",
-            "caption": "跨园区流水线并行（Cross-DC PP）与园区内 NVLink/RoCE + 园区际 DWDM 分层数据并行时序",
-            "source_refs": ["manuscripts/ch15/figure-data.json"],
-            "TeachingRole": "推导用微批次计算掩盖 10 ms 广域网 RTT 的临界条件与两级规约流量缩减比"
+            "file": "ch20-effective-training-time-ratio-ettr-model.svg",
+            "asset": "ch20/ch20-effective-training-time-ratio-ettr-model.svg",
+            "section": "20.1.1",
+            "caption": "十万卡集群有效训练时间比（ETTR）对检查点周期 τ_ckpt、恢复时间 T_rec 与故障率 λ 的响应对比（63.22% vs. 92.34%）",
+            "source_refs": ["experiments/ch15/15-01/run.py", "manuscripts/ch20/figure-data.json"],
+            "TeachingRole": "量化展示内存检查点与秒级热恢复如何为十万卡集群挽回 29.12% 的有效算力"
         },
         {
-            "figure_id": "图 15-13",
+            "figure_id": "图 20-13",
             "number": 13,
-            "file": "ch15-diloco-inner-outer-optimization.svg",
-            "asset": "ch15/ch15-diloco-inner-outer-optimization.svg",
-            "section": "15.4.3",
-            "caption": "DiLoCo 内循环 H = 500 步独立更新与外循环 Nesterov 伪梯度同步将跨城带宽需求压缩 500 倍的机制（算例 15-7）",
-            "source_refs": ["manuscripts/ch15/figure-data.json"],
-            "TeachingRole": "剖析外循环伪梯度同步如何换取 500 倍广域网带宽缩减及其额外显存代价"
+            "file": "ch20-automated-burn-in-fleet-health-pipeline.svg",
+            "asset": "ch20/ch20-automated-burn-in-fleet-health-pipeline.svg",
+            "section": "20.3.1",
+            "caption": "新节点入网与故障修复后的自动化烤机（Burn-in：满载热压测 + 确定性 SDC 校验 + 光链路裕量扫描）准入流水线",
+            "source_refs": ["manuscripts/ch20/figure-data.json"],
+            "TeachingRole": "设计闭环机队健康状态机防止维修后带病节点重新污染在役训练集群"
         },
         {
-            "figure_id": "图 15-14",
+            "figure_id": "图 20-14",
             "number": 14,
-            "file": "ch15-streaming-diloco-chunked-sync.svg",
-            "asset": "ch15/ch15-streaming-diloco-chunked-sync.svg",
-            "section": "15.4.3",
-            "caption": "全量阻塞式外循环同步与 Streaming DiLoCo 分片流水重叠同步的广域网链路利用率对比",
-            "source_refs": ["manuscripts/ch15/figure-data.json"],
-            "TeachingRole": "展示如何将第 H 步的突发全量伪梯度通信摊平至整个内循环窗口以消除 DCI 拥塞"
+            "file": "ch20-twenty-chapter-dual-track-master-ledger.svg",
+            "asset": "ch20/ch20-twenty-chapter-dual-track-master-ledger.svg",
+            "section": "20.5.1",
+            "caption": "全书 20 章双轨贯穿案例（Qwen3-8B Dense 轨与 DeepSeek V4.1 / MoE 轨）从第 1 章到第 20 章的完整工程参数演进总表",
+            "source_refs": ["manuscripts/ch20/figure-data.json"],
+            "TeachingRole": "横向串联全书二十章双轨模型在算力、显存、通信、能耗、安全与容错维度的定量参数"
         },
         {
-            "figure_id": "图 15-15",
+            "figure_id": "图 20-15",
             "number": 15,
-            "file": "ch15-single-campus-vs-multi-campus-decision.svg",
-            "asset": "ch15/ch15-single-campus-vs-multi-campus-decision.svg",
-            "section": "15.4.3",
-            "caption": "单园区等待变电站扩容 vs. 多园区跨城协同训练的完成工期与成本交点决策树",
-            "source_refs": ["research/draft11-outline-audit/report.md", "manuscripts/ch15/figure-data.json"],
-            "TeachingRole": "联合并网延期折旧与广域网专线租金给出单园区与多园区方案的定量切换准则"
+            "file": "ch20-twenty-chapter-architecture-knowledge-graph.svg",
+            "asset": "ch20/ch20-twenty-chapter-architecture-knowledge-graph.svg",
+            "section": "20.5.1",
+            "caption": "全书 20 章“模型与负载 → 芯片与系统 → 推理、训练与六大前沿底座”的知识体系全景图",
+            "source_refs": ["manuscripts/ch20/figure-data.json"],
+            "TeachingRole": "建立自顶向下算法负载与自底向上物理定律双向耦合的全书知识坐标系"
         },
         {
-            "figure_id": "图 15-16",
+            "figure_id": "图 20-16",
             "number": 16,
-            "file": "ch15-power-thermal-wan-co-design-summary.svg",
-            "asset": "ch15/ch15-power-thermal-wan-co-design-summary.svg",
-            "section": "15.5.2",
-            "caption": "从芯片结温、机柜液冷、变电站功率平滑到跨地域光网的吉瓦级 AI 基础设施全景图",
-            "source_refs": ["references/files/specs/nvidia-rubin-system.md", "manuscripts/ch15/figure-data.json"],
-            "TeachingRole": "收束第 15 章供电、散热、瞬态功率与跨城光网的四层物理协同体系"
+            "file": "ch20-ten-first-principles-of-ai-infra.svg",
+            "asset": "ch20/ch20-ten-first-principles-of-ai-infra.svg",
+            "section": "20.5.2",
+            "caption": "AI 基础设施架构师的十条第一性原理终极法则总结图",
+            "source_refs": ["manuscripts/ch20/figure-data.json"],
+            "TeachingRole": "提炼贯穿全书二十章的十条第一性原理与定量工程铁律"
         },
         {
-            "figure_id": "图 15-17",
+            "figure_id": "图 20-17",
             "number": 17,
-            "file": "ch15-single-phase-vs-two-phase-microfluidics.svg",
-            "asset": "ch15/ch15-single-phase-vs-two-phase-microfluidics.svg",
-            "section": "15.6.1",
-            "caption": "单相冷板、两相相变浸没/冷板与硅背面微通道直冷的热阻网络（R_TIM, R_conv）与千瓦级芯片结温边界",
-            "source_refs": ["references/text/ashrae-liquid-cooling.txt", "experiments/ch15/15-01/run.py"],
-            "TeachingRole": "对比显热、汽化潜热与硅背面微流道消除 R_TIM=0.02 °C/W 带来的 +40 °C 进液温度提升"
+            "file": "ch20-chaos-fault-injection-and-canary-rollout-gate.svg",
+            "asset": "ch20/ch20-chaos-fault-injection-and-canary-rollout-gate.svg",
+            "section": "20.5.3",
+            "caption": "面向十万卡集群的混沌故障注入（SDC 比特翻转 / RoCE 灰丢包 / 慢节点）与金丝雀灰度发布验证闭环",
+            "source_refs": ["experiments/ch15/15-02/run.py", "manuscripts/ch20/figure-data.json"],
+            "TeachingRole": "通过 200 次主动混沌演练（99.5% 召回率，MTTR = 3.85 s）验证十万卡自愈闭环"
         },
         {
-            "figure_id": "图 15-18",
+            "figure_id": "图 20-18",
             "number": 18,
-            "file": "ch15-campus-bess-peak-shaving-and-arbitrage.svg",
-            "asset": "ch15/ch15-campus-bess-peak-shaving-and-arbitrage.svg",
-            "section": "15.6.2",
-            "caption": "百兆瓦级园区储能（BESS）在 50 ms 训练脉冲平滑、日内峰谷电价套利与电网掉电备电中的三重能量流",
-            "source_refs": ["references/files/specs/nvidia-rubin-system.md", "experiments/ch15/15-02/run.py"],
-            "TeachingRole": "量化 100 MWh 园区储能在毫秒平抑、分钟调频与小时峰谷套利中的年收益与投资回收期"
+            "file": "ch20-core-cluster-to-four-new-frontiers-bridge.svg",
+            "asset": "ch20/ch20-core-cluster-to-four-new-frontiers-bridge.svg",
+            "section": "20.5.3",
+            "caption": "从前 20 章通用大模型训练/推理底座迈向第 21–24 章（自主智能体、全双工语音、百亿亿次数据工厂、AI for Science）的架构映射桥接图",
+            "source_refs": ["manuscripts/ch20/figure-data.json"],
+            "TeachingRole": "构建第 20 章与第 24 章前后呼应的双枢纽结构，自然引出四大新兴基础设施疆域"
         },
         {
-            "figure_id": "图 15-19",
+            "figure_id": "图 20-19",
             "number": 19,
-            "file": "ch15-kareus-dynamic-static-energy-consolidation.svg",
-            "asset": "ch15/ch15-kareus-dynamic-static-energy-consolidation.svg",
-            "section": "15.6.3",
-            "caption": "Kareus（OSDI '26）动静态能耗分解：低负载下全卡浅度降频的高静态漏电税 vs. 负载紧缩合并 + 空闲卡深度休眠",
-            "source_refs": ["research/2026-infra-survey/reading-osdi-2026.md", "experiments/ch15/15-02/run.py"],
-            "TeachingRole": "证明在 40% 负载下紧缩合并休眠可将单卡等效功耗从 388 W 压至 280–289 W"
+            "file": "ch20-oobleck-pre-instantiated-pipeline-template-failover.svg",
+            "asset": "ch20/ch20-oobleck-pre-instantiated-pipeline-template-failover.svg",
+            "section": "20.5.3",
+            "caption": "Oobleck / Parachute 预实例化异构流水线模板无重启容错重配置（1.45 s 恢复 vs. 300 s 全局重启，算例 20-7）",
+            "source_refs": ["experiments/ch15/15-03/run.py", "manuscripts/ch20/figure-data.json"],
+            "TeachingRole": "展示编译期预建立多阶流水线模板如何在无热备顶替时以 1.45 s 切换实现 98.75% 算力保持"
         },
         {
-            "figure_id": "图 15-20",
+            "figure_id": "图 20-20",
             "number": 20,
-            "file": "ch15-dips-wan-backbone-parameter-sync.svg",
-            "asset": "ch15/ch15-dips-wan-backbone-parameter-sync.svg",
-            "section": "15.6.3",
-            "caption": "Di-PS（NSDI '26）跨地域训练的广域网链路段带宽调度与层间异步梯度传输重叠",
-            "source_refs": ["research/2026-infra-survey/reading-nsdi-2026.md", "experiments/ch15/15-02/run.py"],
-            "TeachingRole": "展示异构跨集群训练如何通过异步参数服务器与伪梯度阻尼容忍百毫秒级 WAN RTT"
-        },
-        {
-            "figure_id": "图 15-21",
-            "number": 21,
-            "file": "ch15-embodied-carbon-vs-operational-carbon-lifecycle.svg",
-            "asset": "ch15/ch15-embodied-carbon-vs-operational-carbon-lifecycle.svg",
-            "section": "15.6.3",
-            "caption": "AI 数据中心 3–5 年生命周期内隐含碳（Embodied Carbon：晶圆制造与基建）与运行碳（Operational Carbon：发电结构）的权衡曲线",
-            "source_refs": ["manuscripts/ch15/figure-data.json"],
-            "TeachingRole": "阐明先进制程晶圆隐含碳与电网碳强度 CI(t) 在园区全生命周期中的权衡"
-        },
-        {
-            "figure_id": "图 15-22",
-            "number": 22,
-            "file": "ch15-gigawatt-campus-master-engineering-ledger.svg",
-            "asset": "ch15/ch15-gigawatt-campus-master-engineering-ledger.svg",
-            "section": "15.6.3",
-            "caption": "吉瓦级 AI 园区从电网并网、储能平滑、微通道液冷到跨城光网协同的完整工程总账本",
-            "source_refs": ["experiments/ch15/15-01/run.py", "experiments/ch15/15-02/run.py"],
-            "TeachingRole": "汇总结温、液冷、储能套利、动静态能耗与跨城协同训练的工程总账本"
-        },
-        {
-            "figure_id": "图 15-23",
-            "number": 23,
-            "file": "ch15-48v-vs-800v-hvdc-and-vertical-power-delivery.svg",
-            "asset": "ch15/ch15-48v-vs-800v-hvdc-and-vertical-power-delivery.svg",
-            "section": "15.6.4",
-            "caption": "120–250 kW 超高密机柜中传统 48V 铜排瓶颈 vs. 800V HVDC 高压直流母线与芯片背部垂直供电（VPD）的损耗对比",
-            "source_refs": ["manuscripts/ch15/figure-data.json"],
-            "TeachingRole": "量化 140 kW 机柜从 48V 升级至 800V HVDC 及垂直供电（VPD）带来的 277.8 倍母排焦耳损耗下降"
-        },
-        {
-            "figure_id": "图 15-24",
-            "number": 24,
-            "file": "ch15-sofc-microgrid-and-heat-recovery-ere-loop.svg",
-            "asset": "ch15/ch15-sofc-microgrid-and-heat-recovery-ere-loop.svg",
-            "section": "15.6.4",
-            "caption": "吉瓦级 AI 园区现场 SOFC/燃气微网、BESS 储能与 60°C 液冷余热回收（ERE < 1.0）综合能量闭环",
-            "source_refs": ["manuscripts/ch15/figure-data.json"],
-            "TeachingRole": "建立现场 SOFC 微网直供与 60°C 液冷废热区域供暖回收（ERE = 0.43 < 1.0）的能量复用方程"
-        },
-        {
-            "figure_id": "图 15-25",
-            "number": 25,
-            "file": "ch15-in-silicon-microfluidic-cooling-thermal-resistance.svg",
-            "asset": "ch15/ch15-in-silicon-microfluidic-cooling-thermal-resistance.svg",
-            "section": "15.6.4",
-            "caption": "硅内三维分水微通道直冷（Direct-to-Silicon Microfluidics，热通量 277.8 W/cm²）截面流场与冷板界面热阻消融对比",
-            "source_refs": ["experiments/ch15/15-03/run.py", "manuscripts/ch15/figure-data.json"],
-            "TeachingRole": "量化 2,500 W 芯片在硅内三维分水微通道直冷下总热阻降至 0.0100 K/W（降 2.80×）与 1.65 W 泵功账本"
-        },
-        {
-            "figure_id": "图 15-26",
-            "number": 26,
-            "file": "ch15-gw-campus-smr-gas-bess-microgrid-frequency-control.svg",
-            "asset": "ch15/ch15-gw-campus-smr-gas-bess-microgrid-frequency-control.svg",
-            "section": "15.6.4",
-            "caption": "1.2 GW 园区孤岛微网（300 MW SMR + 600 MW 燃机 + 400 MW 构网型 BESS）在 450 MW 训练阶跃下的 RoCoF 与电热联合调频闭环",
-            "source_refs": ["experiments/ch15/15-03/run.py", "manuscripts/ch15/figure-data.json"],
-            "TeachingRole": "推导 1.2 GW 孤岛微网转子摇摆方程及构网型 BESS 虚拟惯量（13.5 s）压制 RoCoF 至 1.50 Hz/s 的整定准则"
+            "file": "ch20-goodput-sla-under-bursty-poisson-traffic.svg",
+            "asset": "ch20/ch20-goodput-sla-under-bursty-poisson-traffic.svg",
+            "section": "20.5.3",
+            "caption": "推理系统在作弊式均匀到达（CV=0）与真实泊松突发长尾流量（CV≥1）下的排队膨胀与 SLO Goodput 崩塌曲线",
+            "source_refs": ["experiments/ch15/15-03/run.py", "manuscripts/ch20/figure-data.json"],
+            "TeachingRole": "用排队论 Kingman 公式揭露均匀定速压测掩盖 11.37× TTFT 膨胀与 51.27% Goodput 缩水的机理"
         }
     ]
+    for row in fig_index:
+        row['figure'] = f"20-{row['number']}"
+        row['name'] = Path(row['file']).stem
     (HERE / 'figure-index.json').write_text(json.dumps(fig_index, ensure_ascii=False, indent=2) + '\n')
 
-    md = HERE.parent / '15-吉瓦级 AI 数据中心、电力热学与跨地域协同训练.md'
+    md = HERE.parent / '20-十万卡集群可靠性工程、静默数据损坏（SDC）防御与基准评测科学.md'
     if md.exists():
         text_md = md.read_text()
         display = re.findall(r'\$\$(.+?)\$\$', text_md, re.S)
@@ -846,22 +685,23 @@ def main():
             'const a=JSON.parse(fs.readFileSync(0,"utf8"));const e=[];'
             'a.forEach((s,i)=>{try{katex.renderToString(s,{throwOnError:true,displayMode:i<'
             + str(len(display))
-            + '})}catch(err){e.push({index:i,formula:s,error:String(err)})}});'
-            'console.log(JSON.stringify({checked:a.length,display:'
+            + '})}catch(err){e.push({i,s,err:err.message})}});'
+            'console.log(JSON.stringify({total:a.length,display:'
             + str(len(display))
             + ',inline:'
             + str(len(inline))
-            + ',errors:e}));if(e.length)process.exit(1);'
+            + ',errors:e}));'
         )
         res = subprocess.run(
             ['node', '-e', js, str(katex_js)],
             input=json.dumps(formulas),
             text=True,
             capture_output=True,
-            cwd=ROOT,
             check=True,
         )
-        (HERE / 'math-validation.json').write_text(res.stdout)
+        math_val = json.loads(res.stdout)
+        assert not math_val['errors'], math_val['errors']
+        (HERE / 'math-validation.json').write_text(json.dumps(math_val, ensure_ascii=False, indent=2) + '\n')
 
         import markdown
 
@@ -871,13 +711,22 @@ def main():
             b64 = base64.b64encode(p.read_bytes()).decode()
             return f'<figure><img alt="{alt}" src="data:image/png;base64,{b64}"><figcaption>{alt}</figcaption></figure>'
 
-        work = re.sub(r'!\[([^\]]*)\]\((ch15/[^)]+)\)', repl_img, text_md)
+        work = re.sub(r'!\[([^\]]*)\]\((ch20/[^)]+)\)', repl_img, text_md)
         body = markdown.markdown(work, extensions=['tables', 'fenced_code', 'footnotes', 'toc'])
-        html = f'<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>第 15 章：吉瓦级 AI 数据中心、电力热学与跨地域协同训练</title></head><body>{body}</body></html>\n'
+        html = f'<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>第 20 章：十万卡集群可靠性工程、静默数据损坏（SDC）防御与基准评测科学</title></head><body>{body}</body></html>\n'
         out_html = preview_path(md)
         out_html.write_text(html)
 
-    sources = [HERE / 'build.py', HERE / 'figure-data.json', HERE / 'figure-index.json']
+    sources = [
+        HERE / 'build.py',
+        HERE / 'figure-data.json',
+        HERE / 'figure-index.json',
+        ROOT / 'case-studies/collective-paths-and-diagnosis.md',
+        ROOT / 'case-studies/optimization-evaluation-and-deployment.md',
+        ROOT / 'experiments/ch15/15-01/run.py',
+        ROOT / 'experiments/ch15/15-02/run.py',
+        ROOT / 'experiments/ch15/15-03/run.py',
+    ]
     if md.exists():
         sources.append(md)
     (HERE / 'sources.json').write_text(
@@ -903,8 +752,8 @@ def main():
         )
         + '\n'
     )
-    print(f'Built {len(outputs)} figure files for Chapter 15; 0 layout warnings.')
+    print(f'Built {len(outputs)} figure files for Chapter 20; 0 layout warnings.')
 
 
 if __name__ == '__main__':
-    main()
+    build_chapter()

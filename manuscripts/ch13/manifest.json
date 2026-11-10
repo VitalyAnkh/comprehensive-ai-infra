@@ -1,356 +1,569 @@
 {
+  "chapter": "ch13",
   "outputs": [
     {
-      "path": "manuscripts/ch13/ch13-3fs-craq-architecture.pdf",
-      "sha256": "8198ce5283a2af7cc834874a71e6b7085f0247721fc86c3a944fc2870206807a"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-3fs-craq-architecture.png",
-      "sha256": "8bd557e52f7b5e5b3a133dcc0883ba8a582c50aa40d32a89d6d727bfc35bbc44"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-3fs-craq-architecture.svg",
-      "sha256": "4eae524acaa0e585bc4b6b4d26d7dc01e13f5b24d7bcbec0f71238985c948f80"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-ai-storage-bandwidth-latency-iops-cube.pdf",
-      "sha256": "f9aefdaa7e7986e0ecfd08c133d9c3cbf44b11e5e89f1bb0c71c318683619d18"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-ai-storage-bandwidth-latency-iops-cube.png",
-      "sha256": "301f16c54a4412f7850739e4a1e421aac48185021b2e96177300bffce2bbd9c0"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-ai-storage-bandwidth-latency-iops-cube.svg",
-      "sha256": "3d46e3318e9e4363867a73a8e22610de3c5fb265c845ca557d373a13f2d46178"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-cacheblend-non-prefix-kv-fusion.pdf",
-      "sha256": "4646b51b53bd95e24510a20a26ba1760059924e738e4c63a7acb71d398abee5b"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-cacheblend-non-prefix-kv-fusion.png",
-      "sha256": "30b0bc92c01068148d4969f8b723238d4259cc895abda3a132a6e958895ccf05"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-cacheblend-non-prefix-kv-fusion.svg",
-      "sha256": "0a785a0b9cefd0c48498b748ae5c6c8d65ccb4e724c0f6d8a0951f938f90a164"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-checkpoint-and-kv-unified-nvme-pool-qos.pdf",
-      "sha256": "f4935620e88fb131c006538037acac9701f2d295d1eb62569fa7aaff367b086c"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-checkpoint-and-kv-unified-nvme-pool-qos.png",
-      "sha256": "9c805b996aa03f6b5a4d171451352ca2cc7a8b205e7964b49b6018df4e58d551"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-checkpoint-and-kv-unified-nvme-pool-qos.svg",
-      "sha256": "aceea810a5d54d8cdcb0812c2368a32ade5818284c8d5ac4e155abd7ea0a6c4e"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-checkpoint-replication-to-erasure-coding-lifecycle.pdf",
-      "sha256": "67e8005e1e3cf64c2935e36efe1e3fb9bcb3fdc0d67a5b9c6ea8a9ea5f6147ad"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-checkpoint-replication-to-erasure-coding-lifecycle.png",
-      "sha256": "dca6464f1a5eb16bc0558da16cc9d7f1f395352ba2502929fdcef6eb23f97ec3"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-checkpoint-replication-to-erasure-coding-lifecycle.svg",
-      "sha256": "0961eea103e81671d4b34542520ea508ce309914baceeaa2fd08f676e9ffa507"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-copilotio-gds-vs-cpu-assisted-io.pdf",
-      "sha256": "f5580174f83febc9a247a6f7666daa77ac9aa0acd46a777ac48fdf4e2654d505"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-copilotio-gds-vs-cpu-assisted-io.png",
-      "sha256": "5486b7c9df3ef3f149ef2c4544ca0940f81e48f2b4e96debee1ac86f4ae8ee07"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-copilotio-gds-vs-cpu-assisted-io.svg",
-      "sha256": "46e6d0e8b02bf1a154fe0cf548e17be71fbbf99bb53ee30b02c8c00a3ff236cc"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-distvs-helmsman-disaggregated-vector-search.pdf",
-      "sha256": "ba8370cd0d024da1042a28444478a6a2dc3024ad02c27830fcf5e21889d1179b"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-distvs-helmsman-disaggregated-vector-search.png",
-      "sha256": "86e316fa41134c20ab05c3684cac581ef5feb7673401aef1917200cd83342547"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-distvs-helmsman-disaggregated-vector-search.svg",
-      "sha256": "45a57f35eccea86d8005f8860cfe3223c4ed2f435cd1a2ed63ffe7a173d22bef"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-dsec-erofs-ondemand-container-boot.pdf",
-      "sha256": "38279c93524eccde013677c61d3234b184196af48eebcf4b78e128d84fbe0c9e"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-dsec-erofs-ondemand-container-boot.png",
-      "sha256": "2f0536d2c10970aa1105fee923070f50863502964e6687a99c619885028013c9"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-dsec-erofs-ondemand-container-boot.svg",
-      "sha256": "e6b3a9ce8f0da515f4c7f92347eca3a3c4b315152623a30ea1c3b0cdd921bed3"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-faiss-flat-vs-iks-near-storage.pdf",
-      "sha256": "cc5535aa0e34c6913f4624948771d9925db12b41c00cb74c6c6ef39fe6c226da"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-faiss-flat-vs-iks-near-storage.png",
-      "sha256": "964604dc8a3848e689e1ebbdbf42381b5c490f53e6bab88ce6b33ae4dd5e384b"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-faiss-flat-vs-iks-near-storage.svg",
-      "sha256": "38345a98ba63d53eb2f20824c728342f4af2b0f6bb226fae7f444daa0688405a"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-falconfs-server-side-path-resolution.pdf",
-      "sha256": "69701ddad4278b4322393ef334a7b9a598999f1eec8b6b769cf22de4800121e6"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-falconfs-server-side-path-resolution.png",
-      "sha256": "913062082e54ab1d25df7e6cfc85d60754bcefb17546eff363de486210304e5b"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-falconfs-server-side-path-resolution.svg",
-      "sha256": "a963ea0fd987b36d1d2b62fd50d0b2481bdd9c595ce8fb65899e2afb823047c4"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-full-stack-ai-data-plane.pdf",
-      "sha256": "93e82014c082dd151572764546378d285be896e78f4f597ed9267329a2b66157"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-full-stack-ai-data-plane.png",
-      "sha256": "062ac35620f1b2c1005f87535887e04a7feb55094e14132ad51e05f9aed9eb6b"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-full-stack-ai-data-plane.svg",
-      "sha256": "d000e6204835de018646a5d9ff35fdbbb4646204c1f06e3c232da2ebe2bb66c6"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-hnsw-memory-vs-diskann-ssd-layout.pdf",
-      "sha256": "adc78ee7df1897b4ae32622876752a74004d65b03610110a7ea5e267bc40a2b1"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-hnsw-memory-vs-diskann-ssd-layout.png",
-      "sha256": "054b547970d690acb0cd3d3bb63c8cc73e796d91be0e1e7138182dbaf5e2cc08"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-hnsw-memory-vs-diskann-ssd-layout.svg",
-      "sha256": "5be22312c9f5586aa5fb7ecd6ed536913828771e0e245f2e7098290e52e60ae7"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-kv-layout-read-amplification.pdf",
-      "sha256": "44c95c017b66657551b9c6e0b4397388329e4457cd7b534ea40026da922aaeb6"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-kv-layout-read-amplification.png",
-      "sha256": "25243ea5241c7be9706fc8d49e56fe8ab56b4f685c59358d1d833169cff2543b"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-kv-layout-read-amplification.svg",
-      "sha256": "ddebba64bf89a5a4d28644ac5625d3ea32285fd2679ce2045756f2caf574fe29"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-lmcache-prefix-kv-compression-and-gds-prefetch.pdf",
-      "sha256": "bb3c045cbe186812ddf9e448df0f2c580b8cb9da1dabea7087d2f1349cbbd435"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-lmcache-prefix-kv-compression-and-gds-prefetch.png",
-      "sha256": "3bd9bf5b5e9b63a946172d7695a3052f9aafc6404e4f40e5316d1c969aa7849d"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-lmcache-prefix-kv-compression-and-gds-prefetch.svg",
-      "sha256": "6b6eff22e4989ed7f806696a431cbc171d4b69f6fd40093500ce7ddadf0dc847"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-multimodal-dataloader-pipeline.pdf",
-      "sha256": "466a74c8caec5b9beeba3be0e8fa967e45bff2364e1675bde5a4b480a3489d34"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-multimodal-dataloader-pipeline.png",
-      "sha256": "9fdd1664267669bf7664e1ce22d297c2b34a71156cbc8179e0312e69518e9d8b"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-multimodal-dataloader-pipeline.svg",
-      "sha256": "54674fff5159a75f49ba3e608f1e5bfa5ad0094bf4e5ee9dbdc3209e55ec393f"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-multimodal-tar-webdataset-vs-lance-random.pdf",
-      "sha256": "298a798f2310d66b0037afaa7c5d41a4bd40f6f2dcea3ae952f6fd094fa6e76e"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-multimodal-tar-webdataset-vs-lance-random.png",
-      "sha256": "4b610ac1781aef2bccff1f8cee1c12249d8dd52580816db9898738d08cfdc86e"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-multimodal-tar-webdataset-vs-lance-random.svg",
-      "sha256": "61af75090f83566b3de784e228acca976b9f1b407a74ac20ba43cc23bca7ab95"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-nixl-unified-nonblocking-transfer-plane.pdf",
-      "sha256": "ff89e7cfc7462530d592efbd2f1c312f092ece3ef6d47e16be61a02b26dc5eec"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-nixl-unified-nonblocking-transfer-plane.png",
-      "sha256": "a4394b925b2ef9d64e8309f816fb4c7c9dde5597e0487aa502505e38be164d1a"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-nixl-unified-nonblocking-transfer-plane.svg",
-      "sha256": "c516b10b9fe1b791ae635e67f16041022f8a552655665bfebd55ce8c774d518d"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-parquet-lance-vs-webdataset-io.pdf",
-      "sha256": "3ba1481651a6195da4e51792b27b6b7a8afae28e48ea7c6c604c607c785c3624"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-parquet-lance-vs-webdataset-io.png",
-      "sha256": "40516f118f1b7872d4312684b5c98e225433907d3c961ef3bae9836facd1e355"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-parquet-lance-vs-webdataset-io.svg",
-      "sha256": "3dec3aafec61b8e674a19dc1757ce0e042fc750f808810766761f65564bcfb35"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-posix-pagecache-vs-gds-dma.pdf",
-      "sha256": "f47d05b8200749e47a0d4803f205f1d6b73a11dc1ef614a05c58eea580e461f0"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-posix-pagecache-vs-gds-dma.png",
-      "sha256": "51c48e9e077681d2a84430bd9a1b5186dd219e2c83bd8018eb3bfb9591c896be"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-posix-pagecache-vs-gds-dma.svg",
-      "sha256": "ec34473806f5acc5abda8b2b7eb3d18a4c0e1ec60b432582ab7f8c1818623c5e"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-rag-288-requests-calibration-trap.pdf",
-      "sha256": "c6f8f65c8310642c7af7d011ab573d46a11d994ca2bb3ab0d24e855b3bb7090d"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-rag-288-requests-calibration-trap.png",
-      "sha256": "7b73abc80dc2774d6bd199ec86942cb5c34e10028b9173a7f61ad695a214e083"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-rag-288-requests-calibration-trap.svg",
-      "sha256": "f037bb7c6065633def359ff9593970e7d80049c8fc69c281320da01fd34573c9"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-rag-end-to-end-timeline-breakdown.pdf",
-      "sha256": "6309672d059c99ae1d2ff0c203cd42759eded560519fd19c58ca9b55d4482448"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-rag-end-to-end-timeline-breakdown.png",
-      "sha256": "b5a7405b7340c3a16d65ca20ccfef2c41512fc74bba53053aa9a7dafd650d0b8"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-rag-end-to-end-timeline-breakdown.svg",
-      "sha256": "88c65ec39ff74337eea10cfb0ac02a3287bad9730b3f1eaee92bf5de6152e036"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-rag-topk-kv-blocks-and-rlimit-gap.pdf",
-      "sha256": "df4618faf0d3fd3803cea7b8cd8dc38c252720853f9946da140993048896a347"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-rag-topk-kv-blocks-and-rlimit-gap.png",
-      "sha256": "395c8aed2b3e66bfebbfa388cbcb44cc2a0c3f3b8a093ed865b1097a186a8121"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-rag-topk-kv-blocks-and-rlimit-gap.svg",
-      "sha256": "a7a8ba44be75467f3bcc99d8c0507bd8da5c7e907595a2b80b5fb0f74644c3d4"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-ssd-dwpd-endurance-and-admission.pdf",
-      "sha256": "f70ce6bb88c34d36b90b590d54b76c185547045b64cd71a8472e06bdd6cae9f2"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-ssd-dwpd-endurance-and-admission.png",
-      "sha256": "8c8bd8ea8f3e01a2bc65e7c600f9bd285a8a60eabcc40835a71cf0be87c229bf"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-ssd-dwpd-endurance-and-admission.svg",
-      "sha256": "28822b85a4d7073ce7faf92cc661be7072764cb0ad66442fe5461dbfe6d35cb8"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-storage-diagnosis-workflow.pdf",
-      "sha256": "e0001823e2e54a8f3d7b5797cad6fec8347ca41dcbf4f96f6f942b28f920efef"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-storage-diagnosis-workflow.png",
-      "sha256": "79bf39fe8fa58e4338e375b795227777c6f18ee8dbba4b93c6ef1b02a633a67b"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-storage-diagnosis-workflow.svg",
-      "sha256": "f56d8fd9c7a24ee976f8cb7203d78dc460f2aaec4df313cb199c40bb65d5ecbd"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-storage-hierarchy-and-access-patterns.pdf",
-      "sha256": "e9f8d79313b51d334045424e317c0371283dc3561f449dcce973e90e12a50786"
+      "path": "manuscripts/ch13/ch13-storage-hierarchy-and-access-patterns.svg",
+      "sha256": "6ca19269835f31107d024c0801297f1fe05e810d5f2ea4c32c2e39816a76f5ab"
     },
     {
       "path": "manuscripts/ch13/ch13-storage-hierarchy-and-access-patterns.png",
       "sha256": "98b0dd1436c93664d10095232f6f6c36f8931eef1368c019ee27f3ec96d30cad"
     },
     {
-      "path": "manuscripts/ch13/ch13-storage-hierarchy-and-access-patterns.svg",
-      "sha256": "6ca19269835f31107d024c0801297f1fe05e810d5f2ea4c32c2e39816a76f5ab"
+      "path": "manuscripts/ch13/ch13-storage-hierarchy-and-access-patterns.pdf",
+      "sha256": "e9f8d79313b51d334045424e317c0371283dc3561f449dcce973e90e12a50786"
     },
     {
-      "path": "manuscripts/ch13/ch13-three-tier-kv-cache-hierarchy.pdf",
-      "sha256": "19e3781443d9066b08b9dfcfd57a484781937e7d2fea65a4c22f5e90aabb8acd"
+      "path": "manuscripts/ch13/ch13-posix-pagecache-vs-gds-dma.svg",
+      "sha256": "ec34473806f5acc5abda8b2b7eb3d18a4c0e1ec60b432582ab7f8c1818623c5e"
     },
     {
-      "path": "manuscripts/ch13/ch13-three-tier-kv-cache-hierarchy.png",
-      "sha256": "0f5a622029d99c1387e53ae115fc26ff9ad1748bbc8e886109916cf9d37a85b7"
+      "path": "manuscripts/ch13/ch13-posix-pagecache-vs-gds-dma.png",
+      "sha256": "51c48e9e077681d2a84430bd9a1b5186dd219e2c83bd8018eb3bfb9591c896be"
     },
     {
-      "path": "manuscripts/ch13/ch13-three-tier-kv-cache-hierarchy.svg",
-      "sha256": "864dd7f3e73deec1af08ba5cb486e98c58f7e1e838a89ad290d941899bf99505"
+      "path": "manuscripts/ch13/ch13-posix-pagecache-vs-gds-dma.pdf",
+      "sha256": "f47d05b8200749e47a0d4803f205f1d6b73a11dc1ef614a05c58eea580e461f0"
     },
     {
-      "path": "manuscripts/ch13/ch13-umap-moonbright-mmap-and-gpu-page-table.pdf",
-      "sha256": "cce2f64d84470eee42a5d0a5bfd0fcd792c0e5834cc75db3d5a6654daf22a267"
+      "path": "manuscripts/ch13/ch13-3fs-craq-architecture.svg",
+      "sha256": "4eae524acaa0e585bc4b6b4d26d7dc01e13f5b24d7bcbec0f71238985c948f80"
     },
     {
-      "path": "manuscripts/ch13/ch13-umap-moonbright-mmap-and-gpu-page-table.png",
-      "sha256": "df1bdd9cf2f93c6a7190f2b396f2df226cc6958faf0fdc741211b39e6e9d9008"
+      "path": "manuscripts/ch13/ch13-3fs-craq-architecture.png",
+      "sha256": "8bd557e52f7b5e5b3a133dcc0883ba8a582c50aa40d32a89d6d727bfc35bbc44"
     },
     {
-      "path": "manuscripts/ch13/ch13-umap-moonbright-mmap-and-gpu-page-table.svg",
-      "sha256": "4c8e0fe900d6e7e6f89baa3fd1af09eb293364591ba1631d504394e2128f632c"
+      "path": "manuscripts/ch13/ch13-3fs-craq-architecture.pdf",
+      "sha256": "8198ce5283a2af7cc834874a71e6b7085f0247721fc86c3a944fc2870206807a"
     },
     {
-      "path": "manuscripts/ch13/ch13-zns-gc-tail-latency.pdf",
-      "sha256": "75bdb5cb51dd4d5c0dcf640031c61d618dc77f8e1105d754cb12f5e92a1e9523"
+      "path": "manuscripts/ch13/ch13-kv-layout-read-amplification.svg",
+      "sha256": "ddebba64bf89a5a4d28644ac5625d3ea32285fd2679ce2045756f2caf574fe29"
     },
     {
-      "path": "manuscripts/ch13/ch13-zns-gc-tail-latency.png",
-      "sha256": "3d9bc93c499bcd5d195d16496f8e4048e39cdddddb514e966d938e65dc3ffe44"
+      "path": "manuscripts/ch13/ch13-kv-layout-read-amplification.png",
+      "sha256": "25243ea5241c7be9706fc8d49e56fe8ab56b4f685c59358d1d833169cff2543b"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-kv-layout-read-amplification.pdf",
+      "sha256": "44c95c017b66657551b9c6e0b4397388329e4457cd7b534ea40026da922aaeb6"
     },
     {
       "path": "manuscripts/ch13/ch13-zns-gc-tail-latency.svg",
       "sha256": "141d3bc9692d84315a641186766e42f769086fb811d35a0c046a119c8fad34aa"
     },
     {
-      "path": "manuscripts/ch13/figure-data.json",
-      "sha256": "572cce292c90c76aeaf9a48b76d0de85be40458d650de281935f892f6fdc46f5"
+      "path": "manuscripts/ch13/ch13-zns-gc-tail-latency.png",
+      "sha256": "3d9bc93c499bcd5d195d16496f8e4048e39cdddddb514e966d938e65dc3ffe44"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-zns-gc-tail-latency.pdf",
+      "sha256": "75bdb5cb51dd4d5c0dcf640031c61d618dc77f8e1105d754cb12f5e92a1e9523"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-multimodal-dataloader-pipeline.svg",
+      "sha256": "54674fff5159a75f49ba3e608f1e5bfa5ad0094bf4e5ee9dbdc3209e55ec393f"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-multimodal-dataloader-pipeline.png",
+      "sha256": "9fdd1664267669bf7664e1ce22d297c2b34a71156cbc8179e0312e69518e9d8b"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-multimodal-dataloader-pipeline.pdf",
+      "sha256": "466a74c8caec5b9beeba3be0e8fa967e45bff2364e1675bde5a4b480a3489d34"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-parquet-lance-vs-webdataset-io.svg",
+      "sha256": "3dec3aafec61b8e674a19dc1757ce0e042fc750f808810766761f65564bcfb35"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-parquet-lance-vs-webdataset-io.png",
+      "sha256": "40516f118f1b7872d4312684b5c98e225433907d3c961ef3bae9836facd1e355"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-parquet-lance-vs-webdataset-io.pdf",
+      "sha256": "3ba1481651a6195da4e51792b27b6b7a8afae28e48ea7c6c604c607c785c3624"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-dsec-erofs-ondemand-container-boot.svg",
+      "sha256": "e6b3a9ce8f0da515f4c7f92347eca3a3c4b315152623a30ea1c3b0cdd921bed3"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-dsec-erofs-ondemand-container-boot.png",
+      "sha256": "2f0536d2c10970aa1105fee923070f50863502964e6687a99c619885028013c9"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-dsec-erofs-ondemand-container-boot.pdf",
+      "sha256": "38279c93524eccde013677c61d3234b184196af48eebcf4b78e128d84fbe0c9e"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-faiss-flat-vs-iks-near-storage.svg",
+      "sha256": "38345a98ba63d53eb2f20824c728342f4af2b0f6bb226fae7f444daa0688405a"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-faiss-flat-vs-iks-near-storage.png",
+      "sha256": "964604dc8a3848e689e1ebbdbf42381b5c490f53e6bab88ce6b33ae4dd5e384b"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-faiss-flat-vs-iks-near-storage.pdf",
+      "sha256": "cc5535aa0e34c6913f4624948771d9925db12b41c00cb74c6c6ef39fe6c226da"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-hnsw-memory-vs-diskann-ssd-layout.svg",
+      "sha256": "5be22312c9f5586aa5fb7ecd6ed536913828771e0e245f2e7098290e52e60ae7"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-hnsw-memory-vs-diskann-ssd-layout.png",
+      "sha256": "054b547970d690acb0cd3d3bb63c8cc73e796d91be0e1e7138182dbaf5e2cc08"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-hnsw-memory-vs-diskann-ssd-layout.pdf",
+      "sha256": "adc78ee7df1897b4ae32622876752a74004d65b03610110a7ea5e267bc40a2b1"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-rag-288-requests-calibration-trap.svg",
+      "sha256": "f037bb7c6065633def359ff9593970e7d80049c8fc69c281320da01fd34573c9"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-rag-288-requests-calibration-trap.png",
+      "sha256": "7b73abc80dc2774d6bd199ec86942cb5c34e10028b9173a7f61ad695a214e083"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-rag-288-requests-calibration-trap.pdf",
+      "sha256": "c6f8f65c8310642c7af7d011ab573d46a11d994ca2bb3ab0d24e855b3bb7090d"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-rag-topk-kv-blocks-and-rlimit-gap.svg",
+      "sha256": "a7a8ba44be75467f3bcc99d8c0507bd8da5c7e907595a2b80b5fb0f74644c3d4"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-rag-topk-kv-blocks-and-rlimit-gap.png",
+      "sha256": "395c8aed2b3e66bfebbfa388cbcb44cc2a0c3f3b8a093ed865b1097a186a8121"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-rag-topk-kv-blocks-and-rlimit-gap.pdf",
+      "sha256": "df4618faf0d3fd3803cea7b8cd8dc38c252720853f9946da140993048896a347"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-rag-end-to-end-timeline-breakdown.svg",
+      "sha256": "88c65ec39ff74337eea10cfb0ac02a3287bad9730b3f1eaee92bf5de6152e036"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-rag-end-to-end-timeline-breakdown.png",
+      "sha256": "b5a7405b7340c3a16d65ca20ccfef2c41512fc74bba53053aa9a7dafd650d0b8"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-rag-end-to-end-timeline-breakdown.pdf",
+      "sha256": "6309672d059c99ae1d2ff0c203cd42759eded560519fd19c58ca9b55d4482448"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-three-tier-kv-cache-hierarchy.svg",
+      "sha256": "864dd7f3e73deec1af08ba5cb486e98c58f7e1e838a89ad290d941899bf99505"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-three-tier-kv-cache-hierarchy.png",
+      "sha256": "0f5a622029d99c1387e53ae115fc26ff9ad1748bbc8e886109916cf9d37a85b7"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-three-tier-kv-cache-hierarchy.pdf",
+      "sha256": "19e3781443d9066b08b9dfcfd57a484781937e7d2fea65a4c22f5e90aabb8acd"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-cacheblend-non-prefix-kv-fusion.svg",
+      "sha256": "0a785a0b9cefd0c48498b748ae5c6c8d65ccb4e724c0f6d8a0951f938f90a164"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-cacheblend-non-prefix-kv-fusion.png",
+      "sha256": "30b0bc92c01068148d4969f8b723238d4259cc895abda3a132a6e958895ccf05"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-cacheblend-non-prefix-kv-fusion.pdf",
+      "sha256": "4646b51b53bd95e24510a20a26ba1760059924e738e4c63a7acb71d398abee5b"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-ssd-dwpd-endurance-and-admission.svg",
+      "sha256": "28822b85a4d7073ce7faf92cc661be7072764cb0ad66442fe5461dbfe6d35cb8"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-ssd-dwpd-endurance-and-admission.png",
+      "sha256": "8c8bd8ea8f3e01a2bc65e7c600f9bd285a8a60eabcc40835a71cf0be87c229bf"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-ssd-dwpd-endurance-and-admission.pdf",
+      "sha256": "f70ce6bb88c34d36b90b590d54b76c185547045b64cd71a8472e06bdd6cae9f2"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-storage-diagnosis-workflow.svg",
+      "sha256": "f56d8fd9c7a24ee976f8cb7203d78dc460f2aaec4df313cb199c40bb65d5ecbd"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-storage-diagnosis-workflow.png",
+      "sha256": "79bf39fe8fa58e4338e375b795227777c6f18ee8dbba4b93c6ef1b02a633a67b"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-storage-diagnosis-workflow.pdf",
+      "sha256": "e0001823e2e54a8f3d7b5797cad6fec8347ca41dcbf4f96f6f942b28f920efef"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-full-stack-ai-data-plane.svg",
+      "sha256": "d000e6204835de018646a5d9ff35fdbbb4646204c1f06e3c232da2ebe2bb66c6"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-full-stack-ai-data-plane.png",
+      "sha256": "062ac35620f1b2c1005f87535887e04a7feb55094e14132ad51e05f9aed9eb6b"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-full-stack-ai-data-plane.pdf",
+      "sha256": "93e82014c082dd151572764546378d285be896e78f4f597ed9267329a2b66157"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-falconfs-server-side-path-resolution.svg",
+      "sha256": "a963ea0fd987b36d1d2b62fd50d0b2481bdd9c595ce8fb65899e2afb823047c4"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-falconfs-server-side-path-resolution.png",
+      "sha256": "913062082e54ab1d25df7e6cfc85d60754bcefb17546eff363de486210304e5b"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-falconfs-server-side-path-resolution.pdf",
+      "sha256": "69701ddad4278b4322393ef334a7b9a598999f1eec8b6b769cf22de4800121e6"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-multimodal-tar-webdataset-vs-lance-random.svg",
+      "sha256": "61af75090f83566b3de784e228acca976b9f1b407a74ac20ba43cc23bca7ab95"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-multimodal-tar-webdataset-vs-lance-random.png",
+      "sha256": "4b610ac1781aef2bccff1f8cee1c12249d8dd52580816db9898738d08cfdc86e"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-multimodal-tar-webdataset-vs-lance-random.pdf",
+      "sha256": "298a798f2310d66b0037afaa7c5d41a4bd40f6f2dcea3ae952f6fd094fa6e76e"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-distvs-helmsman-disaggregated-vector-search.svg",
+      "sha256": "45a57f35eccea86d8005f8860cfe3223c4ed2f435cd1a2ed63ffe7a173d22bef"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-distvs-helmsman-disaggregated-vector-search.png",
+      "sha256": "86e316fa41134c20ab05c3684cac581ef5feb7673401aef1917200cd83342547"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-distvs-helmsman-disaggregated-vector-search.pdf",
+      "sha256": "ba8370cd0d024da1042a28444478a6a2dc3024ad02c27830fcf5e21889d1179b"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-copilotio-gds-vs-cpu-assisted-io.svg",
+      "sha256": "46e6d0e8b02bf1a154fe0cf548e17be71fbbf99bb53ee30b02c8c00a3ff236cc"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-copilotio-gds-vs-cpu-assisted-io.png",
+      "sha256": "5486b7c9df3ef3f149ef2c4544ca0940f81e48f2b4e96debee1ac86f4ae8ee07"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-copilotio-gds-vs-cpu-assisted-io.pdf",
+      "sha256": "f5580174f83febc9a247a6f7666daa77ac9aa0acd46a777ac48fdf4e2654d505"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-umap-moonbright-mmap-and-gpu-page-table.svg",
+      "sha256": "4c8e0fe900d6e7e6f89baa3fd1af09eb293364591ba1631d504394e2128f632c"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-umap-moonbright-mmap-and-gpu-page-table.png",
+      "sha256": "df1bdd9cf2f93c6a7190f2b396f2df226cc6958faf0fdc741211b39e6e9d9008"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-umap-moonbright-mmap-and-gpu-page-table.pdf",
+      "sha256": "cce2f64d84470eee42a5d0a5bfd0fcd792c0e5834cc75db3d5a6654daf22a267"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-ai-storage-bandwidth-latency-iops-cube.svg",
+      "sha256": "3d46e3318e9e4363867a73a8e22610de3c5fb265c845ca557d373a13f2d46178"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-ai-storage-bandwidth-latency-iops-cube.png",
+      "sha256": "301f16c54a4412f7850739e4a1e421aac48185021b2e96177300bffce2bbd9c0"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-ai-storage-bandwidth-latency-iops-cube.pdf",
+      "sha256": "f9aefdaa7e7986e0ecfd08c133d9c3cbf44b11e5e89f1bb0c71c318683619d18"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-nixl-unified-nonblocking-transfer-plane.svg",
+      "sha256": "c516b10b9fe1b791ae635e67f16041022f8a552655665bfebd55ce8c774d518d"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-nixl-unified-nonblocking-transfer-plane.png",
+      "sha256": "a4394b925b2ef9d64e8309f816fb4c7c9dde5597e0487aa502505e38be164d1a"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-nixl-unified-nonblocking-transfer-plane.pdf",
+      "sha256": "ff89e7cfc7462530d592efbd2f1c312f092ece3ef6d47e16be61a02b26dc5eec"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-checkpoint-replication-to-erasure-coding-lifecycle.svg",
+      "sha256": "0961eea103e81671d4b34542520ea508ce309914baceeaa2fd08f676e9ffa507"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-checkpoint-replication-to-erasure-coding-lifecycle.png",
+      "sha256": "dca6464f1a5eb16bc0558da16cc9d7f1f395352ba2502929fdcef6eb23f97ec3"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-checkpoint-replication-to-erasure-coding-lifecycle.pdf",
+      "sha256": "67e8005e1e3cf64c2935e36efe1e3fb9bcb3fdc0d67a5b9c6ea8a9ea5f6147ad"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-lmcache-prefix-kv-compression-and-gds-prefetch.svg",
+      "sha256": "6b6eff22e4989ed7f806696a431cbc171d4b69f6fd40093500ce7ddadf0dc847"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-lmcache-prefix-kv-compression-and-gds-prefetch.png",
+      "sha256": "3bd9bf5b5e9b63a946172d7695a3052f9aafc6404e4f40e5316d1c969aa7849d"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-lmcache-prefix-kv-compression-and-gds-prefetch.pdf",
+      "sha256": "bb3c045cbe186812ddf9e448df0f2c580b8cb9da1dabea7087d2f1349cbbd435"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-checkpoint-and-kv-unified-nvme-pool-qos.svg",
+      "sha256": "aceea810a5d54d8cdcb0812c2368a32ade5818284c8d5ac4e155abd7ea0a6c4e"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-checkpoint-and-kv-unified-nvme-pool-qos.png",
+      "sha256": "9c805b996aa03f6b5a4d171451352ca2cc7a8b205e7964b49b6018df4e58d551"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-checkpoint-and-kv-unified-nvme-pool-qos.pdf",
+      "sha256": "f4935620e88fb131c006538037acac9701f2d295d1eb62569fa7aaff367b086c"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-100pb-commoncrawl-to-15t-tokens-curation-funnel.svg",
+      "sha256": "b0054a7c8cf94beeb4b037d4f415d2fbc7ba78d2fd8ac20b7307a210da05494f"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-100pb-commoncrawl-to-15t-tokens-curation-funnel.png",
+      "sha256": "a5924cce0ed3aaba70026944d8f21b36c06b756347c6eb2954dc4dea7ad8cf7f"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-100pb-commoncrawl-to-15t-tokens-curation-funnel.pdf",
+      "sha256": "d154c50f306e0d697f99ac28a7b2d60b4db55dd62c16b3e87f74ea07615dfbea"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-minhash-lsh-band-row-s-curve-probability.svg",
+      "sha256": "ca92692b181828b7a1a8968365343c94223a94ece57c588e95b4b8e34e296a34"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-minhash-lsh-band-row-s-curve-probability.png",
+      "sha256": "496a23080619a900feb9dad3525b1ac83214c852fddfcdfe148bbcf0bf9d3fd1"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-minhash-lsh-band-row-s-curve-probability.pdf",
+      "sha256": "459a24da0c34acb0bd96be475eac5ee395299ccbd3020d373e1d3c7ba494a5b8"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-distributed-minhash-shuffle-and-gpu-union-find.svg",
+      "sha256": "dca7509d24b1bdd0e2f68e0d63a4ddca142ac56e46679a1a7132388266274a05"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-distributed-minhash-shuffle-and-gpu-union-find.png",
+      "sha256": "3d17661219450fa3dc48e5a39577616bf46998cd247eb23802e3a6e0566492b6"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-distributed-minhash-shuffle-and-gpu-union-find.pdf",
+      "sha256": "c4d278eee0b81945d0062e0efaa4681a2dbbd2f23282098c65d789b4251a17d9"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-cpu-datatrove-vs-gpu-nemo-curator-throughput.svg",
+      "sha256": "aee3921bab0d86e3b240ae9a4abe7d628f572cb50a0d58f3d4251e90109ba4d1"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-cpu-datatrove-vs-gpu-nemo-curator-throughput.png",
+      "sha256": "d0421646356ff933ca8bc0527ae0e4adb3541c5defb2e773834d93ab7fac9b2d"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-cpu-datatrove-vs-gpu-nemo-curator-throughput.pdf",
+      "sha256": "e50175f774c7e6e74e5b61e05881c5223ea899bdbc10dde409df9d7c2ad42a23"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-document-fuzzy-dedup-vs-suffix-array-substring-dedup.svg",
+      "sha256": "51db5f7442f8faf33049c3952577199e7f4ab420e54f4314d19b74709b4284e0"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-document-fuzzy-dedup-vs-suffix-array-substring-dedup.png",
+      "sha256": "b1030a8fe424e64aaaa6355f3e9af5c12d13b27e5ad947ce23a23053fc19bf09"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-document-fuzzy-dedup-vs-suffix-array-substring-dedup.pdf",
+      "sha256": "5a66a40c436f07d01e838df8f15540fcbda4c3087dfc7c0afb2cab421018446d"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-llm-rubric-distillation-to-fasttext-bert-classifier.svg",
+      "sha256": "492113c30600a6a4458481a6a03dcd1c70be2cb2b3e4cd9a32a4db618bfaca54"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-llm-rubric-distillation-to-fasttext-bert-classifier.png",
+      "sha256": "d09872e818a4aa41d4af7afd5fa3dedbe1cabbc76cb2fea83f4cfa161ae23667"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-llm-rubric-distillation-to-fasttext-bert-classifier.pdf",
+      "sha256": "ddc0ad6c069b56206237e1cd56daba98d7d4ae88134a1bfe5b126feac974487e"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-nemotron-cc-classifier-ensembling-and-rephrasing.svg",
+      "sha256": "896a235a8d8f90486e05ac5f22bc27ad3df66e751a0d06a79923fb234d58a36f"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-nemotron-cc-classifier-ensembling-and-rephrasing.png",
+      "sha256": "8b89705330de53b60e5931a1fd7bbb61fff6f75dbb4cf210895985864eb4852f"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-nemotron-cc-classifier-ensembling-and-rephrasing.pdf",
+      "sha256": "ecc45704536d06a7ffaa3dfd9a34b4e4a3543a90d8216bb3c6f24c2eb2afe3ee"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-benchmark-decontamination-ngram-and-embedding-hybrid.svg",
+      "sha256": "aab3fb75077aa1c7553a2ca1df890f912115ba1881639dffbd74acec45a5a15a"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-benchmark-decontamination-ngram-and-embedding-hybrid.png",
+      "sha256": "7c9fb9acf2875842359b03f80a0f6714b82df48810059b4b98fe6bfc3c06159e"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-benchmark-decontamination-ngram-and-embedding-hybrid.pdf",
+      "sha256": "6977b7fe0e12a3d88db4b16ecd586dd99261925f764b50be76f40330dc79ea6b"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-doremi-regmix-domain-weight-optimization.svg",
+      "sha256": "9c06b5b73762d23c022a07ebd541b6098dba19afe40b600fcd02589722b37c4e"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-doremi-regmix-domain-weight-optimization.png",
+      "sha256": "ba9e64629bb609a229137aa0bda58d1a465fb344b6848f5949846f31051ec74a"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-doremi-regmix-domain-weight-optimization.pdf",
+      "sha256": "8284fe201e845ca0caf3ded393c352924433c4588548f41b30bacb1d155a6302"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-online-serving-vs-offline-synthetic-factory-roofline.svg",
+      "sha256": "8c63f7d568aff6b3b01816a114ac7a1a0e1eeef32e20e6d8eea2331cfe86a6f3"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-online-serving-vs-offline-synthetic-factory-roofline.png",
+      "sha256": "e133e0d0e4b11f235c6c26241fcfb0b8b55901457de0aa3ec4f67c99526133a0"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-online-serving-vs-offline-synthetic-factory-roofline.pdf",
+      "sha256": "1a32bc9b797667a4424f4d0cbd24c2ecde7dced825a953504569220ead5c8d44"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-synthetic-data-generator-verifier-rejection-funnel.svg",
+      "sha256": "d33afa3531ee0e39a0f6414a5f4aba42f48f20cd4aa57cb7d30710ac9c9a6893"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-synthetic-data-generator-verifier-rejection-funnel.png",
+      "sha256": "912c4de522a386dabc5ee63f76f4a8890be9f01a23684522b46700b4496d987b"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-synthetic-data-generator-verifier-rejection-funnel.pdf",
+      "sha256": "1a056b55170d570618679eaf646b309f539592e4d2613593c0befad4ed05e639"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-slack-capacity-harvesting-for-synthetic-generation.svg",
+      "sha256": "fc09e5955cc71f5533fd81977c8d141ef4573b1439caac193b82dc5c74a82aca"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-slack-capacity-harvesting-for-synthetic-generation.png",
+      "sha256": "72db3a68a621f585de704b1e9034cf4bac505cf26eac7c6aba71b41aef03abe2"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-slack-capacity-harvesting-for-synthetic-generation.pdf",
+      "sha256": "9c8e23c25b098c64b7ec96f82dac6e990470ea5bb56825bba3cae49321bdcf57"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-pdf-scientific-ocr-layout-math-extraction-pipeline.svg",
+      "sha256": "e71bd08372024798646fb1f73fc8cbd7334aeb4a7d754d6dcc2bf2eace6ac291"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-pdf-scientific-ocr-layout-math-extraction-pipeline.png",
+      "sha256": "818e7a74284b84ffbe58cf87b50269ee035671fcf8cc88a0aad864195d17edee"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-pdf-scientific-ocr-layout-math-extraction-pipeline.pdf",
+      "sha256": "be82b78004bf16b95a1638a5d0e4f8e77daeceafcf574d6b9feb726c3b1aed8f"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-tokenized-dataset-mmap-shuffling-and-sequence-packing.svg",
+      "sha256": "1493ba557f964c47c53b1e43432c33e5620bb8ed68caa03ffbd61a378311b967"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-tokenized-dataset-mmap-shuffling-and-sequence-packing.png",
+      "sha256": "dd67f556230467deaad59bb2d6dd9ad431a21f317afb47386d5be075314c3d4c"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-tokenized-dataset-mmap-shuffling-and-sequence-packing.pdf",
+      "sha256": "9348ab8a7b2d19dfab1116873d48d9b6a4a8184315dc609997899c306eebc303"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-data-lineage-copyright-optout-and-audit-ledger.svg",
+      "sha256": "48195b3f84fb47a534f9e4c32a141261f3fff2337bb80ab1cb4c83b6621bf169"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-data-lineage-copyright-optout-and-audit-ledger.png",
+      "sha256": "dc2150146c1fba7595a9f5816ca60d131d2a181ccd3b53cf6f71aa1d6e203491"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-data-lineage-copyright-optout-and-audit-ledger.pdf",
+      "sha256": "9e011e0f44f9f0bd32f2dfd15fb8ad49ffd8a5441f331ee2bff6a0006312a7e8"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-exascale-data-and-synthetic-factory-master-architecture.svg",
+      "sha256": "c0e87cc48bcc514f0255ab59cc5f7bb831785af91a4ba48444844ed791561b4f"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-exascale-data-and-synthetic-factory-master-architecture.png",
+      "sha256": "83e3fa5194ada37f042ca268133c6f8a3c2352bd2501b51d47ad3d36467cb81b"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-exascale-data-and-synthetic-factory-master-architecture.pdf",
+      "sha256": "58fd28d689bff73d0342499a988ec4d595763c564eaeca882ff649a70d63c8c8"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-mineru-olmocr-pdf-layout-and-formula-gpu-pipeline.svg",
+      "sha256": "823589051af41824b36ff018c976fb41a24665a02ab25b5583f0342b78069625"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-mineru-olmocr-pdf-layout-and-formula-gpu-pipeline.png",
+      "sha256": "132ab91ad60a05c94364187943d20c1c04095413e36bbbaff9bfd328b3b449d6"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-mineru-olmocr-pdf-layout-and-formula-gpu-pipeline.pdf",
+      "sha256": "36420074454baead98e92189b1a3236ecd16520447bddb4ebe014d89c3127b00"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-repo-level-ast-dependency-topological-packing.svg",
+      "sha256": "032236abde6c60364e529052b41a1ed1210004960424df3f64c727a38241f619"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-repo-level-ast-dependency-topological-packing.png",
+      "sha256": "c05aab205398dff52fb3d5d7bce2c31ee12118a3b557fa1dddc5459291f92926"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-repo-level-ast-dependency-topological-packing.pdf",
+      "sha256": "752ec5bc0571b58b165b76ee30dc2165b3ea51e36bd2020439e93d1d0a7d3c9c"
     },
     {
       "path": "manuscripts/ch13/figure-index.json",
-      "sha256": "5b9199123dc6859ec69ee8f237c13c004d1a5744364d4be94264f77b25b88fa9"
+      "sha256": "65fe370f471b865220fbe45c01c7c61e186082391145f1ba2a0e666eb7e4b271"
     },
     {
       "path": "manuscripts/ch13/teaching-layout-validation.json",
-      "sha256": "e5e607d8e08cd8ad89ddb9ad5049de3128182c584c25f0e9736b57ce31052a27"
+      "sha256": "f8806f7df7b574e89e05423361f352ad70457a7bb29272b0c56dd66f15956250"
     },
     {
       "path": "manuscripts/ch13/math-validation.json",
-      "sha256": "e04d4f3ab69f9177922dec73e4fbb5c72574a9b7ac9ffca4b30401b970017248"
+      "sha256": "456250dd503b086b7ff2ee320148ff5127bb1d0fdee4ca10caede2f6f0f88801"
     }
   ]
 }

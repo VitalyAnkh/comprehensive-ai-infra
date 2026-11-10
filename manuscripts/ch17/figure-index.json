@@ -2,323 +2,321 @@
   {
     "figure_id": "图 17-1",
     "number": 1,
-    "file": "ch17-1d-llm-vs-3d-spatiotemporal-dit-tokens.svg",
-    "asset": "ch17/ch17-1d-llm-vs-3d-spatiotemporal-dit-tokens.svg",
+    "file": "ch17-ppo-four-model-vs-grpo-memory-ledger.svg",
+    "asset": "ch17/ch17-ppo-four-model-vs-grpo-memory-ledger.svg",
     "section": "17.1.1",
-    "caption": "一维文本 Token 序列与 3D 视频扩散模型（T×H×W 潜空间分块，489,600 Tokens）的规模与算术强度对比",
+    "caption": "PPO 四模型（Actor/Critic/Ref/RM）与 GRPO/DAPO（消去 Critic + 组采样 G 条轨迹）的显存与计算量对比（算例 17-1）",
     "source_refs": [
-      "manuscripts/ch17/figure-data.json",
-      "experiments/ch17/17-01/run.py"
+      "manuscripts/ch18/figure-data.json",
+      "experiments/ch18/18-01/run.py"
     ],
-    "TeachingRole": "对比 1D LLM 自回归访存受限与 3D DiT 489,600 时空词元双向注意力算力墙",
+    "TeachingRole": "量化 32B 模型下 PPO 1,152 GB（36Ψ）与 GRPO 576 GB（18Ψ）的 50% 状态显存削减",
     "figure": "17-1",
-    "name": "ch17-1d-llm-vs-3d-spatiotemporal-dit-tokens"
+    "name": "ch17-ppo-four-model-vs-grpo-memory-ledger"
   },
   {
     "figure_id": "图 17-2",
     "number": 2,
-    "file": "ch17-anyres-navit-dynamic-image-tiling.svg",
-    "asset": "ch17/ch17-anyres-navit-dynamic-image-tiling.svg",
-    "section": "17.1.1",
-    "caption": "AnyRes 动态高分辨率切片、NaViT 序列打包与 Qwen3-VL-4B DeepStack 特征（7.8125 MiB EC → 56.25 MiB KV，7.2x 放大）演化（算例 17-1）",
+    "file": "ch17-rlvr-iteration-timeline-rollout-dominance.svg",
+    "asset": "ch17/ch17-rlvr-iteration-timeline-rollout-dominance.svg",
+    "section": "17.1.2",
+    "caption": "RLVR 单步训练时间线分解——为何自回归 Rollout 占据 70%–90% 墙钟时间且算术强度极低",
     "source_refs": [
-      "case-studies/multimodal-stage-placement.md",
-      "experiments/ch17/17-01/run.py"
+      "manuscripts/ch18/figure-data.json"
     ],
-    "TeachingRole": "复算 Qwen3-VL-4B 单图 400 词元从 7.8125 MiB 编码特征膨胀为 56.25 MiB KV 缓存的 7.2 倍比值",
+    "TeachingRole": "从 Decode 访存带宽受限与 Prefill/Backward 算力密集的反差解释 Rollout 主导现象",
     "figure": "17-2",
-    "name": "ch17-anyres-navit-dynamic-image-tiling"
+    "name": "ch17-rlvr-iteration-timeline-rollout-dominance"
   },
   {
     "figure_id": "图 17-3",
     "number": 3,
-    "file": "ch17-3d-causal-vae-memory-spike-and-tiling.svg",
-    "asset": "ch17/ch17-3d-causal-vae-memory-spike-and-tiling.svg",
-    "section": "17.1.3",
-    "caption": "3D 因果 VAE 解码阶段的特征图显存洪峰（突破 80 GB）与带重叠 Halo 的时空分块（Spatial-Temporal Tiling）解码（算例 17-3）",
+    "file": "ch17-verl-3d-hybrid-engine-zero-redundancy-reshard.svg",
+    "asset": "ch17/ch17-verl-3d-hybrid-engine-zero-redundancy-reshard.svg",
+    "section": "17.2.1",
+    "caption": "veRL（HybridFlow）3D-HybridEngine 训练态（ZeRO+TP+PP）与生成态（微张量并行）的零冗余内存重分片机制",
     "source_refs": [
-      "manuscripts/ch17/figure-data.json",
-      "experiments/ch17/17-01/run.py"
+      "manuscripts/ch18/figure-data.json"
     ],
-    "TeachingRole": "揭示视频去噪尾端 3D VAE 118.65 GiB 特征图洪峰及带 Halo 时空分块的百倍显存压缩",
+    "TeachingRole": "解析子网格微分组 AllGather 如何消除训练态与推理态的并行拓扑冲突",
     "figure": "17-3",
-    "name": "ch17-3d-causal-vae-memory-spike-and-tiling"
+    "name": "ch17-verl-3d-hybrid-engine-zero-redundancy-reshard"
   },
   {
     "figure_id": "图 17-4",
     "number": 4,
-    "file": "ch17-tp-vs-ulysses-vs-ring-attention-comm.svg",
-    "asset": "ch17/ch17-tp-vs-ulysses-vs-ring-attention-comm.svg",
+    "file": "ch17-colocated-vs-disaggregated-rl-architecture.svg",
+    "asset": "ch17/ch17-colocated-vs-disaggregated-rl-architecture.svg",
     "section": "17.2.2",
-    "caption": "张量并行（TP）、DeepSpeed-Ulysses（每层 4Nd/P，P ≤ n_head）与 Ring Attention（单步 2Nd/P、全环 2(P-1)Nd/P ≈ 2Nd，无头数限制）对比（算例 17-4）",
+    "caption": "训推共置（veRL）与物理训推分离及互补错峰池化（Weave OSDI '26，算例 17-3）对比",
     "source_refs": [
-      "manuscripts/ch17/figure-data.json",
-      "experiments/ch17/17-01/run.py"
+      "case-studies/rl-scheduling-and-recovery.md",
+      "experiments/ch18/18-01/run.py"
     ],
-    "TeachingRole": "精确对比 Ulysses 与 Ring Attention 的单步/全环通信公式及注意力头数上限约束",
+    "TeachingRole": "复算 Weave 互补作业（360/120 s 与 120/360 s）共享 216 H20 与 152 H800 的削峰收益",
     "figure": "17-4",
-    "name": "ch17-tp-vs-ulysses-vs-ring-attention-comm"
+    "name": "ch17-colocated-vs-disaggregated-rl-architecture"
   },
   {
     "figure_id": "图 17-5",
     "number": 5,
-    "file": "ch17-2d-usp-hybrid-ulysses-ring-topology.svg",
-    "asset": "ch17/ch17-2d-usp-hybrid-ulysses-ring-topology.svg",
-    "section": "17.2.3",
-    "caption": "2D 统一序列并行（USP）：节点内 NVLink 跑 Ulysses All-to-All + 跨节点 RoCE 跑 Ring Attention P2P 重叠流水",
+    "file": "ch17-long-cot-power-law-straggler-bubble.svg",
+    "asset": "ch17/ch17-long-cot-power-law-straggler-bubble.svg",
+    "section": "17.3.1",
+    "caption": "长思维链（Long-CoT）输出长度幂律分布引发的同步 Rollout 尾部巨大 GPU 空泡",
     "source_refs": [
-      "manuscripts/ch17/figure-data.json",
-      "experiments/ch17/17-01/run.py"
+      "case-studies/rollout-tail-and-sampling.md"
     ],
-    "TeachingRole": "证明 8×8 2D-USP 可将跨节点 RDMA 流量从 7,530.47 MiB 压缩 9.0 倍至 836.72 MiB",
+    "TeachingRole": "揭示 5% 超长推理轨迹如何通过同步屏障迫使 90% 已完成 GPU 空转等待",
     "figure": "17-5",
-    "name": "ch17-2d-usp-hybrid-ulysses-ring-topology"
+    "name": "ch17-long-cot-power-law-straggler-bubble"
   },
   {
     "figure_id": "图 17-6",
     "number": 6,
-    "file": "ch17-dbsp-dual-balanced-sequence-parallelism.svg",
-    "asset": "ch17/ch17-dbsp-dual-balanced-sequence-parallelism.svg",
-    "section": "17.2.3",
-    "caption": "db-SP（MLSys '26）面向变长多模态与因果掩码的双均衡序列切分",
+    "file": "ch17-rollpacker-tail-migration-and-cp-scaling.svg",
+    "asset": "ch17/ch17-rollpacker-tail-migration-and-cp-scaling.svg",
+    "section": "17.3.2",
+    "caption": "RollPacker（NSDI '26）尾部存活请求紧缩迁移、双槽位长度偏差（1/2 → 1/4）与微批均值平均（2.0）vs. 全局总词元归一化（2.5）对比（算例 17-5 & 18-6）",
     "source_refs": [
-      "research/2026-infra-survey/reading-mlsys-2026.md"
+      "case-studies/rollout-tail-and-sampling.md",
+      "experiments/ch18/18-01/run.py"
     ],
-    "TeachingRole": "解析模态内折返配对与跨样本重排如何消除因果/双向混合掩码导致的算力倾斜",
+    "TeachingRole": "严格证明不均等微批下按微批均值平均会产生 2.0 vs 2.5 的梯度偏置",
     "figure": "17-6",
-    "name": "ch17-dbsp-dual-balanced-sequence-parallelism"
+    "name": "ch17-rollpacker-tail-migration-and-cp-scaling"
   },
   {
     "figure_id": "图 17-7",
     "number": 7,
-    "file": "ch17-distrifusion-displaced-patch-parallelism.svg",
-    "asset": "ch17/ch17-distrifusion-displaced-patch-parallelism.svg",
-    "section": "17.3.1",
-    "caption": "DistriFusion 异步位移 Patch 并行——利用第 t-1 步陈旧激活掩盖第 t 步跨卡通信",
+    "file": "ch17-seer-divided-and-conquered-speculative-rollout.svg",
+    "asset": "ch17/ch17-seer-divided-and-conquered-speculative-rollout.svg",
+    "section": "17.3.2",
+    "caption": "Seer（OSDI '26）分段征服长尾 Rollout 与组内共享前缀投机解码加速",
     "source_refs": [
-      "manuscripts/ch17/figure-data.json"
+      "research/2026-infra-survey/reading-osdi-2026.md",
+      "case-studies/rollout-tail-and-sampling.md"
     ],
-    "TeachingRole": "利用相邻扩散步激活缓变性将跨卡 KV 传输彻底移出当前步关键路径",
+    "TeachingRole": "展示如何利用同组已完成短轨迹构建免模型草稿树加速剩余长尾轨迹",
     "figure": "17-7",
-    "name": "ch17-distrifusion-displaced-patch-parallelism"
+    "name": "ch17-seer-divided-and-conquered-speculative-rollout"
   },
   {
     "figure_id": "图 17-8",
     "number": 8,
-    "file": "ch17-pipefusion-step-patch-2d-pipeline.svg",
-    "asset": "ch17/ch17-pipefusion-step-patch-2d-pipeline.svg",
-    "section": "17.3.1",
-    "caption": "PipeFusion 将空间分块与去噪时间步交错流水化的气泡消除时序图",
+    "file": "ch17-staleness-bounded-partial-rollout-pipeline.svg",
+    "asset": "ch17/ch17-staleness-bounded-partial-rollout-pipeline.svg",
+    "section": "17.3.3",
+    "caption": "同步屏障 Rollout vs. 陈旧度有界（τ ≤ τ_max）异步部分采样（Partial Rollout）的流水线吞吐跃升",
     "source_refs": [
-      "manuscripts/ch17/figure-data.json"
+      "case-studies/rollout-tail-and-sampling.md"
     ],
-    "TeachingRole": "展示空间分块与时间步二维交错流水如何将 50 次流水线排空气泡压缩为 1 次",
+    "TeachingRole": "允许未完长轨迹保留 KV 跨训练步续生，将集群有效利用率推高至 >88%",
     "figure": "17-8",
-    "name": "ch17-pipefusion-step-patch-2d-pipeline"
+    "name": "ch17-staleness-bounded-partial-rollout-pipeline"
   },
   {
     "figure_id": "图 17-9",
     "number": 9,
-    "file": "ch17-teacache-timestep-residual-reuse.svg",
-    "asset": "ch17/ch17-teacache-timestep-residual-reuse.svg",
-    "section": "17.3.2",
-    "caption": "TeaCache / AdaCache 基于时间步特征差分的自适应跳步复用与质量—延迟帕累托曲线（算例 17-5）",
+    "file": "ch17-off-policy-importance-sampling-clipping.svg",
+    "asset": "ch17/ch17-off-policy-importance-sampling-clipping.svg",
+    "section": "17.3.3",
+    "caption": "异步 RL 中策略版本偏移 Δv = τ 下的重要性采样比率波动与逐词元真实行为概率记录准则",
     "source_refs": [
-      "manuscripts/ch17/figure-data.json",
-      "experiments/ch17/17-01/run.py"
+      "case-studies/rollout-tail-and-sampling.md"
     ],
-    "TeachingRole": "量化免训练时间步残差复用跳过 28/50 步实现的 2.12x 端到端视频生成加速",
+    "TeachingRole": "阐明跨版本拼接轨迹必须随词元流持久化生成当下的真实 logprob",
     "figure": "17-9",
-    "name": "ch17-teacache-timestep-residual-reuse"
+    "name": "ch17-off-policy-importance-sampling-clipping"
   },
   {
     "figure_id": "图 17-10",
     "number": 10,
-    "file": "ch17-sageattention3-fp4-quantized-attention.svg",
-    "asset": "ch17/ch17-sageattention3-fp4-quantized-attention.svg",
-    "section": "17.3.2",
-    "caption": "SageAttention 平滑均值抑制离群值与 FP8/FP4 块量化注意力的硬件加速路径",
+    "file": "ch17-robustrl-role-based-fault-isolation.svg",
+    "asset": "ch17/ch17-robustrl-role-based-fault-isolation.svg",
+    "section": "17.3.3",
+    "caption": "RobustRL（OSDI '26）区分无状态 Rollout 故障与有状态 Learner 故障的非对称容错（790 s vs. 490 s，净省 300 s，算例 17-7）",
     "source_refs": [
-      "manuscripts/ch17/figure-data.json"
+      "case-studies/rl-scheduling-and-recovery.md",
+      "experiments/ch18/18-01/run.py"
     ],
-    "TeachingRole": "阐明减去 K 通道序列均值如何消除离群偏置并释放 FP8/FP4 Tensor Core 吞吐",
+    "TeachingRole": "复算保留已完成 Rollout 轨迹将训练侧故障恢复耗时从 790 s 压至 490 s 的锁定账本",
     "figure": "17-10",
-    "name": "ch17-sageattention3-fp4-quantized-attention"
+    "name": "ch17-robustrl-role-based-fault-isolation"
   },
   {
     "figure_id": "图 17-11",
     "number": 11,
-    "file": "ch17-interactive-world-model-rolling-kv-30fps.svg",
-    "asset": "ch17/ch17-interactive-world-model-rolling-kv-30fps.svg",
-    "section": "17.3.3",
-    "caption": "交互式世界模型（StreamDiffusionV2 / CausVid）的因果少步蒸馏与 <33.3 ms 滚动 KV 帧生成流水线",
+    "file": "ch17-distrs-disaggregated-reward-sandbox-streaming.svg",
+    "asset": "ch17/ch17-distrs-disaggregated-reward-sandbox-streaming.svg",
+    "section": "17.4.1",
+    "caption": "DistRS（NSDI '26）将沙箱验证与长尾生成流式重叠及基于条件剩余时间 E[S-e | S>e]（90 s vs. 0.9 s）与 216,000 词元阈值的超期裁剪（算例 17-8）",
     "source_refs": [
-      "manuscripts/ch17/figure-data.json"
+      "case-studies/reward-deadlines-and-feedback.md",
+      "experiments/ch18/18-01/run.py"
     ],
-    "TeachingRole": "剖析块因果扩散、1–4 步蒸馏、滚动 KV 缓存与步间流式拼批如何达成 30 FPS 实时交互",
+    "TeachingRole": "证明重尾验证分布下朴素剩余时间估计（0.9 s）与真实条件期望（90.0 s）的百倍误差",
     "figure": "17-11",
-    "name": "ch17-interactive-world-model-rolling-kv-30fps"
+    "name": "ch17-distrs-disaggregated-reward-sandbox-streaming"
   },
   {
     "figure_id": "图 17-12",
     "number": 12,
-    "file": "ch17-epdg-four-stage-disaggregated-serving.svg",
-    "asset": "ch17/ch17-epdg-four-stage-disaggregated-serving.svg",
-    "section": "17.4.1",
-    "caption": "从 TriInfer（MLSys '26）混合 EPD 解耦到 vLLM-Omni 原生全模态 E-P-D-G 四阶段异构池化架构（算例 17-6）",
+    "file": "ch17-test-time-scaling-prm-tree-search-cow-kv.svg",
+    "asset": "ch17/ch17-test-time-scaling-prm-tree-search-cow-kv.svg",
+    "section": "17.4.2",
+    "caption": "推理时扩展（Best-of-N / PRM 树搜索）利用 PagedAttention 写时复制（CoW）共享父节点 KV 缓存",
     "source_refs": [
-      "case-studies/multimodal-stage-placement.md",
-      "research/2026-infra-survey/reading-mlsys-2026.md"
+      "manuscripts/ch18/figure-data.json"
     ],
-    "TeachingRole": "建立 Encode、Prefill、Decode、Generate 四池分离与 TriInfer 动态放置准则",
+    "TeachingRole": "解析页表引用计数 CoW 与树注意力如何消除树状搜索的物理拷贝与显存膨胀",
     "figure": "17-12",
-    "name": "ch17-epdg-four-stage-disaggregated-serving"
+    "name": "ch17-test-time-scaling-prm-tree-search-cow-kv"
   },
   {
     "figure_id": "图 17-13",
     "number": 13,
-    "file": "ch17-vit-embedding-cache-vs-llm-kv-cache.svg",
-    "asset": "ch17/ch17-vit-embedding-cache-vs-llm-kv-cache.svg",
+    "file": "ch17-speculative-tot-reward-barrier-bypass.svg",
+    "asset": "ch17/ch17-speculative-tot-reward-barrier-bypass.svg",
     "section": "17.4.2",
-    "caption": "多轮多模态对话中缓存原始图片、缓存 ViT 视觉特征（7.8125 MiB）与缓存 LLM 全层 KV（56.25 MiB）的体积与重算延迟折中",
+    "caption": "Breaking the Reward Barrier（OSDI '26）在等待 PRM 评分期间投机性预展开高置信分支的时序对比",
     "source_refs": [
-      "case-studies/multimodal-stage-placement.md",
-      "experiments/ch17/17-01/run.py"
+      "research/2026-infra-survey/reading-osdi-2026.md",
+      "case-studies/reward-deadlines-and-feedback.md"
     ],
-    "TeachingRole": "证明在多轮对话温冷层缓存 EC 而非 KV 可节省 86.1% 内存并消除 ViT 重算",
+    "TeachingRole": "通过超前投机展开子节点将重型 PRM 评分延迟隐藏在树搜索关键路径之外",
     "figure": "17-13",
-    "name": "ch17-vit-embedding-cache-vs-llm-kv-cache"
+    "name": "ch17-speculative-tot-reward-barrier-bypass"
   },
   {
     "figure_id": "图 17-14",
     "number": 14,
-    "file": "ch17-audio-video-text-interleaved-batching.svg",
-    "asset": "ch17/ch17-audio-video-text-interleaved-batching.svg",
-    "section": "17.4.2",
-    "caption": "图文音交错流（Omni-modal）中模态专属编码器微批聚合与主干对齐调度",
+    "file": "ch17-multi-turn-tool-env-rl-state-suspension.svg",
+    "asset": "ch17/ch17-multi-turn-tool-env-rl-state-suspension.svg",
+    "section": "17.4.1",
+    "caption": "多轮工具调用 / SWE-bench 强化学习中等待外部环境返回时的 KV 换出挂起与高并发复用",
     "source_refs": [
-      "case-studies/multimodal-stage-placement.md"
+      "case-studies/rl-scheduling-and-recovery.md"
     ],
-    "TeachingRole": "解决图文音混合批次中重型模态编码阻塞纯文本快路径的异构气泡难题",
+    "TeachingRole": "消除慢速外部沙箱执行期间巨量 KV 缓存死占 HBM 导致的算力饥饿",
     "figure": "17-14",
-    "name": "ch17-audio-video-text-interleaved-batching"
+    "name": "ch17-multi-turn-tool-env-rl-state-suspension"
   },
   {
     "figure_id": "图 17-15",
     "number": 15,
-    "file": "ch17-multimodal-dataloader-gpu-decode-nvjpeg.svg",
-    "asset": "ch17/ch17-multimodal-dataloader-gpu-decode-nvjpeg.svg",
-    "section": "17.1.3",
-    "caption": "多模态预训练中 CPU 解码饥饿瓶颈与 DALI / nvJPEG / NVDEC 硬件视频解码卸载流水线",
+    "file": "ch17-hetrl-heterogeneous-inference-training-matching.svg",
+    "asset": "ch17/ch17-hetrl-heterogeneous-inference-training-matching.svg",
+    "section": "17.2.2",
+    "caption": "HetRL 在带宽型推理卡与算力型训练卡之间的最优配比曲线",
     "source_refs": [
-      "manuscripts/ch17/figure-data.json"
+      "case-studies/rl-scheduling-and-recovery.md"
     ],
-    "TeachingRole": "阐明为何必须在 PCIe 下游利用 GPU NVDEC/nvJPEG 硬解码消除 CPU 与总线瓶颈",
+    "TeachingRole": "建立按生成吞吐与训练吞吐匹配异构卡数的定量公式",
     "figure": "17-15",
-    "name": "ch17-multimodal-dataloader-gpu-decode-nvjpeg"
+    "name": "ch17-hetrl-heterogeneous-inference-training-matching"
   },
   {
     "figure_id": "图 17-16",
     "number": 16,
-    "file": "ch17-dit-cfg-classifier-free-guidance-parallel.svg",
-    "asset": "ch17/ch17-dit-cfg-classifier-free-guidance-parallel.svg",
-    "section": "17.2.3",
-    "caption": "分类器自由引导（CFG 双分支）与条件/无条件批量合并及尾部蒸馏对比",
+    "file": "ch17-dapo-dynamic-sampling-zero-variance-filter.svg",
+    "asset": "ch17/ch17-dapo-dynamic-sampling-zero-variance-filter.svg",
+    "section": "17.3.2",
+    "caption": "DAPO 动态过滤全对（r=1）与全错（r=0）零梯度提示词及 RollPacker 1,600 选 1,024 投机池",
     "source_refs": [
-      "manuscripts/ch17/figure-data.json"
+      "case-studies/rollout-tail-and-sampling.md",
+      "experiments/ch18/18-01/run.py"
     ],
-    "TeachingRole": "解析 CFG-Parallel 跨组单次通信优势及后段去噪关停无条件分支的算力节省",
+    "TeachingRole": "结合 +56.25% 投机超采池与在线零方差过滤确保训练微批 100% 满载有效梯度",
     "figure": "17-16",
-    "name": "ch17-dit-cfg-classifier-free-guidance-parallel"
+    "name": "ch17-dapo-dynamic-sampling-zero-variance-filter"
   },
   {
     "figure_id": "图 17-17",
     "number": 17,
-    "file": "ch17-video-dit-end-to-end-latency-breakdown.svg",
-    "asset": "ch17/ch17-video-dit-end-to-end-latency-breakdown.svg",
-    "section": "17.3.2",
-    "caption": "1080p 视频生成从文本编码、50 步 DiT 去噪到 3D VAE 解码的端到端延迟与显存水位全貌",
+    "file": "ch17-rl-post-training-throughput-roofline.svg",
+    "asset": "ch17/ch17-rl-post-training-throughput-roofline.svg",
+    "section": "17.3.3",
+    "caption": "大规模 RLVR 系统从朴素同步共置到异步分池+尾部拼箱的四阶有效吞吐跃迁瀑布图",
     "source_refs": [
-      "manuscripts/ch17/figure-data.json",
-      "experiments/ch17/17-01/run.py"
+      "case-studies/rollout-tail-and-sampling.md"
     ],
-    "TeachingRole": "建立时间瓶颈在 DiT 去噪（94% 耗时）而显存尖峰在 3D VAE 解码（118 GiB）的正交视图",
+    "TeachingRole": "汇总零冗余重分片、尾部拼箱投机与异步部分采样的阶梯收益及无偏性条件",
     "figure": "17-17",
-    "name": "ch17-video-dit-end-to-end-latency-breakdown"
+    "name": "ch17-rl-post-training-throughput-roofline"
   },
   {
     "figure_id": "图 17-18",
     "number": 18,
-    "file": "ch17-multimodal-world-model-infra-synthesis.svg",
-    "asset": "ch17/ch17-multimodal-world-model-infra-synthesis.svg",
+    "file": "ch17-rlvr-and-test-time-compute-closed-loop.svg",
+    "asset": "ch17/ch17-rlvr-and-test-time-compute-closed-loop.svg",
     "section": "17.4.2",
-    "caption": "多模态与世界模型基础设施的算法—并行—缓存—解耦四维总架构图",
+    "caption": "测试时搜索合成高价值轨迹 → 沙箱验证 → 异步 RLVR 更新 → 蒸馏回直觉模型的自我演进总账本",
     "source_refs": [
-      "case-studies/multimodal-stage-placement.md",
-      "experiments/ch17/17-01/run.py"
+      "experiments/ch18/18-01/run.py"
     ],
-    "TeachingRole": "收束第 17 章三维潜空间、2D-USP、时间步复用与 E-P-D-G 四池解耦的工程总账本",
+    "TeachingRole": "收束第 18 章 RLVR 显存账本、训推池化、长尾治理与推理时搜索的工程总图",
     "figure": "17-18",
-    "name": "ch17-multimodal-world-model-infra-synthesis"
+    "name": "ch17-rlvr-and-test-time-compute-closed-loop"
   },
   {
     "figure_id": "图 17-19",
     "number": 19,
-    "file": "ch17-transfusion-hybrid-causal-bidirectional-mask.svg",
-    "asset": "ch17/ch17-transfusion-hybrid-causal-bidirectional-mask.svg",
+    "file": "ch17-geo-distributed-async-rollout-harvester.svg",
+    "asset": "ch17/ch17-geo-distributed-async-rollout-harvester.svg",
     "section": "17.4.3",
-    "caption": "统一多模态模型（Transfusion / Show-o / Bagel）中文本因果掩码与图像块双向扩散掩码的混合排布及模式切换状态机（算例 17-7）",
+    "caption": "跨地域闲置推理算力异步收割 Rollout 轨迹、Token ID 极窄带宽回传与中心 Learner 重要性采样过滤架构（算例 17-9）",
     "source_refs": [
-      "manuscripts/ch17/figure-data.json",
-      "experiments/ch17/17-02/run.py"
+      "manuscripts/ch18/figure-data.json",
+      "experiments/ch18/18-02/run.py"
     ],
-    "TeachingRole": "推导混合掩码 62.5% 有效面积、648/1024 分块跳过及 <boi> 触发 D→G 跨池迁移的定量准则",
+    "TeachingRole": "复算 10 B/tok 紧凑回传将 1,024×16K 轨迹从 2,473.9 GB 压缩 14,745.6x 至 160.0 MiB 的广域网账本",
     "figure": "17-19",
-    "name": "ch17-transfusion-hybrid-causal-bidirectional-mask"
+    "name": "ch17-geo-distributed-async-rollout-harvester"
   },
   {
     "figure_id": "图 17-20",
     "number": 20,
-    "file": "ch17-3dgs-scaffold-guided-world-model-dit.svg",
-    "asset": "ch17/ch17-3dgs-scaffold-guided-world-model-dit.svg",
+    "file": "ch17-rlvr-reward-hacking-kl-divergence-breaker.svg",
+    "asset": "ch17/ch17-rlvr-reward-hacking-kl-divergence-breaker.svg",
     "section": "17.4.3",
-    "caption": "显式 3DGS 几何光栅化提供深度/法线控制条件与视频 DiT 生成逼真物理交互画面的混合世界模型管线",
+    "caption": "RLVR 训练中奖励黑客（长度失控与熵坍缩）的在线监控指标相图与自适应 KL 制动熔断机制",
     "source_refs": [
-      "manuscripts/ch17/figure-data.json",
-      "experiments/ch17/17-02/run.py"
+      "manuscripts/ch18/figure-data.json",
+      "experiments/ch18/18-02/run.py"
     ],
-    "TeachingRole": "剖析 2.4 ms 3DGS 光栅化 + 24.0 ms 4 步视频 DiT + 4.5 ms VAE 达成 32.36 FPS 零几何漂移的管线账本",
+    "TeachingRole": "建立基于 (KL 散度, 输出长度, 策略熵) 的两级在线奖励黑客制动与检查点回滚状态机",
     "figure": "17-20",
-    "name": "ch17-3dgs-scaffold-guided-world-model-dit"
+    "name": "ch17-rlvr-reward-hacking-kl-divergence-breaker"
   },
   {
     "figure_id": "图 17-21",
     "number": 21,
-    "file": "ch17-causal-streaming-world-model-20fps-kv-rolling.svg",
-    "asset": "ch17/ch17-causal-streaming-world-model-20fps-kv-rolling.svg",
+    "file": "ch17-multi-turn-agentic-rlvr-trajectory-tree-forking.svg",
+    "asset": "ch17/ch17-multi-turn-agentic-rlvr-trajectory-tree-forking.svg",
     "section": "17.4.3",
-    "caption": "自回归流式因果视频世界模型（CausVid / Oasis / Matrix-Game）的块因果滚动 KV 缓存池（1 Sink + 5 滑窗，恒定 1.3184 GiB）架构（算例 17-8）",
+    "caption": "多轮工具交互强化学习（SWE-RL / DeepResearch-RL）中容器环境快照（OverlayFS + CRIU）与 Paged KV 树状分叉架构（算例 17-10）",
     "source_refs": [
-      "manuscripts/ch17/figure-data.json",
-      "experiments/ch17/17-03/run.py"
+      "manuscripts/ch18/figure-data.json",
+      "experiments/ch18/18-03/run.py"
     ],
-    "TeachingRole": "推导 1 Sink + 5 滑窗（21,600 词元）将无限时长世界模型 KV 显存锁定在 1.3184 GiB 的定量账本",
+    "TeachingRole": "推导 16 条叶分支下容器+KV 树分叉将沙箱 CPU 耗时从 672.0 s 压至 114.0 s（5.89x）并省 84.38% 前缀 KV 的账本",
     "figure": "17-21",
-    "name": "ch17-causal-streaming-world-model-20fps-kv-rolling"
+    "name": "ch17-multi-turn-agentic-rlvr-trajectory-tree-forking"
   },
   {
     "figure_id": "图 17-22",
     "number": 22,
-    "file": "ch17-teacache-timestep-embedding-aware-activation-reuse.svg",
-    "asset": "ch17/ch17-teacache-timestep-embedding-aware-activation-reuse.svg",
+    "file": "ch17-asynchronous-off-policy-importance-sampling-clipping.svg",
+    "asset": "ch17/ch17-asynchronous-off-policy-importance-sampling-clipping.svg",
     "section": "17.4.3",
-    "caption": "金字塔注意力广播（PAB）与 TeaCache 时间步嵌入感知特征复用在流式世界模型中的跨步/跨帧加速路径",
+    "caption": "异步离策略强化学习中连乘重要性采样爆炸与 V-trace（ρ̄, c̄ 双重截断）/ TIS 轨迹修正及环境观测掩码机制",
     "source_refs": [
-      "manuscripts/ch17/figure-data.json",
-      "experiments/ch17/17-03/run.py"
+      "manuscripts/ch18/figure-data.json",
+      "experiments/ch18/18-03/run.py"
     ],
-    "TeachingRole": "解析空间/时间/交叉注意力金字塔广播与 TeaCache 如何将单帧延迟从 62.0 ms 压至 38.0 ms（26.32 FPS）",
+    "TeachingRole": "对比 10 步未截断连乘 IS（9.31x 爆炸）与 V-trace 双重截断递推及环境观测掩码置零的收敛保障",
     "figure": "17-22",
-    "name": "ch17-teacache-timestep-embedding-aware-activation-reuse"
+    "name": "ch17-asynchronous-off-policy-importance-sampling-clipping"
   }
 ]

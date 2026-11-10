@@ -1,34 +1,73 @@
 {
   "experiment_id": "23-03",
-  "mineru_olmocr_pdf_pipeline": {
-    "total_books": 2000000,
-    "total_pages": 500000000,
-    "digital_born_ratio": 0.65,
-    "avg_gpu_ms_per_page": 17.72,
-    "throughput_pages_per_s_gpu": 56.43,
-    "speedup_vs_monolithic_vlm_x": 35.27,
-    "speedup_vs_serial_mineru_x": 4.51,
-    "monolithic_vlm_gpu_hours": 86805.56,
-    "total_gpu_hours": 2461.11,
-    "wall_hours_on_64_gpus": 38.45,
-    "total_cost_usd": 5414.44,
-    "cost_per_1m_tokens_usd": 0.0135,
-    "pure_scanned_pages_per_s_gpu": 33.11,
-    "pure_scanned_total_gpu_hours": 4194.44
+  "granularity_sweep": [
+    {
+      "G": 1,
+      "total_experts": 64,
+      "active_experts": 2,
+      "expert_dim": 4096,
+      "tile_efficiency": 1.0,
+      "layer_latency_ms": 0.56,
+      "loss_delta_nats": -0.0,
+      "utility_score": -2.542
+    },
+    {
+      "G": 2,
+      "total_experts": 128,
+      "active_experts": 4,
+      "expert_dim": 2048,
+      "tile_efficiency": 1.0,
+      "layer_latency_ms": 0.59,
+      "loss_delta_nats": -0.024,
+      "utility_score": -0.255
+    },
+    {
+      "G": 4,
+      "total_experts": 256,
+      "active_experts": 8,
+      "expert_dim": 1024,
+      "tile_efficiency": 1.0,
+      "layer_latency_ms": 0.64,
+      "loss_delta_nats": -0.048,
+      "utility_score": 1.92
+    },
+    {
+      "G": 8,
+      "total_experts": 512,
+      "active_experts": 16,
+      "expert_dim": 512,
+      "tile_efficiency": 1.0,
+      "layer_latency_ms": 0.74,
+      "loss_delta_nats": -0.072,
+      "utility_score": 3.87
+    },
+    {
+      "G": 16,
+      "total_experts": 1024,
+      "active_experts": 32,
+      "expert_dim": 256,
+      "tile_efficiency": 0.5,
+      "layer_latency_ms": 2.02,
+      "loss_delta_nats": -0.096,
+      "utility_score": 0.51
+    }
+  ],
+  "chip_comparison": {
+    "rubin_ridge_flop_per_b": 2272.73,
+    "tpuv7_ridge_flop_per_b": 626.05,
+    "rubin_step_ms": 11.86,
+    "rubin_tps": 10792.6,
+    "tpuv7_step_ms": 33.64,
+    "tpuv7_tps": 3805.0,
+    "rubin_speedup_vs_tpuv7": 2.84
   },
-  "repo_ast_topological_packing": {
-    "num_repo_files": 18,
-    "total_cross_file_edges": 40,
-    "alphabetical_causal_coverage_pct": 42.5,
-    "random_causal_coverage_pct": 50.0,
-    "topological_causal_coverage_pct": 95.0,
-    "coverage_gain_pct_points": 52.5,
-    "ppl_alphabetical": 6.85,
-    "ppl_topological": 4.12,
-    "ppl_reduction_pct": 39.85,
-    "context_window_tokens": 65536,
-    "packed_valid_tokens": 64750,
-    "packing_efficiency_pct": 98.8,
-    "padding_waste_pct": 1.2
+  "hwnas_optimal": {
+    "feasible_count": 6,
+    "best_G": 8,
+    "best_act_ratio": 0.03125,
+    "best_attn_ratio": 0.25,
+    "best_tpot_ms": 12.91,
+    "best_state_gib": 28.25,
+    "best_quality_score": 96.8
   }
 }

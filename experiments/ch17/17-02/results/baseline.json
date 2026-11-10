@@ -1,43 +1,33 @@
 {
   "experiment_id": "17-02",
-  "epdg_disaggregation": {
-    "single_img_opt_pair": [
-      1,
-      3
-    ],
-    "single_img_opt_tput": 12.0,
-    "effective_mu_e_at_75pct": 48.0,
-    "link_cap_req_s": 9.16,
-    "tput_4img_h0": {
-      "1E_3PD": 3.0,
-      "2E_2PD": 6.0,
-      "3E_1PD": 4.0
-    },
-    "tput_4img_h75": {
-      "1E_3PD": 9.16,
-      "2E_2PD": 8.0,
-      "3E_1PD": 4.0
-    },
-    "warm_demotion_saving_pct": 86.11
+  "distrs_and_heavy_tail": {
+    "unconditional_mean_s": 10.9,
+    "naive_rem_10s": 0.9,
+    "cond_rem_10s": 90.0,
+    "estimation_error_ratio": 100.0,
+    "sunk_work_tokens": 216000,
+    "trimodal_mean_s": 14.6,
+    "trimodal_cond_rem_15s": 50.0,
+    "trimodal_cond_rem_25s": 175.0
   },
-  "transfusion_hybrid_mask": {
-    "total_tokens": 4096,
-    "active_token_pairs": 10485760,
-    "full_matrix_pairs": 16777216,
-    "active_density_pct": 62.5,
-    "total_tiles": 1024,
-    "executed_tiles": 648,
-    "skipped_tiles": 376,
-    "skipped_tile_pct": 36.72,
-    "tile_effective_occupancy_pct": 98.77,
-    "prefix_kv_handoff_mib": 144.0,
-    "kv_handoff_ms": 2.88
+  "geo_distributed_async_rl": {
+    "total_tokens": 16777216,
+    "kv_payload_gb": 2473.9,
+    "compact_payload_mb": 167.77216,
+    "compact_payload_mib": 160.0,
+    "uplink_compression_ratio": 14745.6,
+    "kv_upload_sec": 1979.1,
+    "compact_upload_ms": 134.2,
+    "fp8_delta_sync_sec": 6.4,
+    "seq_geom_is_ratio": 1.0833
   },
-  "hybrid_3dgs_dit_world_model": {
-    "gs_raster_ms": 2.4,
-    "dit_4step_stream_ms": 24.0,
-    "tiled_vae_ms": 4.5,
-    "total_frame_ms": 30.9,
-    "steady_fps": 32.36
+  "prm_cow_tree_search": {
+    "full_copy_token_slots": 81920,
+    "cow_shared_token_slots": 12288,
+    "cow_memory_saving_pct": 85.0,
+    "full_copy_gib": 11.25,
+    "cow_shared_gib": 1.6875,
+    "serial_tot_sec": 40.0,
+    "spec_tot_sec": 29.6
   }
 }

@@ -1,90 +1,115 @@
 #!/usr/bin/env python3
-"""Experiment 23-02: LLM rubric distillation to lightweight classifier, offline synthetic data factory Roofline jump, and sandbox rejection sampling."""
-from __future__ import annotations
-
+"""Experiment 23-02: Telescoping Cost-Reduction Waterfall, FarSkip-Collective & GQA TP Replication."""
 import json
-from pathlib import Path
+import pathlib
 
-HERE = Path(__file__).resolve().parent
-EXPECTED_PATH = HERE / "expected" / "metrics.json"
-RESULTS_PATH = HERE / "results" / "summary.json"
+HERE = pathlib.Path(__file__).resolve().parent
+RESULTS_DIR = HERE / "results"
 
 
-def compute_metrics() -> dict:
-    # 1. LLM Rubric Distillation (70B Teacher -> 110M Classifier) Compute Leverage (Ex 23-4)
-    total_docs_b = 50.0  # 50 billion documents
-    avg_tokens_per_doc = 500
-    total_corpus_tokens = int(total_docs_b * 1e9 * avg_tokens_per_doc)  # 25T tokens
+def compute_telescoping_waterfall():
+    # Locked S0 -> S1 -> S2 -> S3 weight-read lower bound states from Ch14 Section 14.8.2 & calculations.json:
+    # S0: 70B, 1 Byte/param (INT8/FP8) on H100 (3.35 TB/s) -> 70 / 3.35 = 20.895522 ms (displayed 20.90 ms)
+    # S1: 8B, 1 Byte/param on H100 (3.35 TB/s) -> 8 / 3.35 = 2.388060 ms (displayed 2.39 ms, r1 = 70 / 8 = 8.75x)
+    # S2: 8B, 0.5 Byte/param (FP4/INT4) on H100 (3.35 TB/s) -> 4 / 3.35 = 1.194030 ms (displayed 1.19 ms, r2 = 2.00x)
+    # S3: 8B, 0.5 Byte/param on H200 (4.80 TB/s) -> 4 / 4.80 = 0.833333 ms (displayed 0.83 ms, r3 = 4.80 / 3.35 = 1.432836x)
+    s0_exact = 70.0 / 3.35
+    s1_exact = 8.0 / 3.35
+    s2_exact = 4.0 / 3.35
+    s3_exact = 4.0 / 4.80
 
-    teacher_70b_tok_s_gpu = 3200.0
-    direct_70b_gpu_hours = round(total_corpus_tokens / (teacher_70b_tok_s_gpu * 3600.0), 1)  # 2,170,138.9 GPU-h
+    r1 = s0_exact / s1_exact  # 8.75
+    r2 = s1_exact / s2_exact  # 2.00
+    r3 = s2_exact / s3_exact  # 4.80 / 3.35 = 1.43283582
+    product_speedup = r1 * r2 * r3
+    direct_ratio = s0_exact / s3_exact
+    rounded_display_ratio = 20.90 / 0.83
 
-    seed_docs_m = 5.0  # 5 million seed docs labeled by 70B teacher
-    seed_labeling_gpu_hours = round((seed_docs_m * 1e6 * avg_tokens_per_doc) / (teacher_70b_tok_s_gpu * 3600.0), 1)  # 217.0 GPU-h
-    classifier_train_gpu_hours = 80.0
-    student_110m_tok_s_gpu = 180000.0
-    student_scoring_gpu_hours = round(total_corpus_tokens / (student_110m_tok_s_gpu * 3600.0), 1)  # 38,580.2 GPU-h
-    distilled_total_gpu_hours = round(seed_labeling_gpu_hours + classifier_train_gpu_hours + student_scoring_gpu_hours, 1)  # 38,877.2 GPU-h
-    distillation_compute_leverage_x = round(direct_70b_gpu_hours / distilled_total_gpu_hours, 2)  # 55.82x
-
-    # 2. Offline Synthetic Data Factory (Batch=2048 Throughput-First) vs Online Serving (Batch=32) & Rejection Sampling (Ex 23-5)
-    online_batch_size = 32
-    online_tok_s_gpu = 1920.0
-    online_mfu_pct = 11.2
-    online_gpu_rate_usd_hr = 4.00
-    online_usd_per_1m_tokens = round(online_gpu_rate_usd_hr / (online_tok_s_gpu * 3600.0 / 1e6), 3)  # 0.579 USD / 1M
-
-    offline_batch_size = 2048
-    offline_tok_s_gpu = 13824.0
-    offline_mfu_pct = 58.4
-    throughput_gain_x = round(offline_tok_s_gpu / online_tok_s_gpu, 2)  # 7.20x
-
-    slack_spot_gpu_rate_usd_hr = 2.20  # 45% discount via off-peak / slack harvesting
-    offline_raw_usd_per_1m_tokens = round(slack_spot_gpu_rate_usd_hr / (offline_tok_s_gpu * 3600.0 / 1e6), 3)  # 0.044 USD / 1M
-    raw_cost_reduction_x = round(online_usd_per_1m_tokens / offline_raw_usd_per_1m_tokens, 2)  # 13.16x
-
-    raw_sandbox_pass_yield_pct = 31.25  # 5 / 16 pass compiler + unit tests on first try
-    rephrase_salvage_rate = 0.40        # 40% of failed traces salvaged via 1-step self-correction
-    effective_verified_yield_pct = round(
-        raw_sandbox_pass_yield_pct + rephrase_salvage_rate * (100.0 - raw_sandbox_pass_yield_pct), 2
-    )  # 58.75%
-    verified_usd_per_1m_tokens = round(offline_raw_usd_per_1m_tokens / (effective_verified_yield_pct / 100.0), 3)  # 0.075 USD / 1M
+    host_overhead_sweep = []
+    for t_host in [0.0, 0.25, 0.50, 1.00]:
+        e2e_speedup = (s0_exact + t_host) / (s3_exact + t_host)
+        host_overhead_sweep.append({
+            "host_overhead_ms": t_host,
+            "e2e_speedup": round(e2e_speedup, 4),
+        })
 
     return {
-        "experiment_id": "23-02",
-        "rubric_distillation": {
-            "direct_70b_gpu_hours": direct_70b_gpu_hours,
-            "seed_labeling_gpu_hours": seed_labeling_gpu_hours,
-            "student_scoring_gpu_hours": student_scoring_gpu_hours,
-            "distilled_total_gpu_hours": distilled_total_gpu_hours,
-            "distillation_compute_leverage_x": distillation_compute_leverage_x,
+        "states_exact_ms": {
+            "S0": round(s0_exact, 6),
+            "S1": round(s1_exact, 6),
+            "S2": round(s2_exact, 6),
+            "S3": round(s3_exact, 6),
         },
-        "synthetic_data_factory": {
-            "online_batch_size": online_batch_size,
-            "online_tok_s_gpu": online_tok_s_gpu,
-            "online_mfu_pct": online_mfu_pct,
-            "online_usd_per_1m_tokens": online_usd_per_1m_tokens,
-            "offline_batch_size": offline_batch_size,
-            "offline_tok_s_gpu": offline_tok_s_gpu,
-            "offline_mfu_pct": offline_mfu_pct,
-            "throughput_gain_x": throughput_gain_x,
-            "offline_raw_usd_per_1m_tokens": offline_raw_usd_per_1m_tokens,
-            "raw_cost_reduction_x": raw_cost_reduction_x,
-            "raw_sandbox_pass_yield_pct": raw_sandbox_pass_yield_pct,
-            "effective_verified_yield_pct": effective_verified_yield_pct,
-            "verified_usd_per_1m_tokens": verified_usd_per_1m_tokens,
-        },
+        "states_display_ms": {"S0": 20.90, "S1": 2.39, "S2": 1.19, "S3": 0.83},
+        "conditional_ratios": [round(r1, 6), round(r2, 6), round(r3, 6)],
+        "telescoping_product": round(product_speedup, 6),
+        "direct_ratio": round(direct_ratio, 6),
+        "rounded_display_ratio": round(rounded_display_ratio, 4),
+        "host_overhead_sweep": host_overhead_sweep,
     }
 
 
-def main() -> None:
-    metrics = compute_metrics()
-    payload = json.dumps(metrics, indent=2, ensure_ascii=False) + "\n"
-    EXPECTED_PATH.parent.mkdir(parents=True, exist_ok=True)
-    EXPECTED_PATH.write_text(payload)
-    RESULTS_PATH.parent.mkdir(parents=True, exist_ok=True)
-    RESULTS_PATH.write_text(payload)
-    print(payload.strip())
+def simulate_farskip_collective():
+    layers = 60
+    t_comp_ms = 1.20
+    alpha_intra = 0.25
+    t_comm_ms = 1.10
+
+    results = {}
+    for m in [0, 1, 2]:
+        overlap_window_ms = (m + alpha_intra) * t_comp_ms
+        exposed_per_covered_layer_ms = max(0.0, t_comm_ms - overlap_window_ms)
+        total_exposed_ms = 0.0
+        for layer_idx in range(1, layers + 1):
+            m_eff = min(m, layers - layer_idx)
+            layer_overlap_ms = (m_eff + alpha_intra) * t_comp_ms
+            total_exposed_ms += max(0.0, t_comm_ms - layer_overlap_ms)
+        total_ms = layers * t_comp_ms + total_exposed_ms
+        results[f"m={m}"] = {
+            "overlap_window_ms": round(overlap_window_ms, 4),
+            "exposed_per_covered_layer_ms": round(exposed_per_covered_layer_ms, 4),
+            "total_exposed_comm_ms": round(total_exposed_ms, 4),
+            "total_forward_ms": round(total_ms, 4),
+        }
+    base_ms = results["m=0"]["total_forward_ms"]
+    for k, v in results.items():
+        v["speedup_vs_m0"] = round(base_ms / v["total_forward_ms"], 4)
+    return results
+
+
+def audit_gqa_tp_replication():
+    layers = 64
+    d_h = 128
+    seq_len = 131_072
+    tp = 8
+    bytes_per_elem = 1  # FP8 KV
+
+    configs = {}
+    for n_kv in [8, 2]:
+        rep_factor = max(1, tp // n_kv)
+        logical_kv_bytes = layers * 2 * n_kv * d_h * bytes_per_elem * seq_len
+        physical_total_bytes = logical_kv_bytes * rep_factor
+        per_gpu_gib = (physical_total_bytes / tp) / (1024 ** 3)
+        total_gib = physical_total_bytes / (1024 ** 3)
+        configs[f"n_kv={n_kv}"] = {
+            "replication_factor": rep_factor,
+            "logical_kv_gib": round(logical_kv_bytes / (1024 ** 3), 4),
+            "per_gpu_physical_gib": round(per_gpu_gib, 4),
+            "cluster_8gpu_physical_gib": round(total_gib, 4),
+        }
+    return configs
+
+
+def main():
+    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    out = {
+        "telescoping_waterfall": compute_telescoping_waterfall(),
+        "farskip_collective": simulate_farskip_collective(),
+        "gqa_tp_replication": audit_gqa_tp_replication(),
+    }
+    out_path = RESULTS_DIR / "telescoping_and_farskip.json"
+    out_path.write_text(json.dumps(out, indent=2, ensure_ascii=False) + "\n")
+    print(f"Wrote {out_path}")
 
 
 if __name__ == "__main__":

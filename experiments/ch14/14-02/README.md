@@ -1,12 +1,17 @@
-# 实验 14-02：2023–2026 逐级条件比率瀑布、FarSkip-Collective 跳层通信掩盖与 GQA 复制税模拟器
+# 实验 14-02：园区百兆瓦储能套利、Kareus 动静态能耗合并与 Streaming DiLoCo / Di-PS 广域网账本
 
-本实验对应第 14 章 `练习 14-11`、`练习 14-13`、`练习 14-14` 与 `实验 14-15`，仅依赖 Python 3 标准库即可独立运行：
+本实验复现第 14 章 15.4 节与 15.6.2–15.6.3 节的能量调度与跨地域协同训练账本：
 
-1. **逐级条件比率连乘（Telescoping Waterfall）**：严格对齐第 14.8.2 节与 `research/token-cost-2023-2026/calculations.json` 的四个锁定状态 $S_0 \to S_1 \to S_2 \to S_3$（$70/3.35 \approx 20.90\ \mathrm{ms} \to 8/3.35 \approx 2.39\ \mathrm{ms} \to 4/3.35 \approx 1.19\ \mathrm{ms} \to 4/4.80 \approx 0.83\ \mathrm{ms}$；逐级条件比率 $r_1 = 8.75\times$、$r_2 = 2.00\times$、$r_3 = 4.80/3.35 \approx 1.4328\times$；精确连乘加速比 $25.0746\times \approx 25.1\times$）及加入主机固定调度开销 $t_{\mathrm{host}}$ 后的端到端加速比稀释；
-2. **FarSkip-Collective 跨层跳步掩盖模拟**：复算 60 层 MoE 模型在 $m=0$（逐层同步阻塞，总耗时 $120.0\ \mathrm{ms}$）与 $m=1$（跨层延后消费，前 59 层通信完全掩盖、末层暴露 $0.80\ \mathrm{ms}$，总耗时 $72.80\ \mathrm{ms}$，加速比 $1.6484\times$）下的逐层暴露通信时间；
-3. **GQA 键值头复制因子核查**：对比 $n_{\mathrm{kv}}=8$ 与 $n_{\mathrm{kv}}=2$ 在 $\mathrm{TP}=8$ 部署下的复制因子（$1\times$ vs. $4\times$）与 8 卡物理 KV 显存占用（同为 $16.0\ \mathrm{GiB}$）。
+1. **Streaming DiLoCo 与 Di-PS 跨地域训练带宽账本（算例 15-7）**：
+   - $100\mathrm{B}$ 模型（$V_{\mathrm{sync}} = 3,200\ \mathrm{Gb}$，$T_{\mathrm{step}} = 2.0\ \mathrm{s}$）：每步同步需 $1,600\ \mathrm{Gbps}$，DiLoCo（$H=500$）平均带宽降至 $3.2\ \mathrm{Gbps}$，但在 $10\ \mathrm{Gbps}$ 专线上阻塞 $320\ \mathrm{s}$；
+   - Streaming DiLoCo 切分为 $M=25$ 个分片（每 $40\ \mathrm{s}$ 传一个 $128\ \mathrm{Gb}$ 分片，耗时 $12.8\ \mathrm{s} < 40\ \mathrm{s}$），暴露停顿降为 $0\ \mathrm{s}$。
+2. **Kareus（OSDI '26）动静态能耗联合优化（练习 15-12）**：
+   - 给定单卡静态漏电功耗 $P_{\mathrm{static}} = 180\ \mathrm{W}$、满载动态功耗 $P_{\mathrm{dyn}} = 520\ \mathrm{W}$，在集群负载率 $u = 40\%$ 下，均匀分摊单卡功耗为 $180 + 0.40 \times 520 = 388\ \mathrm{W}$；
+   - 采用 Kareus 将负载紧缩合并至 $40\%$ 活跃卡满载运行（$700\ \mathrm{W}$）、其余 $60\%$ 空闲卡进入深度休眠（$P_{\mathrm{sleep}} = 15\ \mathrm{W}$），等效单卡平均功耗降至 $0.40 \times 700 + 0.60 \times 15 = 289\ \mathrm{W}$（若休眠态彻底关断至 $0\ \mathrm{W}$ 则为 $280\ \mathrm{W}$），分别节电 $25.52\%$ 与 $27.84\%$。
+3. **百兆瓦时园区储能系统（BESS）峰谷套利与电网调频账本（练习 15-13）**：
+   - $E_{\mathrm{BESS}} = 100\ \mathrm{MWh}$，谷电充电价 $c_{\mathrm{off}} = 0.04\ \mathrm{USD/kWh}$、峰电放电顶替价 $c_{\mathrm{peak}} = 0.12\ \mathrm{USD/kWh}$（名义价差 $0.08\ \mathrm{USD/kWh}$），往返循环效率 $\eta_{\mathrm{rt}} = 88\%$。
 
-## 运行与校验
+## 运行方式
 
 ```bash
 python3 experiments/ch14/14-02/run.py

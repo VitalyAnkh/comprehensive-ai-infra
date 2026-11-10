@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""Experiment 22-01: Cascaded vs Native Full-Duplex S2S latency, RVQ Codec bitrate, and Temporal+Depth CUDA Graph fusion."""
+"""Experiment 22-01: AlphaFold 3 / Boltz-1 two-stage disaggregation, MMseqs2-GPU MSA speedup, and Pairformer O(N^2)/O(N^3) chunked triangle attention + DAP."""
 from __future__ import annotations
 
 import json
-import math
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -12,87 +11,63 @@ RESULTS_PATH = HERE / "results" / "summary.json"
 
 
 def compute_metrics() -> dict:
-    # 1. Cascaded ASR-LLM-TTS vs Native Full-Duplex S2S TTFA latency breakdown (Ex 22-1)
-    cascaded_stages_ms = {
-        "vad_silence_wait_ms": 480.0,
-        "streaming_asr_ms": 220.0,
-        "llm_ttft_and_clause_buffer_ms": 280.0,
-        "tts_first_chunk_ms": 240.0,
-        "network_and_io_ms": 60.0,
-    }
-    cascaded_total_ttfa_ms = round(sum(cascaded_stages_ms.values()), 2)  # 1280.0 ms
+    # 1. AlphaFold 3 / Boltz-1 Two-Stage Disaggregation & MMseqs2-GPU Acceleration (Ex 24-1)
+    cpu_msa_search_sec = 2700.0  # 45 minutes JackHMMER/HHblits CPU search
+    gpu_pairformer_diffusion_sec = 48.0  # 5 seeds x 5 diffusion samples on H100
+    coupled_total_sec = round(cpu_msa_search_sec + gpu_pairformer_diffusion_sec, 2)  # 2,748.0 s
+    coupled_gpu_utilization_pct = round((gpu_pairformer_diffusion_sec / coupled_total_sec) * 100.0, 2)  # 1.75%
+    coupled_gpu_idle_pct = round(100.0 - coupled_gpu_utilization_pct, 2)  # 98.25%
 
-    duplex_stages_ms = {
-        "client_mic_aec_opus_ms": 25.0,
-        "webrtc_rtt_and_jitter_buffer_ms": 35.0,
-        "codec_encode_ms": 6.0,
-        "temporal_plus_depth_gpu_ms": 11.5,
-        "causal_vocoder_decode_ms": 6.5,
-        "frame_tick_alignment_ms": 80.0,
-    }
-    duplex_total_ttfa_ms = round(sum(duplex_stages_ms.values()), 2)  # 164.0 ms
-    human_perception_threshold_ms = 200.0
-    ttfa_speedup_x = round(cascaded_total_ttfa_ms / duplex_total_ttfa_ms, 2)  # 7.80x
+    mmseqs2_gpu_msa_sec = 1.20
+    msa_speedup_x = round(cpu_msa_search_sec / mmseqs2_gpu_msa_sec, 1)  # 2250.0x
+    disaggregated_total_sec = round(mmseqs2_gpu_msa_sec + gpu_pairformer_diffusion_sec, 2)  # 49.20 s
+    end_to_end_speedup_x = round(coupled_total_sec / disaggregated_total_sec, 2)  # 55.85x
+    stage2_gpu_utilization_pct = round((gpu_pairformer_diffusion_sec / disaggregated_total_sec) * 100.0, 2)  # 97.56%
 
-    # 2. RVQ Neural Audio Codec (Mimi 12.5 Hz, Q=8 codebooks, V=2048) bitrate equation (Ex 22-2)
-    pcm_sample_rate_hz = 24000
-    pcm_bits_per_sample = 16
-    raw_pcm_kbps = round(pcm_sample_rate_hz * pcm_bits_per_sample / 1000.0, 2)  # 384.0 kbps
+    # 2. Pairformer O(N^2) Pair Memory & O(N^3) Chunked Triangle Attention + Dynamic Axial Parallelism (Ex 24-2)
+    n_res = 4096
+    pair_channels_cz = 128
+    num_heads = 4
+    bytes_bf16 = 2
 
-    frame_rate_hz = 12.5
-    frame_period_ms = round(1000.0 / frame_rate_hz, 2)  # 80.0 ms
-    num_codebooks_q = 8
-    vocab_size_va = 2048
-    bits_per_token = int(round(math.log2(vocab_size_va)))  # 11 bits
-    tokens_per_sec_per_stream = round(frame_rate_hz * num_codebooks_q, 1)  # 100.0 tok/s
-    joint_step_tokens = 2 * num_codebooks_q + 1  # 8 user + 8 assistant + 1 inner monologue text = 17 tokens/step
-    rvq_bitrate_kbps = round(tokens_per_sec_per_stream * bits_per_token / 1000.0, 2)  # 1.10 kbps
-    codec_compression_x = round(raw_pcm_kbps / rvq_bitrate_kbps, 2)  # 349.09x
+    pair_tensor_gib = round((n_res * n_res * pair_channels_cz * bytes_bf16) / (1024.0 ** 3), 2)  # 4.00 GiB
+    naive_tri_attn_logits_gib = round((num_heads * (n_res ** 3) * bytes_bf16) / (1024.0 ** 3), 2)  # 512.00 GiB
 
-    # 3. Temporal (7B, 1 step) + Depth (100M, Q=8 steps) GPU Roofline & Full-Step CUDA Graph (Ex 22-3)
-    temporal_step_ms = 3.50
-    depth_layers = 6
-    kernels_per_layer = 8
-    total_depth_kernels = num_codebooks_q * depth_layers * kernels_per_layer  # 384 micro-kernels
-    launch_overhead_per_kernel_us = 35.0
-    eager_launch_overhead_ms = round(total_depth_kernels * launch_overhead_per_kernel_us / 1000.0, 2)  # 13.44 ms
-    eager_unpinned_mem_ms = round(num_codebooks_q * depth_layers * 0.45, 2)  # 21.60 ms
-    depth_eager_ms = round(eager_launch_overhead_ms + eager_unpinned_mem_ms, 2)  # 35.04 ms
-    total_frame_eager_ms = round(temporal_step_ms + depth_eager_ms, 2)  # 38.54 ms
-
-    depth_cudagraph_l2_ms = 8.00
-    total_frame_cudagraph_ms = round(temporal_step_ms + depth_cudagraph_l2_ms, 2)  # 11.50 ms
-    depth_speedup_x = round(depth_eager_ms / depth_cudagraph_l2_ms, 2)  # 4.38x
-    full_step_speedup_x = round(total_frame_eager_ms / total_frame_cudagraph_ms, 2)  # 3.35x
+    chunk_size_b = 64
+    dap_degree_p = 4
+    chunked_dap_attn_workspace_gib = round(
+        (num_heads * chunk_size_b * (n_res ** 2) * bytes_bf16) / (dap_degree_p * (1024.0 ** 3)), 3
+    )  # 2.000 GiB -> with fused Flash-style online softmax (no N^2 materialization per chunk): 0.250 GiB
+    fused_chunked_dap_workspace_gib = 0.25
+    attn_workspace_reduction_x = round(naive_tri_attn_logits_gib / fused_chunked_dap_workspace_gib, 1)  # 2048.0x
+    per_gpu_total_pair_mem_gib = 6.25
+    all_to_all_transpose_volume_gib = round(pair_tensor_gib * (dap_degree_p - 1) / dap_degree_p, 2)  # 3.00 GiB
 
     return {
         "experiment_id": "22-01",
-        "latency_comparison": {
-            "cascaded_total_ttfa_ms": cascaded_total_ttfa_ms,
-            "duplex_total_ttfa_ms": duplex_total_ttfa_ms,
-            "human_perception_threshold_ms": human_perception_threshold_ms,
-            "ttfa_speedup_x": ttfa_speedup_x,
+        "two_stage_msa_disaggregation": {
+            "cpu_msa_search_sec": cpu_msa_search_sec,
+            "gpu_pairformer_diffusion_sec": gpu_pairformer_diffusion_sec,
+            "coupled_total_sec": coupled_total_sec,
+            "coupled_gpu_utilization_pct": coupled_gpu_utilization_pct,
+            "coupled_gpu_idle_pct": coupled_gpu_idle_pct,
+            "mmseqs2_gpu_msa_sec": mmseqs2_gpu_msa_sec,
+            "msa_speedup_x": msa_speedup_x,
+            "disaggregated_total_sec": disaggregated_total_sec,
+            "end_to_end_speedup_x": end_to_end_speedup_x,
+            "stage2_gpu_utilization_pct": stage2_gpu_utilization_pct,
         },
-        "rvq_codec_ledger": {
-            "raw_pcm_kbps": raw_pcm_kbps,
-            "frame_rate_hz": frame_rate_hz,
-            "frame_period_ms": frame_period_ms,
-            "num_codebooks_q": num_codebooks_q,
-            "bits_per_token": bits_per_token,
-            "tokens_per_sec_per_stream": tokens_per_sec_per_stream,
-            "joint_step_tokens": joint_step_tokens,
-            "rvq_bitrate_kbps": rvq_bitrate_kbps,
-            "codec_compression_x": codec_compression_x,
-        },
-        "temporal_depth_cudagraph": {
-            "temporal_step_ms": temporal_step_ms,
-            "total_depth_kernels": total_depth_kernels,
-            "depth_eager_ms": depth_eager_ms,
-            "total_frame_eager_ms": total_frame_eager_ms,
-            "depth_cudagraph_l2_ms": depth_cudagraph_l2_ms,
-            "total_frame_cudagraph_ms": total_frame_cudagraph_ms,
-            "depth_speedup_x": depth_speedup_x,
-            "full_step_speedup_x": full_step_speedup_x,
+        "pairformer_triangle_attention_dap": {
+            "n_res": n_res,
+            "pair_tensor_gib": pair_tensor_gib,
+            "naive_tri_attn_logits_gib": naive_tri_attn_logits_gib,
+            "chunk_size_b": chunk_size_b,
+            "dap_degree_p": dap_degree_p,
+            "chunked_dap_attn_workspace_gib": chunked_dap_attn_workspace_gib,
+            "fused_chunked_dap_workspace_gib": fused_chunked_dap_workspace_gib,
+            "attn_workspace_reduction_x": attn_workspace_reduction_x,
+            "per_gpu_total_pair_mem_gib": per_gpu_total_pair_mem_gib,
+            "all_to_all_transpose_volume_gib": all_to_all_transpose_volume_gib,
         },
     }
 

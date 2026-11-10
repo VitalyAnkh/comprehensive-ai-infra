@@ -1,0 +1,30 @@
+{
+  "experiment_id": "19-04",
+  "latency_comparison": {
+    "cascaded_total_ttfa_ms": 1280.0,
+    "duplex_total_ttfa_ms": 164.0,
+    "human_perception_threshold_ms": 200.0,
+    "ttfa_speedup_x": 7.8
+  },
+  "rvq_codec_ledger": {
+    "raw_pcm_kbps": 384.0,
+    "frame_rate_hz": 12.5,
+    "frame_period_ms": 80.0,
+    "num_codebooks_q": 8,
+    "bits_per_token": 11,
+    "tokens_per_sec_per_stream": 100.0,
+    "joint_step_tokens": 17,
+    "rvq_bitrate_kbps": 1.1,
+    "codec_compression_x": 349.09
+  },
+  "temporal_depth_cudagraph": {
+    "temporal_step_ms": 3.5,
+    "total_depth_kernels": 384,
+    "depth_eager_ms": 35.04,
+    "total_frame_eager_ms": 38.54,
+    "depth_cudagraph_l2_ms": 8.0,
+    "total_frame_cudagraph_ms": 11.5,
+    "depth_speedup_x": 4.38,
+    "full_step_speedup_x": 3.35
+  }
+}

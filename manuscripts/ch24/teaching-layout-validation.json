@@ -1,110 +1,264 @@
-[
-  {
-    "figure": "ch24-llm-1d-tokens-vs-ai4science-four-structural-domains",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch24-alphafold3-boltz1-two-stage-disaggregated-pipeline",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch24-mmseqs2-gpu-kmer-prefilter-and-smith-waterman",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch24-pairformer-triangle-multiplication-and-attention-o-n3",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch24-chunked-triangle-attention-and-dynamic-axial-parallelism",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch24-all-atom-diffusion-module-multi-sample-batching",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch24-evo2-stripedhyena2-multi-scale-hyena-attention-backbone",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch24-flashfftconv-monarch-decomposition-tensor-core",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch24-sfno-spherical-harmonics-and-2d-grid-decomposition",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch24-spatial-domain-halo-exchange-computation-overlap",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch24-era5-petabyte-zarr-gds-direct-streaming-dataloader",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch24-mace-equivariant-message-passing-and-verlet-neighbor-list",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch24-ai-in-the-loop-hybrid-hpc-pde-solver-and-surrogate",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch24-autonomous-wet-lab-active-learning-closed-loop",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch24-twenty-four-chapter-encyclopedia-knowledge-atlas",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch24-unified-laws-across-all-24-chapters-synthesis",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch24-tokamak-plasma-tearing-mode-sub-ms-rl-control",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch24-single-cell-atlas-sparse-gene-expression-dataloader",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  }
-]
+{
+  "chapter": 24,
+  "total_figures": 32,
+  "total_warnings": 0,
+  "all_passed": true,
+  "figures": [
+    {
+      "figure": "24-1",
+      "file": "ch24-deepseek-open-infra-seven-pillar-fullstack-architecture.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "24-2",
+      "file": "ch24-flashmla-512-plus-64-pingpong-warpgroup-pipeline.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "24-3",
+      "file": "ch24-flashmla-variable-length-split-kv-load-balancer.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "24-4",
+      "file": "ch24-deepgemm-runtime-jit-shape-constant-specialization.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "24-5",
+      "file": "ch24-deepgemm-fp8-1x128-128x128-two-level-ffma-accumulation.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "24-6",
+      "file": "ch24-deepep-normal-mode-nvlink-rdma-hybrid-forwarding.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "24-7",
+      "file": "ch24-deepep-low-latency-ibgda-zero-sm-hook-overlap.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "24-8",
+      "file": "ch24-dualpipe-bidirectional-pipeline-schedule-and-20-stage-grid.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "24-9",
+      "file": "ch24-dualpipe-fine-grained-backward-input-weight-split.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "24-10",
+      "file": "ch24-3fs-craq-chain-replication-and-usrbio-zero-copy-ring.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "24-11",
+      "file": "ch24-3fs-180-node-6600gbs-throughput-and-graysort-pipeline.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "24-12",
+      "file": "ch24-smallpond-duckdb-on-3FS-serverless-parquet-shuffle.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "24-13",
+      "file": "ch24-mooncake-transfer-engine-multi-nic-rdma-kv-pool.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "24-14",
+      "file": "ch24-mooncake-early-rejection-and-sla-goodput-controller.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "24-15",
+      "file": "ch24-ktransformers-gpu-mla-and-cpu-amx-numa-expert-offload.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "24-16",
+      "file": "ch24-deepseek-fullstack-cost-and-efficiency-synthesis.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "24-17",
+      "file": "ch24-llm-rlvr-gpu-kernel-synthesis-closed-loop-architecture.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "24-18",
+      "file": "ch24-nsight-compute-roofline-and-warp-stall-feedback-prompt.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "24-19",
+      "file": "ch24-kernelbench-multi-turn-evolution-accuracy-and-speedup.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "24-20",
+      "file": "ch24-auto-discovered-register-fusion-vs-human-handwritten-kernel.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "24-21",
+      "file": "ch24-ilp-mcts-5d-auto-parallelism-and-collective-tree-search.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "24-22",
+      "file": "ch24-alphachip-rl-macro-placement-and-wirelength-optimization.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "24-23",
+      "file": "ch24-per-kernel-dvfs-frequency-scaling-energy-delay-product.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "24-24",
+      "file": "ch24-autonomous-aiops-straggler-and-pfc-root-cause-graph.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "24-25",
+      "file": "ch24-sub-minute-fault-isolation-mttr-and-ettr-recovery.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "24-26",
+      "file": "ch24-datacenter-digital-twin-workload-network-thermal-cosim.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "24-27",
+      "file": "ch24-thirty-chapter-five-part-encyclopedia-master-atlas.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "24-28",
+      "file": "ch24-pillar-1-to-3-hardware-networking-training-inference-map.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "24-29",
+      "file": "ch24-pillar-4-to-5-multimodal-agent-science-frontier-map.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "24-30",
+      "file": "ch24-four-fundamental-conservation-laws-across-30-chapters.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "24-31",
+      "file": "ch24-ten-year-ai-infrastructure-roadmap-2026-to-2035.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    },
+    {
+      "figure": "24-32",
+      "file": "ch24-grand-finale-ai-infrastructure-system-engineering-crown.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
+      "text_extent_warnings": [],
+      "passed": true
+    }
+  ]
+}

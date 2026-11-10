@@ -1,23 +1,31 @@
 #!/usr/bin/env python3
-"""Verify deterministic outputs for Experiment 24-01."""
+"""Verify Experiment 24-01."""
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
-from run import compute_metrics, EXPECTED_PATH, RESULTS_PATH
+
+HERE = Path(__file__).resolve().parent
 
 
 def main() -> None:
-    actual = compute_metrics()
-    expected = json.loads(Path(EXPECTED_PATH).read_text())
-    results = json.loads(Path(RESULTS_PATH).read_text())
-    assert actual == expected == results, f"Mismatch:\nactual={actual}\nexpected={expected}\nresults={results}"
-    assert actual["two_stage_msa_disaggregation"]["msa_speedup_x"] == 2250.0
-    assert actual["two_stage_msa_disaggregation"]["end_to_end_speedup_x"] == 55.85
-    assert actual["two_stage_msa_disaggregation"]["stage2_gpu_utilization_pct"] == 97.56
-    assert actual["pairformer_triangle_attention_dap"]["pair_tensor_gib"] == 4.0
-    assert actual["pairformer_triangle_attention_dap"]["naive_tri_attn_logits_gib"] == 512.0
-    assert actual["pairformer_triangle_attention_dap"]["attn_workspace_reduction_x"] == 2048.0
+    exp = json.loads((HERE / "expected" / "metrics.json").read_text())
+    res = json.loads((HERE / "results" / "summary.json").read_text())
+    assert exp == res, "Expected and results mismatch"
+
+    m = res["flashmla"]
+    assert m["mla_kv_elements"] == 576
+    assert m["mla_kv_bytes_per_token"] == 1152
+    assert math.isclose(m["kv_compression_vs_mha64_x"], 28.44, rel_tol=1e-6)
+    assert math.isclose(m["achieved_bw_gbs"], 3000.0, rel_tol=1e-6)
+    assert math.isclose(m["bw_utilization_pct"], 89.55, rel_tol=1e-6)
+    assert math.isclose(m["achieved_tflops"], 580.0, rel_tol=1e-6)
+
+    g = res["deepgemm"]
+    assert g["jit_regs_per_thread"] == 192
+    assert math.isclose(g["ffma_cycle_overhead_pct"], 3.12, rel_tol=1e-6)
+    assert math.isclose(g["achieved_fp8_tflops"], 1358.0, rel_tol=1e-6)
     print("Experiment 24-01 verified successfully.")
 
 

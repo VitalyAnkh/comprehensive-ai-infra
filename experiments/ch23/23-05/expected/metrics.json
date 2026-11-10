@@ -1,0 +1,25 @@
+{
+  "experiment_id": "23-05",
+  "blt_entropy_patching": {
+    "vocab_size_v": 256000,
+    "hidden_dim_d": 4096,
+    "saved_vocab_mem_gb": 4.194,
+    "saved_lm_head_gflops_per_tok": 2.1,
+    "entropy_threshold_bits": 1.35,
+    "base_patch_bytes": 4.5,
+    "structured_patch_bytes": 12.0,
+    "seq_len_reduction_x": 2.67,
+    "e2e_flop_reduction_pct": 52.4
+  },
+  "titans_ttt_chunk_dual": {
+    "head_dim": 128,
+    "chunk_size_b": 64,
+    "serial_arith_intensity": 1.5,
+    "chunk_arith_intensity": 48.0,
+    "serial_throughput_ktok_s": 42.0,
+    "chunk_throughput_ktok_s": 1033.2,
+    "ttt_speedup_x": 24.6,
+    "context_len_2m": 2000000,
+    "fast_weight_mb_per_layer": 16.0
+  }
+}

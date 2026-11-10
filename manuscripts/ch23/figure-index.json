@@ -2,265 +2,870 @@
   {
     "figure_id": "图 23-1",
     "number": 1,
-    "file": "ch23-100pb-commoncrawl-to-15t-tokens-curation-funnel.svg",
-    "asset": "ch23/ch23-100pb-commoncrawl-to-15t-tokens-curation-funnel.svg",
-    "section": "23.1.1",
-    "caption": "从 100 PB CommonCrawl 原始 WARC 归档经七级提纯漏斗产出 15.0T 精品词元的体积与算力瀑布（算例 23-1）",
+    "file": "ch23-codesign-simultaneous-equations.svg",
+    "asset": "ch23/ch23-codesign-simultaneous-equations.svg",
+    "section": "23.1.2",
+    "caption": "模型—系统—硬件协同设计的跨层耦合约束（MXFP4 块粒度、SFU 配比、HBM 容量与超节点半径）及四大定量设计杠杆",
     "source_refs": [
-      "experiments/ch23/23-01/run.py",
-      "manuscripts/ch23/figure-data.json"
+      "manuscripts/ch14/figure-data.json"
     ],
-    "TeachingRole": "展示百 PB 级原始网页经正文抽取、启发式过滤、去重、分级与去污仅留存 2.40% 的全链路账本",
-    "figure": "23-1",
-    "name": "ch23-100pb-commoncrawl-to-15t-tokens-curation-funnel"
+    "TeachingRole": "建立第 14 章跨层联立方程组与四大协同设计杠杆的总览框架",
+    "name": "ch23-codesign-simultaneous-equations",
+    "figure": "23-1"
   },
   {
     "figure_id": "图 23-2",
     "number": 2,
-    "file": "ch23-minhash-lsh-band-row-s-curve-probability.svg",
-    "asset": "ch23/ch23-minhash-lsh-band-row-s-curve-probability.svg",
+    "file": "ch23-v41-dual-track-context-scaling.svg",
+    "asset": "ch23/ch23-v41-dual-track-context-scaling.svg",
     "section": "23.2.1",
-    "caption": "MinHash LSH 局部敏感哈希在 (b=16, r=8) 分桶配置下的 S 型碰撞概率曲线 P(s) = 1 - (1 - s^r)^b（算例 23-2）",
+    "caption": "算例 23-1：在 8K 至 1M 上下文扩展过程中，DeepSeek V4 Flash 与 V4.1 Flash 的驻留 KV 容量（恒定缩小 3.95x）与单步 Decode 理论读取量（从 1.10x 演进至 2.51x）的双轨分离规律",
     "source_refs": [
-      "experiments/ch23/23-01/run.py",
-      "manuscripts/ch23/figure-data.json"
+      "manuscripts/ch14/figure-data.json"
     ],
-    "TeachingRole": "推导阈值拐点 s* = 0.7071 以及 s=0.80 捕获率 94.70%、s=0.50 误碰率 6.07% 的概率边界",
-    "figure": "23-2",
-    "name": "ch23-minhash-lsh-band-row-s-curve-probability"
+    "TeachingRole": "直观区分驻留显存容量压缩比与单步注意力读取带宽压缩比的不同演进轨迹",
+    "name": "ch23-v41-dual-track-context-scaling",
+    "figure": "23-2"
   },
   {
     "figure_id": "图 23-3",
     "number": 3,
-    "file": "ch23-distributed-minhash-shuffle-and-gpu-union-find.svg",
-    "asset": "ch23/ch23-distributed-minhash-shuffle-and-gpu-union-find.svg",
-    "section": "23.2.2",
-    "caption": "50 亿篇文档模糊去重的分布式流水线：Shingle 哈希、按 Band 洗牌与 GPU 连通分量（Large-Star/Small-Star）聚簇（算例 23-3）",
+    "file": "ch23-v41-four-stage-attention-pipeline.svg",
+    "asset": "ch23/ch23-v41-four-stage-attention-pipeline.svg",
+    "section": "23.2.3",
+    "caption": "V4.1 Flash 的四阶段全局注意力执行流水线（Full -> 16,384 候选池 -> Reindex -> Reuse）以及持久化前缀缓存缩减至 1/8（1/2 SWA 免存 × 1/4 CSA2 跨层共享）的正交拆解",
     "source_refs": [
-      "experiments/ch23/23-01/run.py",
-      "manuscripts/ch23/figure-data.json"
+      "manuscripts/ch14/figure-data.json"
     ],
-    "TeachingRole": "揭示 2.56 TB 签名跨卡洗牌与分布式图连通分量求解传递性重复簇的系统机理",
-    "figure": "23-3",
-    "name": "ch23-distributed-minhash-shuffle-and-gpu-union-find"
+    "TeachingRole": "剖析 4 个 Owner 层与 36 个 Follower 层如何协同消除重复索引扫描并实现 1/8 持久化缓存",
+    "name": "ch23-v41-four-stage-attention-pipeline",
+    "figure": "23-3"
   },
   {
     "figure_id": "图 23-4",
     "number": 4,
-    "file": "ch23-cpu-datatrove-vs-gpu-nemo-curator-throughput.svg",
-    "asset": "ch23/ch23-cpu-datatrove-vs-gpu-nemo-curator-throughput.svg",
-    "section": "23.2.2",
-    "caption": "CPU 集群（DataTrove）与 GPU 加速流水线（NeMo Curator + cuDF + cuGraph）在百 TB 语料去重中的耗时（80.0x 加速）与 TCO（降 4.50x）对比（算例 23-3）",
+    "file": "ch23-digital-worker-v41-vs-k3-cost.svg",
+    "asset": "ch23/ch23-digital-worker-v41-vs-k3-cost.svg",
+    "section": "23.3.2",
+    "caption": "算例 23-2：24×7 数字员工在 200K/1M 上下文下 V4.1 Flash 与 Kimi K3 的跨代 GPU 选卡及 API 成本对比，以及揭示约七成耗时来自逐层固定开销与频繁重建假设的性能归因审计",
     "source_refs": [
-      "experiments/ch23/23-01/run.py",
-      "manuscripts/ch23/figure-data.json"
+      "manuscripts/ch14/figure-data.json"
     ],
-    "TeachingRole": "对比 4,096 核 CPU 跑 148 小时与 64 卡 H100 跑 1.85 小时的吞吐与成本账本",
-    "figure": "23-4",
-    "name": "ch23-cpu-datatrove-vs-gpu-nemo-curator-throughput"
+    "TeachingRole": "演示如何在真实工程评估中剥离未优化运行时伪影与模型架构内生差异",
+    "name": "ch23-digital-worker-v41-vs-k3-cost",
+    "figure": "23-4"
   },
   {
     "figure_id": "图 23-5",
     "number": 5,
-    "file": "ch23-document-fuzzy-dedup-vs-suffix-array-substring-dedup.svg",
-    "asset": "ch23/ch23-document-fuzzy-dedup-vs-suffix-array-substring-dedup.svg",
-    "section": "23.2.2",
-    "caption": "文档级 MinHash 模糊去重与基于后缀数组（Suffix Array）的 50 词元级精确重复模板/导航栏剥离协同",
+    "file": "ch23-opentallas-four-resource-and-wafer-hop.svg",
+    "asset": "ch23/ch23-opentallas-four-resource-and-wafer-hop.svg",
+    "section": "23.4.2",
+    "caption": "算例 23-3：OpenTallas 专用 ASIC 单步 124.221 μs（8,050 tok/s）的四资源时间账本（Case B）、晶圆级 15 跳 180 μs 通信直径越界（Case D）以及 2,000 万美元 NRE 的 40 万亿 token 回本边界（Case F）",
     "source_refs": [
-      "manuscripts/ch23/figure-data.json"
+      "manuscripts/ch14/figure-data.json"
     ],
-    "TeachingRole": "阐明宏观整篇模糊去重与微观后缀数组子串切除的互补分工",
-    "figure": "23-5",
-    "name": "ch23-document-fuzzy-dedup-vs-suffix-array-substring-dedup"
+    "TeachingRole": "用严密的四资源时间线与跨芯片跳数下界审计专用推理芯片的物理与商业可行性",
+    "name": "ch23-opentallas-four-resource-and-wafer-hop",
+    "figure": "23-5"
   },
   {
     "figure_id": "图 23-6",
     "number": 6,
-    "file": "ch23-llm-rubric-distillation-to-fasttext-bert-classifier.svg",
-    "asset": "ch23/ch23-llm-rubric-distillation-to-fasttext-bert-classifier.svg",
-    "section": "23.3.1",
-    "caption": "用 70B 教师模型标注 500 万样本蒸馏 110M 轻量级质量分类器（FineWeb-Edu / DCLM）实现 55.82 倍算力节省的三级漏斗（算例 23-4）",
+    "file": "ch23-five-step-diagnostic-decision-tree.svg",
+    "asset": "ch23/ch23-five-step-diagnostic-decision-tree.svg",
+    "section": "23.5.2",
+    "caption": "全书收束：AI 基础设施架构师的五步定量诊断法与跨层反事实协同设计决策树",
     "source_refs": [
-      "experiments/ch23/23-02/run.py",
-      "manuscripts/ch23/figure-data.json"
+      "manuscripts/ch14/figure-data.json"
     ],
-    "TeachingRole": "证明教师精标种子与轻量分类器全量推理相比直接用大模型打分节省 98.21% 算力",
-    "figure": "23-6",
-    "name": "ch23-llm-rubric-distillation-to-fasttext-bert-classifier"
+    "TeachingRole": "收束全书十四章知识体系，提供可复用的一线 AI Infra 性能诊断与架构设计方法",
+    "name": "ch23-five-step-diagnostic-decision-tree",
+    "figure": "23-6"
   },
   {
     "figure_id": "图 23-7",
     "number": 7,
-    "file": "ch23-nemotron-cc-classifier-ensembling-and-rephrasing.svg",
-    "asset": "ch23/ch23-nemotron-cc-classifier-ensembling-and-rephrasing.svg",
-    "section": "23.3.1",
-    "caption": "Nemotron-CC 范式：多分类器集成打分分桶与对高知识价值但表述残缺网页的合成改写抢救（Synthetic Rephrasing）",
+    "file": "ch23-dflash-block-diffusion-role-reversal.svg",
+    "asset": "ch23/ch23-dflash-block-diffusion-role-reversal.svg",
+    "section": "23.5.3",
+    "caption": "DFlash 块扩散草稿（16-token 并行去噪）与自回归验证的角色反转架构及接受长度增益",
     "source_refs": [
-      "manuscripts/ch23/figure-data.json"
+      "research/token-cost-2023-2026/report.md"
     ],
-    "TeachingRole": "通过多分类器集成与百科风格合成改写突破激进过滤带来的独特词元枯竭墙",
-    "figure": "23-7",
-    "name": "ch23-nemotron-cc-classifier-ensembling-and-rephrasing"
+    "TeachingRole": "展示如何用双向扩散块并行生成替代串行自回归草稿以对齐 Tensor Core 算力",
+    "name": "ch23-dflash-block-diffusion-role-reversal",
+    "figure": "23-7"
   },
   {
     "figure_id": "图 23-8",
     "number": 8,
-    "file": "ch23-benchmark-decontamination-ngram-and-embedding-hybrid.svg",
-    "asset": "ch23/ch23-benchmark-decontamination-ngram-and-embedding-hybrid.svg",
-    "section": "23.3.2",
-    "caption": "防止评测集刷榜失真的双层去污管线（13-gram 子串匹配 + 稠密语义向量近邻剔除防止同义改写与跨语言污染）",
+    "file": "ch23-beyond-chinchilla-lifecycle-compute-allocation.svg",
+    "asset": "ch23/ch23-beyond-chinchilla-lifecycle-compute-allocation.svg",
+    "section": "23.5.3",
+    "caption": "算例 23-5：推理感知的生命周期总计算最小化（Beyond-Chinchilla 3.3 个月能力密度翻倍与超配训练回本点）",
     "source_refs": [
-      "manuscripts/ch23/figure-data.json"
+      "research/token-cost-2023-2026/report.md"
     ],
-    "TeachingRole": "构建字面 n-gram 自动机与稠密向量检索结合的评测基准防泄漏防线",
-    "figure": "23-8",
-    "name": "ch23-benchmark-decontamination-ngram-and-embedding-hybrid"
+    "TeachingRole": "对比仅优化预训练成本的 Chinchilla 最优与纳入服务期推理需求的全生命周期最优",
+    "name": "ch23-beyond-chinchilla-lifecycle-compute-allocation",
+    "figure": "23-8"
   },
   {
     "figure_id": "图 23-9",
     "number": 9,
-    "file": "ch23-doremi-regmix-domain-weight-optimization.svg",
-    "asset": "ch23/ch23-doremi-regmix-domain-weight-optimization.svg",
-    "section": "23.3.2",
-    "caption": "基于小型代理模型（Proxy Model）的领域配比寻优（DoReMi / RegMix）与三阶段预训练动态退火曲线",
+    "file": "ch23-design-review-3candidate-kv-audit.svg",
+    "asset": "ch23/ch23-design-review-3candidate-kv-audit.svg",
+    "section": "23.6.1",
+    "caption": "实验 13-01（design-review）：Qwen3-8B 三种 KV 表示候选在 32 请求上的质量门控与 12.88 GB 固定池真相",
     "source_refs": [
-      "manuscripts/ch23/figure-data.json"
+      "experiments/ch13/13-01/design-review/README.md"
     ],
-    "TeachingRole": "展示如何用小模型网格搜索最优领域配比并在预训练末段执行高纯度数据极速退火",
-    "figure": "23-9",
-    "name": "ch23-doremi-regmix-domain-weight-optimization"
+    "TeachingRole": "揭示 vLLM 固定预分配 KV 池机制与物理可行/经济可行双边界的真实门控纪律",
+    "name": "ch23-design-review-3candidate-kv-audit",
+    "figure": "23-9"
   },
   {
     "figure_id": "图 23-10",
     "number": 10,
-    "file": "ch23-online-serving-vs-offline-synthetic-factory-roofline.svg",
-    "asset": "ch23/ch23-online-serving-vs-offline-synthetic-factory-roofline.svg",
-    "section": "23.4.1",
-    "caption": "在线低延迟服务（B=32，MFU 11.2%）与离线合成数据工厂（B=2,048，MFU 58.4%，吞吐升 7.20 倍、成本降 13.16 倍）的 Roofline 跃迁（算例 23-5）",
+    "file": "ch23-datacenter-vs-consumer-gpu-crossover.svg",
+    "asset": "ch23/ch23-datacenter-vs-consumer-gpu-crossover.svg",
+    "section": "23.6.2",
+    "caption": "算例 23-7：数据中心卡（H100/B200）与工作站/消费级卡（RTX PRO 6000 / 4090）的四场景翻转边界",
     "source_refs": [
-      "experiments/ch23/23-02/run.py",
-      "manuscripts/ch23/figure-data.json"
+      "research/draft14-15-outline-audit/snapshots/13-架构协同设计.md"
     ],
-    "TeachingRole": "阐明卸下实时延迟枷锁后通过超大批量将自回归解码推入 Tensor Core 计算饱和区的经济学",
-    "figure": "23-10",
-    "name": "ch23-online-serving-vs-offline-synthetic-factory-roofline"
+    "TeachingRole": "定量标定不同并发、通信敏感度与站点供电条件下跨市场 GPU 的性价比交点",
+    "name": "ch23-datacenter-vs-consumer-gpu-crossover",
+    "figure": "23-10"
   },
   {
     "figure_id": "图 23-11",
     "number": 11,
-    "file": "ch23-synthetic-data-generator-verifier-rejection-funnel.svg",
-    "asset": "ch23/ch23-synthetic-data-generator-verifier-rejection-funnel.svg",
-    "section": "23.4.2",
-    "caption": "推理与代码合成数据工厂的“多样化种子 -> 高温批量采样 -> 沙箱测试验证（31.25%）-> 自纠重写（综合良率 58.75%）”闭环账本（算例 23-5）",
+    "file": "ch23-preregistered-prediction-lifecycle.svg",
+    "asset": "ch23/ch23-preregistered-prediction-lifecycle.svg",
+    "section": "23.7.1",
+    "caption": "可证伪系统科学：预注册预测协议的 10 项必填字段与不可篡改状态机（D11-SP04）",
     "source_refs": [
-      "experiments/ch23/23-02/run.py",
-      "manuscripts/ch23/figure-data.json"
+      "research/draft11-outline-audit/report.md",
+      "experiments/ch13/13-07/prediction.json"
     ],
-    "TeachingRole": "利用外部确定性沙箱验证器与错误轨迹重写防止模型自噬并将验证词元成本锁定在 0.075 美元/M",
-    "figure": "23-11",
-    "name": "ch23-synthetic-data-generator-verifier-rejection-funnel"
+    "TeachingRole": "建立面向 AI 系统性能工程的预注册预测、SHA-256 冻结与诚实证伪全流程",
+    "name": "ch23-preregistered-prediction-lifecycle",
+    "figure": "23-11"
   },
   {
     "figure_id": "图 23-12",
     "number": 12,
-    "file": "ch23-slack-capacity-harvesting-for-synthetic-generation.svg",
-    "asset": "ch23/ch23-slack-capacity-harvesting-for-synthetic-generation.svg",
-    "section": "23.4.1",
-    "caption": "利用在线推理集群昼夜波谷与训练维护空窗自动拉起离线合成数据作业的零边际硬件成本收割架构",
+    "file": "ch23-exp13-07-k96-counterexample-and-k192-ratios.svg",
+    "asset": "ch23/ch23-exp13-07-k96-counterexample-and-k192-ratios.svg",
+    "section": "23.7.2",
+    "caption": "实验 13-07：K96 保留前缀反慢反例（1.1017x）与 K192 预注册 10 对中位数（0.6931 < 0.70）范围外证伪",
     "source_refs": [
-      "experiments/ch23/23-02/run.py",
-      "manuscripts/ch23/figure-data.json"
+      "experiments/ch13/13-07/README.md"
     ],
-    "TeachingRole": "通过毫秒级抢占式波谷算力收割将离线合成 GPU 小时单价再压降 45%",
-    "figure": "23-12",
-    "name": "ch23-slack-capacity-harvesting-for-synthetic-generation"
+    "TeachingRole": "复盘真实系统实验中为何保留前缀在 K96 反慢而在 K192 超预期变快导致区间失配",
+    "name": "ch23-exp13-07-k96-counterexample-and-k192-ratios",
+    "figure": "23-12"
   },
   {
     "figure_id": "图 23-13",
     "number": 13,
-    "file": "ch23-pdf-scientific-ocr-layout-math-extraction-pipeline.svg",
-    "asset": "ch23/ch23-pdf-scientific-ocr-layout-math-extraction-pipeline.svg",
-    "section": "23.1.1",
-    "caption": "高质量学术论文与教材 PDF 语料的版面分析、公式 LaTeX 还原与多模态图文交错提取流水线",
+    "file": "ch23-exp13-07-commit-buffer-idempotence.svg",
+    "asset": "ch23/ch23-exp13-07-commit-buffer-idempotence.svg",
+    "section": "23.7.2",
+    "caption": "实验 13-07：30 路径全通过下 7,500 唯一提交位置与 1,920 次重复投递幂等拦截的机制解剖",
     "source_refs": [
-      "manuscripts/ch23/figure-data.json"
+      "experiments/ch13/13-07/README.md"
     ],
-    "TeachingRole": "解决传统 PDF 文本提取破坏分栏与数学公式的难题，解锁高阶 STEM 专业文献",
-    "figure": "23-13",
-    "name": "ch23-pdf-scientific-ocr-layout-math-extraction-pipeline"
+    "TeachingRole": "解剖抢占恢复流式推理中的采样与提交分离架构及操作系统长尾停顿放大效应",
+    "name": "ch23-exp13-07-commit-buffer-idempotence",
+    "figure": "23-13"
   },
   {
     "figure_id": "图 23-14",
     "number": 14,
-    "file": "ch23-tokenized-dataset-mmap-shuffling-and-sequence-packing.svg",
-    "asset": "ch23/ch23-tokenized-dataset-mmap-shuffling-and-sequence-packing.svg",
-    "section": "23.3.2",
-    "caption": "万亿词元二进制索引（.bin/.idx mmap）的确定性全局伪随机洗牌与最佳适应序列打包（Best-Fit Packing）零填充损耗",
+    "file": "ch23-four-double-counting-traps-matrix.svg",
+    "asset": "ch23/ch23-four-double-counting-traps-matrix.svg",
+    "section": "23.8.1",
+    "caption": "跨层协同收益归因的四大重复计数陷阱（Double-Counting Traps）与正交消融实验纪律（TC-18）",
     "source_refs": [
-      "manuscripts/ch23/figure-data.json"
+      "research/token-cost-2023-2026/report.md"
     ],
-    "TeachingRole": "通过 Feistel 块级置换与最佳适应无截断打包消除长文档腰斩与跨文档注意力串扰",
-    "figure": "23-14",
-    "name": "ch23-tokenized-dataset-mmap-shuffling-and-sequence-packing"
+    "TeachingRole": "防止读者将相互耦合的容量、精度、系统基准与推测倍率错误连乘",
+    "name": "ch23-four-double-counting-traps-matrix",
+    "figure": "23-14"
   },
   {
     "figure_id": "图 23-15",
     "number": 15,
-    "file": "ch23-data-lineage-copyright-optout-and-audit-ledger.svg",
-    "asset": "ch23/ch23-data-lineage-copyright-optout-and-audit-ledger.svg",
-    "section": "23.3.2",
-    "caption": "面向合规与可追溯性的语料血缘账本（Data Provenance）、版权退订剔除与训练批次精确回溯索引",
+    "file": "ch23-2023-2026-cost-reduction-telescoping.svg",
+    "asset": "ch23/ch23-2023-2026-cost-reduction-telescoping.svg",
+    "section": "23.8.2",
+    "caption": "2023–2026 固定能力门槛下百倍（208x–375x）价格下降的顺序连乘（Telescoping）与 25.1x 读取下界拆解",
     "source_refs": [
-      "manuscripts/ch23/figure-data.json"
+      "research/token-cost-2023-2026/report.md"
     ],
-    "TeachingRole": "建立从每个训练 Batch 反向追溯至原始网页 SHA-256 与许可证标签的密码学审计链路",
-    "figure": "23-15",
-    "name": "ch23-data-lineage-copyright-optout-and-audit-ledger"
+    "TeachingRole": "用公开价格序列与可复算权重读取下界收束全书的同等能力降本主线",
+    "name": "ch23-2023-2026-cost-reduction-telescoping",
+    "figure": "23-15"
   },
   {
     "figure_id": "图 23-16",
     "number": 16,
-    "file": "ch23-exascale-data-and-synthetic-factory-master-architecture.svg",
-    "asset": "ch23/ch23-exascale-data-and-synthetic-factory-master-architecture.svg",
-    "section": "23.4.2",
-    "caption": "百亿亿次 Token 数据工程与合成数据工厂从原始爬虫、GPU 去重到闭环合成退火的全栈总图",
+    "file": "ch23-dual-track-book-throughline-summary.svg",
+    "asset": "ch23/ch23-dual-track-book-throughline-summary.svg",
+    "section": "23.8.2",
+    "caption": "全书双主线（Qwen3-8B Dense 与 DeepSeek-V3/V4.1 MoE）跨章逐步修正推算全景图（D11-SP01）",
     "source_refs": [
-      "experiments/ch23/23-01/run.py",
-      "experiments/ch23/23-02/run.py",
-      "manuscripts/ch23/figure-data.json"
+      "research/draft11-outline-audit/report.md"
     ],
-    "TeachingRole": "收束第 23 章七级提纯漏斗、GPU 连通分量去重、分类器蒸馏与合成数据工厂的完整体系",
-    "figure": "23-16",
-    "name": "ch23-exascale-data-and-synthetic-factory-master-architecture"
+    "TeachingRole": "串联第 2 章至第 14 章的两条核心模型推算轨道，展现约束逐章具体化的演进脉络",
+    "name": "ch23-dual-track-book-throughline-summary",
+    "figure": "23-16"
   },
   {
     "figure_id": "图 23-17",
     "number": 17,
-    "file": "ch23-mineru-olmocr-pdf-layout-and-formula-gpu-pipeline.svg",
-    "asset": "ch23/ch23-mineru-olmocr-pdf-layout-and-formula-gpu-pipeline.svg",
-    "section": "23.4.2",
-    "caption": "百万册级复杂学术 PDF 版面解析与公式还原（MinerU / olmOCR 混合快慢分流与跨页子区域 TensorRT 动态批处理，吞吐提速 35.27 倍）（算例 23-6）",
+    "file": "ch23-rubin-v41-codesign-mapping-matrix.svg",
+    "asset": "ch23/ch23-rubin-v41-codesign-mapping-matrix.svg",
+    "section": "23.8.2",
+    "caption": "下一代 Vera Rubin NVL72（50 PFLOPS NVFP4 / 22 TB/s HBM4 / 3.6 TB/s NVLink 6）与 V4.1/K3 协同映射矩阵",
     "source_refs": [
-      "experiments/ch23/23-03/run.py",
-      "manuscripts/ch23/figure-data.json"
+      "references/files/specs/nvidia-rubin-system.md"
     ],
-    "TeachingRole": "通过 65% 原生数字页正文直抽与跨页公式框 TensorRT 动态批处理将单卡吞吐从 1.60 页/s 推高至 56.43 页/s",
-    "figure": "23-17",
-    "name": "ch23-mineru-olmocr-pdf-layout-and-formula-gpu-pipeline"
+    "TeachingRole": "展望 Rubin 世代硬件参数如何继续强化跨层状态压缩、微缩量化与块扩散草稿",
+    "name": "ch23-rubin-v41-codesign-mapping-matrix",
+    "figure": "23-17"
   },
   {
     "figure_id": "图 23-18",
     "number": 18,
-    "file": "ch23-repo-level-ast-dependency-topological-packing.svg",
-    "asset": "ch23/ch23-repo-level-ast-dependency-topological-packing.svg",
-    "section": "23.4.2",
-    "caption": "代码仓库级跨文件 AST 依赖图提取、Tarjan 强连通破环与 Kahn 拓扑排序序列打包（因果依赖覆盖率从 42.50% 跃升至 95.00%）（算例 23-7）",
+    "file": "ch23-four-dimensional-codesign-closed-loop.svg",
+    "asset": "ch23/ch23-four-dimensional-codesign-closed-loop.svg",
+    "section": "23.8.2",
+    "caption": "全书总结：从算法结构、运行时调度、硅片微架构到吉瓦级能源站点的四维协同设计循环",
     "source_refs": [
-      "experiments/ch23/23-03/run.py",
-      "manuscripts/ch23/figure-data.json"
+      "manuscripts/ch14/figure-data.json"
     ],
-    "TeachingRole": "消除路径字母序拼接导致的跨文件定义盲区，使 64k 代码预训练跨文件 API 困惑度降低 39.85%",
-    "figure": "23-18",
-    "name": "ch23-repo-level-ast-dependency-topological-packing"
+    "TeachingRole": "完成第 1–14 章技术收束并自然引出第 15–16 章的吉瓦级能源与机密计算底座",
+    "name": "ch23-four-dimensional-codesign-closed-loop",
+    "figure": "23-18"
+  },
+  {
+    "figure_id": "图 23-19",
+    "number": 19,
+    "file": "ch23-chakra-execution-trace-graph-simulation.svg",
+    "asset": "ch23/ch23-chakra-execution-trace-graph-simulation.svg",
+    "section": "23.9.1",
+    "caption": "MLCommons Chakra 计算—通信依赖执行轨迹图（ETG）与 Phantora（NSDI '26）、Charon（MLSys '26）集群级细粒度模拟框架及适用边界对比",
+    "source_refs": [
+      "research/2026-infra-survey/reading-nsdi-2026.md",
+      "research/2026-infra-survey/reading-mlsys-2026.md"
+    ],
+    "TeachingRole": "建立从静态算子图向耦合计算—通信依赖轨迹图演进的仿真方法论，并明确单卡拦截模拟不能替代解析下界与真实集群验证",
+    "name": "ch23-chakra-execution-trace-graph-simulation",
+    "figure": "23-19"
+  },
+  {
+    "figure_id": "图 23-20",
+    "number": 20,
+    "file": "ch23-neusight-tile-roofline-calibration.svg",
+    "asset": "ch23/ch23-neusight-tile-roofline-calibration.svg",
+    "section": "23.9.1",
+    "caption": "NeuSight（ASPLOS '25，源码 6945927d）瓦片级 Roofline 利用率校准架构，以及展示“整段总误差为 0% 但逐段误差达 33.3%/50%”的阶段归因陷阱算例",
+    "source_refs": [
+      "references/framework-history/2026-09-09/neusight-calibration/NOTES.md",
+      "references/framework-history/2026-09-09/neusight-calibration/arithmetic.json"
+    ],
+    "TeachingRole": "揭示瓦片级性能预测器对历史数据库与软件栈版本的依赖，并证明必须核对逐阶段误差而非仅看端到端总和",
+    "name": "ch23-neusight-tile-roofline-calibration",
+    "figure": "23-20"
+  },
+  {
+    "figure_id": "图 23-21",
+    "number": 21,
+    "file": "ch23-farskip-collective-delayed-dependency.svg",
+    "asset": "ch23/ch23-farskip-collective-delayed-dependency.svg",
+    "section": "23.9.2",
+    "caption": "标准 MoE 逐层阻塞式 All-to-All 通信与 FarSkip-Collective（MLSys '26）通过跨层残差跳步将专家输出延后至第 l+2 层消费、从而用整层计算时间 T_layer 掩盖通信的对比",
+    "source_refs": [
+      "research/2026-infra-survey/reading-mlsys-2026.md"
+    ],
+    "TeachingRole": "演示如何通过修改模型层间依赖图打破集合通信的串行阻塞，并强调其对重训练/知识蒸馏的精度对齐要求",
+    "name": "ch23-farskip-collective-delayed-dependency",
+    "figure": "23-21"
+  },
+  {
+    "figure_id": "图 23-22",
+    "number": 22,
+    "file": "ch23-moe-granularity-vs-network-radix-co-design.svg",
+    "asset": "ch23/ch23-moe-granularity-vs-network-radix-co-design.svg",
+    "section": "23.9.2",
+    "caption": "MoE 专家细粒度切分倍数 G 的组合表达收益与 All-to-All 小包扇出膨胀、Tensor Core 最小分组块 M_tile=64 限制的跨层帕累托拐点",
+    "source_refs": [
+      "manuscripts/ch14/figure-data.json"
+    ],
+    "TeachingRole": "推导专家切分粒度 G 与超节点网络基数、矩阵乘瓦片尺寸联立求解的定量边界",
+    "name": "ch23-moe-granularity-vs-network-radix-co-design",
+    "figure": "23-22"
+  },
+  {
+    "figure_id": "图 23-23",
+    "number": 23,
+    "file": "ch23-kv-head-ratio-vs-tensor-parallel-limit.svg",
+    "asset": "ch23/ch23-kv-head-ratio-vs-tensor-parallel-limit.svg",
+    "section": "23.9.2",
+    "caption": "GQA 查询头与 KV 头数量配比在无冗余张量并行区（TP ≤ n_kv）与过激进压缩导致 KV 头复制膨胀区（TP > n_kv）的硬约束对比",
+    "source_refs": [
+      "manuscripts/ch14/figure-data.json"
+    ],
+    "TeachingRole": "说明模型注意力头超参数如何直接决定推理部署时的最大无冗余张量并行度",
+    "name": "ch23-kv-head-ratio-vs-tensor-parallel-limit",
+    "figure": "23-23"
+  },
+  {
+    "figure_id": "图 23-24",
+    "number": 24,
+    "file": "ch23-codesign-pre-silicon-to-production-loop.svg",
+    "asset": "ch23/ch23-codesign-pre-silicon-to-production-loop.svg",
+    "section": "23.9.2",
+    "caption": "从四资源下界筛选、Chakra/NeuSight 细粒度仿真、算法—系统—硬件联立改造到预注册证伪实验（实验 23-01 / 23-02）与全生命周期 TCO 摊销的协同工程飞轮",
+    "source_refs": [
+      "manuscripts/ch14/figure-data.json"
+    ],
+    "TeachingRole": "收束第 14 章全章协同设计方法论，串联流片前探索与生产集群实测验证",
+    "name": "ch23-codesign-pre-silicon-to-production-loop",
+    "figure": "23-24"
+  },
+  {
+    "figure_id": "图 23-25",
+    "number": 25,
+    "file": "ch23-hardware-aware-hybrid-layer-allocation-pareto.svg",
+    "asset": "ch23/ch23-hardware-aware-hybrid-layer-allocation-pareto.svg",
+    "section": "23.9.3",
+    "caption": "固定硬件显存与延迟预算下，混合层配比（线性递推层比例 ρ_lin vs. 全局注意力层 1-ρ_lin）的质量—吞吐帕累托寻优曲面",
+    "source_refs": [
+      "manuscripts/ch14/figure-data.json"
+    ],
+    "TeachingRole": "建立以真实硬件 KV 预算与延迟为目标的异构混合层整数规划模型",
+    "name": "ch23-hardware-aware-hybrid-layer-allocation-pareto",
+    "figure": "23-25"
+  },
+  {
+    "figure_id": "图 23-26",
+    "number": 26,
+    "file": "ch23-sparse-upcycling-and-attention-distillation-pipeline.svg",
+    "asset": "ch23/ch23-sparse-upcycling-and-attention-distillation-pipeline.svg",
+    "section": "23.9.3",
+    "caption": "稠密全注意力模型通过 Sparse Upcycling 与跨层注意力蒸馏低成本转化为系统友好型混合 MoE 架构的训练流水线",
+    "source_refs": [
+      "manuscripts/ch14/figure-data.json"
+    ],
+    "TeachingRole": "展示如何仅用从头预训练约 20% 的算力（省 79.71%）将稠密模型热启动迁移为混合线性注意力与稀疏 MoE 架构",
+    "name": "ch23-sparse-upcycling-and-attention-distillation-pipeline",
+    "figure": "23-26"
+  },
+  {
+    "figure_id": "图 23-27",
+    "number": 27,
+    "file": "ch23-moe-granularity-vs-memory-bandwidth-pareto.svg",
+    "asset": "ch23/ch23-moe-granularity-vs-memory-bandwidth-pareto.svg",
+    "section": "23.9.3",
+    "caption": "MoE 细粒度专家切分因子 G 的表达收益与矩阵瓦片填充率拐点（G*=8 时 d_exp=512 严丝合缝对齐瓦片下界，单层耗时 0.74 ms），以及 Vera Rubin NVL72 与 TPU v7 在 671B/37B MoE 上的单步吞吐对比",
+    "source_refs": [
+      "manuscripts/ch14/figure-data.json",
+      "experiments/ch14/14-03/README.md"
+    ],
+    "TeachingRole": "建立 MoE 专家切分粒度 G 与加速器矩阵核心瓦片尺寸、HBM4/NVLink 6 带宽比联立寻优的定量边界",
+    "name": "ch23-moe-granularity-vs-memory-bandwidth-pareto",
+    "figure": "23-27"
+  },
+  {
+    "figure_id": "图 23-28",
+    "number": 28,
+    "file": "ch23-hardware-aware-neural-architecture-search-loop.svg",
+    "asset": "ch23/ch23-hardware-aware-neural-architecture-search-loop.svg",
+    "section": "23.9.3",
+    "caption": "面向下一代加速器的三维超参数（专家粒度 G、激活比 ρ_act、全注意力混合比 r_attn）硬件感知神经架构搜索（HW-NAS）闭环：从 36 组候选中筛出 6 组可行解并锁定 (8, 3.125%, 25%) 最优工作点",
+    "source_refs": [
+      "manuscripts/ch14/figure-data.json",
+      "experiments/ch14/14-03/README.md"
+    ],
+    "TeachingRole": "展示三维架构超参数在硬件 TPOT 与状态显存红线约束下的闭环帕累托寻优流程",
+    "name": "ch23-hardware-aware-neural-architecture-search-loop",
+    "figure": "23-28"
+  },
+  {
+    "figure_id": "图 23-29",
+    "number": 29,
+    "file": "ch23-autoregressive-vs-diffusion-llm-roofline-phase-transition.svg",
+    "asset": "ch23/ch23-autoregressive-vs-diffusion-llm-roofline-phase-transition.svg",
+    "section": "23.10.1",
+    "caption": "32B FP8 模型在 H100 上的解码 Roofline 相变：从逐词元自回归（I=1 FLOP/B，100.0 tok/s）到半自回归块扩散（K=64, T=10，592.6 tok/s，提速 5.93 倍）（算例 23-14）",
+    "source_refs": [
+      "experiments/ch26/26-01/run.py",
+      "manuscripts/ch26/figure-data.json"
+    ],
+    "TeachingRole": "揭示扩散语言模型如何通过块内 64 词元并行去噪将权重读取次数削减 6.40 倍并突破内存带宽墙",
+    "figure": "23-29",
+    "name": "ch23-autoregressive-vs-diffusion-llm-roofline-phase-transition"
+  },
+  {
+    "figure_id": "图 23-30",
+    "number": 30,
+    "file": "ch23-block-diffusion-semi-autoregressive-kv-cache-and-mask.svg",
+    "asset": "ch23/ch23-block-diffusion-semi-autoregressive-kv-cache-and-mask.svg",
+    "section": "23.10.2",
+    "caption": "半自回归块扩散（Block Diffusion）的块间因果 KV 缓存固化与块内 K=64 双向全注意力混合阶梯掩码架构",
+    "source_refs": [
+      "experiments/ch26/26-01/run.py",
+      "manuscripts/ch26/figure-data.json"
+    ],
+    "TeachingRole": "展示如何兼顾自回归模型的历史 KV 缓存复用与扩散模型的块内并行迭代生成",
+    "figure": "23-30",
+    "name": "ch23-block-diffusion-semi-autoregressive-kv-cache-and-mask"
+  },
+  {
+    "figure_id": "图 23-31",
+    "number": 31,
+    "file": "ch23-dynamic-confidence-threshold-remasking-scheduler.svg",
+    "asset": "ch23/ch23-dynamic-confidence-threshold-remasking-scheduler.svg",
+    "section": "23.10.2",
+    "caption": "动态置信度阈值重掩码调度器（gamma=0.92）：提前锁定高置信词元并省去 35.0% 冗余去噪步，单流吞吐跃升至 911.7 tok/s（提速 9.12 倍）（算例 23-15）",
+    "source_refs": [
+      "experiments/ch26/26-01/run.py",
+      "manuscripts/ch26/figure-data.json"
+    ],
+    "TeachingRole": "量化自适应去噪步数早退机制对代码与结构化文本生成的额外加速收益",
+    "figure": "23-31",
+    "name": "ch23-dynamic-confidence-threshold-remasking-scheduler"
+  },
+  {
+    "figure_id": "图 23-32",
+    "number": 32,
+    "file": "ch23-dllm-speculative-parallel-verification-hybrid-engine.svg",
+    "asset": "ch23/ch23-dllm-speculative-parallel-verification-hybrid-engine.svg",
+    "section": "23.10.2",
+    "caption": "扩散模型 O(1) 步并行草稿提议与自回归主模型单步精确校验的跨范式混合投机推理引擎",
+    "source_refs": [
+      "manuscripts/ch26/figure-data.json"
+    ],
+    "TeachingRole": "解决传统投机解码在草稿过长时串行提议耗时急剧攀升的瓶颈",
+    "figure": "23-32",
+    "name": "ch23-dllm-speculative-parallel-verification-hybrid-engine"
+  },
+  {
+    "figure_id": "图 23-33",
+    "number": 33,
+    "file": "ch23-bpe-tokenizer-bottleneck-vs-blt-byte-entropy-patching.svg",
+    "asset": "ch23/ch23-bpe-tokenizer-bottleneck-vs-blt-byte-entropy-patching.svg",
+    "section": "23.11.1",
+    "caption": "Byte Latent Transformer（BLT）基于字节流条件熵阈值（tau_H=1.35 bits）的在线动态分块（Entropy Patching），省去 4.194 GB 词表显存并降低 52.4% 算力（算例 23-16）",
+    "source_refs": [
+      "experiments/ch26/26-02/run.py",
+      "manuscripts/ch26/figure-data.json"
+    ],
+    "TeachingRole": "对比静态 BPE 分词与按信息熵动态合并字节块在显存与计算分配效率上的本质差异",
+    "figure": "23-33",
+    "name": "ch23-bpe-tokenizer-bottleneck-vs-blt-byte-entropy-patching"
+  },
+  {
+    "figure_id": "图 23-34",
+    "number": 34,
+    "file": "ch23-blt-local-byte-encoder-global-latent-cross-attention.svg",
+    "asset": "ch23/ch23-blt-local-byte-encoder-global-latent-cross-attention.svg",
+    "section": "23.11.2",
+    "caption": "BLT 局部字节编码器、全局潜空间 Transformer 与局部字节解码器的非对称交叉注意力流水线",
+    "source_refs": [
+      "experiments/ch26/26-02/run.py",
+      "manuscripts/ch26/figure-data.json"
+    ],
+    "TeachingRole": "阐明如何将 85% 以上的骨干参数集中在缩短 2.67 倍的潜空间 Patch 序列上",
+    "figure": "23-34",
+    "name": "ch23-blt-local-byte-encoder-global-latent-cross-attention"
+  },
+  {
+    "figure_id": "图 23-35",
+    "number": 35,
+    "file": "ch23-blt-ragged-patch-packing-and-load-balancing.svg",
+    "asset": "ch23/ch23-blt-ragged-patch-packing-and-load-balancing.svg",
+    "section": "23.11.2",
+    "caption": "面向变长字节块（1~16 Bytes）的前缀和紧凑打包（cu_seqlens）与无填充非规则交叉注意力（Ragged Cross-Attention）内核",
+    "source_refs": [
+      "manuscripts/ch26/figure-data.json"
+    ],
+    "TeachingRole": "消除动态分块长度不齐带来的 60% 矩形 Padding 算力浪费",
+    "figure": "23-35",
+    "name": "ch23-blt-ragged-patch-packing-and-load-balancing"
+  },
+  {
+    "figure_id": "图 23-36",
+    "number": 36,
+    "file": "ch23-titans-short-term-attention-and-long-term-neural-memory.svg",
+    "asset": "ch23/ch23-titans-short-term-attention-and-long-term-neural-memory.svg",
+    "section": "23.12.1",
+    "caption": "Google Titans 双系统记忆架构：短期精确滑动窗口注意力与惊奇度（梯度范数）驱动动量更新的长期神经记忆模块",
+    "source_refs": [
+      "experiments/ch26/26-02/run.py",
+      "manuscripts/ch26/figure-data.json"
+    ],
+    "TeachingRole": "解释如何将长上下文记忆建模为测试时在线梯度下降（Test-Time Training）",
+    "figure": "23-36",
+    "name": "ch23-titans-short-term-attention-and-long-term-neural-memory"
+  },
+  {
+    "figure_id": "图 23-37",
+    "number": 37,
+    "file": "ch23-ttt-token-by-token-vs-chunkwise-dual-form-tensor-core.svg",
+    "asset": "ch23/ch23-ttt-token-by-token-vs-chunkwise-dual-form-tensor-core.svg",
+    "section": "23.12.2",
+    "caption": "TTT-Linear / Titans 快速权重更新对比：逐词元串行外积（1.5 FLOP/B，42k tok/s）vs. 分块对偶形式（b=64，48.0 FLOP/B，1,033.2k tok/s，提速 24.60 倍）（算例 23-17）",
+    "source_refs": [
+      "experiments/ch26/26-02/run.py",
+      "manuscripts/ch26/figure-data.json"
+    ],
+    "TeachingRole": "推导如何将 64 步串行梯度更新折叠为 Tensor Core 矩阵乘指令",
+    "figure": "23-37",
+    "name": "ch23-ttt-token-by-token-vs-chunkwise-dual-form-tensor-core"
+  },
+  {
+    "figure_id": "图 23-38",
+    "number": 38,
+    "file": "ch23-titans-2m-context-constant-memory-vs-kv-cache-growth.svg",
+    "asset": "ch23/ch23-titans-2m-context-constant-memory-vs-kv-cache-growth.svg",
+    "section": "23.12.2",
+    "caption": "200 万（2M）词元超长上下文下的显存对比：线性膨胀的 Softmax KV 缓存 vs. 恒定 16.0 MB/层（O(1) 零膨胀）的 Titans 快速权重（算例 23-17）",
+    "source_refs": [
+      "experiments/ch26/26-02/run.py",
+      "manuscripts/ch26/figure-data.json"
+    ],
+    "TeachingRole": "直观展示参数化测试时记忆如何彻底打破超长上下文的显存容量墙",
+    "figure": "23-38",
+    "name": "ch23-titans-2m-context-constant-memory-vs-kv-cache-growth"
+  },
+  {
+    "figure_id": "图 23-39",
+    "number": 39,
+    "file": "ch23-coconut-continuous-latent-thought-zero-copy-loop.svg",
+    "asset": "ch23/ch23-coconut-continuous-latent-thought-zero-copy-loop.svg",
+    "section": "23.13.1",
+    "caption": "连续思维链（Coconut）隐藏状态显存内零拷贝回环反馈架构：以 c=3 潜空间压缩比将 3,000 ms 离散推理缩减至 924 ms（提速 3.25 倍）（算例 23-18）",
+    "source_refs": [
+      "experiments/ch26/26-03/run.py",
+      "manuscripts/ch26/figure-data.json"
+    ],
+    "TeachingRole": "剖析省去中间思考步 LM Head 词表投影、采样同步与离散坍缩的系统与信息论双重收益",
+    "figure": "23-39",
+    "name": "ch23-coconut-continuous-latent-thought-zero-copy-loop"
+  },
+  {
+    "figure_id": "图 23-40",
+    "number": 40,
+    "file": "ch23-coconut-latent-tree-breadth-first-parallel-expansion.svg",
+    "asset": "ch23/ch23-coconut-latent-tree-breadth-first-parallel-expansion.svg",
+    "section": "23.13.1",
+    "caption": "Coconut 连续潜向量叠加态（Superposition）驱动的隐式广度优先波束搜索与共享前缀分支验证",
+    "source_refs": [
+      "manuscripts/ch26/figure-data.json"
+    ],
+    "TeachingRole": "展示单潜向量同时编码多条候选推理轨迹以规避离散思维树 KV 爆炸的机制",
+    "figure": "23-40",
+    "name": "ch23-coconut-latent-tree-breadth-first-parallel-expansion"
+  },
+  {
+    "figure_id": "图 23-41",
+    "number": 41,
+    "file": "ch23-mixture-of-depths-token-routing-and-warp-divergence.svg",
+    "asset": "ch23/ch23-mixture-of-depths-token-routing-and-warp-divergence.svg",
+    "section": "23.13.2",
+    "caption": "词元级动态跳层（Mixture-of-Depths，保留率 rho=0.25）在未紧缩掩码执行下引发的 GPU SIMT Warp 分支发散（有效利用率跌至 58.1%）（算例 23-19）",
+    "source_refs": [
+      "experiments/ch26/26-03/run.py",
+      "manuscripts/ch26/figure-data.json"
+    ],
+    "TeachingRole": "通过泊松分布概率推导解释为何细粒度条件跳层会严重破坏 GPU 32 线程锁步效率",
+    "figure": "23-41",
+    "name": "ch23-mixture-of-depths-token-routing-and-warp-divergence"
+  },
+  {
+    "figure_id": "图 23-42",
+    "number": 42,
+    "file": "ch23-stream-compaction-gather-scatter-for-early-exit-layers.svg",
+    "asset": "ch23/ch23-stream-compaction-gather-scatter-for-early-exit-layers.svg",
+    "section": "23.13.2",
+    "caption": "基于硬件 Warp 投票（__ballot_sync）前缀和的流紧缩（Stream Compaction）Gather-GEMM-Scatter 管线，将 Warp 满载率恢复至 96.4% 并实现 3.32 倍单层提速（算例 23-19）",
+    "source_refs": [
+      "experiments/ch26/26-03/run.py",
+      "manuscripts/ch26/figure-data.json"
+    ],
+    "TeachingRole": "展示如何用极低开销的片上连续重排将动态稀疏词元转化为满载 Tensor Core 矩阵块",
+    "figure": "23-42",
+    "name": "ch23-stream-compaction-gather-scatter-for-early-exit-layers"
+  },
+  {
+    "figure_id": "图 23-43",
+    "number": 43,
+    "file": "ch23-post-autoregressive-architectures-throughput-latency-pareto.svg",
+    "asset": "ch23/ch23-post-autoregressive-architectures-throughput-latency-pareto.svg",
+    "section": "23.13.2",
+    "caption": "后自回归生成架构（Block Diffusion、BLT、Titans/TTT、Coconut 与 MoD）在吞吐、延迟与上下文长度三维空间的帕累托前沿",
+    "source_refs": [
+      "manuscripts/ch26/figure-data.json"
+    ],
+    "TeachingRole": "横向对比四大新兴范式各自攻克的硬件瓶颈与协同组合路径",
+    "figure": "23-43",
+    "name": "ch23-post-autoregressive-architectures-throughput-latency-pareto"
+  },
+  {
+    "figure_id": "图 23-44",
+    "number": 44,
+    "file": "ch23-next-gen-foundation-model-infrastructure-synthesis.svg",
+    "asset": "ch23/ch23-next-gen-foundation-model-infrastructure-synthesis.svg",
+    "section": "23.13.2",
+    "caption": "第 23 章系统工程全景图：从扩散并行去噪、字节熵动态分块、测试时分块对偶记忆到连续潜空间与流紧缩运行时",
+    "source_refs": [
+      "manuscripts/ch26/figure-data.json"
+    ],
+    "TeachingRole": "收束全章四大模块，凝练把动态非规则算法还原为高算术强度分块矩阵原语的统一方法论",
+    "figure": "23-44",
+    "name": "ch23-next-gen-foundation-model-infrastructure-synthesis"
+  },
+  {
+    "figure_id": "图 23-45",
+    "number": 45,
+    "file": "ch23-sram-wafer-scale-vs-hbm-gpu-memory-wall-comparison.svg",
+    "asset": "ch23/ch23-sram-wafer-scale-vs-hbm-gpu-memory-wall-comparison.svg",
+    "section": "23.14.1",
+    "caption": "Llama-3.3 70B（FP8 70.0 GB）在 Batch=1 下的第一性原理对决：4xH100 HBM 架构（164.7 tok/s）vs. 全片上 SRAM 架构（21 PB/s，单步读取 0.35 ms，1,850.0 tok/s，提速 11.23 倍）（算例 23-20）",
+    "source_refs": [
+      "experiments/ch27/27-01/run.py",
+      "manuscripts/ch27/figure-data.json"
+    ],
+    "TeachingRole": "从物理带宽差两个数量级解释为什么全片上 SRAM 能将单流生成速度推至 1,850 tok/s",
+    "figure": "23-45",
+    "name": "ch23-sram-wafer-scale-vs-hbm-gpu-memory-wall-comparison"
+  },
+  {
+    "figure_id": "图 23-46",
+    "number": 46,
+    "file": "ch23-cerebras-wse3-wafer-scale-noc-and-weight-streaming.svg",
+    "asset": "ch23/ch23-cerebras-wse3-wafer-scale-noc-and-weight-streaming.svg",
+    "section": "23.14.1",
+    "caption": "Cerebras WSE-3 晶圆级引擎（Wafer-Scale Engine）架构：整片 300mm 硅晶圆跨曝光区互连、90 万 AI 核心与 44 GB 分布式片上 SRAM（21 PB/s）",
+    "source_refs": [
+      "experiments/ch27/27-01/run.py",
+      "manuscripts/ch27/figure-data.json"
+    ],
+    "TeachingRole": "展示不切割晶圆如何消除 SerDes 封装瓶颈并在单晶圆内提供 44 GB 超高速 SRAM",
+    "figure": "23-46",
+    "name": "ch23-cerebras-wse3-wafer-scale-noc-and-weight-streaming"
+  },
+  {
+    "figure_id": "图 23-47",
+    "number": 47,
+    "file": "ch23-groq-lpu-320-chip-deterministic-daisy-chain-pipeline.svg",
+    "asset": "ch23/ch23-groq-lpu-320-chip-deterministic-daisy-chain-pipeline.svg",
+    "section": "23.14.1",
+    "caption": "Groq LPU 320 颗芯片（每颗 230 MB SRAM，片内带宽 80 TB/s）串联菊花链架构：全量驻留 70B 权重并让激活向量沿芯片环高速流转",
+    "source_refs": [
+      "experiments/ch27/27-01/run.py",
+      "manuscripts/ch27/figure-data.json"
+    ],
+    "TeachingRole": "剖析成熟制程小容量 SRAM 芯片如何通过百芯片空间展开承载大模型",
+    "figure": "23-47",
+    "name": "ch23-groq-lpu-320-chip-deterministic-daisy-chain-pipeline"
+  },
+  {
+    "figure_id": "图 23-48",
+    "number": 48,
+    "file": "ch23-3d-stacked-sram-soic-tsv-thermal-and-bandwidth-model.svg",
+    "asset": "ch23/ch23-3d-stacked-sram-soic-tsv-thermal-and-bandwidth-model.svg",
+    "section": "23.14.2",
+    "caption": "TSMC SoIC 8 层 3D 垂直堆叠 SRAM（1.5 GB/chip，TSV 带宽 12.8 TB/s）与计算裸片直触液冷板的倒装热阻耦合模型（温升仅 6.4 摄氏度）（算例 23-21）",
+    "source_refs": [
+      "experiments/ch27/27-01/run.py",
+      "manuscripts/ch27/figure-data.json"
+    ],
+    "TeachingRole": "推导 3D 堆叠 SRAM 的硅穿孔带宽密度与一维傅里叶热传导温升控制",
+    "figure": "23-48",
+    "name": "ch23-3d-stacked-sram-soic-tsv-thermal-and-bandwidth-model"
+  },
+  {
+    "figure_id": "图 23-49",
+    "number": 49,
+    "file": "ch23-sram-asic-vs-hbm-gpu-tco-crossover-by-batch-size.svg",
+    "asset": "ch23/ch23-sram-asic-vs-hbm-gpu-tco-crossover-by-batch-size.svg",
+    "section": "23.14.2",
+    "caption": "全片上 SRAM 阵列与 HBM GPU 超节点的每百万词元成本（USD/MTok）随并发批大小 B 变化的交叉曲线（盈亏平衡并发度 B_cross = 14.2）（算例 23-20）",
+    "source_refs": [
+      "experiments/ch27/27-01/run.py",
+      "manuscripts/ch27/figure-data.json"
+    ],
+    "TeachingRole": "定量界定片上 SRAM 架构（B <= 14 交互式场景）与 HBM 架构（B >= 32 高吞吐场景）的经济统治边界",
+    "figure": "23-49",
+    "name": "ch23-sram-asic-vs-hbm-gpu-tco-crossover-by-batch-size"
+  },
+  {
+    "figure_id": "图 23-50",
+    "number": 50,
+    "file": "ch23-hardware-dynamic-arbitration-vs-cycle-accurate-compiler.svg",
+    "asset": "ch23/ch23-hardware-dynamic-arbitration-vs-cycle-accurate-compiler.svg",
+    "section": "23.15.1",
+    "caption": "传统 GPU 动态硬件缓存/分支/路由仲裁架构 vs. 软件静态确定性编译器（Cycle-Accurate Deterministic Execution，排队抖动 0.0 us）",
+    "source_refs": [
+      "experiments/ch27/27-01/run.py",
+      "manuscripts/ch27/figure-data.json"
+    ],
+    "TeachingRole": "解释剥离硬件动态调度器后如何由编译器精确排定每一时钟周期的数据移动",
+    "figure": "23-50",
+    "name": "ch23-hardware-dynamic-arbitration-vs-cycle-accurate-compiler"
+  },
+  {
+    "figure_id": "图 23-51",
+    "number": 51,
+    "file": "ch23-software-scheduled-tensor-stream-instruction-alignment.svg",
+    "asset": "ch23/ch23-software-scheduled-tensor-stream-instruction-alignment.svg",
+    "section": "23.15.2",
+    "caption": "跨 320 颗 SRAM 芯片的编译期张量流发射时刻表与 ±2 ns 硬件锁相屏障（Zero-Jitter Hardware Barrier）（算例 23-22）",
+    "source_refs": [
+      "experiments/ch27/27-01/run.py",
+      "manuscripts/ch27/figure-data.json"
+    ],
+    "TeachingRole": "证明周期精确飞行时间预计算与微秒级晶振频偏校准如何实现跨百芯片零排队通信",
+    "figure": "23-51",
+    "name": "ch23-software-scheduled-tensor-stream-instruction-alignment"
+  },
+  {
+    "figure_id": "图 23-52",
+    "number": 52,
+    "file": "ch23-sub-millisecond-hft-ai-kernel-bypass-nic-to-gpu-p2p.svg",
+    "asset": "ch23/ch23-sub-millisecond-hft-ai-kernel-bypass-nic-to-gpu-p2p.svg",
+    "section": "23.16.1",
+    "caption": "亚毫秒级高频量化与实时控制 AI 的内核旁路（ef_vi / DPDK）+ PCIe P2P 网卡直写 GPU BAR1 显存零拷贝数据通路（收包 2.8 us，发包 2.3 us）（算例 23-23）",
+    "source_refs": [
+      "experiments/ch27/27-02/run.py",
+      "manuscripts/ch27/figure-data.json"
+    ],
+    "TeachingRole": "展示如何绕过 Linux 内核协议栈与主机内存双缓冲实现微秒级数据入卡",
+    "figure": "23-52",
+    "name": "ch23-sub-millisecond-hft-ai-kernel-bypass-nic-to-gpu-p2p"
+  },
+  {
+    "figure_id": "图 23-53",
+    "number": 53,
+    "file": "ch23-cuda-launch-overhead-vs-persistent-polling-megakernel.svg",
+    "asset": "ch23/ch23-cuda-launch-overhead-vs-persistent-polling-megakernel.svg",
+    "section": "23.16.2",
+    "caption": "传统逐层 cudaLaunchKernel 驱动下发开销（27.0 us）vs. 持久化自旋轮询超级内核（Persistent Polling Megakernel，0.0 us 启动开销，计算 11.4 us）（算例 23-23）",
+    "source_refs": [
+      "experiments/ch27/27-02/run.py",
+      "manuscripts/ch27/figure-data.json"
+    ],
+    "TeachingRole": "揭示在小批量微秒级推理中用单持久内核融合全图并轮询显存标志位的关键机制",
+    "figure": "23-53",
+    "name": "ch23-cuda-launch-overhead-vs-persistent-polling-megakernel"
+  },
+  {
+    "figure_id": "图 23-54",
+    "number": 54,
+    "file": "ch23-linux-isolcpus-rt-throttling-and-p9999-tail-latency.svg",
+    "asset": "ch23/ch23-linux-isolcpus-rt-throttling-and-p9999-tail-latency.svg",
+    "section": "23.16.2",
+    "caption": "结合 Linux 核心物理隔离（isolcpus + nohz_full）与持久轮询内核将端到端中位延迟降至 16.5 us、P99.99 尾延迟从 420.0 us 压至 24.8 us（削减 16.94 倍）（算例 23-23）",
+    "source_refs": [
+      "experiments/ch27/27-02/run.py",
+      "manuscripts/ch27/figure-data.json"
+    ],
+    "TeachingRole": "剖析操作系统调度中断对长尾延迟的破坏及实时核隔离工程方案",
+    "figure": "23-54",
+    "name": "ch23-linux-isolcpus-rt-throttling-and-p9999-tail-latency"
+  },
+  {
+    "figure_id": "图 23-55",
+    "number": 55,
+    "file": "ch23-bitnet-b158-ternary-weight-packing-5trits-per-byte.svg",
+    "asset": "ch23/ch23-bitnet-b158-ternary-weight-packing-5trits-per-byte.svg",
+    "section": "23.17.1",
+    "caption": "BitNet b1.58 三值权重（{-1, 0, +1}，香农熵 1.585 bits）的 5-Trits-per-Byte（3^5=243 <= 256）无损打包编码：实测 1.60 bits/weight，70B 模型压缩 10 倍至 14.0 GB（算例 23-24）",
+    "source_refs": [
+      "experiments/ch27/27-03/run.py",
+      "manuscripts/ch27/figure-data.json"
+    ],
+    "TeachingRole": "推导三值编码的信息论效率（99.06%）与 5 权重进 1 字节的进制打包算法",
+    "figure": "23-55",
+    "name": "ch23-bitnet-b158-ternary-weight-packing-5trits-per-byte"
+  },
+  {
+    "figure_id": "图 23-56",
+    "number": 56,
+    "file": "ch23-fp16-mac-unit-vs-ternary-adder-tree-silicon-area-energy.svg",
+    "asset": "ch23/ch23-fp16-mac-unit-vs-ternary-adder-tree-silicon-area-energy.svg",
+    "section": "23.17.1",
+    "caption": "传统 FP16 浮点乘加器（MAC）与 BitNet b1.58 无乘法器纯整数加法树（消除 88.5% 动态乘法功耗）的硅片面积及能耗对比（算例 23-25）",
+    "source_refs": [
+      "experiments/ch27/27-03/run.py",
+      "manuscripts/ch27/figure-data.json"
+    ],
+    "TeachingRole": "从数字电路门级结构解释三值权重如何将矩阵乘简化为多路选择与纯加法",
+    "figure": "23-56",
+    "name": "ch23-fp16-mac-unit-vs-ternary-adder-tree-silicon-area-energy"
+  },
+  {
+    "figure_id": "图 23-57",
+    "number": 57,
+    "file": "ch23-tmac-precomputed-activation-lut-simd-pshufb-kernel.svg",
+    "asset": "ch23/ch23-tmac-precomputed-activation-lut-simd-pshufb-kernel.svg",
+    "section": "23.17.2",
+    "caption": "T-MAC 预计算激活查找表（g=4，81 种组合对称折半）与 128-bit SIMD 寄存器洗牌查表指令（pshufb / vtbl），实现 6.4 倍端侧加速（算例 23-25）",
+    "source_refs": [
+      "experiments/ch27/27-03/run.py",
+      "manuscripts/ch27/figure-data.json"
+    ],
+    "TeachingRole": "展示如何利用 SIMD 寄存器查表指令在不具备原生三值硬件的 CPU/NPU 上实现高速推理",
+    "figure": "23-57",
+    "name": "ch23-tmac-precomputed-activation-lut-simd-pshufb-kernel"
+  },
+  {
+    "figure_id": "图 23-58",
+    "number": 58,
+    "file": "ch23-bitblas-mixed-precision-w158a8-tensor-core-dequant.svg",
+    "asset": "ch23/ch23-bitblas-mixed-precision-w158a8-tensor-core-dequant.svg",
+    "section": "23.17.2",
+    "caption": "BitBLAS 面向 GPU Tensor Core 的 W1.58A8 混合精度流水线：HBM 紧凑读取 + 寄存器 LOP3 位运算无分支解包 + INT8 MMA 矩阵乘",
+    "source_refs": [
+      "manuscripts/ch27/figure-data.json"
+    ],
+    "TeachingRole": "打通 1.58-bit 极低显存带宽占用与现代 GPU INT8 Tensor Core 超高算力之间的桥梁",
+    "figure": "23-58",
+    "name": "ch23-bitblas-mixed-precision-w158a8-tensor-core-dequant"
+  },
+  {
+    "figure_id": "图 23-59",
+    "number": 59,
+    "file": "ch23-ultra-low-latency-and-1bit-inference-pareto-frontier.svg",
+    "asset": "ch23/ch23-ultra-low-latency-and-1bit-inference-pareto-frontier.svg",
+    "section": "23.17.2",
+    "caption": "全片上 3D-SRAM 架构与 BitNet b1.58 三值量化的化学反应：将 70B 模型压缩至 14.0 GB 装入 10 颗 3D-SRAM 芯片，兼得超低延迟与低硬件成本",
+    "source_refs": [
+      "manuscripts/ch27/figure-data.json"
+    ],
+    "TeachingRole": "揭示三值量化如何将片上 SRAM 芯片需求量削减一个数量级并重塑 TCO 交叉点",
+    "figure": "23-59",
+    "name": "ch23-ultra-low-latency-and-1bit-inference-pareto-frontier"
+  },
+  {
+    "figure_id": "图 23-60",
+    "number": 60,
+    "file": "ch23-extreme-latency-and-ternary-computing-synthesis.svg",
+    "asset": "ch23/ch23-extreme-latency-and-ternary-computing-synthesis.svg",
+    "section": "23.17.2",
+    "caption": "第 23 章系统工程全景图：从晶圆级/3D-SRAM 全片上驻留、静态确定性编译、微秒级内核旁路持久轮询到 BitNet b1.58 查找表计算",
+    "source_refs": [
+      "manuscripts/ch27/figure-data.json"
+    ],
+    "TeachingRole": "收束全章四大支柱，总结突破内存带宽墙、调度抖动墙与乘法器能耗墙的统一工程法则",
+    "figure": "23-60",
+    "name": "ch23-extreme-latency-and-ternary-computing-synthesis"
   }
 ]

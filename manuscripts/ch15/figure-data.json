@@ -1,78 +1,101 @@
 {
-  "chapter": 15,
-  "title": "吉瓦级 AI 数据中心、电力热学与跨地域协同训练",
-  "power_chain": {
-    "substation_kv": "110-220 kV",
-    "mv_distribution_kv": "10-35 kV",
-    "busbar_48v_to_800v": {
-      "current_reduction": "16.67x (1/16.7)",
-      "i2r_loss_reduction": "277.8x (1/278)"
+  "chapter": 20,
+  "title": "十万卡集群可靠性工程、静默数据损坏（SDC）防御与基准评测科学",
+  "cluster_reliability_100k": {
+    "source": "Meta Llama 3 405B (16,384 H100, 54d) & MLSys '26 #33",
+    "llama3_16k_gpus": 16384,
+    "llama3_days": 54,
+    "llama3_interruptions": 419,
+    "hardware_failure_share_pct": 78.0,
+    "mtbf_16k_hours": 3.09,
+    "mtbf_100k_minutes": 30.41,
+    "young_daly_ettr": {
+      "mtbf_s": 1800.0,
+      "traditional_disk_ckpt_s": 180.0,
+      "traditional_restart_rec_s": 300.0,
+      "opt_tau_disk_s": 805.0,
+      "ettr_disk_pct": 63.22,
+      "in_memory_ckpt_s": 5.0,
+      "trainmover_rec_s": 5.0,
+      "opt_tau_fast_s": 134.16,
+      "ettr_fast_pct": 92.34
     },
-    "rack_power_kw": {
-      "air_cooled": "10-15 kW",
-      "gb200_rubin_nvl72": "120-250 kW (Ultra 600 kW)"
+    "hot_spare_pool_poisson": {
+      "failure_rate_per_hour": 2.0,
+      "mttr_repair_hours": 12.0,
+      "mean_in_repair_nodes": 24.0,
+      "min_spares_for_99_9_pct": 40
     }
   },
-  "rubin_power_smoothing": {
-    "avg_power_reduction_pct": 10.0,
-    "peak_50ms_pulse_reduction_pct": 20.0,
-    "dsx_maxlps_gpu_overprovision_pct": 40.0
+  "sdc_defense_and_opguard": {
+    "source": "Safeguarding LLM Training at Scale (OSDI '26 #71) & OpGuard (OSDI '26 #72)",
+    "production_validation_gpu_hours": 35000000,
+    "abft_gemm_4096_overhead_pct": 0.0732,
+    "microbatch_rerun_ms": 50.0,
+    "checkpoint_rollback_hours": 2.0
   },
-  "ashrae_liquid_cooling": {
-    "classes": {
-      "W17": "2-17 C",
-      "W27": "2-27 C",
-      "W32": "2-32 C",
-      "W40": "2-40 C",
-      "W45": "2-45 C (Chiller-less Free Cooling)",
-      "W_plus": ">45 C"
+  "straggler_and_benchmark_science": {
+    "source": "case-studies/collective-paths-and-diagnosis.md & case-studies/optimization-evaluation-and-deployment.md & Blink (OSDI '26 #23)",
+    "collective_arrival_skew_ms": [0.0, 0.0, 0.0, 2.0],
+    "exchange_window_ms": 0.4,
+    "double_bw_savings_ms": 0.2,
+    "skew_fix_savings_ms": 2.0,
+    "flashinfer_bench_paradox": {
+      "baseline_us": [100.0, 100.0],
+      "candidate_a_us": [10.0, 200.0],
+      "candidate_b_us": [50.0, 50.0],
+      "cand_a_mean_speedup": 5.25,
+      "cand_a_equal_freq_us": 210.0,
+      "cand_b_equal_freq_us": 100.0,
+      "crossover_p": 0.7895
     },
-    "raised_floor_cfm_limit": 1900,
-    "fan_power_overhead_pct": "10-20%"
+    "abba_drift_cancellation": {
+      "drift_us": [0.0, 10.0, 20.0, 30.0],
+      "aabb_means_us": [105.0, 115.0],
+      "abba_means_us": [115.0, 105.0]
+    }
   },
-  "logicfolding": {
-    "voltage_v": [0.85, 0.55],
-    "v2_ratio": 0.4187,
-    "total_power_ratio": 0.75,
-    "area_ratio": 0.60,
-    "power_density_ratio": 1.25
+  "chaos_gameday_and_frontier_bridge": {
+    "source": "experiments/ch20/20-02/run.py (100K-GPU Chaos Fault Injection & Chapters 21-24 Bridge)",
+    "total_injected_faults": 200,
+    "detected_faults": 199,
+    "overall_recall_pct": 99.5,
+    "mean_mttd_sec": 2.7,
+    "mean_auto_mttr_sec": 3.85,
+    "manual_mttr_sec": 1500.0,
+    "mttr_speedup_x": 389.61,
+    "arrival_skew_8rank_case": {
+      "healthy_enqueue_ms": 10.0,
+      "straggler_rank": 5,
+      "straggler_enqueue_ms": 12.0,
+      "arrival_skew_ms": 2.0,
+      "ring_transfer_ms": 0.4,
+      "observed_healthy_duration_ms": 2.4,
+      "wait_share_pct": 83.33
+    },
+    "four_new_frontiers_ch21_ch24": {
+      "ch21_agentic": "95% WORM KV + 12 ms MicroVM CoW + 76.92 s Telemetry Drain",
+      "ch22_speech": "<200 ms Full-Duplex S2S + 12.5 Hz Mimi RVQ + Cursor KV Rollback",
+      "ch23_data_factory": "0.5% MinHash/Classifier/Influence Funnel + Mid-Training Mix",
+      "ch24_ai4science": "O(N^3) Triangle Attention + 3D FFT/Equivariance + 24-Ch Synthesis"
+    }
   },
-  "tapas_asplos25": {
-    "row_power_cap_kw": 100.0,
-    "deadline_s": 1.0,
-    "candidate_rows_kw": [102.0, 86.0],
-    "candidate_latency_s": [0.8, 1.3],
-    "reconfig_cost_s": 3.0,
-    "per_request_saving_s": 0.1,
-    "breakeven_requests": 30
-  },
-  "multi_dc_diloco": {
-    "distance_km": 1000,
-    "one_way_latency_ms": 5.0,
-    "rtt_ms": 10.0,
-    "inner_steps_H": 500,
-    "bandwidth_compression": 500
-  },
-  "hvdc_vpd_example_15_11": {
-    "rack_power_kw": 140.0,
-    "bus_resistance_mohm": 0.8,
-    "current_48v_a": 2916.67,
-    "current_800v_a": 175.0,
-    "i2r_loss_48v_w": 6805.56,
-    "i2r_loss_800v_w": 24.50,
-    "loss_reduction_ratio": 277.78,
-    "copper_area_48v_mm2": 1458.33,
-    "copper_area_800v_mm2": 87.50
-  },
-  "sofc_ere_example_15_12": {
-    "it_power_mw": 100.0,
-    "pue": 1.08,
-    "total_power_mw": 108.0,
-    "heat_recovery_ratio": 0.65,
-    "reused_heat_mw": 65.0,
-    "ere": 0.43,
-    "erf": 0.6019,
-    "annual_reused_gwh": 569.4,
-    "annual_co2_saved_kt": 113.88
+  "oobleck_and_bursty_goodput": {
+    "source": "experiments/ch20/20-03/run.py (Oobleck SOSP '23 Pipeline Templates & Kingman Bursty Goodput)",
+    "oobleck_reconfig_sec": 1.45,
+    "full_restart_sec": 300.0,
+    "reconfig_speedup_x": 206.9,
+    "oobleck_retained_throughput_pct": 98.75,
+    "parachute_retained_throughput_pct": 93.75,
+    "rho": 0.85,
+    "ttft_uniform_ms": 80.0,
+    "goodput_uniform_req_s": 7.08,
+    "wq_bursty_ms": 829.6,
+    "ttft_bursty_ms": 909.6,
+    "ttft_inflation_x": 11.37,
+    "slo_attainment_bursty_pct": 48.77,
+    "goodput_bursty_req_s": 3.45,
+    "goodput_drop_pct": 51.27,
+    "max_safe_utilization_pct": 60.04
   }
 }

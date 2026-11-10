@@ -600,7 +600,7 @@ def draw(here, data):
 
         # 27. ch01-thirty-chapter-five-pillar-workload-spectrum (Path F3 Fig 1-28)
         f, a = canvas(6.8)
-        card(a, 0.02, 0.49, 0.96, 0.48, 'A  全书 30 章五大算力象限与前沿负载扩展谱系', '', 'blue', title_size=11.5)
+        card(a, 0.02, 0.49, 0.96, 0.48, 'A  全书 24 章五大算力象限与前沿负载扩展谱系', '', 'blue', title_size=11.5)
         pillars_top = [
             (0.045, '1 搜广推 HSTU', '万亿表三级缓存\nM-FALCON 44.8x', 'blue'),
             (0.355, '2 后自回归生成', 'dLLM 块并行去噪\nBLT 动态字节分块', 'purple'),
@@ -610,18 +610,18 @@ def draw(here, data):
             card(a, px, 0.68, 0.29, 0.20, ptitle, pbody, pcol, title_size=11, body_size=11)
         card(
             a, 0.045, 0.51, 0.43, 0.145,
-            '4 去中心化训练 (Ch28)',
+            '4 去中心化训练 (Ch16)',
             'DiLoCo 降带宽 2000x',
             'teal', title_size=11, body_size=11
         )
         card(
             a, 0.525, 0.51, 0.43, 0.145,
-            '5 源码与自演进 (Ch29-30)',
+            '5 全栈与自演进 (Ch24)',
             'FlashMLA · RLVR 合成',
             'green', title_size=11, body_size=11
         )
 
-        card(a, 0.02, 0.03, 0.96, 0.43, 'B  30 章全栈四维物理边界：算术强度 · 状态介质 · 互联 · 自治', '', 'purple', title_size=11.5)
+        card(a, 0.02, 0.03, 0.96, 0.43, 'B  24 章全栈四维物理边界：算术强度 · 状态介质 · 互联 · 自治', '', 'purple', title_size=11.5)
         bounds_30 = [
             (0.045, '存储介质谱系', '44GB 片上 SRAM\n至百 PB 3FS 池', 'blue'),
             (0.355, '通信带宽跨度', 'NVL576 3.6 TB/s\n至广域 350 Mbps', 'orange'),

@@ -1,37 +1,37 @@
 {
-  "closed_loop_3dgs_sensor_sim": {
-    "total_gaussians": 2500000,
-    "cull_ratio": 0.72,
-    "active_gaussians": 700000,
-    "naive_6cam_ms": 51.0,
-    "naive_1lidar_ms": 24.0,
-    "naive_total_ms": 75.0,
-    "naive_fps": 13.33,
-    "batched_6cam_ms": 11.4,
-    "rtcore_1lidar_ms": 5.4,
-    "opt_total_ms": 16.8,
-    "opt_fps": 59.52,
-    "render_speedup_x": 4.46,
-    "meets_30hz_hil_sla": true,
-    "ex19_13_8cam_2lidar_naive_ms": 104.0,
-    "ex19_13_8cam_2lidar_naive_fps": 9.62,
-    "ex19_13_8cam_2lidar_opt_ms": 22.0,
-    "ex19_13_8cam_2lidar_opt_fps": 45.45,
-    "ex19_13_speedup_x": 4.73
+  "experiment_id": "19-03",
+  "rolling_kv_pool": {
+    "chunk_rgb_frames": 3,
+    "tokens_per_chunk": 3600,
+    "sink_chunks": 1,
+    "window_chunks": 5,
+    "active_chunks": 6,
+    "active_kv_tokens": 21600,
+    "bytes_per_tok_28l": 229376,
+    "hybrid_8l_rolling_kv_gib": 1.3184,
+    "full_28l_rolling_kv_gib": 4.6143,
+    "unbounded_10min_8l_gib": 878.91,
+    "unbounded_10min_28l_gib": 3076.17,
+    "kv_compression_ratio_10min": 666.67
   },
-  "dual_thor_safety_watchdog": {
-    "t_detect_ms": 5.0,
-    "t_switch_ms": 1.5,
-    "t_mpc_ms": 4.0,
-    "t_act_ms": 2.0,
-    "takeover_latency_ms": 12.5,
-    "asil_d_ftti_ms": 15.0,
-    "meets_asil_d_ftti": true,
-    "watchdog_lateral_drift_mm": 3.02,
-    "restart_250ms_lateral_drift_mm": 351.25,
-    "drift_reduction_x": 116.31,
-    "ex19_14_watchdog_drift_mm": 2.5,
-    "ex19_14_restart_200ms_drift_mm": 190.0,
-    "ex19_14_reduction_x": 76.0
+  "pab_teacache_streaming": {
+    "dmd_steps": 4,
+    "uncached_dit_chunk_ms": 168.0,
+    "uncached_total_chunk_ms": 186.0,
+    "uncached_frame_ms": 62.0,
+    "uncached_fps": 16.13,
+    "step_latencies_ms": [
+      42.0,
+      18.0,
+      2.0,
+      34.0
+    ],
+    "pab_teacache_dit_chunk_ms": 96.0,
+    "vae_chunk_ms": 18.0,
+    "opt_total_chunk_ms": 114.0,
+    "opt_frame_ms": 38.0,
+    "streaming_fps": 26.32,
+    "fps_speedup": 1.63,
+    "meets_20fps_sla": true
   }
 }

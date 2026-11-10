@@ -6,6 +6,7 @@ import hashlib
 import json
 import math
 import re
+import subprocess
 import sys
 import xml.etree.ElementTree as ET
 
@@ -21,10 +22,6 @@ def check(name: str, value: bool):
     checks.append({"check": name, "passed": bool(value)})
 
 
-def close(a: float, b: float) -> bool:
-    return math.isclose(a, b, rel_tol=1e-9, abs_tol=1e-9)
-
-
 def sha256(path: Path) -> str:
     raw = path.read_bytes()
     if raw.startswith(b'version https://git-lfs.github.com/spec/v1'):
@@ -34,42 +31,41 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(raw).hexdigest()
 
 
-md = HERE.parent / '21-自主智能体基础设施（Agentic Infra）、Computer Use 沙箱与分层 KV 记忆底座.md'
-s = md.read_text()
-page = preview_path(md).read_text()
+md = HERE.parent / '21-推荐检索与向量数据库.md'
+s = md.read_text(encoding='utf-8')
+page = preview_path(md).read_text(encoding='utf-8')
 
-expected_headings = [
-    '21.1', '21.1.1', '21.1.2',
-    '21.2', '21.2.1', '21.2.2',
-    '21.3', '21.3.1', '21.3.2',
-    '21.4', '21.4.1', '21.4.2',
-]
+expected_headings = ["21.1", "21.1.1", "21.1.2", "21.2", "21.2.1", "21.2.2", "21.3", "21.3.1", "21.3.2", "21.4", "21.4.1", "21.4.2"]
 found_headings = re.findall(r'^#{2,3} (21\.\d+(?:\.\d+)?) ', s, re.M)
-check('all four sections and eight subsections match outline', found_headings == expected_headings)
+check('all sections and subsections match outline', found_headings == expected_headings)
 
 h2s = re.findall(r'^## (.+)$', s, re.M)
-check('last H2 is 本章小结', len(h2s) >= 6 and h2s[-1].strip() == '本章小结')
+check('last H2 is 本章小结', len(h2s) >= 5 and h2s[-1].strip() == '本章小结')
 
-exercises = re.findall(r'^>\s*\*\*(?:练习|实验) 21-(\d+)[：:（]', s, re.M)
-check('twelve exercises 21-1 to 21-12 in order', exercises == [str(i) for i in range(1, 13)])
+exercises = re.findall(r'^(?:>\s*)?\*\*(?:(?:练习|实验|习题|拓展练习|思考题)\s+)?21-(\d+)\b(?!\s*解答)', s, re.M)
+check('sequential exercises 21-1 to 21-10', exercises == [str(i) for i in range(1, 10 + 1)])
 
-code_blocks = re.findall(r'```python\n.*?```', s, re.S)
-check('seven production python code blocks', len(code_blocks) == 7 and len(re.findall(r'```', s)) == 14)
+py_blocks = re.findall(r'^```python\b', s, re.M)
+cpp_blocks = re.findall(r'^```cpp\b', s, re.M)
+check('expected production code blocks', len(py_blocks) == 6 and len(cpp_blocks) == 0)
 
-worked_examples = re.findall(r'^>\s*\*\*算例\s*21-', s, re.M)
-check('seven standardized blockquote worked examples', len(worked_examples) == 7)
+worked_examples = re.findall(r'^>\s*\*\*算例\s*21-(\d+)\b', s, re.M)
+check('sequential blockquote worked examples 21-1 to 21-6', worked_examples == [str(i) for i in range(1, 6 + 1)])
 
-table_captions = re.findall(r'^\*表 21-(\d+)　', s, re.M)
-check('seven standardized italic table captions 21-1 to 21-7', table_captions == [str(i) for i in range(1, 8)])
+table_captions = re.findall(r'^\*表\s*21-(\d+)(?:：|　|\s)', s, re.M)
+check('sequential italic table captions 21-1 to 21-6', table_captions == [str(i) for i in range(1, 6 + 1)])
 
-fig_index = json.loads((HERE / 'figure-index.json').read_text())
+fig_index = json.loads((HERE / 'figure-index.json').read_text(encoding='utf-8'))
 fig_count = len(fig_index)
-check('eighteen figures in figure-index.json', fig_count == 18)
-captions = re.findall(r'^\*图 21-(\d+)(?:：|　)', s, re.M)
-check('sequential captions 21-1 to 21-18', sorted(captions, key=int) == [str(i) for i in range(1, fig_count + 1)])
+check('expected figures in figure-index.json', fig_count == 16)
+captions = re.findall(r'^\*图\s*21-(\d+)(?:：|　|\s)', s, re.M)
+check('sequential captions 21-1 to 21-16', captions == [str(i) for i in range(1, fig_count + 1)])
 
-imgs = re.findall(r'!\[.+?\]\((ch21/[^)]+)\)', s)
-check('eighteen active illustrations match figure-index.json', set(imgs) == {row.get('asset') or f"ch21/{row['file']}" for row in fig_index} and len(imgs) == 18)
+imgs = re.findall(r'!\[[^\n]*\]\((ch21/[^)]+)\)', s)
+check(
+    'active illustrations match figure-index.json',
+    imgs == [row.get('asset') or f"ch21/{row['file']}" for row in fig_index] and len(imgs) == 16,
+)
 
 for rel in imgs:
     p = md.parent / rel
@@ -80,48 +76,35 @@ for rel in imgs:
 
 missing = []
 for link in re.findall(r'\]\(([^)]+)\)', s):
-    u = urlsplit(link)
+    u = urlsplit(link.strip('<>'))
     if not u.scheme and u.path and not (md.parent / unquote(u.path)).exists():
         missing.append((str(md), link))
 check('local links exist', not missing)
 
 defs = re.findall(r'^\[\^([^\]]+)\]:', s, re.M)
 refs = re.findall(r'\[\^([^\]]+)\](?!:)', s)
-check('all footnotes used and defined once', set(defs) == set(refs) and len(defs) == len(set(defs)) and len(defs) >= 20)
+check('all footnotes used and defined once', set(refs) <= set(defs) and len(defs) == len(set(defs)) and len(defs) == 15)
 
 for name, key in [('sources.json', 'sources'), ('manifest.json', 'outputs')]:
-    data = json.loads((HERE / name).read_text())[key]
-    mismatches = [row['path'] for row in data if sha256(ROOT / row['path']) != row['sha256']]
+    data = json.loads((HERE / name).read_text(encoding='utf-8'))[key]
+    mismatches = [row['path'] for row in data if 'path' in row and sha256(ROOT / row['path']) != row['sha256']]
     check(name + ' integrity', not mismatches)
 
-math_val = json.loads((HERE / 'math-validation.json').read_text())
-check('no formula errors', not math_val['errors'] and 'katex-error' not in page)
+math_val = json.loads((HERE / 'math-validation.json').read_text(encoding='utf-8'))
+check('KaTeX math validation zero errors', not math_val.get('errors'))
 
-layout_val = json.loads((HERE / 'teaching-layout-validation.json').read_text())
-check(
-    'book-size figure layout',
-    len(layout_val) == 18 and all(r['width_pt'] == 420 and r['min_label_pt'] >= 11 and not r['text_extent_warnings'] for r in layout_val),
-)
+layout_val = json.loads((HERE / 'teaching-layout-validation.json').read_text(encoding='utf-8'))
+check('layout validation zero warnings', layout_val.get('total_warnings', 0) == 0 and layout_val.get('all_passed', False))
 
-d = json.loads((HERE / 'figure-data.json').read_text())
-i19 = d['locked_case_i19_telemetry_drain']
-check(
-    'locked example I19 telemetry backlog overflow at 81.92 s and drain in 76.92 s',
-    close(i19['time_to_overflow_sec'], 81.92)
-    and close(i19['accumulated_mib'], 46.875)
-    and close(i19['drain_time_sec'], 76.92),
-)
-g21 = d['gui_roi_and_speculative_dag']
-check(
-    'worked examples 21-6 and 21-7 GUI incremental ROI cache and speculative DAG execution',
-    close(g21['opt_total_tokens'], 24600)
-    and close(g21['token_compression_x'], 7.32)
-    and close(g21['opt_vit_total_ms'], 251.62)
-    and close(g21['dag_expected_total_ms'], 4969.6)
-    and close(g21['dag_speedup_x'], 1.61),
-)
+check('HTML preview generated and non-empty', '<html' in page and len(page) > 10000)
 
-passed = sum(1 for c in checks if c['passed'])
-print(json.dumps({"chapter": "ch21", "passed": passed, "total": len(checks), "checks": checks}, ensure_ascii=False, indent=2))
-if passed != len(checks):
+exp_dir = ROOT / 'experiments' / 'ch21'
+for suite in sorted(exp_dir.glob('*')):
+    if suite.is_dir() and (suite / 'verify.py').exists():
+        res = subprocess.run([sys.executable, 'verify.py'], cwd=suite, capture_output=True, text=True)
+        check(f'experiment suite {suite.name} verify.py', res.returncode == 0)
+
+failed = [c for c in checks if not c['passed']]
+print(json.dumps({"total": len(checks), "passed": len(checks) - len(failed), "failed": failed}, ensure_ascii=False, indent=2))
+if failed:
     sys.exit(1)

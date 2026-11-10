@@ -40,7 +40,7 @@ def verify(name):
     checks={
         'title_and_author': '深入理解 AI Infra' in text and '李博杰' in text,
         'all_chapters': all(re.search(rf'第\s*{n}\s*章',text) for n in build['chapters']),
-        'ch25_to_30_keywords': (True if len(build['chapters']) < 30 else ('生成式推荐' in text and '自演进' in text)),
+        'ch18_to_24_keywords': (True if len(build['chapters']) < 24 else ('生成式推荐' in text and '自演进' in text)),
         'new_200k_figure': '200K' in text and '50.48' in text and '1,235.13' in text,
         'all_fonts_embedded': not unembedded,
         'all_pages_portrait': all(angle == 0 for angle in rotations.values()) and all(float(p.attrib['height']) > float(p.attrib['width']) for p in bounds.findall('.//x:page',ns)),

@@ -1,20 +1,25 @@
 {
+  "chapter": "ch17",
   "sources": [
     {
-      "path": "manuscripts/ch17/build.py",
-      "sha256": "1e29ef7ae96b3984885dee7e3390fc26fa0534dbe2bd91e93069e0103ae8ef20"
-    },
-    {
-      "path": "manuscripts/ch17/figure-data.json",
-      "sha256": "0e15c72e3df2a2e09a027326e1a5c818f07f4053ddad15f0b3399187883ebe48"
+      "path": "manuscripts/17-后训练与强化学习系统.md",
+      "sha256": "35fa948d3a308fd0f15470d3ffddca0197a2f8fa5422b642a0eda3fdf5d1a02b"
     },
     {
       "path": "manuscripts/ch17/figure-index.json",
-      "sha256": "18657fffd28140ed3fac17de992b589c385d785fa1dbc43b36f01f6b0cf38de7"
+      "sha256": "e0a597f6e83991448f3747803aa5aa1808ebd1953848312a7fbcb6a1c7ad3619"
     },
     {
-      "path": "manuscripts/17-多模态、视频生成（DiT）与世界模型基础设施.md",
-      "sha256": "ae3279651353172e34de26c29f07b83941ef5ec45c911fc20068b04f901473d1"
+      "path": "experiments/ch17/17-01/run.py",
+      "sha256": "445eb3696b39d8cd911a93279de90f0a33607bcda7b17f4abfcc9ff486392141"
+    },
+    {
+      "path": "experiments/ch17/17-02/run.py",
+      "sha256": "e018fe093e73fba737123690d7e9aa87aecccfe68f70363792d27b7211d3fd84"
+    },
+    {
+      "path": "experiments/ch17/17-03/run.py",
+      "sha256": "f950c2c12eb2a511ea3aced67cc944ec0e905f332f4f0eef0426f12f35891006"
     }
   ]
 }

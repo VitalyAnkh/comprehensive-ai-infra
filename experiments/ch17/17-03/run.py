@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Experiment 17-03: Block-causal KV rolling window and PAB/TeaCache reuse for >20 FPS streaming world models."""
+"""Experiment 17-03: Multi-Turn Agentic RLVR (SWE-RL) CoW Trajectory Tree Forking and V-trace / TIS Off-Policy Clipping."""
 from __future__ import annotations
 
 import json
@@ -11,89 +11,70 @@ SUMMARY_PATH = HERE / "results" / "summary.json"
 
 
 def compute_metrics() -> dict:
-    # 1. Block-causal rolling KV cache pool (Example 17-8 & Exercise 17-15)
-    chunk_rgb_frames = 3
-    tokens_per_chunk = 3600  # (720/16) * (1280/16) = 45 * 80
-    sink_chunks = 1
-    window_chunks = 5
-    active_chunks = sink_chunks + window_chunks  # 6
-    active_kv_tokens = active_chunks * tokens_per_chunk  # 21,600
+    # 1. SWE-RL 4x4 CoW Trajectory Tree Forking (Example 18-10 Part 1 & Exercise 18-15)
+    b1, b2 = 4, 4
+    num_leaves = b1 * b2  # 16
+    t_setup_s = 18.0
+    t_turn_s = 12.0
+    prefix_turns = 2
+    leaf_turns = 2
 
-    dit_layers = 28
-    cross_chunk_layers = 8
-    kv_heads = 16
-    head_dim = 128
-    dtype_bytes = 2
-    bytes_per_tok_per_layer = 2 * kv_heads * head_dim * dtype_bytes  # 8,192 B
-    bytes_per_tok_28l = dit_layers * bytes_per_tok_per_layer  # 229,376 B
+    linear_sandbox_cpu_sec = round(num_leaves * (t_setup_s + prefix_turns * t_turn_s), 2)  # 672.0 s
+    forked_sandbox_cpu_sec = round(t_setup_s + b1 * (prefix_turns * t_turn_s), 2)  # 18.0 + 4 * 24.0 = 114.0 s
+    sandbox_cpu_speedup = round(linear_sandbox_cpu_sec / forked_sandbox_cpu_sec, 2)  # 5.89x
 
-    hybrid_8l_rolling_kv_gib = round(
-        (active_kv_tokens * cross_chunk_layers * bytes_per_tok_per_layer) / (1024 ** 3), 4
-    )  # 1.3184 GiB
-    full_28l_rolling_kv_gib = round(
-        (active_kv_tokens * bytes_per_tok_28l) / (1024 ** 3), 4
-    )  # 4.6143 GiB
+    linear_total_cpu_sec = round(linear_sandbox_cpu_sec + num_leaves * (leaf_turns * t_turn_s), 2)  # 1056.0 s
+    forked_total_cpu_sec = round(forked_sandbox_cpu_sec + num_leaves * (leaf_turns * t_turn_s), 2)  # 498.0 s
+    total_cpu_saving_pct = round((1.0 - forked_total_cpu_sec / linear_total_cpu_sec) * 100.0, 2)  # 52.84%
 
-    ten_min_chunks = 4000  # 10 min * 60 s * 20 FPS / 3 frames
-    unbounded_10min_8l_gib = round(
-        (ten_min_chunks * tokens_per_chunk * cross_chunk_layers * bytes_per_tok_per_layer) / (1024 ** 3), 2
-    )  # 878.91 GiB
-    unbounded_10min_28l_gib = round(
-        (ten_min_chunks * tokens_per_chunk * bytes_per_tok_28l) / (1024 ** 3), 2
-    )  # 3076.17 GiB
-    kv_compression_ratio_10min = round(ten_min_chunks / active_chunks, 2)  # 666.67x
+    l_prompt = 4096
+    l_turn_act_obs = 2048
+    linear_prefix_kv_slots = num_leaves * (l_prompt + prefix_turns * l_turn_act_obs)  # 131,072
+    forked_prefix_kv_slots = l_prompt + b1 * (prefix_turns * l_turn_act_obs)  # 4096 + 4 * 4096 = 20,480
+    prefix_kv_saving_pct = round((1.0 - forked_prefix_kv_slots / linear_prefix_kv_slots) * 100.0, 2)  # 84.38%
 
-    # 2. 4-step DMD block-causal latency with PAB + TeaCache (Example 17-8 & Exercise 17-16)
-    dmd_steps = 4
-    spatial_ffn_ms = 18.0
-    temporal_causal_ms = 16.0
-    cross_cond_ms = 8.0
-    step_full_ms = spatial_ffn_ms + temporal_causal_ms + cross_cond_ms  # 42.0 ms
-    vae_chunk_ms = 18.0
+    # 2. Off-policy IS explosion vs. V-trace / TIS clipping (Example 18-10 Part 2 & Exercise 18-16)
+    step_is_ratio = 1.25
+    horizon = 10
+    unclipped_prod_is = round(step_is_ratio ** horizon, 4)  # 9.3132
+    unclipped_var_amp = round(unclipped_prod_is ** 2, 2)  # 86.74x
 
-    uncached_dit_chunk_ms = round(dmd_steps * step_full_ms, 2)  # 168.0 ms
-    uncached_total_chunk_ms = round(uncached_dit_chunk_ms + vae_chunk_ms, 2)  # 186.0 ms
-    uncached_frame_ms = round(uncached_total_chunk_ms / chunk_rgb_frames, 2)  # 62.0 ms
-    uncached_fps = round(1000.0 / uncached_frame_ms, 2)  # 16.13 FPS
-
-    # Step breakdown: s=4 (42.0 ms), s=3 (18.0 ms), s=2 (2.0 ms TeaCache), s=1 (34.0 ms)
-    step_latencies_ms = [42.0, 18.0, 2.0, 34.0]
-    pab_teacache_dit_chunk_ms = round(sum(step_latencies_ms), 2)  # 96.0 ms
-    opt_total_chunk_ms = round(pab_teacache_dit_chunk_ms + vae_chunk_ms, 2)  # 114.0 ms
-    opt_frame_ms = round(opt_total_chunk_ms / chunk_rgb_frames, 2)  # 38.0 ms
-    streaming_fps = round(1000.0 / opt_frame_ms, 2)  # 26.32 FPS
-    fps_speedup = round(streaming_fps / uncached_fps, 2)  # 1.63x
+    rho_bar = 1.2
+    c_bar = 1.0
+    rho_clipped = min(rho_bar, step_is_ratio)  # 1.2
+    c_clipped = min(c_bar, step_is_ratio)  # 1.0
+    vtrace_prod_c = round(c_clipped ** (horizon - 1), 4)  # 1.0
+    vtrace_last_step_target = round(rho_clipped * 1.0, 4)  # 1.2
+    vtrace_first_step_target = round(vtrace_last_step_target * vtrace_prod_c, 4)  # 1.2
+    variance_amplification_reduction = round(unclipped_prod_is / vtrace_first_step_target, 2)  # 7.76x
 
     return {
         "experiment_id": "17-03",
-        "rolling_kv_pool": {
-            "chunk_rgb_frames": chunk_rgb_frames,
-            "tokens_per_chunk": tokens_per_chunk,
-            "sink_chunks": sink_chunks,
-            "window_chunks": window_chunks,
-            "active_chunks": active_chunks,
-            "active_kv_tokens": active_kv_tokens,
-            "bytes_per_tok_28l": bytes_per_tok_28l,
-            "hybrid_8l_rolling_kv_gib": hybrid_8l_rolling_kv_gib,
-            "full_28l_rolling_kv_gib": full_28l_rolling_kv_gib,
-            "unbounded_10min_8l_gib": unbounded_10min_8l_gib,
-            "unbounded_10min_28l_gib": unbounded_10min_28l_gib,
-            "kv_compression_ratio_10min": kv_compression_ratio_10min,
+        "cow_trajectory_tree_forking": {
+            "branch_factor_l1": b1,
+            "branch_factor_l2": b2,
+            "num_leaves": num_leaves,
+            "linear_sandbox_cpu_sec": linear_sandbox_cpu_sec,
+            "forked_sandbox_cpu_sec": forked_sandbox_cpu_sec,
+            "sandbox_cpu_speedup": sandbox_cpu_speedup,
+            "linear_total_cpu_sec": linear_total_cpu_sec,
+            "forked_total_cpu_sec": forked_total_cpu_sec,
+            "total_cpu_saving_pct": total_cpu_saving_pct,
+            "linear_prefix_kv_slots": linear_prefix_kv_slots,
+            "forked_prefix_kv_slots": forked_prefix_kv_slots,
+            "prefix_kv_saving_pct": prefix_kv_saving_pct,
         },
-        "pab_teacache_streaming": {
-            "dmd_steps": dmd_steps,
-            "uncached_dit_chunk_ms": uncached_dit_chunk_ms,
-            "uncached_total_chunk_ms": uncached_total_chunk_ms,
-            "uncached_frame_ms": uncached_frame_ms,
-            "uncached_fps": uncached_fps,
-            "step_latencies_ms": step_latencies_ms,
-            "pab_teacache_dit_chunk_ms": pab_teacache_dit_chunk_ms,
-            "vae_chunk_ms": vae_chunk_ms,
-            "opt_total_chunk_ms": opt_total_chunk_ms,
-            "opt_frame_ms": opt_frame_ms,
-            "streaming_fps": streaming_fps,
-            "fps_speedup": fps_speedup,
-            "meets_20fps_sla": streaming_fps >= 20.0,
+        "vtrace_and_tis_off_policy": {
+            "step_is_ratio": step_is_ratio,
+            "horizon_steps": horizon,
+            "unclipped_prod_is": unclipped_prod_is,
+            "unclipped_var_amp": unclipped_var_amp,
+            "vtrace_rho_bar": rho_bar,
+            "vtrace_c_bar": c_bar,
+            "vtrace_prod_c": vtrace_prod_c,
+            "vtrace_first_step_target": vtrace_first_step_target,
+            "vtrace_last_step_target": vtrace_last_step_target,
+            "variance_amplification_reduction": variance_amplification_reduction,
         },
     }
 

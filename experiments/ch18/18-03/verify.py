@@ -1,48 +1,29 @@
 #!/usr/bin/env python3
-"""Verifier for Experiment 18-03."""
+"""Verify deterministic outputs for Experiment 18-03."""
 from __future__ import annotations
 
 import json
-import sys
 from pathlib import Path
-
-HERE = Path(__file__).resolve().parent
-EXPECTED_PATH = HERE / "expected" / "metrics.json"
-SUMMARY_PATH = HERE / "results" / "summary.json"
+from run import compute_metrics, EXPECTED_PATH, RESULTS_PATH
 
 
 def main() -> None:
-    if not EXPECTED_PATH.exists() or not SUMMARY_PATH.exists():
-        print("Missing expected/metrics.json or results/summary.json; run run.py first.", file=sys.stderr)
-        sys.exit(1)
-    expected = json.loads(EXPECTED_PATH.read_text())
-    actual = json.loads(SUMMARY_PATH.read_text())
-    assert expected == actual, f"Mismatch:\nexpected={expected}\nactual={actual}"
-
-    cow = actual["cow_trajectory_tree_forking"]
-    assert cow["num_leaves"] == 16
-    assert cow["linear_sandbox_cpu_sec"] == 672.0
-    assert cow["forked_sandbox_cpu_sec"] == 114.0
-    assert cow["sandbox_cpu_speedup"] == 5.89
-    assert cow["linear_total_cpu_sec"] == 1056.0
-    assert cow["forked_total_cpu_sec"] == 498.0
-    assert cow["total_cpu_saving_pct"] == 52.84
-    assert cow["linear_prefix_kv_slots"] == 131072
-    assert cow["forked_prefix_kv_slots"] == 20480
-    assert cow["prefix_kv_saving_pct"] == 84.38
-
-    vt = actual["vtrace_and_tis_off_policy"]
-    assert vt["step_is_ratio"] == 1.25
-    assert vt["horizon_steps"] == 10
-    assert vt["unclipped_prod_is"] == 9.3132
-    assert vt["unclipped_var_amp"] == 86.74
-    assert vt["vtrace_rho_bar"] == 1.2
-    assert vt["vtrace_c_bar"] == 1.0
-    assert vt["vtrace_prod_c"] == 1.0
-    assert vt["vtrace_first_step_target"] == 1.2
-    assert vt["vtrace_last_step_target"] == 1.2
-    assert vt["variance_amplification_reduction"] == 7.76
-    print("Experiment 18-03 verified: all locked metrics match.")
+    actual = compute_metrics()
+    expected = json.loads(Path(EXPECTED_PATH).read_text())
+    results = json.loads(Path(RESULTS_PATH).read_text())
+    assert actual == expected == results, f"Mismatch:\nactual={actual}\nexpected={expected}\nresults={results}"
+    assert actual["gui_incremental_roi_cache_ex21_6"]["opt_total_tokens"] == 24600
+    assert actual["gui_incremental_roi_cache_ex21_6"]["token_compression_x"] == 7.32
+    assert actual["gui_incremental_roi_cache_ex21_6"]["token_saving_pct"] == 86.33
+    assert actual["gui_incremental_roi_cache_ex21_6"]["opt_vit_total_ms"] == 251.62
+    assert actual["gui_incremental_roi_cache_ex21_6"]["vit_speedup_x"] == 5.37
+    assert actual["speculative_dag_execution_ex21_7"]["expected_total_ms"] == 4969.60
+    assert actual["speculative_dag_execution_ex21_7"]["dag_speedup_x"] == 1.61
+    assert actual["speculative_dag_execution_ex21_7"]["latency_reduction_pct"] == 37.88
+    assert actual["speculative_dag_execution_ex21_7"]["breakeven_hit_prob_pct"] == 1.25
+    assert actual["exercises_21_11_and_21_12"]["p11_opt_tokens"] == 35680
+    assert actual["exercises_21_11_and_21_12"]["p12_expected_total_ms"] == 6643.75
+    print("Experiment 18-03 verified successfully.")
 
 
 if __name__ == "__main__":

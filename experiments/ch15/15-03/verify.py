@@ -4,23 +4,38 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from run import compute_metrics, EXPECTED_PATH
+from run import compute_metrics, EXPECTED_PATH, RESULTS_PATH
 
 
 def main() -> None:
     actual = compute_metrics()
     expected = json.loads(Path(EXPECTED_PATH).read_text())
-    assert actual == expected, f"Mismatch:\nactual={actual}\nexpected={expected}"
-    assert actual["in_silicon_microfluidics"]["heat_flux_w_cm2"] == 277.78
-    assert actual["in_silicon_microfluidics"]["r_micro_total_kw"] == 0.01
-    assert actual["in_silicon_microfluidics"]["t_j_micro_c"] == 70.0
-    assert actual["in_silicon_microfluidics"]["pump_power_w"] == 1.65
-    assert actual["gw_microgrid_vsg"]["h_phys_s"] == 3.0
-    assert actual["gw_microgrid_vsg"]["h_with_vsg_s"] == 7.5
-    assert actual["gw_microgrid_vsg"]["rocof_with_vsg_hz_s"] == 1.5
-    assert actual["gw_microgrid_vsg"]["h_bess_min_s"] == 13.5
-    assert actual["electro_thermal_dvfs"]["effective_step_mw"] == 144.0
-    assert actual["electro_thermal_dvfs"]["step_overhead_pct"] == 1.43
+    results = json.loads(Path(RESULTS_PATH).read_text())
+    assert actual == expected == results, f"Mismatch:\nactual={actual}\nexpected={expected}\nresults={results}"
+
+    oob = actual["oobleck_elastic_pipeline_failover"]
+    assert oob["oobleck_reconfig_sec"] == 1.45
+    assert oob["full_restart_sec"] == 300.00
+    assert oob["reconfig_speedup_x"] == 206.90
+    assert oob["oobleck_retained_throughput_pct"] == 98.75
+    assert oob["parachute_retained_throughput_pct"] == 93.75
+    assert oob["ex20_13_parachute_pct"] == 93.75
+    assert oob["ex20_13_oobleck_pct"] == 98.88
+    assert oob["ex20_13_saved_node_hours_per_day"] == 629.76
+
+    gp = actual["bursty_goodput_vs_uniform"]
+    assert gp["ttft_uniform_ms"] == 80.00
+    assert gp["goodput_uniform_req_s"] == 7.08
+    assert gp["wq_bursty_ms"] == 829.60
+    assert gp["ttft_bursty_ms"] == 909.60
+    assert gp["ttft_inflation_x"] == 11.37
+    assert gp["slo_attainment_bursty_pct"] == 48.77
+    assert gp["goodput_bursty_req_s"] == 3.45
+    assert gp["goodput_drop_pct"] == 51.27
+    assert gp["max_safe_utilization_pct"] == 60.04
+    assert gp["ex20_14_wq_bursty_ms"] == 900.00
+    assert gp["ex20_14_ttft_bursty_ms"] == 960.00
+    assert gp["ex20_14_inflation_x"] == 16.00
     print("Experiment 15-03 verified successfully.")
 
 

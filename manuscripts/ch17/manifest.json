@@ -1,284 +1,281 @@
 {
+  "chapter": "ch17",
   "outputs": [
     {
-      "path": "manuscripts/ch17/ch17-1d-llm-vs-3d-spatiotemporal-dit-tokens.pdf",
-      "sha256": "65e292dea1165a218eca3285f9703ca8de344e55836888d450d116be825a9ceb"
+      "path": "manuscripts/ch17/ch17-ppo-four-model-vs-grpo-memory-ledger.svg",
+      "sha256": "62676efa49d82b06f6d73365f7ec5657a1cad2d7d2bb761631afbe52d2db5269"
     },
     {
-      "path": "manuscripts/ch17/ch17-1d-llm-vs-3d-spatiotemporal-dit-tokens.png",
-      "sha256": "c5cb04f772e05bb50cda607fe471cb4e8e9e768cbea281f0d9a07360757d84d7"
+      "path": "manuscripts/ch17/ch17-ppo-four-model-vs-grpo-memory-ledger.png",
+      "sha256": "2a3b77010b1b0b3bb900f0be04f5454027f4e2fd40cc7b607510113750a31e4e"
     },
     {
-      "path": "manuscripts/ch17/ch17-1d-llm-vs-3d-spatiotemporal-dit-tokens.svg",
-      "sha256": "659de6638086e83c3946122846c950df166914ecd6cbb41b018bf8662e28167a"
+      "path": "manuscripts/ch17/ch17-ppo-four-model-vs-grpo-memory-ledger.pdf",
+      "sha256": "74086e96ccfb44ede9fb6a7e1dd460c9f146c694f97620847c9173e051b4e202"
     },
     {
-      "path": "manuscripts/ch17/ch17-2d-usp-hybrid-ulysses-ring-topology.pdf",
-      "sha256": "ddd1b57e3a56510135a95c8cfc0e13a747a61e6394a15dd97504e832e8bd628e"
+      "path": "manuscripts/ch17/ch17-rlvr-iteration-timeline-rollout-dominance.svg",
+      "sha256": "bef3e97e3857dc5e3debd6497a75093463fe3e776dfd825f19601857241928c0"
     },
     {
-      "path": "manuscripts/ch17/ch17-2d-usp-hybrid-ulysses-ring-topology.png",
-      "sha256": "c7b4b20806cc25fbe4845742550d3e447083f9b859c6d1c68c49a412be2e6b87"
+      "path": "manuscripts/ch17/ch17-rlvr-iteration-timeline-rollout-dominance.png",
+      "sha256": "3bb21a626655b8603d4cc1fab26c0aad0284589cf50e83d3cc3c7a77ed2ec232"
     },
     {
-      "path": "manuscripts/ch17/ch17-2d-usp-hybrid-ulysses-ring-topology.svg",
-      "sha256": "957e7c4c626bc02e0aa5cfd997490e1ef84421f77bbe9ea6d432bf13e6001361"
+      "path": "manuscripts/ch17/ch17-rlvr-iteration-timeline-rollout-dominance.pdf",
+      "sha256": "9c2502b4c8c4e230861dee2fcecf3b93747850c994e53ae61846b87dae0bc20f"
     },
     {
-      "path": "manuscripts/ch17/ch17-3d-causal-vae-memory-spike-and-tiling.pdf",
-      "sha256": "45c9827c3f5a6d9e135e09a37df9240b3fd1b30d2fe80b419558be1f62ef6210"
+      "path": "manuscripts/ch17/ch17-verl-3d-hybrid-engine-zero-redundancy-reshard.svg",
+      "sha256": "7d058d537c786fa081393a6a7668e776cb5d4cc9d9d4a265987c7a4fa7a9a930"
     },
     {
-      "path": "manuscripts/ch17/ch17-3d-causal-vae-memory-spike-and-tiling.png",
-      "sha256": "8db3aa9530cec7bda040082a2cb55dbc7c1d46802dcbe43bbf8a1dfc660a0d2e"
+      "path": "manuscripts/ch17/ch17-verl-3d-hybrid-engine-zero-redundancy-reshard.png",
+      "sha256": "7b065d84cebb4a64a5ed8c2b8e92d9dfc617b13de4a400432530f619c2baaa61"
     },
     {
-      "path": "manuscripts/ch17/ch17-3d-causal-vae-memory-spike-and-tiling.svg",
-      "sha256": "8466bf0a42e8ec250bb1da97f51e859f2918b67410b2973ec469d8e57e26b11c"
+      "path": "manuscripts/ch17/ch17-verl-3d-hybrid-engine-zero-redundancy-reshard.pdf",
+      "sha256": "19fb69caba45c26a78a462464a2823b463689308eaca91b9f8f627d336eacd72"
     },
     {
-      "path": "manuscripts/ch17/ch17-3dgs-scaffold-guided-world-model-dit.pdf",
-      "sha256": "0d860dfffe9de5efb3dd6ca21bdd0d605b0da55c2a0dcbc734d9530de6775c86"
+      "path": "manuscripts/ch17/ch17-colocated-vs-disaggregated-rl-architecture.svg",
+      "sha256": "d56cbe2cbf0730239aaacbfaa01f81fbb78a059d3606286843641247d82e845b"
     },
     {
-      "path": "manuscripts/ch17/ch17-3dgs-scaffold-guided-world-model-dit.png",
-      "sha256": "936edabb1e94f28f8a9b078551e261220a56a53b8611cbc937458fecfafa6811"
+      "path": "manuscripts/ch17/ch17-colocated-vs-disaggregated-rl-architecture.png",
+      "sha256": "0931f684e834c2f32c91dd3184de36bbb9e2bbf828e69d9d68eafd7a5b158604"
     },
     {
-      "path": "manuscripts/ch17/ch17-3dgs-scaffold-guided-world-model-dit.svg",
-      "sha256": "bc649283e5346dbf70f5b5ebfbe18e7c3e5c189528a13c5f195d2dacd59de4ee"
+      "path": "manuscripts/ch17/ch17-colocated-vs-disaggregated-rl-architecture.pdf",
+      "sha256": "ff80fa71c1a49293f809c56e7f159cbd5333352677a6a4b4b06e5d7cac687a2c"
     },
     {
-      "path": "manuscripts/ch17/ch17-anyres-navit-dynamic-image-tiling.pdf",
-      "sha256": "81eddeb6594736f5a098aca986cf649ce6c1c810bed412e7bba6d5bee68d88f7"
+      "path": "manuscripts/ch17/ch17-long-cot-power-law-straggler-bubble.svg",
+      "sha256": "d19ee127dcdbc8298081a4e78373b0764b64f1fb07294120f28f2f57c110b5bb"
     },
     {
-      "path": "manuscripts/ch17/ch17-anyres-navit-dynamic-image-tiling.png",
-      "sha256": "4f20b787fe30d16b7eaf6423c6e6aaff48d401f7822baa157360e5b2ea8c95c9"
+      "path": "manuscripts/ch17/ch17-long-cot-power-law-straggler-bubble.png",
+      "sha256": "f76d1759f640836042902d0d0143a0c40c3179c9d826010ab031e583f245d907"
     },
     {
-      "path": "manuscripts/ch17/ch17-anyres-navit-dynamic-image-tiling.svg",
-      "sha256": "5f94244b8caa39faa929ad9254b72e8a628e18875ca428fb796c1b0e0c76d1fa"
+      "path": "manuscripts/ch17/ch17-long-cot-power-law-straggler-bubble.pdf",
+      "sha256": "673f228f6f9bea95f7eedb7b5a942a61a3859aa3079293d9de25e33f59e279da"
     },
     {
-      "path": "manuscripts/ch17/ch17-audio-video-text-interleaved-batching.pdf",
-      "sha256": "01563231d12047dc9d07f07f9aedc1612cac7f56e21a4a7c5e13d2843e99e1e0"
+      "path": "manuscripts/ch17/ch17-rollpacker-tail-migration-and-cp-scaling.svg",
+      "sha256": "df852a70c86ef2b76135aafa3a9d43c8f0e54962392d5443f8fec565d0d1da26"
     },
     {
-      "path": "manuscripts/ch17/ch17-audio-video-text-interleaved-batching.png",
-      "sha256": "08f611d783b4d91e72e6f0a8196a2b1c79cb73f26a0aeb421834872b0f634705"
+      "path": "manuscripts/ch17/ch17-rollpacker-tail-migration-and-cp-scaling.png",
+      "sha256": "a452025f7d13348f2a45229699e7a12c51e6275a52ea5d16386dc88697fb807a"
     },
     {
-      "path": "manuscripts/ch17/ch17-audio-video-text-interleaved-batching.svg",
-      "sha256": "0c5612cf49995d77bfb2bfeb8610430c41c163a228221bd30cec57dabd677af4"
+      "path": "manuscripts/ch17/ch17-rollpacker-tail-migration-and-cp-scaling.pdf",
+      "sha256": "e06800c005e317bfb7ffc1181d17b65a43982dbf6b5e522353c9cc463b79d2c8"
     },
     {
-      "path": "manuscripts/ch17/ch17-causal-streaming-world-model-20fps-kv-rolling.pdf",
-      "sha256": "939e58aa138e19b8d56b85c4a948c99c0e9773c8ac408e03e55923752c87cd17"
+      "path": "manuscripts/ch17/ch17-seer-divided-and-conquered-speculative-rollout.svg",
+      "sha256": "4503b5e028c85499aff21fc09aae93a37fa2bc6d871f27e5d72bbdb80ebae99e"
     },
     {
-      "path": "manuscripts/ch17/ch17-causal-streaming-world-model-20fps-kv-rolling.png",
-      "sha256": "def12ae47060f3cec3a1f9e7b6c36ef8f1202c3502045b51251ca83b6a6ba88b"
+      "path": "manuscripts/ch17/ch17-seer-divided-and-conquered-speculative-rollout.png",
+      "sha256": "aa89112fd4f55c1e3ff1c1eb148120ad222692a289e92a9e82df44152cd0eac0"
     },
     {
-      "path": "manuscripts/ch17/ch17-causal-streaming-world-model-20fps-kv-rolling.svg",
-      "sha256": "be88f9bd3b17fef4536ca73f6e479baf9de034dd664aaed5c7e70fc9728ec9b9"
+      "path": "manuscripts/ch17/ch17-seer-divided-and-conquered-speculative-rollout.pdf",
+      "sha256": "d704740188c22cccd211db312913ac73bbe51b968c9cef4237bb25db27b76a63"
     },
     {
-      "path": "manuscripts/ch17/ch17-dbsp-dual-balanced-sequence-parallelism.pdf",
-      "sha256": "1a0925d84d97059bdd83d952c778f51f87cb047848ca6ce3fcc8bf1962d05355"
+      "path": "manuscripts/ch17/ch17-staleness-bounded-partial-rollout-pipeline.svg",
+      "sha256": "a4df3a1a84af1b9abb7502d63a0b18d17742ee8342db617c5a4ca7acafc46bb3"
     },
     {
-      "path": "manuscripts/ch17/ch17-dbsp-dual-balanced-sequence-parallelism.png",
-      "sha256": "6a570fcb2b4e373de42f3b8a0cbc11a098665d945d1d0d6477e5ef847ffa7c0a"
+      "path": "manuscripts/ch17/ch17-staleness-bounded-partial-rollout-pipeline.png",
+      "sha256": "85bbe70cee5ad5b58c69983fecba18fccd7b51fae286c5961121a4b96299f7dc"
     },
     {
-      "path": "manuscripts/ch17/ch17-dbsp-dual-balanced-sequence-parallelism.svg",
-      "sha256": "511a76f457f063e18b7537ca77f9e56f4a69c8595e7abfc0dc52ad7017c64df7"
+      "path": "manuscripts/ch17/ch17-staleness-bounded-partial-rollout-pipeline.pdf",
+      "sha256": "b29c7fc848273b9cb82f2a2a619e3c751c34cc1a1c0384c9930b3e1e6486226e"
     },
     {
-      "path": "manuscripts/ch17/ch17-distrifusion-displaced-patch-parallelism.pdf",
-      "sha256": "f2411a41ce34b4275c2ee4862e7c9897b9c75ca55f9d497d45831792c9fbad6c"
+      "path": "manuscripts/ch17/ch17-off-policy-importance-sampling-clipping.svg",
+      "sha256": "ab839a675364a07dbb206dc169a07d1e73c30dbd669d0b0d7fbe178fb5eb1be2"
     },
     {
-      "path": "manuscripts/ch17/ch17-distrifusion-displaced-patch-parallelism.png",
-      "sha256": "59a408ffae47ad35d2383120eed5e8025e7c3cdc2dde6d133d1834a951c11912"
+      "path": "manuscripts/ch17/ch17-off-policy-importance-sampling-clipping.png",
+      "sha256": "b2106a5a71d159eeaf49610a07365ae0a03e79992c15926ea1037fdbdf942a72"
     },
     {
-      "path": "manuscripts/ch17/ch17-distrifusion-displaced-patch-parallelism.svg",
-      "sha256": "bec44c3922c7166300fee141d6fad4d76eb45ee38ec5e7d39839669a53154f9f"
+      "path": "manuscripts/ch17/ch17-off-policy-importance-sampling-clipping.pdf",
+      "sha256": "ae3c3e548066fc9c59c540ed1d6c6dfcf2ff5eecba22669a48d99fdaafddb2eb"
     },
     {
-      "path": "manuscripts/ch17/ch17-dit-cfg-classifier-free-guidance-parallel.pdf",
-      "sha256": "87e7d969da147f45b5afd3c8b56b340b54d0c99fd98303fc38c416647d69dedf"
+      "path": "manuscripts/ch17/ch17-robustrl-role-based-fault-isolation.svg",
+      "sha256": "c45c89e34f7e09bf5a1ed1c88d9acc62b4e6c1852c7d4059d48c0cd89aca4017"
     },
     {
-      "path": "manuscripts/ch17/ch17-dit-cfg-classifier-free-guidance-parallel.png",
-      "sha256": "5f7f81fa7e9d9fdc8455faf5fd0ba790193ec78777b84c79c7da15181d1ca769"
+      "path": "manuscripts/ch17/ch17-robustrl-role-based-fault-isolation.png",
+      "sha256": "bb1f4e10a5b74eb7ba5ecac1ea53a936d8646ff004471e9ca354a644c8fd857c"
     },
     {
-      "path": "manuscripts/ch17/ch17-dit-cfg-classifier-free-guidance-parallel.svg",
-      "sha256": "2b9d73091e7ae307b5e6974fa039a17fef0e891386464879fbcfc94969cb912c"
+      "path": "manuscripts/ch17/ch17-robustrl-role-based-fault-isolation.pdf",
+      "sha256": "2676285d4417d675a3507e9b0aec2cd976a019561864fd43f8ed5e3fba1f9133"
     },
     {
-      "path": "manuscripts/ch17/ch17-epdg-four-stage-disaggregated-serving.pdf",
-      "sha256": "a0af9d03168672ba9e5719074ef6a54d2b7a4ad7bea98b65a18afd4f43c8cbbd"
+      "path": "manuscripts/ch17/ch17-distrs-disaggregated-reward-sandbox-streaming.svg",
+      "sha256": "e5dbce66a6e7f20f37a9d1392cb4f9d8e0bace5124c570391fcac96639c0da90"
     },
     {
-      "path": "manuscripts/ch17/ch17-epdg-four-stage-disaggregated-serving.png",
-      "sha256": "0e7c1b4f3c58682f0dd460eaeca47b0380162848dc1471921cad07d9134ae451"
+      "path": "manuscripts/ch17/ch17-distrs-disaggregated-reward-sandbox-streaming.png",
+      "sha256": "84722a8fd846771b7790a6da24df62e46afd2caa3d583a146b01ac67d0c53a18"
     },
     {
-      "path": "manuscripts/ch17/ch17-epdg-four-stage-disaggregated-serving.svg",
-      "sha256": "8abd0d75a28a59407ab969b5f6cad8077e24258b8717d866f52139b5972dc284"
+      "path": "manuscripts/ch17/ch17-distrs-disaggregated-reward-sandbox-streaming.pdf",
+      "sha256": "16f816617a76ba83513b6ae547569716bc90853125f02e83fc7df635b69eb125"
     },
     {
-      "path": "manuscripts/ch17/ch17-interactive-world-model-rolling-kv-30fps.pdf",
-      "sha256": "72d9484811d595d2f5fd5eed804820b935429b49f8143e4fd1f471897335b165"
+      "path": "manuscripts/ch17/ch17-test-time-scaling-prm-tree-search-cow-kv.svg",
+      "sha256": "729e9f7878bf254730d292f54b94cbf884e248056a3fedc3dd6782bba809f878"
     },
     {
-      "path": "manuscripts/ch17/ch17-interactive-world-model-rolling-kv-30fps.png",
-      "sha256": "95e333a4cb4af6b6aebc88abfdb53e93a2aa9fa78e6b42aad009aeb7ecadc5b7"
+      "path": "manuscripts/ch17/ch17-test-time-scaling-prm-tree-search-cow-kv.png",
+      "sha256": "9ba51960314cc327d4a0f08eec2d938a50cc6e227f31bf9b0568a442bbd8c0c3"
     },
     {
-      "path": "manuscripts/ch17/ch17-interactive-world-model-rolling-kv-30fps.svg",
-      "sha256": "b29b72ea48beac08ab53f7d0c9d3e8ad9e793e4549002ba5ac068d46b57a1148"
+      "path": "manuscripts/ch17/ch17-test-time-scaling-prm-tree-search-cow-kv.pdf",
+      "sha256": "71e17294c1c275928f6c894aa6652472953a6e4032b534121f7df48e26ec7a50"
     },
     {
-      "path": "manuscripts/ch17/ch17-multimodal-dataloader-gpu-decode-nvjpeg.pdf",
-      "sha256": "85ab320400557f60d2efbaf9c92666f1d666b1b46195c4211bd0556ba610d893"
+      "path": "manuscripts/ch17/ch17-speculative-tot-reward-barrier-bypass.svg",
+      "sha256": "3314c109d8f1f3ea108cd790f62554b9fd720cc9c646601c0bddaaddada261fa"
     },
     {
-      "path": "manuscripts/ch17/ch17-multimodal-dataloader-gpu-decode-nvjpeg.png",
-      "sha256": "8059e5cdbfc3a6c08bc535ddc99593ca64b49f623bb18b56d2735b71b59a624f"
+      "path": "manuscripts/ch17/ch17-speculative-tot-reward-barrier-bypass.png",
+      "sha256": "c63fd311d9a1eac138645866425c5a236e8ffb69ce531c3509960bb104a1ee05"
     },
     {
-      "path": "manuscripts/ch17/ch17-multimodal-dataloader-gpu-decode-nvjpeg.svg",
-      "sha256": "83fca09a7153195a3e94293e4db09e1cd0c91e7a1ddeb136550c580b7102ecd0"
+      "path": "manuscripts/ch17/ch17-speculative-tot-reward-barrier-bypass.pdf",
+      "sha256": "e4aaea0d6326f80e69a677b477b6c227bba55c29b82fc4a138a76e342d44566a"
     },
     {
-      "path": "manuscripts/ch17/ch17-multimodal-world-model-infra-synthesis.pdf",
-      "sha256": "69e0842418c88699927fada64db8b6c31fc8897a54bb654bbd27b23041cef52b"
+      "path": "manuscripts/ch17/ch17-multi-turn-tool-env-rl-state-suspension.svg",
+      "sha256": "99dce9d80ffa6c8a288564c5c2209e978760d26bb66ab2645ed024cd0de9d8db"
     },
     {
-      "path": "manuscripts/ch17/ch17-multimodal-world-model-infra-synthesis.png",
-      "sha256": "da17ba711768e10e3f529e687727cd92ee96d938d383e3c97d5d8166ba4d963e"
+      "path": "manuscripts/ch17/ch17-multi-turn-tool-env-rl-state-suspension.png",
+      "sha256": "bc947bb08daf9fa6ce36ff96fa799bdeffda6dc45cbd59a82c50a5b8839066b1"
     },
     {
-      "path": "manuscripts/ch17/ch17-multimodal-world-model-infra-synthesis.svg",
-      "sha256": "3969ccd3d1c4e6735177e3a1bbdf3afc88075d45b10212f8b10d7e885da8fe9e"
+      "path": "manuscripts/ch17/ch17-multi-turn-tool-env-rl-state-suspension.pdf",
+      "sha256": "dc7bbdac0968b21ddc5fe1cead47eb4b6e53f4748ff98e4b2fdefb81b68d629b"
     },
     {
-      "path": "manuscripts/ch17/ch17-pipefusion-step-patch-2d-pipeline.pdf",
-      "sha256": "fcf596e8f537577ea9d4520754f3344db99c07de8118290ae54b767c5bd827c3"
+      "path": "manuscripts/ch17/ch17-hetrl-heterogeneous-inference-training-matching.svg",
+      "sha256": "352f25c37c01aa0e674ec7bd1e1122ca580733e56eb3e1025d8bf2c0ef2b4ecf"
     },
     {
-      "path": "manuscripts/ch17/ch17-pipefusion-step-patch-2d-pipeline.png",
-      "sha256": "d36496394d5b564a4d39650cce3dbdc798ac95288d4be20cd8c2a4a860189ffe"
+      "path": "manuscripts/ch17/ch17-hetrl-heterogeneous-inference-training-matching.png",
+      "sha256": "ac6302b5e2741df4c0e0c5dbda29bc29a623efc6c48a7caa890e70bcc4a0f817"
     },
     {
-      "path": "manuscripts/ch17/ch17-pipefusion-step-patch-2d-pipeline.svg",
-      "sha256": "e93108e69eea3a1f25cea9464259aa41e1f5c1147cb80969ca28954956f1dfd5"
+      "path": "manuscripts/ch17/ch17-hetrl-heterogeneous-inference-training-matching.pdf",
+      "sha256": "41cfe9b4531f2966f3d596267ce22cbc5db71d8951e561dd3e98772e48f23b96"
     },
     {
-      "path": "manuscripts/ch17/ch17-sageattention3-fp4-quantized-attention.pdf",
-      "sha256": "91261f3ce99c9c0308546e45ca0ab0589213c710c32f7cea8febb8942f09df2e"
+      "path": "manuscripts/ch17/ch17-dapo-dynamic-sampling-zero-variance-filter.svg",
+      "sha256": "42625c9ea93a53a8259a87a595ded73d99970227d71fe55d9ee012863013bde6"
     },
     {
-      "path": "manuscripts/ch17/ch17-sageattention3-fp4-quantized-attention.png",
-      "sha256": "f29067141a109a8ac42058eb036df6ec4c429793262af3da40a94217c0ca9d6b"
+      "path": "manuscripts/ch17/ch17-dapo-dynamic-sampling-zero-variance-filter.png",
+      "sha256": "be0146b26657b4c1d00c5360b42521ed2d08487951666b3bc1b3429bb4102881"
     },
     {
-      "path": "manuscripts/ch17/ch17-sageattention3-fp4-quantized-attention.svg",
-      "sha256": "0f079172f8a7da6709ac2869552b17e97022f18303157a6c901b122acd77630f"
+      "path": "manuscripts/ch17/ch17-dapo-dynamic-sampling-zero-variance-filter.pdf",
+      "sha256": "f44a7f7aebe7a853807ded3ddff4c1a878a585dd25ac8047c335e2b7b84da1e6"
     },
     {
-      "path": "manuscripts/ch17/ch17-teacache-timestep-embedding-aware-activation-reuse.pdf",
-      "sha256": "849aad485b8f7c214ea3ec56fc3ba408f11f63485826f86082c612d542be88e7"
+      "path": "manuscripts/ch17/ch17-rl-post-training-throughput-roofline.svg",
+      "sha256": "1442827ac9cf07578c5a1e446182b3be6c1b63b5bd79ba99aa56f6bd589a588d"
     },
     {
-      "path": "manuscripts/ch17/ch17-teacache-timestep-embedding-aware-activation-reuse.png",
-      "sha256": "486b3a78510653c2c671c526429e5496ddd2ff2de91a9b3af45e4676be65ad17"
+      "path": "manuscripts/ch17/ch17-rl-post-training-throughput-roofline.png",
+      "sha256": "9c082d68d03d40b6129a20d816696c5e13d01de71e76a703eb445df39dfd53e8"
     },
     {
-      "path": "manuscripts/ch17/ch17-teacache-timestep-embedding-aware-activation-reuse.svg",
-      "sha256": "9daaa5fbd079c0c8b0261984f15c264529bfee93ffcc0b573aa4e804cd0f4f42"
+      "path": "manuscripts/ch17/ch17-rl-post-training-throughput-roofline.pdf",
+      "sha256": "e33820ee8b743283a2a338a93e418144281f13ea2120b41c259021f90935757e"
     },
     {
-      "path": "manuscripts/ch17/ch17-teacache-timestep-residual-reuse.pdf",
-      "sha256": "10f6175ae0375944976172e37e972d2c7c43a596032701c2e1a4be75f2b89c90"
+      "path": "manuscripts/ch17/ch17-rlvr-and-test-time-compute-closed-loop.svg",
+      "sha256": "d7566d5034d01d8b2d35baf3b0b652ec3241061d465019f3bbcb8705dde6ce85"
     },
     {
-      "path": "manuscripts/ch17/ch17-teacache-timestep-residual-reuse.png",
-      "sha256": "047a61dbb3f69f985fb6f80f5c707eaa80c627842dc4f7c0a045d4a387fe08cb"
+      "path": "manuscripts/ch17/ch17-rlvr-and-test-time-compute-closed-loop.png",
+      "sha256": "406499725e4e210fc3e246af7178ca703173f2b9a30cdfb9cb082383cc1b4039"
     },
     {
-      "path": "manuscripts/ch17/ch17-teacache-timestep-residual-reuse.svg",
-      "sha256": "82d4afeb923ca6a0aaf880f445c4db8ffaf0433360ebd3c7d736943766badca0"
+      "path": "manuscripts/ch17/ch17-rlvr-and-test-time-compute-closed-loop.pdf",
+      "sha256": "a8b13018534863fbae5a9e8f9c6a1071d28f8e9a07d06404e185438b213afe3e"
     },
     {
-      "path": "manuscripts/ch17/ch17-tp-vs-ulysses-vs-ring-attention-comm.pdf",
-      "sha256": "fa354edcba6aca1ed3cd642ec077e2f2800e38ed6947d543a900b4c36e447715"
+      "path": "manuscripts/ch17/ch17-geo-distributed-async-rollout-harvester.svg",
+      "sha256": "3c0117ac028efce5074a4cad465f72a8dced446735b0c6d7a3846ffb4d410fea"
     },
     {
-      "path": "manuscripts/ch17/ch17-tp-vs-ulysses-vs-ring-attention-comm.png",
-      "sha256": "e0279ca934c96aec2ab041cad85f219684fba55d419f11073f59229713e0a7f6"
+      "path": "manuscripts/ch17/ch17-geo-distributed-async-rollout-harvester.png",
+      "sha256": "a3798d4880aafe192400e1ca0657d292c3aca94242dfcd547fd724924f67818d"
     },
     {
-      "path": "manuscripts/ch17/ch17-tp-vs-ulysses-vs-ring-attention-comm.svg",
-      "sha256": "0c390511afef3dd8ff6aad31ef426d3ed26e4d4c19229fc24099ee52a750da46"
+      "path": "manuscripts/ch17/ch17-geo-distributed-async-rollout-harvester.pdf",
+      "sha256": "521149342c77150d0bc2f378091e496d7b5f441e206b8d55e21921920748a299"
     },
     {
-      "path": "manuscripts/ch17/ch17-transfusion-hybrid-causal-bidirectional-mask.pdf",
-      "sha256": "fb5d56f279f0bfb8c718f5b619ce369ecbedd0f33b1ebdf83444f49e5e92f2c6"
+      "path": "manuscripts/ch17/ch17-rlvr-reward-hacking-kl-divergence-breaker.svg",
+      "sha256": "442ff88013a4709c66f0520f38bbe6e9b78b819491147eaaa2a24a9c80867133"
     },
     {
-      "path": "manuscripts/ch17/ch17-transfusion-hybrid-causal-bidirectional-mask.png",
-      "sha256": "f493d1a3e7e0657d662eac6929b74392419b8ad55dbe66abc48042efc1d6e078"
+      "path": "manuscripts/ch17/ch17-rlvr-reward-hacking-kl-divergence-breaker.png",
+      "sha256": "ac4dfab46ae06b1d338a1e9e666e6fc8502910f7127cadd0aa1f436ea01c1d17"
     },
     {
-      "path": "manuscripts/ch17/ch17-transfusion-hybrid-causal-bidirectional-mask.svg",
-      "sha256": "aae06c6adfd978c0fcc60162cbc220912b30aeeb832cbd717e57754abb1a2dff"
+      "path": "manuscripts/ch17/ch17-rlvr-reward-hacking-kl-divergence-breaker.pdf",
+      "sha256": "6988ec202d60963988079bba009217fdca30a54a27d2d0e4775489b67713cf0c"
     },
     {
-      "path": "manuscripts/ch17/ch17-video-dit-end-to-end-latency-breakdown.pdf",
-      "sha256": "afb0d1dcf836c08165f5f94adfede4feec6e33e6cb601adc1bf2fd0b1b831dd8"
+      "path": "manuscripts/ch17/ch17-multi-turn-agentic-rlvr-trajectory-tree-forking.svg",
+      "sha256": "82c7f4ee8b1ed9132ae7c70992fe5bf5393d0c7b19628e9b97c539f65edfa071"
     },
     {
-      "path": "manuscripts/ch17/ch17-video-dit-end-to-end-latency-breakdown.png",
-      "sha256": "c5b68a79279fd2bb4ec9dd72c56a80019af10cc6d072e1bd9d66c061b14e3976"
+      "path": "manuscripts/ch17/ch17-multi-turn-agentic-rlvr-trajectory-tree-forking.png",
+      "sha256": "20d841fa1d80450697859f97b7a1693d88d8fcf69e847ff5cbd268cc49fbd62a"
     },
     {
-      "path": "manuscripts/ch17/ch17-video-dit-end-to-end-latency-breakdown.svg",
-      "sha256": "96b4a88e7da12227d6a80b2baf340d053679953635d4cbeee3cd31b1b5ec9769"
+      "path": "manuscripts/ch17/ch17-multi-turn-agentic-rlvr-trajectory-tree-forking.pdf",
+      "sha256": "c7d92994ccdbd6c5d37afb467091f2e0d7dd4a8834c58d4be0e1c505c766965e"
     },
     {
-      "path": "manuscripts/ch17/ch17-vit-embedding-cache-vs-llm-kv-cache.pdf",
-      "sha256": "31d7896659a17b6f951013e2f4d75d83870c6a6a74b57b12c643199b887e604e"
+      "path": "manuscripts/ch17/ch17-asynchronous-off-policy-importance-sampling-clipping.svg",
+      "sha256": "e24cc26fc6685010679fa51a5f69ce61592e722e77ff947c9acc2fc84fbbcf67"
     },
     {
-      "path": "manuscripts/ch17/ch17-vit-embedding-cache-vs-llm-kv-cache.png",
-      "sha256": "c430849abcf7352ebb7fcf201c88da76986508687be0bf4e799f5cedcc1ee0dd"
+      "path": "manuscripts/ch17/ch17-asynchronous-off-policy-importance-sampling-clipping.png",
+      "sha256": "c3cbb9223e8b32d30a68614762cc486a607600e0f2d959cae3e49567d63c7a6e"
     },
     {
-      "path": "manuscripts/ch17/ch17-vit-embedding-cache-vs-llm-kv-cache.svg",
-      "sha256": "f8d1f8afccc0e4cf389a79bb9bd5d8ca742664024a044e63802024ef49e0d239"
-    },
-    {
-      "path": "manuscripts/ch17/figure-data.json",
-      "sha256": "0e15c72e3df2a2e09a027326e1a5c818f07f4053ddad15f0b3399187883ebe48"
+      "path": "manuscripts/ch17/ch17-asynchronous-off-policy-importance-sampling-clipping.pdf",
+      "sha256": "ef94f31d89ba6d1ba8118dfb4bf72c0f464a4d94b49df982b767018d63bea9b4"
     },
     {
       "path": "manuscripts/ch17/figure-index.json",
-      "sha256": "18657fffd28140ed3fac17de992b589c385d785fa1dbc43b36f01f6b0cf38de7"
+      "sha256": "e0a597f6e83991448f3747803aa5aa1808ebd1953848312a7fbcb6a1c7ad3619"
     },
     {
       "path": "manuscripts/ch17/teaching-layout-validation.json",
-      "sha256": "10400a981316bbe08c5bc6fa0ac4c0cf4cf7699388d53a8673cdd6dda2587b01"
+      "sha256": "18a9216d00cf9b6dcf85d15e263b90febdc19cae471151a89c052672e31d9f50"
     },
     {
       "path": "manuscripts/ch17/math-validation.json",
-      "sha256": "3859bcd38243c5b9282d8522f8e2bc67a74fb30419770f9b8e232be28d2b6dac"
+      "sha256": "3df843b626d996b46c1f64146deb0b581efff818ddd121f11a537223a87a662a"
     }
   ]
 }

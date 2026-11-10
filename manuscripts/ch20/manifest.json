@@ -1,260 +1,257 @@
 {
+  "chapter": "ch20",
   "outputs": [
     {
-      "path": "manuscripts/ch20/ch20-abft-checksum-matrix-multiplication.pdf",
-      "sha256": "3774ed620e7961dc93ce8cb04f118e8886afde5a4c84f1838ab04aca187b2fdd"
+      "path": "manuscripts/ch20/ch20-cloud-llm-slo-vs-embodied-hard-realtime.svg",
+      "sha256": "c22851baaff6fa759f12c3e672fea40075b241d2f47a23bed5991f464a66f1be"
     },
     {
-      "path": "manuscripts/ch20/ch20-abft-checksum-matrix-multiplication.png",
-      "sha256": "f31baa2605f646d6e702e74ce090b06fc7e59939b8ebf4f61a7c4c80225068d7"
+      "path": "manuscripts/ch20/ch20-cloud-llm-slo-vs-embodied-hard-realtime.png",
+      "sha256": "ec52c9c6affc649ebfe3f6d41f12595c7b1148b5f98de1e77306f139c34cb269"
     },
     {
-      "path": "manuscripts/ch20/ch20-abft-checksum-matrix-multiplication.svg",
-      "sha256": "759f32435efa1d1771123fca17789b73e06995b10088c4b1fdf25d783a9f9c57"
+      "path": "manuscripts/ch20/ch20-cloud-llm-slo-vs-embodied-hard-realtime.pdf",
+      "sha256": "bdeeab0666d627b1359197da6fe5ab03079dcb341066bc9d8c30ee73a097a6f5"
     },
     {
-      "path": "manuscripts/ch20/ch20-automated-burn-in-fleet-health-pipeline.pdf",
-      "sha256": "e71bc5d4c5f67aeab5aa8281c59e87c293dd226f9738feb9287d97306b04937e"
+      "path": "manuscripts/ch20/ch20-vlalagbench-latency-vs-dynamic-grasp-success.svg",
+      "sha256": "3b20fe523360898aa9fb3fdb33212b1ef30bb05d9e4319d01861a3db9f9901bd"
     },
     {
-      "path": "manuscripts/ch20/ch20-automated-burn-in-fleet-health-pipeline.png",
-      "sha256": "e1c7cc488f7c790436f09a9b219fe9eb9c36d5611ecb25f4a2cdd5bc6e55e8bf"
+      "path": "manuscripts/ch20/ch20-vlalagbench-latency-vs-dynamic-grasp-success.png",
+      "sha256": "77ac566a1bf51110e298644285b60f70acdb7fac6a9d3a7e38e73a721660b433"
     },
     {
-      "path": "manuscripts/ch20/ch20-automated-burn-in-fleet-health-pipeline.svg",
-      "sha256": "a2841f50ba67b8c094386477b6dcd96b46a4d408059428ff3ea7583504c3f905"
+      "path": "manuscripts/ch20/ch20-vlalagbench-latency-vs-dynamic-grasp-success.pdf",
+      "sha256": "f5d362582fa0aacdf29b44835747772562df08371500cf9c780f080fd3d46e13"
     },
     {
-      "path": "manuscripts/ch20/ch20-chaos-fault-injection-and-canary-rollout-gate.pdf",
-      "sha256": "3d3eaf313768a68d752cba7469ff3250695fb34d466b0b0fccb1c1d2b1dfe77d"
+      "path": "manuscripts/ch20/ch20-action-chunking-and-temporal-ensembling.svg",
+      "sha256": "ee9e49220ee76715990e977a8b070aae439b5efd2a4033d18b1de0215dee3280"
     },
     {
-      "path": "manuscripts/ch20/ch20-chaos-fault-injection-and-canary-rollout-gate.png",
-      "sha256": "69b0d5cbead364a5b7fd658e978d85fa9ac5d86d45da4cf98f4cf034a6b6b486"
+      "path": "manuscripts/ch20/ch20-action-chunking-and-temporal-ensembling.png",
+      "sha256": "bc38ff5632b7e8ec911de26efa29dfa2b671c1d8fa256fd4d1d095fa18f909b1"
     },
     {
-      "path": "manuscripts/ch20/ch20-chaos-fault-injection-and-canary-rollout-gate.svg",
-      "sha256": "d5b296e7f41c837eb6297b9d11be48b627cc0fb1e36cae80c670a67078a80568"
+      "path": "manuscripts/ch20/ch20-action-chunking-and-temporal-ensembling.pdf",
+      "sha256": "45743bde3fcecce7f4986f2afe43d82d60e7cb33fb49f1abcb00bebb066545e2"
     },
     {
-      "path": "manuscripts/ch20/ch20-cluster-mtbf-scaling-and-llama3-failures.pdf",
-      "sha256": "97bfc6defc7391b65897c051052e1dff0fffe771c843162a57935df4a4c022d8"
+      "path": "manuscripts/ch20/ch20-system2-vlm-system1-flow-matching-dual-loop.svg",
+      "sha256": "8adf019f9548fff96498b32ba4e8a58b37f222c5b75fdb9b9d59a843cdb79457"
     },
     {
-      "path": "manuscripts/ch20/ch20-cluster-mtbf-scaling-and-llama3-failures.png",
-      "sha256": "dcfcf9ac579dd6fd70345b87b5bb4cf27132854c7a67f2ca081ac49ba5797720"
+      "path": "manuscripts/ch20/ch20-system2-vlm-system1-flow-matching-dual-loop.png",
+      "sha256": "f715080f1813eb802891053b4c3c3be017c2d05108389dbdaaeb854ee9031653"
     },
     {
-      "path": "manuscripts/ch20/ch20-cluster-mtbf-scaling-and-llama3-failures.svg",
-      "sha256": "470b499c85ea775368fe5e361cdba74577dd1e0db8df63f06998eef2c3ab548c"
+      "path": "manuscripts/ch20/ch20-system2-vlm-system1-flow-matching-dual-loop.pdf",
+      "sha256": "d0474ebcad870bb5722ea9ffac3f6e28ceeb70d987168d37a9b06cb746e81e1b"
     },
     {
-      "path": "manuscripts/ch20/ch20-core-cluster-to-four-new-frontiers-bridge.pdf",
-      "sha256": "218241684f55a09f12d0e657e5b6fad77e018cb79198479ff28e9c6b4d539097"
+      "path": "manuscripts/ch20/ch20-jetson-thor-mig-rtos-deterministic-isolation.svg",
+      "sha256": "7081587611e410b38bd3e72655e8626237d225c827b631af4efcee4b62e78d2b"
     },
     {
-      "path": "manuscripts/ch20/ch20-core-cluster-to-four-new-frontiers-bridge.png",
-      "sha256": "90f23294dee76ec0dd2c23b99ae861e815583df92e85f1c95b3f3ad5bd18b0eb"
+      "path": "manuscripts/ch20/ch20-jetson-thor-mig-rtos-deterministic-isolation.png",
+      "sha256": "d874f596af94fb803a3546a96b751db257905f921e21bc4d6a62b6fc43c6ca35"
     },
     {
-      "path": "manuscripts/ch20/ch20-core-cluster-to-four-new-frontiers-bridge.svg",
-      "sha256": "4d839d7f5a41232ffabdce65549fbf12d0597a3e28b29a8639ef4ed483f7a1a6"
+      "path": "manuscripts/ch20/ch20-jetson-thor-mig-rtos-deterministic-isolation.pdf",
+      "sha256": "16b829dc6ee283825e154237cb68ec4e6c5ef598889af769ffb237c6b9d4d826"
     },
     {
-      "path": "manuscripts/ch20/ch20-effective-training-time-ratio-ettr-model.pdf",
-      "sha256": "243407580d1230249c9d6d07079184aefadd1f6617ea50072aef401968fde5bf"
+      "path": "manuscripts/ch20/ch20-flow-matching-ode-steps-vs-control-jitter.svg",
+      "sha256": "540cdea8629e19be0e32343171bfa1116036db4d1df82fe755050177638f529d"
     },
     {
-      "path": "manuscripts/ch20/ch20-effective-training-time-ratio-ettr-model.png",
-      "sha256": "fde50a04b35e624b4532fc6326e56730238b0e2373e27513ba7139b93cab4d79"
+      "path": "manuscripts/ch20/ch20-flow-matching-ode-steps-vs-control-jitter.png",
+      "sha256": "6b86661eccbe42f79b66ae3f67c80f8d8e43afcd1c82dff8ce7819cb3de6bb1f"
     },
     {
-      "path": "manuscripts/ch20/ch20-effective-training-time-ratio-ettr-model.svg",
-      "sha256": "5e9c0ff562edb7fa6b87f7272367424faf7a64a8e03ffea32234b15af0139aa8"
+      "path": "manuscripts/ch20/ch20-flow-matching-ode-steps-vs-control-jitter.pdf",
+      "sha256": "1fa6b29fa712bb0ec4dc10641115f1de4c695b94a79b9afe87381cd9b1e5db62"
     },
     {
-      "path": "manuscripts/ch20/ch20-five-benchmark-gaming-traps.pdf",
-      "sha256": "a323703f146a4b03e9d1fec3680f35b5d34341c54684a3a534ea79625bb1abf7"
+      "path": "manuscripts/ch20/ch20-cpu-sim-pcie-bottleneck-vs-gpu-native-sim.svg",
+      "sha256": "8f635e856d310dde8a22b7187b239624026c4f64473c4b81242c08fd03577071"
     },
     {
-      "path": "manuscripts/ch20/ch20-five-benchmark-gaming-traps.png",
-      "sha256": "2fc012d67d26effbea614536d7c58a4fb4c963939b1c2a0e3497319d432e33f2"
+      "path": "manuscripts/ch20/ch20-cpu-sim-pcie-bottleneck-vs-gpu-native-sim.png",
+      "sha256": "7a48d99e7cfb3eaed0edc77d8fc2ad304b70cee55ad5962858b6289caa545f16"
     },
     {
-      "path": "manuscripts/ch20/ch20-five-benchmark-gaming-traps.svg",
-      "sha256": "f12ace396b3ab7344c01280c670293a3a67f6da06a6c7800bfaaf70ad1141c22"
+      "path": "manuscripts/ch20/ch20-cpu-sim-pcie-bottleneck-vs-gpu-native-sim.pdf",
+      "sha256": "9e828d96424ef7940211b54952c81e00e983bdce15dfebdd8ef53c52918fe8ee"
     },
     {
-      "path": "manuscripts/ch20/ch20-flashinfer-bench-cceval-and-blink-profiling.pdf",
-      "sha256": "13be4772187954ce2bf2582804b7dad34555646d406dfa84a173042cff95bfc3"
+      "path": "manuscripts/ch20/ch20-physics-renderer-policy-three-way-sm-budget.svg",
+      "sha256": "ccb0ec24a6273f17cd478014579ce7570291daa9c24fbb2cac14e0e4f020c7e5"
     },
     {
-      "path": "manuscripts/ch20/ch20-flashinfer-bench-cceval-and-blink-profiling.png",
-      "sha256": "de043f7cda199c4dc60157071b90260ac107dec9f64dde1c12a834117359dab2"
+      "path": "manuscripts/ch20/ch20-physics-renderer-policy-three-way-sm-budget.png",
+      "sha256": "d1e8ec43eaa7ab038fdef4dbfe423b75226137f8f163e4d99a3459645dd609dd"
     },
     {
-      "path": "manuscripts/ch20/ch20-flashinfer-bench-cceval-and-blink-profiling.svg",
-      "sha256": "10969be78b572cdb71f5ad2c16ddfb265ee00518663ec0e1b17118899d021d52"
+      "path": "manuscripts/ch20/ch20-physics-renderer-policy-three-way-sm-budget.pdf",
+      "sha256": "e59a2e9eebdb0d38042badfb18e051776d8383c787c61575d4702074b52fbc6f"
     },
     {
-      "path": "manuscripts/ch20/ch20-goodput-sla-under-bursty-poisson-traffic.pdf",
-      "sha256": "3be29557d2bb0a9380472ee391b2c63e5c74fc908a468fa04c2efb27acd2e46e"
+      "path": "manuscripts/ch20/ch20-contact-divergence-warp-inefficiency.svg",
+      "sha256": "5af43d96fabfb920c9294167692808ab7666d9ef0abe81d12ac0335702329ddb"
     },
     {
-      "path": "manuscripts/ch20/ch20-goodput-sla-under-bursty-poisson-traffic.png",
-      "sha256": "0ab763d31b6fc5716bc726ee6b3d437488c96a846896c795bb98c2d9eb9635d8"
+      "path": "manuscripts/ch20/ch20-contact-divergence-warp-inefficiency.png",
+      "sha256": "0602456e00f01300f876438812b49b1f9d9b2000fa9676b06f5e341dcf784c2a"
     },
     {
-      "path": "manuscripts/ch20/ch20-goodput-sla-under-bursty-poisson-traffic.svg",
-      "sha256": "24eb9489e17a7db22e6338c7f3c17962e4dc0927da1dfa1b4021c74e58f173f1"
+      "path": "manuscripts/ch20/ch20-contact-divergence-warp-inefficiency.pdf",
+      "sha256": "652fcc7022f97ea3c76d240e1f5eea75e24b5b861eb151921a925b2f52e97089"
     },
     {
-      "path": "manuscripts/ch20/ch20-hot-spare-pool-queuing-dimensioning.pdf",
-      "sha256": "3e63b88ff69108dc446b31fa27b26e3a556a25fa835fb7d431f58fa26d0bc6eb"
+      "path": "manuscripts/ch20/ch20-multi-camera-tiled-rendering-zero-copy-tensor.svg",
+      "sha256": "3c6dc3363e5f700dcfbffa98c7ac4c6329a37b8cc1a369b124866fab4d1f2a93"
     },
     {
-      "path": "manuscripts/ch20/ch20-hot-spare-pool-queuing-dimensioning.png",
-      "sha256": "7f2d49bd6ed8f51c705222e592209d81f871504767a7cc082b1a1c9efa2160da"
+      "path": "manuscripts/ch20/ch20-multi-camera-tiled-rendering-zero-copy-tensor.png",
+      "sha256": "55eaabbdd503450d4a795c8e1029316a30e1556ea44b32b037f5bc1af5013809"
     },
     {
-      "path": "manuscripts/ch20/ch20-hot-spare-pool-queuing-dimensioning.svg",
-      "sha256": "18f93ec0245c3ae484e64a4111b99d44c1226788d3c67ad549efe47972ce6b83"
+      "path": "manuscripts/ch20/ch20-multi-camera-tiled-rendering-zero-copy-tensor.pdf",
+      "sha256": "4b4a1326ecaa5ee90a71b089a3012f5e4a4618932a34a7fd4266268a61ea2079"
     },
     {
-      "path": "manuscripts/ch20/ch20-microbatch-rerun-vs-checkpoint-rollback.pdf",
-      "sha256": "67104da7dc90f4f296f6334f7acdb6bbef0c8ec53afa97179504e1a9cd2383de"
+      "path": "manuscripts/ch20/ch20-multi-sensor-ptp-hardware-trigger-alignment.svg",
+      "sha256": "701389ef631c3fd429865fbf20ce270464fa9632c1ad568f97ea6a82c7d77b2c"
     },
     {
-      "path": "manuscripts/ch20/ch20-microbatch-rerun-vs-checkpoint-rollback.png",
-      "sha256": "69948bb1671009fea1ffc7d8757e1a99654aa6d5d298c0d549cb3a32a85999f5"
+      "path": "manuscripts/ch20/ch20-multi-sensor-ptp-hardware-trigger-alignment.png",
+      "sha256": "e838c05d070ffae7be67f129a7e9c6ac879184a336a64a6f6b995c5ba8a02bdc"
     },
     {
-      "path": "manuscripts/ch20/ch20-microbatch-rerun-vs-checkpoint-rollback.svg",
-      "sha256": "5c7e60f8881ffc6b93d8e122d1ad0e80428bf696925711a108ae03595e45ca49"
+      "path": "manuscripts/ch20/ch20-multi-sensor-ptp-hardware-trigger-alignment.pdf",
+      "sha256": "1f8fc3cfcde1815f5375aa683de4ffdc42f1a7c17b7cc023178795d621bac68c"
     },
     {
-      "path": "manuscripts/ch20/ch20-nccl-flight-recorder-straggler-blame.pdf",
-      "sha256": "31f19293b611c2a7a85990272c36f7db553cc22ba0e608a551ba9ec8e2a01f54"
+      "path": "manuscripts/ch20/ch20-shadow-mode-disagreement-edge-trigger.svg",
+      "sha256": "4c641bc126e3a7b7c22c1503b247768f8f287f708cbbffdae4d0eec6b77b020b"
     },
     {
-      "path": "manuscripts/ch20/ch20-nccl-flight-recorder-straggler-blame.png",
-      "sha256": "afc15b5a981549a652f851e8231603f961f6c67e41c40f15ee6b40954f075c63"
+      "path": "manuscripts/ch20/ch20-shadow-mode-disagreement-edge-trigger.png",
+      "sha256": "be5aa88a649c890b983a0065c0d9b672345be233b84cdcf3e422e1c312f06d13"
     },
     {
-      "path": "manuscripts/ch20/ch20-nccl-flight-recorder-straggler-blame.svg",
-      "sha256": "8ebca2c67ffa86e8152b5134e37a90433251d2a3eee426e329d31688d125c643"
+      "path": "manuscripts/ch20/ch20-shadow-mode-disagreement-edge-trigger.pdf",
+      "sha256": "c09bb01c340ca530b2072a42f5bcfe8b78d7d2d3722202a2732b6d8f71f2b388"
     },
     {
-      "path": "manuscripts/ch20/ch20-oobleck-pre-instantiated-pipeline-template-failover.pdf",
-      "sha256": "949d7578f271927cd8f7851256bcca44ee61119e12b02ff2ade42903846082a9"
+      "path": "manuscripts/ch20/ch20-3dgs-neural-reconstruction-sim2real-loop.svg",
+      "sha256": "942a791e041826dccefd989350643ab8268a0648bdf16284e6f3ea85a299748f"
     },
     {
-      "path": "manuscripts/ch20/ch20-oobleck-pre-instantiated-pipeline-template-failover.png",
-      "sha256": "c5d792e045ca192226ddc3377744a1f88cdd4b1d99c82f4c3c02cb094ea7b3f8"
+      "path": "manuscripts/ch20/ch20-3dgs-neural-reconstruction-sim2real-loop.png",
+      "sha256": "92c1863248925bfcfc88d98ba1a926fb82a961574d515ac5f5623e207475e0e2"
     },
     {
-      "path": "manuscripts/ch20/ch20-oobleck-pre-instantiated-pipeline-template-failover.svg",
-      "sha256": "7c1038711a65356e61b5582c7583cb9064c987914f94c86338bdc3066bda2de2"
+      "path": "manuscripts/ch20/ch20-3dgs-neural-reconstruction-sim2real-loop.pdf",
+      "sha256": "6fa51bede8895b784114256a45071f1bd92bda695b38afc54047db9f1701118f"
     },
     {
-      "path": "manuscripts/ch20/ch20-optical-ber-fec-gray-failure-detection.pdf",
-      "sha256": "fb772e41a45f9397b3be0853a975abf7d5e78929b4b5bbaad0d0173c8663cc8c"
+      "path": "manuscripts/ch20/ch20-onboard-vs-mec-edge-offload-safety-fallback.svg",
+      "sha256": "68ce806468e235ae2144114cf5042a0a90403fab3ec8457c14e772ccff939d78"
     },
     {
-      "path": "manuscripts/ch20/ch20-optical-ber-fec-gray-failure-detection.png",
-      "sha256": "3aa1fa4f8a483b5b897910b072b08e45b360c3a5bc78b29e5c6b3f9716b6d277"
+      "path": "manuscripts/ch20/ch20-onboard-vs-mec-edge-offload-safety-fallback.png",
+      "sha256": "1bc2073b574fe81f616fd2652991d801ff6c9872c52b22785d9e7b465d3d58fb"
     },
     {
-      "path": "manuscripts/ch20/ch20-optical-ber-fec-gray-failure-detection.svg",
-      "sha256": "0851c7a6667368dd14e5de7ee496d3ab004eddea7c98da2a026680983988dd26"
+      "path": "manuscripts/ch20/ch20-onboard-vs-mec-edge-offload-safety-fallback.pdf",
+      "sha256": "5253a9ba9681b4f74de6e6097b0859c4b1822ff7a19241822156fccbdb33793e"
     },
     {
-      "path": "manuscripts/ch20/ch20-safeguarding-sdc-and-opguard-bitwise-debug.pdf",
-      "sha256": "062ec800ca88ed0b636c78ea2893c979b6782244d139d1e9a3eea591b3f9903e"
+      "path": "manuscripts/ch20/ch20-vla-early-exit-and-token-pruning-wcet.svg",
+      "sha256": "4e97918e0e00ae830be1e35e022cd0be8ae3adf2b2c2c350715ed93ee9bfe7b4"
     },
     {
-      "path": "manuscripts/ch20/ch20-safeguarding-sdc-and-opguard-bitwise-debug.png",
-      "sha256": "7b55af3191a174aae25db1bbc4ccb9d3e2dbab92c1d4a52cbee5c7b47860e004"
+      "path": "manuscripts/ch20/ch20-vla-early-exit-and-token-pruning-wcet.png",
+      "sha256": "4ce2073b57cdfd9fdea61514e41d5617dbc47c5f2d791a804f15c28c37bb95f7"
     },
     {
-      "path": "manuscripts/ch20/ch20-safeguarding-sdc-and-opguard-bitwise-debug.svg",
-      "sha256": "2f0dabe0d16ec9d94347ad1d71e3dc9b479bdeec378fa3ed804d8aae5b4acf65"
+      "path": "manuscripts/ch20/ch20-vla-early-exit-and-token-pruning-wcet.pdf",
+      "sha256": "b3598007d8a55cc4d2bfd6c764f4e938ce93bf8e500211f25212a33f8005f46c"
     },
     {
-      "path": "manuscripts/ch20/ch20-sdc-bitflip-allreduce-contamination.pdf",
-      "sha256": "7ea25b1230035fa604aa665a24d853b5eea3e5896a9841964f01bfe83286e180"
+      "path": "manuscripts/ch20/ch20-embodied-ai-full-stack-infrastructure-map.svg",
+      "sha256": "c9cbcf039c4d78afdf9181bc2e60f81269cce4dfb1a8fadde2e264c521df839d"
     },
     {
-      "path": "manuscripts/ch20/ch20-sdc-bitflip-allreduce-contamination.png",
-      "sha256": "203c8b4f79aad3d2adf7c674f5c8d497502acd992a7e3c58c05adc7dcd3419a7"
+      "path": "manuscripts/ch20/ch20-embodied-ai-full-stack-infrastructure-map.png",
+      "sha256": "4f53991df849a45127b9ba6995db29ac6691f549f74702dff6e52fabd657f115"
     },
     {
-      "path": "manuscripts/ch20/ch20-sdc-bitflip-allreduce-contamination.svg",
-      "sha256": "8fd10f290452b71ea651aa9f373e5cc5d57858fc2eabab0880487a024c729b49"
+      "path": "manuscripts/ch20/ch20-embodied-ai-full-stack-infrastructure-map.pdf",
+      "sha256": "4ef778636de489f776480f269fcdf661c695a1785aaa313606d5d5b45a2c1c91"
     },
     {
-      "path": "manuscripts/ch20/ch20-ten-first-principles-of-ai-infra.pdf",
-      "sha256": "4a346f93c7156e041ed8edd246f3f94555e64c832ad974a05456f19417e02803"
+      "path": "manuscripts/ch20/ch20-three-tier-vlm-flow-wbc-humanoid-control.svg",
+      "sha256": "c3ebd22f3f3afab690a4992f8d506741979047a881f98f70034c5b49fd8eb584"
     },
     {
-      "path": "manuscripts/ch20/ch20-ten-first-principles-of-ai-infra.png",
-      "sha256": "b75aa78c9f0cc0422c563d2feb3e75989655638d6b533208ed59a8f3228ded02"
+      "path": "manuscripts/ch20/ch20-three-tier-vlm-flow-wbc-humanoid-control.png",
+      "sha256": "c23bed43d11bd7a748320f557380b459b144c39cefc242f30904b3d8f001feb4"
     },
     {
-      "path": "manuscripts/ch20/ch20-ten-first-principles-of-ai-infra.svg",
-      "sha256": "aecfc85754dd17c5d56d79345f2dcc1833ceb07c4f974efb73a78ec10d0e3d45"
+      "path": "manuscripts/ch20/ch20-three-tier-vlm-flow-wbc-humanoid-control.pdf",
+      "sha256": "13529442fc992fd8d2121277fb5b8302f772a2a607a50933935ea3a77a765981"
     },
     {
-      "path": "manuscripts/ch20/ch20-trainmover-subsecond-hot-migration.pdf",
-      "sha256": "34345eb2d061645fb1c70a98da60f123074f6c97245e6cc139126f063bcbf421"
+      "path": "manuscripts/ch20/ch20-fast-dct-frequency-action-tokenization.svg",
+      "sha256": "6ccbc63d47e6c50fec403018c531f70c5293f64368cd72048e06602be3cf59a3"
     },
     {
-      "path": "manuscripts/ch20/ch20-trainmover-subsecond-hot-migration.png",
-      "sha256": "a0fc530faaf4ccb9a5dd52c236c42b4d3dd8ba1966699fc1754a9745e2f25144"
+      "path": "manuscripts/ch20/ch20-fast-dct-frequency-action-tokenization.png",
+      "sha256": "ffce466fa60f014279e9bdac9f09ddab2804237ee2c4b0558d076eece934e07c"
     },
     {
-      "path": "manuscripts/ch20/ch20-trainmover-subsecond-hot-migration.svg",
-      "sha256": "a20b874db1699818d60b615d5a88b988dc306cd9deb74ae00e3b4c5551bf875f"
+      "path": "manuscripts/ch20/ch20-fast-dct-frequency-action-tokenization.pdf",
+      "sha256": "3c97d04a47624bb30d03978f0f31d6980837c925d4682d841ba3fe190964a7cf"
     },
     {
-      "path": "manuscripts/ch20/ch20-twenty-chapter-architecture-knowledge-graph.pdf",
-      "sha256": "31606e8579d7c1f3ed0ca74f45e81eef5427f3e386d813842f18d3ed3c451815"
+      "path": "manuscripts/ch20/ch20-3dgs-neural-sensor-closed-loop-re-simulation.svg",
+      "sha256": "3b6989b0a6244d5998f4d986b360c9dd5ceb4e50ef9240a60280a1063361104c"
     },
     {
-      "path": "manuscripts/ch20/ch20-twenty-chapter-architecture-knowledge-graph.png",
-      "sha256": "0a8e092a0b2ae7855e642bd0afc7b6c07f31de57737d7a5f4a4ca1c3330a4ff3"
+      "path": "manuscripts/ch20/ch20-3dgs-neural-sensor-closed-loop-re-simulation.png",
+      "sha256": "a13c79e66da9d505976fe9aeffd64046b180afe838508144af2c4c4307d32255"
     },
     {
-      "path": "manuscripts/ch20/ch20-twenty-chapter-architecture-knowledge-graph.svg",
-      "sha256": "99aac3adbc33d63fc62443ce4ca467332b547c2422a59a400f06c96096c78bfc"
+      "path": "manuscripts/ch20/ch20-3dgs-neural-sensor-closed-loop-re-simulation.pdf",
+      "sha256": "659b27537133b969a2a36ad92ee7acb5b31387eddb5ff984afdeeb1a673bb58e"
     },
     {
-      "path": "manuscripts/ch20/ch20-twenty-chapter-dual-track-master-ledger.pdf",
-      "sha256": "d7b3997cef97338ff577ef06fa4c40836ea1ed33f80cb46b29b96514c2dc6dd6"
+      "path": "manuscripts/ch20/ch20-dual-thor-soc-safety-fallback-watchdog-pipeline.svg",
+      "sha256": "2aa88834fe85cb20ac3179815b63659f1bfa3153c239fe79ec9d7d0d23937a13"
     },
     {
-      "path": "manuscripts/ch20/ch20-twenty-chapter-dual-track-master-ledger.png",
-      "sha256": "6735c5c4b38eb5b7ebbb36da1fef14b665f6ddf7838f01b96cad34fe8aa0d3f3"
+      "path": "manuscripts/ch20/ch20-dual-thor-soc-safety-fallback-watchdog-pipeline.png",
+      "sha256": "6cdfd568097bb978831aad88dee95233bdb4aa336bd820fdbc451e70a442f9c4"
     },
     {
-      "path": "manuscripts/ch20/ch20-twenty-chapter-dual-track-master-ledger.svg",
-      "sha256": "0bd623dcfb11d98664d66e54926057179c1c50941293d09ba0ed66f1249c4da8"
-    },
-    {
-      "path": "manuscripts/ch20/figure-data.json",
-      "sha256": "8a9702836b61f17953cdf6011a875b5e70f5da7a3535395b88e746eb83f9a887"
+      "path": "manuscripts/ch20/ch20-dual-thor-soc-safety-fallback-watchdog-pipeline.pdf",
+      "sha256": "b1b423326b70c3b5451a41cd1a33f33d76dcad3b546abde92fe0266f57103d6b"
     },
     {
       "path": "manuscripts/ch20/figure-index.json",
-      "sha256": "f21f47f6f21a9156541d663028b8e5e2edd2bf6c708da74a3b8752f207634e0a"
+      "sha256": "a901291684c6808901c7fd66be23ea0ed6f84af4f4a10881312b97edb2922eed"
     },
     {
       "path": "manuscripts/ch20/teaching-layout-validation.json",
-      "sha256": "53d4d0f8b4c0cfd810e74ddd6682144409923e3e776d1f0b9e4704a6e6e9d279"
+      "sha256": "1721d543fc99ba847dbce9351b403318e4a12283bebe68b2055c17dfe08642a2"
     },
     {
       "path": "manuscripts/ch20/math-validation.json",
-      "sha256": "1868aade620f22834c3db137f6d1ca68955028e32decc96f84f909f4a6111c49"
+      "sha256": "387ed4db36ff097ba0ed9f6d97942a1209e226f71e71c25a381265d4c9c65ec9"
     }
   ]
 }

@@ -1,236 +1,233 @@
 {
+  "chapter": "ch22",
   "outputs": [
     {
-      "path": "manuscripts/ch22/ch22-acoustic-token-eviction-and-semantic-anchor-retention.pdf",
-      "sha256": "a66995dca855ed3a49a2d74aa978bf8ee54df2e165a7c24e758a9c18dc172edc"
+      "path": "manuscripts/ch22/ch22-llm-1d-tokens-vs-ai4science-four-structural-domains.svg",
+      "sha256": "ecfd1befce2436e3026c1140779fa27b322a4f5680f3dcb5133780d4f00b144a"
     },
     {
-      "path": "manuscripts/ch22/ch22-acoustic-token-eviction-and-semantic-anchor-retention.png",
-      "sha256": "b6d05bc3d65b984abd156e6791383e73286e1cbc64759bd621d4b4ced7c54a1f"
+      "path": "manuscripts/ch22/ch22-llm-1d-tokens-vs-ai4science-four-structural-domains.png",
+      "sha256": "26def636547cd1b6e7d134af1b3fe6cad7f246138887c88e21d04b9553a5578a"
     },
     {
-      "path": "manuscripts/ch22/ch22-acoustic-token-eviction-and-semantic-anchor-retention.svg",
-      "sha256": "d43a8b3a2aa2e0a14a646beb8de229fcf003bc3e02ebe3de7818e045c1246696"
+      "path": "manuscripts/ch22/ch22-llm-1d-tokens-vs-ai4science-four-structural-domains.pdf",
+      "sha256": "40b296aed92a586093d55c368f6c6aaa535a3d04fc0af17344fa23ac0b931039"
     },
     {
-      "path": "manuscripts/ch22/ch22-barge-in-playback-cursor-aligned-kv-rollback.pdf",
-      "sha256": "32c36961751ada27ac50bb0423a223dda7875ecab9f2f23638de646b84e04e50"
+      "path": "manuscripts/ch22/ch22-alphafold3-boltz1-two-stage-disaggregated-pipeline.svg",
+      "sha256": "b4058eff0ee5cc9c8c01239da617b66a7fbac3384c93c887c34c2413cc6ec9a7"
     },
     {
-      "path": "manuscripts/ch22/ch22-barge-in-playback-cursor-aligned-kv-rollback.png",
-      "sha256": "9023d2b2d3c11460ed8e6ac454a0560000f2fc9d6a82a5858d96e596a8413008"
+      "path": "manuscripts/ch22/ch22-alphafold3-boltz1-two-stage-disaggregated-pipeline.png",
+      "sha256": "e34c35560d2dd2abd1a6783ac798e23c6cf4fbc3435ab5a01a1a4cf3d0350824"
     },
     {
-      "path": "manuscripts/ch22/ch22-barge-in-playback-cursor-aligned-kv-rollback.svg",
-      "sha256": "ec5248286c6dbbb9361083842483d84a997576e44045dd7c15752c2fb4c1a995"
+      "path": "manuscripts/ch22/ch22-alphafold3-boltz1-two-stage-disaggregated-pipeline.pdf",
+      "sha256": "bdfdedb08a50c3b33fd7199437537fbc0fc1cda403fc7d569de3b1784b5ddd94"
     },
     {
-      "path": "manuscripts/ch22/ch22-cascaded-asr-llm-tts-vs-native-full-duplex-s2s.pdf",
-      "sha256": "b31b415da7c4179a01f059e7367614a506795defd9e73fd1a56a156376ccee76"
+      "path": "manuscripts/ch22/ch22-mmseqs2-gpu-kmer-prefilter-and-smith-waterman.svg",
+      "sha256": "ce968b644be2ccb920de528f82f5239cbbdaac0a1988d9b965d138b6f87bb802"
     },
     {
-      "path": "manuscripts/ch22/ch22-cascaded-asr-llm-tts-vs-native-full-duplex-s2s.png",
-      "sha256": "466996559481cdbb2702afa9e758ad113722238b0ca102a61dfed8d024bb109f"
+      "path": "manuscripts/ch22/ch22-mmseqs2-gpu-kmer-prefilter-and-smith-waterman.png",
+      "sha256": "d859f93003c9f749188bfcbca94e18b3976f30a5efef2ebc3c2829ec2716bebe"
     },
     {
-      "path": "manuscripts/ch22/ch22-cascaded-asr-llm-tts-vs-native-full-duplex-s2s.svg",
-      "sha256": "1005e196ab1860d4f10b93bd0d36740f94e4940c056e148a00018d1daa48d2dc"
+      "path": "manuscripts/ch22/ch22-mmseqs2-gpu-kmer-prefilter-and-smith-waterman.pdf",
+      "sha256": "43196ab67b288f911b94f831048e34c533bc5b2ab016543aa45b6197bf7747b5"
     },
     {
-      "path": "manuscripts/ch22/ch22-delayed-codebook-pattern-vs-depth-transformer.pdf",
-      "sha256": "28466fde9a144be2c518a1369992f563b48ee816d909ce7069c6d566ff2378cc"
+      "path": "manuscripts/ch22/ch22-pairformer-triangle-multiplication-and-attention-o-n3.svg",
+      "sha256": "c5195116517e678365af163c785ceddce3fe86ac8de48a7b11464e40ff07a21f"
     },
     {
-      "path": "manuscripts/ch22/ch22-delayed-codebook-pattern-vs-depth-transformer.png",
-      "sha256": "6f4b2f99d25bb4c0026ad86e82d4ce68b8108898625c95c990641165d924a8ac"
+      "path": "manuscripts/ch22/ch22-pairformer-triangle-multiplication-and-attention-o-n3.png",
+      "sha256": "73ebc73777bda26e70bf34cda04995f9290e2bc5e434a98c9f86c202b7cced9d"
     },
     {
-      "path": "manuscripts/ch22/ch22-delayed-codebook-pattern-vs-depth-transformer.svg",
-      "sha256": "8335743b60b9c5914d3ee61490c0dfd6d2735e965ecf59b5e26a5e075e0bf279"
+      "path": "manuscripts/ch22/ch22-pairformer-triangle-multiplication-and-attention-o-n3.pdf",
+      "sha256": "ec1af22a7fa006432a99d6d217f02533b55eb20f31c348cd8eb27e0b6c39ecc5"
     },
     {
-      "path": "manuscripts/ch22/ch22-duplex-turn-taking-backchannel-and-overlap-state-machine.pdf",
-      "sha256": "f98546584c29ed2917ba60debf7135558a8889867382a1eca22c3786d5a1d823"
+      "path": "manuscripts/ch22/ch22-chunked-triangle-attention-and-dynamic-axial-parallelism.svg",
+      "sha256": "3e574f4c27d5f9099c6327a08a5f40b66c10dfac29163b4ad03d64631db556f5"
     },
     {
-      "path": "manuscripts/ch22/ch22-duplex-turn-taking-backchannel-and-overlap-state-machine.png",
-      "sha256": "6e25cec065c4376a3d94f13c9baaeb8524d35e3b1471abd7bdba8b11db2615a8"
+      "path": "manuscripts/ch22/ch22-chunked-triangle-attention-and-dynamic-axial-parallelism.png",
+      "sha256": "d7c9059baadf7d0c1a6440b6fbff3636602b1b4b87ec1259138496bafc73741e"
     },
     {
-      "path": "manuscripts/ch22/ch22-duplex-turn-taking-backchannel-and-overlap-state-machine.svg",
-      "sha256": "3bc8dd64f85adea172c4f74b8767e949681b95093ba6df041bf7ef7aeda6002c"
+      "path": "manuscripts/ch22/ch22-chunked-triangle-attention-and-dynamic-axial-parallelism.pdf",
+      "sha256": "b65d6582d4eb3520d7cbd4a82468a44a3084d1f40fd686d7f1a1f86677883bb2"
     },
     {
-      "path": "manuscripts/ch22/ch22-dynamic-batching-under-strict-80ms-isochronous-tick.pdf",
-      "sha256": "94e790c075d948ed8b519f25b14612f9e62f8e5c73a67b150c2ea918884e57ac"
+      "path": "manuscripts/ch22/ch22-all-atom-diffusion-module-multi-sample-batching.svg",
+      "sha256": "293b7d2a93ee173bef530b1654cb5ae6b1d658d05a6209cfea5cfdd6fb1d0260"
     },
     {
-      "path": "manuscripts/ch22/ch22-dynamic-batching-under-strict-80ms-isochronous-tick.png",
-      "sha256": "0f3aa72cf6a109f3931bfb1f620671aa3a766ac614e170aa101571e2e37df7e8"
+      "path": "manuscripts/ch22/ch22-all-atom-diffusion-module-multi-sample-batching.png",
+      "sha256": "97e3a2c40402c62ee79c57a8ca40fc80278fe7d3adda0e95b0d9e7f14565c080"
     },
     {
-      "path": "manuscripts/ch22/ch22-dynamic-batching-under-strict-80ms-isochronous-tick.svg",
-      "sha256": "bc3fa3dfc51fbcfc58b2a0a7aa58564e8ef05482c340633a69c3e70e6e041a33"
+      "path": "manuscripts/ch22/ch22-all-atom-diffusion-module-multi-sample-batching.pdf",
+      "sha256": "69c549c060882120249867024d76420c948675aa8f1c9e78aa628c981a0783d3"
     },
     {
-      "path": "manuscripts/ch22/ch22-edge-vad-aec-wake-word-and-cloud-duplex-handover.pdf",
-      "sha256": "794f8c981bbed2e3d624b27db8c80f7076881fdde67acf5582b8121c941e0cab"
+      "path": "manuscripts/ch22/ch22-evo2-stripedhyena2-multi-scale-hyena-attention-backbone.svg",
+      "sha256": "b62651115ab888492102b4c2e962407220f63e5f203c58562459aa4722c063a4"
     },
     {
-      "path": "manuscripts/ch22/ch22-edge-vad-aec-wake-word-and-cloud-duplex-handover.png",
-      "sha256": "ef3b2ab3f6ff11e4785159b82878706f85d232b5e9bf12bbbf289d683d01d0e4"
+      "path": "manuscripts/ch22/ch22-evo2-stripedhyena2-multi-scale-hyena-attention-backbone.png",
+      "sha256": "d4d77eb12230294d5f06ce44ccef493acb8851701c9ac2895208605d72d279b8"
     },
     {
-      "path": "manuscripts/ch22/ch22-edge-vad-aec-wake-word-and-cloud-duplex-handover.svg",
-      "sha256": "c8c50029cbfd0c2baadce8b91c565ac2ff8f28951dae7d0d6d23a5f219a9f0de"
+      "path": "manuscripts/ch22/ch22-evo2-stripedhyena2-multi-scale-hyena-attention-backbone.pdf",
+      "sha256": "0bb5a13ee7b68b566f4a1603a26925571dd2d3b181b66a8089a23085b8c09d3a"
     },
     {
-      "path": "manuscripts/ch22/ch22-full-duplex-dual-audio-streams-and-inner-monologue.pdf",
-      "sha256": "5a5fcafcd0bb99617208e73d151a162b2bd069d6db9bca9fd331ebe009559236"
+      "path": "manuscripts/ch22/ch22-flashfftconv-monarch-decomposition-tensor-core.svg",
+      "sha256": "5af625315d9ec5c1b91154274a2b8e89608cfb3fa6c8db2ecf8b300bcfb08a6a"
     },
     {
-      "path": "manuscripts/ch22/ch22-full-duplex-dual-audio-streams-and-inner-monologue.png",
-      "sha256": "b2f0f64e3e4d65bbeefb5d86f373eb16963b37494b3e774c63a90890490bdea8"
+      "path": "manuscripts/ch22/ch22-flashfftconv-monarch-decomposition-tensor-core.png",
+      "sha256": "3a1424bae711698011f6ff62dd9c3cc3b8a3fdfa7f71b860ad706b31937cca70"
     },
     {
-      "path": "manuscripts/ch22/ch22-full-duplex-dual-audio-streams-and-inner-monologue.svg",
-      "sha256": "2903f694ed2f0a48e2a2ca669494a341d74a81d50219c6b393492715bc5c5690"
+      "path": "manuscripts/ch22/ch22-flashfftconv-monarch-decomposition-tensor-core.pdf",
+      "sha256": "dc388326080eca47597121940d3792457b594989a3474e1b8129646587fee4c7"
     },
     {
-      "path": "manuscripts/ch22/ch22-full-duplex-gpu-concurrency-vs-p99-frame-underrun.pdf",
-      "sha256": "271709fc191bc66bfc51ffb98909205c8f18ca4c26111a699b46b2078d29c002"
+      "path": "manuscripts/ch22/ch22-sfno-spherical-harmonics-and-2d-grid-decomposition.svg",
+      "sha256": "86eef3de91452b74abe159446529b61be2984bbe61e653d03cc2237474b6163d"
     },
     {
-      "path": "manuscripts/ch22/ch22-full-duplex-gpu-concurrency-vs-p99-frame-underrun.png",
-      "sha256": "d098f3429472ec9ccaf9ca4c25600ebbadc872fc313741244518cc5a8c078b52"
+      "path": "manuscripts/ch22/ch22-sfno-spherical-harmonics-and-2d-grid-decomposition.png",
+      "sha256": "0f2a92d686bcf7a45ae20f36dbe85c0aef31fdf80b9a3c3c753690d684f1a003"
     },
     {
-      "path": "manuscripts/ch22/ch22-full-duplex-gpu-concurrency-vs-p99-frame-underrun.svg",
-      "sha256": "7effb3abedf7fff6a6cc441c2187dee6ce3bb89fbf9d9305dc6bc88a282c2061"
+      "path": "manuscripts/ch22/ch22-sfno-spherical-harmonics-and-2d-grid-decomposition.pdf",
+      "sha256": "1094984d524f6f01fe649c857037c3dd3e7eedcc46eda3af80a1aa53bf1a5320"
     },
     {
-      "path": "manuscripts/ch22/ch22-full-duplex-omni-streaming-infrastructure-synthesis.pdf",
-      "sha256": "4546c5a454b782f38ea9cc2bc13a9ec6bce0aa49de860fcc8419762657277ac7"
+      "path": "manuscripts/ch22/ch22-spatial-domain-halo-exchange-computation-overlap.svg",
+      "sha256": "fd6eeb68464cccf728f2b05c49b6e0fe557af463cd99dbdcbc7be2dd94268d4a"
     },
     {
-      "path": "manuscripts/ch22/ch22-full-duplex-omni-streaming-infrastructure-synthesis.png",
-      "sha256": "275368182bfa865b8d5aa4f651736858cfb29e6f29a1876e6ca04d0713af202c"
+      "path": "manuscripts/ch22/ch22-spatial-domain-halo-exchange-computation-overlap.png",
+      "sha256": "e881c5545f92284f081964e9459fbf4499a15a16ffa74e3a75121acea9055a98"
     },
     {
-      "path": "manuscripts/ch22/ch22-full-duplex-omni-streaming-infrastructure-synthesis.svg",
-      "sha256": "e6eae79082a796fe46ff793851ef4b02351237a7e5c0748385b41883159a81c2"
+      "path": "manuscripts/ch22/ch22-spatial-domain-halo-exchange-computation-overlap.pdf",
+      "sha256": "b9f6fcc8d100a1d79c14998976e997619b443d719fcd289cc34ad9b69958e587"
     },
     {
-      "path": "manuscripts/ch22/ch22-global-edge-webrtc-sfu-to-gpu-duplex-mesh.pdf",
-      "sha256": "1c3bbf6fdbc15e6133642d604a41213ee6e62e502dc08fc6855e61175e57b26c"
+      "path": "manuscripts/ch22/ch22-era5-petabyte-zarr-gds-direct-streaming-dataloader.svg",
+      "sha256": "0faab58839cb07ae20b2eb464a811d85ab7d895cade83c0d345e737befc45a8c"
     },
     {
-      "path": "manuscripts/ch22/ch22-global-edge-webrtc-sfu-to-gpu-duplex-mesh.png",
-      "sha256": "c499969ab39ca40c492405a4523ad15f27a69cb719548cba2e483b51315d917a"
+      "path": "manuscripts/ch22/ch22-era5-petabyte-zarr-gds-direct-streaming-dataloader.png",
+      "sha256": "59fa46e8eb25ea888b1b50724e248face85c6b8735cfe02960c3cbd33cedfbe9"
     },
     {
-      "path": "manuscripts/ch22/ch22-global-edge-webrtc-sfu-to-gpu-duplex-mesh.svg",
-      "sha256": "7bae24bdaf81fa6e7ee2523f50254fbc3daf1fa9b85d6049c2903aaeebb83dd9"
+      "path": "manuscripts/ch22/ch22-era5-petabyte-zarr-gds-direct-streaming-dataloader.pdf",
+      "sha256": "3c927cd70f06ee4224bc7b3df829c44f5da09b1e6b562c5dd54c3d101a44c2bf"
     },
     {
-      "path": "manuscripts/ch22/ch22-live-video-1fps-and-audio-12hz-interleaved-pacing.pdf",
-      "sha256": "c913c6a801cf3a45f52bbdafcee94e8637c1a25551718c3bc7c82fa7f2489909"
+      "path": "manuscripts/ch22/ch22-mace-equivariant-message-passing-and-verlet-neighbor-list.svg",
+      "sha256": "c04aa2285cd915644809e332541e6608d4e41e318a19a014dad70e40c580f4b4"
     },
     {
-      "path": "manuscripts/ch22/ch22-live-video-1fps-and-audio-12hz-interleaved-pacing.png",
-      "sha256": "0f1a38f254febba5d31aa0b76bb6491a6400436d170d1d8c46c227696384518a"
+      "path": "manuscripts/ch22/ch22-mace-equivariant-message-passing-and-verlet-neighbor-list.png",
+      "sha256": "6f3158a7f5464add57ccb94fa4e48497b4c7bb8a9f4fe4592564c0f519cd8b7b"
     },
     {
-      "path": "manuscripts/ch22/ch22-live-video-1fps-and-audio-12hz-interleaved-pacing.svg",
-      "sha256": "06a88f0b49cae066d7198a3a8d2a32e711bdaf9461d943d28c59d4a9617ccf3c"
+      "path": "manuscripts/ch22/ch22-mace-equivariant-message-passing-and-verlet-neighbor-list.pdf",
+      "sha256": "a46fc45be37fd93c3396de8783fdcfc3fe231d2c34cab5fc18bbd51fda9a8e31"
     },
     {
-      "path": "manuscripts/ch22/ch22-realtime-avatar-lip-sync-audio-video-jitter-alignment.pdf",
-      "sha256": "55973615bf947a076d14de37b54759612b9925bc11444327aa1ca803b02f3357"
+      "path": "manuscripts/ch22/ch22-ai-in-the-loop-hybrid-hpc-pde-solver-and-surrogate.svg",
+      "sha256": "13a4129b3f8daab22a314a3d79447aed143df0851a2fbc994fb5a7b8ce4b340c"
     },
     {
-      "path": "manuscripts/ch22/ch22-realtime-avatar-lip-sync-audio-video-jitter-alignment.png",
-      "sha256": "51b23f0f5286d5e5c3191e575e91c991411e49cc8ce79362e3e15944df22b8e9"
+      "path": "manuscripts/ch22/ch22-ai-in-the-loop-hybrid-hpc-pde-solver-and-surrogate.png",
+      "sha256": "5f91927c9b2ead6b5ca736ad9dc03b539d530f7f77ad2d380baa48927d760f3b"
     },
     {
-      "path": "manuscripts/ch22/ch22-realtime-avatar-lip-sync-audio-video-jitter-alignment.svg",
-      "sha256": "d744b3ba0cbc51e9d057b8b0f30ade0604b16cb632c4e9a8993ea247dba68853"
+      "path": "manuscripts/ch22/ch22-ai-in-the-loop-hybrid-hpc-pde-solver-and-surrogate.pdf",
+      "sha256": "a1a9e8f7dd429fa132bb54ff4691cafa9797e882297bea1532974ca4477b85ea"
     },
     {
-      "path": "manuscripts/ch22/ch22-rvq-neural-audio-codec-semantic-acoustic-hierarchy.pdf",
-      "sha256": "7528e3f4d954efa5f864cf04792772ba1dcf69b55adb3f051e781367eee05c66"
+      "path": "manuscripts/ch22/ch22-autonomous-wet-lab-active-learning-closed-loop.svg",
+      "sha256": "90d16389e1dbb00bf91a9e252dbfe16cbace96297633b21301836148d7007e55"
     },
     {
-      "path": "manuscripts/ch22/ch22-rvq-neural-audio-codec-semantic-acoustic-hierarchy.png",
-      "sha256": "5cd0529389215a624e5e86370ac18a9c3c998c1b842413b217864558d52e06a2"
+      "path": "manuscripts/ch22/ch22-autonomous-wet-lab-active-learning-closed-loop.png",
+      "sha256": "584da71ea51a84f5de3d4218b71828ca806620bb0e6753367c1c319c87ce61f9"
     },
     {
-      "path": "manuscripts/ch22/ch22-rvq-neural-audio-codec-semantic-acoustic-hierarchy.svg",
-      "sha256": "d625f18140676feb3e206a79abf544c243f1d6bfd59156b8d1fbf863d8c13264"
+      "path": "manuscripts/ch22/ch22-autonomous-wet-lab-active-learning-closed-loop.pdf",
+      "sha256": "83b5fd7f42bf1fd16b47cd3cd1eeacd8a7d7be1f43745dd8c129d9ad0c69ff56"
     },
     {
-      "path": "manuscripts/ch22/ch22-streaming-causal-conv-vocoder-chunk-halo.pdf",
-      "sha256": "4afdc10e1a5550c17ccfa27715a6ad6e4f63120818ff279e1221dc669d481872"
+      "path": "manuscripts/ch22/ch22-tokamak-plasma-tearing-mode-sub-ms-rl-control.svg",
+      "sha256": "0ee6e9e57461fe47add710e149eaf71dddd3cd7a76cd2a23815b471a4be96b94"
     },
     {
-      "path": "manuscripts/ch22/ch22-streaming-causal-conv-vocoder-chunk-halo.png",
-      "sha256": "5a7f1bb05c98c85459a90b8f7e578ae5379600d29baf47be47d6697cdc035e62"
+      "path": "manuscripts/ch22/ch22-tokamak-plasma-tearing-mode-sub-ms-rl-control.png",
+      "sha256": "b691a6adc2ca6bc00923113d763bf8cb088e10a5e009dabe686555633a9d5fe5"
     },
     {
-      "path": "manuscripts/ch22/ch22-streaming-causal-conv-vocoder-chunk-halo.svg",
-      "sha256": "0bb45aee2c4d03f84174e1346cd9c71193d3e0fb05e2332adc5283574be8fc45"
+      "path": "manuscripts/ch22/ch22-tokamak-plasma-tearing-mode-sub-ms-rl-control.pdf",
+      "sha256": "78e04c7e25e5f3bb3c84d4df941e8c22552a9276dff0257f348817919e063216"
     },
     {
-      "path": "manuscripts/ch22/ch22-temporal-and-depth-transformer-gpu-roofline-trap.pdf",
-      "sha256": "8d5652bb0768f9661c38e0adeb8b276d607f5d2a928d4fb7acf8c978d4713bfc"
+      "path": "manuscripts/ch22/ch22-single-cell-atlas-sparse-gene-expression-dataloader.svg",
+      "sha256": "5b259468e26692446bd57cb6ebab07bac16fb0a8a3d1c40ba3f9d01128f09f9d"
     },
     {
-      "path": "manuscripts/ch22/ch22-temporal-and-depth-transformer-gpu-roofline-trap.png",
-      "sha256": "2976e740408d8f09b5579f6f004b1eb066a373a32ef2eb9207a0b210a8a5b2a6"
+      "path": "manuscripts/ch22/ch22-single-cell-atlas-sparse-gene-expression-dataloader.png",
+      "sha256": "d6c7c81178b6b775af36abfa516a7515e30b73c41513f228b27f96e0952eeefa"
     },
     {
-      "path": "manuscripts/ch22/ch22-temporal-and-depth-transformer-gpu-roofline-trap.svg",
-      "sha256": "6e1d5f73dae36627e4e21be943c53b4ae6fe20d02cd920f926483594b456d263"
+      "path": "manuscripts/ch22/ch22-single-cell-atlas-sparse-gene-expression-dataloader.pdf",
+      "sha256": "dee4b7b8fc4d5f3b6ec83e0131abcc4f7cd0b154540b6f6b80ff70e0af84717c"
     },
     {
-      "path": "manuscripts/ch22/ch22-voice-cloning-zero-shot-speaker-embedding-cache.pdf",
-      "sha256": "727c79cd65655ef33f665c1046597f993cb0761297219c94b37a6c7811da96c9"
+      "path": "manuscripts/ch22/ch22-twenty-four-chapter-encyclopedia-knowledge-atlas.svg",
+      "sha256": "18962aa93260a34481d6290b414486fb05e835ab7b95d456a23ed73d9621bca5"
     },
     {
-      "path": "manuscripts/ch22/ch22-voice-cloning-zero-shot-speaker-embedding-cache.png",
-      "sha256": "6c06ae2884c1306dedb32631b1326dca222f36fa7ccb3502776d9ea17fe1abfa"
+      "path": "manuscripts/ch22/ch22-twenty-four-chapter-encyclopedia-knowledge-atlas.png",
+      "sha256": "997be9e4eba2ea87bd6db0c4c6906f493dd2ac06c58e75b09df0102b359756a3"
     },
     {
-      "path": "manuscripts/ch22/ch22-voice-cloning-zero-shot-speaker-embedding-cache.svg",
-      "sha256": "7c3d2221ff8a368698ac5db53d5aed52390901c0ecba52bf6e928079a448bb5a"
+      "path": "manuscripts/ch22/ch22-twenty-four-chapter-encyclopedia-knowledge-atlas.pdf",
+      "sha256": "6952bfba7c1b451d6ca4b0b314cc1b797f680e46a39a8bce747d161b36a9db08"
     },
     {
-      "path": "manuscripts/ch22/ch22-webrtc-opus-aec-to-gpu-end-to-end-latency-budget.pdf",
-      "sha256": "31b0bc81aba0078400c658ce22f5f44ba4b130f8fffbf65d97ee21466eb2df39"
+      "path": "manuscripts/ch22/ch22-unified-laws-across-all-24-chapters-synthesis.svg",
+      "sha256": "ef62cfb4235ea7a1d3951f947c77b0038c36df2929e26f622bf1b658e54417ed"
     },
     {
-      "path": "manuscripts/ch22/ch22-webrtc-opus-aec-to-gpu-end-to-end-latency-budget.png",
-      "sha256": "e1bd2f4c38c97afbf539ed76b3ff37aae315c4cefae29378eb43002153cccc84"
+      "path": "manuscripts/ch22/ch22-unified-laws-across-all-24-chapters-synthesis.png",
+      "sha256": "a58ce4dabfa980c2e5577aebcc58090bbe70d201d4ab70351830a7ed76de24d9"
     },
     {
-      "path": "manuscripts/ch22/ch22-webrtc-opus-aec-to-gpu-end-to-end-latency-budget.svg",
-      "sha256": "4c4ab1723346af285402b5bb9f17c17641330f926ee1c89d8507198a27e1f029"
-    },
-    {
-      "path": "manuscripts/ch22/figure-data.json",
-      "sha256": "84b94989f9493da8ec7da35ba674e95619f8254b988f0b478737a71acf0d5dd5"
+      "path": "manuscripts/ch22/ch22-unified-laws-across-all-24-chapters-synthesis.pdf",
+      "sha256": "4ca477d20feb59c07bb780e29620cf649c2838ab1bb934fb7e10ae875d94d5af"
     },
     {
       "path": "manuscripts/ch22/figure-index.json",
-      "sha256": "bf7c0b975121535e9edf83fb1cbcb3b46f8822e9b5bc2e88874f497b43620064"
+      "sha256": "eac2bdc0185494d267223f087e7631f8aa456f32f6d959fc25182e293b9b6c4c"
     },
     {
       "path": "manuscripts/ch22/teaching-layout-validation.json",
-      "sha256": "26d6649759e94c483ced9563025abf0caf8b05ce1ddb7a44dfb70adaeb378e14"
+      "sha256": "143fe6cf3829fb4cc449d91a24057f32c654ff461381d8b309b9e55ec20eea69"
     },
     {
       "path": "manuscripts/ch22/math-validation.json",
-      "sha256": "8a3a44e87807a5358f2cf26fa38c44d6456e3eecf595f7710103211b8a5cdb43"
+      "sha256": "026a712881778789b516824c611df2975cf75d3254f46479afb50076d6efe290"
     }
   ]
 }

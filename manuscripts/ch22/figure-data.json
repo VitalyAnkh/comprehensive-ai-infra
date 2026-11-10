@@ -1,100 +1,89 @@
 {
-  "chapter": 22,
-  "title": "全双工实时语音（Full-Duplex Speech）、神经音频编解码与原生全模态流式底座",
-  "latency_comparison": {
-    "source": "experiments/ch22/22-01/run.py (Cascaded VAD-ASR-LLM-TTS vs Native Full-Duplex S2S)",
-    "cascaded_stages_ms": {
-      "vad_silence_wait_ms": 480.0,
-      "streaming_asr_ms": 220.0,
-      "llm_ttft_and_clause_buffer_ms": 280.0,
-      "tts_first_chunk_ms": 240.0,
-      "network_and_io_ms": 60.0
-    },
-    "cascaded_total_ttfa_ms": 1280.0,
-    "duplex_stages_ms": {
-      "client_mic_aec_opus_ms": 25.0,
-      "webrtc_rtt_and_jitter_buffer_ms": 35.0,
-      "codec_encode_ms": 6.0,
-      "temporal_plus_depth_gpu_ms": 11.5,
-      "causal_vocoder_decode_ms": 6.5,
-      "frame_tick_alignment_ms": 80.0
-    },
-    "duplex_total_ttfa_ms": 164.0,
-    "human_perception_threshold_ms": 200.0,
-    "ttfa_speedup_x": 7.8
+  "chapter": 24,
+  "title": "科学智能（AI for Science）基础设施：生物大分子、百万碱基基因组与物理场网格系统",
+  "msa_and_disaggregation": {
+    "cpu_msa_sec": 2700.0,
+    "gpu_msa_sec": 1.2,
+    "msa_speedup_x": 2250.0,
+    "stage2_pairformer_diffusion_sec": 48.0,
+    "colocated_total_sec": 2748.0,
+    "colocated_gpu_idle_pct": 98.25,
+    "disaggregated_total_sec": 49.2,
+    "disaggregated_gpu_util_pct": 97.56,
+    "end_to_end_speedup_x": 55.85
   },
-  "rvq_codec_ledger": {
-    "source": "experiments/ch22/22-01/run.py (Mimi RVQ 12.5 Hz 8-Codebook Neural Audio Codec)",
-    "raw_pcm_kbps": 384.0,
-    "frame_rate_hz": 12.5,
-    "frame_period_ms": 80.0,
-    "num_codebooks_q": 8,
-    "vocab_size_va": 2048,
-    "bits_per_token": 11,
-    "tokens_per_sec_per_stream": 100.0,
-    "joint_step_tokens": 17,
-    "rvq_bitrate_kbps": 1.1,
-    "codec_compression_x": 349.09
+  "pairformer_triangle_attention": {
+    "n_res": 4096,
+    "c_z": 128,
+    "heads": 4,
+    "bytes_per_elem": 2,
+    "pair_rep_gib": 4.0,
+    "naive_cubic_logits_gib": 512.0,
+    "chunk_size": 64,
+    "chunked_1gpu_workspace_gib": 1.0,
+    "dap_gpus": 4,
+    "dap_per_gpu_pair_gib": 1.0,
+    "dap_per_gpu_workspace_gib": 0.25,
+    "workspace_reduction_x": 2048.0,
+    "dap_all_to_all_ms": 2.85,
+    "triangle_compute_ms": 34.5,
+    "comm_compute_ratio_pct": 8.26
   },
-  "temporal_depth_cudagraph": {
-    "source": "experiments/ch22/22-01/run.py (Temporal 7B + Depth 100M Full-Step CUDA Graph)",
-    "temporal_step_ms": 3.5,
-    "total_depth_kernels": 384,
-    "depth_eager_ms": 35.04,
-    "total_frame_eager_ms": 38.54,
-    "depth_cudagraph_l2_ms": 8.0,
-    "total_frame_cudagraph_ms": 11.5,
-    "depth_speedup_x": 4.38,
-    "full_step_speedup_x": 3.35
+  "evo2_genomic_long_context": {
+    "seq_len_bp": 1048576,
+    "d_model": 8192,
+    "quadratic_attn_tflops_per_layer": 36028.8,
+    "flash_fft_conv_gflops_per_layer": 1735.17,
+    "sequence_mixer_flop_reduction_x": 20763.8,
+    "end_to_end_layer_speedup_x": 28.5
   },
-  "barge_in_kv_rollback": {
-    "source": "experiments/ch22/22-02/run.py (Barge-in Playback-Cursor Aligned KV Rollback)",
-    "server_gen_frame": 65,
-    "server_gen_time_ms": 5200.0,
-    "client_playback_rtp_ms": 4320.0,
-    "client_playback_frame": 54,
-    "unplayed_lookahead_frames": 11,
-    "unplayed_lookahead_ms": 880.0,
-    "rolled_back_kv_tokens": 187,
-    "resume_frame_index": 55,
-    "kv_pointer_rollback_ms": 0.12
+  "sfno_weather_halo": {
+    "grid_lat": 3600,
+    "grid_lon": 7200,
+    "gpus": 64,
+    "local_lat": 450,
+    "local_lon": 900,
+    "halo_width": 4,
+    "channels": 128,
+    "halo_cells_per_gpu": 10800,
+    "halo_bytes_mb": 5.53,
+    "halo_comm_ms": 0.18,
+    "interior_compute_ms": 14.2,
+    "comm_to_compute_ratio_pct": 1.27,
+    "exposed_halo_ms": 0.0
   },
-  "interleaved_video_audio_pacing": {
-    "source": "experiments/ch22/22-02/run.py (Live Video 1 FPS + Audio 12.5 Hz Interleaved Chunking)",
-    "naive_peak_frame_ms": 83.5,
-    "deadline_violated_naive": true,
-    "interleave_ticks": 8,
-    "vis_tokens_per_tick": 32,
-    "interleaved_peak_frame_ms": 20.5,
-    "peak_frame_reduction_x": 4.07
+  "grand_encyclopedia_synthesis": {
+    "total_chapters": 24,
+    "total_parts": 4,
+    "total_figures": 883,
+    "total_production_code_blocks": 166,
+    "total_worked_examples": 192,
+    "total_exercises": 432,
+    "total_unique_exercise_ids": 431,
+    "total_experiment_suites": 147
   },
-  "one_hour_acoustic_eviction": {
-    "source": "experiments/ch22/22-02/run.py (1-Hour Call Rolling Acoustic & Visual Token Eviction)",
-    "total_frames": 45000,
-    "full_audio_text_tokens": 765000,
-    "full_multimodal_tokens": 1686600,
-    "retained_audio_text_tokens": 136750,
-    "retained_multimodal_tokens": 139310,
-    "audio_kv_saving_pct": 82.12,
-    "multimodal_kv_saving_pct": 91.74
+  "tokamak_sub_ms_rl_control": {
+    "control_freq_hz": 4000,
+    "cycle_period_us": 250.0,
+    "hard_budget_us": 200.0,
+    "unopt_total_us": 435.0,
+    "opt_total_us": 68.5,
+    "speedup_x": 6.35,
+    "budget_util_pct": 34.25,
+    "headroom_us": 131.5,
+    "p999_latency_us": 74.0,
+    "forecast_lead_ms": 28.5,
+    "actuation_margin_ms": 16.5
   },
-  "avatar_lipsync_and_edge_sfu_mesh": {
-    "source": "experiments/ch22/22-03/run.py (3D Avatar Lip-Sync < 40 ms Alignment & Global Edge SFU Mesh)",
-    "vis_path_ms": 32.5,
-    "raw_steady_skew_ms": 44.0,
-    "raw_p99_skew_ms": 59.0,
-    "audio_hold_delay_ms": 26.0,
-    "aligned_steady_skew_ms": 18.0,
-    "aligned_p99_skew_ms": 33.0,
-    "skew_reduction_pct": 59.09,
-    "avatar_ttfa_ms": 190.0,
-    "net_direct_ms": 175.0,
-    "net_edge_ms": 98.5,
-    "net_reduction_pct": 43.71,
-    "ttfa_direct_ms": 304.0,
-    "ttfa_edge_ms": 181.5,
-    "ttfa_speedup_x": 1.67,
-    "bw_compression_x": 43.64,
-    "bw_saving_pct": 97.71
+  "single_cell_csr_sparse_atlas": {
+    "n_cells": 100000000,
+    "g_total": 20480,
+    "k_avg": 1536,
+    "dense_storage_gb": 4096.0,
+    "csr_storage_gb": 615.2,
+    "storage_compression_x": 6.66,
+    "seq_compression_x": 13.33,
+    "attn_flop_reduction_x": 177.78,
+    "e2e_training_speedup_x": 20.0
   }
 }

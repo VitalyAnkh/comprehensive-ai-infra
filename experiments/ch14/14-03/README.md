@@ -1,15 +1,15 @@
-# 实验 14-03：面向 Vera Rubin 与 TPU v7 的下一代 MoE 超参数与芯片带宽比联合 Pareto 寻优器
+# 实验 14-03：硅内三维分水微通道直冷（Direct-to-Silicon Microfluidics）与 1.2 GW 园区孤岛微网（SMR + 燃机 + 构网型 BESS）动态调频仿真
 
-本实验复现第 14 章 14.9.3 节“面向 Vera Rubin 与 TPU v7 的下一代 MoE 超参数协同搜索（专家粒度、激活比、注意力混合比与芯片内存带宽比联合 Pareto 寻优）”中的三组定量账本：
+本实验复现第 14 章 15.6.4 节新增专题（练习 15-17、练习 15-18）的热工水力方程与园区孤岛微网转子摇摆方程：
 
-1. **MoE 细粒度专家切分倍数 $G$ 的表达收益与硬件瓦片/通信开销帕累托拐点**：
-   - 保持每层激活 FFN 维度预算 $k(G) \cdot d_{\mathrm{exp}}(G) = 8,192$ 不变，扫描切分倍数 $G \in \{1, 2, 4, 8, 16\}$（总路由专家数 $E(G) = 64 G$，激活专家数 $k(G) = 2 G$，单专家隐藏维 $d_{\mathrm{exp}}(G) = 4,096 / G$）；
-   - 当 $G = 8$（即 $E = 512, k = 16, d_{\mathrm{exp}} = 512$，恰好对齐矩阵核心最小高效列宽 $N_{\mathrm{tile}} = 512$）时，单层步延迟控制在 **$0.74\ \mathrm{ms}$**（瓦片有效利用率 $100\%$），质量损失相对 $G=1$ 下降 **$0.0720\ \mathrm{nats}$**，取得质量与延迟效用函数的全局最优（效用分 **$3.870$**）；若继续切分至 $G = 16$（$d_{\mathrm{exp}} = 256 < 512$，瓦片利用率跌至 $50\%$），瓦片填充折损使延迟跳升至 **$2.02\ \mathrm{ms}$**。
-2. **Vera Rubin NVL72 与 TPU v7（Ironwood）在 671B/37B MoE 上的算存比与通信拐点对比**：
-   - **Vera Rubin**（$P_{\mathrm{FP4}} = 50,000\ \mathrm{TFLOP/s}$，$B_{\mathrm{HBM4}} = 22.0\ \mathrm{TB/s}$，NVLink 6 单卡双向 $3.6\ \mathrm{TB/s}$）：Roofline 临界算术强度高达 $\mathcal{I}_{\mathrm{Rubin}}^* = \mathbf{2,272.73\ \mathrm{FLOP/B}}$；在 `EP=64`、`batch=128` Decode 下，单步权重与状态读取耗时 **$8.64\ \mathrm{ms}$**、All-to-All 通信耗时 **$1.42\ \mathrm{ms}$**，单步总周期 **$11.86\ \mathrm{ms}$**（吞吐 **$10,792.6\ \mathrm{tok/s}$**）；
-   - **TPU v7 Ironwood**（$P_{\mathrm{FP8}} = 4,614\ \mathrm{TFLOP/s}$，$B_{\mathrm{HBM3e}} = 7.37\ \mathrm{TB/s}$，3D Torus ICI $1.2\ \mathrm{TB/s}$）：Roofline 临界算术强度为 $\mathcal{I}_{\mathrm{TPUv7}}^* = \mathbf{626.05\ \mathrm{FLOP/B}}$；在 `EP=64`、`batch=128` FP8 Decode 下，单步读取耗时 **$25.78\ \mathrm{ms}$**、ICI 通信耗时 **$4.26\ \mathrm{ms}$**，单步总周期 **$33.64\ \mathrm{ms}$**（吞吐 **$3,805.0\ \mathrm{tok/s}$**）。
-3. **三维超参数 $(G, \rho_{\mathrm{act}}, r_{\mathrm{attn}})$ 硬件感知闭环搜索（HW-NAS Loop）**：
-   - 在单步延迟上限 $\mathrm{TPOT} \le 15.0\ \mathrm{ms}$、单卡状态显存预算 $\le 40.0\ \mathrm{GiB}$ 约束下，联合搜索 $(G, \rho_{\mathrm{act}}, r_{\mathrm{attn}})$，锁定最优配置为 **$(G^*=8, \rho_{\mathrm{act}}^*=0.03125, r_{\mathrm{attn}}^*=0.25)$**（即 $1:3$ 全注意力与线性注意力混合 + $16/512$ 细粒度 MoE），单步耗时 **$12.91\ \mathrm{ms}$**、单卡状态显存 **$28.25\ \mathrm{GiB}$**、综合质量得分 **$96.80$**。
+1. **硅内三维分水微通道直冷（2,500 W 芯片，$q'' = 277.78\ \mathrm{W/cm^2}$）**：
+   - 对比传统外贴铜冷板（$R_{\mathrm{th, cp}} = 0.028\ \mathrm{K/W}$，$T_{\mathrm{in}} = 45.0^\circ\mathrm{C}$ 下结温达 $115.0^\circ\mathrm{C}$）与硅内三维分水微通道直冷（$R_{\mathrm{cond, Si}} = 0.0018\ \mathrm{K/W}$、$R_{\mathrm{conv, micro}} = 0.0042\ \mathrm{K/W}$、$R_{\mathrm{cal}} = 0.0040\ \mathrm{K/W}$，总热阻 $0.0100\ \mathrm{K/W}$，降低 $2.80\times$）；
+   - 验证在 ASHRAE W45（$45.0^\circ\mathrm{C}$）下结温保持 $70.0^\circ\mathrm{C} \le 85.0^\circ\mathrm{C}$（最高允许进水温度 $60.0^\circ\mathrm{C}$），且在 $\Delta P = 38.4\ \mathrm{kPa}$、$\dot{V} = 1.80\ \mathrm{L/min}$ 下水力泵功仅为 $1.65\ \mathrm{W}$（占芯片热功耗 $0.0658\%$）。
+2. **1.2 GW 园区孤岛微网（300 MW SMR + 600 MW 燃机 + 400 MW 构网型 BESS）调频整定**：
+   - 在 $\Delta P_{\mathrm{step}} = 450.0\ \mathrm{MW}$ 同步训练阶跃卸载下，无虚拟惯量时物理惯量 $H_{\mathrm{phys}} = 3.00\ \mathrm{s}$、初始 $\mathrm{RoCoF}_0 = 3.750\ \mathrm{Hz/s}$；
+   - 整定 $400\ \mathrm{MW}$ 构网型 BESS 虚拟同步惯量 $H_{\mathrm{BESS}} = 13.50\ \mathrm{s}$ 后，系统等效惯量升至 $7.50\ \mathrm{s}$，初始 $\mathrm{RoCoF}_0$ 压至 $1.500\ \mathrm{Hz/s}$，暂态极值频偏从 $2.874\ \mathrm{Hz}$ 压至 $0.739\ \mathrm{Hz}$。
+3. **8 子集群微批次错峰与电热联合 DVFS 闭环控制**：
+   - 将瞬态阶跃负载削减至 $144.0\ \mathrm{MW}$，芯片结温控制在 $66.01^\circ\mathrm{C}$，端到端训练步时间开销仅为 $1.43\%$。
 
 ## 运行方式
 

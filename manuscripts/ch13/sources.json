@@ -1,20 +1,33 @@
 {
+  "chapter": "ch13",
   "sources": [
     {
-      "path": "manuscripts/ch13/build.py",
-      "sha256": "2ed9c6424c57f7eb9abe4cdef273154e612bdbc1c659b320b99da0e9da3f75da"
-    },
-    {
-      "path": "manuscripts/ch13/figure-data.json",
-      "sha256": "572cce292c90c76aeaf9a48b76d0de85be40458d650de281935f892f6fdc46f5"
+      "path": "manuscripts/13-存储系统与数据工程.md",
+      "sha256": "ef19a7115d8e27e59a0ff8d2845dabc117952efbcaa11d2711134cf826c18658"
     },
     {
       "path": "manuscripts/ch13/figure-index.json",
-      "sha256": "5b9199123dc6859ec69ee8f237c13c004d1a5744364d4be94264f77b25b88fa9"
+      "sha256": "65fe370f471b865220fbe45c01c7c61e186082391145f1ba2a0e666eb7e4b271"
     },
     {
-      "path": "manuscripts/13-AI 原生存储系统与数据底座.md",
-      "sha256": "de02ad287c182f8f814bb6b23bdf76b8575fa178e50ca08fb73de15c60f9fe28"
+      "path": "experiments/ch13/13-02/run.py",
+      "sha256": "121f67058d23c9c70a9a55ed4e225554c443ba9eac383816cf20510e9633610d"
+    },
+    {
+      "path": "experiments/ch13/13-03/run.py",
+      "sha256": "866fa25af78af299a9fc88230439105a1a52bcf55f5f402e99102cc07faf19ce"
+    },
+    {
+      "path": "experiments/ch13/13-04/run.py",
+      "sha256": "c66f130c7bf68981f2725e199807bc0f2f207602905438a5e19384def2cb07dd"
+    },
+    {
+      "path": "experiments/ch13/13-05/run.py",
+      "sha256": "f447e1ee7fa9e626f4f79bd67a7eb8f6a34ab35ddb3b010c63c9a12c3b487011"
+    },
+    {
+      "path": "experiments/ch13/13-06/run.py",
+      "sha256": "f5434157c3e575c62047314aad1d5225295bb00edf2f13b096e994eafe5b34b0"
     }
   ]
 }

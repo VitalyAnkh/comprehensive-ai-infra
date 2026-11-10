@@ -2,294 +2,291 @@
   {
     "figure_id": "图 20-1",
     "number": 1,
-    "file": "ch20-cluster-mtbf-scaling-and-llama3-failures.svg",
-    "asset": "ch20/ch20-cluster-mtbf-scaling-and-llama3-failures.svg",
+    "file": "ch20-cloud-llm-slo-vs-embodied-hard-realtime.svg",
+    "asset": "ch20/ch20-cloud-llm-slo-vs-embodied-hard-realtime.svg",
     "section": "20.1.1",
-    "caption": "集群规模从 1K 扩至 100K 卡时 MTBF_cluster 跌至 30.41 分钟的反比规律及 Meta 16,384 卡 419 次中断分类账本（算例 20-1）",
+    "caption": "云端对话软实时 SLO 与物理世界闭环控制硬实时截止期（盲飞位移 Δx = v·Δt_inf，算例 20-1）对比",
     "source_refs": [
-      "experiments/ch20/20-01/run.py",
-      "manuscripts/ch20/figure-data.json"
+      "experiments/ch19/19-01/run.py",
+      "manuscripts/ch19/figure-data.json"
     ],
-    "TeachingRole": "展示十万卡规模下硬件故障从偶发异常演变为每半小时必至的稳态过程",
+    "TeachingRole": "建立时间延迟向物理空间碰撞误差转化的第一性原理公式",
     "figure": "20-1",
-    "name": "ch20-cluster-mtbf-scaling-and-llama3-failures"
+    "name": "ch20-cloud-llm-slo-vs-embodied-hard-realtime"
   },
   {
     "figure_id": "图 20-2",
     "number": 2,
-    "file": "ch20-hot-spare-pool-queuing-dimensioning.svg",
-    "asset": "ch20/ch20-hot-spare-pool-queuing-dimensioning.svg",
+    "file": "ch20-vlalagbench-latency-vs-dynamic-grasp-success.svg",
+    "asset": "ch20/ch20-vlalagbench-latency-vs-dynamic-grasp-success.svg",
     "section": "20.1.2",
-    "caption": "基于泊松修复队列模型（λ=2/h, MTTR=12h）的热备节点池（Hot-Spare Pool S_min=40）配置与可用性曲线（算例 20-2）",
+    "caption": "VLALagBench 实证规律：静态操作 vs. 动态操作随推理延迟 Δt_inf 增大的成功率退化曲线",
     "source_refs": [
-      "experiments/ch20/20-01/run.py",
-      "research/2026-infra-survey/reading-mlsys-2026.md"
+      "experiments/ch19/19-01/run.py",
+      "manuscripts/ch19/figure-data.json"
     ],
-    "TeachingRole": "推导以 99.9% 概率保证万卡训练不降级所需的最小热备节点数",
+    "TeachingRole": "揭示观测过时（Observation Staleness）导致 100 ms 以上动态抓取成功率崩塌的机理",
     "figure": "20-2",
-    "name": "ch20-hot-spare-pool-queuing-dimensioning"
+    "name": "ch20-vlalagbench-latency-vs-dynamic-grasp-success"
   },
   {
     "figure_id": "图 20-3",
     "number": 3,
-    "file": "ch20-sdc-bitflip-allreduce-contamination.svg",
-    "asset": "ch20/ch20-sdc-bitflip-allreduce-contamination.svg",
-    "section": "20.2.1",
-    "caption": "单颗 GPU Tensor Core 静默比特翻转（SDC）如何逃过 HBM ECC 并通过一次 AllReduce 瞬间污染万卡权重",
+    "file": "ch20-action-chunking-and-temporal-ensembling.svg",
+    "asset": "ch20/ch20-action-chunking-and-temporal-ensembling.svg",
+    "section": "20.1.3",
+    "caption": "动作块预测（Action Chunking H 步）与滑动窗口指数加权时间集成（Temporal Ensembling）时序图",
     "source_refs": [
-      "research/2026-infra-survey/reading-osdi-2026.md",
-      "manuscripts/ch20/figure-data.json"
+      "manuscripts/ch19/figure-data.json"
     ],
-    "TeachingRole": "剖析无 ECC 保护的数据通路翻转如何被硬件赋予合法校验码并传染全集群",
+    "TeachingRole": "剖析动作块长度在抑制高频抖动与引入开环盲区之间的工程权衡",
     "figure": "20-3",
-    "name": "ch20-sdc-bitflip-allreduce-contamination"
+    "name": "ch20-action-chunking-and-temporal-ensembling"
   },
   {
     "figure_id": "图 20-4",
     "number": 4,
-    "file": "ch20-abft-checksum-matrix-multiplication.svg",
-    "asset": "ch20/ch20-abft-checksum-matrix-multiplication.svg",
-    "section": "20.2.2",
-    "caption": "基于代数不变量（ABFT 行列校验和）以 0.0732%（<0.5%）算力开销在线拦截并定位矩阵乘硬件错误（算例 20-3）",
+    "file": "ch20-system2-vlm-system1-flow-matching-dual-loop.svg",
+    "asset": "ch20/ch20-system2-vlm-system1-flow-matching-dual-loop.svg",
+    "section": "20.2.1",
+    "caption": "System 2（2 Hz 多模态 VLM 慢思考）+ System 1（100 Hz Flow-Matching 动作头快反射）双频异步架构",
     "source_refs": [
-      "experiments/ch20/20-01/run.py",
-      "manuscripts/ch20/figure-data.json"
+      "experiments/ch19/19-01/run.py",
+      "manuscripts/ch19/figure-data.json"
     ],
-    "TeachingRole": "证明利用线性结合律可将 O(N^3) 矩阵乘校验降维至 O(N^2) 外围向量内积",
+    "TeachingRole": "展示 50:1 双频异步协同如何兼顾大模型语义泛化与 10 ms 硬实时闭环控制",
     "figure": "20-4",
-    "name": "ch20-abft-checksum-matrix-multiplication"
+    "name": "ch20-system2-vlm-system1-flow-matching-dual-loop"
   },
   {
     "figure_id": "图 20-5",
     "number": 5,
-    "file": "ch20-safeguarding-sdc-and-opguard-bitwise-debug.svg",
-    "asset": "ch20/ch20-safeguarding-sdc-and-opguard-bitwise-debug.svg",
+    "file": "ch20-jetson-thor-mig-rtos-deterministic-isolation.svg",
+    "asset": "ch20/ch20-jetson-thor-mig-rtos-deterministic-isolation.svg",
     "section": "20.2.2",
-    "caption": "3,500 万 GPU 小时在线 SDC 感知隔离（Safeguarding LLM Training OSDI '26）与控制良性非确定性的位级对齐定位（OpGuard OSDI '26）",
+    "caption": "NVIDIA Jetson Thor / Drive Thor 上利用 GPU MIG 分区与无锁共享内存隔离 System 2 干扰的 WCET 保障",
     "source_refs": [
-      "research/2026-infra-survey/reading-osdi-2026.md"
+      "experiments/ch19/19-01/run.py"
     ],
-    "TeachingRole": "结合 AllReduce 前统计拦截与确定性重放解决浮点非确定性掩盖 SDC 的难题",
+    "TeachingRole": "解析硬件级缓存/带宽隔离与 PREEMPT_RT 核绑定如何锁定 WCET ≤ 4.2 ms",
     "figure": "20-5",
-    "name": "ch20-safeguarding-sdc-and-opguard-bitwise-debug"
+    "name": "ch20-jetson-thor-mig-rtos-deterministic-isolation"
   },
   {
     "figure_id": "图 20-6",
     "number": 6,
-    "file": "ch20-microbatch-rerun-vs-checkpoint-rollback.svg",
-    "asset": "ch20/ch20-microbatch-rerun-vs-checkpoint-rollback.svg",
-    "section": "20.2.2",
-    "caption": "检测到异常后原地重跑当前微批次（耗时 50 ms）区分瞬态软错误与永久硬件故障 vs. 盲目回滚数小时全局检查点",
+    "file": "ch20-flow-matching-ode-steps-vs-control-jitter.svg",
+    "asset": "ch20/ch20-flow-matching-ode-steps-vs-control-jitter.svg",
+    "section": "20.2.1",
+    "caption": "动作生成头中 DDPM 多步采样 vs. Flow-Matching 少步确定性 ODE 积分的周期稳定性对比",
     "source_refs": [
-      "research/2026-infra-survey/reading-osdi-2026.md",
-      "manuscripts/ch20/figure-data.json"
+      "experiments/ch19/19-01/run.py"
     ],
-    "TeachingRole": "展示在优化器更新前拦截异常并重算微批次如何避免回滚数小时进度",
+    "TeachingRole": "说明最优传输直线流匹配与静态 CUDA Graph 如何消除扩散采样抖动",
     "figure": "20-6",
-    "name": "ch20-microbatch-rerun-vs-checkpoint-rollback"
+    "name": "ch20-flow-matching-ode-steps-vs-control-jitter"
   },
   {
     "figure_id": "图 20-7",
     "number": 7,
-    "file": "ch20-trainmover-subsecond-hot-migration.svg",
-    "asset": "ch20/ch20-trainmover-subsecond-hot-migration.svg",
+    "file": "ch20-cpu-sim-pcie-bottleneck-vs-gpu-native-sim.svg",
+    "asset": "ch20/ch20-cpu-sim-pcie-bottleneck-vs-gpu-native-sim.svg",
     "section": "20.3.1",
-    "caption": "传统全局销毁重启（torchrun 耗时 300 s）vs. TrainMover（OSDI '26）利用预热备用进程与 RDMA 重映射实现秒级无重启接管",
+    "caption": "传统 CPU 物理仿真 + PCIe 往返（43.39 GB/s 瓶颈）vs. GPU 原生万级并行仿真的数据零搬移闭环",
     "source_refs": [
-      "research/2026-infra-survey/reading-osdi-2026.md",
-      "experiments/ch20/20-01/run.py"
+      "experiments/ch19/19-01/run.py",
+      "manuscripts/ch19/figure-data.json"
     ],
-    "TeachingRole": "解析虚拟通信域局部重连如何消除九万九千张健康卡的陪葬重启开销",
+    "TeachingRole": "定量证明 4,096 环境跨 PCIe 传输观测必撞带宽墙，必须全驻留 GPU 显存",
     "figure": "20-7",
-    "name": "ch20-trainmover-subsecond-hot-migration"
+    "name": "ch20-cpu-sim-pcie-bottleneck-vs-gpu-native-sim"
   },
   {
     "figure_id": "图 20-8",
     "number": 8,
-    "file": "ch20-nccl-flight-recorder-straggler-blame.svg",
-    "asset": "ch20/ch20-nccl-flight-recorder-straggler-blame.svg",
+    "file": "ch20-physics-renderer-policy-three-way-sm-budget.svg",
+    "asset": "ch20/ch20-physics-renderer-policy-three-way-sm-budget.svg",
     "section": "20.3.2",
-    "caption": "利用 NCCL Flight Recorder 与集合通信到达时间偏斜矩阵（Arrival Skew，算例 20-4）从全网阻塞假象中揪出唯一根因慢节点",
+    "caption": "单张 GPU 内刚体接触求解器、批量光线追踪渲染器与 VLA 策略网络的三方显存（25.52 GiB）与 SM 分配",
     "source_refs": [
-      "case-studies/collective-paths-and-diagnosis.md",
-      "experiments/ch20/20-01/run.py"
+      "experiments/ch19/19-01/run.py",
+      "manuscripts/ch19/figure-data.json"
     ],
-    "TeachingRole": "证明同步集合通信中升级带宽仅省 0.2 ms、而消除 2.0 ms 入队偏斜才是正解",
+    "TeachingRole": "核算 4,096 并行环境在 HBM 与 132 个 SM（CUDA/RT/Tensor Core）上的协同账本",
     "figure": "20-8",
-    "name": "ch20-nccl-flight-recorder-straggler-blame"
+    "name": "ch20-physics-renderer-policy-three-way-sm-budget"
   },
   {
     "figure_id": "图 20-9",
     "number": 9,
-    "file": "ch20-optical-ber-fec-gray-failure-detection.svg",
-    "asset": "ch20/ch20-optical-ber-fec-gray-failure-detection.svg",
+    "file": "ch20-contact-divergence-warp-inefficiency.svg",
+    "asset": "ch20/ch20-contact-divergence-warp-inefficiency.svg",
     "section": "20.3.2",
-    "caption": "光模块劣化引发 FEC 纠错重传（灰故障 Gray Failure）导致通信有效带宽周期性塌陷的特征识别",
+    "caption": "4,096 个并行仿真环境中稀疏多点碰撞导致的 SIMT Warp 分支发散与流式紧缩重排序",
     "source_refs": [
-      "manuscripts/ch20/figure-data.json"
+      "manuscripts/ch19/figure-data.json"
     ],
-    "TeachingRole": "通过监控 Pre-FEC 误码率与高阶纠错符号桶在链路彻底断连前主动隔离灰故障",
+    "TeachingRole": "展示按活跃接触对流式紧缩（Stream Compaction）如何解决 GPU 物理求解分支发散",
     "figure": "20-9",
-    "name": "ch20-optical-ber-fec-gray-failure-detection"
+    "name": "ch20-contact-divergence-warp-inefficiency"
   },
   {
     "figure_id": "图 20-10",
     "number": 10,
-    "file": "ch20-five-benchmark-gaming-traps.svg",
-    "asset": "ch20/ch20-five-benchmark-gaming-traps.svg",
-    "section": "20.4.1",
-    "caption": "AI 系统跑分中的五大失真陷阱与算术平均加速比悖论（候选 A 5.25x 反慢于候选 B 2.0x，算例 20-5）",
+    "file": "ch20-multi-camera-tiled-rendering-zero-copy-tensor.svg",
+    "asset": "ch20/ch20-multi-camera-tiled-rendering-zero-copy-tensor.svg",
+    "section": "20.3.1",
+    "caption": "多环境相机画布拼接渲染（Tiled Rendering）直接映射为 PyTorch 张量避免逐环境小 Kernel 启动",
     "source_refs": [
-      "case-studies/optimization-evaluation-and-deployment.md",
-      "experiments/ch20/20-01/run.py"
+      "manuscripts/ch19/figure-data.json"
     ],
-    "TeachingRole": "复算加速比平均悖论（p*=15/19）与 AABB/ABBA 线性时漂抵消实验",
+    "TeachingRole": "通过单次大画布光追与 DLPack 零拷贝映射消除 8,192 次微调用开销",
     "figure": "20-10",
-    "name": "ch20-five-benchmark-gaming-traps"
+    "name": "ch20-multi-camera-tiled-rendering-zero-copy-tensor"
   },
   {
     "figure_id": "图 20-11",
     "number": 11,
-    "file": "ch20-flashinfer-bench-cceval-and-blink-profiling.svg",
-    "asset": "ch20/ch20-flashinfer-bench-cceval-and-blink-profiling.svg",
-    "section": "20.4.2",
-    "caption": "FlashInfer-Bench（算子基准）、CCEval（集合通信基准）、DriftBench（负载漂移）与 Blink（OSDI '26 消除采样失真）的四维评测体系",
+    "file": "ch20-multi-sensor-ptp-hardware-trigger-alignment.svg",
+    "asset": "ch20/ch20-multi-sensor-ptp-hardware-trigger-alignment.svg",
+    "section": "20.4.1",
+    "caption": "多目相机曝光、激光雷达扫描、IMU 与关节力矩传感器的微秒级硬件 PTP 时间戳对齐",
     "source_refs": [
-      "research/2026-infra-survey/reading-osdi-2026.md",
-      "research/2026-infra-survey/reading-mlsys-2026.md"
+      "manuscripts/ch19/figure-data.json"
     ],
-    "TeachingRole": "建立从无偏硬件剖析（Blink）到影子流量质量门禁的工业级评测标准",
+    "TeachingRole": "对比软件接收时间戳抖动与硬件曝光触发 + SE(3) 插值对齐的精度差异",
     "figure": "20-11",
-    "name": "ch20-flashinfer-bench-cceval-and-blink-profiling"
+    "name": "ch20-multi-sensor-ptp-hardware-trigger-alignment"
   },
   {
     "figure_id": "图 20-12",
     "number": 12,
-    "file": "ch20-effective-training-time-ratio-ettr-model.svg",
-    "asset": "ch20/ch20-effective-training-time-ratio-ettr-model.svg",
-    "section": "20.1.1",
-    "caption": "十万卡集群有效训练时间比（ETTR）对检查点周期 τ_ckpt、恢复时间 T_rec 与故障率 λ 的响应对比（63.22% vs. 92.34%）",
+    "file": "ch20-shadow-mode-disagreement-edge-trigger.svg",
+    "asset": "ch20/ch20-shadow-mode-disagreement-edge-trigger.svg",
+    "section": "20.4.2",
+    "caption": "真机影子模式（Shadow Mode）：利用策略动作分歧度触发 0.5% 难例切片回传（省带宽 200 倍，算例 20-5）",
     "source_refs": [
-      "experiments/ch20/20-01/run.py",
-      "manuscripts/ch20/figure-data.json"
+      "experiments/ch19/19-01/run.py",
+      "manuscripts/ch19/figure-data.json"
     ],
-    "TeachingRole": "量化展示内存检查点与秒级热恢复如何为十万卡集群挽回 29.12% 的有效算力",
+    "TeachingRole": "核算机载环形黑匣子与边缘难例触发将单机日传数据从 2.592 TB 压至 12.96 GB",
     "figure": "20-12",
-    "name": "ch20-effective-training-time-ratio-ettr-model"
+    "name": "ch20-shadow-mode-disagreement-edge-trigger"
   },
   {
     "figure_id": "图 20-13",
     "number": 13,
-    "file": "ch20-automated-burn-in-fleet-health-pipeline.svg",
-    "asset": "ch20/ch20-automated-burn-in-fleet-health-pipeline.svg",
-    "section": "20.3.1",
-    "caption": "新节点入网与故障修复后的自动化烤机（Burn-in：满载热压测 + 确定性 SDC 校验 + 光链路裕量扫描）准入流水线",
+    "file": "ch20-3dgs-neural-reconstruction-sim2real-loop.svg",
+    "asset": "ch20/ch20-3dgs-neural-reconstruction-sim2real-loop.svg",
+    "section": "20.4.2",
+    "caption": "利用真机难例日志构建 3D 高斯泼溅（3DGS）可微数字孪生场景并用于闭环重仿真的完整流水线",
     "source_refs": [
-      "manuscripts/ch20/figure-data.json"
+      "manuscripts/ch19/figure-data.json"
     ],
-    "TeachingRole": "设计闭环机队健康状态机防止维修后带病节点重新污染在役训练集群",
+    "TeachingRole": "结合 3DGS 新视角合成与物理碰撞网格实现照片级反事实闭环重仿真",
     "figure": "20-13",
-    "name": "ch20-automated-burn-in-fleet-health-pipeline"
+    "name": "ch20-3dgs-neural-reconstruction-sim2real-loop"
   },
   {
     "figure_id": "图 20-14",
     "number": 14,
-    "file": "ch20-twenty-chapter-dual-track-master-ledger.svg",
-    "asset": "ch20/ch20-twenty-chapter-dual-track-master-ledger.svg",
-    "section": "20.5.1",
-    "caption": "全书 20 章双轨贯穿案例（Qwen3-8B Dense 轨与 DeepSeek V4.1 / MoE 轨）从第 1 章到第 20 章的完整工程参数演进总表",
+    "file": "ch20-onboard-vs-mec-edge-offload-safety-fallback.svg",
+    "asset": "ch20/ch20-onboard-vs-mec-edge-offload-safety-fallback.svg",
+    "section": "20.2.2",
+    "caption": "机载端侧计算与局域 5G/Wi-Fi 7 边缘卸载的抖动边界及本地控制屏障安全护盾（CBF）",
     "source_refs": [
-      "manuscripts/ch20/figure-data.json"
+      "manuscripts/ch19/figure-data.json"
     ],
-    "TeachingRole": "横向串联全书二十章双轨模型在算力、显存、通信、能耗、安全与容错维度的定量参数",
+    "TeachingRole": "确立仅卸载慢速语义规划、端侧保留高频闭环与 1,000 Hz 安全护盾的容错边界",
     "figure": "20-14",
-    "name": "ch20-twenty-chapter-dual-track-master-ledger"
+    "name": "ch20-onboard-vs-mec-edge-offload-safety-fallback"
   },
   {
     "figure_id": "图 20-15",
     "number": 15,
-    "file": "ch20-twenty-chapter-architecture-knowledge-graph.svg",
-    "asset": "ch20/ch20-twenty-chapter-architecture-knowledge-graph.svg",
-    "section": "20.5.1",
-    "caption": "全书 20 章“模型与负载 → 芯片与系统 → 推理、训练与六大前沿底座”的知识体系全景图",
+    "file": "ch20-vla-early-exit-and-token-pruning-wcet.svg",
+    "asset": "ch20/ch20-vla-early-exit-and-token-pruning-wcet.svg",
+    "section": "20.2.2",
+    "caption": "面向硬实时截止期的多视角视觉词元固定配额剪枝（VLA-Pruner）与层早退机制",
     "source_refs": [
-      "manuscripts/ch20/figure-data.json"
+      "manuscripts/ch19/figure-data.json"
     ],
-    "TeachingRole": "建立自顶向下算法负载与自底向上物理定律双向耦合的全书知识坐标系",
+    "TeachingRole": "说明为何必须采用固定 Top-K 词元配额才能保持静态张量形状与 CUDA Graph 兼容性",
     "figure": "20-15",
-    "name": "ch20-twenty-chapter-architecture-knowledge-graph"
+    "name": "ch20-vla-early-exit-and-token-pruning-wcet"
   },
   {
     "figure_id": "图 20-16",
     "number": 16,
-    "file": "ch20-ten-first-principles-of-ai-infra.svg",
-    "asset": "ch20/ch20-ten-first-principles-of-ai-infra.svg",
-    "section": "20.5.2",
-    "caption": "AI 基础设施架构师的十条第一性原理终极法则总结图",
+    "file": "ch20-embodied-ai-full-stack-infrastructure-map.svg",
+    "asset": "ch20/ch20-embodied-ai-full-stack-infrastructure-map.svg",
+    "section": "20.4.3",
+    "caption": "具身智能从万级 GPU 物理仿真、双频实时机载推理到车队影子数据飞轮的全栈基础设施总图",
     "source_refs": [
-      "manuscripts/ch20/figure-data.json"
+      "experiments/ch19/19-01/run.py"
     ],
-    "TeachingRole": "提炼贯穿全书二十章的十条第一性原理与定量工程铁律",
+    "TeachingRole": "收束第 19 章硬实时控制、GPU 原生仿真与 Sim-to-Real 数据闭环的工程总账本",
     "figure": "20-16",
-    "name": "ch20-ten-first-principles-of-ai-infra"
+    "name": "ch20-embodied-ai-full-stack-infrastructure-map"
   },
   {
     "figure_id": "图 20-17",
     "number": 17,
-    "file": "ch20-chaos-fault-injection-and-canary-rollout-gate.svg",
-    "asset": "ch20/ch20-chaos-fault-injection-and-canary-rollout-gate.svg",
-    "section": "20.5.3",
-    "caption": "面向十万卡集群的混沌故障注入（SDC 比特翻转 / RoCE 灰丢包 / 慢节点）与金丝雀灰度发布验证闭环",
+    "file": "ch20-three-tier-vlm-flow-wbc-humanoid-control.svg",
+    "asset": "ch20/ch20-three-tier-vlm-flow-wbc-humanoid-control.svg",
+    "section": "20.4.4",
+    "caption": "人形机器人三级实时控制架构（2 Hz VLM 语义规划 → 100 Hz Flow-Matching 末端轨迹 → 1,000 Hz WBC/MPC 全身力矩平衡与触觉反射）",
     "source_refs": [
-      "experiments/ch20/20-02/run.py",
-      "manuscripts/ch20/figure-data.json"
+      "experiments/ch19/19-02/run.py",
+      "manuscripts/ch19/figure-data.json"
     ],
-    "TeachingRole": "通过 200 次主动混沌演练（99.5% 召回率，MTTR = 3.85 s）验证十万卡自愈闭环",
+    "TeachingRole": "剖析 1,000 Hz 视触觉初生打滑反射与 28-DoF 全身动力学二次规划（WCET = 800 μs）的三级解耦",
     "figure": "20-17",
-    "name": "ch20-chaos-fault-injection-and-canary-rollout-gate"
+    "name": "ch20-three-tier-vlm-flow-wbc-humanoid-control"
   },
   {
     "figure_id": "图 20-18",
     "number": 18,
-    "file": "ch20-core-cluster-to-four-new-frontiers-bridge.svg",
-    "asset": "ch20/ch20-core-cluster-to-four-new-frontiers-bridge.svg",
-    "section": "20.5.3",
-    "caption": "从前 20 章通用大模型训练/推理底座迈向第 21–24 章（自主智能体、全双工语音、百亿亿次数据工厂、AI for Science）的架构映射桥接图",
+    "file": "ch20-fast-dct-frequency-action-tokenization.svg",
+    "asset": "ch20/ch20-fast-dct-frequency-action-tokenization.svg",
+    "section": "20.4.4",
+    "caption": "时域逐帧离散化动作 Token 在高频采样下的边际信息坍缩 vs. FAST（离散余弦变换 DCT + BPE）频域动作压缩",
     "source_refs": [
-      "manuscripts/ch20/figure-data.json"
+      "experiments/ch19/19-02/run.py",
+      "manuscripts/ch19/figure-data.json"
     ],
-    "TeachingRole": "构建第 20 章与第 24 章前后呼应的双枢纽结构，自然引出四大新兴基础设施疆域",
+    "TeachingRole": "证明利用机械轨迹低通特性将 700 个时域动作值压缩为 80 个频域词元（8.75× 压缩）的机理",
     "figure": "20-18",
-    "name": "ch20-core-cluster-to-four-new-frontiers-bridge"
+    "name": "ch20-fast-dct-frequency-action-tokenization"
   },
   {
     "figure_id": "图 20-19",
     "number": 19,
-    "file": "ch20-oobleck-pre-instantiated-pipeline-template-failover.svg",
-    "asset": "ch20/ch20-oobleck-pre-instantiated-pipeline-template-failover.svg",
-    "section": "20.5.3",
-    "caption": "Oobleck / Parachute 预实例化异构流水线模板无重启容错重配置（1.45 s 恢复 vs. 300 s 全局重启，算例 20-7）",
+    "file": "ch20-3dgs-neural-sensor-closed-loop-re-simulation.svg",
+    "asset": "ch20/ch20-3dgs-neural-sensor-closed-loop-re-simulation.svg",
+    "section": "20.4.4",
+    "caption": "端到端自动驾驶 3D 高斯泼溅（3DGS）动静态解耦与相机+激光雷达闭环重渲染流水线（算例 20-7）",
     "source_refs": [
-      "experiments/ch20/20-03/run.py",
-      "manuscripts/ch20/figure-data.json"
+      "experiments/ch19/19-03/run.py",
+      "manuscripts/ch19/figure-data.json"
     ],
-    "TeachingRole": "展示编译期预建立多阶流水线模板如何在无热备顶替时以 1.45 s 切换实现 98.75% 算力保持",
+    "TeachingRole": "剖析动静态高斯图解耦、72% 视锥剔除与批量瓦片光栅+RT Core 激光求交实现 16.80 ms (59.52 FPS) 闭环仿真的架构",
     "figure": "20-19",
-    "name": "ch20-oobleck-pre-instantiated-pipeline-template-failover"
+    "name": "ch20-3dgs-neural-sensor-closed-loop-re-simulation"
   },
   {
     "figure_id": "图 20-20",
     "number": 20,
-    "file": "ch20-goodput-sla-under-bursty-poisson-traffic.svg",
-    "asset": "ch20/ch20-goodput-sla-under-bursty-poisson-traffic.svg",
-    "section": "20.5.3",
-    "caption": "推理系统在作弊式均匀到达（CV=0）与真实泊松突发长尾流量（CV≥1）下的排队膨胀与 SLO Goodput 崩塌曲线",
+    "file": "ch20-dual-thor-soc-safety-fallback-watchdog-pipeline.svg",
+    "asset": "ch20/ch20-dual-thor-soc-safety-fallback-watchdog-pipeline.svg",
+    "section": "20.4.4",
+    "caption": "车载双 Orin/Thor 异构 SoC 的 ASIL-D Simplex 安全降级接管（Safety Fallback Watchdog，12.50 ms 闭环）流水线",
     "source_refs": [
-      "experiments/ch20/20-03/run.py",
-      "manuscripts/ch20/figure-data.json"
+      "experiments/ch19/19-03/run.py",
+      "manuscripts/ch19/figure-data.json"
     ],
-    "TeachingRole": "用排队论 Kingman 公式揭露均匀定速压测掩盖 11.37× TTFT 膨胀与 51.27% Goodput 缩水的机理",
+    "TeachingRole": "对比 12.50 ms 双芯片 ASIL-D 看门狗热备接管（横向偏离 3.02 mm）与 250 ms 软件重启（偏离 351.25 mm）的安全边界",
     "figure": "20-20",
-    "name": "ch20-goodput-sla-under-bursty-poisson-traffic"
+    "name": "ch20-dual-thor-soc-safety-fallback-watchdog-pipeline"
   }
 ]

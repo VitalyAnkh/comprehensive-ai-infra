@@ -1,24 +1,41 @@
 {
   "experiment_id": "15-02",
-  "diloco_wan": {
-    "bw_h1_gbps": 1600.0,
-    "bw_diloco_avg_gbps": 3.2,
-    "blocking_stall_s": 320.0,
-    "shard_interval_s": 40.0,
-    "shard_tx_s": 12.8,
-    "streaming_exposed_stall_s": 0.0
+  "chaos_gameday_audit": {
+    "total_injected": 200,
+    "total_detected": 199,
+    "overall_recall_pct": 99.5,
+    "mean_mttd_sec": 2.7,
+    "mean_auto_mttr_sec": 3.85,
+    "manual_mttr_sec": 1500.0,
+    "mttr_speedup_x": 389.61
   },
-  "kareus_power": {
-    "p_uniform_per_gpu_w": 388.0,
-    "p_consolidated_zero_sleep_w": 280.0,
-    "p_consolidated_15w_sleep_w": 289.0,
-    "saving_pct_zero_sleep": 27.84,
-    "saving_pct_15w_sleep": 25.52
+  "arrival_skew_8rank": {
+    "straggler_rank": 5,
+    "arrival_skew_ms": 2.0,
+    "healthy_observed_duration_ms": 2.4,
+    "straggler_observed_duration_ms": 0.4,
+    "healthy_wait_share_pct": 83.33,
+    "healthy_xfer_share_pct": 16.67
   },
-  "bess_100mwh": {
-    "daily_rev_spread_usd": 7040.0,
-    "annual_rev_spread_usd": 2569600.0,
-    "daily_rev_exact_usd": 6560.0,
-    "annual_rev_exact_usd": 2394400.0
+  "trainmover_hot_swap": {
+    "qp_remap_sec": 0.08,
+    "rdma_state_push_sec": 0.6,
+    "trainmover_total_recovery_sec": 0.68,
+    "global_restart_sec": 300.0,
+    "trainmover_speedup_x": 441.18
+  },
+  "benchmark_debiasing": {
+    "arith_speedup_a": 5.25,
+    "true_speedup_a_equal_freq": 0.9524,
+    "arith_speedup_x": 4.25,
+    "arith_speedup_y": 2.0,
+    "true_speedup_x_equal_freq": 0.8,
+    "true_speedup_y_equal_freq": 2.0,
+    "crossover_p_x_beats_y": 0.8571,
+    "aabb_bias_8us_drift": -16.0,
+    "aabb_systematic_bias_us": -24.0,
+    "abba_systematic_bias_us": 0.0,
+    "canary_p99_regression_pct": 4.8,
+    "canary_auto_rollback_triggered": true
   }
 }

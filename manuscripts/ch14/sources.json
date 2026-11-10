@@ -1,20 +1,25 @@
 {
+  "chapter": "ch14",
   "sources": [
     {
-      "path": "manuscripts/ch14/build.py",
-      "sha256": "e49b3a493d06635dc0e18a3d90a14a65ea417dc02bd2dcad682606f766337edb"
-    },
-    {
-      "path": "manuscripts/ch14/figure-data.json",
-      "sha256": "d7569b192a67db6ffa18998c9795cd06beeee4886a9a24b95c064f81fe5fbeaa"
+      "path": "manuscripts/14-智算中心与电力热学系统.md",
+      "sha256": "031d66b2103939b2cb3c19ec70d55ed6170c9b39da865432b8071dd3453f79e7"
     },
     {
       "path": "manuscripts/ch14/figure-index.json",
-      "sha256": "556a3076c1a2912fc5791296927e0baf1e90c031e2d26c3545f6a7b1381862e5"
+      "sha256": "7f8f6d380c2264b56949bf7416112696ae6c684c440f1aadc03f61ee523217b3"
     },
     {
-      "path": "manuscripts/14-模型与系统硬件协同设计.md",
-      "sha256": "7f079882f5df173274b693b335b7879be78f145feba1ec494338a39be672945d"
+      "path": "experiments/ch14/14-01/run.py",
+      "sha256": "2badfb54afc426b2bee9baefbe4a8621ab0f7f87b0922f00ef454cef6b642142"
+    },
+    {
+      "path": "experiments/ch14/14-02/run.py",
+      "sha256": "1dfd5b09375048419069ae3a7390c6537ba6515618c109d2ba963ee650d02b57"
+    },
+    {
+      "path": "experiments/ch14/14-03/run.py",
+      "sha256": "abf63a73a1808f2c310fa0211613640831a5334c58909adba9b9b7f4124e7ae5"
     }
   ]
 }

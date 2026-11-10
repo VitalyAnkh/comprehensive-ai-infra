@@ -1,32 +1,49 @@
 {
+  "chapter": "ch23",
   "sources": [
     {
-      "path": "manuscripts/ch23/build.py",
-      "sha256": "6614d35c1c6860c34b68901921e1738da39c229768103ec9e1cb95682ecc156e"
-    },
-    {
-      "path": "manuscripts/ch23/figure-data.json",
-      "sha256": "21805ca2c3756ac1309b19f6e3d0146b7ff70d35c591adabafcfff9600cf4c40"
+      "path": "manuscripts/23-软硬件协同与新型架构.md",
+      "sha256": "15da4990c4543961ed7ec7f0ebb41c6df882de678ffbacaf379ae5f457a46e98"
     },
     {
       "path": "manuscripts/ch23/figure-index.json",
-      "sha256": "cc5e6cf82b7297583dc28134a7831cbca806182cc09daa8d2f97a439f7b150de"
+      "sha256": "bd1ea442f66f92fca5f19cb27cdd77f45bd68e054fda46210c49d5c8797897ec"
     },
     {
       "path": "experiments/ch23/23-01/run.py",
-      "sha256": "5682da1b06e5cc5db12840a6fc73a27992cdd4b702622cce22f8775112cd159f"
+      "sha256": "1bf97551a363e65e972c2e891480857f1f2b7eafc68812509fd6d10bd9536abb"
     },
     {
       "path": "experiments/ch23/23-02/run.py",
-      "sha256": "9ef690586561886bd2f5852914de441019d1f6bee4c0d3a3af5982ca30b145d4"
+      "sha256": "0ce51191cdece2f804f0d7716e5be40e5259f4bb2dda17210aa782c2dad7c25f"
     },
     {
       "path": "experiments/ch23/23-03/run.py",
-      "sha256": "bbd567b4930d432938ce3c0564290e68858d71ea3797b6264d9fffcf0ddb6fb5"
+      "sha256": "d652cd0e4cc16c5b955181d895fa7710889e629cee655ed60c0187aa38ce3539"
     },
     {
-      "path": "manuscripts/23-百亿亿次 Token 数据工程、GPU 加速模糊去重与合成数据工厂底座.md",
-      "sha256": "9d492a0dc8d3185a95f5efbd21a226394432d1286498e17f3a7c12e963fcb0bf"
+      "path": "experiments/ch23/23-04/run.py",
+      "sha256": "4a1ad10a9955c9e2bef12f114356ad2a266f6b9bae9bc27614da49190eaa4c89"
+    },
+    {
+      "path": "experiments/ch23/23-05/run.py",
+      "sha256": "f7d820b60187e7900a8d2c47ea66c802b14f8104ab2f2de8c172c10ecdff6ea6"
+    },
+    {
+      "path": "experiments/ch23/23-06/run.py",
+      "sha256": "65ed8d472ed11650a3ad4cc67a4b9aaa3723a8112040963e1c16dab404c6a8e1"
+    },
+    {
+      "path": "experiments/ch23/23-07/run.py",
+      "sha256": "3afef03132ac86504c853e0f288c5a7e8a71f60c7d1a016b9d9abb1c8de973e6"
+    },
+    {
+      "path": "experiments/ch23/23-08/run.py",
+      "sha256": "afd808894e009322208b6cffbead475711efd774a745fd8ada57dbf6e843641d"
+    },
+    {
+      "path": "experiments/ch23/23-09/run.py",
+      "sha256": "14e2823cd406be37817500890fa50620d32fc31d1689f2e8344826822c7ddd02"
     }
   ]
 }

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Experiment 20-01: 100K-GPU MTBF & Young-Daly ETTR, hot-spare Poisson sizing, ABFT SDC interception, and benchmark gaming counterexamples."""
+"""Experiment 20-01: Embodied AI VLA hard real-time drift, VLALagBench degradation, System 2/1 WCET isolation, and 4,096-env GPU simulation ledger."""
 from __future__ import annotations
 
 import json
@@ -12,158 +12,115 @@ RESULTS_PATH = HERE / "results" / "summary.json"
 
 
 def compute_metrics() -> dict:
-    # 1. Meta Llama 3 405B 16,384-GPU 54-day failure ledger & 100,000-GPU extrapolation
-    llama3_gpus = 16384
-    llama3_days = 54
-    llama3_interruptions = 419
-    mtbf_16k_hours = round((llama3_days * 24.0) / llama3_interruptions, 4)  # 3.0931 h
-    mtbf_100k_minutes = round(mtbf_16k_hours * 60.0 * (llama3_gpus / 100000.0), 2)  # 30.41 min
+    # 1. Blind-flight displacement dx = v * dt and VLALagBench dynamic vs static success rate
+    # (a) High-speed conveyor grasp (v = 1.5 m/s, 120 ms vs 5 ms)
+    velocity_m_s = 1.5
+    dt_cloud_ms = 120.0
+    dt_sys1_ms = 5.0
+    blind_drift_cloud_mm = round(velocity_m_s * dt_cloud_ms, 2)  # 180.0 mm
+    blind_drift_sys1_mm = round(velocity_m_s * dt_sys1_ms, 2)  # 7.5 mm
+    drift_reduction_x = round(blind_drift_cloud_mm / blind_drift_sys1_mm, 2)  # 24.0x
+    # (b) Precision peg-in-hole (v = 0.5 m/s, 200 ms -> 100.0 mm, Ex 19-1)
+    blind_drift_05ms_200ms_mm = round(0.5 * 200.0, 2)  # 100.0 mm
 
-    # Young-Daly optimal checkpoint interval tau_opt = sqrt(2 * C_ckpt * M) at M = 1,800 s (30 min)
-    m_cluster_sec = 1800.0
-    c_traditional_sec = 180.0
-    r_traditional_sec = 300.0
-    tau_exact_a = math.sqrt(2.0 * c_traditional_sec * m_cluster_sec)
-    tau_opt_traditional_sec = round(tau_exact_a, 2)  # 804.98 s
-    # (a) Steady-state production ETTR benchmark (Ex 20-1 & figure-data.json): 63.22% vs 92.34%
-    ettr_traditional_pct = 63.22
-    # (b) First-order linear approximation: (tau/(tau+C)) * (1 - (0.5*tau + R)/M) -> 49.83% (49.81% with rounded tau)
-    ettr_traditional_linear_pct = round(
-        (tau_exact_a / (tau_exact_a + c_traditional_sec))
-        * (1.0 - (tau_exact_a / 2.0 + r_traditional_sec) / m_cluster_sec)
-        * 100.0,
-        2,
-    )  # 49.83%
-    # (c) Cycle-time amortized ratio -> 58.92%
-    ettr_traditional_exact_pct = 58.92
+    # Temporal Ensembling weights w_k = exp(-m * k)
+    # (a) H=16, m=0.1 -> newest w_0 / sum = 0.1192
+    horizon_h = 16
+    decay_m = 0.1
+    raw_weights = [math.exp(-decay_m * k) for k in range(horizon_h)]
+    weight_sum = sum(raw_weights)
+    newest_pred_weight_share = round(raw_weights[0] / weight_sum, 4)  # 0.1192
+    # (b) K=6, m=0.2 (Ex 19-2) -> oldest w_5 / sum = 0.0954, newest w_0 / sum = 0.2594
+    weights_k6 = [math.exp(-0.2 * k) for k in range(6)]
+    sum_k6 = sum(weights_k6)
+    oldest_pred_weight_share_k6 = round(weights_k6[5] / sum_k6, 4)  # 0.0954
+    newest_pred_weight_share_k6 = round(weights_k6[0] / sum_k6, 4)  # 0.2594
 
-    c_fast_sec = 5.0
-    r_trainmover_sec = 5.0
-    tau_exact_b = math.sqrt(2.0 * c_fast_sec * m_cluster_sec)
-    tau_opt_fast_sec = round(tau_exact_b, 2)  # 134.16 s
-    ettr_fast_pct = 92.34
-    ettr_fast_linear_pct = round(
-        (tau_exact_b / (tau_exact_b + c_fast_sec))
-        * (1.0 - (tau_exact_b / 2.0 + r_trainmover_sec) / m_cluster_sec)
-        * 100.0,
-        2,
-    )  # 92.56%
-    ettr_fast_exact_pct = 92.69
+    # VLALagBench static vs dynamic grasp success rate (%) at 20 ms vs 120 ms (>100 ms threshold)
+    static_success_20ms_pct = 88.0
+    static_success_120ms_pct = 82.0
+    dynamic_success_20ms_pct = 84.0
+    dynamic_success_120ms_pct = 32.0
+    dynamic_drop_pct_points = round(dynamic_success_20ms_pct - dynamic_success_120ms_pct, 2)  # 52.0
 
-    # 2. Hot-Spare Pool sizing via Poisson repair queue (lambda = 2.0 /h, MTTR = 12.0 h -> L = 24.0)
-    lam_per_hour = 2.0
-    mttr_hours = 12.0
-    offered_load_l = lam_per_hour * mttr_hours  # 24.0
-    cum_prob = 0.0
-    term = math.exp(-offered_load_l)
-    min_spares_999 = 0
-    for k in range(0, 100):
-        if k > 0:
-            term *= offered_load_l / k
-        cum_prob += term
-        if cum_prob >= 0.999:
-            min_spares_999 = k
-            break  # 40 nodes
+    # 2. System 2 (2 Hz VLM, 500 ms) + System 1 (200 Hz / 100 Hz Flow-Matching ODE) WCET on Jetson Thor
+    sys2_freq_hz = 2.0
+    sys1_freq_hz = 200.0
+    freq_ratio = int(sys1_freq_hz / sys2_freq_hz)  # 100 System-1 ticks per System-2 update
+    sys1_wcet_shared_unisolated_ms = 18.5  # Violates 10 ms / 5 ms deadline due to System 2 Prefill contention
+    sys1_wcet_mig_isolated_ms = 4.1  # Meets 5.0 ms hard real-time deadline
+    ddpm_50step_latency_ms = 41.0
+    flow_matching_5step_latency_ms = 4.1
+    flow_matching_speedup_x = round(ddpm_50step_latency_ms / flow_matching_5step_latency_ms, 2)  # 10.0x
 
-    # 3. ABFT checksum GEMM overhead & single-element SDC bit-flip localization
-    dim_n = 4096
-    gemm_flops = 2 * (dim_n ** 3)
-    abft_extra_flops = 6 * (dim_n ** 2)
-    abft_overhead_pct = round(abft_extra_flops / gemm_flops * 100.0, 4)  # 0.0732%
+    # 3. 4,096-Environment GPU-Native Physics + Ray-Tracing + Policy Simulation Ledger
+    num_envs = 4096
+    sim_step_hz = 60
+    # Tier A (128x128 RGB x2 + 64-dim FP32 state = 98,560 B/env -> 24.22 GB/s, 8.25 GiB HBM)
+    obs_bytes_per_env = 2 * (128 * 128 * 3) + 64 * 4  # 98,560 B
+    cpu_gpu_pcie_bw_gb_s = round(num_envs * sim_step_hz * obs_bytes_per_env / 1e9, 2)  # 24.22 GB/s saved
+    physics_state_mib = round(num_envs * 64 / 1024, 2)  # 256.0 MiB
+    bvh_geometry_mib = 512.0  # 512.0 MiB shared mesh & BVH
+    tiled_render_fb_mib = round(num_envs * 384 / 1024, 2)  # 1,536.0 MiB
+    policy_rollout_mib = 6144.0  # 6,144.0 MiB
+    total_sim_hbm_mib = round(
+        physics_state_mib + bvh_geometry_mib + tiled_render_fb_mib + policy_rollout_mib, 2
+    )  # 8,448.0 MiB (8.25 GiB)
+    total_sim_hbm_gib = round(total_sim_hbm_mib / 1024.0, 2)  # 8.25 GiB
 
-    # Small deterministic 4x4 matrix ABFT localization test
-    mat_a = [[float(i + j + 1) for j in range(4)] for i in range(4)]
-    mat_b = [[float((i + 1) * (j + 1)) for j in range(4)] for i in range(4)]
-    mat_c = [[sum(mat_a[i][k] * mat_b[k][j] for k in range(4)) for j in range(4)] for i in range(4)]
-    # Inject silent data corruption (+64.0) at row 2, col 3
-    mat_c[2][3] += 64.0
-    col_sum_a = [sum(mat_a[i][k] for i in range(4)) for k in range(4)]
-    expected_col_sums = [sum(col_sum_a[k] * mat_b[k][j] for k in range(4)) for j in range(4)]
-    row_sum_b = [sum(mat_b[k][j] for j in range(4)) for k in range(4)]
-    expected_row_sums = [sum(mat_a[i][k] * row_sum_b[k] for k in range(4)) for i in range(4)]
-    row_residuals = [round(sum(mat_c[i]) - expected_row_sums[i], 2) for i in range(4)]
-    col_residuals = [round(sum(mat_c[i][j] for i in range(4)) - expected_col_sums[j], 2) for j in range(4)]
-    detected_row = next(i for i, r in enumerate(row_residuals) if abs(r) > 1e-5)
-    detected_col = next(j for j, r in enumerate(col_residuals) if abs(r) > 1e-5)
+    # Tier B (224x224 stereo packed 176,032 B + 128-dim FP32 state 512 B = 176,544 B/env -> 43.39 GB/s, 25.52 GiB HBM, Ex 19-4)
+    obs_bytes_tier_b = 176032 + 128 * 4  # 176,544 B
+    cpu_gpu_pcie_bw_tier_b_gb_s = round(num_envs * sim_step_hz * obs_bytes_tier_b / 1e9, 2)  # 43.39 GB/s
+    total_sim_hbm_tier_b_mib = 2048.0 + 4096.0 + 3600.0 + 16384.0  # 26,128.0 MiB
+    total_sim_hbm_tier_b_gib = round(total_sim_hbm_tier_b_mib / 1024.0, 2)  # 25.52 GiB
 
-    # 4. Straggler arrival skew, multi-NIC stripe & cycle deadlock (case-studies/collective-paths-and-diagnosis.md)
-    # Arrival skew: 4 ranks at [0, 0, 0, 2.0] ms + 0.4 ms collective transfer
-    earliest_wait_ms = 2.0 + 0.4  # 2.4 ms
-    double_bw_saving_ms = 0.2
-    fix_straggler_saving_ms = 2.0
-    # 4-NIC stripe [1.0, 1.0, 1.0, 2.0] ms -> mean 1.25 ms, max 2.0 ms
-    stripe_times_ms = [1.0, 1.0, 1.0, 2.0]
-    stripe_mean_ms = sum(stripe_times_ms) / len(stripe_times_ms)  # 1.25 ms
-    stripe_max_ms = max(stripe_times_ms)  # 2.0 ms
-    # 3-edge wait-for graph cycle {(0,1), (1,2), (2,0)}
-    wait_edges = {(0, 1), (1, 2), (2, 0)}
-    deadlock_cycle_detected = (0, 1) in wait_edges and (1, 2) in wait_edges and (2, 0) in wait_edges
-
-    # 5. Benchmark gaming counterexamples (case-studies/optimization-evaluation-and-deployment.md)
-    # (a) Arithmetic mean speedup vs frequency-weighted runtime
-    mean_speedup_cand_a = (100.0 / 10.0 + 100.0 / 200.0) / 2.0  # 5.25x
-    mean_speedup_cand_b = (100.0 / 50.0 + 100.0 / 50.0) / 2.0  # 2.0x
-    equal_freq_time_cand_a_us = 10.0 + 200.0  # 210.0 us (> 200 us baseline)
-    equal_freq_time_cand_b_us = 50.0 + 50.0  # 100.0 us
-    crossover_p_num, crossover_p_den = 15, 19  # p > 15/19
-
-    # (b) Linear drift [0, 10, 20, 30] us on A=100 us, B=90 us
-    aabb_means_us = [(100 + 0 + 100 + 10) / 2.0, (90 + 20 + 90 + 30) / 2.0]  # [105.0, 115.0]
-    abba_means_us = [(100 + 0 + 100 + 30) / 2.0, (90 + 10 + 90 + 20) / 2.0]  # [115.0, 105.0]
-
-    # (c) Profile ranking inversion: Plan A (70 + 30*k) vs Plan B (82.2 + 18*k) -> k* = 10/9, at k=1.3: 109.0 vs 105.6 ms
-    k_val = 1.3
-    plan_a_at_1_3_ms = round(70.0 + 30.0 * k_val, 2)  # 109.0 ms
-    plan_b_at_1_3_ms = round(82.2 + 18.0 * k_val, 2)  # 105.6 ms
-
-    # (d) Telemetry backlog drain: 5,000 / (180 - 115) = 76.92 s & two-stage canary (5% stage, 190 ms > 180 ms rollback)
-    telemetry_drain_sec = round(5000.0 / (180.0 - 115.0), 2)  # 76.92 s
-    canary_stage_pct = 5
-    canary_rollback_on_190ms = 190.0 > 180.0
+    # 4. Shadow Mode Edge Triage Bandwidth Reduction (Ex 19-5)
+    raw_mb_per_s = 180.0
+    hours_per_day = 4.0
+    raw_tb_per_day = round(raw_mb_per_s * hours_per_day * 3600.0 / 1e6, 3)  # 2.592 TB/day
+    triage_ratio = 0.005
+    triage_gb_per_day = round(raw_tb_per_day * 1000.0 * triage_ratio, 2)  # 12.96 GB/day
+    compression_ratio_x = round(1.0 / triage_ratio, 1)  # 200.0x
 
     return {
         "experiment_id": "20-01",
-        "cluster_reliability_100k": {
-            "llama3_16k_interruptions_54d": llama3_interruptions,
-            "mtbf_16k_hours": mtbf_16k_hours,
-            "mtbf_100k_minutes": mtbf_100k_minutes,
-            "tau_opt_traditional_sec": tau_opt_traditional_sec,
-            "ettr_traditional_pct": ettr_traditional_pct,
-            "ettr_traditional_linear_pct": ettr_traditional_linear_pct,
-            "ettr_traditional_exact_pct": ettr_traditional_exact_pct,
-            "tau_opt_fast_sec": tau_opt_fast_sec,
-            "ettr_fast_pct": ettr_fast_pct,
-            "ettr_fast_linear_pct": ettr_fast_linear_pct,
-            "ettr_fast_exact_pct": ettr_fast_exact_pct,
-            "hot_spare_offered_load": offered_load_l,
-            "min_spares_999": min_spares_999,
+        "realtime_control_and_vlalagbench": {
+            "blind_drift_cloud_120ms_mm": blind_drift_cloud_mm,
+            "blind_drift_sys1_5ms_mm": blind_drift_sys1_mm,
+            "drift_reduction_x": drift_reduction_x,
+            "blind_drift_05ms_200ms_mm": blind_drift_05ms_200ms_mm,
+            "newest_pred_weight_share": newest_pred_weight_share,
+            "oldest_pred_weight_share_k6": oldest_pred_weight_share_k6,
+            "newest_pred_weight_share_k6": newest_pred_weight_share_k6,
+            "static_success_20ms_pct": static_success_20ms_pct,
+            "static_success_120ms_pct": static_success_120ms_pct,
+            "dynamic_success_20ms_pct": dynamic_success_20ms_pct,
+            "dynamic_success_120ms_pct": dynamic_success_120ms_pct,
+            "dynamic_drop_pct_points": dynamic_drop_pct_points,
         },
-        "abft_sdc_defense": {
-            "abft_overhead_4096_pct": abft_overhead_pct,
-            "injected_sdc_coord": [2, 3],
-            "detected_sdc_coord": [detected_row, detected_col],
-            "injected_error_magnitude": row_residuals[detected_row],
+        "dual_system_thor_isolation": {
+            "sys2_freq_hz": sys2_freq_hz,
+            "sys1_freq_hz": sys1_freq_hz,
+            "freq_ratio": freq_ratio,
+            "sys1_wcet_shared_unisolated_ms": sys1_wcet_shared_unisolated_ms,
+            "sys1_wcet_mig_isolated_ms": sys1_wcet_mig_isolated_ms,
+            "flow_matching_speedup_x": flow_matching_speedup_x,
         },
-        "straggler_and_benchmark_science": {
-            "earliest_wait_ms": earliest_wait_ms,
-            "double_bw_saving_ms": double_bw_saving_ms,
-            "fix_straggler_saving_ms": fix_straggler_saving_ms,
-            "stripe_mean_ms": stripe_mean_ms,
-            "stripe_max_ms": stripe_max_ms,
-            "deadlock_cycle_detected": deadlock_cycle_detected,
-            "mean_speedup_cand_a": mean_speedup_cand_a,
-            "mean_speedup_cand_b": mean_speedup_cand_b,
-            "equal_freq_time_cand_a_us": equal_freq_time_cand_a_us,
-            "equal_freq_time_cand_b_us": equal_freq_time_cand_b_us,
-            "crossover_fraction": f"{crossover_p_num}/{crossover_p_den}",
-            "aabb_means_us": aabb_means_us,
-            "abba_means_us": abba_means_us,
-            "k_star": "10/9",
-            "plan_a_at_1_3_ms": plan_a_at_1_3_ms,
-            "plan_b_at_1_3_ms": plan_b_at_1_3_ms,
-            "telemetry_drain_sec": telemetry_drain_sec,
-            "canary_stage_pct": canary_stage_pct,
-            "canary_rollback_on_190ms": canary_rollback_on_190ms,
+        "gpu_native_sim_4096": {
+            "num_envs": num_envs,
+            "obs_bytes_per_env": obs_bytes_per_env,
+            "cpu_gpu_pcie_bw_saved_gb_s": cpu_gpu_pcie_bw_gb_s,
+            "total_sim_hbm_mib": total_sim_hbm_mib,
+            "total_sim_hbm_gib": total_sim_hbm_gib,
+            "obs_bytes_tier_b": obs_bytes_tier_b,
+            "cpu_gpu_pcie_bw_saved_tier_b_gb_s": cpu_gpu_pcie_bw_tier_b_gb_s,
+            "total_sim_hbm_tier_b_mib": total_sim_hbm_tier_b_mib,
+            "total_sim_hbm_tier_b_gib": total_sim_hbm_tier_b_gib,
+        },
+        "shadow_mode_edge_triage": {
+            "raw_tb_per_day": raw_tb_per_day,
+            "triage_gb_per_day": triage_gb_per_day,
+            "compression_ratio_x": compression_ratio_x,
         },
     }
 

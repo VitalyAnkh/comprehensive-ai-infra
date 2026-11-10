@@ -1,28 +1,31 @@
 {
   "experiment_id": "22-02",
-  "barge_in_kv_rollback": {
-    "server_gen_frame": 65,
-    "client_playback_frame": 54,
-    "unplayed_lookahead_frames": 11,
-    "unplayed_lookahead_ms": 880.0,
-    "rolled_back_kv_tokens": 187,
-    "resume_frame_index": 55,
-    "kv_pointer_rollback_ms": 0.12
+  "evo2_flashfftconv_1m": {
+    "seq_len_l": 1048576,
+    "hidden_dim_d": 8192,
+    "quadratic_attn_tflops": 36028.8,
+    "flash_fft_conv_gflops": 1735.17,
+    "seq_mixer_flop_reduction_x": 20763.8,
+    "end_to_end_layer_speedup_x": 28.5
   },
-  "interleaved_video_audio_pacing": {
-    "naive_peak_frame_ms": 83.5,
-    "deadline_violated_naive": true,
-    "vis_tokens_per_tick": 32,
-    "interleaved_peak_frame_ms": 20.5,
-    "peak_frame_reduction_x": 4.07
+  "sfno_2d_halo_overlap": {
+    "sub_lat": 450,
+    "sub_lon": 900,
+    "halo_perimeter_cells": 10800,
+    "halo_volume_mb": 5.53,
+    "interior_compute_ms": 14.2,
+    "halo_transfer_ms": 0.18,
+    "comm_to_comp_ratio_pct": 1.27,
+    "exposed_halo_ms": 0.0
   },
-  "one_hour_acoustic_eviction": {
-    "total_frames": 45000,
-    "full_audio_text_tokens": 765000,
-    "full_multimodal_tokens": 1686600,
-    "retained_audio_text_tokens": 136750,
-    "retained_multimodal_tokens": 139310,
-    "audio_kv_saving_pct": 82.12,
-    "multimodal_kv_saving_pct": 91.74
+  "grand_encyclopedia_ledger": {
+    "total_chapters": 24,
+    "total_parts": 4,
+    "total_chapter_figures": 883,
+    "total_production_code_blocks": 166,
+    "total_worked_examples": 192,
+    "total_exercise_blocks": 432,
+    "total_unique_exercise_ids": 431,
+    "total_experiment_suites": 147
   }
 }

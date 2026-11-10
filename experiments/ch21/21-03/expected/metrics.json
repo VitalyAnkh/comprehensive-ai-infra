@@ -1,35 +1,25 @@
 {
   "experiment_id": "21-03",
-  "gui_incremental_roi_cache_ex21_6": {
-    "steps": 30,
-    "naive_total_tokens": 180000,
-    "opt_total_tokens": 24600,
-    "token_compression_x": 7.32,
-    "token_saving_pct": 86.33,
-    "naive_vit_total_ms": 1350.0,
-    "opt_vit_total_ms": 251.62,
-    "vit_speedup_x": 5.37
+  "cuvs_cagra_vs_hnsw": {
+    "num_vectors": 1000000000,
+    "dim": 768,
+    "raw_vectors_tb": 1.536,
+    "cpu_hnsw_hours": 11.5,
+    "gpu_cagra_hours": 0.68,
+    "gpu_cagra_minutes": 40.8,
+    "build_speedup_x": 16.91
   },
-  "speculative_dag_execution_ex21_7": {
-    "num_stages": 4,
-    "seq_total_ms": 8000.0,
-    "hit_stage_ms": 1050.0,
-    "miss_stage_ms": 2012.0,
-    "expected_stage_ms": 1242.4,
-    "expected_total_ms": 4969.6,
-    "dag_speedup_x": 1.61,
-    "latency_reduction_pct": 37.88,
-    "breakeven_hit_prob_pct": 1.25
-  },
-  "exercises_21_11_and_21_12": {
-    "p11_naive_tokens": 320000,
-    "p11_opt_tokens": 35680,
-    "p11_token_compression_x": 8.97,
-    "p11_naive_vit_ms": 2400.0,
-    "p11_opt_vit_ms": 372.0,
-    "p11_vit_speedup_x": 6.45,
-    "p12_seq_total_ms": 10000.0,
-    "p12_expected_total_ms": 6643.75,
-    "p12_dag_speedup_x": 1.51
+  "diskann_sector_aligned_search": {
+    "dram_pq_gb": 64.0,
+    "node_bytes": 1792,
+    "sector_bytes": 4096,
+    "nodes_per_sector": 2,
+    "beam_width_w": 4,
+    "search_hops_s": 6,
+    "random_reads_per_query": 24,
+    "total_nvme_iops": 6000000,
+    "sustainable_qps": 210000,
+    "recall_at_10_pct": 95.4,
+    "p99_latency_ms": 2.85
   }
 }

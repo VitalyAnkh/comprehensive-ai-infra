@@ -1,134 +1,140 @@
-[
-  {
-    "figure": "ch17-1d-llm-vs-3d-spatiotemporal-dit-tokens",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch17-anyres-navit-dynamic-image-tiling",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch17-3d-causal-vae-memory-spike-and-tiling",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch17-tp-vs-ulysses-vs-ring-attention-comm",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch17-2d-usp-hybrid-ulysses-ring-topology",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch17-dbsp-dual-balanced-sequence-parallelism",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch17-distrifusion-displaced-patch-parallelism",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch17-pipefusion-step-patch-2d-pipeline",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch17-teacache-timestep-residual-reuse",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch17-sageattention3-fp4-quantized-attention",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch17-interactive-world-model-rolling-kv-30fps",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch17-epdg-four-stage-disaggregated-serving",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch17-vit-embedding-cache-vs-llm-kv-cache",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch17-audio-video-text-interleaved-batching",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch17-multimodal-dataloader-gpu-decode-nvjpeg",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch17-dit-cfg-classifier-free-guidance-parallel",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch17-video-dit-end-to-end-latency-breakdown",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch17-multimodal-world-model-infra-synthesis",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch17-transfusion-hybrid-causal-bidirectional-mask",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch17-3dgs-scaffold-guided-world-model-dit",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch17-causal-streaming-world-model-20fps-kv-rolling",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  },
-  {
-    "figure": "ch17-teacache-timestep-embedding-aware-activation-reuse",
-    "width_pt": 420.0,
-    "min_label_pt": 11.0,
-    "text_extent_warnings": []
-  }
-]
+{
+  "chapter": "ch17",
+  "figure_count": 22,
+  "all_passed": true,
+  "total_warnings": 0,
+  "figures": [
+    {
+      "figure": "17-1",
+      "file": "ch17-ppo-four-model-vs-grpo-memory-ledger.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "17-2",
+      "file": "ch17-rlvr-iteration-timeline-rollout-dominance.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "17-3",
+      "file": "ch17-verl-3d-hybrid-engine-zero-redundancy-reshard.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "17-4",
+      "file": "ch17-colocated-vs-disaggregated-rl-architecture.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "17-5",
+      "file": "ch17-long-cot-power-law-straggler-bubble.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "17-6",
+      "file": "ch17-rollpacker-tail-migration-and-cp-scaling.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "17-7",
+      "file": "ch17-seer-divided-and-conquered-speculative-rollout.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "17-8",
+      "file": "ch17-staleness-bounded-partial-rollout-pipeline.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "17-9",
+      "file": "ch17-off-policy-importance-sampling-clipping.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "17-10",
+      "file": "ch17-robustrl-role-based-fault-isolation.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "17-11",
+      "file": "ch17-distrs-disaggregated-reward-sandbox-streaming.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "17-12",
+      "file": "ch17-test-time-scaling-prm-tree-search-cow-kv.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "17-13",
+      "file": "ch17-speculative-tot-reward-barrier-bypass.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "17-14",
+      "file": "ch17-multi-turn-tool-env-rl-state-suspension.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "17-15",
+      "file": "ch17-hetrl-heterogeneous-inference-training-matching.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "17-16",
+      "file": "ch17-dapo-dynamic-sampling-zero-variance-filter.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "17-17",
+      "file": "ch17-rl-post-training-throughput-roofline.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "17-18",
+      "file": "ch17-rlvr-and-test-time-compute-closed-loop.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "17-19",
+      "file": "ch17-geo-distributed-async-rollout-harvester.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "17-20",
+      "file": "ch17-rlvr-reward-hacking-kl-divergence-breaker.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "17-21",
+      "file": "ch17-multi-turn-agentic-rlvr-trajectory-tree-forking.svg",
+      "passed": true,
+      "warnings": []
+    },
+    {
+      "figure": "17-22",
+      "file": "ch17-asynchronous-off-policy-importance-sampling-clipping.svg",
+      "passed": true,
+      "warnings": []
+    }
+  ]
+}

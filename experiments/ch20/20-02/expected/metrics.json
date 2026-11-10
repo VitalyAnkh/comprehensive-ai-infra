@@ -1,41 +1,40 @@
 {
   "experiment_id": "20-02",
-  "chaos_gameday_audit": {
-    "total_injected": 200,
-    "total_detected": 199,
-    "overall_recall_pct": 99.5,
-    "mean_mttd_sec": 2.7,
-    "mean_auto_mttr_sec": 3.85,
-    "manual_mttr_sec": 1500.0,
-    "mttr_speedup_x": 389.61
+  "three_tier_humanoid_wbc": {
+    "tier1_vlm_hz": 2.0,
+    "tier2_flow_hz": 100.0,
+    "tier3_wbc_hz": 1000.0,
+    "tier3_period_us": 1000.0,
+    "tier3_wcet_us": 800.0,
+    "tier3_margin_us": 200.0,
+    "slip_disp_100hz_mm": 1.8,
+    "slip_disp_1000hz_mm": 0.12,
+    "slip_reduction_x": 15.0
   },
-  "arrival_skew_8rank": {
-    "straggler_rank": 5,
-    "arrival_skew_ms": 2.0,
-    "healthy_observed_duration_ms": 2.4,
-    "straggler_observed_duration_ms": 0.4,
-    "healthy_wait_share_pct": 83.33,
-    "healthy_xfer_share_pct": 16.67
+  "fast_dct_action_tokenizer": {
+    "horizon_h": 50,
+    "action_dims": 14,
+    "naive_tokens": 700,
+    "retained_low_freqs": 8,
+    "fast_bpe_tokens": 80,
+    "compression_ratio_x": 8.75,
+    "token_reduction_pct": 88.57,
+    "ar_decode_naive_ms": 2450.0,
+    "ar_decode_fast_ms": 280.0,
+    "energy_retention_pct": 99.47,
+    "recon_rmse_mm": 0.2431
   },
-  "trainmover_hot_swap": {
-    "qp_remap_sec": 0.08,
-    "rdma_state_push_sec": 0.6,
-    "trainmover_total_recovery_sec": 0.68,
-    "global_restart_sec": 300.0,
-    "trainmover_speedup_x": 441.18
-  },
-  "benchmark_debiasing": {
-    "arith_speedup_a": 5.25,
-    "true_speedup_a_equal_freq": 0.9524,
-    "arith_speedup_x": 4.25,
-    "arith_speedup_y": 2.0,
-    "true_speedup_x_equal_freq": 0.8,
-    "true_speedup_y_equal_freq": 2.0,
-    "crossover_p_x_beats_y": 0.8571,
-    "aabb_bias_8us_drift": -16.0,
-    "aabb_systematic_bias_us": -24.0,
-    "abba_systematic_bias_us": 0.0,
-    "canary_p99_regression_pct": 4.8,
-    "canary_auto_rollback_triggered": true
+  "ptp_alignment_and_cbf_shield": {
+    "software_skew_ms": 27.0,
+    "ptp_interp_skew_ms": 0.018,
+    "software_pos_err_mm": 16.2,
+    "ptp_pos_err_mm": 0.011,
+    "sync_accuracy_gain_x": 1472.7,
+    "v_nom_m_s": 0.85,
+    "v_safe_at_15mm": 0.3,
+    "raw_cbf_margin": -0.55,
+    "post_cbf_margin": 0.0,
+    "safety_violations_500steps": 0,
+    "min_dist_mm": 1.2
   }
 }

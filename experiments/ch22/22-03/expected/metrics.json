@@ -1,32 +1,27 @@
 {
   "experiment_id": "22-03",
-  "avatar_lipsync_alignment_ex22_6": {
-    "vis_path_ms": 32.5,
-    "raw_steady_skew_ms": 44.0,
-    "raw_p99_skew_ms": 59.0,
-    "aligned_steady_skew_ms": 18.0,
-    "aligned_p99_skew_ms": 33.0,
-    "skew_reduction_pct": 59.09,
-    "avatar_ttfa_ms": 190.0
+  "tokamak_sub_ms_rl_control": {
+    "control_freq_hz": 4000,
+    "cycle_period_us": 250.0,
+    "hard_budget_us": 200.0,
+    "unopt_total_us": 435.0,
+    "opt_total_us": 68.5,
+    "speedup_x": 6.35,
+    "budget_util_pct": 34.25,
+    "headroom_us": 131.5,
+    "p999_latency_us": 74.0,
+    "forecast_lead_ms": 28.5,
+    "actuation_margin_ms": 16.5
   },
-  "global_edge_sfu_mesh_ex22_7": {
-    "net_direct_ms": 175.0,
-    "net_edge_ms": 98.5,
-    "net_reduction_pct": 43.71,
-    "ttfa_direct_ms": 304.0,
-    "ttfa_edge_ms": 181.5,
-    "ttfa_speedup_x": 1.67,
-    "bw_compression_x": 43.64,
-    "bw_saving_pct": 97.71
-  },
-  "exercises_22_11_and_22_12": {
-    "p11_raw_steady_skew_ms": 38.0,
-    "p11_raw_p99_skew_ms": 50.0,
-    "p11_aligned_steady_skew_ms": 16.0,
-    "p11_aligned_p99_skew_ms": 28.0,
-    "p11_avatar_ttfa_ms": 182.0,
-    "p12_ttfa_direct_ms": 319.0,
-    "p12_ttfa_edge_ms": 185.5,
-    "p12_speedup_x": 1.72
+  "single_cell_csr_sparse_atlas": {
+    "n_cells": 100000000,
+    "g_total": 20480,
+    "k_avg": 1536,
+    "dense_storage_gb": 4096.0,
+    "csr_storage_gb": 615.2,
+    "storage_compression_x": 6.66,
+    "seq_compression_x": 13.33,
+    "attn_flop_reduction_x": 177.78,
+    "e2e_training_speedup_x": 20.0
   }
 }

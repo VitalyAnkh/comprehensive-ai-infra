@@ -1,30 +1,30 @@
 #!/usr/bin/env python3
-"""Verify deterministic outputs for Experiment 24-02."""
+"""Verify Experiment 24-02."""
 from __future__ import annotations
 
 import json
+import math
 from pathlib import Path
-from run import compute_metrics, EXPECTED_PATH, RESULTS_PATH
+
+HERE = Path(__file__).resolve().parent
 
 
 def main() -> None:
-    actual = compute_metrics()
-    expected = json.loads(Path(EXPECTED_PATH).read_text())
-    results = json.loads(Path(RESULTS_PATH).read_text())
-    assert actual == expected == results, f"Mismatch:\nactual={actual}\nexpected={expected}\nresults={results}"
-    assert actual["evo2_flashfftconv_1m"]["quadratic_attn_tflops"] == 36028.8
-    assert actual["evo2_flashfftconv_1m"]["flash_fft_conv_gflops"] == 1735.17
-    assert actual["evo2_flashfftconv_1m"]["seq_mixer_flop_reduction_x"] == 20763.8
-    assert actual["sfno_2d_halo_overlap"]["halo_volume_mb"] == 5.53
-    assert actual["sfno_2d_halo_overlap"]["comm_to_comp_ratio_pct"] == 1.27
-    assert actual["sfno_2d_halo_overlap"]["exposed_halo_ms"] == 0.0
-    assert actual["grand_encyclopedia_ledger"]["total_chapters"] == 24
-    assert actual["grand_encyclopedia_ledger"]["total_chapter_figures"] == 883
-    assert actual["grand_encyclopedia_ledger"]["total_production_code_blocks"] == 166
-    assert actual["grand_encyclopedia_ledger"]["total_worked_examples"] == 192
-    assert actual["grand_encyclopedia_ledger"]["total_exercise_blocks"] == 432
-    assert actual["grand_encyclopedia_ledger"]["total_unique_exercise_ids"] == 431
-    assert actual["grand_encyclopedia_ledger"]["total_experiment_suites"] == 147
+    exp = json.loads((HERE / "expected" / "metrics.json").read_text())
+    res = json.loads((HERE / "results" / "summary.json").read_text())
+    assert exp == res, "Expected and results mismatch"
+
+    ep = res["deepep"]
+    assert ep["normal_mode_sm_count"] == 24
+    assert math.isclose(ep["normal_mode_bw_gbs"], 153.0, rel_tol=1e-6)
+    assert math.isclose(ep["low_latency_dispatch_us"], 163.0, rel_tol=1e-6)
+    assert math.isclose(ep["low_latency_combine_us"], 194.0, rel_tol=1e-6)
+    assert ep["low_latency_sm_occupied"] == 0
+
+    dp = res["dualpipe"]
+    assert dp["pp_stages"] == 16
+    assert dp["bidirectional_microbatches"] == 32
+    assert math.isclose(dp["exposed_alltoall_stall_pct"], 0.0, abs_tol=1e-9)
     print("Experiment 24-02 verified successfully.")
 
 

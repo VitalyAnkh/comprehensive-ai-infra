@@ -12,16 +12,11 @@ def main() -> None:
     expected = json.loads(Path(EXPECTED_PATH).read_text())
     results = json.loads(Path(RESULTS_PATH).read_text())
     assert actual == expected == results, f"Mismatch:\nactual={actual}\nexpected={expected}\nresults={results}"
-    assert actual["agentic_worm_40turns"]["cumulative_prefill_tokens"] == 1640000
-    assert actual["agentic_worm_40turns"]["worm_reuse_ratio_pct"] == 95.12
-    assert actual["agentic_worm_40turns"]["prefill_to_decode_ratio"] == 205.0
-    assert actual["tool_wait_phase_diagram"]["kv_size_gib"] == 9.0
-    assert actual["tool_wait_phase_diagram"]["swap_in_ms"] == 187.5
-    assert actual["tool_wait_phase_diagram"]["crossover_wait_sec"] == 2.16
-    assert actual["tool_wait_phase_diagram"]["hbm_cost_saving_at_15s_pct"] == 85.6
-    assert actual["kv_global_router_and_cachegen"]["router_ttft_speedup_x"] == 3.0
-    assert actual["kv_global_router_and_cachegen"]["cachegen_compression_x"] == 4.21
-    assert actual["kv_global_router_and_cachegen"]["cachegen_transfer_ms"] == 385.9
+    assert actual["three_tier_embedding_cache"]["total_table_tb"] == 10.0
+    assert actual["three_tier_embedding_cache"]["weighted_latency_us"] == 2.19
+    assert actual["three_tier_embedding_cache"]["pure_ssd_speedup_x"] == 29.7
+    assert actual["torchrec_all_to_all_overlap"]["balanced_a2a_ms"] == 1.53
+    assert actual["torchrec_all_to_all_overlap"]["exposed_balanced_comm_ms"] == 0.0
     print("Experiment 21-01 verified successfully.")
 
 

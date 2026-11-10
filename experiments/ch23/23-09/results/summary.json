@@ -1,0 +1,17 @@
+{
+  "experiment_id": "23-09",
+  "bitnet_b158_and_tmac": {
+    "shannon_entropy_bits": 1.585,
+    "trits_per_byte": 5,
+    "states_used": 243,
+    "packed_bits_per_weight": 1.6,
+    "coding_efficiency_pct": 99.06,
+    "model_70b_fp16_gb": 140.0,
+    "model_70b_bitnet_gb": 14.0,
+    "compression_vs_fp16_x": 10.0,
+    "tmac_group_size_g": 4,
+    "tmac_lut_entries": 81,
+    "tmac_speedup_x": 6.4,
+    "dynamic_mul_power_saving_pct": 88.5
+  }
+}

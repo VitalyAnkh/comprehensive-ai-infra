@@ -1,17 +1,15 @@
-# 实验 15-03：硅内三维分水微通道直冷（Direct-to-Silicon Microfluidics）与 1.2 GW 园区孤岛微网（SMR + 燃机 + 构网型 BESS）动态调频仿真
+# 实验 15-03：Oobleck 预实例化流水线无重启容错重配置与推理服务泊松突发流量 Goodput 评测器
 
-本实验复现第 15 章 15.6.4 节新增专题（练习 15-17、练习 15-18）的热工水力方程与园区孤岛微网转子摇摆方程：
+本实验复算并校验第 15 章 20.5.3 节算例 20-7、练习 20-13 与实验 20-14 的全部锁定工程账本：
 
-1. **硅内三维分水微通道直冷（2,500 W 芯片，$q'' = 277.78\ \mathrm{W/cm^2}$）**：
-   - 对比传统外贴铜冷板（$R_{\mathrm{th, cp}} = 0.028\ \mathrm{K/W}$，$T_{\mathrm{in}} = 45.0^\circ\mathrm{C}$ 下结温达 $115.0^\circ\mathrm{C}$）与硅内三维分水微通道直冷（$R_{\mathrm{cond, Si}} = 0.0018\ \mathrm{K/W}$、$R_{\mathrm{conv, micro}} = 0.0042\ \mathrm{K/W}$、$R_{\mathrm{cal}} = 0.0040\ \mathrm{K/W}$，总热阻 $0.0100\ \mathrm{K/W}$，降低 $2.80\times$）；
-   - 验证在 ASHRAE W45（$45.0^\circ\mathrm{C}$）下结温保持 $70.0^\circ\mathrm{C} \le 85.0^\circ\mathrm{C}$（最高允许进水温度 $60.0^\circ\mathrm{C}$），且在 $\Delta P = 38.4\ \mathrm{kPa}$、$\dot{V} = 1.80\ \mathrm{L/min}$ 下水力泵功仅为 $1.65\ \mathrm{W}$（占芯片热功耗 $0.0658\%$）。
-2. **1.2 GW 园区孤岛微网（300 MW SMR + 600 MW 燃机 + 400 MW 构网型 BESS）调频整定**：
-   - 在 $\Delta P_{\mathrm{step}} = 450.0\ \mathrm{MW}$ 同步训练阶跃卸载下，无虚拟惯量时物理惯量 $H_{\mathrm{phys}} = 3.00\ \mathrm{s}$、初始 $\mathrm{RoCoF}_0 = 3.750\ \mathrm{Hz/s}$；
-   - 整定 $400\ \mathrm{MW}$ 构网型 BESS 虚拟同步惯量 $H_{\mathrm{BESS}} = 13.50\ \mathrm{s}$ 后，系统等效惯量升至 $7.50\ \mathrm{s}$，初始 $\mathrm{RoCoF}_0$ 压至 $1.500\ \mathrm{Hz/s}$，暂态极值频偏从 $2.874\ \mathrm{Hz}$ 压至 $0.739\ \mathrm{Hz}$。
-3. **8 子集群微批次错峰与电热联合 DVFS 闭环控制**：
-   - 将瞬态阶跃负载削减至 $144.0\ \mathrm{MW}$，芯片结温控制在 $66.01^\circ\mathrm{C}$，端到端训练步时间开销仅为 $1.43\%$。
+1. **Oobleck / Parachute 预实例化异构流水线模板无重启容错重配置（算例 20-7 & 练习 20-13）**：
+   - $P = 32$ 条 8 阶段数据并行流水线（$256$ 台节点）突发 $F = 2$ 台节点掉线且无热备顶替时：传统全局重启耗时 $300.00\ \mathrm{s}$，而 `Oobleck` 预实例化模板重配置仅需 $0.25 + 0.85 + 0.35 = \mathbf{1.45\ \mathrm{s}}$（恢复提速 **$206.90\times$**），30 条 $\mathcal{T}_8$ + 2 条 $\mathcal{T}_7$（效率 $80\%$）保留 **$98.75\%$** 稳态吞吐（`Parachute` 摘除 2 条管线保留 **$93.75\%$**）；
+   - 练习 20-13（$64$ 条管线突发 $F = 4$ 台节点掉线，$\mathcal{T}_7$ 效率 $82\%$）：`Parachute` 保留 **$93.75\%$** 吞吐，`Oobleck` 保留 **$98.88\%$** 吞吐，每天净多挽回 **$629.76$** 个等效健康节点小时（$5,038.08$ GPU 小时/天）。
+2. **推理压测均匀到达（$C_a=C_s=0$）vs. 泊松突发长尾流量（$C_a=1.0, C_s=1.2$）的 Goodput 崩塌（算例 20-7 & 实验 20-14）**：
+   - 在 $\rho = 0.85, T_s = 120.0\ \mathrm{ms}, T_{\mathrm{prefill}} = 80.0\ \mathrm{ms}, \mathrm{SLO}_{\mathrm{TTFT}} = 500.0\ \mathrm{ms}$ 下：均匀定速压测排队 $0.00\ \mathrm{ms}$、$\mathrm{TTFT} = 80.00\ \mathrm{ms}$、虚报 $100\%$ 达标（Goodput $= 7.08\ \mathrm{req/s}$）；真实泊松长尾流量下排队飙升至 **$829.60\ \mathrm{ms}$**、平均 $\mathrm{TTFT} = \mathbf{909.60\ \mathrm{ms}}$（膨胀 **$11.37\times$**），SLO 达标率跌至 **$48.77\%$**，真实 Goodput 仅为 **$3.45\ \mathrm{req/s}$**（缩水 **$51.27\%$**），满足平均 $\mathrm{TTFT} \le 300.0\ \mathrm{ms}$ 的最大安全利用率为 **$60.04\%$**；
+   - 实验 20-14（$\rho = 0.80, T_s = 100.0\ \mathrm{ms}, T_{\mathrm{prefill}} = 60.0\ \mathrm{ms}, C_a = C_s = 1.5$）：排队等待时间从 $0.00\ \mathrm{ms}$ 飙升至 **$900.00\ \mathrm{ms}$**，平均 $\mathrm{TTFT}$ 从 $60.00\ \mathrm{ms}$ 膨胀至 **$960.00\ \mathrm{ms}$**（膨胀 **$16.00\times$**）。
 
-## 运行方式
+## 运行与验证
 
 ```bash
 python3 experiments/ch15/15-03/run.py

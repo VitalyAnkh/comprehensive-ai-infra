@@ -1,101 +1,110 @@
 {
-  "chapter": 20,
-  "title": "十万卡集群可靠性工程、静默数据损坏（SDC）防御与基准评测科学",
-  "cluster_reliability_100k": {
-    "source": "Meta Llama 3 405B (16,384 H100, 54d) & MLSys '26 #33",
-    "llama3_16k_gpus": 16384,
-    "llama3_days": 54,
-    "llama3_interruptions": 419,
-    "hardware_failure_share_pct": 78.0,
-    "mtbf_16k_hours": 3.09,
-    "mtbf_100k_minutes": 30.41,
-    "young_daly_ettr": {
-      "mtbf_s": 1800.0,
-      "traditional_disk_ckpt_s": 180.0,
-      "traditional_restart_rec_s": 300.0,
-      "opt_tau_disk_s": 805.0,
-      "ettr_disk_pct": 63.22,
-      "in_memory_ckpt_s": 5.0,
-      "trainmover_rec_s": 5.0,
-      "opt_tau_fast_s": 134.16,
-      "ettr_fast_pct": 92.34
+  "chapter": 19,
+  "title": "具身智能（VLA）、实时控制与大规模物理仿真底座",
+  "embodied_latency_and_dual_loop": {
+    "source": "experiments/ch19/19-01/run.py & VLALagBench",
+    "arm_velocity_m_s": 0.50,
+    "contact_tolerance_mm": 5.0,
+    "max_safe_latency_ms": 10.0,
+    "blind_drift_200ms_mm": 100.0,
+    "dynamic_grasp_success_curve": {
+      "10ms": 0.88,
+      "50ms": 0.78,
+      "100ms": 0.56,
+      "150ms": 0.34,
+      "200ms": 0.18
     },
-    "hot_spare_pool_poisson": {
-      "failure_rate_per_hour": 2.0,
-      "mttr_repair_hours": 12.0,
-      "mean_in_repair_nodes": 24.0,
-      "min_spares_for_99_9_pct": 40
+    "system2_vlm": {
+      "params_b": 7.0,
+      "freq_hz": 2.0,
+      "period_ms": 500.0
+    },
+    "system1_flow_matching": {
+      "params_m": 150.0,
+      "freq_hz": 100.0,
+      "period_ms": 10.0,
+      "ode_steps": 6,
+      "wcet_ms": 4.2
     }
   },
-  "sdc_defense_and_opguard": {
-    "source": "Safeguarding LLM Training at Scale (OSDI '26 #71) & OpGuard (OSDI '26 #72)",
-    "production_validation_gpu_hours": 35000000,
-    "abft_gemm_4096_overhead_pct": 0.0732,
-    "microbatch_rerun_ms": 50.0,
-    "checkpoint_rollback_hours": 2.0
-  },
-  "straggler_and_benchmark_science": {
-    "source": "case-studies/collective-paths-and-diagnosis.md & case-studies/optimization-evaluation-and-deployment.md & Blink (OSDI '26 #23)",
-    "collective_arrival_skew_ms": [0.0, 0.0, 0.0, 2.0],
-    "exchange_window_ms": 0.4,
-    "double_bw_savings_ms": 0.2,
-    "skew_fix_savings_ms": 2.0,
-    "flashinfer_bench_paradox": {
-      "baseline_us": [100.0, 100.0],
-      "candidate_a_us": [10.0, 200.0],
-      "candidate_b_us": [50.0, 50.0],
-      "cand_a_mean_speedup": 5.25,
-      "cand_a_equal_freq_us": 210.0,
-      "cand_b_equal_freq_us": 100.0,
-      "crossover_p": 0.7895
+  "gpu_native_physics_simulation_4096": {
+    "source": "experiments/ch19/19-01/run.py (Isaac Lab / MuJoCo Warp / Genesis)",
+    "num_envs": 4096,
+    "pcie_roundtrip_bandwidth_gb_s": 43.39,
+    "hbm_budget_mib": {
+      "physics_state_and_contacts": 2048.0,
+      "bvh_and_scene_assets": 4096.0,
+      "camera_framebuffers": 3600.0,
+      "policy_and_rollout_buffer": 16384.0,
+      "total_mib": 26128.0,
+      "total_gib": 25.52
     },
-    "abba_drift_cancellation": {
-      "drift_us": [0.0, 10.0, 20.0, 30.0],
-      "aabb_means_us": [105.0, 115.0],
-      "abba_means_us": [115.0, 105.0]
+    "sm_partition_132": {
+      "physics_sms": 44,
+      "renderer_sms": 48,
+      "policy_sms": 40
     }
   },
-  "chaos_gameday_and_frontier_bridge": {
-    "source": "experiments/ch20/20-02/run.py (100K-GPU Chaos Fault Injection & Chapters 21-24 Bridge)",
-    "total_injected_faults": 200,
-    "detected_faults": 199,
-    "overall_recall_pct": 99.5,
-    "mean_mttd_sec": 2.7,
-    "mean_auto_mttr_sec": 3.85,
-    "manual_mttr_sec": 1500.0,
-    "mttr_speedup_x": 389.61,
-    "arrival_skew_8rank_case": {
-      "healthy_enqueue_ms": 10.0,
-      "straggler_rank": 5,
-      "straggler_enqueue_ms": 12.0,
-      "arrival_skew_ms": 2.0,
-      "ring_transfer_ms": 0.4,
-      "observed_healthy_duration_ms": 2.4,
-      "wait_share_pct": 83.33
+  "edge_shadow_mode_and_sim2real": {
+    "source": "experiments/ch19/19-01/run.py",
+    "raw_sensor_rate_mb_s": 180.0,
+    "raw_daily_tb_per_robot": 2.592,
+    "trigger_rate_pct": 0.5,
+    "triage_daily_gb_per_robot": 12.96,
+    "bandwidth_reduction_x": 200.0
+  },
+  "three_tier_wbc_and_fast_tokenizer": {
+    "source": "experiments/ch19/19-02/run.py (Visuotactile WBC + Physical Intelligence FAST DCT Tokenizer)",
+    "tier1_vlm_hz": 2.0,
+    "tier2_flow_hz": 100.0,
+    "tier3_wbc_tactile_hz": 1000.0,
+    "tier3_period_us": 1000.0,
+    "tier3_wcet_breakdown_us": {
+      "tactile_and_ethercat_read_us": 180.0,
+      "slip_margin_reflex_us": 40.0,
+      "wbc_qp_28dof_solve_us": 420.0,
+      "ethercat_pdo_tx_us": 160.0,
+      "total_wcet_us": 800.0,
+      "safety_margin_us": 200.0
     },
-    "four_new_frontiers_ch21_ch24": {
-      "ch21_agentic": "95% WORM KV + 12 ms MicroVM CoW + 76.92 s Telemetry Drain",
-      "ch22_speech": "<200 ms Full-Duplex S2S + 12.5 Hz Mimi RVQ + Cursor KV Rollback",
-      "ch23_data_factory": "0.5% MinHash/Classifier/Influence Funnel + Mid-Training Mix",
-      "ch24_ai4science": "O(N^3) Triangle Attention + 3D FFT/Equivariance + 24-Ch Synthesis"
+    "slip_displacement_100hz_mm": 1.80,
+    "slip_displacement_1000hz_mm": 0.12,
+    "slip_reduction_x": 15.0,
+    "fast_dct_action_tokenizer": {
+      "chunk_horizon_steps": 50,
+      "action_dims": 14,
+      "naive_time_domain_tokens": 700,
+      "dct_retained_low_freqs": 8,
+      "fast_bpe_tokens": 80,
+      "compression_ratio_x": 8.75,
+      "token_reduction_pct": 88.57,
+      "energy_retention_pct": 99.47,
+      "ar_decode_naive_ms": 2450.0,
+      "ar_decode_fast_ms": 280.0
     }
   },
-  "oobleck_and_bursty_goodput": {
-    "source": "experiments/ch20/20-03/run.py (Oobleck SOSP '23 Pipeline Templates & Kingman Bursty Goodput)",
-    "oobleck_reconfig_sec": 1.45,
-    "full_restart_sec": 300.0,
-    "reconfig_speedup_x": 206.9,
-    "oobleck_retained_throughput_pct": 98.75,
-    "parachute_retained_throughput_pct": 93.75,
-    "rho": 0.85,
-    "ttft_uniform_ms": 80.0,
-    "goodput_uniform_req_s": 7.08,
-    "wq_bursty_ms": 829.6,
-    "ttft_bursty_ms": 909.6,
-    "ttft_inflation_x": 11.37,
-    "slo_attainment_bursty_pct": 48.77,
-    "goodput_bursty_req_s": 3.45,
-    "goodput_drop_pct": 51.27,
-    "max_safe_utilization_pct": 60.04
+  "closed_loop_3dgs_and_dual_thor_watchdog": {
+    "source": "experiments/ch19/19-03/run.py (StreetGaussians / NeuRAD 3DGS + Dual Drive Thor ASIL-D Watchdog)",
+    "total_gaussians": 2500000,
+    "cull_ratio": 0.72,
+    "active_gaussians": 700000,
+    "naive_6cam_1lidar_ms": 75.0,
+    "naive_fps": 13.33,
+    "batched_6cam_ms": 11.4,
+    "rtcore_1lidar_ms": 5.4,
+    "opt_total_ms": 16.8,
+    "opt_fps": 59.52,
+    "render_speedup_x": 4.46,
+    "watchdog_stages_ms": {
+      "detect_ms": 5.0,
+      "switch_ms": 1.5,
+      "mpc_ms": 4.0,
+      "act_ms": 2.0,
+      "total_takeover_ms": 12.5,
+      "asil_d_ftti_ms": 15.0
+    },
+    "watchdog_lateral_drift_mm": 3.02,
+    "restart_250ms_lateral_drift_mm": 351.25,
+    "drift_reduction_x": 116.31
   }
 }

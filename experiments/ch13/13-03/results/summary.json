@@ -1,0 +1,25 @@
+{
+  "experiment_id": "13-03",
+  "rubric_distillation": {
+    "direct_70b_gpu_hours": 2170138.9,
+    "seed_labeling_gpu_hours": 217.0,
+    "student_scoring_gpu_hours": 38580.2,
+    "distilled_total_gpu_hours": 38877.2,
+    "distillation_compute_leverage_x": 55.82
+  },
+  "synthetic_data_factory": {
+    "online_batch_size": 32,
+    "online_tok_s_gpu": 1920.0,
+    "online_mfu_pct": 11.2,
+    "online_usd_per_1m_tokens": 0.579,
+    "offline_batch_size": 2048,
+    "offline_tok_s_gpu": 13824.0,
+    "offline_mfu_pct": 58.4,
+    "throughput_gain_x": 7.2,
+    "offline_raw_usd_per_1m_tokens": 0.044,
+    "raw_cost_reduction_x": 13.16,
+    "raw_sandbox_pass_yield_pct": 31.25,
+    "effective_verified_yield_pct": 58.75,
+    "verified_usd_per_1m_tokens": 0.075
+  }
+}

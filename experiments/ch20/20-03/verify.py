@@ -13,29 +13,29 @@ def main() -> None:
     results = json.loads(Path(RESULTS_PATH).read_text())
     assert actual == expected == results, f"Mismatch:\nactual={actual}\nexpected={expected}\nresults={results}"
 
-    oob = actual["oobleck_elastic_pipeline_failover"]
-    assert oob["oobleck_reconfig_sec"] == 1.45
-    assert oob["full_restart_sec"] == 300.00
-    assert oob["reconfig_speedup_x"] == 206.90
-    assert oob["oobleck_retained_throughput_pct"] == 98.75
-    assert oob["parachute_retained_throughput_pct"] == 93.75
-    assert oob["ex20_13_parachute_pct"] == 93.75
-    assert oob["ex20_13_oobleck_pct"] == 98.88
-    assert oob["ex20_13_saved_node_hours_per_day"] == 629.76
+    sim = actual["closed_loop_3dgs_sensor_sim"]
+    assert sim["active_gaussians"] == 700_000
+    assert sim["naive_total_ms"] == 75.00
+    assert sim["naive_fps"] == 13.33
+    assert sim["opt_total_ms"] == 16.80
+    assert sim["opt_fps"] == 59.52
+    assert sim["render_speedup_x"] == 4.46
+    assert sim["meets_30hz_hil_sla"] is True
+    assert sim["ex19_13_8cam_2lidar_naive_ms"] == 104.00
+    assert sim["ex19_13_8cam_2lidar_naive_fps"] == 9.62
+    assert sim["ex19_13_8cam_2lidar_opt_ms"] == 22.00
+    assert sim["ex19_13_8cam_2lidar_opt_fps"] == 45.45
+    assert sim["ex19_13_speedup_x"] == 4.73
 
-    gp = actual["bursty_goodput_vs_uniform"]
-    assert gp["ttft_uniform_ms"] == 80.00
-    assert gp["goodput_uniform_req_s"] == 7.08
-    assert gp["wq_bursty_ms"] == 829.60
-    assert gp["ttft_bursty_ms"] == 909.60
-    assert gp["ttft_inflation_x"] == 11.37
-    assert gp["slo_attainment_bursty_pct"] == 48.77
-    assert gp["goodput_bursty_req_s"] == 3.45
-    assert gp["goodput_drop_pct"] == 51.27
-    assert gp["max_safe_utilization_pct"] == 60.04
-    assert gp["ex20_14_wq_bursty_ms"] == 900.00
-    assert gp["ex20_14_ttft_bursty_ms"] == 960.00
-    assert gp["ex20_14_inflation_x"] == 16.00
+    wd = actual["dual_thor_safety_watchdog"]
+    assert wd["takeover_latency_ms"] == 12.50
+    assert wd["meets_asil_d_ftti"] is True
+    assert wd["watchdog_lateral_drift_mm"] == 3.02
+    assert wd["restart_250ms_lateral_drift_mm"] == 351.25
+    assert wd["drift_reduction_x"] == 116.31
+    assert wd["ex19_14_watchdog_drift_mm"] == 2.50
+    assert wd["ex19_14_restart_200ms_drift_mm"] == 190.00
+    assert wd["ex19_14_reduction_x"] == 76.00
     print("Experiment 20-03 verified successfully.")
 
 

@@ -12,15 +12,19 @@ def main() -> None:
     expected = json.loads(Path(EXPECTED_PATH).read_text())
     results = json.loads(Path(RESULTS_PATH).read_text())
     assert actual == expected == results, f"Mismatch:\nactual={actual}\nexpected={expected}\nresults={results}"
-    assert actual["barge_in_kv_rollback"]["unplayed_lookahead_frames"] == 11
-    assert actual["barge_in_kv_rollback"]["unplayed_lookahead_ms"] == 880.0
-    assert actual["barge_in_kv_rollback"]["rolled_back_kv_tokens"] == 187
-    assert actual["barge_in_kv_rollback"]["resume_frame_index"] == 55
-    assert actual["interleaved_video_audio_pacing"]["naive_peak_frame_ms"] == 83.5
-    assert actual["interleaved_video_audio_pacing"]["deadline_violated_naive"] is True
-    assert actual["interleaved_video_audio_pacing"]["interleaved_peak_frame_ms"] == 20.5
-    assert actual["one_hour_acoustic_eviction"]["audio_kv_saving_pct"] == 82.12
-    assert actual["one_hour_acoustic_eviction"]["multimodal_kv_saving_pct"] == 91.74
+    assert actual["evo2_flashfftconv_1m"]["quadratic_attn_tflops"] == 36028.8
+    assert actual["evo2_flashfftconv_1m"]["flash_fft_conv_gflops"] == 1735.17
+    assert actual["evo2_flashfftconv_1m"]["seq_mixer_flop_reduction_x"] == 20763.8
+    assert actual["sfno_2d_halo_overlap"]["halo_volume_mb"] == 5.53
+    assert actual["sfno_2d_halo_overlap"]["comm_to_comp_ratio_pct"] == 1.27
+    assert actual["sfno_2d_halo_overlap"]["exposed_halo_ms"] == 0.0
+    assert actual["grand_encyclopedia_ledger"]["total_chapters"] == 24
+    assert actual["grand_encyclopedia_ledger"]["total_chapter_figures"] == 883
+    assert actual["grand_encyclopedia_ledger"]["total_production_code_blocks"] == 166
+    assert actual["grand_encyclopedia_ledger"]["total_worked_examples"] == 192
+    assert actual["grand_encyclopedia_ledger"]["total_exercise_blocks"] == 432
+    assert actual["grand_encyclopedia_ledger"]["total_unique_exercise_ids"] == 431
+    assert actual["grand_encyclopedia_ledger"]["total_experiment_suites"] == 147
     print("Experiment 22-02 verified successfully.")
 
 
