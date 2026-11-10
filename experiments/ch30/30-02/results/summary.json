@@ -1,0 +1,21 @@
+{
+  "experiment_id": "30-02",
+  "per_kernel_dvfs": {
+    "freq_downclock_pct": 18.0,
+    "perf_loss_pct": 0.6,
+    "dynamic_power_saving_pct": 26.5
+  },
+  "autonomous_aiops_rca": {
+    "cluster_gpus": 32768,
+    "manual_mttr_hours": 4.2,
+    "auto_mttr_seconds": 42.0,
+    "mttr_reduction_x": 360.0,
+    "manual_ettr_pct": 88.4,
+    "auto_ettr_pct": 97.8,
+    "six_month_saved_usd_millions": 13.5
+  },
+  "digital_twin_cosim": {
+    "oversubscription_ratio": 2.0,
+    "prevented_moe_slowdown_pct": 21.4
+  }
+}

@@ -1316,6 +1316,29 @@ if __name__ == "__main__":
 | **流水线重叠时间下界** | $T_{\mathrm{lower}} = \max(F/\Pi,\, R/\beta)$（完美重叠）对比 $F/\Pi + R/\beta$（完全串行） | $\max(\cdot)$ 下界要求数据分块搬移与计算在双缓冲流水线上充分重叠且忽略首尾填充气泡；当数据块极小或存在严格串行屏障时，耗时退化为各项之和加启动延迟 $\alpha$ | H100 整卡 $80\ \mathrm{GB}$ 按 $3.35\ \mathrm{TB/s}$ 扫描一遍需 $23.88\ \mathrm{ms}$ |
 | **批次大小 $B$ 与参数单位 `B`** | 公式中斜体 $B$ 表征并发请求数（batch size），模型名中正体 `B` 表征 $10^9$（Billion）参数 | 拐点公式 $B_* = b_W \Pi / (2\beta)$ 仅考虑共享权重读取与线性矩阵运算，未计入随 $B$ 线性累加的 KV 缓存容量与读取量 $B R_{\mathrm{state},1}$；实际可达并发数受显存剩余容量硬约束 | H100 上 1 字节权重转折点 $B_* \approx 148$ |
 
+下面的零依赖核对脚本将表 1-10 与表 1-11 的单位换算及单步时间下界封装为自动化断言，供读者在纸笔推演后快速自检：
+
+```python
+def verify_back_of_envelope_unit_invariants() -> dict:
+    """Verify decimal/binary unit conversions and Qwen3-8B Roofline lower bounds."""
+    gib_to_gb = (2 ** 30) / 1e9
+    kv_2048_gb = (2048 * 144 * 1024) / 1e9
+    prefill_lower_ms = (29.69 / 503.8) * 1000.0
+    decode_lower_ms = ((15.14 + 0.302) / 1792.0) * 1000.0
+    assert round(gib_to_gb, 4) == 1.0737
+    assert round(kv_2048_gb, 3) == 0.302
+    assert round(prefill_lower_ms, 1) == 58.9
+    assert round(decode_lower_ms, 2) == 8.62
+    return {
+        "gib_to_gb": round(gib_to_gb, 4),
+        "kv_2048_gb": round(kv_2048_gb, 3),
+        "prefill_lower_ms": round(prefill_lower_ms, 1),
+        "decode_lower_ms": round(decode_lower_ms, 2),
+    }
+
+assert verify_back_of_envelope_unit_invariants()["decode_lower_ms"] == 8.62
+```
+
 ## 常见误区
 
 **误区一：芯片的峰值算力翻倍，模型推理速度就会跟着翻倍。** 看到算力指标翻倍前，务必先检查当前任务究竟受限于计算还是受限于访存。正如例题 1-1 所算的那样，单请求解码时读取权重的时间下界是矩阵计算下界的 148 倍，此时哪怕把矩阵峰值算力提升十倍，单步耗时下界也几乎不会缩短；如果优化的只是复杂端到端流程中的一个局部环节，还必须用 Amdahl 定律核算整体加速比的理论上限。

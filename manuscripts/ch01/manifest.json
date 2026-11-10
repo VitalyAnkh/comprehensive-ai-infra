@@ -4,13 +4,13 @@
   "matplotlib": "3.11.2",
   "chapter": {
     "file": "manuscripts/01-初识 AI Infra.md",
-    "sha256": "51a19a42810bbd694498a6c4a820a7810febc9c02f486db8cbccb48ccaf4a767"
+    "sha256": "94c8e805f6dbed04791ead7a45270d2546b2511650999688385db1384831acc5"
   },
   "outputs": [
     {
       "path": "manuscripts/ch01/figure-1-1-panorama.svg",
       "bytes": 250171,
-      "sha256": "74621bed11ee118a2b41c76e469005cd9b4325061a632e2622a8643d6965ee21"
+      "sha256": "d196c9880d071c20f330ba490b5ebd45dbf0733b4c19024759338ad3c7199a9d"
     },
     {
       "path": "manuscripts/ch01/figure-1-1-panorama.png",
@@ -20,7 +20,7 @@
     {
       "path": "manuscripts/ch01/figure-1-2-request.svg",
       "bytes": 152690,
-      "sha256": "b3f00c29617823d74d05c6be8bdc3d53e5490728e7da6f813d01467228087aec"
+      "sha256": "a12c3900615a9d9b644ce3558a8c4d112f50b65b3684ebedbf5d28bcbc2533a5"
     },
     {
       "path": "manuscripts/ch01/figure-1-2-request.png",
@@ -30,7 +30,7 @@
     {
       "path": "manuscripts/ch01/figure-1-3-datacenter.svg",
       "bytes": 165755,
-      "sha256": "843fe1c3d34ff84895cd5aeeb65d242a01341bbd651fb765dec583b5544c4b61"
+      "sha256": "7fb4b63c2b9b899b930de78b4f52cb81af62bf7262f9eb92fc8427d6380078b9"
     },
     {
       "path": "manuscripts/ch01/figure-1-3-datacenter.png",
@@ -40,7 +40,7 @@
     {
       "path": "manuscripts/ch01/figure-1-4-numbers.svg",
       "bytes": 69634,
-      "sha256": "746bf7cf4cf58edb493231940c0c484aed7060651f86a0bd2d87788f05f28f42"
+      "sha256": "fe2b0a028ec86b440dcf3f1ea2456214fe00767b78ce25ce37b6c9928aac56b4"
     },
     {
       "path": "manuscripts/ch01/figure-1-4-numbers.png",
@@ -50,7 +50,7 @@
     {
       "path": "manuscripts/ch01/figure-1-5-budget.svg",
       "bytes": 60416,
-      "sha256": "ed74b9825aa7a2ac9e22d73abbf12fb31373ca9ae124849640dbfe841b1c2ba4"
+      "sha256": "27d5b42c97324cfce2b47fa3be3ebe500a29456cb5b2c5ca989ac52758ee9b93"
     },
     {
       "path": "manuscripts/ch01/figure-1-5-budget.png",
@@ -60,7 +60,7 @@
     {
       "path": "manuscripts/ch01/figure-1-capacity-path.svg",
       "bytes": 46388,
-      "sha256": "8ad977bdaaf98f9a74b8e7261d7dc1f0497a58cfe95f6de6adb8dabbbf17e213"
+      "sha256": "457ef6c82ecc5a52f35f5d155d78c35c27c9c0dfc59e5349a414870fe247dd5a"
     },
     {
       "path": "manuscripts/ch01/figure-1-capacity-path.png",
@@ -70,7 +70,7 @@
     {
       "path": "manuscripts/ch01/figure-1-batch-transition.svg",
       "bytes": 65033,
-      "sha256": "e03ea9fcfcc6c73a461054631f00f2ab5e8632a69dc30dc1ce2aedb7cabf1054"
+      "sha256": "f0fffa7b1f6539375fd970bebd245fbad649fc0e2704b49ac18f1ae8e8b46156"
     },
     {
       "path": "manuscripts/ch01/figure-1-batch-transition.png",
@@ -80,17 +80,17 @@
     {
       "path": "manuscripts/ch01/figure-1-1-panorama.pdf",
       "bytes": 48604,
-      "sha256": "5cf84ded8d24ee4f5d5428932acf029de6b07ae48e05351c926210e9867178b1"
+      "sha256": "7067f9881bb69c7863bb19114b3bbbce2264902e3937807f7104455f1b2a3e35"
     },
     {
       "path": "manuscripts/ch01/figure-1-2-request.pdf",
       "bytes": 35616,
-      "sha256": "6f29ba2c655bf690785b07cec3a38f01817ed4c881a425bdbf19c7b566850f08"
+      "sha256": "ada183a37257d9861eadc23d33152ab345543ea200a905bd8fbfbc780c505fd4"
     },
     {
       "path": "manuscripts/ch01/figure-1-weight-lifetime.svg",
       "bytes": 136021,
-      "sha256": "af3e448fed3e937cd0b1cdb5dd30c1170bfff3d86835e44cd567b9263db721c6"
+      "sha256": "5bb6a71ee02786d6961bd36dfd015714d6d8f1f8519cbde6a871fa3923ac6980"
     },
     {
       "path": "manuscripts/ch01/figure-1-weight-lifetime.png",
@@ -100,22 +100,22 @@
     {
       "path": "manuscripts/ch01/figure-1-weight-lifetime.pdf",
       "bytes": 38373,
-      "sha256": "ae4b65d4a45d3d03367423cd60ca0e9903da36453dfc137de46bf90f3719836b"
+      "sha256": "f5f92f1198aceabaabf3ec0c04900fe4a4bef7bfa0c9fa990fcc32c813b70f8b"
     },
     {
       "path": "manuscripts/ch01/figure-1-3-datacenter.pdf",
       "bytes": 37532,
-      "sha256": "1640e42e262d0af4c61d9afd2b00f52b4c84e73940a4285268c682dd0dd810d6"
+      "sha256": "62f5ce2b6451150325012922cbdcf169553b74fcee7e72a77d871aee861a0dda"
     },
     {
       "path": "manuscripts/ch01/figure-1-4-numbers.pdf",
       "bytes": 21552,
-      "sha256": "85a94bb4cc08b5683320882a4546cb2766f839b10263c815feb5110dff6e3455"
+      "sha256": "eb3e1f68b90653d3c36b6711c0aeb9c6d2e6799229a4c8a297747cb512047a45"
     },
     {
       "path": "manuscripts/ch01/figure-1-amdahl-coding.svg",
       "bytes": 80067,
-      "sha256": "869a7867a2b73c346d7fd15d90783a44d8cee2390d3416118c7e46c2fbe4cf81"
+      "sha256": "333c138a9edef1008160385e3155fa4085b2f25aeedf99b6b4f39a5a3b31abdb"
     },
     {
       "path": "manuscripts/ch01/figure-1-amdahl-coding.png",
@@ -125,17 +125,17 @@
     {
       "path": "manuscripts/ch01/figure-1-amdahl-coding.pdf",
       "bytes": 36239,
-      "sha256": "0e41ae670db17d73189238b9cb5bd07c3dfb6e27fe678fa75275fe082f6d1bff"
+      "sha256": "711fcad7e90c2b4f7cc6f693982f67f375e77d0fcb05cb2e2a673fabcf1ad002"
     },
     {
       "path": "manuscripts/ch01/figure-1-capacity-path.pdf",
       "bytes": 18218,
-      "sha256": "1c219c5e20d1c45767bf69092c2a08ae837dd221f287409f23fd3962c66071a0"
+      "sha256": "265d93e0ef799f35f2d7c9fd6b7dde08e38b8598e04773e24da0c4a1c921a84c"
     },
     {
       "path": "manuscripts/ch01/figure-1-read-path.svg",
       "bytes": 80032,
-      "sha256": "b38a5f5b676399dcc012c729bc6012a0901b206f5a86fbc4ca16fa2a1913ad81"
+      "sha256": "ce4e13334a1e08cb7f19eab312ddc7e1974d59a12dae066c76c06e1b44289555"
     },
     {
       "path": "manuscripts/ch01/figure-1-read-path.png",
@@ -145,17 +145,17 @@
     {
       "path": "manuscripts/ch01/figure-1-read-path.pdf",
       "bytes": 24426,
-      "sha256": "9de5d47a9dc0ea840cecc9ad215c485207abf34a787dda2bc0ad1f6a25c12cbe"
+      "sha256": "826f8cfba94d4e18b6406207abd7dd262e5ab06d4fa8bab1f919c178976d7cdd"
     },
     {
       "path": "manuscripts/ch01/figure-1-5-budget.pdf",
       "bytes": 17741,
-      "sha256": "bf4504268069eb1c7465d4cfee968723b91761b680ec8c87f950a8db5123824e"
+      "sha256": "c9108dbd5b0154a26a7927b350bbe4ce76ebd251f6e6edbb88062f8163ea0cb0"
     },
     {
       "path": "manuscripts/ch01/figure-1-batch-reuse.svg",
       "bytes": 98879,
-      "sha256": "8bd6074ed0afe254854df1e1e211acce580b58acd7b3b00e23994b589bc7e367"
+      "sha256": "2398b171150951069fedb4f72954a050ca8027024a82bab9a8f9fd2334495e0d"
     },
     {
       "path": "manuscripts/ch01/figure-1-batch-reuse.png",
@@ -165,17 +165,17 @@
     {
       "path": "manuscripts/ch01/figure-1-batch-reuse.pdf",
       "bytes": 27287,
-      "sha256": "3dd481c8e23182af5685a14b5ecf98b1c68d31a1b5851cd3b8f0c52c2640dbbf"
+      "sha256": "d1d41f5868f503a75d564925394c5f484eafb27dd741f0c8b21bb6320b62900f"
     },
     {
       "path": "manuscripts/ch01/figure-1-batch-transition.pdf",
       "bytes": 31778,
-      "sha256": "75ceeb3a55e73d575b669bd8cdae4820d3bfdf4c159a9abad4ba95c55eb8968d"
+      "sha256": "abd518a67b307da6e436e7106a8ff0632980f8273737fefb9022c498b9ab19ca"
     },
     {
       "path": "manuscripts/ch01/figure-1-batch-throughput.svg",
       "bytes": 74989,
-      "sha256": "1c6d07d9a6e36321eea47138bbdc1fe51fa00b11a8937e4ec8b3088a578bfe9f"
+      "sha256": "60d371c3038f611a644aad39a0ee3dd6c2a5c60d045bd549e362109ea25605bd"
     },
     {
       "path": "manuscripts/ch01/figure-1-batch-throughput.png",
@@ -185,12 +185,12 @@
     {
       "path": "manuscripts/ch01/figure-1-batch-throughput.pdf",
       "bytes": 35126,
-      "sha256": "492fef0ac7b9c2db9ea7f45a55c0113788dc829d2efe8439337a4e3a7a8e827e"
+      "sha256": "880fe7152769935650cfe689cddfda6b165db667c7b7da5405311eba96729fa1"
     },
     {
       "path": "manuscripts/ch01/figure-1-measured-throughput.svg",
       "bytes": 53581,
-      "sha256": "a1a4da66c508fae8b0e046b8a9775317cd28db34ef7b9a95773c0abaccc2c3a4"
+      "sha256": "ac658a4b98d2a5fce0f10bcd633c58d8d4a461626d034b5100905ae2b5928e64"
     },
     {
       "path": "manuscripts/ch01/figure-1-measured-throughput.png",
@@ -200,12 +200,12 @@
     {
       "path": "manuscripts/ch01/figure-1-measured-throughput.pdf",
       "bytes": 17304,
-      "sha256": "7f45aa178b07dc91bbf9407688551ed12968bea2c5feccd5de13434a10bb3352"
+      "sha256": "f0f33df6a6ed129cf5f386150825dcd751bc36abb084dac1572814f955883cf9"
     },
     {
       "path": "manuscripts/ch01/figure-1-measured-tpot.svg",
       "bytes": 53553,
-      "sha256": "228c9cb6a88f1dc864792c96fa23873acc47ff23cc66f3486e2bd099d652476e"
+      "sha256": "2d36e1aa0cc593ebc8dc8a10d4f759ea9aea41330d474464b5bd3865c8d64745"
     },
     {
       "path": "manuscripts/ch01/figure-1-measured-tpot.png",
@@ -215,12 +215,12 @@
     {
       "path": "manuscripts/ch01/figure-1-measured-tpot.pdf",
       "bytes": 17415,
-      "sha256": "5699a06e02b85a68700da23161873b742f7113caf126875ed2e33f1b0d4ab4bf"
+      "sha256": "b8d32f2e58d6e1bda9ebfb5c85b97bafd28efee153fbbb9eb6600e0e9f65a8c0"
     },
     {
       "path": "manuscripts/ch01/figure-1-step-breakdown.svg",
       "bytes": 92677,
-      "sha256": "78c9f3cacbc62b05d0bde277969d2a479f78f5fbe938d4fc4baf19ebf52b0ba1"
+      "sha256": "ca9375222cad9b963e0f6ecbe8686054120b0f1d697eb9dbc31f151d4c3263a2"
     },
     {
       "path": "manuscripts/ch01/figure-1-step-breakdown.png",
@@ -230,12 +230,12 @@
     {
       "path": "manuscripts/ch01/figure-1-step-breakdown.pdf",
       "bytes": 22292,
-      "sha256": "8b8870830b5846535645e7a607314a2840927a1a754c677f15b8d8079b8a9830"
+      "sha256": "088cac8ca23e2d5ebaeb3a89ac9e93692baac780337dfb4441c54595a38e45d9"
     },
     {
       "path": "manuscripts/ch01/figure-1-design-tpu.svg",
       "bytes": 139118,
-      "sha256": "fcf7baa661982a84b2addaf4dcc981627ad407fc62170031bd5da2d6aed6c17b"
+      "sha256": "609f5cba06c5521e9c4923ce856842060f918f2d756d99fbd95a28a3b69953e3"
     },
     {
       "path": "manuscripts/ch01/figure-1-design-tpu.png",
@@ -245,12 +245,12 @@
     {
       "path": "manuscripts/ch01/figure-1-design-tpu.pdf",
       "bytes": 30625,
-      "sha256": "e63f5f4e7045d78d3afae36de8652dd0ad020792f19f7d53788232a644e183df"
+      "sha256": "9731aec778e59c94b1c6f14a93504556d55d5e8c4fb6dfd1c870ebba61161f9e"
     },
     {
       "path": "manuscripts/ch01/figure-1-design-smartnic.svg",
       "bytes": 137444,
-      "sha256": "753442443ef0b14b605d786bdb29aa5dfcd92aba704046c3e284871a265aaec7"
+      "sha256": "d1bb2d6e3344afba4cd69c9691a93b9ada4ac8de45bc5db867ea7d0265715a12"
     },
     {
       "path": "manuscripts/ch01/figure-1-design-smartnic.png",
@@ -260,12 +260,12 @@
     {
       "path": "manuscripts/ch01/figure-1-design-smartnic.pdf",
       "bytes": 33341,
-      "sha256": "baec5079507fcde0428003717a10d6bbdef203e5ef8dfe88bb1d3fe13c779a96"
+      "sha256": "a22d5a7ce84a830ce652f0aab2ffadf30beff435634dd74a5ab3a4f6d11a1f9d"
     },
     {
       "path": "manuscripts/ch01/ch01-fleet-goodput-and-smartnic-offload.svg",
       "bytes": 114650,
-      "sha256": "abdaa8f3f8111f0780a6bb6e6276193fa17dcabeee2dd3583bb08b8630d00104"
+      "sha256": "f8cd96e5dc47f9475dde718a6c67f7015853159b8a9c746dbbd120ec30fdd652"
     },
     {
       "path": "manuscripts/ch01/ch01-fleet-goodput-and-smartnic-offload.png",
@@ -275,12 +275,12 @@
     {
       "path": "manuscripts/ch01/ch01-fleet-goodput-and-smartnic-offload.pdf",
       "bytes": 29051,
-      "sha256": "b2d04513c169f3369b00087747b8b10e18721d02e5953233b1ab782ebdce3c3b"
+      "sha256": "68ac759af888533e6aebd3680d5ae98fb2f770877c0dd3ca56e333797710caac"
     },
     {
       "path": "manuscripts/ch01/figure-1-design-ub.svg",
       "bytes": 138023,
-      "sha256": "eaa551a4ea870e2b633595c7510f3c06e98a9ca65c41c7c0cecc9bc65c11d034"
+      "sha256": "e244aac12c8b21d4253894f5bfdcf1110498a4b8a1877e1697d60b20262d6e6f"
     },
     {
       "path": "manuscripts/ch01/figure-1-design-ub.png",
@@ -290,12 +290,12 @@
     {
       "path": "manuscripts/ch01/figure-1-design-ub.pdf",
       "bytes": 33581,
-      "sha256": "7e70affcd64327ecec358f5341a4267454f42c759921e7b0f37b002fcd25fa1b"
+      "sha256": "638f03518cd33f9ea8bebf64c8b48c3a63fcc4f3d78e38f8dbcd8fe0950100ec"
     },
     {
       "path": "manuscripts/ch01/ch01-cloud-vs-ai-datacenter-and-patterns.svg",
       "bytes": 274336,
-      "sha256": "9738dd3546d6b8db085a1baf9e8e0c93513a6d80850d9beb312222b22192842a"
+      "sha256": "fa3d56d3ffa6719c0a56e2c685648ae5b08ee0c00a134c667725163b9416aa53"
     },
     {
       "path": "manuscripts/ch01/ch01-cloud-vs-ai-datacenter-and-patterns.png",
@@ -305,12 +305,12 @@
     {
       "path": "manuscripts/ch01/ch01-cloud-vs-ai-datacenter-and-patterns.pdf",
       "bytes": 52359,
-      "sha256": "d1552d4c22c664c7daf06e0f9c765dfe0d5c0e19fec92102b944cf9b733d0bdf"
+      "sha256": "f11559fc7eb77874f6c968e2b44a73a0c442770455f3b7d61c118e5d96634f0a"
     },
     {
       "path": "manuscripts/ch01/ch01-token-cost-telescoping-chain.svg",
       "bytes": 90340,
-      "sha256": "7de7ccf66ffae7eddcb02d44e76679e76c67b36aac15a45e45c1bff29d47f4f7"
+      "sha256": "14338439b54dfae483f7fcb76b2712990b863609f0b43ead9663e050b562cb03"
     },
     {
       "path": "manuscripts/ch01/ch01-token-cost-telescoping-chain.png",
@@ -320,12 +320,12 @@
     {
       "path": "manuscripts/ch01/ch01-token-cost-telescoping-chain.pdf",
       "bytes": 24473,
-      "sha256": "a26a580aad6089f6ef992ea41f83d5beac64e16ee1b7d5aa7e7061a046e719eb"
+      "sha256": "0a185e4d83866447facb3d676fe8ef78887c470c614a3cd7110c3fe71e01c2d4"
     },
     {
       "path": "manuscripts/ch01/ch01-host-dispatch-ghost-wave-zoc.svg",
       "bytes": 279680,
-      "sha256": "70cefb23291f812674a780200a9c91056b3c34d815c1388e4837a3c55dff1193"
+      "sha256": "d1781e3a2691e7da2f08360f128d927eea53214cdc38eb3e3fa263d878332465"
     },
     {
       "path": "manuscripts/ch01/ch01-host-dispatch-ghost-wave-zoc.png",
@@ -335,12 +335,12 @@
     {
       "path": "manuscripts/ch01/ch01-host-dispatch-ghost-wave-zoc.pdf",
       "bytes": 53956,
-      "sha256": "ceeed4a84fe1ac706e3c9688ada53b9016c44d4797c85c4e0bfe652bb258334f"
+      "sha256": "8b87635d85694d07c942160b700c22bda4a85a0a6df8c7481f095c0b93a57cc0"
     },
     {
       "path": "manuscripts/ch01/ch01-xprof-profinfer-critical-path.svg",
       "bytes": 215622,
-      "sha256": "2a37adc92f626542c47966dafcd332c6907ddf232568b8f1539c00e9655a61bf"
+      "sha256": "3599edf580407e91c6cf0ed903309dd6c5d9c39aef53c0acfa0652c3b2c32cc6"
     },
     {
       "path": "manuscripts/ch01/ch01-xprof-profinfer-critical-path.png",
@@ -350,12 +350,12 @@
     {
       "path": "manuscripts/ch01/ch01-xprof-profinfer-critical-path.pdf",
       "bytes": 45611,
-      "sha256": "27a24b8b4d349489a6c2d754d561cfe2c75ec6f7b73002ce57ac33a37ae04d76"
+      "sha256": "61b7c30b05ec4094dbd167b77c16076784d470da08a160cf0ed2f8d220d3afa2"
     },
     {
       "path": "manuscripts/ch01/ch01-five-workload-paradigms-arithmetic-intensity.svg",
       "bytes": 235077,
-      "sha256": "ef87c114e8774b4b7379196845e3b0f2d9949d447476bbe4fd16667921bd43ad"
+      "sha256": "e694283d0e5625adddf45a09c1f4e97afb2271cfbf110b57c719403b3d6ee562"
     },
     {
       "path": "manuscripts/ch01/ch01-five-workload-paradigms-arithmetic-intensity.png",
@@ -365,12 +365,12 @@
     {
       "path": "manuscripts/ch01/ch01-five-workload-paradigms-arithmetic-intensity.pdf",
       "bytes": 47545,
-      "sha256": "4a7caab54497fb8a7b2fe17844842887ee42d1f8967c4bd9654bfda939707a6d"
+      "sha256": "376b68d8c58d6593a4657b422d3aa112cc9c6180b6d444cafa52cb32dcb314fd"
     },
     {
       "path": "manuscripts/ch01/ch01-north-star-efficiency-waterfall-chain.svg",
       "bytes": 115986,
-      "sha256": "5007216da59d7a501ad5fbc5c0a4a062c86f801724642bf70d2ab8aae875f70d"
+      "sha256": "0930de0e1b5903b660948cb262d3920657e3fb6dafac69db3e82f2073c156dfa"
     },
     {
       "path": "manuscripts/ch01/ch01-north-star-efficiency-waterfall-chain.png",
@@ -380,12 +380,12 @@
     {
       "path": "manuscripts/ch01/ch01-north-star-efficiency-waterfall-chain.pdf",
       "bytes": 28309,
-      "sha256": "8adadde9e09b67643ef8b4aaa579f07cd1de72b40ad0ad1670a84fb117586adb"
+      "sha256": "7c5e1b609f8858fbad71c6dbf5ed3784261d032ff501b1d641ab60747f4c6f4e"
     },
     {
       "path": "manuscripts/ch01/ch01-inference-amortized-overtraining-scaling-curve.svg",
       "bytes": 96958,
-      "sha256": "f601988b37478ef02663e80732da30fc4b86af2d7509cd97b5d769f71f751e5e"
+      "sha256": "2c823e30f83fe8031425d41b7c62d1243b3d1b1555ea6231a9533ebe7d3f15b7"
     },
     {
       "path": "manuscripts/ch01/ch01-inference-amortized-overtraining-scaling-curve.png",
@@ -395,12 +395,12 @@
     {
       "path": "manuscripts/ch01/ch01-inference-amortized-overtraining-scaling-curve.pdf",
       "bytes": 25622,
-      "sha256": "0e3cea22cfe4482ce16641ecc2d0772c9702c3274b2543d46cad9c86ef50bbcd"
+      "sha256": "167e66bade4643a5690dc9e56081d596f8d020e44af3ace62da37c0d085f3458"
     },
     {
       "path": "manuscripts/ch01/ch01-thirty-chapter-five-pillar-workload-spectrum.svg",
       "bytes": 246591,
-      "sha256": "af7c33007781c52ed0976068f3517a56bf261898cb78103d19fda605688b14b9"
+      "sha256": "e3c7a43916ca59d21429673b79189401362005206b75321ca3e92e2878db1369"
     },
     {
       "path": "manuscripts/ch01/ch01-thirty-chapter-five-pillar-workload-spectrum.png",
@@ -410,12 +410,12 @@
     {
       "path": "manuscripts/ch01/ch01-thirty-chapter-five-pillar-workload-spectrum.pdf",
       "bytes": 49437,
-      "sha256": "3f86a98fceb54a70ed706bd83d3565d1494ce6275201b30e49a1e937384752a3"
+      "sha256": "58ac9686be7ee972a74f79205c0984e55672c481acb7a3290d1f7c2b1921ed01"
     },
     {
       "path": "manuscripts/ch01/figure-1-programmability.svg",
       "bytes": 236940,
-      "sha256": "3856ed929555716b46338fe5c4441060b42ec8d5a72c35a18c85642a413341e5"
+      "sha256": "7d65479325f0f1b24a5e9938e1233ded30613477402429d7fa7cdb51b33f5d01"
     },
     {
       "path": "manuscripts/ch01/figure-1-programmability.png",
@@ -425,12 +425,12 @@
     {
       "path": "manuscripts/ch01/figure-1-programmability.pdf",
       "bytes": 49847,
-      "sha256": "5c7ef22f76de78f5dfc3999fb42aa1c08e05ca9c832c455ba9a1bc5def5afe6b"
+      "sha256": "853ef07a6838728f103cc3002b44501cdf91b72ddfcff40b427e4e4035e6cb54"
     },
     {
       "path": "build/legacy/manuscripts/01-初识 AI Infra.html",
-      "bytes": 8593264,
-      "sha256": "3451be30a86ea3cee724cf55ab8dea0642e9c525a4093a15b3a36e05a02cb33d"
+      "bytes": 8594349,
+      "sha256": "30e5a95153de62689a76f9872cda1856ba168fec63e3f5df0ac904a680f01826"
     },
     {
       "path": "manuscripts/ch01/figure-index.json",

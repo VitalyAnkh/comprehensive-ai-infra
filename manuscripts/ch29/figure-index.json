@@ -1,0 +1,241 @@
+[
+  {
+    "figure_id": "图 29-1",
+    "number": 1,
+    "file": "ch29-deepseek-open-infra-seven-pillar-fullstack-architecture.svg",
+    "asset": "ch29/ch29-deepseek-open-infra-seven-pillar-fullstack-architecture.svg",
+    "section": "29.1.1",
+    "caption": "DeepSeek 开源基础设施七大支柱全栈架构图：算子层（FlashMLA、DeepGEMM）、通信与流水层（DeepEP、DualPipe）、存储与数据层（3FS、Smallpond）及推理部署层（Mooncake、KTransformers）",
+    "source_refs": [
+      "experiments/ch29/29-01/run.py",
+      "manuscripts/ch29/figure-data.json"
+    ],
+    "TeachingRole": "建立从底层 PTX 算子到万卡存储与单机异构推理的七大组件全局协同视图",
+    "figure": "29-1",
+    "name": "ch29-deepseek-open-infra-seven-pillar-fullstack-architecture"
+  },
+  {
+    "figure_id": "图 29-2",
+    "number": 2,
+    "file": "ch29-flashmla-512-plus-64-pingpong-warpgroup-pipeline.svg",
+    "asset": "ch29/ch29-flashmla-512-plus-64-pingpong-warpgroup-pipeline.svg",
+    "section": "29.1.1",
+    "caption": "FlashMLA 深度解剖：矩阵吸收后 [512+64] 非对称头维（1,152 B/token，压缩 28.44 倍）与双消费者 Warpgroup 乒乓流水线（H800 实测 3,000 GB/s 与 580 TFLOPS）（算例 29-1）",
+    "source_refs": [
+      "experiments/ch29/29-01/run.py",
+      "manuscripts/ch29/figure-data.json"
+    ],
+    "TeachingRole": "揭示如何通过矩阵吸收与双 Warpgroup 乒乓交替将 H800 显存带宽压榨至 89.55%",
+    "figure": "29-2",
+    "name": "ch29-flashmla-512-plus-64-pingpong-warpgroup-pipeline"
+  },
+  {
+    "figure_id": "图 29-3",
+    "number": 3,
+    "file": "ch29-flashmla-variable-length-split-kv-load-balancer.svg",
+    "asset": "ch29/ch29-flashmla-variable-length-split-kv-load-balancer.svg",
+    "section": "29.1.1",
+    "caption": "FlashMLA 变长序列持久块调度（Split-KV Load Balancer）：按全局 KV 块定额动态切分长短请求并通过在线 LogSumExp 归约消除 SM 尾块空转",
+    "source_refs": [
+      "experiments/ch29/29-01/run.py",
+      "manuscripts/ch29/figure-data.json"
+    ],
+    "TeachingRole": "展示在在线推理变长序列批处理下如何保障全部 132 个 SM 负载均衡",
+    "figure": "29-3",
+    "name": "ch29-flashmla-variable-length-split-kv-load-balancer"
+  },
+  {
+    "figure_id": "图 29-4",
+    "number": 4,
+    "file": "ch29-deepgemm-runtime-jit-shape-constant-specialization.svg",
+    "asset": "ch29/ch29-deepgemm-runtime-jit-shape-constant-specialization.svg",
+    "section": "29.1.2",
+    "caption": "DeepGEMM 运行期 JIT 形状常量化对比：将矩阵维数与分块步长编译为 PTX 立即数，单线程寄存器占用从 248 个降至 192 个（节省 56 个寄存器）（算例 29-2）",
+    "source_refs": [
+      "experiments/ch29/29-01/run.py",
+      "manuscripts/ch29/figure-data.json"
+    ],
+    "TeachingRole": "阐明为何 300 行核心模板配合运行期 JIT 能击败庞大复杂的静态预编译算子库",
+    "figure": "29-4",
+    "name": "ch29-deepgemm-runtime-jit-shape-constant-specialization"
+  },
+  {
+    "figure_id": "图 29-5",
+    "number": 5,
+    "file": "ch29-deepgemm-fp8-1x128-128x128-two-level-ffma-accumulation.svg",
+    "asset": "ch29/ch29-deepgemm-fp8-1x128-128x128-two-level-ffma-accumulation.svg",
+    "section": "29.1.2",
+    "caption": "DeepGEMM FP8 细粒度（1x128 激活与 128x128 权重）二级累加流水线：每 128 个 Tensor Core 周期插入 4 周期 CUDA Core FFMA（开销仅 3.12%），跑出 1,358 TFLOPS（算例 29-2）",
+    "source_refs": [
+      "experiments/ch29/29-01/run.py",
+      "manuscripts/ch29/figure-data.json"
+    ],
+    "TeachingRole": "剖析如何以 3.12% 的极小指令代价弥补 Hopper FP8 WGMMA 14-bit 定点累加器的精度缺陷",
+    "figure": "29-5",
+    "name": "ch29-deepgemm-fp8-1x128-128x128-two-level-ffma-accumulation"
+  },
+  {
+    "figure_id": "图 29-6",
+    "number": 6,
+    "file": "ch29-deepep-normal-mode-nvlink-rdma-hybrid-forwarding.svg",
+    "asset": "ch29/ch29-deepep-normal-mode-nvlink-rdma-hybrid-forwarding.svg",
+    "section": "29.2.1",
+    "caption": "DeepEP Normal 模式（面向预填充与训练）：机内 NVLink 预聚合与机间 RDMA 流水转发协同，仅占 24 个 SM 实现 153 GB/s 跨节点 All-to-All 吞吐（算例 29-3）",
+    "source_refs": [
+      "experiments/ch29/29-02/run.py",
+      "manuscripts/ch29/figure-data.json"
+    ],
+    "TeachingRole": "展示两级拓扑感知转发如何消除跨机小包风暴并最小化通信对计算 SM 的抢占",
+    "figure": "29-6",
+    "name": "ch29-deepep-normal-mode-nvlink-rdma-hybrid-forwarding"
+  },
+  {
+    "figure_id": "图 29-7",
+    "number": 7,
+    "file": "ch29-deepep-low-latency-ibgda-zero-sm-hook-overlap.svg",
+    "asset": "ch29/ch29-deepep-low-latency-ibgda-zero-sm-hook-overlap.svg",
+    "section": "29.2.1",
+    "caption": "DeepEP Low-Latency 模式（面向在线解码）：基于纯 IBGDA 门铃直写与后台 Hook 完成位轮询，在 0 个 SM 占用下实现 163 us Dispatch 与 194 us Combine（算例 29-3）",
+    "source_refs": [
+      "experiments/ch29/29-02/run.py",
+      "manuscripts/ch29/figure-data.json"
+    ],
+    "TeachingRole": "揭示如何在零 SM 占用下将跨机专家通信完全隐藏在共享专家计算阴影中",
+    "figure": "29-7",
+    "name": "ch29-deepep-low-latency-ibgda-zero-sm-hook-overlap"
+  },
+  {
+    "figure_id": "图 29-8",
+    "number": 8,
+    "file": "ch29-dualpipe-bidirectional-pipeline-schedule-and-20-stage-grid.svg",
+    "asset": "ch29/ch29-dualpipe-bidirectional-pipeline-schedule-and-20-stage-grid.svg",
+    "section": "29.2.2",
+    "caption": "DualPipe 双向流水线时间表（PP=16，双向注入 2M=32 微批）：相向微批正反交错使流水气泡减半，并将跨节点专家通信 100% 掩盖在另一方向的矩阵计算之下（算例 29-4）",
+    "source_refs": [
+      "experiments/ch29/29-02/run.py",
+      "manuscripts/ch29/figure-data.json"
+    ],
+    "TeachingRole": "对比传统单向 1F1B 与 DualPipe 双向交错在跨节点 MoE 通信掩盖上的本质差异",
+    "figure": "29-8",
+    "name": "ch29-dualpipe-bidirectional-pipeline-schedule-and-20-stage-grid"
+  },
+  {
+    "figure_id": "图 29-9",
+    "number": 9,
+    "file": "ch29-dualpipe-fine-grained-backward-input-weight-split.svg",
+    "asset": "ch29/ch29-dualpipe-fine-grained-backward-input-weight-split.svg",
+    "section": "29.2.2",
+    "caption": "DualPipe 细粒度反向传播拆分：将 Backward 解耦为输入梯度（B 块，激活上游流水）与无跨层依赖的权重梯度（W 块，填充通信等待窗口）",
+    "source_refs": [
+      "experiments/ch29/29-02/run.py",
+      "manuscripts/ch29/figure-data.json"
+    ],
+    "TeachingRole": "阐明为何必须将反向传播一分为二才能构造严丝合缝的四象限计算—通信重叠块",
+    "figure": "29-9",
+    "name": "ch29-dualpipe-fine-grained-backward-input-weight-split"
+  },
+  {
+    "figure_id": "图 29-10",
+    "number": 10,
+    "file": "ch29-3fs-craq-chain-replication-and-usrbio-zero-copy-ring.svg",
+    "asset": "ch29/ch29-3fs-craq-chain-replication-and-usrbio-zero-copy-ring.svg",
+    "section": "29.3.1",
+    "caption": "3FS（Fire-Flyer File System）架构：链式复制（CRAQ）强一致多副本并发读状态机与 O_DIRECT + USRBIO 用户态零拷贝异步环形队列",
+    "source_refs": [
+      "experiments/ch29/29-03/run.py",
+      "manuscripts/ch29/figure-data.json"
+    ],
+    "TeachingRole": "解释为何在大模型高并发随机读场景下必须彻底抛弃操作系统 Page Cache",
+    "figure": "29-10",
+    "name": "ch29-3fs-craq-chain-replication-and-usrbio-zero-copy-ring"
+  },
+  {
+    "figure_id": "图 29-11",
+    "number": 11,
+    "file": "ch29-3fs-180-node-6600gbs-throughput-and-graysort-pipeline.svg",
+    "asset": "ch29/ch29-3fs-180-node-6600gbs-throughput-and-graysort-pipeline.svg",
+    "section": "29.3.1",
+    "caption": "3FS 180 台存储节点（2,880 块 NVMe SSD + 360 张 200G 网卡）实测：持续输出 6.60 TB/s 聚合随机读吞吐，并在 30 min 14 s 内完成 110.5 TiB GraySort 排序（算例 29-5）",
+    "source_refs": [
+      "experiments/ch29/29-03/run.py",
+      "manuscripts/ch29/figure-data.json"
+    ],
+    "TeachingRole": "用存储介质与 RDMA 网卡 1:1 带宽配比账本验证 6.60 TB/s 聚合吞吐的物理构成",
+    "figure": "29-11",
+    "name": "ch29-3fs-180-node-6600gbs-throughput-and-graysort-pipeline"
+  },
+  {
+    "figure_id": "图 29-12",
+    "number": 12,
+    "file": "ch29-smallpond-duckdb-on-3FS-serverless-parquet-shuffle.svg",
+    "asset": "ch29/ch29-smallpond-duckdb-on-3FS-serverless-parquet-shuffle.svg",
+    "section": "29.3.2",
+    "caption": "Smallpond 轻量级数据框架：基于 DuckDB 向量化列式引擎与 3FS 共享分区洗牌池的无常驻服务（Serverless）PB 级 Parquet 数据处理流水线",
+    "source_refs": [
+      "experiments/ch29/29-03/run.py",
+      "manuscripts/ch29/figure-data.json"
+    ],
+    "TeachingRole": "展示如何用无状态进程加高速分布式文件系统取代笨重的常驻 JVM 大数据集群",
+    "figure": "29-12",
+    "name": "ch29-smallpond-duckdb-on-3FS-serverless-parquet-shuffle"
+  },
+  {
+    "figure_id": "图 29-13",
+    "number": 13,
+    "file": "ch29-mooncake-transfer-engine-multi-nic-rdma-kv-pool.svg",
+    "asset": "ch29/ch29-mooncake-transfer-engine-multi-nic-rdma-kv-pool.svg",
+    "section": "29.4.1",
+    "caption": "Mooncake Transfer Engine 架构：跨 HBM、主机 DRAM 与 NVMe SSD 的多网卡 RDMA 拓扑感知全局 KV 缓存池与零拷贝 P-D 传输通路",
+    "source_refs": [
+      "experiments/ch29/29-03/run.py",
+      "manuscripts/ch29/figure-data.json"
+    ],
+    "TeachingRole": "剖析以 KV 缓存为中心（KV-Centric）的预填充—解码分离调度架构",
+    "figure": "29-13",
+    "name": "ch29-mooncake-transfer-engine-multi-nic-rdma-kv-pool"
+  },
+  {
+    "figure_id": "图 29-14",
+    "number": 14,
+    "file": "ch29-mooncake-early-rejection-and-sla-goodput-controller.svg",
+    "asset": "ch29/ch29-mooncake-early-rejection-and-sla-goodput-controller.svg",
+    "section": "29.4.1",
+    "caption": "Mooncake 基于排队延迟与 KV 池水位预测的提前拒绝（Early Rejection）准入控制器：防止过载级联雪崩并将 SLA 合规有效吞吐（Goodput）提升 2.1 倍",
+    "source_refs": [
+      "experiments/ch29/29-03/run.py",
+      "manuscripts/ch29/figure-data.json"
+    ],
+    "TeachingRole": "论证在突发流量下主动拒绝违约请求对保护全局 GPU 有效算力的关键作用",
+    "figure": "29-14",
+    "name": "ch29-mooncake-early-rejection-and-sla-goodput-controller"
+  },
+  {
+    "figure_id": "图 29-15",
+    "number": 15,
+    "file": "ch29-ktransformers-gpu-mla-and-cpu-amx-numa-expert-offload.svg",
+    "asset": "ch29/ch29-ktransformers-gpu-mla-and-cpu-amx-numa-expert-offload.svg",
+    "section": "29.4.2",
+    "caption": "KTransformers 异构卸载架构：单张 24 GB RTX 4090D（驻留 19.2 GB MLA 与共享专家）配合双路 Xeon DDR5（680 GB/s）+ AMX 原位计算 256 个路由专家，实现预填充 286.4 tok/s、解码 18.6 tok/s（提速 13.8 倍）（算例 29-6）",
+    "source_refs": [
+      "experiments/ch29/29-03/run.py",
+      "manuscripts/ch29/figure-data.json"
+    ],
+    "TeachingRole": "揭示“算子跟权重走（仅传 14 KB 激活）”相较“跨 PCIe 搬权重”的十倍性能鸿沟",
+    "figure": "29-15",
+    "name": "ch29-ktransformers-gpu-mla-and-cpu-amx-numa-expert-offload"
+  },
+  {
+    "figure_id": "图 29-16",
+    "number": 16,
+    "file": "ch29-deepseek-fullstack-cost-and-efficiency-synthesis.svg",
+    "asset": "ch29/ch29-deepseek-fullstack-cost-and-efficiency-synthesis.svg",
+    "section": "29.4.2",
+    "caption": "第 29 章系统工程全景图：DeepSeek 开源基础设施全栈（FlashMLA、DeepGEMM、DeepEP、DualPipe、3FS、Smallpond、Mooncake、KTransformers）核心性能锚点总览",
+    "source_refs": [
+      "manuscripts/ch29/figure-data.json"
+    ],
+    "TeachingRole": "收束全章七大开源项目，提炼跨层协同消除硬件闲置的极客工程方法论",
+    "figure": "29-16",
+    "name": "ch29-deepseek-fullstack-cost-and-efficiency-synthesis"
+  }
+]

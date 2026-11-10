@@ -2,7 +2,7 @@
 
 这里是正文算例背后的展开材料：具体模型、硬件与系统案例的完整推算、来源核对和取舍说明。正文只保留结论与关键推导，脚注链接到对应案例。
 
-下表按引用的章节分组；“引用章节”列出所有链接到该案例的章（全库 73 篇案例已 100% 接入正文第 1～24 章）。
+下表按引用的章节分组；“引用章节”列出所有链接到该案例的章（全库 73 篇案例已 100% 接入正文第 1～30 章）。
 
 ## 第 1 章 · 初识 AI Infra
 
@@ -224,3 +224,46 @@
 | --- | :--: |
 | [注意力分块：容量、重读与计算安排](attention-tiles-and-io.md) | 5、24 |
 | [矩阵形状、通信分块与执行条件](mesh-shape-and-slicing.md) | 6、24 |
+
+## 第 25 章 · 生成式推荐系统（Generative Recommenders）、万亿参数稀疏表（DLRM）与十亿级 GPU 向量检索引擎
+
+| 案例 | 引用章节 |
+| --- | :--: |
+| [检索与生成的协同预算](retrieval-and-generation.md) | 3、23、25 |
+| [分层内存：容量、等待与迁移收益](memory-criticality-and-tiering.md) | 6、9、25 |
+
+## 第 26 章 · 后自回归生成范式基础设施：扩散大语言模型（dLLM）、字节级无分词架构（BLT）与测试时记忆网络（Titans-TTT）
+
+| 案例 | 引用章节 |
+| --- | :--: |
+| [混合模型的前缀状态与恢复成本](hybrid-prefix-state.md) | 8、26 |
+| [推测解码的执行成本与动态预算](speculative-execution.md) | 8、26 |
+
+## 第 27 章 · 晶圆级与 3D-SRAM 专用推理芯片（Cerebras-Groq）、微秒级极低延迟 AI 与三值量化（BitNet b1.58）系统
+
+| 案例 | 引用章节 |
+| --- | :--: |
+| [加速器架构与执行比较](accelerator-architecture.md) | 4、27 |
+| [OpenTallas：从不可变权重到系统可行性的案例与习题](opentallas.md) | 4、14、27 |
+
+## 第 28 章 · 主权 AI、广域网去中心化低通信训练（DiLoCo）、实时护栏（Guardrails）与密码学水印安全底座
+
+| 案例 | 引用章节 |
+| --- | :--: |
+| [工具参数生成中的 CPU 工作与状态](structured-generation.md) | 8、11、28 |
+| [优化结果与 Agent 执行记录](evaluation-and-agent-records.md) | 11、16、20、28 |
+
+## 第 29 章 · DeepSeek 开源基础设施全栈解剖与极客工程实战：FlashMLA、DeepGEMM、DeepEP、DualPipe、3FS、Mooncake 与 KTransformers
+
+| 案例 | 引用章节 |
+| --- | :--: |
+| [专家分派、重排与扩缩容](expert-dispatch-and-resizing.md) | 9、10、29 |
+| [异构推理的两种切分：A100／H20 与 KTransformers](pd-af-heterogeneous.md) | 9、29 |
+| [权重卸载的容量、流量与执行位置](weight-offload-execution.md) | 8、9、29 |
+
+## 第 30 章 · 自演进 AI 基础设施（AI for AI Infra）：大模型驱动的算子自动合成、强化学习编译寻优与三十章全栈终极收束
+
+| 案例 | 引用章节 |
+| --- | :--: |
+| [自动融合：保留什么状态，接受什么数值语义](fusion-legality-and-precision.md) | 5、30 |
+| [自动优化的成绩与部署收益](optimization-evaluation-and-deployment.md) | 5、20、30 |

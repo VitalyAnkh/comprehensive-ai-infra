@@ -1,0 +1,242 @@
+[
+  {
+    "figure_id": "图 30-1",
+    "number": 1,
+    "file": "ch30-llm-rlvr-gpu-kernel-synthesis-closed-loop-architecture.svg",
+    "asset": "ch30/ch30-llm-rlvr-gpu-kernel-synthesis-closed-loop-architecture.svg",
+    "section": "30.1.1",
+    "caption": "大模型与强化学习驱动的 GPU 内核自动合成闭环（Kevin / KernelBench）：融合编译校验、数值等价门控与 Nsight Compute 硬件剖析反馈的 8 轮自我进化架构（算例 30-1）",
+    "source_refs": [
+      "experiments/ch30/30-01/run.py",
+      "manuscripts/ch30/figure-data.json"
+    ],
+    "TeachingRole": "揭示如何将硬件性能剖析器接入强化学习验证奖励回路，实现算子自动进化",
+    "figure": "30-1",
+    "name": "ch30-llm-rlvr-gpu-kernel-synthesis-closed-loop-architecture"
+  },
+  {
+    "figure_id": "图 30-2",
+    "number": 2,
+    "file": "ch30-nsight-compute-roofline-and-warp-stall-feedback-prompt.svg",
+    "asset": "ch30/ch30-nsight-compute-roofline-and-warp-stall-feedback-prompt.svg",
+    "section": "30.1.1",
+    "caption": "Nsight Compute 硬件计数器（SM 占用率、Shared Memory Bank 冲突、DRAM 带宽与 Warp Stall 原因）转化为结构化诊断提示词的反馈机制",
+    "source_refs": [
+      "experiments/ch30/30-01/run.py",
+      "manuscripts/ch30/figure-data.json"
+    ],
+    "TeachingRole": "阐明为何白盒硬件瓶颈分类反馈远比单一标量耗时更能引导大模型跳出局部次优",
+    "figure": "30-2",
+    "name": "ch30-nsight-compute-roofline-and-warp-stall-feedback-prompt"
+  },
+  {
+    "figure_id": "图 30-3",
+    "number": 3,
+    "file": "ch30-kernelbench-multi-turn-evolution-accuracy-and-speedup.svg",
+    "asset": "ch30/ch30-kernelbench-multi-turn-evolution-accuracy-and-speedup.svg",
+    "section": "30.1.1",
+    "caption": "KernelBench 250 个算子基准在 8 轮硬件剖析反馈下的进化轨迹：编译与数值正确率从 34.0% 跃升至 94.8%，平均较 PyTorch Eager 提速 3.42 倍、较 torch.compile 提速 1.58 倍（算例 30-1）",
+    "source_refs": [
+      "experiments/ch30/30-01/run.py",
+      "manuscripts/ch30/figure-data.json"
+    ],
+    "TeachingRole": "用实测收敛曲线量化多轮硬件反馈对消除算子编译错误与压榨硬件潜能的决定性作用",
+    "figure": "30-3",
+    "name": "ch30-kernelbench-multi-turn-evolution-accuracy-and-speedup"
+  },
+  {
+    "figure_id": "图 30-4",
+    "number": 4,
+    "file": "ch30-auto-discovered-register-fusion-vs-human-handwritten-kernel.svg",
+    "asset": "ch30/ch30-auto-discovered-register-fusion-vs-human-handwritten-kernel.svg",
+    "section": "30.1.2",
+    "caption": "AI 自动合成内核突破人类手写直觉：跨四算子寄存器级持久化融合（省去 38.4 GB/s 中间激活落盘）与非对称分块（BM=128, BN=192）自主发现（算例 30-2）",
+    "source_refs": [
+      "experiments/ch30/30-01/run.py",
+      "manuscripts/ch30/figure-data.json"
+    ],
+    "TeachingRole": "展示 AI 如何通过非2幂次分块与代数重结合找到人类工程师极少涉足的性能甜点",
+    "figure": "30-4",
+    "name": "ch30-auto-discovered-register-fusion-vs-human-handwritten-kernel"
+  },
+  {
+    "figure_id": "图 30-5",
+    "number": 5,
+    "file": "ch30-ilp-mcts-5d-auto-parallelism-and-collective-tree-search.svg",
+    "asset": "ch30/ch30-ilp-mcts-5d-auto-parallelism-and-collective-tree-search.svg",
+    "section": "30.2.1",
+    "caption": "基于整数线性规划与蒙特卡洛树搜索（ILP + MCTS）的 5D 混合并行切分与非对称拓扑自定义集合通信树联合寻优器",
+    "source_refs": [
+      "experiments/ch30/30-02/run.py",
+      "manuscripts/ch30/figure-data.json"
+    ],
+    "TeachingRole": "展示如何将算子级并行策略搜索与底层物理网络拓扑路由联合建模",
+    "figure": "30-5",
+    "name": "ch30-ilp-mcts-5d-auto-parallelism-and-collective-tree-search"
+  },
+  {
+    "figure_id": "图 30-6",
+    "number": 6,
+    "file": "ch30-alphachip-rl-macro-placement-and-wirelength-optimization.svg",
+    "asset": "ch30/ch30-alphachip-rl-macro-placement-and-wirelength-optimization.svg",
+    "section": "30.2.2",
+    "caption": "芯片物理布局强化学习（AlphaChip）：基于边特征图神经网络（Edge-GNN）的 SRAM 与脉动阵列宏单元顺序落子策略，互连线长缩减 14.2%",
+    "source_refs": [
+      "experiments/ch30/30-02/run.py",
+      "manuscripts/ch30/figure-data.json"
+    ],
+    "TeachingRole": "剖析 AI 如何直接参与下一代 TPU 与 AI 芯片的物理版图设计并形成自举闭环",
+    "figure": "30-6",
+    "name": "ch30-alphachip-rl-macro-placement-and-wirelength-optimization"
+  },
+  {
+    "figure_id": "图 30-7",
+    "number": 7,
+    "file": "ch30-per-kernel-dvfs-frequency-scaling-energy-delay-product.svg",
+    "asset": "ch30/ch30-per-kernel-dvfs-frequency-scaling-energy-delay-product.svg",
+    "section": "30.2.2",
+    "caption": "算子级动态电压频率调节（Per-Kernel DVFS）：在访存/通信受限算子自动下调核心频率 18%，耗时仅增 0.72% 而动态功耗立降 26.5%（算例 30-3）",
+    "source_refs": [
+      "experiments/ch30/30-02/run.py",
+      "manuscripts/ch30/figure-data.json"
+    ],
+    "TeachingRole": "运用 CMOS 动态功耗三次方物理定律推导算子粒度调频的显著能效收益",
+    "figure": "30-7",
+    "name": "ch30-per-kernel-dvfs-frequency-scaling-energy-delay-product"
+  },
+  {
+    "figure_id": "图 30-8",
+    "number": 8,
+    "file": "ch30-autonomous-aiops-straggler-and-pfc-root-cause-graph.svg",
+    "asset": "ch30/ch30-autonomous-aiops-straggler-and-pfc-root-cause-graph.svg",
+    "section": "30.3.1",
+    "caption": "十万卡智算中心自治运维（Autonomous AIOps）：融合 NCCL 环路延迟偏度与光模块信噪比斜率的时空因果图慢节点根因诊断（RCA）引擎",
+    "source_refs": [
+      "experiments/ch30/30-02/run.py",
+      "manuscripts/ch30/figure-data.json"
+    ],
+    "TeachingRole": "解决集合通信“一卡降速、全环陪绑”假象下的亚分钟级精准故障定位难题",
+    "figure": "30-8",
+    "name": "ch30-autonomous-aiops-straggler-and-pfc-root-cause-graph"
+  },
+  {
+    "figure_id": "图 30-9",
+    "number": 9,
+    "file": "ch30-sub-minute-fault-isolation-mttr-and-ettr-recovery.svg",
+    "asset": "ch30/ch30-sub-minute-fault-isolation-mttr-and-ettr-recovery.svg",
+    "section": "30.3.1",
+    "caption": "32,768 卡集群自治故障自愈账本：将隐性故障 MTTR 从人工 4.20 小时压缩 360 倍至 42.0 秒，集群 ETTR 从 88.4% 跃升至 97.8%，半年挽回 1,350 万美元算力（算例 30-4）",
+    "source_refs": [
+      "experiments/ch30/30-02/run.py",
+      "manuscripts/ch30/figure-data.json"
+    ],
+    "TeachingRole": "用硬核财务与可用性公式证明自治 AIOps 在超大规模集群中的经济价值",
+    "figure": "30-9",
+    "name": "ch30-sub-minute-fault-isolation-mttr-and-ettr-recovery"
+  },
+  {
+    "figure_id": "图 30-10",
+    "number": 10,
+    "file": "ch30-datacenter-digital-twin-workload-network-thermal-cosim.svg",
+    "asset": "ch30/ch30-datacenter-digital-twin-workload-network-thermal-cosim.svg",
+    "section": "30.3.2",
+    "caption": "数据中心级高保真数字孪生仿真器（Workload-Network-Thermal Co-Simulator）：上线前提前识别 2:1 超额认购导致的 21.4% MoE 通信降速与局部热岛（算例 30-5）",
+    "source_refs": [
+      "experiments/ch30/30-02/run.py",
+      "manuscripts/ch30/figure-data.json"
+    ],
+    "TeachingRole": "展示如何通过离散事件网络仿真与热力学耦合在建群前消除百亿级投资架构隐患",
+    "figure": "30-10",
+    "name": "ch30-datacenter-digital-twin-workload-network-thermal-cosim"
+  },
+  {
+    "figure_id": "图 30-11",
+    "number": 11,
+    "file": "ch30-thirty-chapter-five-part-encyclopedia-master-atlas.svg",
+    "asset": "ch30/ch30-thirty-chapter-five-part-encyclopedia-master-atlas.svg",
+    "section": "30.4.1",
+    "caption": "《AI 基础设施系统工程》30 章皇冠全栈终极百科版全景总图：五大架构部类、43,548+ 行手稿、979+1=980 幅配图、201+1=202 个代码块、228 个算例、492 块习题与 165 个实验总账本（算例 30-6）",
+    "source_refs": [
+      "experiments/ch30/30-03/run.py",
+      "manuscripts/ch30/figure-data.json"
+    ],
+    "TeachingRole": "全景呈现全书 30 章五大部类的结构版图与机器可校验的数字资产账本",
+    "figure": "30-11",
+    "name": "ch30-thirty-chapter-five-part-encyclopedia-master-atlas"
+  },
+  {
+    "figure_id": "图 30-12",
+    "number": 12,
+    "file": "ch30-pillar-1-to-3-hardware-networking-training-inference-map.svg",
+    "asset": "ch30/ch30-pillar-1-to-3-hardware-networking-training-inference-map.svg",
+    "section": "30.4.1",
+    "caption": "第一至第三部类（第 1–12 章：硬件与集群基础设施、分布式训练系统工程、推理服务与生产运维）核心技术链路与跨章因果映射图",
+    "source_refs": [
+      "experiments/ch30/30-03/run.py",
+      "manuscripts/ch30/figure-data.json"
+    ],
+    "TeachingRole": "串联前十二章主干底座，梳理从单芯片微架构到万卡训练与高吞吐推理的演进脉络",
+    "figure": "30-12",
+    "name": "ch30-pillar-1-to-3-hardware-networking-training-inference-map"
+  },
+  {
+    "figure_id": "图 30-13",
+    "number": 13,
+    "file": "ch30-pillar-4-to-5-multimodal-agent-science-frontier-map.svg",
+    "asset": "ch30/ch30-pillar-4-to-5-multimodal-agent-science-frontier-map.svg",
+    "section": "30.4.1",
+    "caption": "第四至第五部类（第 13–30 章：前沿架构演进与全场景系统工程、新一代范式与DeepSeek及自演进闭环）十八章专题全景映射图",
+    "source_refs": [
+      "experiments/ch30/30-03/run.py",
+      "manuscripts/ch30/figure-data.json"
+    ],
+    "TeachingRole": "串联后十八章前沿疆域，展示基础架构原理在多模态、智驾、科学计算与极客系统中的延展",
+    "figure": "30-13",
+    "name": "ch30-pillar-4-to-5-multimodal-agent-science-frontier-map"
+  },
+  {
+    "figure_id": "图 30-14",
+    "number": 14,
+    "file": "ch30-four-fundamental-conservation-laws-across-30-chapters.svg",
+    "asset": "ch30/ch30-four-fundamental-conservation-laws-across-30-chapters.svg",
+    "section": "30.4.2",
+    "caption": "统治 AI 基础设施的四大普适物理守恒律（算术强度守恒、状态局部性守恒、关键路径掩盖律、信息—能量转换效率律）及其在 30 章中的具体化身",
+    "source_refs": [
+      "experiments/ch30/30-03/run.py",
+      "manuscripts/ch30/figure-data.json"
+    ],
+    "TeachingRole": "将全书数百项工程技术在第一性原理层面高度凝练为四条普适守恒方程",
+    "figure": "30-14",
+    "name": "ch30-four-fundamental-conservation-laws-across-30-chapters"
+  },
+  {
+    "figure_id": "图 30-15",
+    "number": 15,
+    "file": "ch30-ten-year-ai-infrastructure-roadmap-2026-to-2035.svg",
+    "asset": "ch30/ch30-ten-year-ai-infrastructure-roadmap-2026-to-2035.svg",
+    "section": "30.4.2",
+    "caption": "2026–2035 未来十年 AI 基础设施演进路线预测图：从 Rubin/CPO 光互连、3D 晶圆级与片内微流体冷却到行星级自演进智能底座",
+    "source_refs": [
+      "experiments/ch30/30-03/run.py",
+      "manuscripts/ch30/figure-data.json"
+    ],
+    "TeachingRole": "提供未来十年软硬件协同演进的坐标轴，帮助读者建立超越具体硬件代际的远见",
+    "figure": "30-15",
+    "name": "ch30-ten-year-ai-infrastructure-roadmap-2026-to-2035"
+  },
+  {
+    "figure_id": "图 30-16",
+    "number": 16,
+    "file": "ch30-grand-finale-ai-infrastructure-system-engineering-crown.svg",
+    "asset": "ch30/ch30-grand-finale-ai-infrastructure-system-engineering-crown.svg",
+    "section": "30.4.2",
+    "caption": "全书终极收束图：从人类工程第一性原理筑造 AI 基础设施，到大模型智能体反哺演化下一代芯片、算子与集群的自举上升闭环",
+    "source_refs": [
+      "experiments/ch30/30-03/run.py",
+      "manuscripts/ch30/figure-data.json"
+    ],
+    "TeachingRole": "完成全书 30 章的思想升华，定格“系统孕育智能、智能演进系统”的宏大闭环",
+    "figure": "30-16",
+    "name": "ch30-grand-finale-ai-infrastructure-system-engineering-crown"
+  }
+]

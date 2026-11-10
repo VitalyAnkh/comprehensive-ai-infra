@@ -1,0 +1,24 @@
+{
+  "experiment_id": "29-01",
+  "flashmla": {
+    "mla_kv_elements": 576,
+    "mla_kv_bytes_per_token": 1152,
+    "std_mha_kv_bytes_per_token": 32768,
+    "kv_compression_vs_mha64_x": 28.44,
+    "kv_compression_vs_mha192_x": 85.33,
+    "h800_peak_bw_gbs": 3350.0,
+    "achieved_bw_gbs": 3000.0,
+    "bw_utilization_pct": 89.55,
+    "achieved_tflops": 580.0,
+    "roofline_efficiency_pct": 94.2
+  },
+  "deepgemm": {
+    "static_regs_per_thread": 248,
+    "jit_regs_per_thread": 192,
+    "regs_saved_per_thread": 56,
+    "wgmma_cycles_per_k128": 128,
+    "cuda_ffma_promotion_cycles": 4,
+    "ffma_cycle_overhead_pct": 3.12,
+    "achieved_fp8_tflops": 1358.0
+  }
+}

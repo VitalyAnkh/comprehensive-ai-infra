@@ -2,7 +2,7 @@
 
 [前言](00-前言.md)介绍写作缘起、作者的 UB 与数据中心网络经历，以及本书的分析方法。前言同时提供三个阶段的结构图、逐章导读和阅读前置条件。
 
-二十四章正文以模型训练与推理的完整执行过程连接跨层优化：应用通过模型与上下文表达行为，各层利用计算关系、状态寿命与任务依赖重新选择实现。算子融合、执行复用、设备交接、上下文共享、AI 原生存储底座、模型—硬件跨层协同设计、吉瓦级 AI 数据中心电力热学、机密 AI 计算、原生多模态与视频生成（3D DiT）、大规模后训练与强化学习（RLVR）、具身智能（VLA）与大规模物理仿真、十万卡集群可靠性工程与基准评测科学、自主智能体（Agentic AI）长程上下文与沙箱底座、全双工实时语音与原生全模态流式底座、百亿亿次 Token 数据工程与合成数据工厂、以及科学智能（AI for Science）基础设施将这一主线融入具体推导。各章插图沿用全书统一的 Hands-On Large Language Models 风格，以 SVG、PNG、PDF 提供（全书共 835 幅章节配图）。
+三十章正文以模型训练与推理的完整执行过程连接跨层优化：应用通过模型与上下文表达行为，各层利用计算关系、状态寿命与任务依赖重新选择实现。算子融合、执行复用、设备交接、上下文共享、AI 原生存储底座、模型—硬件跨层协同设计、吉瓦级 AI 数据中心电力热学、机密 AI 计算、原生多模态与视频生成（3D DiT）、大规模后训练与强化学习（RLVR）、具身智能（VLA）与大规模物理仿真、十万卡集群可靠性工程与基准评测科学、自主智能体（Agentic AI）长程上下文与沙箱底座、全双工实时语音与原生全模态流式底座、百亿亿次 Token 数据工程与合成数据工厂、科学智能（AI for Science）基础设施、生成式推荐系统（HSTU）与十亿级 GPU 向量检索、后自回归生成范式（dLLM、BLT 与 Titans-TTT）、晶圆级与 3D-SRAM 专用推理芯片及三值量化（BitNet b1.58）系统、主权 AI 与广域网低通信训练（DiLoCo）及实时护栏水印、DeepSeek 开源基础设施全栈解剖、以及自演进 AI 基础设施（AI for AI Infra）将这一主线融入具体推导。各章插图沿用全书统一的 Hands-On Large Language Models 风格，以 SVG、PNG、PDF 提供（全书共 979 幅编号章节配图，含导读总图共 980 幅）。
 
 各章均以“本章小结”收尾，资料说明移出正文，来源保留为脚注。
 
@@ -34,6 +34,12 @@
 | 22 | [全双工实时语音（Full-Duplex Speech）、神经音频编解码与原生全模态流式底座](<22-全双工实时语音（Full-Duplex Speech）、神经音频编解码与原生全模态流式底座.md>) |
 | 23 | [百亿亿次 Token 数据工程、GPU 加速模糊去重与合成数据工厂底座](<23-百亿亿次 Token 数据工程、GPU 加速模糊去重与合成数据工厂底座.md>) |
 | 24 | [科学智能（AI for Science）基础设施：生物大分子、百万碱基基因组与物理场网格系统](<24-科学智能（AI for Science）基础设施：生物大分子、百万碱基基因组与物理场网格系统.md>) |
+| 25 | [生成式推荐系统（Generative Recommenders）、万亿参数稀疏表（DLRM）与十亿级 GPU 向量检索引擎](<25-生成式推荐系统（Generative Recommenders）、万亿参数稀疏表（DLRM）与十亿级 GPU 向量检索引擎.md>) |
+| 26 | [后自回归生成范式基础设施：扩散大语言模型（dLLM）、字节级无分词架构（BLT）与测试时记忆网络（Titans-TTT）](<26-后自回归生成范式基础设施：扩散大语言模型（dLLM）、字节级无分词架构（BLT）与测试时记忆网络（Titans-TTT）.md>) |
+| 27 | [晶圆级与 3D-SRAM 专用推理芯片（Cerebras-Groq）、微秒级极低延迟 AI 与三值量化（BitNet b1.58）系统](<27-晶圆级与 3D-SRAM 专用推理芯片（Cerebras-Groq）、微秒级极低延迟 AI 与三值量化（BitNet b1.58）系统.md>) |
+| 28 | [主权 AI、广域网去中心化低通信训练（DiLoCo）、实时护栏（Guardrails）与密码学水印安全底座](<28-主权 AI、广域网去中心化低通信训练（DiLoCo）、实时护栏（Guardrails）与密码学水印安全底座.md>) |
+| 29 | [DeepSeek 开源基础设施全栈解剖与极客工程实战：FlashMLA、DeepGEMM、DeepEP、DualPipe、3FS、Mooncake 与 KTransformers](<29-DeepSeek 开源基础设施全栈解剖与极客工程实战：FlashMLA、DeepGEMM、DeepEP、DualPipe、3FS、Mooncake 与 KTransformers.md>) |
+| 30 | [自演进 AI 基础设施（AI for AI Infra）：大模型驱动的算子自动合成、强化学习编译寻优与三十章全栈终极收束](<30-自演进 AI 基础设施（AI for AI Infra）：大模型驱动的算子自动合成、强化学习编译寻优与三十章全栈终极收束.md>) |
 
 配图由各章 `build.py` 生成，统一样式位于 `figure_style/`，本轮新增图位于 `core_principles_figures.py`。图号与阅读顺序由正文派生，记录在各章 `figure-index.json`。
 

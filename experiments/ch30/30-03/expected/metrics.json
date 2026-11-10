@@ -1,0 +1,23 @@
+{
+  "experiment_id": "30-03",
+  "grand_30chapter_encyclopedia_ledger": {
+    "total_chapters": 30,
+    "architectural_parts": 5,
+    "min_lines_per_chapter": 1000,
+    "target_min_total_lines": 43548,
+    "numbered_chapter_figures": 979,
+    "unnumbered_roadmap_figures": 1,
+    "total_figures": 980,
+    "total_figure_asset_files": 2940,
+    "python_code_blocks": 201,
+    "cpp_code_blocks": 1,
+    "total_typed_code_blocks": 202,
+    "standardized_worked_examples": 228,
+    "standardized_tables": 341,
+    "exercise_blocks": 492,
+    "unique_exercise_ids": 491,
+    "academic_footnotes": 812,
+    "runnable_experiment_suites": 165,
+    "four_conservation_laws_verified": 4
+  }
+}

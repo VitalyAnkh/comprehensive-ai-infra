@@ -1,0 +1,49 @@
+{
+  "chapter": 30,
+  "title": "自演进 AI 基础设施（AI for AI Infra）：大模型驱动的算子自动合成、强化学习编译寻优与三十章全栈终极收束",
+  "kernelbench_rlvr": {
+    "benchmark_tasks": 250,
+    "feedback_iterations": 8,
+    "zero_shot_correctness_pct": 34.0,
+    "zero_shot_faster_than_compile_pct": 18.0,
+    "rlvr_8turn_correctness_pct": 94.8,
+    "rlvr_8turn_speedup_vs_eager_x": 3.42,
+    "rlvr_8turn_speedup_vs_compile_x": 1.58,
+    "register_fusion_hbm_saved_gbps": 38.4,
+    "asymmetric_tile_bm": 128,
+    "asymmetric_tile_bn": 192
+  },
+  "auto_parallel_dvfs": {
+    "memory_bound_freq_reduction_pct": 18.0,
+    "perf_degradation_pct": 0.72,
+    "dynamic_power_saving_pct": 26.5,
+    "alphachip_wirelength_reduction_pct": 14.2
+  },
+  "autonomous_aiops_twin": {
+    "cluster_gpus": 32768,
+    "manual_mttr_hours": 4.2,
+    "autonomous_mttr_seconds": 42.0,
+    "mttr_compression_x": 360.0,
+    "ettr_manual_pct": 88.4,
+    "ettr_autonomous_pct": 97.8,
+    "six_month_saved_compute_usd_m": 13.5,
+    "digital_twin_oversubscription_slowdown_pct": 21.4
+  },
+  "grand_30chapter_ledger": {
+    "total_chapters": 30,
+    "total_parts": 5,
+    "total_lines_min": 43548,
+    "numbered_figures": 979,
+    "roadmap_unnumbered_figures": 1,
+    "total_figures": 980,
+    "python_code_blocks": 201,
+    "cpp_code_blocks": 1,
+    "total_typed_code_blocks": 202,
+    "worked_examples": 228,
+    "tables": 341,
+    "exercise_blocks": 492,
+    "unique_exercise_ids": 491,
+    "academic_footnotes": 812,
+    "runnable_experiments": 165
+  }
+}

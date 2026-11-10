@@ -7,7 +7,7 @@ import fitz
 
 
 EDITIONS = {
-    'zh': dict(name='AI-Infra-Book', expected_text=('AI Infra', '端边云', '十万卡集群', '科学智能'),
+    'zh': dict(name='AI-Infra-Book', expected_text=('AI Infra', '端边云', '十万卡集群', '科学智能', '生成式推荐', '自演进'),
                required_fonts=('Songti-SC-Regular', 'Menlo-Regular', 'SourceHanSansCN-Regular',
                                'SourceHanSansCN-Bold', 'LMRoman10-Regular', 'LatinModernMath-Regular')),
     'en': dict(name='AI-Infra-Book-EN', expected_text=('AI Infra', 'Edge-Cloud Coordination'),
@@ -26,7 +26,7 @@ def main():
     directory = args.directory
     edition = EDITIONS[args.edition]
     report = json.loads((directory / f"{edition['name']}-build.json").read_text())
-    expected_chapters = list(range(1, 25)) if args.edition == 'zh' else list(range(1, 13))
+    expected_chapters = list(range(1, 31)) if args.edition == 'zh' else list(range(1, 13))
     if report['chapters'] != expected_chapters:
         raise SystemExit(f'Expected all {len(expected_chapters)} chapters')
     doc = fitz.open(directory / f"{edition['name']}.pdf")

@@ -1,0 +1,98 @@
+[
+  {
+    "figure": "ch29-deepseek-open-infra-seven-pillar-fullstack-architecture",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch29-flashmla-512-plus-64-pingpong-warpgroup-pipeline",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch29-flashmla-variable-length-split-kv-load-balancer",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch29-deepgemm-runtime-jit-shape-constant-specialization",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch29-deepgemm-fp8-1x128-128x128-two-level-ffma-accumulation",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch29-deepep-normal-mode-nvlink-rdma-hybrid-forwarding",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch29-deepep-low-latency-ibgda-zero-sm-hook-overlap",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch29-dualpipe-bidirectional-pipeline-schedule-and-20-stage-grid",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch29-dualpipe-fine-grained-backward-input-weight-split",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch29-3fs-craq-chain-replication-and-usrbio-zero-copy-ring",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch29-3fs-180-node-6600gbs-throughput-and-graysort-pipeline",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch29-smallpond-duckdb-on-3FS-serverless-parquet-shuffle",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch29-mooncake-transfer-engine-multi-nic-rdma-kv-pool",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch29-mooncake-early-rejection-and-sla-goodput-controller",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch29-ktransformers-gpu-mla-and-cpu-amx-numa-expert-offload",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch29-deepseek-fullstack-cost-and-efficiency-synthesis",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  }
+]
