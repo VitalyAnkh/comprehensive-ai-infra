@@ -51,25 +51,25 @@ h2s = re.findall(r'^## (.+)$', s, re.M)
 check('last H2 is 本章小结', len(h2s) >= 6 and h2s[-1].strip() == '本章小结')
 
 exercises = re.findall(r'^>\s*\*\*(?:练习|实验) 22-(\d+)[：:（]', s, re.M)
-check('ten exercises 22-1 to 22-10 in order', exercises == [str(i) for i in range(1, 11)])
+check('twelve exercises 22-1 to 22-12 in order', exercises == [str(i) for i in range(1, 13)])
 
 code_blocks = re.findall(r'```python\n.*?```', s, re.S)
-check('six production python code blocks', len(code_blocks) == 6 and len(re.findall(r'```', s)) == 12)
+check('seven production python code blocks', len(code_blocks) == 7 and len(re.findall(r'```', s)) == 14)
 
 worked_examples = re.findall(r'^>\s*\*\*算例\s*22-', s, re.M)
-check('five standardized blockquote worked examples', len(worked_examples) == 5)
+check('seven standardized blockquote worked examples', len(worked_examples) == 7)
 
 table_captions = re.findall(r'^\*表 22-(\d+)　', s, re.M)
-check('six standardized italic table captions 22-1 to 22-6', table_captions == [str(i) for i in range(1, 7)])
+check('seven standardized italic table captions 22-1 to 22-7', table_captions == [str(i) for i in range(1, 8)])
 
 fig_index = json.loads((HERE / 'figure-index.json').read_text())
 fig_count = len(fig_index)
-check('sixteen figures in figure-index.json', fig_count == 16)
+check('eighteen figures in figure-index.json', fig_count == 18)
 captions = re.findall(r'^\*图 22-(\d+)(?:：|　)', s, re.M)
-check('sequential captions 22-1 to 22-16', sorted(captions, key=int) == [str(i) for i in range(1, fig_count + 1)])
+check('sequential captions 22-1 to 22-18', sorted(captions, key=int) == [str(i) for i in range(1, fig_count + 1)])
 
 imgs = re.findall(r'!\[.+?\]\((ch22/[^)]+)\)', s)
-check('sixteen active illustrations match figure-index.json', set(imgs) == {row.get('asset') or f"ch22/{row['file']}" for row in fig_index} and len(imgs) == 16)
+check('eighteen active illustrations match figure-index.json', set(imgs) == {row.get('asset') or f"ch22/{row['file']}" for row in fig_index} and len(imgs) == 18)
 
 for rel in imgs:
     p = md.parent / rel
@@ -87,7 +87,7 @@ check('local links exist', not missing)
 
 defs = re.findall(r'^\[\^([^\]]+)\]:', s, re.M)
 refs = re.findall(r'\[\^([^\]]+)\](?!:)', s)
-check('all footnotes used and defined once', set(defs) == set(refs) and len(defs) == len(set(defs)) and len(defs) >= 8)
+check('all footnotes used and defined once', set(defs) == set(refs) and len(defs) == len(set(defs)) and len(defs) >= 20)
 
 for name, key in [('sources.json', 'sources'), ('manifest.json', 'outputs')]:
     data = json.loads((HERE / name).read_text())[key]
@@ -100,7 +100,7 @@ check('no formula errors', not math_val['errors'] and 'katex-error' not in page)
 layout_val = json.loads((HERE / 'teaching-layout-validation.json').read_text())
 check(
     'book-size figure layout',
-    len(layout_val) == 16 and all(r['width_pt'] == 420 and r['min_label_pt'] >= 11 and not r['text_extent_warnings'] for r in layout_val),
+    len(layout_val) == 18 and all(r['width_pt'] == 420 and r['min_label_pt'] >= 11 and not r['text_extent_warnings'] for r in layout_val),
 )
 
 d = json.loads((HERE / 'figure-data.json').read_text())
@@ -110,6 +110,15 @@ check(
     barge['client_playback_frame'] == 54
     and barge['unplayed_lookahead_frames'] == 11
     and barge['rolled_back_kv_tokens'] == 187,
+)
+av22 = d['avatar_lipsync_and_edge_sfu_mesh']
+check(
+    'examples 22-6 and 22-7 avatar lip-sync alignment and global edge SFU mesh',
+    close(av22['aligned_steady_skew_ms'], 18.0)
+    and close(av22['aligned_p99_skew_ms'], 33.0)
+    and close(av22['avatar_ttfa_ms'], 190.0)
+    and close(av22['ttfa_edge_ms'], 181.5)
+    and close(av22['bw_saving_pct'], 97.71),
 )
 
 passed = sum(1 for c in checks if c['passed'])

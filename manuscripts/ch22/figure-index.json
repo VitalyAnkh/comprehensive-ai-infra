@@ -232,5 +232,35 @@
     "TeachingRole": "收束第 22 章等时节拍、Temporal+Depth 图融合与打断游标对齐的完整技术闭环",
     "figure": "22-16",
     "name": "ch22-full-duplex-omni-streaming-infrastructure-synthesis"
+  },
+  {
+    "figure_id": "图 22-17",
+    "number": 17,
+    "file": "ch22-realtime-avatar-lip-sync-audio-video-jitter-alignment.svg",
+    "asset": "ch22/ch22-realtime-avatar-lip-sync-audio-video-jitter-alignment.svg",
+    "section": "22.4.2",
+    "caption": "实时 3D 数字人唇形渲染管线与基于 RTP 绝对时间戳的 < 40 ms 音画同步抖动缓冲对齐（算例 22-6）",
+    "source_refs": [
+      "experiments/ch22/22-03/run.py",
+      "manuscripts/ch22/figure-data.json"
+    ],
+    "TeachingRole": "展示 26 ms 客户端音频补偿延迟如何将数字人音画偏斜从 44/59 ms 压至 18/33 ms（< 40 ms）",
+    "figure": "22-17",
+    "name": "ch22-realtime-avatar-lip-sync-audio-video-jitter-alignment"
+  },
+  {
+    "figure_id": "图 22-18",
+    "number": 18,
+    "file": "ch22-global-edge-webrtc-sfu-to-gpu-duplex-mesh.svg",
+    "asset": "ch22/ch22-global-edge-webrtc-sfu-to-gpu-duplex-mesh.svg",
+    "section": "22.4.2",
+    "caption": "全球 Anycast 边缘 WebRTC SFU 就近终结、边缘 RVQ 词元卸载与跨洋骨干专线全双工媒体网格（算例 22-7）",
+    "source_refs": [
+      "experiments/ch22/22-03/run.py",
+      "manuscripts/ch22/figure-data.json"
+    ],
+    "TeachingRole": "证明全球边缘 SFU 卸载与跨洋专线 RVQ 中继将跨洲 TTFA 从 304 ms 压至 181.5 ms 并省 97.71% 干线带宽",
+    "figure": "22-18",
+    "name": "ch22-global-edge-webrtc-sfu-to-gpu-duplex-mesh"
   }
 ]

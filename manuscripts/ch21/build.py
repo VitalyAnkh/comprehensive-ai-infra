@@ -375,6 +375,42 @@ def build_chapter() -> None:
         '第 21 章收束：记忆分层、环境分叉与工具幂等构成智能体三大支柱',
     )
 
+    draw_dual_band(
+        ex,
+        'ch21-speculative-tool-execution-and-rollback-dag',
+        '多智能体 DAG 关键路径投机工具预执行（算例 21-7）',
+        'teal',
+        [
+            ('传统串行等待基线\n600 ms 模型 + 1,400 ms 工具\n4 阶段累计 8,000.0 ms', 'orange'),
+            ('Draft 100 ms 投机预启动\n命中占 80%，净耗时 1,050 ms\n4 阶段期望 4,969.6 ms（1.61×）', 'teal'),
+        ],
+        '12.0 ms CoW 快照回滚兜底与 1.25% 超低盈亏平衡线',
+        'purple',
+        [
+            ('命中（p = 0.80）：直接提交\n掩盖 950 ms 关键路径等待\n下游节点流水线无缝衔接', 'blue'),
+            ('误判（p = 0.20）：12 ms 回滚\nFirecracker 快照瞬时复位\n命中率 > 1.25% 即稳赚加速', 'purple'),
+        ],
+        '12 ms 微虚机快照赋予投机工具执行廉价反悔权，削减 37.88% 端到端时延',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch21-gui-incremental-region-of-interest-vision-token-cache',
+        'GUI 智能体增量脏矩形 ROI 视觉缓存与 DOM 剪枝（算例 21-6）',
+        'blue',
+        [
+            ('全量重编码基线（30 步）\n2,400 视觉 + 3,600 DOM/步\n累计 180,000 词元 | 1,350 ms', 'orange'),
+            ('脏矩形 ROI 视觉块复用\n仅编码 12.5% 变化瓦片（300）\n87.5% 静态背景直接复用 KV', 'teal'),
+        ],
+        'Set-of-Marks 可交互 DOM 剪枝与双通道坐标一致性门禁',
+        'teal',
+        [
+            ('视口可交互 DOM 子树提取\n3,600 词元压至 450 词元/步\n30 步总词元 24,600（省 86.33%）', 'blue'),
+            ('30 步 ViT 总耗时 251.62 ms\n视觉编码加速 5.37×\n词元上下文压缩 7.32×', 'purple'),
+        ],
+        '结合脏矩形视觉块哈希复用与可交互 DOM 剪枝，根治 GUI 智能体上下文爆炸',
+    )
+
     outputs = ex.finish()
 
     fig_index = [
@@ -537,6 +573,26 @@ def build_chapter() -> None:
             "caption": "自主智能体基础设施从四级分层 KV 记忆、12 ms CoW 微虚机沙箱到幂等安全网关的全栈总图",
             "source_refs": ["experiments/ch21/21-01/run.py", "experiments/ch21/21-02/run.py", "manuscripts/ch21/figure-data.json"],
             "TeachingRole": "收束第 21 章记忆分层化、环境可分叉化与工具执行幂等化的完整工程体系"
+        },
+        {
+            "figure_id": "图 21-17",
+            "number": 17,
+            "file": "ch21-speculative-tool-execution-and-rollback-dag.svg",
+            "asset": "ch21/ch21-speculative-tool-execution-and-rollback-dag.svg",
+            "section": "21.4.2",
+            "caption": "多智能体工作流 DAG 关键路径投机工具预执行（Speculative Tool Execution）与 CoW 沙箱毫秒级误判回滚流水线（算例 21-7）",
+            "source_refs": ["experiments/ch21/21-03/run.py", "manuscripts/ch21/figure-data.json"],
+            "TeachingRole": "展示 Draft 投机预启动工具与 12 ms CoW 回滚如何将 4 阶段 DAG 延迟从 8,000 ms 压至 4,969.6 ms（1.61x）"
+        },
+        {
+            "figure_id": "图 21-18",
+            "number": 18,
+            "file": "ch21-gui-incremental-region-of-interest-vision-token-cache.svg",
+            "asset": "ch21/ch21-gui-incremental-region-of-interest-vision-token-cache.svg",
+            "section": "21.4.2",
+            "caption": "GUI 智能体（OSWorld / WebArena）增量脏矩形 ROI 视觉块哈希复用与 Set-of-Marks 可交互 DOM 剪枝流水线（算例 21-6）",
+            "source_refs": ["experiments/ch21/21-03/run.py", "manuscripts/ch21/figure-data.json"],
+            "TeachingRole": "证明 12.5% 脏矩形视觉缓存与可交互 DOM 剪枝实现 7.32 倍词元压缩与 5.37 倍 ViT 编码提速"
         }
     ]
     for row in fig_index:
@@ -594,6 +650,7 @@ def build_chapter() -> None:
         HERE / 'figure-index.json',
         ROOT / 'experiments/ch21/21-01/run.py',
         ROOT / 'experiments/ch21/21-02/run.py',
+        ROOT / 'experiments/ch21/21-03/run.py',
     ]
     if md.exists():
         sources.append(md)

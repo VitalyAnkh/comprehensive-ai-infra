@@ -2,15 +2,15 @@
   "sources": [
     {
       "path": "manuscripts/ch21/build.py",
-      "sha256": "332b81bce312646d9247da849290d1aa356396fa66c23fc080c3fa54e431abff"
+      "sha256": "9e347cde57fa2cd640c4546fc411f6d0e0776376a075e0c3333adfb171cad497"
     },
     {
       "path": "manuscripts/ch21/figure-data.json",
-      "sha256": "54c3aa9519b227ca7144ae417645762d1005318030f3ae692087696bc092e46a"
+      "sha256": "53eaa03233c8560d68b978408052254bd59923b6961f33f60b659f58c64ee0a8"
     },
     {
       "path": "manuscripts/ch21/figure-index.json",
-      "sha256": "1f19ee604b1c5523107aeab3069ae94e26ea5b31c81322c6b11fa65c579d1d12"
+      "sha256": "73e5e4d4ccc751853e6731e5d89f8eeb78e9578292e06f5c695f67ad5c4bd2b1"
     },
     {
       "path": "experiments/ch21/21-01/run.py",
@@ -21,8 +21,12 @@
       "sha256": "d811ad90c97321c2b4159b390d74a5d62b38ce97ad9c2ac5a570cd05c111dc3f"
     },
     {
+      "path": "experiments/ch21/21-03/run.py",
+      "sha256": "d710d02497701e03fe0751eeaf274ec422e261a92d5d8ca60555a38b1880df32"
+    },
+    {
       "path": "manuscripts/21-自主智能体基础设施（Agentic Infra）、Computer Use 沙箱与分层 KV 记忆底座.md",
-      "sha256": "7b414e48df5223afed3fc214bfd429d0bfba6e74c6fa250a29008e9fe3a4c60c"
+      "sha256": "52f5ee7edc9b83ad594596e355f80d1d8ee425788ee7991da093af9ebff4de04"
     }
   ]
 }

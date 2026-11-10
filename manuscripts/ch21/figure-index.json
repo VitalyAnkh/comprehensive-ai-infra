@@ -232,5 +232,35 @@
     "TeachingRole": "收束第 21 章记忆分层化、环境可分叉化与工具执行幂等化的完整工程体系",
     "figure": "21-16",
     "name": "ch21-autonomous-agent-infrastructure-full-stack-map"
+  },
+  {
+    "figure_id": "图 21-17",
+    "number": 17,
+    "file": "ch21-speculative-tool-execution-and-rollback-dag.svg",
+    "asset": "ch21/ch21-speculative-tool-execution-and-rollback-dag.svg",
+    "section": "21.4.2",
+    "caption": "多智能体工作流 DAG 关键路径投机工具预执行（Speculative Tool Execution）与 CoW 沙箱毫秒级误判回滚流水线（算例 21-7）",
+    "source_refs": [
+      "experiments/ch21/21-03/run.py",
+      "manuscripts/ch21/figure-data.json"
+    ],
+    "TeachingRole": "展示 Draft 投机预启动工具与 12 ms CoW 回滚如何将 4 阶段 DAG 延迟从 8,000 ms 压至 4,969.6 ms（1.61x）",
+    "figure": "21-17",
+    "name": "ch21-speculative-tool-execution-and-rollback-dag"
+  },
+  {
+    "figure_id": "图 21-18",
+    "number": 18,
+    "file": "ch21-gui-incremental-region-of-interest-vision-token-cache.svg",
+    "asset": "ch21/ch21-gui-incremental-region-of-interest-vision-token-cache.svg",
+    "section": "21.4.2",
+    "caption": "GUI 智能体（OSWorld / WebArena）增量脏矩形 ROI 视觉块哈希复用与 Set-of-Marks 可交互 DOM 剪枝流水线（算例 21-6）",
+    "source_refs": [
+      "experiments/ch21/21-03/run.py",
+      "manuscripts/ch21/figure-data.json"
+    ],
+    "TeachingRole": "证明 12.5% 脏矩形视觉缓存与可交互 DOM 剪枝实现 7.32 倍词元压缩与 5.37 倍 ViT 编码提速",
+    "figure": "21-18",
+    "name": "ch21-gui-incremental-region-of-interest-vision-token-cache"
   }
 ]

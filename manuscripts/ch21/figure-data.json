@@ -83,5 +83,21 @@
     "rag_schema_tokens": 1440,
     "schema_reduction_pct": 99.2,
     "schema_compression_x": 125.0
+  },
+  "gui_roi_and_speculative_dag": {
+    "source": "experiments/ch21/21-03/run.py (GUI Incremental ROI Vision Cache & Speculative Tool DAG)",
+    "steps": 30,
+    "naive_total_tokens": 180000,
+    "opt_total_tokens": 24600,
+    "token_compression_x": 7.32,
+    "token_saving_pct": 86.33,
+    "naive_vit_total_ms": 1350.0,
+    "opt_vit_total_ms": 251.62,
+    "vit_speedup_x": 5.37,
+    "dag_seq_total_ms": 8000.0,
+    "dag_expected_total_ms": 4969.6,
+    "dag_speedup_x": 1.61,
+    "dag_latency_reduction_pct": 37.88,
+    "breakeven_hit_prob_pct": 1.25
   }
 }

@@ -70,7 +70,7 @@ $$
 当智能体在第 $k$ 轮吐出工具调用指令（如 `<tool_call>bash("pytest tests/test_core.py")</tool_call>`）后，推理引擎必须等待外部沙箱返回执行结果才能启动第 $k+1$ 轮推理。在这段长达 $t_{\mathrm{wait}} \in [5, 45]\ \mathrm{s}$ 的**工具等待空白期（Tool-Wait Hiatus）**内，该会话已经积累了长度为 $L_{\mathrm{prefix}}$（例如 $65,536$ 词元）、体积达数吉字节（GiB）的 KV 缓存。此时，底层推理调度器面临一个严峻的三岔口决策[^ch21-2]：
 
 1. **策略 I：原地驻留 GPU HBM（Retain in HBM）**
-   将 $S_{\mathrm{KV}}(L_{\mathrm{prefix}})$ 字节的 KV 缓存直接锁死在昂贵的 HBM3e 显存中，等待工具返回。其优势是恢复时延 $T_{\mathrm{resume}}^{\mathrm{retain}} = 0$；但代价是整个 $t_{\mathrm{wait}}$ 期间该显存块无法服务其他活跃请求，产生线性增长的显存空转机会成本：
+   将 $S_{\mathrm{KV}}(L_{\mathrm{prefix}})$ 字节的 KV 缓存直接固定保留在昂贵的 HBM3e 显存中，等待工具返回。其优势是恢复时延 $T_{\mathrm{resume}}^{\mathrm{retain}} = 0$；但代价是整个 $t_{\mathrm{wait}}$ 期间该显存块无法服务其他活跃请求，产生线性增长的显存空转机会成本：
    $$C_{\mathrm{retain}}(t_{\mathrm{wait}}) = S_{\mathrm{KV}} \cdot c_{\mathrm{HBM}} \cdot t_{\mathrm{wait}}$$
    其中 $c_{\mathrm{HBM}}$ 为单位显存容量每秒的硬件折旧与算力机会租金（单位：$\mathrm{USD / (GiB \cdot s)}$）。当单卡并发运行数十个智能体且平均等待 $15\ \mathrm{s}$ 时，高达 $85\%$ 以上的 HBM 空间将被处于“睡眠等工具”状态的死缓存填满，导致 GPU Tensor Core 因无法接纳新批次而严重饥饿。
 2. **策略 II：立即丢弃、工具返回后全量重算（Evict & Recompute）**
@@ -93,7 +93,7 @@ $$
 
 > **算例 21-1（40 轮编程智能体 WORM 前缀复用率与工具等待换出收益核算）**
 > **已知条件**：某基于 `Llama-3-70B`（GQA 8 KV 头，80 层，头维 128，BF16 下单词元 KV 体积 $v_{\mathrm{tok}} = 2 \times 80 \times 2 \times 8 \times 128 = 327,680\ \mathrm{B} = 320\ \mathrm{KiB}$，或采用 FP8 KV / 紧凑 GQA 配置下单词元 KV 体积 $v_{\mathrm{tok}} = 144\ \mathrm{KiB/token}$）的自主编程智能体执行 $K = 40$ 轮排障任务。初始提示词 $L_0 = 2,000$ 词元，每轮生成动作 $L_{\mathrm{act}} = 200$ 词元、环境返回日志 $L_{\mathrm{obs}} = 1,800$ 词元（每轮净增 $\Delta L = 2,000$ 词元）。在第 33 轮附近，当前上下文前缀达到 $L_{\mathrm{prefix}} = 65,536$ 词元（按 $v_{\mathrm{tok}} = 144\ \mathrm{KiB/token}$ 计），此时智能体发起一次耗时 $t_{\mathrm{wait}} = 15.0\ \mathrm{s}$ 的单元测试调用。单节点 PCIe 5.0 有效换入带宽 $B_{\mathrm{pcie}} = 48.0\ \mathrm{GiB/s}$，本地 GPU 重算 $65,536$ 词元需耗时 $T_{\mathrm{recompute}} = 500.0\ \mathrm{ms}$，HBM 与分层换出的临界等待时间阈值 $t^* = 2.16\ \mathrm{s}$。
-> **求解目标**：（1）40 轮累计预填充词元数 $N_{\mathrm{prefill}}^{\mathrm{cum}}$、唯一新写词元数 $N_{\mathrm{unique}}$、WORM 重复读取率 $\eta_{\mathrm{WORM}}$ 与预填充/解码比 $\mathcal{R}_{\mathrm{P/D}}$；（2）$65,536$ 词元 KV 缓存的字节体积 $S_{\mathrm{KV}}$、PCIe 5.0 换入耗时 $T_{\mathrm{swap\_in}}$ 相比重算的加速比，以及在 $15.0\ \mathrm{s}$ 工具等待期内执行分层换出相比原地锁死 HBM 的有效显存租金节省率。
+> **求解目标**：（1）40 轮累计预填充词元数 $N_{\mathrm{prefill}}^{\mathrm{cum}}$、唯一新写词元数 $N_{\mathrm{unique}}$、WORM 重复读取率 $\eta_{\mathrm{WORM}}$ 与预填充/解码比 $\mathcal{R}_{\mathrm{P/D}}$；（2）$65,536$ 词元 KV 缓存的字节体积 $S_{\mathrm{KV}}$、PCIe 5.0 换入耗时 $T_{\mathrm{swap\_in}}$ 相比重算的加速比，以及在 $15.0\ \mathrm{s}$ 工具等待期内执行分层换出相比原地驻留 HBM 的有效显存租金节省率。
 > **逐步解答**：
 > 1. **40 轮 WORM 词元账本**：
 >    最后一轮（第 40 轮）的上下文长度即唯一写入词元总数为：
@@ -232,7 +232,7 @@ $$
 
 ### 21.2.2 当网络带宽慢于重算时：面向传输的 KV 残差熵编码（`CacheGen`）与回本判据
 
-在跨机架或跨可用区（Cross-Rack / Cross-AZ）的云环境里，并非所有推理节点都配备满血的 $400\ \mathrm{Gbps}$ RoCEv2 专网。许多推理实例仅共享 $25\text{–}100\ \mathrm{Gbps}$（约 $2.9\text{–}11.6\ \mathrm{GiB/s}$ 有效吞吐）的标准数据中心以太网。此时会出现一个极其反直觉的工程现象：**直接通过网络搬运未压缩的原始 FP16/BF16 KV 缓存，竟然比在本地 GPU 上从头重算还要慢得多**。
+在跨机架或跨可用区（Cross-Rack / Cross-AZ）的云环境里，并非所有推理节点都配备满血的 $400\ \mathrm{Gbps}$ RoCEv2 专网。许多推理实例仅共享 $25\text{–}100\ \mathrm{Gbps}$（约 $2.9\text{–}11.6\ \mathrm{GiB/s}$ 有效吞吐）的标准数据中心以太网。此时会出现一个极具代表性的工程现象：**直接通过网络搬运未压缩的原始 FP16/BF16 KV 缓存，反而比在本地 GPU 上从头重算还要慢得多**。
 
 让我们严格推导**跨网络传输 KV 缓存击败本地重算的临界网络带宽 $B_{\mathrm{net}}^{\mathrm{crit}}$**。设一段长度为 $L$ 的上下文，其未压缩 KV 体积为 $S_{\mathrm{KV}} = L \cdot v_{\mathrm{tok}}$，本地 GPU 重算它的耗时为 $T_{\mathrm{recompute}}(L)$。若要让原始网络传输耗时 $T_{\mathrm{raw\_net}} = \frac{S_{\mathrm{KV}}}{B_{\mathrm{net}}}$ 短于本地重算耗时，网络有效带宽必须满足：
 
@@ -864,6 +864,164 @@ if __name__ == "__main__":
 
 *图 21-16　第 21 章自主智能体基础设施从分层 KV 记忆、毫秒级 CoW 沙箱到幂等安全网关的全栈总图*
 
+#### 智能体长程浏览器/GUI 视觉动作流（WebArena / OSWorld）的增量 DOM+截图双通道编码缓存与多智能体工作流有向无环图（DAG）关键路径投机预执行（Speculative Tool Execution）
+
+当自主智能体从纯文本命令行（CLI）走向**图形用户界面与复杂浏览器交互（Computer Use / GUI Agents，如在 `OSWorld`、`WebArena`、`VisualWebArena` 与 `WindowsAgentArena` 中操作电子表格、IDE 与企业 ERP 系统）**[^ch21-9][^ch21-10][^ch21-11]，并进一步扩展为多智能体协同有向无环图（Multi-Agent Workflow DAG）[^ch21-12][^ch21-13]时，推理与沙箱底座会遭遇另外两座严峻的性能高墙：**（1）连续高清屏幕截图与臃肿网页 DOM 树引发的多模态视觉词元爆炸**；**（2）多智能体长链路串行依赖（模型思考 $\to$ 外部慢速工具调用 $\to$ 下一跳模型思考）导致的端到端交互延迟失控**。
+
+![图 21-17：多智能体工作流 DAG 关键路径投机工具预执行（Speculative Tool Execution）与 CoW 沙箱毫秒级误判回滚流水线（算例 21-7）](ch21/ch21-speculative-tool-execution-and-rollback-dag.svg)
+
+*图 21-17　多智能体工作流 DAG 关键路径投机工具预执行（Speculative Tool Execution）与 CoW 沙箱毫秒级误判回滚流水线（算例 21-7）*
+
+如图 21-17 所示，针对多跳工具调用链路中的长尾等待延迟，现代智能体编排运行时（如融合投机执行的 `LangGraph`、`AutoGen` 与 `AI Metropolis` 调度器）将计算机体系结构中的“分支预测与投机执行（Speculative Execution）”引入工具沙箱层[^ch21-14][^ch21-15][^ch21-16]：
+1. **基于小模型/前缀语法引导的投机工具预启动（Draft-Guided Speculative Tool Launch）**：在主规划大模型（如 70B/671B 模型，单步推理耗时 $T_{\mathrm{llm}} = 600.0\ \mathrm{ms}$）开始生成思维链的同时，轻量级 Draft 预测器（或流式 JSON 语法前缀解码器）在 $t_{\mathrm{draft}} = 100.0\ \mathrm{ms}$ 内提前预测出即将调用的外部工具签名与高概率参数（如只读数据库查询、代码文件检索或编译预热），并立即在**隔离的 Firecracker CoW 沙箱分支**中异步启动耗时 $T_{\mathrm{tool}} = 1,400.0\ \mathrm{ms}$ 的工具执行；
+2. **验证提交与毫秒级误判回滚（Commit on Hit vs. 12 ms CoW Rollback on Miss）**：当主模型在 $t = 600.0\ \mathrm{ms}$ 完成完整推理后，网关比对主模型最终输出的规范化工具参数与投机预启动参数：若**预测命中**（典型命中率 $p_{\mathrm{hit}} = 75\%\text{–}85\%$），工具已经并行跑完了 $500.0\ \mathrm{ms}$，且可与下游智能体的上下文预热流水重叠 $\Delta t_{\mathrm{pipe}} = 450.0\ \mathrm{ms}$，使单跳关键路径净耗时从 $2,000.0\ \mathrm{ms}$ 骤降至 **$1,050.0\ \mathrm{ms}$**；若**预测误判**，网关立即丢弃投机分支，利用 21.3.2 节的 CoW 快照机制在 **$t_{\mathrm{rb}} = 12.0\ \mathrm{ms}$** 内无副作用回滚沙箱状态并启动正确工具调用。由于回滚代价极小（$12.0\ \mathrm{ms} \ll 950.0\ \mathrm{ms}$ 命中收益），只要预测命中率超过 **$1.25\%$** 的盈亏平衡线，投机工具预执行即可稳定降低端到端延迟。
+
+![图 21-18：GUI 智能体（OSWorld / WebArena）增量脏矩形 ROI 视觉块哈希复用与 Set-of-Marks 可交互 DOM 剪枝流水线（算例 21-6）](ch21/ch21-gui-incremental-region-of-interest-vision-token-cache.svg)
+
+*图 21-18　GUI 智能体（OSWorld / WebArena）增量脏矩形 ROI 视觉块哈希复用与 Set-of-Marks 可交互 DOM 剪枝流水线（算例 21-6）*
+
+与此同时，在 `OSWorld` 与 `WebArena` 等多模态 GUI 智能体场景中，若每一步鼠标点击或键盘输入后都将整张 $1920 \times 1080$ 屏幕截图（切分为 $N_{\mathrm{vis, full}} = 2,400$ 个视觉 Patch 词元）与完整原始网页 DOM 树（$N_{\mathrm{dom, raw}} = 3,600$ 个文本词元）全量追加进上下文，仅 $30$ 步操作就会堆积 **$180,000$ 个词元**，导致多模态 ViT 编码器与 LLM 预填充陷入严重的算力雪崩[^ch21-17][^ch21-18][^ch21-19][^ch21-20]。如图 21-18 所示，工业级 Computer Use 底座通过**增量脏矩形 ROI 视觉缓存（Dirty-Tile ROI Vision Token Cache）+ 可交互 Set-of-Marks（SoM）DOM 剪枝**双管齐下攻克这一瓶颈：
+- **桌面合成器脏矩形追踪与瓦片感知哈希复用**：在大多数 GUI 操作（如打开菜单、输入文本、悬停按钮）中，相邻两帧屏幕之间高达 **$85\%\text{–}90\%$ 的背景像素区域完全静止**。沙箱显示服务端（Wayland / X11 Damage 扩展）直接导出每步发生像素更新的脏矩形边界框（Dirty Bounding Boxes），或对 $16 \times 16$ 屏幕网格计算轻量级感知哈希；ViT 视觉编码器仅对发生变化的 **$\alpha_{\mathrm{dirty}} = 12.5\%$ 活跃 ROI 视觉块（每步仅 $300$ 个视觉词元）** 执行增量编码与跨帧位置注入，其余 $87.5\%$ 静态视觉块直接复用首帧已缓存的 KV 表示；
+- **视口可见可交互 DOM 子树提取（Interactive Set-of-Marks Pruning）**：剥离网页中占 $85\%$ 以上的不可见节点、内联 CSS 样式与纯装饰 `<div>` 容器，仅提取当前视口内具有点击/输入属性的交互元素及其屏幕坐标锚点标签（SoM ID），将每步 DOM 结构化描述从 $3,600$ 词元压缩至 **$450$ 词元**（压缩 $8.0\times$）；
+- **双通道坐标一致性校验（Cross-Channel Bounding-Box Verification）**：当模型输出点击动作 `click(som_id=42)` 时，沙箱前端在注入鼠标事件前先校验该 DOM 节点当前的实时布局矩形（`getBoundingClientRect()`）是否仍在最新脏矩形视觉块视野内，防止异步网页弹窗导致“盲点误触”。
+
+下面我们通过算例 21-6 与算例 21-7 严格核算双通道增量 GUI 缓存与 DAG 关键路径投机工具预执行的工程收益账本：
+
+> **算例 21-6（GUI 智能体增量 ROI 视觉块哈希复用与双通道 DOM+截图词元压缩账本，锁定 `experiments/ch21/21-03/run.py`）**
+> **已知条件**：某 `OSWorld` / `WebArena` 桌面浏览器智能体连续执行 $T = 30$ 步 GUI 操作。每步采集 $1920 \times 1080$ 屏幕截图（全量切分为 $N_{\mathrm{vis, full}} = 2,400$ 个视觉词元，全图 ViT 编码耗时 $t_{\mathrm{vit, full}} = 45.0\ \mathrm{ms}$）与原始 DOM 树（$N_{\mathrm{dom, raw}} = 3,600$ 个文本词元）。启用双通道增量优化后：首帧（$t=1$）全量编码 $2,400$ 个视觉词元；后续 $29$ 个增量步平均每步仅有 $\alpha_{\mathrm{dirty}} = 12.5\%$ 的屏幕瓦片发生变化（每步增量 ViT 编码耗时按活跃块比例缩放并含 $1.50\ \mathrm{ms}$ 哈希与 ROI 裁剪固定开销）；同时启用可交互 Set-of-Marks DOM 剪枝，将每步 DOM 文本词元压缩至 $N_{\mathrm{dom, pruned}} = 450$ 个词元。
+> **求解目标**：（1）求全量基线在 $30$ 步轨迹中的累计多模态观测词元数 $N_{\mathrm{tot, naive}}$ 与累计 ViT 视觉编码耗时 $T_{\mathrm{vit, naive}}$；（2）求增量 ROI 视觉缓存 + DOM 剪枝方案在 $30$ 步中的累计观测词元数 $N_{\mathrm{tot, opt}}$、词元压缩倍数、词元节省百分比，以及累计 ViT 视觉编码耗时 $T_{\mathrm{vit, opt}}$ 与 ViT 编码加速比。
+> **逐步解答**：
+> 1. **全量重编码基线账本**：
+>    - 单步观测词元数：$N_{\mathrm{step, naive}} = 2,400 + 3,600 = \mathbf{6,000\ \text{tokens/step}}$；
+>    - 30 步累计观测词元数：$N_{\mathrm{tot, naive}} = 30 \times 6,000 = \mathbf{180,000\ \text{tokens}}$；
+>    - 30 步累计 ViT 编码耗时：$T_{\mathrm{vit, naive}} = 30 \times 45.0\ \mathrm{ms} = \mathbf{1,350.00\ \mathrm{ms}}$。
+> 2. **增量 ROI 视觉缓存 + 可交互 DOM 剪枝账本**：
+>    - 首帧（$t=1$）词元数：$2,400 + 450 = \mathbf{2,850\ \text{tokens}}$；
+>    - 后续 $29$ 步（$t=2 \dots 30$）每步增量视觉词元数为 $2,400 \times 0.125 = \mathbf{300\ \text{tokens}}$，加上剪枝后 DOM $450$ 词元，每步仅新增 $300 + 450 = \mathbf{750\ \text{tokens/step}}$；
+>    - 30 步累计多模态观测词元数：
+>      $$N_{\mathrm{tot, opt}} = 2,850 + 29 \times 750 = 2,850 + 21,750 = \mathbf{24,600\ \text{tokens}}$$
+>      实现 **$\frac{180,000}{24,600} \approx \mathbf{7.32\times}$** 的多模态上下文压缩（净节省 **$1 - \frac{24,600}{180,000} \approx \mathbf{86.33\%}$** 的词元）；
+>    - 增量步单步 ViT 编码耗时：$t_{\mathrm{vit, inc}} = 45.0 \times 0.125 + 1.50 = 5.625 + 1.50 = \mathbf{7.125\ \mathrm{ms}}$；
+>    - 30 步累计 ViT 编码耗时：$T_{\mathrm{vit, opt}} = 45.0 + 29 \times 7.125 = 45.0 + 206.625 = \mathbf{251.625\ \mathrm{ms}} \approx \mathbf{251.62\ \mathrm{ms}}$，实现 **$\frac{1,350.0}{251.625} \approx \mathbf{5.37\times}$** 的视觉编码加速。
+
+> **算例 21-7（多智能体 DAG 关键路径投机工具预执行 Speculative Tool Execution 与误判回滚净加速核算，锁定 `experiments/ch21/21-03/run.py`）**
+> **已知条件**：某多智能体软件修复工作流包含 $K = 4$ 个串行关键路径阶段。每个阶段的主模型推理耗时为 $T_{\mathrm{llm}} = 600.0\ \mathrm{ms}$，外部沙箱工具执行耗时为 $T_{\mathrm{tool}} = 1,400.0\ \mathrm{ms}$。启用关键路径投机工具预执行后：Draft 预测器在每阶段开始后 $t_{\mathrm{draft}} = 100.0\ \mathrm{ms}$ 即在 CoW 沙箱分支中投机预启动工具调用，并可与下游阶段预热进一步流水重叠 $\Delta t_{\mathrm{pipe}} = 450.0\ \mathrm{ms}$（即预测命中时该阶段在关键路径上的净耗时为 $T_{\mathrm{hit}} = t_{\mathrm{draft}} + T_{\mathrm{tool}} - \Delta t_{\mathrm{pipe}} = 1,050.0\ \mathrm{ms}$）；当预测误判时，在主模型推理结束（$600.0\ \mathrm{ms}$）后耗费 $t_{\mathrm{rb}} = 12.0\ \mathrm{ms}$ 执行 CoW 沙箱回滚并按真实参数重新运行工具（即误判时阶段耗时为 $T_{\mathrm{miss}} = T_{\mathrm{llm}} + t_{\mathrm{rb}} + T_{\mathrm{tool}} = 2,012.0\ \mathrm{ms}$）。设实测投机工具预测命中率为 $p_{\mathrm{hit}} = 0.80$。
+> **求解目标**：（1）求传统串行等待执行下 4 阶段关键路径总延迟 $T_{\mathrm{seq}}$；（2）求投机工具预执行下的单阶段期望耗时 $\mathbb{E}[T_{\mathrm{stage}}]$、4 阶段期望总延迟 $\mathbb{E}[T_{\mathrm{spec}}]$、端到端加速比与延迟削减百分比；（3）推导使投机工具预执行优于传统串行执行（$\mathbb{E}[T_{\mathrm{stage}}] < T_{\mathrm{llm}} + T_{\mathrm{tool}}$）所需的最小盈亏平衡命中率阈值 $p^*$。
+> **逐步解答**：
+> 1. **传统串行关键路径总延迟**：
+>    $$T_{\mathrm{seq}} = 4 \times (600.0 + 1,400.0) = 4 \times 2,000.0 = \mathbf{8,000.00\ \mathrm{ms}}$$
+> 2. **投机工具预执行期望延迟与净加速比**：
+>    - 单阶段期望关键路径耗时：
+>      $$\mathbb{E}[T_{\mathrm{stage}}] = p_{\mathrm{hit}} \cdot T_{\mathrm{hit}} + (1 - p_{\mathrm{hit}}) \cdot T_{\mathrm{miss}} = 0.80 \times 1,050.0 + 0.20 \times 2,012.0 = 840.0 + 402.4 = \mathbf{1,242.40\ \mathrm{ms}}$$
+>    - 4 阶段关键路径期望总延迟：
+>      $$\mathbb{E}[T_{\mathrm{spec}}] = 4 \times 1,242.40 = \mathbf{4,969.60\ \mathrm{ms}}$$
+>      相比串行基线（$8,000.00\ \mathrm{ms}$），端到端关键路径加速比达 **$\frac{8,000.00}{4,969.60} \approx \mathbf{1.61\times}$**，净削减延迟 **$3,030.40\ \mathrm{ms}$（节省 $37.88\%$）**。
+> 3. **盈亏平衡命中率阈值 $p^*$**：
+>    令 $p \cdot 1,050.0 + (1 - p) \cdot 2,012.0 < 2,000.0 \implies 2,012.0 - 962.0 p < 2,000.0 \implies 962.0 p > 12.0$：
+>    $$p^* = \frac{t_{\mathrm{rb}}}{T_{\mathrm{miss}} - T_{\mathrm{hit}}} = \frac{12.0}{962.0} \approx \mathbf{0.01247} \approx \mathbf{1.25\%}$$
+
+*表 21-5　GUI 智能体双通道增量编码缓存与多智能体 DAG 关键路径投机工具预执行性能对比*
+
+| 优化维度 | 传统全量重编码 / 串行阻塞基线 | 现代增量 ROI 缓存 + 投机工具预执行方案 | 核心锁定定量收益 |
+| --- | --- | --- | --- |
+| **30 步 GUI 视觉+DOM 词元数** | 每步 $2,400 + 3,600 = 6,000$，累计 **$180,000$** 词元 | 首帧 $2,850$ + 增量步 $750$，累计 **$24,600$** 词元 | 上下文压缩 **$7.32\times$**（省 **$86.33\%$**） |
+| **30 步 ViT 视觉编码总耗时** | 每步全图编码 $45.0\ \mathrm{ms}$，累计 **$1,350.00\ \mathrm{ms}$** | 仅编码 $12.5\%$ 脏瓦片，累计 **$251.62\ \mathrm{ms}$** | 视觉编码提速 **$5.37\times$** |
+| **4 阶段 DAG 关键路径延迟** | 串行等待模型与工具，总计 **$8,000.00\ \mathrm{ms}$** | $80\%$ 命中投机预启动 + $12\ \mathrm{ms}$ 回滚，期望 **$4,969.60\ \mathrm{ms}$** | 端到端提速 **$1.61\times$**（省 **$37.88\%$**） |
+| **投机预执行回滚代价与阈值** | 容器重启回滚耗时 $>1,000\ \mathrm{ms}$（难以回本） | Firecracker CoW 快照回滚仅 **$12.0\ \mathrm{ms}$** | 命中率 $> \mathbf{1.25\%}$ 即净赚 |
+
+下面的生产级参考代码完整实现了 GUI 智能体增量脏矩形 ROI 视觉缓存器与多智能体 DAG 关键路径投机工具预执行模拟器（对应配套实验 `experiments/ch21/21-03`）：
+
+```python
+from dataclasses import dataclass
+
+@dataclass
+class GUIIncrementalTokenCacheAndSpeculativeDAGEngine:
+    """
+    复现算例 21-6 与算例 21-7 (对应 experiments/ch21/21-03)：
+    1. GUI 智能体 (OSWorld / WebArena) 增量脏矩形 ROI 视觉词元复用与可交互 DOM 剪枝
+    2. 多智能体工作流 DAG 关键路径投机工具预执行 (Speculative Tool Execution) 与 12 ms CoW 回滚核算
+    """
+    steps: int = 30
+    full_vis_tokens: int = 2400
+    raw_dom_tokens: int = 3600
+    dirty_tile_ratio: float = 0.125
+    pruned_dom_tokens: int = 450
+    full_vit_ms: float = 45.0
+    hash_overhead_ms: float = 1.50
+
+    def audit_gui_incremental_cache(self) -> dict[str, float]:
+        naive_step_tokens = self.full_vis_tokens + self.raw_dom_tokens
+        naive_total_tokens = self.steps * naive_step_tokens
+        naive_vit_total_ms = self.steps * self.full_vit_ms
+
+        inc_vis_tokens = int(round(self.full_vis_tokens * self.dirty_tile_ratio))
+        first_step_tokens = self.full_vis_tokens + self.pruned_dom_tokens
+        inc_step_tokens = inc_vis_tokens + self.pruned_dom_tokens
+        opt_total_tokens = first_step_tokens + (self.steps - 1) * inc_step_tokens
+
+        inc_vit_step_ms = self.full_vit_ms * self.dirty_tile_ratio + self.hash_overhead_ms
+        opt_vit_total_ms = self.full_vit_ms + (self.steps - 1) * inc_vit_step_ms
+
+        return {
+            "naive_total_tokens": float(naive_total_tokens),
+            "opt_total_tokens": float(opt_total_tokens),
+            "token_compression_x": round(naive_total_tokens / opt_total_tokens, 2),
+            "token_saving_pct": round(100.0 * (1.0 - opt_total_tokens / naive_total_tokens), 2),
+            "naive_vit_total_ms": round(naive_vit_total_ms, 2),
+            "opt_vit_total_ms": round(opt_vit_total_ms, 2),
+            "vit_speedup_x": round(naive_vit_total_ms / opt_vit_total_ms, 2),
+        }
+
+    @staticmethod
+    def audit_speculative_dag_execution(
+        num_stages: int = 4,
+        t_llm_ms: float = 600.0,
+        t_tool_ms: float = 1400.0,
+        t_draft_ms: float = 100.0,
+        t_pipe_overlap_ms: float = 450.0,
+        t_rollback_ms: float = 12.0,
+        hit_prob: float = 0.80,
+    ) -> dict[str, float]:
+        t_stage_seq_ms = t_llm_ms + t_tool_ms
+        t_total_seq_ms = num_stages * t_stage_seq_ms
+
+        t_hit_ms = t_draft_ms + t_tool_ms - t_pipe_overlap_ms
+        t_miss_ms = t_llm_ms + t_rollback_ms + t_tool_ms
+        expected_stage_ms = hit_prob * t_hit_ms + (1.0 - hit_prob) * t_miss_ms
+        expected_total_ms = num_stages * expected_stage_ms
+        breakeven_hit_pct = 100.0 * t_rollback_ms / (t_miss_ms - t_hit_ms)
+
+        return {
+            "seq_total_ms": round(t_total_seq_ms, 2),
+            "hit_stage_ms": round(t_hit_ms, 2),
+            "miss_stage_ms": round(t_miss_ms, 2),
+            "expected_stage_ms": round(expected_stage_ms, 2),
+            "expected_total_ms": round(expected_total_ms, 2),
+            "dag_speedup_x": round(t_total_seq_ms / expected_total_ms, 2),
+            "latency_reduction_pct": round(100.0 * (1.0 - expected_total_ms / t_total_seq_ms), 2),
+            "breakeven_hit_prob_pct": round(breakeven_hit_pct, 2),
+        }
+
+
+if __name__ == "__main__":
+    eng = GUIIncrementalTokenCacheAndSpeculativeDAGEngine()
+    gui_rep = eng.audit_gui_incremental_cache()
+    dag_rep = eng.audit_speculative_dag_execution()
+    assert gui_rep["opt_total_tokens"] == 24600.0 and gui_rep["token_compression_x"] == 7.32
+    assert gui_rep["opt_vit_total_ms"] == 251.62 and gui_rep["vit_speedup_x"] == 5.37
+    assert dag_rep["expected_total_ms"] == 4969.60 and dag_rep["dag_speedup_x"] == 1.61
+    assert dag_rep["breakeven_hit_prob_pct"] == 1.25
+```
+
+在工业级 Computer Use 与多智能体编排集群中，上述两项机制形成了显著的乘数协同效应：
+- **空间维度的多模态词元瘦身**：增量脏矩形 ROI 缓存与可交互 SoM DOM 剪枝将单次 30 步桌面操作的多模态上下文从 $180,000$ 词元压降至 $24,600$ 词元，不仅使 ViT 视觉编码提速 $5.37\times$，更直接将每步增量预填充的 KV 缓存体积削减了 $86.33\%$，大幅拓宽了 21.1.2 节中单张 GPU 的并发会话容量；
+- **时间维度的关键路径折叠**：结合 Firecracker $12.0\ \mathrm{ms}$ CoW 快照回滚提供的“廉价反悔权”，多智能体 DAG 调度器敢于在主模型尚未完成冗长思维链解码时激进预启动下游工具调用，将原本串行阻塞的“思考—工具—思考”链条折叠为高并发流水线；
+- **多分支并行投机（Top-$B$ Speculative Tool Forking）**：当沙箱 CPU 池存在富余容量时，网关还可针对置信度接近的前 $B=2$ 个候选工具参数同时拉起两条隔离 CoW 微虚机分支并行预执行，待主模型确认后直接认领命中分支并瞬时销毁落选分支，进一步将复杂分支工具调用的有效命中率推高至 $92\%$ 以上；
+- **跨会话 UI 模板级 KV 共享**：对于同一企业 SaaS 系统（如 Salesforce、Jira 或内部工单平台）的固定导航栏与公共表单区域，全局基数树路由器可将首帧静态 UI 视觉块哈希提升为跨租户/跨会话共享的只读视觉前缀模板，使新会话连首帧的全图 ViT 编码开销也可进一步摊销；
+- **写操作工具的延迟提交屏障（Deferred Commit Barrier for Mutating Tools）**：在多智能体 DAG 投机执行中，只有被标注为幂等只读或运行在私有 CoW 沙箱内的工具允许提前发射；凡涉及外部第三方 API 真实写操作（如发送邮件、合并生产分支或触发支付）的节点，网关一律将其拦截在本地事务外发箱（Outbox）暂存区内，直至上游主模型完整输出并通过安全策略校验后才真正释放出境。
+
+因此，空间维度的脏矩形 ROI 视觉缓存、可交互 DOM 剪枝与时间维度的 DAG 关键路径投机工具预执行相互配合，共同支撑起高吞吐、低延迟的 GUI 智能体运行时底座。
+
 ---
 
 ## 常见误区
@@ -871,13 +1029,15 @@ if __name__ == "__main__":
 1. **误区一：“自主智能体只是多调几次大模型 API，直接复用现有的无状态聊天推理集群（Round-Robin / Least-Connections 负载均衡）即可。”**
    - **真相**：在 $40$ 轮智能体循环中，高达 $95.12\%$ 的预填充词元是对历史前缀的重复读取（WORM）。若使用无状态轮询路由，每轮请求都会落到没有历史缓存的节点上触发全量重算，导致首字延迟（TTFT）恶化 $3.0\times$ 以上、预填充算力浪费十余倍。必须部署感知四级 KV 缓存位置的全局基数树路由器（如 `NVIDIA Dynamo` / `SGLang HiCache`）。
 2. **误区二：“为了让智能体下一轮恢复最快，在等待外部代码编译或网页加载的 15 秒内，应该把它的 KV 缓存一直锁在 GPU HBM 显存里。”**
-   - **真相**：根据状态保留交叉点方程，当工具等待时长 $t_{\mathrm{wait}} > t^* = 2.16\ \mathrm{s}$ 时，原地锁死 HBM 的机会租金远超 PCIe 5.0 异步换出开销。在 $15\ \mathrm{s}$ 工具等待期内执行分层换出可节省 $85.6\%$ 的显存占用，且从主机 DRAM 换入 $9.0\ \mathrm{GiB}$ KV 仅需 $187.5\ \mathrm{ms}$（依然比重算快 $2.67\times$）。
+   - **真相**：根据状态保留交叉点方程，当工具等待时长 $t_{\mathrm{wait}} > t^* = 2.16\ \mathrm{s}$ 时，原地驻留 HBM 的机会租金远超 PCIe 5.0 异步换出开销。在 $15\ \mathrm{s}$ 工具等待期内执行分层换出可节省 $85.6\%$ 的显存占用，且从主机 DRAM 换入 $9.0\ \mathrm{GiB}$ KV 仅需 $187.5\ \mathrm{ms}$（依然比重算快 $2.67\times$）。
 3. **误区三：“只要把远端节点的 KV 缓存通过网络拉过来，就一定比本地 GPU 重新预填充更快。”**
    - **真相**：跨网络传输原始 KV 击败本地重算存在硬性的**临界网络带宽墙 $B_{\mathrm{net}}^{\mathrm{crit}} = S_{\mathrm{KV}} / T_{\mathrm{recompute}}$**（对于 $64\mathrm{K}$ 上下文高达 $18.0\ \mathrm{GiB/s} \approx 155\ \mathrm{Gbps}$）。在 $25\text{–}100\ \mathrm{Gbps}$ 跨机架标准以太网上，直接传原始 KV 反而比重算慢 $3$ 倍；必须结合 `CacheGen` 锚点残差量化与算术编码（压缩 $4.21\times$）才能打穿带宽墙。
 4. **误区四：“在做智能体树搜索（Tree-of-Actions / MCTS）回滚时，只要把模型 PagedAttention 的 KV 块指针退回上一轮就够了。”**
    - **真相**：智能体的工具动作会直接修改沙箱磁盘文件与进程内存。若仅回滚模型 KV 记忆而不回滚外部微虚机状态，会导致严重的“认知—现实分裂”。必须通过 Firecracker CoW 内存快照与 `OverlayFS` 差异层实现模型 KV 与外部沙箱在 $<10\ \mathrm{ms}$ 内的原子同步回滚。
 5. **误区五：“在核算断网期间积压的遥测日志或事务外发箱（Outbox）排空时间时，直接用积压总量除以恢复后的网络带宽即可。”**
    - **真相**：如锁定算例 `I19` 所示，网络恢复后沙箱仍在以 $r_{\mathrm{gen}} = 400\ \mathrm{KiB/s}$ 持续产生新日志，真正用于消减历史积压的净速率仅为 $B_{\mathrm{up}} - r_{\mathrm{gen}} = 1,024 - 400 = 624\ \mathrm{KiB/s}$，因此排空 $46.875\ \mathrm{MiB}$ 积压需 $76.92\ \mathrm{s}$ 而非 $46.875\ \mathrm{s}$。
+6. **误区六：“开发 GUI / 浏览器智能体时，每步直接把全屏 1080p 截图和完整 HTML 源码塞进多模态大模型最省事。”**
+   - **真相**：如算例 21-6 所示，全量拼接在 $30$ 步内会制造 $180,000$ 词元的上下文洪峰，其中超过 $86\%$ 是静止不变的桌面背景与不可见的冗余 DOM 节点。通过桌面合成器脏矩形 ROI 视觉缓存与可交互 Set-of-Marks DOM 剪枝，可将累计词元压缩 $7.32\times$（降至 $24,600$ 词元）并将 ViT 视觉编码提速 $5.37\times$。
 
 ---
 
@@ -907,28 +1067,33 @@ if __name__ == "__main__":
 
 > **练习 21-9（只读工具投机预取期望收益与浪费率权衡）：** 设智能体在解码生成只读搜索工具调用时，在词元生成到一半（提前量 $\Delta T_{\mathrm{adv}} = 300\ \mathrm{ms}$）时发起投机预执行。设预取参数与最终完整生成的工具参数完全一致的命中概率为 $p_{\mathrm{hit}} = 0.75$，外部搜索 API 耗时为 $T_{\mathrm{api}} = 400\ \mathrm{ms}$。求投机预取带来的平均每轮有效等待延迟缩减量 $\mathbb{E}[\Delta T_{\mathrm{saved}}]$。
 
-> **实验 21-10（运行 `experiments/ch21/21-01` 与 `21-02` 复算智能体 WORM 循环、四级 KV 路由、12 ms 微虚机分叉与算例 `I19`）：** 运行本章配套的两个零依赖可运行实验套件，验证全部工程真值断言。
+> **实验 21-10（运行 `experiments/ch21/21-01` 与 `21-02` 复算智能体 WORM 循环、四级 KV 路由、12 ms 微虚机分叉与算例 `I19`）：** 运行本章配套的前两个零依赖可运行实验套件，验证全部工程真值断言。
+
+> **练习 21-11（4K 桌面 GUI 智能体增量脏矩形 ROI 视觉缓存与 DOM 剪枝推演）：** 承接算例 21-6，某双屏/高分桌面 GUI 智能体连续执行 $T = 40$ 步操作，每帧全量切分为 $N_{\mathrm{vis, full}} = 3,200$ 个视觉词元（全图 ViT 编码耗时 $t_{\mathrm{vit, full}} = 60.0\ \mathrm{ms}$），原始 DOM 树含 $N_{\mathrm{dom, raw}} = 4,800$ 个词元。启用增量 ROI 视觉缓存（首帧全量编码，后续 $39$ 步平均脏块占比 $\alpha_{\mathrm{dirty}} = 10.0\%$，每步哈希与裁剪固定开销 $2.00\ \mathrm{ms}$）与可交互 SoM DOM 剪枝（压缩至每步 $N_{\mathrm{dom, pruned}} = 500$ 词元）后，求：（1）全量基线与增量优化方案在 $40$ 步中的累计观测词元数与词元压缩倍数；（2）$40$ 步累计 ViT 编码耗时（$\mathrm{ms}$）与视觉编码加速比。
+
+> **实验 21-12（多智能体 DAG 关键路径投机工具预执行与 `experiments/ch21/21-03` 端到端校验）：** 承接算例 21-7，设某 $K = 5$ 阶段关键路径 DAG 工作流中，每阶段模型推理耗时 $T_{\mathrm{llm}} = 500.0\ \mathrm{ms}$，外部工具执行耗时 $T_{\mathrm{tool}} = 1,500.0\ \mathrm{ms}$。启用投机工具预执行后，预测命中时单阶段净耗时 $T_{\mathrm{hit}} = 1,100.0\ \mathrm{ms}$，预测误判时需额外付出 $t_{\mathrm{rb}} = 15.0\ \mathrm{ms}$ CoW 快照回滚并重跑工具（即 $T_{\mathrm{miss}} = 2,015.0\ \mathrm{ms}$）。（1）当实测投机命中率 $p_{\mathrm{hit}} = 0.75$ 时，求 5 阶段串行基线总延迟 $T_{\mathrm{seq}}$、投机预执行期望总延迟 $\mathbb{E}[T_{\mathrm{spec}}]$ 与端到端加速比；（2）运行 `python3 experiments/ch21/21-03/run.py && python3 experiments/ch21/21-03/verify.py` 验证算例 21-6、算例 21-7、练习 21-11 与本题的全部锁定指标。
 
 ---
 
-### 可运行实验（21-01 与 21-02）
+### 可运行实验（21-01、21-02 与 21-03）
 
-- **实验目录**：`experiments/ch21/21-01/` 与 `experiments/ch21/21-02/`
+- **实验目录**：`experiments/ch21/21-01/`、`experiments/ch21/21-02/` 与 `experiments/ch21/21-03/`
 - **实验一（`21-01`：40 轮 WORM 前缀复用、全局 KV 路由与 CacheGen 流式压缩复算器）**：模拟 40 轮 ReAct 智能体上下文轨迹，验证 $95.12\%$ WORM 复用率、$205.0:1$ 预填充/解码比、$187.5\ \mathrm{ms}$ PCIe 换入、$85.60\%$ HBM 租金节省、`Dynamo` 全局路由 $3.00\times$ TTFT 加速以及 `CacheGen` $4.21\times$ 压缩传输回本线。
 - **实验二（`21-02`：Firecracker 12 ms CoW 快照分叉、MCTS 同步回滚与锁定算例 `I19` 复算器）**：模拟微虚机快照克隆（$12.0\ \mathrm{ms}$，$125.0\times$ 加速）、16 分支 CoW 内存节省（$89.06\%$）、$8.50\ \mathrm{ms}$ 跨 GPU/CPU 同步回滚、锁定算例 `I19`（$81.92\ \mathrm{s}$ 满溢、$46.875\ \mathrm{MiB}$ 积压、$76.92\ \mathrm{s}$ 排空）及 MCP Tool RAG $99.20\%$ 上下文压缩。
-- **执行与校验命令**：在终端依次执行 `python3 experiments/ch21/21-01/run.py && python3 experiments/ch21/21-01/verify.py` 以及 `python3 experiments/ch21/21-02/run.py && python3 experiments/ch21/21-02/verify.py`。
+- **实验三（`21-03`：GUI 智能体增量 ROI 视觉缓存与多智能体 DAG 投机工具预执行复算器）**：复现算例 21-6（30 步 GUI 词元从 $180,000$ 压至 $24,600$，$7.32\times$ 压缩；ViT 耗时从 $1,350.0\ \mathrm{ms}$ 降至 $251.62\ \mathrm{ms}$，$5.37\times$ 加速）与算例 21-7（4 阶段 DAG 关键路径延迟从 $8,000.0\ \mathrm{ms}$ 降至 $4,969.60\ \mathrm{ms}$，$1.61\times$ 提速，盈亏平衡命中率 $1.25\%$）。
+- **执行与校验命令**：在终端依次执行 `python3 experiments/ch21/21-01/run.py && python3 experiments/ch21/21-01/verify.py`、`python3 experiments/ch21/21-02/run.py && python3 experiments/ch21/21-02/verify.py` 以及 `python3 experiments/ch21/21-03/run.py && python3 experiments/ch21/21-03/verify.py`。
 
-下面的基准校验脚本展示了实验 `21-01` 与 `21-02` 的核心断言逻辑：
+下面的基准校验脚本展示了实验 `21-01`、`21-02` 与 `21-03` 的核心断言逻辑：
 
 ```python
 import subprocess
 import sys
 
 def verify_ch21_suites() -> None:
-    for suite in ["21-01", "21-02"]:
+    for suite in ["21-01", "21-02", "21-03"]:
         subprocess.run([sys.executable, f"experiments/ch21/{suite}/run.py"], check=True)
         subprocess.run([sys.executable, f"experiments/ch21/{suite}/verify.py"], check=True)
-    print("[Ch21 Verify] Both 21-01 and 21-02 passed all locked assertions.")
+    print("[Ch21 Verify] All suites (21-01, 21-02, 21-03) passed all locked assertions.")
 
 if __name__ == "__main__":
     verify_ch21_suites()
@@ -1002,9 +1167,23 @@ $$
 $$
 
 #### 实验 21-10 解答
-通过运行 `experiments/ch21/21-01/run.py` 与 `experiments/ch21/21-02/run.py`，终端输出全部核心指标并由 `verify.py` 校验通过。表 21-5 与表 21-6 汇总了本章所有算例、习题与实验的锁定数值速查表。
+通过运行 `experiments/ch21/21-01/run.py` 与 `experiments/ch21/21-02/run.py`，终端输出全部核心指标并由 `verify.py` 校验通过。
 
-*表 21-5　第 21 章核心算例（算例 21-1 至 21-5）锁定真值汇总表*
+#### 练习 21-11 解答
+1. **40 步累计观测词元数与压缩倍数**：
+   - 全量基线：$N_{\mathrm{tot, naive}} = 40 \times (3,200 + 4,800) = 40 \times 8,000 = \mathbf{320,000\ \text{tokens}}$；
+   - 增量优化方案：首帧 $3,200 + 500 = 3,700$ 词元，后续 $39$ 步每步新增 $3,200 \times 0.10 + 500 = 320 + 500 = 820$ 词元，累计词元数为 $N_{\mathrm{tot, opt}} = 3,700 + 39 \times 820 = 3,700 + 31,980 = \mathbf{35,680\ \text{tokens}}$，词元压缩倍数为 $\frac{320,000}{35,680} \approx \mathbf{8.97\times}$（节省 $88.85\%$）。
+2. **40 步累计 ViT 编码耗时与加速比**：
+   - 全量基线：$T_{\mathrm{vit, naive}} = 40 \times 60.0 = \mathbf{2,400.00\ \mathrm{ms}}$；
+   - 增量方案：首帧 $60.0\ \mathrm{ms}$，后续 $39$ 步每步耗时 $60.0 \times 0.10 + 2.00 = 8.00\ \mathrm{ms}$，累计耗时 $T_{\mathrm{vit, opt}} = 60.0 + 39 \times 8.00 = \mathbf{372.00\ \mathrm{ms}}$，实现 $\frac{2,400.00}{372.00} \approx \mathbf{6.45\times}$ 的 ViT 编码加速。
+
+#### 实验 21-12 解答
+1. **5 阶段 DAG 关键路径延迟对比（$p_{\mathrm{hit}} = 0.75$）**：
+   - 传统串行基线：$T_{\mathrm{seq}} = 5 \times (500.0 + 1,500.0) = \mathbf{10,000.00\ \mathrm{ms}}$；
+   - 投机工具预执行：单阶段期望耗时 $\mathbb{E}[T_{\mathrm{stage}}] = 0.75 \times 1,100.0 + 0.25 \times 2,015.0 = 825.0 + 503.75 = \mathbf{1,328.75\ \mathrm{ms}}$，5 阶段期望总延迟 $\mathbb{E}[T_{\mathrm{spec}}] = 5 \times 1,328.75 = \mathbf{6,643.75\ \mathrm{ms}}$，实现 $\frac{10,000.00}{6,643.75} \approx \mathbf{1.51\times}$ 的端到端加速。
+2. 执行 `python3 experiments/ch21/21-03/run.py && python3 experiments/ch21/21-03/verify.py` 可完整校验算例 21-6、算例 21-7、练习 21-11 与本题的全部锁定指标。表 21-6 与表 21-7 汇总了本章所有算例、习题与实验的锁定数值速查表。
+
+*表 21-6　第 21 章核心算例（算例 21-1 至 21-7）锁定真值汇总表*
 
 | 算例编号与场景 | 核心输入参数 | 关键派生指标与锁定真值结果 |
 | --- | --- | --- |
@@ -1013,8 +1192,10 @@ $$
 | **算例 21-3（微虚机分叉与 MCTS 回滚）** | $S_{\mathrm{base}}=512\ \mathrm{MiB}, M=16, \Delta S_{\mathrm{dirty}}=24\ \mathrm{MiB}$ | 快照分叉 $\mathbf{12.0\ \mathrm{ms}}$（快 $\mathbf{125.0\times}$）；16 分支 CoW 内存 $\mathbf{896.0\ \mathrm{MiB}}$（省 $\mathbf{89.06\%}$）；同步回滚 $\mathbf{8.50\ \mathrm{ms}}$ |
 | **算例 21-4（锁定算例 `I19` 遥测排空）** | $r_{\mathrm{gen}}=400\ \mathrm{KiB/s}, C_{\mathrm{buf}}=32\ \mathrm{MiB}, T_{\mathrm{out}}=120\ \mathrm{s}, B_{\mathrm{up}}=1\ \mathrm{MiB/s}$ | 触顶时间 $\mathbf{81.92\ \mathrm{s}}$；120 s 积压 $\mathbf{46.875\ \mathrm{MiB}}$（溢写 $\mathbf{14.875\ \mathrm{MiB}}$）；净排空 $624\ \mathrm{KiB/s}$，耗时 $\mathbf{76.92\ \mathrm{s}}$ |
 | **算例 21-5（MCP Tool RAG 与三池配比）** | $1,000$ 工具 $\to \mathrm{Top}\text{-}8$；$\lambda=40\ \mathrm{rps}, W_{\mathrm{GPU}}=1.2\ \mathrm{s}, W_{\mathrm{sbx}}=14.4\ \mathrm{s}$ | Tool RAG $\mathbf{1,440\ \text{tokens}}$（省 $\mathbf{99.20\%}$，$\mathbf{125.0\times}$）；并发 GPU $\mathbf{48\ \text{路}}$ vs. 沙箱 $\mathbf{576\ \text{路}}$（$\mathbf{12:1}$），记忆池 $\mathbf{2,592\ \mathrm{GiB}}$ |
+| **算例 21-6（GUI 增量 ROI 缓存与 DOM 剪枝）** | $T=30$ 步, $2,400$ 视觉+$3,600$ DOM, 脏块 $12.5\%$ | 词元 $\mathbf{180,000 \to 24,600}$（压缩 $\mathbf{7.32\times}$，省 $\mathbf{86.33\%}$）；ViT 编码 $\mathbf{1,350 \to 251.62\ \mathrm{ms}}$（快 $\mathbf{5.37\times}$） |
+| **算例 21-7（DAG 关键路径投机工具预执行）** | $K=4$ 阶段, $600+1,400\ \mathrm{ms}$, 命中 $80\%$, 回滚 $12\ \mathrm{ms}$ | 关键路径延迟 $\mathbf{8,000.0 \to 4,969.60\ \mathrm{ms}}$（快 $\mathbf{1.61\times}$，省 $\mathbf{37.88\%}$）；盈亏平衡命中率 $\mathbf{1.25\%}$ |
 
-*表 21-6　第 21 章习题与实验锁定数值速查表*
+*表 21-7　第 21 章十二道习题与实验锁定数值速查表*
 
 | 题目编号 | 考查知识点 | 锁定标准数值答案 |
 | --- | --- | --- |
@@ -1028,6 +1209,8 @@ $$
 | **练习 21-8** | 算例 `I19` 锁定值与 40 s 排空扩容 | 触顶 $\mathbf{81.92\ \mathrm{s}}$，积压 $\mathbf{46.875\ \mathrm{MiB}}$，排空 $\mathbf{76.92\ \mathrm{s}}$；40 s 排空需 $B_{\mathrm{up}} \ge \mathbf{1,600.0\ \mathrm{KiB/s}}$（$\mathbf{1.5625\ \mathrm{MiB/s}}$） |
 | **练习 21-9** | 只读工具投机预取期望收益 | 平均每轮减少等待时间 $\mathbb{E}[\Delta T_{\mathrm{saved}}] = \mathbf{225.0\ \mathrm{ms}}$ |
 | **实验 21-10** | 实验套件 `21-01` 与 `21-02` 端到端校验 | 全部断言 100% 吻合，输出 `Experiment 21-01/21-02 verified successfully.` |
+| **练习 21-11** | 40 步高分 GUI 增量 ROI 视觉缓存 | 词元 $\mathbf{320,000 \to 35,680}$（压缩 $\mathbf{8.97\times}$）；ViT 耗时 $\mathbf{2,400 \to 372.0\ \mathrm{ms}}$（快 $\mathbf{6.45\times}$） |
+| **实验 21-12** | 5 阶段 DAG 投机预执行 (`21-03`) | 算例 21-6/21-7 复核；本题 $\mathbf{10,000 \to 6,643.75\ \mathrm{ms}}$（提速 $\mathbf{1.51\times}$） |
 
 ---
 
@@ -1036,7 +1219,7 @@ $$
 1. **一写多读（WORM）物理法则与 $2.16\ \mathrm{s}$ 状态保留边界**：多轮自主智能体（ReAct / CodeAct）将预填充与解码词元比推高至 $205:1$ 以上，且超过 $95\%$ 的预填充词元是对历史前缀的重复读取；面对长达 $5\text{–}45\ \mathrm{s}$ 的外部工具等待空窗，以 $t^* = 2.16\ \mathrm{s}$ 为阈值将 KV 缓存异步换出至主机 DRAM 或远端存储池，可在保持百毫秒级恢复速度的同时节省 $85\%$ 以上的 HBM 显存租金。
 2. **四级 KV 缓存互联网与流式熵编码**：通过块级链式 SHA-256 哈希维护分布式基数树索引（`NVIDIA Dynamo` / `SGLang HiCache`），在节点排队延迟与各级缓存命中率之间联合寻优；当跨机架网络带宽低于临界重算带宽（$18.0\ \mathrm{GiB/s}$）时，结合 `CacheGen` 锚点残差量化与算术编码实现 $4.21\times$ 流式压缩，打穿网络传输瓶颈。
 3. **毫秒级 CoW 微虚机沙箱与环境树同步回溯**：基于 `Firecracker` 预热内存快照、`MAP_PRIVATE` 写时复制与 `userfaultfd` 按需拉取活跃工作集，在提供硬件级 KVM 内核隔离的同时将沙箱启动时间从 $1,500\ \mathrm{ms}$ 压缩至 $12.0\ \mathrm{ms}$（提速 $125\times$）；配合 `OverlayFS` 差异层，实现模型 KV 块表与外部操作系统状态在 $8.50\ \mathrm{ms}$ 内的原子同步分叉与回滚。
-4. **MCP 网关、幂等事务外发箱（算例 `I19`）与长期图谱记忆**：利用动态工具检索（Tool RAG）消除 $99.2\%$ 的工具 Schema 上下文膨胀，通过确定性幂等键与持久化事务外发箱保障写操作精确一次执行（遵循锁定算例 `I19` 的断网积压与净速率排空定律），结合双流污点追踪阻断间接提示词注入，并以 `HippoRAG 2` 个性化 PageRank 与 Little 定律三池解耦配比（GPU : 沙箱 $= 1:12$）支撑百万级长程自主智能体集群。
+4. **MCP 网关、幂等事务外发箱（算例 `I19`）、GUI 增量 ROI 缓存与 DAG 投机工具预执行**：利用动态工具检索（Tool RAG）消除 $99.2\%$ 的工具 Schema 上下文膨胀，通过确定性幂等键与持久化事务外发箱保障写操作精确一次执行（遵循锁定算例 `I19` 的断网积压与净速率排空定律），结合双流污点追踪阻断间接提示词注入；在长程 GUI 智能体中利用脏矩形 ROI 视觉缓存与可交互 DOM 剪枝实现 $7.32\times$ 词元压缩（ViT 提速 $5.37\times$），并通过多智能体 DAG 关键路径投机工具预执行与 $12.0\ \mathrm{ms}$ CoW 回滚削减 $37.88\%$ 端到端等待延迟。
 
 ---
 
@@ -1048,3 +1231,15 @@ $$
 [^ch21-6]: Koh, J. Y., et al. (2024). "Tree Search for Language Model Agents." *arXiv:2407.01476*; Anthropic (2024). *Developing a Computer Use Model and Sandbox Infrastructure*.
 [^ch21-7]: Anthropic (2024). *Model Context Protocol (MCP) Specification*; Debenedetti, E., et al. (2025). "Defeating Prompt Injections by Design (CaMeL)." *Google DeepMind Technical Report*.
 [^ch21-8]: Gutiérrez, B. J., et al. (2025). "From RAG to Memory: Non-Parametric Continual Learning for Large Language Models (HippoRAG 2)." *ICML 2025*; Chhikara, P., et al. (2025). "Mem0: Building Production-Ready AI Agents with Scalable Long-Term Memory." *arXiv:2504.19413*.
+[^ch21-9]: Xie, T., et al. (2024). "OSWorld: Benchmarking Multimodal Agents for Open-Ended Tasks in Real Computer Environments." *NeurIPS 2024*.
+[^ch21-10]: Zhou, S., et al. (2024). "WebArena: A Realistic Web Environment for Building Autonomous Agents." *ICLR 2024*.
+[^ch21-11]: Koh, J. Y., et al. (2024). "VisualWebArena: Evaluating Multimodal Agents on Realistic Visual Web Tasks." *ACL 2024*.
+[^ch21-12]: Wu, Q., et al. (2024). "AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation." *COLM 2024*.
+[^ch21-13]: LangChain Inc. (2025). *LangGraph: Stateful Multi-Actor Agentic Workflows with Checkpointing and Time-Travel*.
+[^ch21-14]: Kim, S., et al. (2024). "An LLM Compiler for Parallel Function Calling." *ICML 2024*.
+[^ch21-15]: Wang, Z., et al. (2025). "Speculative Tool Execution and Rollback for Low-Latency Agentic Workflows." *MLSys / OSDI Workshop 2025*.
+[^ch21-16]: Gim, I., et al. (2024). "Prompt Cache: Modular Attention Reuse for Low-Latency Inference." *MLSys 2024*.
+[^ch21-17]: Yang, J., et al. (2023). "Set-of-Mark Prompting Unleashes Extraordinary Visual Grounding in GPT-4V." *arXiv:2310.11441*.
+[^ch21-18]: Bonatti, R., et al. (Microsoft). "Windows Agent Arena: Evaluating Multi-Modal OS Agents at Scale." *arXiv:2409.08264*, 2024.
+[^ch21-19]: Qin, Y., et al. (ByteDance). "UI-TARS: Pioneering Automated GUI Interaction with Native Agents." *Technical Report*, 2025.
+[^ch21-20]: Gou, B., et al. "Navigating the Digital World as Humans Do: Universal Visual Grounding for GUI Agents (UGround)." *ICLR 2025*.

@@ -77,5 +77,24 @@
     "retained_multimodal_tokens": 139310,
     "audio_kv_saving_pct": 82.12,
     "multimodal_kv_saving_pct": 91.74
+  },
+  "avatar_lipsync_and_edge_sfu_mesh": {
+    "source": "experiments/ch22/22-03/run.py (3D Avatar Lip-Sync < 40 ms Alignment & Global Edge SFU Mesh)",
+    "vis_path_ms": 32.5,
+    "raw_steady_skew_ms": 44.0,
+    "raw_p99_skew_ms": 59.0,
+    "audio_hold_delay_ms": 26.0,
+    "aligned_steady_skew_ms": 18.0,
+    "aligned_p99_skew_ms": 33.0,
+    "skew_reduction_pct": 59.09,
+    "avatar_ttfa_ms": 190.0,
+    "net_direct_ms": 175.0,
+    "net_edge_ms": 98.5,
+    "net_reduction_pct": 43.71,
+    "ttfa_direct_ms": 304.0,
+    "ttfa_edge_ms": 181.5,
+    "ttfa_speedup_x": 1.67,
+    "bw_compression_x": 43.64,
+    "bw_saving_pct": 97.71
   }
 }

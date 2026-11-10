@@ -2,7 +2,7 @@
   "outputs": [
     {
       "path": "manuscripts/ch21/ch21-agentic-cluster-cpu-gpu-sandbox-pool-sizing.pdf",
-      "sha256": "cf8843d90350b354343a8ca462f1755a6461fa159ac9d411ae9a33e74ec98f79"
+      "sha256": "c455f8ce576b17d8fcabd20a1d333cf7fa04e7f25d1f5a6d28dda9be9f0cc217"
     },
     {
       "path": "manuscripts/ch21/ch21-agentic-cluster-cpu-gpu-sandbox-pool-sizing.png",
@@ -10,11 +10,11 @@
     },
     {
       "path": "manuscripts/ch21/ch21-agentic-cluster-cpu-gpu-sandbox-pool-sizing.svg",
-      "sha256": "c815584b5a9fcd4aeef999bb4108f8b752438b38b6a9b9022520d6389d60b1a8"
+      "sha256": "085c477ca574a7728475d901c7b86fab0e1ddef1e9c514e6c43a23c8826b62e1"
     },
     {
       "path": "manuscripts/ch21/ch21-autonomous-agent-infrastructure-full-stack-map.pdf",
-      "sha256": "6e635f3b2a14526213563355fe5233b479bd3a0e13de894e5ea8076c863bb839"
+      "sha256": "eed704616d1a2f1cb5fdf37dc673902d32ef30ac7465f49fd5a825a5f443cfe2"
     },
     {
       "path": "manuscripts/ch21/ch21-autonomous-agent-infrastructure-full-stack-map.png",
@@ -22,11 +22,11 @@
     },
     {
       "path": "manuscripts/ch21/ch21-autonomous-agent-infrastructure-full-stack-map.svg",
-      "sha256": "d247bbb8830d2cc40e1d881ecd2dbe13fbf3c2bb564546f484e3beb2c1891e1d"
+      "sha256": "6fb46f7b10d78192f005a9983988fc340c244be324be559bc2a5862b864879b4"
     },
     {
       "path": "manuscripts/ch21/ch21-cachegen-anchor-delta-entropy-kv-streaming.pdf",
-      "sha256": "e248c15e542fada1023f35e389f42f1092280dbbdb24e53323e2807b8ac8719e"
+      "sha256": "d10cff17d1d3111c5c9c43efcf8c700af6106b4b1fa5d692c83565a1dc32ea7d"
     },
     {
       "path": "manuscripts/ch21/ch21-cachegen-anchor-delta-entropy-kv-streaming.png",
@@ -34,11 +34,11 @@
     },
     {
       "path": "manuscripts/ch21/ch21-cachegen-anchor-delta-entropy-kv-streaming.svg",
-      "sha256": "ebc66119cdbdcbaf645651af385f2952fbe39340e8e422d33026d244cf425f15"
+      "sha256": "6ae38a935060669c154ef7e95e57ac3d41244d5c2a68398ccc542e5abec48899"
     },
     {
       "path": "manuscripts/ch21/ch21-computer-use-gui-webrtc-frame-diff-pipeline.pdf",
-      "sha256": "a02eac0da7b58628b1af1c0f04148ad69da018ae6b674282b5bdc3d52c7f03ba"
+      "sha256": "db9dab4e54cd85a2f6de327494987c8456d6c728b74fb53ca01a3b5ceac2a375"
     },
     {
       "path": "manuscripts/ch21/ch21-computer-use-gui-webrtc-frame-diff-pipeline.png",
@@ -46,11 +46,11 @@
     },
     {
       "path": "manuscripts/ch21/ch21-computer-use-gui-webrtc-frame-diff-pipeline.svg",
-      "sha256": "3122b60fce9dc3b02ffb815827a8871498585a61c165921e7c0ac265a7f42bde"
+      "sha256": "fd095c8ff1ca8561d632babddd93023c32f253d716695aa8564e306e50d7c105"
     },
     {
       "path": "manuscripts/ch21/ch21-four-tier-kv-cache-hierarchy-dynamo-lmcache.pdf",
-      "sha256": "92ecb7e562581bcab4b84a4fbebdcbb0f4f89e4103fb4aed94498fe45fb18dbc"
+      "sha256": "91c915aaf037e6fc13c322adf67c3eb6c69be31de4433559b9bfba536ed6a842"
     },
     {
       "path": "manuscripts/ch21/ch21-four-tier-kv-cache-hierarchy-dynamo-lmcache.png",
@@ -58,11 +58,23 @@
     },
     {
       "path": "manuscripts/ch21/ch21-four-tier-kv-cache-hierarchy-dynamo-lmcache.svg",
-      "sha256": "b428dc6481cd2271104a5951f5b0b0ed8a2b6287aa58a24630fd78b3946c681a"
+      "sha256": "d8596d0815f4ba09968caddb11ee2b242bdf3d47991a7bd58ab4481d093eb5d5"
+    },
+    {
+      "path": "manuscripts/ch21/ch21-gui-incremental-region-of-interest-vision-token-cache.pdf",
+      "sha256": "2cf080d19a3ca450dc95f0156185b8b4aa9f749fd41f68ea499f1266e1a82c6e"
+    },
+    {
+      "path": "manuscripts/ch21/ch21-gui-incremental-region-of-interest-vision-token-cache.png",
+      "sha256": "d331c944fd6e17b932fe1f20c760df314119f1bec0106ac35662cc6336eda273"
+    },
+    {
+      "path": "manuscripts/ch21/ch21-gui-incremental-region-of-interest-vision-token-cache.svg",
+      "sha256": "dc672a25ec419e447dd54e2a5eb58823e743af14cfae2e93079f4cb76d053335"
     },
     {
       "path": "manuscripts/ch21/ch21-hipporag2-graph-vector-episodic-memory-consolidation.pdf",
-      "sha256": "13bd8e53c88ceb4d5ebe814766b9d346fdc8560d55bd42051da83869d24a128d"
+      "sha256": "f5f170144c27ac078e53d86197b796af24c1c5c85f2dfe8170d16aa062b82a5b"
     },
     {
       "path": "manuscripts/ch21/ch21-hipporag2-graph-vector-episodic-memory-consolidation.png",
@@ -70,11 +82,11 @@
     },
     {
       "path": "manuscripts/ch21/ch21-hipporag2-graph-vector-episodic-memory-consolidation.svg",
-      "sha256": "d75efb9e0345e25b0d2e3a36cfed2cfc60a2162b28abd883e7f937fe4cfde54b"
+      "sha256": "e6a83c7d963828d6051ac903962d55bc66917f252b4bd4008a9295ada9fc39d7"
     },
     {
       "path": "manuscripts/ch21/ch21-i19-telemetry-backlog-buffer-overflow-and-drain.pdf",
-      "sha256": "d913506bdcb6b936f9ea797e7c696ef9b116f689ab05a1ada29ca2a6417dfd43"
+      "sha256": "a30e2940acdd042cad93903f12d2367abd15e73c801f9e430709a4ef860966f8"
     },
     {
       "path": "manuscripts/ch21/ch21-i19-telemetry-backlog-buffer-overflow-and-drain.png",
@@ -82,11 +94,11 @@
     },
     {
       "path": "manuscripts/ch21/ch21-i19-telemetry-backlog-buffer-overflow-and-drain.svg",
-      "sha256": "f7c85fc907ab0ffd93a7cbe6af12265c43a3ecf2635932c3303c65524d3465cb"
+      "sha256": "6698d24086fc960e738490f270e2ba89302b9ed084c0a5cd5c391fed660e3ae6"
     },
     {
       "path": "manuscripts/ch21/ch21-idempotent-outbox-and-speculative-tool-prefetch.pdf",
-      "sha256": "d90f9d2499e2106da4d13568fe49c236a24c6836a36c9d90626e66eec2cda947"
+      "sha256": "64e5dcc48929ba1a45cdf9d09ffdcd5ab16b7227aec3251d027f79fb1997af17"
     },
     {
       "path": "manuscripts/ch21/ch21-idempotent-outbox-and-speculative-tool-prefetch.png",
@@ -94,11 +106,11 @@
     },
     {
       "path": "manuscripts/ch21/ch21-idempotent-outbox-and-speculative-tool-prefetch.svg",
-      "sha256": "237ee02797629de304d53355a0808007940aafba30dbb2aade138ab7cc5ca174"
+      "sha256": "2892e25a03392bc49c7c992a1160859e086e4f4d67fb0c41e2791627691e6abe"
     },
     {
       "path": "manuscripts/ch21/ch21-kv-aware-global-radix-router-ttft-tradeoff.pdf",
-      "sha256": "5aa89affa5c6b3ed47044cdd192ba13fbf4c4cdcf86e3db75abd34554a7802af"
+      "sha256": "28124f1b41cd372615486d3b69ab65607a20c6e8b2b1c5d50c282e35190770bb"
     },
     {
       "path": "manuscripts/ch21/ch21-kv-aware-global-radix-router-ttft-tradeoff.png",
@@ -106,11 +118,11 @@
     },
     {
       "path": "manuscripts/ch21/ch21-kv-aware-global-radix-router-ttft-tradeoff.svg",
-      "sha256": "cff83b87fc485391cb465f63f45a5645a1f5febf328973050d07041444b020a3"
+      "sha256": "5f5d6fcc988df7b4a4b87ff9ead39460159d7bdfb540ab31d8936b07bc79e414"
     },
     {
       "path": "manuscripts/ch21/ch21-mcp-gateway-dynamic-tool-rag-and-auth-isolation.pdf",
-      "sha256": "78ddf2f6bbef79f60114bb7ba07e806cd96c2174da23eeb02831312bc796c483"
+      "sha256": "7c94ff55e47b5ab48dd48908e06673c055fdfbb5d69aaf286feb044319f6da29"
     },
     {
       "path": "manuscripts/ch21/ch21-mcp-gateway-dynamic-tool-rag-and-auth-isolation.png",
@@ -118,11 +130,11 @@
     },
     {
       "path": "manuscripts/ch21/ch21-mcp-gateway-dynamic-tool-rag-and-auth-isolation.svg",
-      "sha256": "90f96fd55b55b33f85f9c9fa72db69cdea70953d2fd0baa7435d38d61c58967f"
+      "sha256": "3258d83e1687120e1a1f1b105db37b555d0596a14453eed54db1dedcd838b514"
     },
     {
       "path": "manuscripts/ch21/ch21-microvm-snapshot-cow-userfaultfd-12ms-fork.pdf",
-      "sha256": "2ee29eff61fa97732f5e3b5ca18e4015b99979647312034b7daff4df48fa4440"
+      "sha256": "1c0ab0cf104cc0a6dc3fd227abae5fdc3115930652ca1c15018f3e921e767313"
     },
     {
       "path": "manuscripts/ch21/ch21-microvm-snapshot-cow-userfaultfd-12ms-fork.png",
@@ -130,11 +142,11 @@
     },
     {
       "path": "manuscripts/ch21/ch21-microvm-snapshot-cow-userfaultfd-12ms-fork.svg",
-      "sha256": "17bd4fef7382fe82a40770a7d3382d35be8067bd6e53a3ceacb885b5c4f0319b"
+      "sha256": "5d4b5fb64622107910030a2566afeeb7d976d03acca1fadcf3f7b5cb32b43769"
     },
     {
       "path": "manuscripts/ch21/ch21-multi-agent-dag-scheduler-and-token-budget-allocation.pdf",
-      "sha256": "33715f1cd6d7a919fafddb9714cdd5c1397b651497a874ae4b797a3fb551611c"
+      "sha256": "c1313679f59fb3e9aa200a3fb2f5813c9f9da208a8ef159b4f233d9d5f12995a"
     },
     {
       "path": "manuscripts/ch21/ch21-multi-agent-dag-scheduler-and-token-budget-allocation.png",
@@ -142,11 +154,11 @@
     },
     {
       "path": "manuscripts/ch21/ch21-multi-agent-dag-scheduler-and-token-budget-allocation.svg",
-      "sha256": "0cc4b4776478d2c1b1f2cba1b829cff7f1bf84f56dbf8aa391899ba86ff0b37d"
+      "sha256": "a4732370a5c6e91db2dbf632afa915b33b0a9f6fad4262655ecdce7cd81c1ac5"
     },
     {
       "path": "manuscripts/ch21/ch21-prompt-injection-taint-tracking-dual-llm-firewall.pdf",
-      "sha256": "34b5e6c50668f485aaf983c072c119b484ad0307e2fc6b73281ea3e238a78593"
+      "sha256": "f86d52169dfdd126225d1bcd66df2fba65bb5f732ec5c8e5b603de3a7801e720"
     },
     {
       "path": "manuscripts/ch21/ch21-prompt-injection-taint-tracking-dual-llm-firewall.png",
@@ -154,11 +166,11 @@
     },
     {
       "path": "manuscripts/ch21/ch21-prompt-injection-taint-tracking-dual-llm-firewall.svg",
-      "sha256": "5ee16a13320e636d0a533aea8c4b06b9911f8f21c2a79e6238af79a8e867df60"
+      "sha256": "6fb490798ce44b23a8648d28e7f452e5bf19590e9da98f6b2fed5d3116753625"
     },
     {
       "path": "manuscripts/ch21/ch21-single-turn-chat-vs-multi-turn-agent-worm-loop.pdf",
-      "sha256": "3ecba9a060bd198dd4101cb986f08ab5605315357e809a9ccd21ab3e99161431"
+      "sha256": "2e94b79d9059b829f42803e15f5dfa1d4f8255c03fb14d9d2bb99595f63e9956"
     },
     {
       "path": "manuscripts/ch21/ch21-single-turn-chat-vs-multi-turn-agent-worm-loop.png",
@@ -166,11 +178,23 @@
     },
     {
       "path": "manuscripts/ch21/ch21-single-turn-chat-vs-multi-turn-agent-worm-loop.svg",
-      "sha256": "8ed426257cc5e4ebf940394b4154d4ccc24698a6f5fe002e66997f90293b1c0e"
+      "sha256": "de54cc9bd7f929add4bf1aedee423c70a10e38124e7d8db196c03d71f67eefb4"
+    },
+    {
+      "path": "manuscripts/ch21/ch21-speculative-tool-execution-and-rollback-dag.pdf",
+      "sha256": "1100eba94d0530248dc19acc3a704c255e722428dd79c0c5978342733648fc12"
+    },
+    {
+      "path": "manuscripts/ch21/ch21-speculative-tool-execution-and-rollback-dag.png",
+      "sha256": "0ce6a768e56e5954f774351b072cbb86a092e19b8a111b7335de7eadb5e26330"
+    },
+    {
+      "path": "manuscripts/ch21/ch21-speculative-tool-execution-and-rollback-dag.svg",
+      "sha256": "d13ee7f3145bbadd27f11ace1c81ad30a3251cc9f52755f58d8d64b8c3c2038b"
     },
     {
       "path": "manuscripts/ch21/ch21-synchronized-kv-and-sandbox-mcts-tree-forking.pdf",
-      "sha256": "ee9e76b613551f22fc9dd1a70c9025d5d57b8d12ffb06158329c4e63f48e3a3a"
+      "sha256": "310a49d61f74c8465d544dce88e4f211ad2202446e2b69e74447ce260140c459"
     },
     {
       "path": "manuscripts/ch21/ch21-synchronized-kv-and-sandbox-mcts-tree-forking.png",
@@ -178,11 +202,11 @@
     },
     {
       "path": "manuscripts/ch21/ch21-synchronized-kv-and-sandbox-mcts-tree-forking.svg",
-      "sha256": "55bd4f1330375a5250f67b177eaeec142d239e5282d73c2ae5caa381ec3b5cc0"
+      "sha256": "6c0a82a42f3a7c5298a207aa75567a4e52636891e6a0e1c86c1b46a2a1275d60"
     },
     {
       "path": "manuscripts/ch21/ch21-tool-wait-hbm-retain-recompute-offload-phase-diagram.pdf",
-      "sha256": "ee6605fbcc11260da4762d02f6be8fdd3b9808734c244996d303f89e9cebf5b0"
+      "sha256": "0b3c8408118a3e935f65e42ace1c1ea486d5dc5f1f8c56f5ffa8ab3a530fc3ad"
     },
     {
       "path": "manuscripts/ch21/ch21-tool-wait-hbm-retain-recompute-offload-phase-diagram.png",
@@ -190,23 +214,23 @@
     },
     {
       "path": "manuscripts/ch21/ch21-tool-wait-hbm-retain-recompute-offload-phase-diagram.svg",
-      "sha256": "7dc4b16239f010b2a0a0f7c4ebb4e1864bc50f0c9c14400f74da9ae9fdb0f3d9"
+      "sha256": "f39c26c2effaf63e505339c0c3a61d31775c74e9b6e16966df6a887aca1260f5"
     },
     {
       "path": "manuscripts/ch21/figure-data.json",
-      "sha256": "54c3aa9519b227ca7144ae417645762d1005318030f3ae692087696bc092e46a"
+      "sha256": "53eaa03233c8560d68b978408052254bd59923b6961f33f60b659f58c64ee0a8"
     },
     {
       "path": "manuscripts/ch21/figure-index.json",
-      "sha256": "1f19ee604b1c5523107aeab3069ae94e26ea5b31c81322c6b11fa65c579d1d12"
+      "sha256": "73e5e4d4ccc751853e6731e5d89f8eeb78e9578292e06f5c695f67ad5c4bd2b1"
     },
     {
       "path": "manuscripts/ch21/teaching-layout-validation.json",
-      "sha256": "a30e4cbcb6644ab9fee525acfeb213f8ff765ceb52855ba8ef49a8d56d00ee3a"
+      "sha256": "ee7b3d9355f5e197a94c17ab98e0a363af4efe3e0bbba43b7d9d215412d0e738"
     },
     {
       "path": "manuscripts/ch21/math-validation.json",
-      "sha256": "e4ea1dffcdec8666e7415e0c4206396a13a5bc4e6d314907810aeaa9ea5daa17"
+      "sha256": "bcaf505b20748890332708ec55790b0e90d66034732f2582bff902ba02b45a9a"
     }
   ]
 }

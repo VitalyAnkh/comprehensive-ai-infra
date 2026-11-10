@@ -372,6 +372,42 @@ def build_chapter() -> None:
         '第 22 章收束：80 ms 硬节拍、整步图融合与播放游标回滚构筑三大基石',
     )
 
+    draw_dual_band(
+        ex,
+        'ch22-realtime-avatar-lip-sync-audio-video-jitter-alignment',
+        '实时 3D 数字人唇形渲染与声画时延差（算例 22-6）',
+        'orange',
+        [
+            ('声学与视觉支路耗时差\n声码器 6.5 ms | 视觉 32.5 ms\n视频网络抖动偏斜 +18.0 ms', 'orange'),
+            ('未对齐音画错位（声超前画）\n稳态 +44.0 ms | P99 +59.0 ms\n突破 ITU <40.0 ms 红线', 'purple'),
+        ],
+        '双轨 RTP 绝对时间戳（abs-capture-time）对齐缓冲控制',
+        'teal',
+        [
+            ('音频补偿驻留 26.0 ms\n稳态压至 +18.0 ms（省 59%）\nP99 峰值 +33.0 ms < 40 ms', 'teal'),
+            ('音画同步首包 190.0 ms\n严守 <200 ms 交互阈值\n消除数字人“腹语术”脱节', 'blue'),
+        ],
+        '以 26 ms 精确音频驻留补偿，换取全工况 <40 ms 唇形咬字严丝合缝',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch22-global-edge-webrtc-sfu-to-gpu-duplex-mesh',
+        '跨洲公网直连痛点 vs. 全球边缘 WebRTC SFU 就近卸载（算例 22-7）',
+        'blue',
+        [
+            ('跨洋公网 UDP 直连网关\nRTT 110 ms + 缓冲 65 ms\n端到端 TTFA 达 304.0 ms', 'orange'),
+            ('Anycast 边缘 SFU 终结\n城域 RTT 12 ms + 缓冲 10 ms\n边缘分离与 RVQ 编码 4.5 ms', 'teal'),
+        ],
+        '跨洋海底光纤专线 RVQ 离散词元流（2.20 kbps）极速中继',
+        'purple',
+        [
+            ('专线 68 ms + 微缓冲 4 ms\n网络耗时 175 -> 98.5 ms\n跨洲 TTFA 压至 181.5 ms', 'blue'),
+            ('边缘转码双向 2.20 kbps\n较 96 kbps 压缩 43.64×\n节省 97.71% 跨洋干线带宽', 'purple'),
+        ],
+        '边缘 SFU 吸收最后一公里无线抖动，RVQ 词元流打穿跨洋专线带宽成本',
+    )
+
     outputs = ex.finish()
 
     fig_index = [
@@ -534,6 +570,26 @@ def build_chapter() -> None:
             "caption": "全双工实时语音与原生全模态流式基础设施从 RVQ 编解码、双层图融合到播放游标回滚的全景架构图",
             "source_refs": ["experiments/ch22/22-01/run.py", "experiments/ch22/22-02/run.py", "manuscripts/ch22/figure-data.json"],
             "TeachingRole": "收束第 22 章等时节拍、Temporal+Depth 图融合与打断游标对齐的完整技术闭环"
+        },
+        {
+            "figure_id": "图 22-17",
+            "number": 17,
+            "file": "ch22-realtime-avatar-lip-sync-audio-video-jitter-alignment.svg",
+            "asset": "ch22/ch22-realtime-avatar-lip-sync-audio-video-jitter-alignment.svg",
+            "section": "22.4.2",
+            "caption": "实时 3D 数字人唇形渲染管线与基于 RTP 绝对时间戳的 < 40 ms 音画同步抖动缓冲对齐（算例 22-6）",
+            "source_refs": ["experiments/ch22/22-03/run.py", "manuscripts/ch22/figure-data.json"],
+            "TeachingRole": "展示 26 ms 客户端音频补偿延迟如何将数字人音画偏斜从 44/59 ms 压至 18/33 ms（< 40 ms）"
+        },
+        {
+            "figure_id": "图 22-18",
+            "number": 18,
+            "file": "ch22-global-edge-webrtc-sfu-to-gpu-duplex-mesh.svg",
+            "asset": "ch22/ch22-global-edge-webrtc-sfu-to-gpu-duplex-mesh.svg",
+            "section": "22.4.2",
+            "caption": "全球 Anycast 边缘 WebRTC SFU 就近终结、边缘 RVQ 词元卸载与跨洋骨干专线全双工媒体网格（算例 22-7）",
+            "source_refs": ["experiments/ch22/22-03/run.py", "manuscripts/ch22/figure-data.json"],
+            "TeachingRole": "证明全球边缘 SFU 卸载与跨洋专线 RVQ 中继将跨洲 TTFA 从 304 ms 压至 181.5 ms 并省 97.71% 干线带宽"
         }
     ]
     for row in fig_index:
@@ -591,6 +647,7 @@ def build_chapter() -> None:
         HERE / 'figure-index.json',
         ROOT / 'experiments/ch22/22-01/run.py',
         ROOT / 'experiments/ch22/22-02/run.py',
+        ROOT / 'experiments/ch22/22-03/run.py',
     ]
     if md.exists():
         sources.append(md)
