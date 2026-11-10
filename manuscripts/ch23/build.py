@@ -379,6 +379,44 @@ def build_chapter() -> None:
         '数据工程已演进为与预训练集群同等规模的核心 AI 基础设施',
     )
 
+    draw_dual_band(
+        ex,
+        'ch23-mineru-olmocr-pdf-layout-and-formula-gpu-pipeline',
+        '百万册学术 PDF 解析：数字页直抽与公式框动态批处理',
+        'blue',
+        [
+            ('① CMap 字符探针\n65% 原生数字页\n正文零拷贝直抽', 'blue'),
+            ('② 跨页子框微批\n公式/表格 B=256\n均摊仅 11.00 ms', 'purple'),
+            ('③ 扫描页 olmOCR\n35% 乱码扫描页\n连续批处理 30.2 ms', 'teal'),
+        ],
+        '200 万册（5 亿页）文献库：加权 17.72 ms/页 vs 单体 VLM 625 ms/页',
+        'teal',
+        [
+            ('单体 7B VLM 全页解码瓶颈：\n1.60 页/s · 86,805.6 GPU-h\n已有数字层重复自回归浪费算力', 'orange'),
+            ('MinerU + olmOCR 混合双通路：\n56.43 页/s（提速 35.27 倍）\n2,461.1 GPU-h · 0.0135 USD/M', 'teal'),
+        ],
+        '区分原生数字页与扫描页并对公式子框跨页批处理，将吞吐推高 35.27 倍',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch23-repo-level-ast-dependency-topological-packing',
+        '代码仓库 64k 预训练：AST 依赖提取、Tarjan 破环与拓扑装箱',
+        'purple',
+        [
+            ('① Tree-sitter\n解析 import/符号\n建跨文件有向图', 'blue'),
+            ('② Tarjan 强连通\n凝聚循环导入环\n化简为严格 DAG', 'purple'),
+            ('③ Kahn 拓扑装箱\n被调方排调用方前\n64k 装箱率 98.8%', 'teal'),
+        ],
+        '因果掩码下跨文件定义可见率：字母序 42.50% -> 拓扑序 95.00%',
+        'teal',
+        [
+            ('路径字母序拼接（42.50%）：\napp/ 排在 core/ 与 utils/ 之前\n57.5% 跨文件调用沦为无定义盲猜', 'orange'),
+            ('AST 拓扑序装箱（95.00%）：\n基础库与工具定义驻留左侧前缀\n跨文件 API 困惑度降 39.85%', 'teal'),
+        ],
+        '按 AST 依赖拓扑排序让因果自注意力自然贴合软件工程的真实调用流向',
+    )
+
     outputs = ex.finish()
 
     fig_index = [
@@ -541,6 +579,26 @@ def build_chapter() -> None:
             "caption": "百亿亿次 Token 数据工程与合成数据工厂从原始爬虫、GPU 去重到闭环合成退火的全栈总图",
             "source_refs": ["experiments/ch23/23-01/run.py", "experiments/ch23/23-02/run.py", "manuscripts/ch23/figure-data.json"],
             "TeachingRole": "收束第 23 章七级提纯漏斗、GPU 连通分量去重、分类器蒸馏与合成数据工厂的完整体系"
+        },
+        {
+            "figure_id": "图 23-17",
+            "number": 17,
+            "file": "ch23-mineru-olmocr-pdf-layout-and-formula-gpu-pipeline.svg",
+            "asset": "ch23/ch23-mineru-olmocr-pdf-layout-and-formula-gpu-pipeline.svg",
+            "section": "23.4.2",
+            "caption": "百万册级复杂学术 PDF 版面解析与公式还原（MinerU / olmOCR 混合快慢分流与跨页子区域 TensorRT 动态批处理，吞吐提速 35.27 倍）（算例 23-6）",
+            "source_refs": ["experiments/ch23/23-03/run.py", "manuscripts/ch23/figure-data.json"],
+            "TeachingRole": "通过 65% 原生数字页正文直抽与跨页公式框 TensorRT 动态批处理将单卡吞吐从 1.60 页/s 推高至 56.43 页/s"
+        },
+        {
+            "figure_id": "图 23-18",
+            "number": 18,
+            "file": "ch23-repo-level-ast-dependency-topological-packing.svg",
+            "asset": "ch23/ch23-repo-level-ast-dependency-topological-packing.svg",
+            "section": "23.4.2",
+            "caption": "代码仓库级跨文件 AST 依赖图提取、Tarjan 强连通破环与 Kahn 拓扑排序序列打包（因果依赖覆盖率从 42.50% 跃升至 95.00%）（算例 23-7）",
+            "source_refs": ["experiments/ch23/23-03/run.py", "manuscripts/ch23/figure-data.json"],
+            "TeachingRole": "消除路径字母序拼接导致的跨文件定义盲区，使 64k 代码预训练跨文件 API 困惑度降低 39.85%"
         }
     ]
     for row in fig_index:
@@ -598,6 +656,7 @@ def build_chapter() -> None:
         HERE / 'figure-index.json',
         ROOT / 'experiments/ch23/23-01/run.py',
         ROOT / 'experiments/ch23/23-02/run.py',
+        ROOT / 'experiments/ch23/23-03/run.py',
     ]
     if md.exists():
         sources.append(md)

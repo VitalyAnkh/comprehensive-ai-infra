@@ -44,12 +44,12 @@ def compute_metrics() -> dict:
     grand_ledger = {
         "total_chapters": 24,
         "total_parts": 4,
-        "total_chapter_figures": 835,
-        "total_production_code_blocks": 113,
-        "total_worked_examples": 152,
-        "total_exercise_blocks": 384,
-        "total_unique_exercise_ids": 383,
-        "total_experiment_suites": 135,
+        "total_chapter_figures": 883,
+        "total_production_code_blocks": 166,
+        "total_worked_examples": 192,
+        "total_exercise_blocks": 432,
+        "total_unique_exercise_ids": 431,
+        "total_experiment_suites": 147,
     }
 
     return {

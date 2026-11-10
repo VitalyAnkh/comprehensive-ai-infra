@@ -1,0 +1,27 @@
+{
+  "experiment_id": "24-03",
+  "tokamak_sub_ms_rl_control": {
+    "control_freq_hz": 4000,
+    "cycle_period_us": 250.0,
+    "hard_budget_us": 200.0,
+    "unopt_total_us": 435.0,
+    "opt_total_us": 68.5,
+    "speedup_x": 6.35,
+    "budget_util_pct": 34.25,
+    "headroom_us": 131.5,
+    "p999_latency_us": 74.0,
+    "forecast_lead_ms": 28.5,
+    "actuation_margin_ms": 16.5
+  },
+  "single_cell_csr_sparse_atlas": {
+    "n_cells": 100000000,
+    "g_total": 20480,
+    "k_avg": 1536,
+    "dense_storage_gb": 4096.0,
+    "csr_storage_gb": 615.2,
+    "storage_compression_x": 6.66,
+    "seq_compression_x": 13.33,
+    "attn_flop_reduction_x": 177.78,
+    "e2e_training_speedup_x": 20.0
+  }
+}

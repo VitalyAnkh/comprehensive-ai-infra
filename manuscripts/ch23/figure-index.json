@@ -232,5 +232,35 @@
     "TeachingRole": "收束第 23 章七级提纯漏斗、GPU 连通分量去重、分类器蒸馏与合成数据工厂的完整体系",
     "figure": "23-16",
     "name": "ch23-exascale-data-and-synthetic-factory-master-architecture"
+  },
+  {
+    "figure_id": "图 23-17",
+    "number": 17,
+    "file": "ch23-mineru-olmocr-pdf-layout-and-formula-gpu-pipeline.svg",
+    "asset": "ch23/ch23-mineru-olmocr-pdf-layout-and-formula-gpu-pipeline.svg",
+    "section": "23.4.2",
+    "caption": "百万册级复杂学术 PDF 版面解析与公式还原（MinerU / olmOCR 混合快慢分流与跨页子区域 TensorRT 动态批处理，吞吐提速 35.27 倍）（算例 23-6）",
+    "source_refs": [
+      "experiments/ch23/23-03/run.py",
+      "manuscripts/ch23/figure-data.json"
+    ],
+    "TeachingRole": "通过 65% 原生数字页正文直抽与跨页公式框 TensorRT 动态批处理将单卡吞吐从 1.60 页/s 推高至 56.43 页/s",
+    "figure": "23-17",
+    "name": "ch23-mineru-olmocr-pdf-layout-and-formula-gpu-pipeline"
+  },
+  {
+    "figure_id": "图 23-18",
+    "number": 18,
+    "file": "ch23-repo-level-ast-dependency-topological-packing.svg",
+    "asset": "ch23/ch23-repo-level-ast-dependency-topological-packing.svg",
+    "section": "23.4.2",
+    "caption": "代码仓库级跨文件 AST 依赖图提取、Tarjan 强连通破环与 Kahn 拓扑排序序列打包（因果依赖覆盖率从 42.50% 跃升至 95.00%）（算例 23-7）",
+    "source_refs": [
+      "experiments/ch23/23-03/run.py",
+      "manuscripts/ch23/figure-data.json"
+    ],
+    "TeachingRole": "消除路径字母序拼接导致的跨文件定义盲区，使 64k 代码预训练跨文件 API 困惑度降低 39.85%",
+    "figure": "23-18",
+    "name": "ch23-repo-level-ast-dependency-topological-packing"
   }
 ]

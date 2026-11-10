@@ -19,8 +19,12 @@ def main() -> None:
     assert actual["sfno_2d_halo_overlap"]["comm_to_comp_ratio_pct"] == 1.27
     assert actual["sfno_2d_halo_overlap"]["exposed_halo_ms"] == 0.0
     assert actual["grand_encyclopedia_ledger"]["total_chapters"] == 24
-    assert actual["grand_encyclopedia_ledger"]["total_chapter_figures"] == 835
-    assert actual["grand_encyclopedia_ledger"]["total_experiment_suites"] == 135
+    assert actual["grand_encyclopedia_ledger"]["total_chapter_figures"] == 883
+    assert actual["grand_encyclopedia_ledger"]["total_production_code_blocks"] == 166
+    assert actual["grand_encyclopedia_ledger"]["total_worked_examples"] == 192
+    assert actual["grand_encyclopedia_ledger"]["total_exercise_blocks"] == 432
+    assert actual["grand_encyclopedia_ledger"]["total_unique_exercise_ids"] == 431
+    assert actual["grand_encyclopedia_ledger"]["total_experiment_suites"] == 147
     print("Experiment 24-02 verified successfully.")
 
 

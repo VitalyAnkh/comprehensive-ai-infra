@@ -1,0 +1,34 @@
+{
+  "experiment_id": "23-03",
+  "mineru_olmocr_pdf_pipeline": {
+    "total_books": 2000000,
+    "total_pages": 500000000,
+    "digital_born_ratio": 0.65,
+    "avg_gpu_ms_per_page": 17.72,
+    "throughput_pages_per_s_gpu": 56.43,
+    "speedup_vs_monolithic_vlm_x": 35.27,
+    "speedup_vs_serial_mineru_x": 4.51,
+    "monolithic_vlm_gpu_hours": 86805.56,
+    "total_gpu_hours": 2461.11,
+    "wall_hours_on_64_gpus": 38.45,
+    "total_cost_usd": 5414.44,
+    "cost_per_1m_tokens_usd": 0.0135,
+    "pure_scanned_pages_per_s_gpu": 33.11,
+    "pure_scanned_total_gpu_hours": 4194.44
+  },
+  "repo_ast_topological_packing": {
+    "num_repo_files": 18,
+    "total_cross_file_edges": 40,
+    "alphabetical_causal_coverage_pct": 42.5,
+    "random_causal_coverage_pct": 50.0,
+    "topological_causal_coverage_pct": 95.0,
+    "coverage_gain_pct_points": 52.5,
+    "ppl_alphabetical": 6.85,
+    "ppl_topological": 4.12,
+    "ppl_reduction_pct": 39.85,
+    "context_window_tokens": 65536,
+    "packed_valid_tokens": 64750,
+    "packing_efficiency_pct": 98.8,
+    "padding_waste_pct": 1.2
+  }
+}

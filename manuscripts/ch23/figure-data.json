@@ -59,5 +59,31 @@
     "raw_sandbox_pass_yield_pct": 31.25,
     "effective_verified_yield_pct": 58.75,
     "verified_usd_per_1m_tokens": 0.075
+  },
+  "mineru_olmocr_pdf_pipeline": {
+    "source": "experiments/ch23/23-03/run.py (2M Academic PDF Books 500M Pages MinerU/olmOCR Hybrid GPU Pipeline)",
+    "total_books": 2000000,
+    "total_pages": 500000000,
+    "digital_born_ratio": 0.65,
+    "avg_gpu_ms_per_page": 17.72,
+    "throughput_pages_per_s_gpu": 56.43,
+    "speedup_vs_monolithic_vlm_x": 35.27,
+    "speedup_vs_serial_mineru_x": 4.51,
+    "total_gpu_hours": 2461.11,
+    "total_cost_usd": 5414.44,
+    "cost_per_1m_tokens_usd": 0.0135
+  },
+  "repo_ast_topological_packing": {
+    "source": "experiments/ch23/23-03/run.py (64k Repo-Level AST Dependency Graph + Tarjan SCC + Kahn Topological Packing)",
+    "num_repo_files": 18,
+    "total_cross_file_edges": 40,
+    "alphabetical_causal_coverage_pct": 42.5,
+    "random_causal_coverage_pct": 50.0,
+    "topological_causal_coverage_pct": 95.0,
+    "coverage_gain_pct_points": 52.5,
+    "ppl_alphabetical": 6.85,
+    "ppl_topological": 4.12,
+    "ppl_reduction_pct": 39.85,
+    "packing_efficiency_pct": 98.8
   }
 }

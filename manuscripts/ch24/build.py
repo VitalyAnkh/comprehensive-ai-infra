@@ -345,37 +345,75 @@ def build_chapter() -> None:
     draw_dual_band(
         ex,
         'ch24-twenty-four-chapter-encyclopedia-knowledge-atlas',
-        '《AI 基础设施系统工程》全书 24 章四大部分全景图（上）',
+        '《AI 基础设施系统工程》前四部分 24 章全景图（上）',
         'blue',
         [
             ('第一部分（第 1–6 章）：\n工作负载、缩放定律与硬件底座\n算子/GPU/机柜互连/光电网络', 'blue'),
             ('第二部分（第 7–12 章）：\n高吞吐推理、大规模训练与存储\nKV 缓存/P-D 分离/5D 并行/ETTR', 'purple'),
         ],
-        '《AI 基础设施系统工程》全书 24 章四大部分全景图（下）',
+        '《AI 基础设施系统工程》前四部分 24 章全景图（下）',
         'teal',
         [
             ('第三部分（第 13–20 章）：\n软硬协同、800V 液冷、机密计算\n多模态、RLVR、具身 VLA 与评测', 'blue'),
             ('第四部分（第 21–24 章）：\n智能体、全双工语音、数据工程\n合成数据工厂与科学智能底座', 'teal'),
         ],
-        '全书 24 章 · 835 幅出版级配图 · 384 道习题 · 135 个可运行实验套件',
+        '前四部分 24 章 · 883 幅章节配图 · 432 道习题 · 147 个实验套件',
     )
 
     draw_dual_band(
         ex,
         'ch24-unified-laws-across-all-24-chapters-synthesis',
-        '贯穿全书 24 章的四大物理守恒律（上）：算术强度与状态局部性',
+        '贯穿全书的四大物理守恒律（上）：算术强度与状态局部性',
         'purple',
         [
             ('第一铁律：算术强度与带宽墙\nI = FLOPs / Bytes\n跨越拐点推满矩阵计算引擎', 'blue'),
             ('第二铁律：状态生命周期局部性\nSRAM -> HBM -> DRAM -> SSD\n分块融合与分级缓存消灭冗余', 'purple'),
         ],
-        '贯穿全书 24 章的四大物理守恒律（下）：关键路径掩盖与能量转换',
+        '贯穿全书的四大物理守恒律（下）：关键路径掩盖与能量转换',
         'teal',
         [
             ('第三铁律：通信掩盖与尾延迟\n暴露延迟 = max(0, 通信 - 计算)\n双流重叠与扇出对冲消除同步气泡', 'blue'),
             ('第四铁律：北极星可验证有效产出\n有效产出 = 算力效率 x 良率\n将每焦耳电能转化为可验证智能', 'teal'),
         ],
         '模型架构日新月异，唯有热力学、香农容量、光速延迟与算术强度永存',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch24-tokamak-plasma-tearing-mode-sub-ms-rl-control',
+        '托卡马克等离子体撕裂模 4,000 Hz（200 us 预算）实时控制流水',
+        'blue',
+        [
+            ('① 磁探针 RDMA 直写\n6.5 us 零拷贝入显存\n绕过主机内核协议栈', 'blue'),
+            ('② 磁面重构与撕裂预警\n18.0+24.5=42.5 us\n提前 28.5 ms 预警', 'purple'),
+            ('③ RL 策略与线圈下发\n14.0+5.5=19.5 us\n总计 68.5 us (34.3%)', 'teal'),
+        ],
+        '主机中转动态调度（435.0 us 超时）vs. 静态图 L2 驻留（68.5 us）',
+        'teal',
+        [
+            ('传统主机中转 + 逐算子 HBM：\nPCIe 往返 + Python 启动抖动\n总耗时 435.0 us 突破 200 us 红线', 'orange'),
+            ('GPUDirect + CUDA Graph 锁频：\n权重 100% 锁入片上 L2 Cache\n提速 6.35 倍，P99.9 仅 74.0 us', 'teal'),
+        ],
+        '消灭主机中转与 HBM 往返，以 68.5 us 确定性微秒级闭环驯服核聚变撕裂模',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch24-single-cell-atlas-sparse-gene-expression-dataloader',
+        '亿级单细胞图谱（scGPT / Geneformer）CSR 稀疏加载与非零打包',
+        'purple',
+        [
+            ('① CSR 稀疏块直读\n4,096->615.2 GB\n存储带宽省 6.66 倍', 'blue'),
+            ('② 仅发射非零 Token\n20,480->1,536 基因\n序列压缩 13.33 倍', 'purple'),
+            ('③ 变长拼包自注意力\n平方计算降 177.8 倍\n训练吞吐升 20.00 倍', 'teal'),
+        ],
+        '稠密零填充矩阵（92.5% 零元素浪费）vs. 动态非零基因打包流水线',
+        'blue',
+        [
+            ('传统稠密 20,480 基因全长输入：\n92.5% 算力耗费在零表达位置\n每步耗时 1,024 ms 严重受限', 'orange'),
+            ('CSR 零拷贝直读 + 变长紧凑打包：\n仅对活跃表达基因计算自注意力\n每步压至 51.2 ms（25 万细胞/s）', 'teal'),
+        ],
+        '顺应生物转录组 92.5% 天然稀疏性，将 177.78 倍冗余平方计算化归为零',
     )
 
     outputs = ex.finish()
@@ -522,14 +560,34 @@ def build_chapter() -> None:
             "TeachingRole": "构建从数字生成仿真到真实物理实验室机器人验证的主动学习飞轮"
         },
         {
+            "figure_id": "图 24-17",
+            "number": 17,
+            "file": "ch24-tokamak-plasma-tearing-mode-sub-ms-rl-control.svg",
+            "asset": "ch24/ch24-tokamak-plasma-tearing-mode-sub-ms-rl-control.svg",
+            "section": "24.4.2",
+            "caption": "托卡马克核聚变等离子体磁流体（MHD）撕裂模 4,000 Hz（200.0 us 预算）实时强化学习控制推理底座：GPUDirect RDMA + 静态 CUDA Graph + L2 缓存驻留将延迟从 435.0 us 压至 68.5 us（提速 6.35 倍，预算占用 34.25%）（算例 24-6）",
+            "source_refs": ["experiments/ch24/24-03/run.py", "manuscripts/ch24/figure-data.json"],
+            "TeachingRole": "阐明硬实时科学控制回路如何消灭主机 PCIe 往返与 HBM 读取抖动，以 68.5 us 确定性延迟抑制撕裂模破裂"
+        },
+        {
+            "figure_id": "图 24-18",
+            "number": 18,
+            "file": "ch24-single-cell-atlas-sparse-gene-expression-dataloader.svg",
+            "asset": "ch24/ch24-single-cell-atlas-sparse-gene-expression-dataloader.svg",
+            "section": "24.4.2",
+            "caption": "亿级单细胞转录组图谱（scGPT / Geneformer，1 亿细胞 x 20,480 基因，非零率 7.5%）的 CSR 稀疏压缩存储（4,096 -> 615.20 GB，6.66 倍）与动态非零序列打包（二次方注意力降低 177.78 倍，端到端训练提速 20.00 倍）（算例 24-7）",
+            "source_refs": ["experiments/ch24/24-03/run.py", "manuscripts/ch24/figure-data.json"],
+            "TeachingRole": "利用 CSR 稀疏块直读与变长非零基因 Token 拼包彻底消除 92.5% 零表达基因的二次方算力浪费"
+        },
+        {
             "figure_id": "图 24-15",
             "number": 15,
             "file": "ch24-twenty-four-chapter-encyclopedia-knowledge-atlas.svg",
             "asset": "ch24/ch24-twenty-four-chapter-encyclopedia-knowledge-atlas.svg",
             "section": "24.5.1",
-            "caption": "全书 24 章四大部分（基础与硬件篇、训推系统篇、智能体与模态底座篇、数据/科学/机队工程篇）百科全书知识全景图（算例 24-5）",
+            "caption": "前四部分 24 章（基础与硬件篇、训推系统篇、智能体与模态底座篇、数据/科学/机队工程篇）百科全书知识全景图（算例 24-5）",
             "source_refs": ["experiments/ch24/24-02/run.py", "manuscripts/ch24/figure-data.json"],
-            "TeachingRole": "宏观鸟瞰全书 24 章、835 幅配图、384 道习题与 135 个可运行实验的系统工程坐标系"
+            "TeachingRole": "宏观鸟瞰前四部分 24 章、883 幅章节配图、432 道习题与 147 个可运行实验的系统工程坐标系，并承前启后引出第五部分（第 25–30 章）"
         },
         {
             "figure_id": "图 24-16",
@@ -537,9 +595,9 @@ def build_chapter() -> None:
             "file": "ch24-unified-laws-across-all-24-chapters-synthesis.svg",
             "asset": "ch24/ch24-unified-laws-across-all-24-chapters-synthesis.svg",
             "section": "24.5.2",
-            "caption": "贯穿全书 24 章的统一物理底座——从单个矩阵乘法的算术强度，到驾驭语言、全模态、机器人与科学发现的四大智能计算铁律",
+            "caption": "贯穿全书的统一物理底座——从单个矩阵乘法的算术强度，到驾驭语言、全模态、机器人与科学发现的四大智能计算铁律",
             "source_refs": ["experiments/ch24/24-02/run.py", "manuscripts/ch24/figure-data.json"],
-            "TeachingRole": "以算术强度、状态局部性、通信掩盖与北极星可验证有效产出收束全书二十四章主线"
+            "TeachingRole": "以算术强度、状态局部性、通信掩盖与北极星可验证有效产出收束前四部分二十四章主线并衔接第五部分"
         }
     ]
     for row in fig_index:
@@ -597,6 +655,7 @@ def build_chapter() -> None:
         HERE / 'figure-index.json',
         ROOT / 'experiments/ch24/24-01/run.py',
         ROOT / 'experiments/ch24/24-02/run.py',
+        ROOT / 'experiments/ch24/24-03/run.py',
     ]
     if md.exists():
         sources.append(md)

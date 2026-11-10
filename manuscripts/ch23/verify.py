@@ -51,27 +51,27 @@ h2s = re.findall(r'^## (.+)$', s, re.M)
 check('last H2 is 本章小结', len(h2s) >= 6 and h2s[-1].strip() == '本章小结')
 
 exercises = re.findall(r'^>\s*\*\*(?:练习|实验) 23-(\d+)[：:（]', s, re.M)
-check('ten exercises 23-1 to 23-10 in order', exercises == [str(i) for i in range(1, 11)])
+check('twelve exercises 23-1 to 23-12 in order', exercises == [str(i) for i in range(1, 13)])
 
 code_blocks = re.findall(r'```python\n.*?```', s, re.S)
-check('six production python code blocks', len(code_blocks) == 6 and len(re.findall(r'```', s)) == 12)
+check('eight production python code blocks', len(code_blocks) == 8 and len(re.findall(r'```', s)) == 16)
 
 worked_examples = re.findall(r'^>\s*\*\*算例\s*23-', s, re.M)
-check('five standardized blockquote worked examples', len(worked_examples) == 5)
+check('seven standardized blockquote worked examples', len(worked_examples) == 7)
 
 table_captions = re.findall(r'^\*表 23-(\d+)　', s, re.M)
-check('six standardized italic table captions 23-1 to 23-6', table_captions == [str(i) for i in range(1, 7)])
+check('seven standardized italic table captions 23-1 to 23-7', table_captions == [str(i) for i in range(1, 8)])
 
 fig_index = json.loads((HERE / 'figure-index.json').read_text())
 fig_count = len(fig_index)
-check('sixteen figures in figure-index.json', fig_count == 16)
+check('eighteen figures in figure-index.json', fig_count == 18)
 captions = re.findall(r'^\*图 23-(\d+)(?:：|　)', s, re.M)
-check('sequential captions 23-1 to 23-16', sorted(captions, key=int) == [str(i) for i in range(1, fig_count + 1)])
+check('sequential captions 23-1 to 23-18', sorted(captions, key=int) == [str(i) for i in range(1, fig_count + 1)])
 
 imgs = re.findall(r'!\[.+?\]\((ch23/[^)]+)\)', s)
 check(
-    'sixteen active illustrations match figure-index.json',
-    imgs == [row.get('asset') or f"ch23/{row['file']}" for row in fig_index] and len(imgs) == 16,
+    'eighteen active illustrations match figure-index.json',
+    imgs == [row.get('asset') or f"ch23/{row['file']}" for row in fig_index] and len(imgs) == 18,
 )
 
 for rel in imgs:
@@ -90,7 +90,7 @@ check('local links exist', not missing)
 
 defs = re.findall(r'^\[\^([^\]]+)\]:', s, re.M)
 refs = re.findall(r'\[\^([^\]]+)\](?!:)', s)
-check('all footnotes used and defined once', set(defs) == set(refs) and len(defs) == len(set(defs)) and len(defs) >= 8)
+check('all footnotes used and defined once', set(defs) == set(refs) and len(defs) == len(set(defs)) and len(defs) >= 20)
 
 for name, key in [('sources.json', 'sources'), ('manifest.json', 'outputs')]:
     data = json.loads((HERE / name).read_text())[key]
@@ -103,19 +103,23 @@ check('no formula errors', not math_val['errors'] and 'katex-error' not in page)
 layout_val = json.loads((HERE / 'teaching-layout-validation.json').read_text())
 check(
     'book-size figure layout',
-    len(layout_val) == 16 and all(r['width_pt'] == 420 and r['min_label_pt'] >= 11 and not r['text_extent_warnings'] for r in layout_val),
+    len(layout_val) == 18 and all(r['width_pt'] == 420 and r['min_label_pt'] >= 11 and not r['text_extent_warnings'] for r in layout_val),
 )
 
 d = json.loads((HERE / 'figure-data.json').read_text())
 check(
-    'locked curation funnel 100 PB -> 2.40 PB (15.0T) and GPU dedup 80.0x / synthetic factory 13.16x',
+    'locked curation funnel 100 PB -> 2.40 PB (15.0T), GPU dedup 80.0x, synthetic 13.16x, MinerU 35.27x & AST 95.0%',
     close(d['curation_funnel']['after_decontam_pb'], 2.40)
     and close(d['curation_funnel']['final_curated_tokens_t'], 15.0)
     and close(d['minhash_lsh_scurve']['threshold_s_star'], 0.7071)
     and close(d['gpu_fuzzy_dedup_cluster']['dedup_speedup_x'], 80.0)
     and close(d['rubric_distillation']['distillation_compute_leverage_x'], 55.82)
     and close(d['synthetic_data_factory']['raw_cost_reduction_x'], 13.16)
-    and close(d['synthetic_data_factory']['verified_usd_per_1m_tokens'], 0.075),
+    and close(d['synthetic_data_factory']['verified_usd_per_1m_tokens'], 0.075)
+    and close(d['mineru_olmocr_pdf_pipeline']['avg_gpu_ms_per_page'], 17.72)
+    and close(d['mineru_olmocr_pdf_pipeline']['speedup_vs_monolithic_vlm_x'], 35.27)
+    and close(d['repo_ast_topological_packing']['topological_causal_coverage_pct'], 95.0)
+    and close(d['repo_ast_topological_packing']['ppl_reduction_pct'], 39.85),
 )
 
 passed = sum(1 for c in checks if c['passed'])

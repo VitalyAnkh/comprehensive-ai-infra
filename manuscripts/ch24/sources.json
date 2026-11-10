@@ -2,15 +2,15 @@
   "sources": [
     {
       "path": "manuscripts/ch24/build.py",
-      "sha256": "640dac00de3def94ce37ead29d1d3ec84deda0f6d768a2de85254819bef37d31"
+      "sha256": "df6bd392b2c351b59eef5b5de69d793d980edbb58d9fcefc0864151187bf339d"
     },
     {
       "path": "manuscripts/ch24/figure-data.json",
-      "sha256": "4f2eadb07398d286107e7292eba43cc990a5c0ea06f9ac36b62a3fe232dfaf69"
+      "sha256": "0615087fb2135404922d5e337613172757689712badc6342dcafa6d6f4c0c8e4"
     },
     {
       "path": "manuscripts/ch24/figure-index.json",
-      "sha256": "829e826cb0ed199ef99708fbc55dcaec14bfc97481b63b8e9c8694b3dedfab45"
+      "sha256": "0a73f57ea88046802f37949cd45e17fefee640d52769dc10accd4c4978baf7a5"
     },
     {
       "path": "experiments/ch24/24-01/run.py",
@@ -18,11 +18,15 @@
     },
     {
       "path": "experiments/ch24/24-02/run.py",
-      "sha256": "4f193e22b10e73ab9848137cf3f73e81d4309490648fa3ecb02e7dd6bb9611c0"
+      "sha256": "a68303034c2f862c26fb31f4c59feb66f8f5561fcab1a2f92ddb0d299aa17634"
+    },
+    {
+      "path": "experiments/ch24/24-03/run.py",
+      "sha256": "87b4673c8cb7419c66fa85aad62a193d3c0a1a381379718f04dca3b35566cb31"
     },
     {
       "path": "manuscripts/24-科学智能（AI for Science）基础设施：生物大分子、百万碱基基因组与物理场网格系统.md",
-      "sha256": "339ccd018116dd69a5c3e68cc9598fe209cc7f26d1feba39c53d8af1c5939880"
+      "sha256": "a205abe7ae6b467419afcfc58a2c236f0551de969f9b5b11bc2410618ad5578b"
     }
   ]
 }
