@@ -1,0 +1,63 @@
+{
+  "block_diffusion_roofline": {
+    "model_params_b": 32.0,
+    "gen_tokens": 512,
+    "ar_steps": 512,
+    "ar_total_sec": 5.12,
+    "ar_tok_per_sec": 100.0,
+    "block_size_k": 64,
+    "denoise_steps_t": 10,
+    "dllm_forwards": 80,
+    "weight_read_reduction_x": 6.4,
+    "dllm_total_sec": 0.864,
+    "dllm_tok_per_sec": 592.6,
+    "speedup_vs_ar_x": 5.93,
+    "dllm_8b_tok_per_sec": 1420.0
+  },
+  "confidence_remasking_early_exit": {
+    "confidence_gamma": 0.92,
+    "step_saving_pct": 35.0,
+    "avg_steps_per_block": 6.5,
+    "early_stop_forwards": 52,
+    "early_stop_tok_per_sec": 911.7,
+    "early_stop_speedup_x": 9.12
+  },
+  "blt_entropy_patching": {
+    "vocab_size_v": 256000,
+    "hidden_dim_d": 4096,
+    "saved_vocab_mem_gb": 4.194,
+    "saved_lm_head_gflops_per_tok": 2.1,
+    "entropy_threshold_bits": 1.35,
+    "base_patch_bytes": 4.5,
+    "structured_patch_bytes": 12.0,
+    "seq_len_reduction_x": 2.67,
+    "e2e_flop_reduction_pct": 52.4
+  },
+  "titans_ttt_chunk_dual": {
+    "head_dim": 128,
+    "chunk_size_b": 64,
+    "serial_arith_intensity": 1.5,
+    "chunk_arith_intensity": 48.0,
+    "serial_throughput_ktok_s": 42.0,
+    "chunk_throughput_ktok_s": 1033.2,
+    "ttt_speedup_x": 24.6,
+    "context_len_2m": 2000000,
+    "fast_weight_mb_per_layer": 16.0
+  },
+  "coconut_latent_loop": {
+    "discrete_cot_tokens": 300,
+    "compression_ratio_c": 3,
+    "latent_thought_steps": 100,
+    "discrete_total_ms": 3000.0,
+    "latent_total_ms": 924.0,
+    "latency_reduction_pct": 69.2,
+    "coconut_speedup_x": 3.25
+  },
+  "mod_stream_compaction": {
+    "keep_ratio_rho": 0.25,
+    "warp_size": 32,
+    "uncompacted_warp_eff_pct": 58.1,
+    "compacted_warp_eff_pct": 96.4,
+    "mod_layer_speedup_x": 3.32
+  }
+}

@@ -1,0 +1,235 @@
+[
+  {
+    "figure_id": "图 25-1",
+    "number": 1,
+    "file": "ch25-trillion-param-dlrm-three-tier-hbm-cxl-ssd-embedding.svg",
+    "asset": "ch25/ch25-trillion-param-dlrm-three-tier-hbm-cxl-ssd-embedding.svg",
+    "section": "25.1.1",
+    "caption": "10.0 TB 万亿参数 DLRM 稀疏嵌入表三级分层存储架构（HBM 320 GB 热表 + CXL 2.0 TB 温表 + NVMe 10.0 TB 冷表），加权查表延迟降至 2.19 us（算例 25-1）",
+    "source_refs": [
+      "experiments/ch25/25-01/run.py",
+      "manuscripts/ch25/figure-data.json"
+    ],
+    "TeachingRole": "展示如何利用 3.2% HBM 热缓存捕获 82.0% 幂律访问，将加权延迟较纯 SSD 提升 29.7 倍",
+    "figure": "25-1",
+    "name": "ch25-trillion-param-dlrm-three-tier-hbm-cxl-ssd-embedding"
+  },
+  {
+    "figure_id": "图 25-2",
+    "number": 2,
+    "file": "ch25-zipf-power-law-hot-embedding-cache-hit-curve.svg",
+    "asset": "ch25/ch25-zipf-power-law-hot-embedding-cache-hit-curve.svg",
+    "section": "25.1.1",
+    "caption": "搜广推稀疏特征 Zipf 幂律分布（alpha=1.12）与 15 分钟滑动窗口时间漂移（eta=0.038）下的三级缓存命中率曲线与无锁 Cuckoo 哈希晋升机制（算例 25-1）",
+    "source_refs": [
+      "experiments/ch25/25-01/run.py",
+      "manuscripts/ch25/figure-data.json"
+    ],
+    "TeachingRole": "量化静态幂律聚集与在线突发热点漂移对多级缓存未命中率的耦合影响",
+    "figure": "25-2",
+    "name": "ch25-zipf-power-law-hot-embedding-cache-hit-curve"
+  },
+  {
+    "figure_id": "图 25-3",
+    "number": 3,
+    "file": "ch25-torchrec-all-to-all-sparse-lookup-and-bucket-sharding.svg",
+    "asset": "ch25/ch25-torchrec-all-to-all-sparse-lookup-and-bucket-sharding.svg",
+    "section": "25.1.2",
+    "caption": "64 卡 TorchRec 稀疏嵌入表热度感知分桶切分（倾斜度从 2.85 降至 1.06）与底端 MLP 计算完全掩盖 All-to-All 通信（暴露延迟 0.00 ms）（算例 25-2）",
+    "source_refs": [
+      "experiments/ch25/25-01/run.py",
+      "manuscripts/ch25/figure-data.json"
+    ],
+    "TeachingRole": "阐明如何通过按访问热度分桶消除 All-to-All 木桶效应并实现双流零暴露重叠",
+    "figure": "25-3",
+    "name": "ch25-torchrec-all-to-all-sparse-lookup-and-bucket-sharding"
+  },
+  {
+    "figure_id": "图 25-4",
+    "number": 4,
+    "file": "ch25-cascade-dlrm-vs-generative-recommender-hstu-paradigm.svg",
+    "asset": "ch25/ch25-cascade-dlrm-vs-generative-recommender-hstu-paradigm.svg",
+    "section": "25.2.1",
+    "caption": "传统多阶段级联推荐漏斗（DLRM 碎片化特征工程，MFU < 12%）向统一生成式推荐序列转导器（Meta HSTU / OneRec，MFU > 48%）的范式跃迁",
+    "source_refs": [
+      "manuscripts/ch25/figure-data.json"
+    ],
+    "TeachingRole": "揭示搜广推如何从访存受限的浅层交叉网络演进为遵循扩展定律的自回归序列生成模型",
+    "figure": "25-4",
+    "name": "ch25-cascade-dlrm-vs-generative-recommender-hstu-paradigm"
+  },
+  {
+    "figure_id": "图 25-5",
+    "number": 5,
+    "file": "ch25-hstu-pointwise-aggregated-attention-and-stochastic-length.svg",
+    "asset": "ch25/ch25-hstu-pointwise-aggregated-attention-and-stochastic-length.svg",
+    "section": "25.2.1",
+    "caption": "层次化序列转导单元（HSTU）的非归一化 SiLU 点积聚合注意力内核与随机序列长度压缩（Stochastic Length，beta=0.75 削减 56.2% 注意力算力）（算例 25-3）",
+    "source_refs": [
+      "experiments/ch25/25-02/run.py",
+      "manuscripts/ch25/figure-data.json"
+    ],
+    "TeachingRole": "解释为何推荐系统必须摒弃概率归一 Softmax 以保留用户偏好强度并利用幂律稀疏采样压缩长序列",
+    "figure": "25-5",
+    "name": "ch25-hstu-pointwise-aggregated-attention-and-stochastic-length"
+  },
+  {
+    "figure_id": "图 25-6",
+    "number": 6,
+    "file": "ch25-m-falcon-candidate-microbatch-prefix-amortization.svg",
+    "asset": "ch25/ch25-m-falcon-candidate-microbatch-prefix-amortization.svg",
+    "section": "25.2.2",
+    "caption": "M-FALCON 候选集微批前缀摊销算法：单次编码 L=4,096 用户历史前缀并共享 KV 状态并行打分 M=1,024 个候选物品，算力缩减 44.80 倍（1,409.3 -> 31.46 TFLOPs）（算例 25-4）",
+    "source_refs": [
+      "experiments/ch25/25-02/run.py",
+      "manuscripts/ch25/figure-data.json"
+    ],
+    "TeachingRole": "通过前缀 KV 共享与候选对角注意力掩码攻克生成式推荐在线打分千级候选物品的算力墙",
+    "figure": "25-6",
+    "name": "ch25-m-falcon-candidate-microbatch-prefix-amortization"
+  },
+  {
+    "figure_id": "图 25-7",
+    "number": 7,
+    "file": "ch25-hstu-online-event-streaming-and-delta-kv-update.svg",
+    "asset": "ch25/ch25-hstu-online-event-streaming-and-delta-kv-update.svg",
+    "section": "25.2.2",
+    "caption": "在线实时行为事件流（Kafka / Flink）驱动的用户历史序列增量 Delta KV 缓存追加与跨请求前缀复用流水线",
+    "source_refs": [
+      "manuscripts/ch25/figure-data.json"
+    ],
+    "TeachingRole": "消除同一用户连续刷屏时的 4,096 历史序列重复预填充开销",
+    "figure": "25-7",
+    "name": "ch25-hstu-online-event-streaming-and-delta-kv-update"
+  },
+  {
+    "figure_id": "图 25-8",
+    "number": 8,
+    "file": "ch25-cpu-hnsw-vs-gpu-cuvs-cagra-graph-build-pipeline.svg",
+    "asset": "ch25/ch25-cpu-hnsw-vs-gpu-cuvs-cagra-graph-build-pipeline.svg",
+    "section": "25.3.1",
+    "caption": "十亿级 768 维向量（1.536 TB）图索引构建对比：双路 128 核 CPU HNSW（11.50 小时）vs. 8 卡 H100 cuVS CAGRA（40.8 分钟，提速 16.91 倍）（算例 25-5）",
+    "source_refs": [
+      "experiments/ch25/25-03/run.py",
+      "manuscripts/ch25/figure-data.json"
+    ],
+    "TeachingRole": "剖析 CPU HNSW 层级锁竞争与随机访存瓶颈，展示 GPU 原生扁平固定度图的并行建图优势",
+    "figure": "25-8",
+    "name": "ch25-cpu-hnsw-vs-gpu-cuvs-cagra-graph-build-pipeline"
+  },
+  {
+    "figure_id": "图 25-9",
+    "number": 9,
+    "file": "ch25-cagra-warp-splitting-distance-and-two-stage-pruning.svg",
+    "asset": "ch25/ch25-cagra-warp-splitting-distance-and-two-stage-pruning.svg",
+    "section": "25.3.1",
+    "caption": "NVIDIA cuVS CAGRA 的 Warp-Split 协同距离计算内核、两阶段二跳绕行路径剪枝与反向边注入拓扑优化",
+    "source_refs": [
+      "experiments/ch25/25-03/run.py",
+      "manuscripts/ch25/figure-data.json"
+    ],
+    "TeachingRole": "拆解 GPU 图索引如何在精简一半出边度数的同时维持 98.2% 以上的全局强连通召回率",
+    "figure": "25-9",
+    "name": "ch25-cagra-warp-splitting-distance-and-two-stage-pruning"
+  },
+  {
+    "figure_id": "图 25-10",
+    "number": 10,
+    "file": "ch25-ivf-pq-shared-memory-lut-asymmetric-distance-kernel.svg",
+    "asset": "ch25/ch25-ivf-pq-shared-memory-lut-asymmetric-distance-kernel.svg",
+    "section": "25.3.2",
+    "caption": "乘积量化（IVF-PQ）非对称距离查找表（32 KB ADC-LUT）在 GPU 片上共享内存中的无 Bank 冲突交错布局与寄存器级累加内核",
+    "source_refs": [
+      "manuscripts/ch25/figure-data.json"
+    ],
+    "TeachingRole": "利用 32 KB 片上 SRAM 查找表消除 24 倍显存解压带宽膨胀",
+    "figure": "25-10",
+    "name": "ch25-ivf-pq-shared-memory-lut-asymmetric-distance-kernel"
+  },
+  {
+    "figure_id": "图 25-11",
+    "number": 11,
+    "file": "ch25-diskann-4kb-sector-aligned-vector-and-neighbor-layout.svg",
+    "asset": "ch25/ch25-diskann-4kb-sector-aligned-vector-and-neighbor-layout.svg",
+    "section": "25.4.1",
+    "caption": "DiskANN 物理扇区对齐存储布局：主机 DRAM 常驻 64.0 GB PQ 码 + NVMe 4,096 B 扇区紧凑封装 2 个完整图节点（1,792 B/节点）（算例 25-6）",
+    "source_refs": [
+      "experiments/ch25/25-03/run.py",
+      "manuscripts/ch25/figure-data.json"
+    ],
+    "TeachingRole": "通过将全精度向量与 64 个邻居 ID 同页打包，确保每跳遍历严格只消耗 1 次 4 KB 随机读",
+    "figure": "25-11",
+    "name": "ch25-diskann-4kb-sector-aligned-vector-and-neighbor-layout"
+  },
+  {
+    "figure_id": "图 25-12",
+    "number": 12,
+    "file": "ch25-diskann-io-uring-gds-beam-search-pipeline.svg",
+    "asset": "ch25/ch25-diskann-io-uring-gds-beam-search-pipeline.svg",
+    "section": "25.4.1",
+    "caption": "DiskANN 基于 io_uring / GDS 的异步波束搜索（W=4, S=6，单查询 24 次随机读）在 4 块 PCIe 5.0 SSD 上实现 210,000 QPS 与 2.85 ms P99 延迟（算例 25-6）",
+    "source_refs": [
+      "experiments/ch25/25-03/run.py",
+      "manuscripts/ch25/figure-data.json"
+    ],
+    "TeachingRole": "用内存 PQ 粗排导航结合多路异步 I/O 并发隐藏闪存读取延迟",
+    "figure": "25-12",
+    "name": "ch25-diskann-io-uring-gds-beam-search-pipeline"
+  },
+  {
+    "figure_id": "图 25-13",
+    "number": 13,
+    "file": "ch25-freshdiskann-streaming-insert-delete-consolidation.svg",
+    "asset": "ch25/ch25-freshdiskann-streaming-insert-delete-consolidation.svg",
+    "section": "25.4.2",
+    "caption": "FreshDiskANN 在线流式增量图写入、墓碑删除标记与后台鲁棒重连合并（Robust Stitch Consolidation）双缓冲架构",
+    "source_refs": [
+      "manuscripts/ch25/figure-data.json"
+    ],
+    "TeachingRole": "解决静态图索引无法支持每秒数万次实时增删而导致拓扑断裂的工业界痛点",
+    "figure": "25-13",
+    "name": "ch25-freshdiskann-streaming-insert-delete-consolidation"
+  },
+  {
+    "figure_id": "图 25-14",
+    "number": 14,
+    "file": "ch25-graphrag-hierarchical-community-and-vector-hybrid-retrieval.svg",
+    "asset": "ch25/ch25-graphrag-hierarchical-community-and-vector-hybrid-retrieval.svg",
+    "section": "25.4.2",
+    "caption": "GraphRAG 多跳知识图谱社区摘要（Leiden 层次聚类）与 GPU 稠密向量检索的并发执行及倒数秩融合（RRF）流水线",
+    "source_refs": [
+      "manuscripts/ch25/figure-data.json"
+    ],
+    "TeachingRole": "在 8.4 ms 预算内协同完成细粒度向量语义命中与跨文档全局关系图谱召回",
+    "figure": "25-14",
+    "name": "ch25-graphrag-hierarchical-community-and-vector-hybrid-retrieval"
+  },
+  {
+    "figure_id": "图 25-15",
+    "number": 15,
+    "file": "ch25-search-ads-rec-gpu-fleet-tco-and-sla-roofline.svg",
+    "asset": "ch25/ch25-search-ads-rec-gpu-fleet-tco-and-sla-roofline.svg",
+    "section": "25.4.2",
+    "caption": "互联网搜广推与混合检索全链路 50 ms SLA 延迟分解（向量召回 3.5 ms + 三级查表 2.5 ms + HSTU 精排 11.8 ms = 17.8 ms）与 GPU 机队 TCO 收益",
+    "source_refs": [
+      "manuscripts/ch25/figure-data.json"
+    ],
+    "TeachingRole": "从数据中心机队视角算清全栈 GPU 化替代传统 CPU 级联集群的延迟裕度与投资回报率",
+    "figure": "25-15",
+    "name": "ch25-search-ads-rec-gpu-fleet-tco-and-sla-roofline"
+  },
+  {
+    "figure_id": "图 25-16",
+    "number": 16,
+    "file": "ch25-generative-recommendation-and-vector-engine-synthesis.svg",
+    "asset": "ch25/ch25-generative-recommendation-and-vector-engine-synthesis.svg",
+    "section": "25.4.2",
+    "caption": "第 25 章系统工程全景图：从 10 TB 三级稀疏嵌入表、HSTU + M-FALCON 生成式推荐到 cuVS CAGRA / DiskANN 十亿级向量检索引擎",
+    "source_refs": [
+      "manuscripts/ch25/figure-data.json"
+    ],
+    "TeachingRole": "收束本章四大模块，归纳状态分级局部性与前缀共享摊销两大核心设计准则",
+    "figure": "25-16",
+    "name": "ch25-generative-recommendation-and-vector-engine-synthesis"
+  }
+]
