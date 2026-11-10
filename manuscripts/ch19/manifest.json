@@ -2,7 +2,7 @@
   "outputs": [
     {
       "path": "manuscripts/ch19/ch19-3dgs-neural-reconstruction-sim2real-loop.pdf",
-      "sha256": "849c90e5eb793c34c02632deb418fc40a72e5c603e9eb90c8a0c01fd8795a9c7"
+      "sha256": "6fa51bede8895b784114256a45071f1bd92bda695b38afc54047db9f1701118f"
     },
     {
       "path": "manuscripts/ch19/ch19-3dgs-neural-reconstruction-sim2real-loop.png",
@@ -10,11 +10,23 @@
     },
     {
       "path": "manuscripts/ch19/ch19-3dgs-neural-reconstruction-sim2real-loop.svg",
-      "sha256": "6493f01e3796edd27a43f5f14bb97d6da0cff43dc1bc4b3e2bc73a0458145ffc"
+      "sha256": "942a791e041826dccefd989350643ab8268a0648bdf16284e6f3ea85a299748f"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-3dgs-neural-sensor-closed-loop-re-simulation.pdf",
+      "sha256": "659b27537133b969a2a36ad92ee7acb5b31387eddb5ff984afdeeb1a673bb58e"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-3dgs-neural-sensor-closed-loop-re-simulation.png",
+      "sha256": "a13c79e66da9d505976fe9aeffd64046b180afe838508144af2c4c4307d32255"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-3dgs-neural-sensor-closed-loop-re-simulation.svg",
+      "sha256": "3b6989b0a6244d5998f4d986b360c9dd5ceb4e50ef9240a60280a1063361104c"
     },
     {
       "path": "manuscripts/ch19/ch19-action-chunking-and-temporal-ensembling.pdf",
-      "sha256": "838401cadcf815775bfd271230acee7a869b8aec401a4d01a8aa84fecb40b3c6"
+      "sha256": "45743bde3fcecce7f4986f2afe43d82d60e7cb33fb49f1abcb00bebb066545e2"
     },
     {
       "path": "manuscripts/ch19/ch19-action-chunking-and-temporal-ensembling.png",
@@ -22,11 +34,11 @@
     },
     {
       "path": "manuscripts/ch19/ch19-action-chunking-and-temporal-ensembling.svg",
-      "sha256": "9e84d38a615acfb9172fab996f46c7f9d9380ccce05ad8f52e63562aa643ed28"
+      "sha256": "ee9e49220ee76715990e977a8b070aae439b5efd2a4033d18b1de0215dee3280"
     },
     {
       "path": "manuscripts/ch19/ch19-cloud-llm-slo-vs-embodied-hard-realtime.pdf",
-      "sha256": "17636ee575aa782fa8b90c010b2655dffc7cf712c1e6cb75c9fd2ba64f8f9970"
+      "sha256": "bdeeab0666d627b1359197da6fe5ab03079dcb341066bc9d8c30ee73a097a6f5"
     },
     {
       "path": "manuscripts/ch19/ch19-cloud-llm-slo-vs-embodied-hard-realtime.png",
@@ -34,11 +46,11 @@
     },
     {
       "path": "manuscripts/ch19/ch19-cloud-llm-slo-vs-embodied-hard-realtime.svg",
-      "sha256": "2f5188037e4fce83089789019f62fdd70de8cd2665cf27802d1d8fdbf44d7471"
+      "sha256": "c22851baaff6fa759f12c3e672fea40075b241d2f47a23bed5991f464a66f1be"
     },
     {
       "path": "manuscripts/ch19/ch19-contact-divergence-warp-inefficiency.pdf",
-      "sha256": "29db53364f3392dd10e525e97130243c852f274c5e49a2cff811a1ec30d590bb"
+      "sha256": "652fcc7022f97ea3c76d240e1f5eea75e24b5b861eb151921a925b2f52e97089"
     },
     {
       "path": "manuscripts/ch19/ch19-contact-divergence-warp-inefficiency.png",
@@ -46,11 +58,11 @@
     },
     {
       "path": "manuscripts/ch19/ch19-contact-divergence-warp-inefficiency.svg",
-      "sha256": "08a413dd80661ecdf34828969d3af92d995fa995848e8c4a6fee26f9b9d58231"
+      "sha256": "5af43d96fabfb920c9294167692808ab7666d9ef0abe81d12ac0335702329ddb"
     },
     {
       "path": "manuscripts/ch19/ch19-cpu-sim-pcie-bottleneck-vs-gpu-native-sim.pdf",
-      "sha256": "fbe88364c610664430de4c76d944377453be759bd560841b2ae7d68bdac0d074"
+      "sha256": "9e828d96424ef7940211b54952c81e00e983bdce15dfebdd8ef53c52918fe8ee"
     },
     {
       "path": "manuscripts/ch19/ch19-cpu-sim-pcie-bottleneck-vs-gpu-native-sim.png",
@@ -58,11 +70,23 @@
     },
     {
       "path": "manuscripts/ch19/ch19-cpu-sim-pcie-bottleneck-vs-gpu-native-sim.svg",
-      "sha256": "b75ac59ed76c54d14c6aef6733da1e846543ee318d3e628b61ec08ee2fbb1088"
+      "sha256": "8f635e856d310dde8a22b7187b239624026c4f64473c4b81242c08fd03577071"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-dual-thor-soc-safety-fallback-watchdog-pipeline.pdf",
+      "sha256": "b1b423326b70c3b5451a41cd1a33f33d76dcad3b546abde92fe0266f57103d6b"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-dual-thor-soc-safety-fallback-watchdog-pipeline.png",
+      "sha256": "6cdfd568097bb978831aad88dee95233bdb4aa336bd820fdbc451e70a442f9c4"
+    },
+    {
+      "path": "manuscripts/ch19/ch19-dual-thor-soc-safety-fallback-watchdog-pipeline.svg",
+      "sha256": "2aa88834fe85cb20ac3179815b63659f1bfa3153c239fe79ec9d7d0d23937a13"
     },
     {
       "path": "manuscripts/ch19/ch19-embodied-ai-full-stack-infrastructure-map.pdf",
-      "sha256": "c0f139b63878b3877961ba57d5f4b1b848143cd2aebc807ceea7fe5face340cf"
+      "sha256": "4ef778636de489f776480f269fcdf661c695a1785aaa313606d5d5b45a2c1c91"
     },
     {
       "path": "manuscripts/ch19/ch19-embodied-ai-full-stack-infrastructure-map.png",
@@ -70,11 +94,11 @@
     },
     {
       "path": "manuscripts/ch19/ch19-embodied-ai-full-stack-infrastructure-map.svg",
-      "sha256": "2599e255d182086eaea78391f82afe7bc76946c57b33ca822d60570da21fef7d"
+      "sha256": "c9cbcf039c4d78afdf9181bc2e60f81269cce4dfb1a8fadde2e264c521df839d"
     },
     {
       "path": "manuscripts/ch19/ch19-fast-dct-frequency-action-tokenization.pdf",
-      "sha256": "ab7d26859c6686bba2ee6d829129d0f3f97ece7c6ac39bac7e277e4e1fc2b0d8"
+      "sha256": "3c97d04a47624bb30d03978f0f31d6980837c925d4682d841ba3fe190964a7cf"
     },
     {
       "path": "manuscripts/ch19/ch19-fast-dct-frequency-action-tokenization.png",
@@ -82,11 +106,11 @@
     },
     {
       "path": "manuscripts/ch19/ch19-fast-dct-frequency-action-tokenization.svg",
-      "sha256": "4e4aebfc05bb7e199ec255731d648bbe647f5044776a79ec2ab68139fca38f19"
+      "sha256": "6ccbc63d47e6c50fec403018c531f70c5293f64368cd72048e06602be3cf59a3"
     },
     {
       "path": "manuscripts/ch19/ch19-flow-matching-ode-steps-vs-control-jitter.pdf",
-      "sha256": "2f620a758b33a9f4457ae3f673d012956634240d4b5d1d947eed61726aee57b2"
+      "sha256": "1fa6b29fa712bb0ec4dc10641115f1de4c695b94a79b9afe87381cd9b1e5db62"
     },
     {
       "path": "manuscripts/ch19/ch19-flow-matching-ode-steps-vs-control-jitter.png",
@@ -94,11 +118,11 @@
     },
     {
       "path": "manuscripts/ch19/ch19-flow-matching-ode-steps-vs-control-jitter.svg",
-      "sha256": "8ff6a02c99ce4d020bd4dc24605a205ff577773fb12f53bcc41720ec765ee37d"
+      "sha256": "540cdea8629e19be0e32343171bfa1116036db4d1df82fe755050177638f529d"
     },
     {
       "path": "manuscripts/ch19/ch19-jetson-thor-mig-rtos-deterministic-isolation.pdf",
-      "sha256": "b3de3982cfb90eb8b8734670031741c413a75be865cf357e126a2c67b47ff941"
+      "sha256": "16b829dc6ee283825e154237cb68ec4e6c5ef598889af769ffb237c6b9d4d826"
     },
     {
       "path": "manuscripts/ch19/ch19-jetson-thor-mig-rtos-deterministic-isolation.png",
@@ -106,11 +130,11 @@
     },
     {
       "path": "manuscripts/ch19/ch19-jetson-thor-mig-rtos-deterministic-isolation.svg",
-      "sha256": "0eee7b2c8c695132cf5b2ed7eb83c56ef3311f57f5c51c679d40193608d8874b"
+      "sha256": "7081587611e410b38bd3e72655e8626237d225c827b631af4efcee4b62e78d2b"
     },
     {
       "path": "manuscripts/ch19/ch19-multi-camera-tiled-rendering-zero-copy-tensor.pdf",
-      "sha256": "50d30d2c167db5fc5c5a95f94d2f5291e2a8b00a4a62471024a25024e1b67a27"
+      "sha256": "4b4a1326ecaa5ee90a71b089a3012f5e4a4618932a34a7fd4266268a61ea2079"
     },
     {
       "path": "manuscripts/ch19/ch19-multi-camera-tiled-rendering-zero-copy-tensor.png",
@@ -118,11 +142,11 @@
     },
     {
       "path": "manuscripts/ch19/ch19-multi-camera-tiled-rendering-zero-copy-tensor.svg",
-      "sha256": "040b3bf02c3b5a60419ea1e329992a05981819583dc0f153aa5e284aa4c81004"
+      "sha256": "3c6dc3363e5f700dcfbffa98c7ac4c6329a37b8cc1a369b124866fab4d1f2a93"
     },
     {
       "path": "manuscripts/ch19/ch19-multi-sensor-ptp-hardware-trigger-alignment.pdf",
-      "sha256": "5f0e92bcffb52e9ea768114f63cef62772d55f149ef07d77a36f8a9f39e2acdb"
+      "sha256": "1f8fc3cfcde1815f5375aa683de4ffdc42f1a7c17b7cc023178795d621bac68c"
     },
     {
       "path": "manuscripts/ch19/ch19-multi-sensor-ptp-hardware-trigger-alignment.png",
@@ -130,11 +154,11 @@
     },
     {
       "path": "manuscripts/ch19/ch19-multi-sensor-ptp-hardware-trigger-alignment.svg",
-      "sha256": "321f39b2a5223e4e6bac286ce68524a4e12ecbc3491f3dd5328d3e1e15a6d9c3"
+      "sha256": "701389ef631c3fd429865fbf20ce270464fa9632c1ad568f97ea6a82c7d77b2c"
     },
     {
       "path": "manuscripts/ch19/ch19-onboard-vs-mec-edge-offload-safety-fallback.pdf",
-      "sha256": "6ddd3cbf862faac0dc427f266d560b1764c452af3258397d2b480ccbd63920c6"
+      "sha256": "5253a9ba9681b4f74de6e6097b0859c4b1822ff7a19241822156fccbdb33793e"
     },
     {
       "path": "manuscripts/ch19/ch19-onboard-vs-mec-edge-offload-safety-fallback.png",
@@ -142,11 +166,11 @@
     },
     {
       "path": "manuscripts/ch19/ch19-onboard-vs-mec-edge-offload-safety-fallback.svg",
-      "sha256": "0e1d011e529ac278d4630ccf0a0d7a0a0f7ec518ad8bccb00940e38ee3112056"
+      "sha256": "68ce806468e235ae2144114cf5042a0a90403fab3ec8457c14e772ccff939d78"
     },
     {
       "path": "manuscripts/ch19/ch19-physics-renderer-policy-three-way-sm-budget.pdf",
-      "sha256": "45d0046dbb786cee104b5d3745ed6ace77731a3241ed06b84a31018bbc5c8fb3"
+      "sha256": "e59a2e9eebdb0d38042badfb18e051776d8383c787c61575d4702074b52fbc6f"
     },
     {
       "path": "manuscripts/ch19/ch19-physics-renderer-policy-three-way-sm-budget.png",
@@ -154,11 +178,11 @@
     },
     {
       "path": "manuscripts/ch19/ch19-physics-renderer-policy-three-way-sm-budget.svg",
-      "sha256": "cd8a98c6b31bab423350b134c926238eb89c6008566ed3ceda7f31a71ceffaf5"
+      "sha256": "ccb0ec24a6273f17cd478014579ce7570291daa9c24fbb2cac14e0e4f020c7e5"
     },
     {
       "path": "manuscripts/ch19/ch19-shadow-mode-disagreement-edge-trigger.pdf",
-      "sha256": "2ce997319b759cc4d9e4bfe2b1eb80f818a66918f59c67f40c568e3019a3a9f4"
+      "sha256": "c09bb01c340ca530b2072a42f5bcfe8b78d7d2d3722202a2732b6d8f71f2b388"
     },
     {
       "path": "manuscripts/ch19/ch19-shadow-mode-disagreement-edge-trigger.png",
@@ -166,11 +190,11 @@
     },
     {
       "path": "manuscripts/ch19/ch19-shadow-mode-disagreement-edge-trigger.svg",
-      "sha256": "10eadbeb4ae861833bf6dd44ef1308df52dbacbfeab746dd7225c8847bdb986e"
+      "sha256": "4c641bc126e3a7b7c22c1503b247768f8f287f708cbbffdae4d0eec6b77b020b"
     },
     {
       "path": "manuscripts/ch19/ch19-system2-vlm-system1-flow-matching-dual-loop.pdf",
-      "sha256": "4bb04bc758990483afbbbb3934c5b135467ac0666f6ebb0c81018b1ac104d524"
+      "sha256": "d0474ebcad870bb5722ea9ffac3f6e28ceeb70d987168d37a9b06cb746e81e1b"
     },
     {
       "path": "manuscripts/ch19/ch19-system2-vlm-system1-flow-matching-dual-loop.png",
@@ -178,11 +202,11 @@
     },
     {
       "path": "manuscripts/ch19/ch19-system2-vlm-system1-flow-matching-dual-loop.svg",
-      "sha256": "890482614506b2b8b1ad688c2004687beb9d2c0c47d1a5f297bff8283cb386b8"
+      "sha256": "8adf019f9548fff96498b32ba4e8a58b37f222c5b75fdb9b9d59a843cdb79457"
     },
     {
       "path": "manuscripts/ch19/ch19-three-tier-vlm-flow-wbc-humanoid-control.pdf",
-      "sha256": "03014a095d2fb64566703ab062c13d1b08144172b971a0d21b63a9b7b30fc549"
+      "sha256": "13529442fc992fd8d2121277fb5b8302f772a2a607a50933935ea3a77a765981"
     },
     {
       "path": "manuscripts/ch19/ch19-three-tier-vlm-flow-wbc-humanoid-control.png",
@@ -190,11 +214,11 @@
     },
     {
       "path": "manuscripts/ch19/ch19-three-tier-vlm-flow-wbc-humanoid-control.svg",
-      "sha256": "6c27d886572e0da2a09fcb060e499c0318f396f28c2d3de21b420b1d3a7a1bef"
+      "sha256": "c3ebd22f3f3afab690a4992f8d506741979047a881f98f70034c5b49fd8eb584"
     },
     {
       "path": "manuscripts/ch19/ch19-vla-early-exit-and-token-pruning-wcet.pdf",
-      "sha256": "e19323bd6235d1442ccee9f65abb1abfc1bc0ba81ac16f679f723152342a5a92"
+      "sha256": "b3598007d8a55cc4d2bfd6c764f4e938ce93bf8e500211f25212a33f8005f46c"
     },
     {
       "path": "manuscripts/ch19/ch19-vla-early-exit-and-token-pruning-wcet.png",
@@ -202,11 +226,11 @@
     },
     {
       "path": "manuscripts/ch19/ch19-vla-early-exit-and-token-pruning-wcet.svg",
-      "sha256": "c668a2fac823428b46de74a8adc6c4adab3d7f7c086a4e4a9428026639632402"
+      "sha256": "4e97918e0e00ae830be1e35e022cd0be8ae3adf2b2c2c350715ed93ee9bfe7b4"
     },
     {
       "path": "manuscripts/ch19/ch19-vlalagbench-latency-vs-dynamic-grasp-success.pdf",
-      "sha256": "0d67f7f1d15550d496bea69fb6054eebeadd838998e96159aaa0d2500fe5e790"
+      "sha256": "f5d362582fa0aacdf29b44835747772562df08371500cf9c780f080fd3d46e13"
     },
     {
       "path": "manuscripts/ch19/ch19-vlalagbench-latency-vs-dynamic-grasp-success.png",
@@ -214,23 +238,23 @@
     },
     {
       "path": "manuscripts/ch19/ch19-vlalagbench-latency-vs-dynamic-grasp-success.svg",
-      "sha256": "217a4bf0fedae344dade90be29b6ef7945cd43b786e3593fea373dabcab3bfc9"
+      "sha256": "3b20fe523360898aa9fb3fdb33212b1ef30bb05d9e4319d01861a3db9f9901bd"
     },
     {
       "path": "manuscripts/ch19/figure-data.json",
-      "sha256": "cb8d30d7805d9d6b32dc216cc7935033910864765d240cff4671310d1fcacd24"
+      "sha256": "f1bb4e30d9fd82179224cfb45980b2ec3d17524a9b0eef2ff057f8dc1b878c18"
     },
     {
       "path": "manuscripts/ch19/figure-index.json",
-      "sha256": "d707c68738559e0d4c02e767837f18314ad0c4d3f56f19ee3e9857c53b835ce3"
+      "sha256": "48cd247b4bbf199b3a482e7f65f6686f00487f8479e256acf0ab6a8d7489d231"
     },
     {
       "path": "manuscripts/ch19/teaching-layout-validation.json",
-      "sha256": "9744a795d3b8e3102dad2c843b871af2817a85450080328dfe7304cc2cdb98d5"
+      "sha256": "277d847a5babbafe862575fe114638301dd0627717aca777bb4c19ce9f6c0690"
     },
     {
       "path": "manuscripts/ch19/math-validation.json",
-      "sha256": "ec392c2d17dfc6189f1ed0b6b48cba75fb1e80a80de74538eae91d026ce74731"
+      "sha256": "f37d71b7d46afd08539e6e4dc5e5eacf211b7345d0e78ce0f6c6ab0e7e9bdc84"
     }
   ]
 }

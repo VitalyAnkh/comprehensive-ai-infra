@@ -2,15 +2,15 @@
   "sources": [
     {
       "path": "manuscripts/ch20/build.py",
-      "sha256": "1615de7abb07bdd398988baafd46778dbda96b4cb8896ab588c0775d57714666"
+      "sha256": "34b5658971e0b1c86f9051bf1e59ec20c62fc5e95df9a34401e89f607d3ae109"
     },
     {
       "path": "manuscripts/ch20/figure-data.json",
-      "sha256": "f818963f7652d9b4ae0998015ff11ec5d0eadb3efc5f90b965d56bc4bd82a14b"
+      "sha256": "8a9702836b61f17953cdf6011a875b5e70f5da7a3535395b88e746eb83f9a887"
     },
     {
       "path": "manuscripts/ch20/figure-index.json",
-      "sha256": "92eb0181d6d4b312ba859d1d002a2880663124ca40fa4dc247780b7ac0a1f90a"
+      "sha256": "f21f47f6f21a9156541d663028b8e5e2edd2bf6c708da74a3b8752f207634e0a"
     },
     {
       "path": "case-studies/collective-paths-and-diagnosis.md",
@@ -29,8 +29,12 @@
       "sha256": "375f09a9ed4bb7efadadedb5e8ac3a099ceacee415205d72083a0676b4d608b9"
     },
     {
+      "path": "experiments/ch20/20-03/run.py",
+      "sha256": "8afb8a162086b6cbc86692dff03442a30993451c2d6253cfb57eadb08b645e4a"
+    },
+    {
       "path": "manuscripts/20-十万卡集群可靠性工程、静默数据损坏（SDC）防御与基准评测科学.md",
-      "sha256": "e925b960e404822dc3d11a1226eba1b0c312aaa2fb346cd957cb531899df762e"
+      "sha256": "9417928c5dc886c4edd494ad12ec68b3a3768e6e4b4f2503419ee8305ff46710"
     }
   ]
 }

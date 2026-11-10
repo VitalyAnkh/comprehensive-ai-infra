@@ -261,5 +261,35 @@
     "TeachingRole": "构建第 20 章与第 24 章前后呼应的双枢纽结构，自然引出四大新兴基础设施疆域",
     "figure": "20-18",
     "name": "ch20-core-cluster-to-four-new-frontiers-bridge"
+  },
+  {
+    "figure_id": "图 20-19",
+    "number": 19,
+    "file": "ch20-oobleck-pre-instantiated-pipeline-template-failover.svg",
+    "asset": "ch20/ch20-oobleck-pre-instantiated-pipeline-template-failover.svg",
+    "section": "20.5.3",
+    "caption": "Oobleck / Parachute 预实例化异构流水线模板无重启容错重配置（1.45 s 恢复 vs. 300 s 全局重启，算例 20-7）",
+    "source_refs": [
+      "experiments/ch20/20-03/run.py",
+      "manuscripts/ch20/figure-data.json"
+    ],
+    "TeachingRole": "展示编译期预建立多阶流水线模板如何在无热备顶替时以 1.45 s 切换实现 98.75% 算力保持",
+    "figure": "20-19",
+    "name": "ch20-oobleck-pre-instantiated-pipeline-template-failover"
+  },
+  {
+    "figure_id": "图 20-20",
+    "number": 20,
+    "file": "ch20-goodput-sla-under-bursty-poisson-traffic.svg",
+    "asset": "ch20/ch20-goodput-sla-under-bursty-poisson-traffic.svg",
+    "section": "20.5.3",
+    "caption": "推理系统在作弊式均匀到达（CV=0）与真实泊松突发长尾流量（CV≥1）下的排队膨胀与 SLO Goodput 崩塌曲线",
+    "source_refs": [
+      "experiments/ch20/20-03/run.py",
+      "manuscripts/ch20/figure-data.json"
+    ],
+    "TeachingRole": "用排队论 Kingman 公式揭露均匀定速压测掩盖 11.37× TTFT 膨胀与 51.27% Goodput 缩水的机理",
+    "figure": "20-20",
+    "name": "ch20-goodput-sla-under-bursty-poisson-traffic"
   }
 ]

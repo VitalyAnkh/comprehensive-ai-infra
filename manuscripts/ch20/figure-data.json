@@ -79,5 +79,23 @@
       "ch23_data_factory": "0.5% MinHash/Classifier/Influence Funnel + Mid-Training Mix",
       "ch24_ai4science": "O(N^3) Triangle Attention + 3D FFT/Equivariance + 24-Ch Synthesis"
     }
+  },
+  "oobleck_and_bursty_goodput": {
+    "source": "experiments/ch20/20-03/run.py (Oobleck SOSP '23 Pipeline Templates & Kingman Bursty Goodput)",
+    "oobleck_reconfig_sec": 1.45,
+    "full_restart_sec": 300.0,
+    "reconfig_speedup_x": 206.9,
+    "oobleck_retained_throughput_pct": 98.75,
+    "parachute_retained_throughput_pct": 93.75,
+    "rho": 0.85,
+    "ttft_uniform_ms": 80.0,
+    "goodput_uniform_req_s": 7.08,
+    "wq_bursty_ms": 829.6,
+    "ttft_bursty_ms": 909.6,
+    "ttft_inflation_x": 11.37,
+    "slo_attainment_bursty_pct": 48.77,
+    "goodput_bursty_req_s": 3.45,
+    "goodput_drop_pct": 51.27,
+    "max_safe_utilization_pct": 60.04
   }
 }

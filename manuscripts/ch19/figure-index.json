@@ -258,5 +258,35 @@
     "TeachingRole": "证明利用机械轨迹低通特性将 700 个时域动作值压缩为 80 个频域词元（8.75× 压缩）的机理",
     "figure": "19-18",
     "name": "ch19-fast-dct-frequency-action-tokenization"
+  },
+  {
+    "figure_id": "图 19-19",
+    "number": 19,
+    "file": "ch19-3dgs-neural-sensor-closed-loop-re-simulation.svg",
+    "asset": "ch19/ch19-3dgs-neural-sensor-closed-loop-re-simulation.svg",
+    "section": "19.4.4",
+    "caption": "端到端自动驾驶 3D 高斯泼溅（3DGS）动静态解耦与相机+激光雷达闭环重渲染流水线（算例 19-7）",
+    "source_refs": [
+      "experiments/ch19/19-03/run.py",
+      "manuscripts/ch19/figure-data.json"
+    ],
+    "TeachingRole": "剖析动静态高斯图解耦、72% 视锥剔除与批量瓦片光栅+RT Core 激光求交实现 16.80 ms (59.52 FPS) 闭环仿真的架构",
+    "figure": "19-19",
+    "name": "ch19-3dgs-neural-sensor-closed-loop-re-simulation"
+  },
+  {
+    "figure_id": "图 19-20",
+    "number": 20,
+    "file": "ch19-dual-thor-soc-safety-fallback-watchdog-pipeline.svg",
+    "asset": "ch19/ch19-dual-thor-soc-safety-fallback-watchdog-pipeline.svg",
+    "section": "19.4.4",
+    "caption": "车载双 Orin/Thor 异构 SoC 的 ASIL-D Simplex 安全降级接管（Safety Fallback Watchdog，12.50 ms 闭环）流水线",
+    "source_refs": [
+      "experiments/ch19/19-03/run.py",
+      "manuscripts/ch19/figure-data.json"
+    ],
+    "TeachingRole": "对比 12.50 ms 双芯片 ASIL-D 看门狗热备接管（横向偏离 3.02 mm）与 250 ms 软件重启（偏离 351.25 mm）的安全边界",
+    "figure": "19-20",
+    "name": "ch19-dual-thor-soc-safety-fallback-watchdog-pipeline"
   }
 ]

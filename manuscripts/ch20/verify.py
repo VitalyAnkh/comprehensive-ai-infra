@@ -52,25 +52,25 @@ h2s = re.findall(r'^## (.+)$', s, re.M)
 check('last H2 is 本章小结', len(h2s) >= 6 and h2s[-1].strip() == '本章小结')
 
 exercises = re.findall(r'^>\s*\*\*(?:练习|实验) 20-(\d+)[：:（]', s, re.M)
-check('twelve exercises 20-1 to 20-12 in order', exercises == [str(i) for i in range(1, 13)])
+check('fourteen exercises 20-1 to 20-14 in order', exercises == [str(i) for i in range(1, 15)])
 
 code_blocks = re.findall(r'```python\n.*?```', s, re.S)
-check('six production python code blocks', len(code_blocks) == 6 and len(re.findall(r'```', s)) == 12)
+check('seven production python code blocks', len(code_blocks) == 7 and len(re.findall(r'```', s)) == 14)
 
 worked_examples = re.findall(r'^>\s*\*\*算例\s*20-', s, re.M)
-check('six standardized blockquote worked examples', len(worked_examples) == 6)
+check('seven standardized blockquote worked examples', len(worked_examples) == 7)
 
 table_captions = re.findall(r'^\*表 20-(\d+)　', s, re.M)
-check('nine standardized italic table captions 20-1 to 20-9', table_captions == [str(i) for i in range(1, 10)])
+check('ten standardized italic table captions 20-1 to 20-10', table_captions == [str(i) for i in range(1, 11)])
 
 fig_index = json.loads((HERE / 'figure-index.json').read_text())
 fig_count = len(fig_index)
-check('eighteen figures in figure-index.json', fig_count == 18)
+check('twenty figures in figure-index.json', fig_count == 20)
 captions = re.findall(r'^\*图 20-(\d+)(?:：|　)', s, re.M)
-check('sequential captions 20-1 to 20-18', sorted(captions, key=int) == [str(i) for i in range(1, fig_count + 1)])
+check('sequential captions 20-1 to 20-20', sorted(captions, key=int) == [str(i) for i in range(1, fig_count + 1)])
 
 imgs = re.findall(r'!\[.+?\]\((ch20/[^)]+)\)', s)
-check('eighteen active illustrations match figure-index.json', set(imgs) == {row.get('asset') or f"ch20/{row['file']}" for row in fig_index} and len(imgs) == 18)
+check('twenty active illustrations match figure-index.json', set(imgs) == {row.get('asset') or f"ch20/{row['file']}" for row in fig_index} and len(imgs) == 20)
 
 for rel in imgs:
     p = md.parent / rel
@@ -88,7 +88,7 @@ check('local links exist', not missing)
 
 defs = re.findall(r'^\[\^([^\]]+)\]:', s, re.M)
 refs = re.findall(r'\[\^([^\]]+)\](?!:)', s)
-check('all footnotes used and defined once', set(defs) == set(refs) and len(defs) == len(set(defs)) and len(defs) >= 10)
+check('all footnotes used and defined once', set(defs) == set(refs) and len(defs) == len(set(defs)) and len(defs) >= 22)
 
 for name, key in [('sources.json', 'sources'), ('manifest.json', 'outputs')]:
     data = json.loads((HERE / name).read_text())[key]
@@ -101,7 +101,7 @@ check('no formula errors', not math_val['errors'] and 'katex-error' not in page)
 layout_val = json.loads((HERE / 'teaching-layout-validation.json').read_text())
 check(
     'book-size figure layout',
-    len(layout_val) == 18 and all(r['width_pt'] == 420 and r['min_label_pt'] >= 11 and not r['text_extent_warnings'] for r in layout_val),
+    len(layout_val) == 20 and all(r['width_pt'] == 420 and r['min_label_pt'] >= 11 and not r['text_extent_warnings'] for r in layout_val),
 )
 
 d = json.loads((HERE / 'figure-data.json').read_text())
@@ -110,6 +110,14 @@ check(
     'example 20-6 Chaos GameDay fault injection recall and MTTR speedup',
     close(round(100.0 * chaos['detected_faults'] / chaos['total_injected_faults'], 2), chaos['overall_recall_pct'])
     and close(round(chaos['manual_mttr_sec'] / chaos['mean_auto_mttr_sec'], 2), chaos['mttr_speedup_x']),
+)
+ob = d['oobleck_and_bursty_goodput']
+check(
+    'example 20-7 Oobleck failover and bursty Goodput arithmetic',
+    close(ob['oobleck_reconfig_sec'], 1.45)
+    and close(ob['oobleck_retained_throughput_pct'], 98.75)
+    and close(ob['wq_bursty_ms'], 829.60)
+    and close(ob['goodput_bursty_req_s'], 3.45),
 )
 
 passed = sum(1 for c in checks if c['passed'])

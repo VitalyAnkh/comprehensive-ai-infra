@@ -405,6 +405,48 @@ def fig_19_18_fast_dct_tokenizer(ex: Exporter) -> None:
     ex.save(fig, 'ch19-fast-dct-frequency-action-tokenization')
 
 
+def fig_19_19_3dgs_closed_loop(ex: Exporter) -> None:
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '动静态解耦 3DGS 场景图与全向视锥剔除（留 70 万活跃点）', color='blue')
+    stages = [
+        (0.03, 0.58, 0.29, 0.24, '① 动静态场景解耦\n静态街道+动态实例\nSE(3) 位姿更新', 'blue'),
+        (0.355, 0.58, 0.29, 0.24, '② 视锥+LOD 剔除\n剔除 72% 远场点\n留 70 万活跃高斯', 'teal'),
+        (0.68, 0.58, 0.29, 0.24, '③ 相机+雷达求交\n瓦片光栅+BVH 光追\n零拷贝直通闭环', 'purple'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.355, 0.70))
+    arrow(ax, (0.645, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '6 路 1080p 环视 + 128 线雷达单步闭环重渲染延迟对比', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '朴素串行渲染（75.00 ms）\n相机 51 ms + 雷达 24 ms\n仅 13.33 FPS（违背 30 Hz）', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '批量光栅+光追（16.80 ms）\n相机 11.4 ms + 雷达 5.4 ms\n达 59.52 FPS（提速 4.46×）', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '单张 GPU 同步合成 6 路环视与 128 线雷达仅需 16.80 ms', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch19-3dgs-neural-sensor-closed-loop-re-simulation')
+
+
+def fig_19_20_dual_thor_watchdog(ex: Exporter) -> None:
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '车载双 Thor 异构 Simplex 四阶段接管（12.50 ms ≤ 15 ms）', color='orange')
+    steps = [
+        (0.03, 0.58, 0.29, 0.24, '① 检测与硬件仲裁\n检测 5.0+切换 1.5ms\n锁步岛切断主通道', 'orange'),
+        (0.355, 0.58, 0.29, 0.24, '② 热备 MPC 锁存\nt_mpc = 4.00 ms\n100 Hz 安全走廊', 'blue'),
+        (0.68, 0.58, 0.29, 0.24, '③ 线控底盘生效\nt_act = 2.00 ms\n12.50 ms 接管达标', 'teal'),
+    ]
+    for x, y, w, h, label, role in steps:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.355, 0.70))
+    arrow(ax, (0.645, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '120 km/h 高速巡航故障失控窗口横向车道偏离对比', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '单芯片软件重启（250.0 ms）\n纵向盲奔 8.33 m，违背红线\n失控偏离 Δy = 351.25 mm', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '双 Thor 看门狗（12.50 ms）\n满足 ASIL-D 15.0 ms FTTI\n横向偏离仅 3.02 mm（省116×）', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '端到端 VLA 大模型必须配对独立 ASIL-D 安全岛与 100 Hz MPC 热备', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch19-dual-thor-soc-safety-fallback-watchdog-pipeline')
+
+
 def build_chapter() -> None:
     ex = Exporter(HERE)
     fig_19_1_cloud_vs_embodied(ex)
@@ -425,6 +467,8 @@ def build_chapter() -> None:
     fig_19_16_full_stack_map(ex)
     fig_19_17_three_tier_humanoid_control(ex)
     fig_19_18_fast_dct_tokenizer(ex)
+    fig_19_19_3dgs_closed_loop(ex)
+    fig_19_20_dual_thor_watchdog(ex)
     outputs = ex.finish()
 
     fig_index = [
@@ -607,6 +651,26 @@ def build_chapter() -> None:
             "caption": "时域逐帧离散化动作 Token 在高频采样下的边际信息坍缩 vs. FAST（离散余弦变换 DCT + BPE）频域动作压缩",
             "source_refs": ["experiments/ch19/19-02/run.py", "manuscripts/ch19/figure-data.json"],
             "TeachingRole": "证明利用机械轨迹低通特性将 700 个时域动作值压缩为 80 个频域词元（8.75× 压缩）的机理"
+        },
+        {
+            "figure_id": "图 19-19",
+            "number": 19,
+            "file": "ch19-3dgs-neural-sensor-closed-loop-re-simulation.svg",
+            "asset": "ch19/ch19-3dgs-neural-sensor-closed-loop-re-simulation.svg",
+            "section": "19.4.4",
+            "caption": "端到端自动驾驶 3D 高斯泼溅（3DGS）动静态解耦与相机+激光雷达闭环重渲染流水线（算例 19-7）",
+            "source_refs": ["experiments/ch19/19-03/run.py", "manuscripts/ch19/figure-data.json"],
+            "TeachingRole": "剖析动静态高斯图解耦、72% 视锥剔除与批量瓦片光栅+RT Core 激光求交实现 16.80 ms (59.52 FPS) 闭环仿真的架构"
+        },
+        {
+            "figure_id": "图 19-20",
+            "number": 20,
+            "file": "ch19-dual-thor-soc-safety-fallback-watchdog-pipeline.svg",
+            "asset": "ch19/ch19-dual-thor-soc-safety-fallback-watchdog-pipeline.svg",
+            "section": "19.4.4",
+            "caption": "车载双 Orin/Thor 异构 SoC 的 ASIL-D Simplex 安全降级接管（Safety Fallback Watchdog，12.50 ms 闭环）流水线",
+            "source_refs": ["experiments/ch19/19-03/run.py", "manuscripts/ch19/figure-data.json"],
+            "TeachingRole": "对比 12.50 ms 双芯片 ASIL-D 看门狗热备接管（横向偏离 3.02 mm）与 250 ms 软件重启（偏离 351.25 mm）的安全边界"
         }
     ]
     for row in fig_index:
@@ -664,6 +728,7 @@ def build_chapter() -> None:
         HERE / 'figure-index.json',
         ROOT / 'experiments/ch19/19-01/run.py',
         ROOT / 'experiments/ch19/19-02/run.py',
+        ROOT / 'experiments/ch19/19-03/run.py',
     ]
     if md.exists():
         sources.append(md)

@@ -400,6 +400,48 @@ def fig_20_18_frontier_bridge(ex: Exporter) -> None:
     ex.save(fig, 'ch20-core-cluster-to-four-new-frontiers-bridge')
 
 
+def fig_20_19_oobleck_failover(ex: Exporter) -> None:
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, 'Oobleck 预实例化异构流水线模板无重启容错（1.45 s 恢复）', color='blue')
+    steps = [
+        (0.03, 0.58, 0.29, 0.24, '① 预实例化双模板\n标准 8 阶 T_8 与\n紧凑 7 阶 T_7 域', 'blue'),
+        (0.355, 0.58, 0.29, 0.24, '② 局部层分片补齐\n检测 0.25+补齐 0.85s\nRDMA 拉取冗余分片', 'teal'),
+        (0.68, 0.58, 0.29, 0.24, '③ 异构微批重配额\n同步 0.35s 零重启\n30×T_8 + 2×T_7', 'purple'),
+    ]
+    for x, y, w, h, label, role in steps:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.355, 0.70))
+    arrow(ax, (0.645, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '32 条 8 阶流水线（256 节点）掉线 2 台无备机时恢复对比', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '传统全局销毁重启（300.00 s）\n销毁 2,048 卡进程并重载磁盘\n无备机时全集群阻塞停机', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, 'Oobleck 模板切换（1.45 s）\n恢复提速 206.90×（零全局重启）\n保留 98.75% 稳态训练吞吐', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '编译期预建立多阶流水线通信域可在热备池耗尽时实现秒级降级续训', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-oobleck-pre-instantiated-pipeline-template-failover')
+
+
+def fig_20_20_bursty_goodput(ex: Exporter) -> None:
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, 'Kingman 排队近似公式与推理压测流量变异系数（CV）黑洞', color='orange')
+    stages = [
+        (0.03, 0.58, 0.29, 0.24, '作弊均匀定速压测\nC_a = 0, C_s = 0\n排队 W_q 恒为 0 ms', 'orange'),
+        (0.355, 0.58, 0.29, 0.24, '真实泊松长尾流量\nC_a = 1.0, C_s = 1.2\n变异因子达 1.22', 'purple'),
+        (0.68, 0.58, 0.29, 0.24, '高水位排队非线性爆炸\nρ/(1-ρ) 放大 5.67×\nW_q 飙至 829.60 ms', 'blue'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.355, 0.70))
+    arrow(ax, (0.645, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '利用率 ρ = 0.85 下 TTFT 与 SLO Goodput（≤500 ms）失真对比', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '均匀发包虚报（TTFT=80.0ms）\n宣称 100% 达标（7.08 req/s）\n掩盖线上突发排队尾延迟', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '泊松长尾实测（TTFT=909.6ms）\n膨胀 11.37×，仅 48.77% 达标\n真实 Goodput 仅 3.45 req/s', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '满足平均 TTFT ≤ 300 ms 要求系统利用率 ρ ≤ 60.04%（预留 ~40% 水位）', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-goodput-sla-under-bursty-poisson-traffic')
+
+
 def build_chapter() -> None:
     ex = Exporter(HERE)
     fig_20_1_mtbf_scaling(ex)
@@ -420,6 +462,8 @@ def build_chapter() -> None:
     fig_20_16_ten_principles(ex)
     fig_20_17_chaos_fault_injection(ex)
     fig_20_18_frontier_bridge(ex)
+    fig_20_19_oobleck_failover(ex)
+    fig_20_20_bursty_goodput(ex)
     outputs = ex.finish()
 
     fig_index = [
@@ -602,6 +646,26 @@ def build_chapter() -> None:
             "caption": "从前 20 章通用大模型训练/推理底座迈向第 21–24 章（自主智能体、全双工语音、百亿亿次数据工厂、AI for Science）的架构映射桥接图",
             "source_refs": ["manuscripts/ch20/figure-data.json"],
             "TeachingRole": "构建第 20 章与第 24 章前后呼应的双枢纽结构，自然引出四大新兴基础设施疆域"
+        },
+        {
+            "figure_id": "图 20-19",
+            "number": 19,
+            "file": "ch20-oobleck-pre-instantiated-pipeline-template-failover.svg",
+            "asset": "ch20/ch20-oobleck-pre-instantiated-pipeline-template-failover.svg",
+            "section": "20.5.3",
+            "caption": "Oobleck / Parachute 预实例化异构流水线模板无重启容错重配置（1.45 s 恢复 vs. 300 s 全局重启，算例 20-7）",
+            "source_refs": ["experiments/ch20/20-03/run.py", "manuscripts/ch20/figure-data.json"],
+            "TeachingRole": "展示编译期预建立多阶流水线模板如何在无热备顶替时以 1.45 s 切换实现 98.75% 算力保持"
+        },
+        {
+            "figure_id": "图 20-20",
+            "number": 20,
+            "file": "ch20-goodput-sla-under-bursty-poisson-traffic.svg",
+            "asset": "ch20/ch20-goodput-sla-under-bursty-poisson-traffic.svg",
+            "section": "20.5.3",
+            "caption": "推理系统在作弊式均匀到达（CV=0）与真实泊松突发长尾流量（CV≥1）下的排队膨胀与 SLO Goodput 崩塌曲线",
+            "source_refs": ["experiments/ch20/20-03/run.py", "manuscripts/ch20/figure-data.json"],
+            "TeachingRole": "用排队论 Kingman 公式揭露均匀定速压测掩盖 11.37× TTFT 膨胀与 51.27% Goodput 缩水的机理"
         }
     ]
     for row in fig_index:
@@ -661,6 +725,7 @@ def build_chapter() -> None:
         ROOT / 'case-studies/optimization-evaluation-and-deployment.md',
         ROOT / 'experiments/ch20/20-01/run.py',
         ROOT / 'experiments/ch20/20-02/run.py',
+        ROOT / 'experiments/ch20/20-03/run.py',
     ]
     if md.exists():
         sources.append(md)

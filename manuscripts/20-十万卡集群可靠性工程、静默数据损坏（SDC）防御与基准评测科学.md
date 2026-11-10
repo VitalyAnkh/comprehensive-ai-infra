@@ -955,6 +955,160 @@ class ChaosGameDayAndArrivalSkewAuditor:
         }
 ```
 
+#### 无中断弹性重配置（Parachute / Oobleck 预实例化流水线模板秒级容错降级）与面向推理系统 Goodput 的动态负载压测生成科学（Poisson 突发请求与长尾长度分布建模）
+
+在超大规模集群工程与基准评测科学中，还有两项直接决定生产 SLA 真实底线的核心技术：**（1）当热备节点池（Hot-Spare Pool）因突发机架级断电或交换机故障暂时耗尽时，如何在不销毁重创全局 `NCCL` 通信域、不重载远端检查点的前提下，通过异构流水线模板实现秒级降级续训（Elastic Reconfiguration without Restart）**[^ch20-oobleck][^ch20-parachute][^ch20-unicron]；**（2）在评测大模型在线推理服务时，如何戳穿“均匀定速发包（Uniform Pacing）+ 固定长度 Prompt”制造的虚假吞吐繁荣，建立基于泊松突发到达（Poisson Bursty Arrival）与长尾序列分布的 SLO Goodput（达标有效吞吐）评测规范**[^ch20-mlperf][^ch20-splitwise][^ch20-distserve]。
+
+![图 20-19：Oobleck / Parachute 预实例化异构流水线模板无重启容错重配置（1.45 s 恢复 vs. 300 s 全局重启，算例 20-7）](ch20/ch20-oobleck-pre-instantiated-pipeline-template-failover.svg)
+
+*图 20-19　Oobleck / Parachute 预实例化异构流水线模板无重启容错重配置（1.45 s 恢复 vs. 300 s 全局重启，算例 20-7）。*
+
+如图 20-19 所示，传统弹性训练框架（如原生 `torchrun` Elastic 或 `Varuna`）在遭遇节点损失且无热备顶替时，必须销毁所有幸存节点上的进程、重新执行 TCPStore 握手与 `ncclCommInitRank` 全网建链，并从磁盘检查点重新切分加载模型权重（单次重构耗时高达 $240\text{–}300\ \mathrm{s}$）[^ch20-varuna][^ch20-bamboo][^ch20-megascale]。而以 **Oobleck（SOSP '23）与 Parachute** 为代表的无重启弹性训练架构通过**编译期预实例化多套异构流水线模板（Pre-Instantiated Heterogeneous Pipeline Templates）**彻底消除了重初始化开销[^ch20-oobleck][^ch20-parachute]：
+1. **多阶流水线模板与通信域预建立**：在作业启动阶段，运行时同时在显存/主机内存中注册标准 $S_{\mathrm{std}} = 8$ 阶段流水线模板 $\mathcal{T}_8$（每阶段承载 $8$ 层 Transformer）与紧凑 $S_{\mathrm{deg}} = 7$ 阶段容错模板 $\mathcal{T}_7$（通过开启细粒度激活重计算将 $64$ 层模型重映射至 $7$ 台节点，每节点承载 $8\text{–}10$ 层），并预先完成两组模板对应的点对点与集合通信域句柄初始化；
+2. **局部层分片热拼装与异构微批配额调度**：当 $32$ 条数据并行流水线中有 $F = 2$ 条各损失 1 台节点时，其余 $30$ 条健康流水线完全不受影响（继续运行 8 阶段模板 $\mathcal{T}_8$）；仅受损的 2 条流水线在 **$1.45\ \mathrm{s}$** 内激活 7 阶段模板 $\mathcal{T}_7$，利用训练跨流水线副本已持有的冗余模型分片通过 RDMA/NVLink 补齐缺失层状态，并由全局调度器动态调整各流水线的微批配额（或如 `Parachute` 直接将受损流水线的微批平滑分摊至健康流水线），实现零全局重启、高达 **$93.75\%\text{–}98.75\%$** 的稳态算力保持率。
+
+![图 20-20：推理系统在作弊式均匀到达（CV=0）与真实泊松突发长尾流量（CV≥1）下的排队膨胀与 SLO Goodput 崩塌曲线](ch20/ch20-goodput-sla-under-bursty-poisson-traffic.svg)
+
+*图 20-20　推理系统在作弊式均匀到达（CV=0）与真实泊松突发长尾流量（CV≥1）下的排队膨胀与 SLO Goodput 崩塌曲线。*
+
+在推理系统基准评测侧，20.4.1 节剖析了算子级跑分失真，而在端到端服务级（Serving Benchmark）评测中，最具迷惑性的反模式是**“用恒定步调发生器（Constant-Rate Closed-Loop / Uniform Pacing）评测在线推理吞吐”**（图 20-20）[^ch20-sarathi][^ch20-kingman][^ch20-sharegpt]：
+- **排队论 Kingman 公式揭示的突发性黑洞**：设推理引擎的平均单请求服务耗时为 $T_s$，系统平均利用率为 $\rho = \lambda T_s \in (0, 1)$，请求到达间隔的变异系数（Coefficient of Variation，即标准差除以均值）为 $C_a$，服务时间（由输入/输出序列长度分布决定）的变异系数为 $C_s$。根据排队论经典的 **Kingman G/G/1 近似公式**[^ch20-kingman]，请求在调度队列中的平均排队等待时间 $W_q$ 为：
+  $$W_q \approx \frac{\rho}{1 - \rho} \cdot \frac{C_a^2 + C_s^2}{2} \cdot T_s$$
+- **为什么均匀发包（$C_a = 0$）+ 固定长度（$C_s = 0$）是彻头彻尾的跑分作弊**：当评测脚本每隔精确的 $\Delta t = 1/\lambda$ 毫秒均匀发送一个长度完全相同的请求时，$C_a^2 + C_s^2 = 0$，即便把 GPU 利用率推高到 $\rho = 0.85\text{–}0.95$，队列等待时间依然恒为 **$W_q = 0$**，测得的首词元延迟（TTFT）永远等于纯算子执行时间 $T_{\mathrm{prefill}}$。然而一旦上线面对真实人类用户或智能体并发（到达过程服从泊松过程 $C_a = 1.0$，且 `ShareGPT` 长尾长度分布使 $C_s \ge 1.2$），因子 $\frac{C_a^2 + C_s^2}{2} = 1.22$ 瞬间激活 $\frac{\rho}{1-\rho}$ 的非线性爆炸，导致 $\rho = 0.85$ 下的排队延迟飙升十余倍，过半请求违背 TTFT SLO 红线，使真实**达标有效吞吐（Goodput，即同时满足 $\mathrm{TTFT} \le \mathrm{SLO}_1$ 且 $\mathrm{TPOT} \le \mathrm{SLO}_2$ 的每秒完成请求数）**发生断崖式崩塌。
+
+> **算例 20-7（Oobleck 预实例化异构流水线模板 1.45 s 无重启重配置与泊松突发流量下的推理 Goodput 崩塌核算，锁定 `experiments/ch20/20-03/run.py`）：**
+>
+> **问题设定**：
+> 1. **Oobleck 预实例化异构流水线无重启容错账本**：某大模型训练任务运行在 $P = 32$ 条数据并行流水线上，每条标准流水线含 $S = 8$ 台节点（共 $256$ 台节点，$2,048$ 张 GPU）。当热备池暂时耗尽且突发 $F = 2$ 台节点掉线（分别位于流水线 #3 与 #19）时，对比以下两种恢复路径：（a）传统 `torchrun` 全局销毁重启并从磁盘重载检查点（耗时 $T_{\mathrm{restart}} = 300.00\ \mathrm{s}$）；（b）`Oobleck` 预实例化模板重配置——包括故障确认与路由切换 $t_{\mathrm{detect}} = 0.25\ \mathrm{s}$、跨副本缺失层分片 RDMA 补齐 $t_{\mathrm{shard}} = 0.85\ \mathrm{s}$、异构微批配额同步对齐 $t_{\mathrm{sync}} = 0.35\ \mathrm{s}$（其中 2 条降级为 7 阶段模板的流水线因开启局部重计算单步吞吐为原管线的 $80.0\%$，其余 30 条 8 阶段健康流水线吞吐为 $100.0\%$）。求 `Oobleck` 端到端重配置延迟 $T_{\mathrm{oobleck}}$、相对传统重启的恢复加速比，以及在无备机顶替期间集群保留的有效吞吐百分比（同时给出 `Parachute` 直接摘除 2 条受损流水线时的保留吞吐百分比）。
+> 2. **推理压测均匀到达（$C_a=0, C_s=0$）vs. 真实泊松长尾流量（$C_a=1.0, C_s=1.2$）的 Goodput 核算**：设某推理实例的平均单请求服务时间为 $T_s = 120.0\ \mathrm{ms}$（饱和吞吐率 $\mu = \frac{1000}{120.0} \approx 8.3333\ \mathrm{req/s}$），纯 Prefill 算子执行耗时 $T_{\mathrm{prefill}} = 80.0\ \mathrm{ms}$，首词元延迟 SLO 上限为 $\mathrm{SLO}_{\mathrm{TTFT}} = 500.0\ \mathrm{ms}$（最大容许排队时间 $W_{\max} = 420.0\ \mathrm{ms}$）。当系统在利用率 $\rho = 0.85$（到达率 $\lambda = 0.85 \mu \approx 7.0833\ \mathrm{req/s}$）下运行时，分别计算均匀定速固定长度压测与真实泊松长尾压测下的平均排队时间 $W_q$、平均 $\mathrm{TTFT}$、按指数尾部模型 $P(W_q \le W_{\max}) = 1 - \rho \exp(-W_{\max}/W_q)$ 估算的 SLO 达标率与有效吞吐 Goodput（$\mathrm{req/s}$），并求出在真实突发流量下若要求平均 $\mathrm{TTFT} \le 300.0\ \mathrm{ms}$（即 $W_q \le 220.0\ \mathrm{ms}$）所允许的最大安全系统利用率 $\rho_{\max}$。
+>
+> **逐项推导**：
+>
+> 1. **Oobleck 预实例化流水线模板重配置延迟与有效算力保持率**：
+>    - **端到端无重启重配置耗时与加速比**：
+>      $$T_{\mathrm{oobleck}} = t_{\mathrm{detect}} + t_{\mathrm{shard}} + t_{\mathrm{sync}} = 0.25 + 0.85 + 0.35 = \mathbf{1.45\ \mathrm{s}}$$
+>      相比传统全局销毁重启（$T_{\mathrm{restart}} = 300.00\ \mathrm{s}$），恢复速度提升 **$\frac{300.00}{1.45} \approx \mathbf{206.90\times}$**。
+>    - **无备机顶替期间的稳态吞吐保持率**：
+>      - 在 `Oobleck` 异构模板混合运行（30 条 $\mathcal{T}_8$ + 2 条 $\mathcal{T}_7$）下，集群保留的有效训练吞吐比例为：
+>        $$\eta_{\mathrm{oobleck}} = \frac{30 \times 1.00 + 2 \times 0.80}{32} = \frac{31.60}{32} = \mathbf{98.75\%}$$
+>      - 若采用 `Parachute` 弹性降级数据并行度（摘除 2 条受损流水线，30 条健康流水线无中断继续运行），保留吞吐比例为：
+>        $$\eta_{\mathrm{parachute}} = \frac{30}{32} = \mathbf{93.75\%}$$
+>
+> 2. **均匀定速压测 vs. 真实泊松长尾压测的排队膨胀与 Goodput 崩塌**：
+>    - **作弊式均匀定速 + 固定长度压测（$C_a = 0, C_s = 0$）**：
+>      $$W_{q,\mathrm{uniform}} = \mathbf{0.00\ \mathrm{ms}},\qquad \mathrm{TTFT}_{\mathrm{uniform}} = 80.00 + 0.00 = \mathbf{80.00\ \mathrm{ms}} \le 500.0\ \mathrm{ms}$$
+>      表面 SLO 达标率为 **$100.00\%$**，宣称 Goodput $= \lambda = \mathbf{7.08\ \mathrm{req/s}}$。
+>    - **真实泊松突发 + 长尾长度压测（$C_a = 1.0, C_s = 1.2$）**：变异因子 $\frac{C_a^2 + C_s^2}{2} = \frac{1.00 + 1.44}{2} = 1.22$，平均排队等待时间飙升至：
+>      $$W_{q,\mathrm{bursty}} = \frac{0.85}{1 - 0.85} \times 1.22 \times 120.0\ \mathrm{ms} = 5.6667 \times 146.4\ \mathrm{ms} = \mathbf{829.60\ \mathrm{ms}}$$
+>      平均首词元延迟暴涨至 $\mathrm{TTFT}_{\mathrm{bursty}} = 80.00 + 829.60 = \mathbf{909.60\ \mathrm{ms}}$（膨胀 **$\frac{909.60}{80.00} \approx \mathbf{11.37\times}$**）。在 $W_{\max} = 420.0\ \mathrm{ms}$ 预算下，SLO 达标率跌至：
+>      $$P_{\mathrm{slo}} = 1 - 0.85 \exp\!\left(-\frac{420.0}{829.60}\right) = 1 - 0.85 \times 0.60274 \approx \mathbf{48.77\%}$$
+>      真实有效吞吐骤降至 $\mathrm{Goodput}_{\mathrm{bursty}} = 7.0833 \times 0.48767 \approx \mathbf{3.45\ \mathrm{req/s}}$（比均匀压测宣称的 $7.08\ \mathrm{req/s}$ 缩水 **$51.27\%$**）。
+>    - **满足平均 $\mathrm{TTFT} \le 300.0\ \mathrm{ms}$（即 $W_q \le 220.0\ \mathrm{ms}$）的最大安全利用率 $\rho_{\max}$**：
+>      $$\frac{\rho_{\max}}{1 - \rho_{\max}} \le \frac{220.0}{1.22 \times 120.0} = \frac{220.0}{146.4} \approx 1.50273 \implies \rho_{\max} = \frac{1.50273}{2.50273} \approx \mathbf{60.04\%}$$
+>      这从数学上解释了为何在线生产推理集群必须预留约 $35\%\text{–}40\%$ 的突发排队缓冲水位（Headroom），严禁按均匀压测的 $85\%$ 利用率满载排布。
+
+表 20-9 总结了无重启弹性流水线重配置与面向 SLO Goodput 的真实动态流量评测规范：
+
+| 工程与评测维度 | 传统脆弱基线 / 失真压测手法 | 现代高可靠弹性与反作弊评测规范（Oobleck + Bursty Goodput） | 定量改善或失真揭露幅度 |
+| :--- | :--- | :--- | :---: |
+| **无备机时节点掉线恢复** | `torchrun` 全局销毁重建通信域并读盘（$300.00\ \mathrm{s}$） | **Oobleck 预实例化异构流水线模板切换（$1.45\ \mathrm{s}$）** | 恢复提速 **$206.90\times$** |
+| **掉线 2/256 节点期间吞吐** | 全部 $2,048$ 卡停机阻塞等待（有效吞吐 $0\%$） | **30 条 $\mathcal{T}_8$ + 2 条 $\mathcal{T}_7$ 异构续训（保留 $98.75\%$ 吞吐）** | 挽回 **$98.75\%$** 算力 |
+| **推理压测请求到达分布** | 作弊式均匀定速发包（$C_a=0, C_s=0$） | **泊松突发到达（$C_a=1.0$）+ 长尾长度分布（$C_s=1.2$）** | 还原真实线上排队尾延迟 |
+| **$\rho=0.85$ 下平均 TTFT** | 虚假测量值 **$80.00\ \mathrm{ms}$**（排队 $0\ \mathrm{ms}$） | 真实平均耗时 **$909.60\ \mathrm{ms}$**（排队高达 $829.60\ \mathrm{ms}$） | 揭露 **$11.37\times$** 延迟低估 |
+| **$\rho=0.85$ 下 SLO Goodput** | 虚报 $100\%$ 达标（**$7.08\ \mathrm{req/s}$**） | 仅 **$48.77\%$** 达标（真实 Goodput **$3.45\ \mathrm{req/s}$**） | 揭露 **$51.27\%$** 有效吞吐虚标 |
+
+*表 20-9　无重启预实例化流水线容错重配置（Oobleck / Parachute）与推理服务突发流量 Goodput 评测对比。*
+
+下面的参考实现代码将预实例化异构流水线模板容错调度器与基于 Kingman 排队论的突发流量 Goodput 审计器封装为生产级校验引擎（对应配套实验 `experiments/ch20/20-03`）：
+
+```python
+import math
+from dataclasses import dataclass
+
+@dataclass
+class OobleckElasticPipelineAndGoodputBenchEngine:
+    """
+    复现算例 20-7 (对应 experiments/ch20/20-03)：
+    1. Oobleck / Parachute 预实例化异构流水线模板无重启容错重配置 (1.45 s vs. 300.0 s)
+    2. 均匀定速压测 (CV=0) vs. 泊松突发长尾流量 (Ca=1.0, Cs=1.2) 的 Kingman 排队膨胀与 Goodput 审计
+     """
+    num_pipelines: int = 32
+    stages_per_pipeline: int = 8
+    failed_nodes: int = 2
+    degraded_template_eff: float = 0.80
+
+    def audit_oobleck_failover(
+        self,
+        t_detect_s: float = 0.25,
+        t_shard_s: float = 0.85,
+        t_sync_s: float = 0.35,
+        t_full_restart_s: float = 300.0,
+    ) -> dict[str, float]:
+        t_oobleck_s = round(t_detect_s + t_shard_s + t_sync_s, 2)
+        healthy_pipes = self.num_pipelines - self.failed_nodes
+        oobleck_retain_pct = round(
+            100.0 * (healthy_pipes * 1.0 + self.failed_nodes * self.degraded_template_eff) / self.num_pipelines, 2
+        )
+        parachute_retain_pct = round(100.0 * healthy_pipes / self.num_pipelines, 2)
+        return {
+            "oobleck_reconfig_sec": t_oobleck_s,
+            "full_restart_sec": round(t_full_restart_s, 2),
+            "reconfig_speedup_x": round(t_full_restart_s / t_oobleck_s, 2),
+            "oobleck_retained_throughput_pct": oobleck_retain_pct,
+            "parachute_retained_throughput_pct": parachute_retain_pct,
+        }
+
+    @staticmethod
+    def audit_bursty_goodput_vs_uniform(
+        service_ms: float = 120.0,
+        prefill_ms: float = 80.0,
+        slo_ttft_ms: float = 500.0,
+        rho: float = 0.85,
+        ca_bursty: float = 1.0,
+        cs_bursty: float = 1.2,
+        target_mean_ttft_ms: float = 300.0,
+    ) -> dict[str, float]:
+        mu_req_s = 1000.0 / service_ms
+        arrival_req_s = rho * mu_req_s
+        w_max_ms = slo_ttft_ms - prefill_ms
+
+        ttft_uniform_ms = prefill_ms
+        goodput_uniform = round(arrival_req_s, 2)
+
+        var_factor = 0.5 * (ca_bursty ** 2 + cs_bursty ** 2)
+        wq_bursty_ms = (rho / (1.0 - rho)) * var_factor * service_ms
+        ttft_bursty_ms = prefill_ms + wq_bursty_ms
+        slo_attain_ratio = 1.0 - rho * math.exp(-w_max_ms / wq_bursty_ms)
+        goodput_bursty = round(arrival_req_s * slo_attain_ratio, 2)
+
+        target_wq_ms = target_mean_ttft_ms - prefill_ms
+        odds = target_wq_ms / (var_factor * service_ms)
+        rho_max_pct = round(100.0 * (odds / (1.0 + odds)), 2)
+
+        return {
+            "ttft_uniform_ms": round(ttft_uniform_ms, 2),
+            "goodput_uniform_req_s": goodput_uniform,
+            "wq_bursty_ms": round(wq_bursty_ms, 2),
+            "ttft_bursty_ms": round(ttft_bursty_ms, 2),
+            "ttft_inflation_x": round(ttft_bursty_ms / ttft_uniform_ms, 2),
+            "slo_attainment_bursty_pct": round(100.0 * slo_attain_ratio, 2),
+            "goodput_bursty_req_s": goodput_bursty,
+            "goodput_drop_pct": round(100.0 * (goodput_uniform - goodput_bursty) / goodput_uniform, 2),
+            "max_safe_utilization_pct": rho_max_pct,
+        }
+
+
+if __name__ == "__main__":
+    eng = OobleckElasticPipelineAndGoodputBenchEngine()
+    ob = eng.audit_oobleck_failover()
+    gp = eng.audit_bursty_goodput_vs_uniform()
+    assert ob["oobleck_reconfig_sec"] == 1.45 and ob["reconfig_speedup_x"] == 206.90
+    assert ob["oobleck_retained_throughput_pct"] == 98.75 and ob["parachute_retained_throughput_pct"] == 93.75
+    assert gp["wq_bursty_ms"] == 829.60 and gp["ttft_bursty_ms"] == 909.60
+    assert gp["slo_attainment_bursty_pct"] == 48.77 and gp["goodput_bursty_req_s"] == 3.45
+    assert gp["max_safe_utilization_pct"] == 60.04
+```
+
 ---
 
 ## 常见误区
@@ -1033,11 +1187,21 @@ class ChaosGameDayAndArrivalSkewAuditor:
 > （1）复算算例 20-6 中的 8-Rank 入队偏斜矩阵诊断（精确锁定 `straggler_rank = 5`、偏斜 $2.0\ \mathrm{ms}$、慢节点等待占比 $83.33\%$）以及 `TrainMover` 亚秒级热迁移（$0.68\ \mathrm{s}$ vs. 传统重启 $300.0\ \mathrm{s}$，提速 $441.18\times$）；
 > （2）复算四大跑分失真修正与两阶段金丝雀门禁（$5.25\times$ 算术平均加速比实则 $0.9524\times$ 倒退、`ABBA` 消除 $-16.0\ \mu\mathrm{s}$ 漂移偏置、金丝雀捕获 $+4.8\%$ P99 退化自动回滚），以及十万卡 $200$ 次 Chaos GameDay 故障注入演练（$99.50\%$ 召回率、$\mathrm{MTTD} = 2.70\ \mathrm{s}$、$\mathrm{MTTR}_{\mathrm{auto}} = 3.85\ \mathrm{s}$，比人工恢复快 $389.61\times$）。
 
-### 可运行实验（20-01 与 20-02）
+> **练习 20-13（Oobleck 预实例化异构流水线模板在多节点同时掉线下的吞吐保持率推演）：**
+> 承接算例 20-7，某 $64$ 条数据并行流水线（每条 $8$ 阶段，共 $512$ 台节点）的训练任务在热备节点耗尽期间突发 $F = 4$ 台节点掉线（分别位于 4 条不同的数据并行流水线中）。
+> （1）若采用 `Parachute` 策略直接摘除这 4 条受损流水线、保持其余 $60$ 条流水线无中断运行，集群保留的有效训练吞吐百分比是多少？
+> （2）若采用 `Oobleck` 预实例化模板重配置，将这 4 条受损流水线在 $1.45\ \mathrm{s}$ 内切换为 7 阶段紧凑模板 $\mathcal{T}_7$（单条降级管线因开启局部激活重计算，有效吞吐为原 8 阶段管线的 $82.0\%$），求集群保留的有效训练吞吐百分比，以及相比 `Parachute` 策略每天（$24\ \mathrm{h}$）净多挽回多少个等效健康节点小时（Node-Hours）？
 
-- **实验目录**：`experiments/ch20/20-01`（十万卡 Young-Daly 周期、热备池排队模型与 ABFT SDC 修复器）、`experiments/ch20/20-02`（Arrival Skew 慢节点定位、`TrainMover` 热迁移、四大跑分失真修正与 Chaos GameDay 演练审计器）
-- **实验目标**：一键复现并校验本章全部锁定算例与生产案例账本，包括十万卡 $\mathrm{MTBF} = 30.41\ \mathrm{min}$、Young-Daly 最优检查点周期与有效训练时间比（$\mathrm{ETTR}\ 63.22\% \to 92.34\%$）、泊松热备节点池（$S_{\min}=40$）、ABFT 矩阵乘行列校验和（$0.0732\%$ 开销与原地修复）（`20-01`），以及 8-Rank 入队偏斜慢节点定位（$83.33\%$ 等待占比）、`TrainMover` $0.68\ \mathrm{s}$ 热接管（快 $441.18\times$）、四大跑分失真修正与 $200$ 次 Chaos GameDay 故障注入演练（$99.50\%$ 召回率、$\mathrm{MTTR}_{\mathrm{auto}} = 3.85\ \mathrm{s}$）（`20-02`）。
-- **执行与校验命令**：在终端依次执行 `python3 experiments/ch20/20-01/run.py && python3 experiments/ch20/20-01/verify.py` 以及 `python3 experiments/ch20/20-02/run.py && python3 experiments/ch20/20-02/verify.py`。
+> **实验 20-14（推理服务泊松突发长尾流量下的 Kingman 排队膨胀与 Goodput 校验实验 `experiments/ch20/20-03`）：**
+> 承接算例 20-7，设某推理引擎的平均单请求服务耗时为 $T_s = 100.0\ \mathrm{ms}$（饱和吞吐率 $\mu = 10.0\ \mathrm{req/s}$），纯 Prefill 耗时 $T_{\mathrm{prefill}} = 60.0\ \mathrm{ms}$，当系统工作在利用率 $\rho = 0.80$（到达率 $\lambda = 8.0\ \mathrm{req/s}$）时：
+> （1）对比均匀定速固定长度压测（$C_a = 0, C_s = 0$）与极端智能体并发突发流量（$C_a = 1.5, C_s = 1.5$）下的平均排队等待时间 $W_q$ 与平均首词元延迟 $\mathrm{TTFT}$；
+> （2）运行 `python3 experiments/ch20/20-03/run.py && python3 experiments/ch20/20-03/verify.py` 校验算例 20-7、练习 20-13 与本题的全部锁定指标。
+
+### 可运行实验（20-01、20-02 与 20-03）
+
+- **实验目录**：`experiments/ch20/20-01`（十万卡 Young-Daly 周期、热备池排队模型与 ABFT SDC 修复器）、`experiments/ch20/20-02`（Arrival Skew 慢节点定位、`TrainMover` 热迁移、四大跑分失真修正与 Chaos GameDay 演练审计器）、`experiments/ch20/20-03`（Oobleck 预实例化流水线无重启容错重配置与泊松突发流量 Goodput 评测器）
+- **实验目标**：一键复现并校验本章全部锁定算例与生产案例账本，包括十万卡 $\mathrm{MTBF} = 30.41\ \mathrm{min}$、Young-Daly 最优检查点周期与有效训练时间比（$\mathrm{ETTR}\ 63.22\% \to 92.34\%$）、泊松热备节点池（$S_{\min}=40$）、ABFT 矩阵乘行列校验和（$0.0732\%$ 开销与原地修复）（`20-01`），8-Rank 入队偏斜慢节点定位（$83.33\%$ 等待占比）、`TrainMover` $0.68\ \mathrm{s}$ 热接管（快 $441.18\times$）、四大跑分失真修正与 $200$ 次 Chaos GameDay 故障注入演练（$99.50\%$ 召回率、$\mathrm{MTTR}_{\mathrm{auto}} = 3.85\ \mathrm{s}$）（`20-02`），以及 `Oobleck` $1.45\ \mathrm{s}$ 预实例化模板重配置（快 $206.90\times$，保留 $98.75\%$ 吞吐）与 $\rho=0.85$ 泊松突发流量下 $\mathrm{TTFT}$ 从 $80.00\ \mathrm{ms}$ 膨胀至 $909.60\ \mathrm{ms}$（Goodput 缩水 $51.27\%$）（`20-03`）。
+- **执行与校验命令**：在终端依次执行 `python3 experiments/ch20/20-01/run.py && python3 experiments/ch20/20-01/verify.py`、`python3 experiments/ch20/20-02/run.py && python3 experiments/ch20/20-02/verify.py` 以及 `python3 experiments/ch20/20-03/run.py && python3 experiments/ch20/20-03/verify.py`。
 
 ---
 
@@ -1090,7 +1254,17 @@ class ChaosGameDayAndArrivalSkewAuditor:
 - **20-12 解答**：
   在仓库根目录执行 `python3 experiments/ch20/20-02/run.py && python3 experiments/ch20/20-02/verify.py`，终端输出 `Experiment 20-02 verified successfully.`，实测锁定 `straggler_rank = 5`（等待占比 $83.33\%$）、`TrainMover` $0.68\ \mathrm{s}$ 热接管（提速 $441.18\times$）、`ABBA` 消除 $-16.0\ \mu\mathrm{s}$ 漂移，以及 $200$ 次 Chaos GameDay 演练 $99.50\%$ 召回率与 $\mathrm{MTTR}_{\mathrm{auto}} = 3.85\ \mathrm{s}$（提速 $389.61\times$）。
 
-下表给出了全章 12 道练习与实验的核心锁定数值速查索引：
+- **20-13 解答**：
+  1. **Parachute 直接摘除 4 条受损管线**：保留的有效训练吞吐比例为 $\eta_{\mathrm{para}} = \frac{64 - 4}{64} = \frac{60}{64} = \mathbf{93.75\%}$（有 $4 \times 7 = 28$ 台幸存健康节点被迫陪绑闲置）。
+  2. **Oobleck 预实例化 7 阶段模板重配置**：保留的有效训练吞吐比例为 $\eta_{\mathrm{oob}} = \frac{60 \times 1.00 + 4 \times 0.82}{64} = \frac{63.28}{64} = \mathbf{98.88\%}$（精确值为 $98.875\%$）。相比 `Parachute`，每天（$24\ \mathrm{h}$）净多挽回的等效健康节点小时数为 $512 \times (0.98875 - 0.9375) \times 24\ \mathrm{h} = 512 \times 0.05125 \times 24 = \mathbf{629.76\ \text{Node-Hours/day}}$（折合 $5{,}038.08$ GPU 小时/天）。
+
+- **20-14 解答**：
+  1. **均匀定速压测 vs. 智能体突发压测（$\rho = 0.80, T_s = 100.0\ \mathrm{ms}, T_{\mathrm{prefill}} = 60.0\ \mathrm{ms}$）**：
+     - 均匀压测（$C_a = 0, C_s = 0$）：$W_{q,\mathrm{uni}} = \mathbf{0.00\ \mathrm{ms}}$，$\mathrm{TTFT}_{\mathrm{uni}} = \mathbf{60.00\ \mathrm{ms}}$；
+     - 突发长尾压测（$C_a = 1.5, C_s = 1.5$）：变异因子 $\frac{1.5^2 + 1.5^2}{2} = 2.25$，排队等待时间 $W_{q,\mathrm{burst}} = \frac{0.80}{0.20} \times 2.25 \times 100.0 = 4.0 \times 225.0 = \mathbf{900.00\ \mathrm{ms}}$，平均首词元延迟暴涨至 $\mathrm{TTFT}_{\mathrm{burst}} = 60.00 + 900.00 = \mathbf{960.00\ \mathrm{ms}}$（膨胀 **$16.00\times$**）。
+  2. 执行 `python3 experiments/ch20/20-03/run.py && python3 experiments/ch20/20-03/verify.py` 可完整校验算例 20-7、练习 20-13 与本题的全部锁定指标。
+
+下表给出了全章 14 道练习与实验的核心锁定数值速查索引：
 
 | 练习编号 | 考查工程主题 | 核心锁定输入参数 | 精确复算输出基准 |
 | :--- | :--- | :--- | :--- |
@@ -1106,8 +1280,10 @@ class ChaosGameDayAndArrivalSkewAuditor:
 | **20-10** | 十万卡容错与评测反例实验 | `experiments/ch20/20-01` 锁定脚本 | $\mathrm{ETTR}\ 63.22\% \to 92.34\%, S_{\min}=40, p^*=15/19$ |
 | **20-11** | 16-Rank 入队偏斜反演与热迁移 | $15$ 卡 $22.5\ \mathrm{ms}$ vs. 慢卡 $28.5\ \mathrm{ms}$, 传输 $1.5\ \mathrm{ms}$ | 观测 $7.50\ \mathrm{ms}$（$80\%$ 等待）；带宽翻倍仅省 $10\%$，替换慢卡快 $5.00\times$ |
 | **20-12** | 偏斜定位、金丝雀与混沌演练实验 | `experiments/ch20/20-02` 锁定脚本 | `straggler_rank=5`（$83.33\%$），`TrainMover` 快 $441.18\times$，演练召回 $99.50\%$ |
+| **20-13** | 64 管线 Oobleck 异构模板容错 | $F=4/64$ 受损, $\mathcal{T}_7$ 效率 $82.0\%$ | Parachute $93.75\%$ vs. Oobleck $98.88\%$（日省 $629.76$ 节点时） |
+| **20-14** | 突发流量 Kingman 膨胀 (`20-03`) | $\rho=0.80, C_a=C_s=1.5, T_s=100\ \mathrm{ms}$ | 算例 20-7 Goodput 降 $51.27\%$；本题 $\mathrm{TTFT}\ 60 \to 960.0\ \mathrm{ms}$（$16\times$） |
 
-*表 20-9　第 20 章十二道练习与可运行实验核心锁定数值速查表。*
+*表 20-10　第 20 章十四道练习与可运行实验核心锁定数值速查表。*
 
 ---
 
@@ -1115,8 +1291,8 @@ class ChaosGameDayAndArrivalSkewAuditor:
 
 1. **十万卡可靠性反比坍缩与热备池排队论**：集群级平均无故障时间随规模按 $\mathrm{MTBF}_{\mathrm{cluster}} = \mathrm{MTBF}_{\mathrm{unit}} / N$ 反比衰减——从 Meta $16,384$ 卡的 $3.09$ 小时（$54$ 天 $419$ 次中断，硬件占 $78\%$）外推至十万卡时，每 **$30.41$ 分钟**即发生一次中断。利用内存异步快照（$C=5\ \mathrm{s}$）、`TrainMover` 秒级无重启接管（$T_{\mathrm{rec}}=5\ \mathrm{s}$）与泊松维修队列热备池（$L=24 \implies S_{\min}=40$ 台，占比 $<0.4\%$），可将十万卡有效训练时间比（ETTR）从 $63.22\%$ 拉升至 **$92.34\%$**。
 2. **静默数据损坏（SDC）的三道毫秒级在线防线**：算术单元内部的瞬态或老化比特翻转会逃逸 HBM ECC 并通过单次 AllReduce 污染全网权重。通过 **（1）算子级 ABFT 行列校验和**（开销 $0.0732\% < 0.5\%$）、**（2）AllReduce 归约前跨秩梯度统计拦截**（`Safeguarding LLM Training` OSDI '26，3,500 万卡时验证）与 **（3）控制良性非确定性的位级对齐重放定位**（`OpGuard` OSDI '26，耗时 $50\ \mathrm{ms}$ 微批重算），可在线揪出物理坏卡并实现零检查点回滚自愈。
-3. **慢节点到达偏斜取证与光链路灰故障预测**：在紧耦合集合通信中，单张慢卡迟到 $2.0\ \mathrm{ms}$ 会让其余所有健康卡显示“通信耗时 $2.4\ \mathrm{ms}$”（其中 $83.33\%$ 在空等慢卡）。利用 `NCCL Flight Recorder` 入队时间戳偏斜矩阵与 800G 光模块 RS-FEC 高阶纠错桶斜率监控，配合 `TrainMover` $0.68\ \mathrm{s}$ 亚秒级热迁移（比全局重启快 $441.18\times$），可精准隔离慢节点与灰故障。
-4. **反作弊基准评测科学、混沌演练门禁与向四大新兴疆域的延伸**：算术平均加速比会制造“$5.25\times$ 加速实则比基线更慢”的假象，单调 `AABB` 测量会把热漂移当成算法收益，扁平负载会让传统 PMU 采样失真。结合 `FlashInfer-Bench`、`CCEval`、`DriftBench`、`Blink`（OSDI '26）、两阶段金丝雀门禁与 $200$ 次 Chaos GameDay 主动故障注入演练（$99.50\%$ 召回率，$\mathrm{MTTR}_{\mathrm{auto}} = 3.85\ \mathrm{s}$），本章完成了前二十章通用大模型底座的阶段性收束，并正式开启第 21–24 章四大新兴前沿疆域。
+3. **慢节点到达偏斜取证、光链路灰故障预测与 Oobleck 无重启弹性重配置**：在紧耦合集合通信中，单张慢卡迟到 $2.0\ \mathrm{ms}$ 会让其余所有健康卡显示“通信耗时 $2.4\ \mathrm{ms}$”（其中 $83.33\%$ 在空等慢卡）。利用 `NCCL Flight Recorder` 入队时间戳偏斜矩阵与 800G 光模块 RS-FEC 高阶纠错桶斜率监控，配合 `TrainMover` $0.68\ \mathrm{s}$ 亚秒级热迁移（比全局重启快 $441.18\times$）以及热备耗尽时的 `Oobleck` 预实例化异构流水线模板切换（$1.45\ \mathrm{s}$ 恢复，提速 $206.90\times$，保留 $98.75\%$ 算力），可实现全天候无中断训练。
+4. **反作弊基准评测科学、泊松突发流量 Goodput 与混沌演练门禁**：算术平均加速比会制造“$5.25\times$ 加速实则比基线更慢”的假象，单调 `AABB` 测量会把热漂移当成算法收益，均匀定速发包（$C_a=C_s=0$）会掩盖真实泊松突发长尾流量（$C_a=1.0, C_s=1.2$）在 $\rho=0.85$ 下高达 $11.37\times$ 的 TTFT 排队膨胀与 $51.27\%$ 的 SLO Goodput 缩水。结合 `FlashInfer-Bench`、`CCEval`、`DriftBench`、`Blink`（OSDI '26）、两阶段金丝雀门禁与 $200$ 次 Chaos GameDay 主动故障注入演练（$99.50\%$ 召回率，$\mathrm{MTTR}_{\mathrm{auto}} = 3.85\ \mathrm{s}$），本章完成了前二十章通用大模型底座的阶段性收束，并正式开启后续前沿与全栈架构疆域。
 
 [^ch20-llama3]: 关于 Meta Llama 3 405B 在 $16,384$ 张 H100 GPU 上历时 $54$ 天的 $419$ 次非计划中断分类账本，参见 Dubey 等人的技术报告 *The Llama 3 Herd of Models*（Section 3.3, arXiv:2407.21783, 2024）。
 [^ch20-daly]: 关于周期性检查点开销与平均无故障间隔下的最优检查点间隔公式（$\tau_{\mathrm{opt}} = \sqrt{2 C_{\mathrm{ckpt}} M}$），参见 Daly 的经典论文 *A Higher Order Estimate of the Optimum Checkpoint Interval for Restart Dumps*（Future Generation Computer Systems, 2006）。
@@ -1128,3 +1304,15 @@ class ChaosGameDayAndArrivalSkewAuditor:
 [^ch20-flashinfer-bench]: 关于绑定真实生产形状分布的算子评测基准 `FlashInfer-Bench` 与动态负载漂移基准 `DriftBench`，参见 MLSys 2026 相关论文及本书案例库 `case-studies/optimization-evaluation-and-deployment.md`。
 [^ch20-cceval]: 关于集合通信真实拓扑评测基准 `CCEval` 及慢节点偏斜、多轨失衡与环路死锁诊断，参见 NSDI 2026 论文 `CCEval` 及本书案例库 `case-studies/collective-paths-and-diagnosis.md`。
 [^ch20-blink]: 关于消除扁平微秒级运行时负载上硬件 PMU 周期性采样滑移失真（Sampling Skid）的无偏性能剖析器，参见 OSDI 2026 论文 *Blink: When Sampling Lies — Recovering Trustworthy Profiling on Flat Workloads*（OSDI '26 #23）。
+[^ch20-oobleck]: Jang, I., et al. "Oobleck: Resilient Distributed Training of Large Models Using Pipeline Templates." *SOSP*, 2023.
+[^ch20-parachute]: Watcharapichat, P., et al. & Elastic Pipeline Fault-Tolerant Training Frameworks ("Parachute: Responsive and Fault-Tolerant Data-Parallel / Pipeline-Parallel Training"). *MLSys / EuroSys*, 2023–2024.
+[^ch20-bamboo]: Thorpe, J., et al. "Bamboo: Making Preemptible Instances Resilient for Affordable Large Model Training." *NSDI*, 2023.
+[^ch20-varuna]: Athlur, S., et al. "Varuna: Scalable, Low-Cost Training of Massive Deep Learning Models." *EuroSys*, 2022.
+[^ch20-megascale]: Jiang, Z., et al. (ByteDance). "MegaScale: Scaling Large Language Model Training to More Than 10,000 GPUs." *NSDI*, 2024.
+[^ch20-unicron]: He, T., et al. "Unicron: Economizing Self-Healing LLM Training at Scale." *EuroSys*, 2024.
+[^ch20-splitwise]: Patel, P., et al. "Splitwise: Efficient Generative LLM Inference Using Phase Splitting." *ISCA*, 2024.
+[^ch20-distserve]: Zhong, Y., et al. "DistServe: Disaggregating Prefill and Decoding for Goodput-Optimized Large Language Model Serving." *OSDI*, 2024.
+[^ch20-sarathi]: Agrawal, A., et al. "Taming Throughput-Latency Tradeoff in LLM Inference with Sarathi-Serve." *OSDI*, 2024.
+[^ch20-mlperf]: Reddi, V. J., et al. "MLPerf Inference Benchmark: Server Poisson Arrival vs. Offline Scenarios." *ISCA*, 2020–2025.
+[^ch20-kingman]: Kingman, J. F. C. "The Single Server Queue in Heavy Traffic." *Mathematical Proceedings of the Cambridge Philosophical Society*, 57(4), 902–904, 1961.
+[^ch20-sharegpt]: Zheng, L., et al. "LMSYS-Chat-1M & ShareGPT: A Large-Scale Real-World LLM Conversation Dataset for Bursty Workload Modeling." *ICLR*, 2024.

@@ -1,0 +1,37 @@
+{
+  "closed_loop_3dgs_sensor_sim": {
+    "total_gaussians": 2500000,
+    "cull_ratio": 0.72,
+    "active_gaussians": 700000,
+    "naive_6cam_ms": 51.0,
+    "naive_1lidar_ms": 24.0,
+    "naive_total_ms": 75.0,
+    "naive_fps": 13.33,
+    "batched_6cam_ms": 11.4,
+    "rtcore_1lidar_ms": 5.4,
+    "opt_total_ms": 16.8,
+    "opt_fps": 59.52,
+    "render_speedup_x": 4.46,
+    "meets_30hz_hil_sla": true,
+    "ex19_13_8cam_2lidar_naive_ms": 104.0,
+    "ex19_13_8cam_2lidar_naive_fps": 9.62,
+    "ex19_13_8cam_2lidar_opt_ms": 22.0,
+    "ex19_13_8cam_2lidar_opt_fps": 45.45,
+    "ex19_13_speedup_x": 4.73
+  },
+  "dual_thor_safety_watchdog": {
+    "t_detect_ms": 5.0,
+    "t_switch_ms": 1.5,
+    "t_mpc_ms": 4.0,
+    "t_act_ms": 2.0,
+    "takeover_latency_ms": 12.5,
+    "asil_d_ftti_ms": 15.0,
+    "meets_asil_d_ftti": true,
+    "watchdog_lateral_drift_mm": 3.02,
+    "restart_250ms_lateral_drift_mm": 351.25,
+    "drift_reduction_x": 116.31,
+    "ex19_14_watchdog_drift_mm": 2.5,
+    "ex19_14_restart_200ms_drift_mm": 190.0,
+    "ex19_14_reduction_x": 76.0
+  }
+}

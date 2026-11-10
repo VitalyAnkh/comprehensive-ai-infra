@@ -82,5 +82,29 @@
       "ar_decode_naive_ms": 2450.0,
       "ar_decode_fast_ms": 280.0
     }
+  },
+  "closed_loop_3dgs_and_dual_thor_watchdog": {
+    "source": "experiments/ch19/19-03/run.py (StreetGaussians / NeuRAD 3DGS + Dual Drive Thor ASIL-D Watchdog)",
+    "total_gaussians": 2500000,
+    "cull_ratio": 0.72,
+    "active_gaussians": 700000,
+    "naive_6cam_1lidar_ms": 75.0,
+    "naive_fps": 13.33,
+    "batched_6cam_ms": 11.4,
+    "rtcore_1lidar_ms": 5.4,
+    "opt_total_ms": 16.8,
+    "opt_fps": 59.52,
+    "render_speedup_x": 4.46,
+    "watchdog_stages_ms": {
+      "detect_ms": 5.0,
+      "switch_ms": 1.5,
+      "mpc_ms": 4.0,
+      "act_ms": 2.0,
+      "total_takeover_ms": 12.5,
+      "asil_d_ftti_ms": 15.0
+    },
+    "watchdog_lateral_drift_mm": 3.02,
+    "restart_250ms_lateral_drift_mm": 351.25,
+    "drift_reduction_x": 116.31
   }
 }

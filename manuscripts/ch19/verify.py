@@ -51,25 +51,25 @@ h2s = re.findall(r'^## (.+)$', s, re.M)
 check('last H2 is 本章小结', len(h2s) >= 6 and h2s[-1].strip() == '本章小结')
 
 exercises = re.findall(r'^>\s*\*\*(?:练习|实验) 19-(\d+)[：:（]', s, re.M)
-check('twelve exercises 19-1 to 19-12 in order', exercises == [str(i) for i in range(1, 13)])
+check('fourteen exercises 19-1 to 19-14 in order', exercises == [str(i) for i in range(1, 15)])
 
 code_blocks = re.findall(r'```(?:python|cpp)\n.*?```', s, re.S)
-check('eight production code blocks (7 python + 1 cpp)', len(code_blocks) == 8 and len(re.findall(r'```', s)) == 16)
+check('nine production code blocks (8 python + 1 cpp)', len(code_blocks) == 9 and len(re.findall(r'```', s)) == 18)
 
 worked_examples = re.findall(r'^>\s*\*\*算例\s*19-', s, re.M)
-check('six standardized blockquote worked examples', len(worked_examples) == 6)
+check('seven standardized blockquote worked examples', len(worked_examples) == 7)
 
 table_captions = re.findall(r'^\*表 19-(\d+)　', s, re.M)
-check('eight standardized italic table captions 19-1 to 19-8', table_captions == [str(i) for i in range(1, 9)])
+check('nine standardized italic table captions 19-1 to 19-9', table_captions == [str(i) for i in range(1, 10)])
 
 fig_index = json.loads((HERE / 'figure-index.json').read_text())
 fig_count = len(fig_index)
-check('eighteen figures in figure-index.json', fig_count == 18)
+check('twenty figures in figure-index.json', fig_count == 20)
 captions = re.findall(r'^\*图 19-(\d+)(?:：|　)', s, re.M)
-check('sequential captions 19-1 to 19-18', sorted(captions, key=int) == [str(i) for i in range(1, fig_count + 1)])
+check('sequential captions 19-1 to 19-20', sorted(captions, key=int) == [str(i) for i in range(1, fig_count + 1)])
 
 imgs = re.findall(r'!\[.+?\]\((ch19/[^)]+)\)', s)
-check('eighteen active illustrations match figure-index.json', set(imgs) == {row.get('asset') or f"ch19/{row['file']}" for row in fig_index} and len(imgs) == 18)
+check('twenty active illustrations match figure-index.json', set(imgs) == {row.get('asset') or f"ch19/{row['file']}" for row in fig_index} and len(imgs) == 20)
 
 for rel in imgs:
     p = md.parent / rel
@@ -87,7 +87,7 @@ check('local links exist', not missing)
 
 defs = re.findall(r'^\[\^([^\]]+)\]:', s, re.M)
 refs = re.findall(r'\[\^([^\]]+)\](?!:)', s)
-check('all footnotes used and defined once', set(defs) == set(refs) and len(defs) == len(set(defs)) and len(defs) >= 9)
+check('all footnotes used and defined once', set(defs) == set(refs) and len(defs) == len(set(defs)) and len(defs) >= 21)
 
 for name, key in [('sources.json', 'sources'), ('manifest.json', 'outputs')]:
     data = json.loads((HERE / name).read_text())[key]
@@ -100,7 +100,7 @@ check('no formula errors', not math_val['errors'] and 'katex-error' not in page)
 layout_val = json.loads((HERE / 'teaching-layout-validation.json').read_text())
 check(
     'book-size figure layout',
-    len(layout_val) == 18 and all(r['width_pt'] == 420 and r['min_label_pt'] >= 11 and not r['text_extent_warnings'] for r in layout_val),
+    len(layout_val) == 20 and all(r['width_pt'] == 420 and r['min_label_pt'] >= 11 and not r['text_extent_warnings'] for r in layout_val),
 )
 
 d = json.loads((HERE / 'figure-data.json').read_text())
@@ -110,6 +110,14 @@ check(
     fast['chunk_horizon_steps'] * fast['action_dims'] == fast['naive_time_domain_tokens']
     and close(round(fast['naive_time_domain_tokens'] / fast['fast_bpe_tokens'], 2), fast['compression_ratio_x'])
     and close(fast['ar_decode_naive_ms'] / fast['ar_decode_fast_ms'], fast['compression_ratio_x']),
+)
+wd = d['closed_loop_3dgs_and_dual_thor_watchdog']
+check(
+    'example 19-7 3DGS closed-loop and dual Thor watchdog arithmetic',
+    wd['active_gaussians'] == 700000
+    and close(wd['opt_total_ms'], 16.80)
+    and close(wd['watchdog_stages_ms']['total_takeover_ms'], 12.50)
+    and close(wd['watchdog_lateral_drift_mm'], 3.02),
 )
 
 passed = sum(1 for c in checks if c['passed'])
