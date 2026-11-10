@@ -1,0 +1,32 @@
+{
+  "sources": [
+    {
+      "path": "manuscripts/ch28/build.py",
+      "sha256": "408d157d8589fefd81792b607a8485db5cbee90e3e0fd2312c952e83601e23b6"
+    },
+    {
+      "path": "manuscripts/ch28/figure-data.json",
+      "sha256": "71e23b11738332784d939e795a8c7bfa8e59b94243d56e9bff6e6c9e8b155879"
+    },
+    {
+      "path": "manuscripts/ch28/figure-index.json",
+      "sha256": "8771d14f7342def201d2232518c2b7685925e3a169caa103505091257ee917f7"
+    },
+    {
+      "path": "experiments/ch28/28-01/run.py",
+      "sha256": "b41b39ce5012c08fee69a102dc3a0e3c98106687f150af5052ccdefed3935478"
+    },
+    {
+      "path": "experiments/ch28/28-02/run.py",
+      "sha256": "606415863d6b9677571701ceb99f1a815f0a615f8d650cb19ecd6d6ee3ff04e2"
+    },
+    {
+      "path": "experiments/ch28/28-03/run.py",
+      "sha256": "d52d42d10458587ca234abf8a0003be6da249748e7b40c6aa3aab50937e6dbd3"
+    },
+    {
+      "path": "manuscripts/28-主权 AI、广域网去中心化低通信训练（DiLoCo）、实时护栏（Guardrails）与密码学水印安全底座.md",
+      "sha256": "a9b7152b473b8bc12191711fe67d0b59acbf424eb884767ecb1614fe8a48255f"
+    }
+  ]
+}

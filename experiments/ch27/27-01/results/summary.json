@@ -1,0 +1,24 @@
+{
+  "experiment_id": "27-01",
+  "sram_vs_hbm_tco": {
+    "model_weight_gb": 70.0,
+    "hbm_step_ms": 6.07,
+    "hbm_b1_tok_per_sec": 164.7,
+    "hbm_b128_tok_per_sec": 6400.0,
+    "sram_agg_bw_pbs": 21.0,
+    "sram_read_ms": 0.35,
+    "sram_b1_tok_per_sec": 1850.0,
+    "b1_speedup_x": 11.23,
+    "tco_crossover_batch_size": 14.2,
+    "high_batch_hbm_cost_adv_x": 6.8
+  },
+  "soic_3d_sram_and_deterministic_noc": {
+    "soic_sram_layers": 8,
+    "sram_capacity_gb_per_chip": 1.5,
+    "tsv_bw_tbs_per_chip": 12.8,
+    "thermal_delta_t_celsius": 6.4,
+    "daisy_chain_chips": 320,
+    "hardware_barrier_skew_ns": 2.0,
+    "queueing_jitter_us": 0.0
+  }
+}

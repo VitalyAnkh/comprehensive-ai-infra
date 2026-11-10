@@ -1,0 +1,49 @@
+{
+  "sram_vs_hbm_tco": {
+    "model_weight_gb": 70.0,
+    "hbm_step_ms": 6.07,
+    "hbm_b1_tok_per_sec": 164.7,
+    "hbm_b128_tok_per_sec": 6400.0,
+    "sram_agg_bw_pbs": 21.0,
+    "sram_read_ms": 0.35,
+    "sram_b1_tok_per_sec": 1850.0,
+    "b1_speedup_x": 11.23,
+    "tco_crossover_batch_size": 14.2,
+    "high_batch_hbm_cost_adv_x": 6.8
+  },
+  "soic_3d_sram_and_deterministic_noc": {
+    "soic_sram_layers": 8,
+    "sram_capacity_gb_per_chip": 1.5,
+    "tsv_bw_tbs_per_chip": 12.8,
+    "thermal_delta_t_celsius": 6.4,
+    "daisy_chain_chips": 320,
+    "hardware_barrier_skew_ns": 2.0,
+    "queueing_jitter_us": 0.0
+  },
+  "sub_millisecond_hft_ai": {
+    "baseline_p50_us": 78.0,
+    "baseline_p9999_us": 420.0,
+    "persistent_rx_gdr_us": 2.8,
+    "persistent_launch_us": 0.0,
+    "persistent_compute_us": 11.4,
+    "persistent_tx_gdr_us": 2.3,
+    "persistent_p50_us": 16.5,
+    "persistent_p9999_us": 24.8,
+    "p50_speedup_x": 4.73,
+    "p9999_tail_reduction_x": 16.94
+  },
+  "bitnet_b158_and_tmac": {
+    "shannon_entropy_bits": 1.585,
+    "trits_per_byte": 5,
+    "states_used": 243,
+    "packed_bits_per_weight": 1.6,
+    "coding_efficiency_pct": 99.06,
+    "model_70b_fp16_gb": 140.0,
+    "model_70b_bitnet_gb": 14.0,
+    "compression_vs_fp16_x": 10.0,
+    "tmac_group_size_g": 4,
+    "tmac_lut_entries": 81,
+    "tmac_speedup_x": 6.4,
+    "dynamic_mul_power_saving_pct": 88.5
+  }
+}

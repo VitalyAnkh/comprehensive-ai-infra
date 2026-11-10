@@ -1,0 +1,18 @@
+{
+  "experiment_id": "28-03",
+  "synthid_text_watermark": {
+    "tournament_depth_m": 30,
+    "token_length": 200,
+    "target_fpr": 1e-06,
+    "achieved_tpr_pct": 99.2,
+    "delta_ppl": 0.006,
+    "tp_seed_sync_bytes_per_step": 8
+  },
+  "safetensors_supply_chain": {
+    "page_alignment_bytes": 4096,
+    "pickle_load_70b_s": 42.5,
+    "safetensors_mmap_70b_s": 3.4,
+    "load_speedup_x": 12.5,
+    "host_ram_extra_copies": 0
+  }
+}

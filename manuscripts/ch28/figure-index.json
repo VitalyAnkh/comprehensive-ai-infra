@@ -1,0 +1,238 @@
+[
+  {
+    "figure_id": "图 28-1",
+    "number": 1,
+    "file": "ch28-wan-allreduce-bottleneck-vs-diloco-two-level-optimizer.svg",
+    "asset": "ch28/ch28-wan-allreduce-bottleneck-vs-diloco-two-level-optimizer.svg",
+    "section": "28.1.1",
+    "caption": "跨 4 个地理区域（RTT=85 ms）联合训练 70B 模型对比：标准每步 Ring AllReduce（需 700.0 Gbps 专线）vs. DiLoCo 双层优化器（本地 AdamW H=500 步 + 外循环 Nesterov 动量，通信频率降低 500 倍）（算例 28-1）",
+    "source_refs": [
+      "experiments/ch28/28-01/run.py",
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "揭示如何通过内外双层优化器解耦打破跨地域广域网的高延迟与低带宽枷锁",
+    "figure": "28-1",
+    "name": "ch28-wan-allreduce-bottleneck-vs-diloco-two-level-optimizer"
+  },
+  {
+    "figure_id": "图 28-2",
+    "number": 2,
+    "file": "ch28-streaming-diloco-fragment-pipeline-and-fp4-outer-delta.svg",
+    "asset": "ch28/ch28-streaming-diloco-fragment-pipeline-and-fp4-outer-delta.svg",
+    "section": "28.1.2",
+    "caption": "Streaming DiLoCo 分片流水线（M=25 个分片，每 20 步后台传输 1 片）与 FP4 E2M1 伪梯度量化：将广域网带宽需求压至 350.0 Mbps（压缩 2,000 倍）且暴露等待为 0.0 s（算例 28-1）",
+    "source_refs": [
+      "experiments/ch28/28-01/run.py",
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "展示如何消除第 500 步末尾的突发同步尖峰并实现 99.4% 的算力有效利用率",
+    "figure": "28-2",
+    "name": "ch28-streaming-diloco-fragment-pipeline-and-fp4-outer-delta"
+  },
+  {
+    "figure_id": "图 28-3",
+    "number": 3,
+    "file": "ch28-diloco-inner-step-h-vs-validation-loss-and-bandwidth.svg",
+    "asset": "ch28/ch28-diloco-inner-step-h-vs-validation-loss-and-bandwidth.svg",
+    "section": "28.1.2",
+    "caption": "DiLoCo 内循环步数 H 与外循环 Nesterov 动量对验证集困惑度（Perplexity）及广域网带宽需求的帕累托权衡曲线",
+    "source_refs": [
+      "experiments/ch28/28-01/run.py",
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "阐明外循环 Nesterov 伪梯度动量为何能在 H=500 大步长下避免简单权重平均的鞍点坍塌",
+    "figure": "28-3",
+    "name": "ch28-diloco-inner-step-h-vs-validation-loss-and-bandwidth"
+  },
+  {
+    "figure_id": "图 28-4",
+    "number": 4,
+    "file": "ch28-proof-of-learning-spot-check-and-byzantine-median.svg",
+    "asset": "ch28/ch28-proof-of-learning-spot-check-and-byzantine-median.svg",
+    "section": "28.2.1",
+    "caption": "开放不可信算力池的双层防御：随机重放抽检（Proof-of-Learning，p=5% 抽检率 10 轮捕获率 99.97%）与 Weiszfeld 几何中位数鲁棒聚合（崩溃点 50%）（算例 28-2）",
+    "source_refs": [
+      "experiments/ch28/28-02/run.py",
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "解决开放算力网络中恶意节点伪造梯度或投毒攻击的博弈与数学过滤难题",
+    "figure": "28-4",
+    "name": "ch28-proof-of-learning-spot-check-and-byzantine-median"
+  },
+  {
+    "figure_id": "图 28-5",
+    "number": 5,
+    "file": "ch28-dht-hivemind-elastic-optimizer-sharding-spot-recovery.svg",
+    "asset": "ch28/ch28-dht-hivemind-elastic-optimizer-sharding-spot-recovery.svg",
+    "section": "28.2.2",
+    "caption": "基于 Kademlia 分布式哈希表（DHT / Hivemind）的优化器状态分片与抢占式 Spot 实例（每小时中断率 8%）秒级对等自愈（ETTR = 96.8%）（算例 28-3）",
+    "source_refs": [
+      "experiments/ch28/28-02/run.py",
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "展示无中心元数据节点下如何实现优化器状态分片的毫秒级发现与热恢复",
+    "figure": "28-5",
+    "name": "ch28-dht-hivemind-elastic-optimizer-sharding-spot-recovery"
+  },
+  {
+    "figure_id": "图 28-6",
+    "number": 6,
+    "file": "ch28-serial-guardrail-blocking-vs-async-speculative-sidecar.svg",
+    "asset": "ch28/ch28-serial-guardrail-blocking-vs-async-speculative-sidecar.svg",
+    "section": "28.3.1",
+    "caption": "大模型在线安全护栏对比：传统串行前后置阻塞（增加 45 ms TTFT 与 180 ms 尾阻塞）vs. 异步流式伴飞护栏（Speculative Guardrail Sidecar，暴露延迟 3.2 ms）（算例 28-4）",
+    "source_refs": [
+      "experiments/ch28/28-02/run.py",
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "量化双流异步伴飞架构如何将安全审查从主推理关键路径上剥离",
+    "figure": "28-6",
+    "name": "ch28-serial-guardrail-blocking-vs-async-speculative-sidecar"
+  },
+  {
+    "figure_id": "图 28-7",
+    "number": 7,
+    "file": "ch28-sliding-window-token-stream-guardrail-rollback.svg",
+    "asset": "ch28/ch28-sliding-window-token-stream-guardrail-rollback.svg",
+    "section": "28.3.1",
+    "caption": "K=8 词元块粒度滑动窗口投机放行与违规检出时的客户端流式撤回及 KV 缓存熔断回收机制",
+    "source_refs": [
+      "experiments/ch28/28-02/run.py",
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "揭示如何在保持流式输出丝滑体验的同时将护栏模型调用频率降低 8 倍",
+    "figure": "28-7",
+    "name": "ch28-sliding-window-token-stream-guardrail-rollback"
+  },
+  {
+    "figure_id": "图 28-8",
+    "number": 8,
+    "file": "ch28-in-situ-residual-stream-sae-feature-clamping.svg",
+    "asset": "ch28/ch28-in-situ-residual-stream-sae-feature-clamping.svg",
+    "section": "28.3.2",
+    "caption": "推理残差流原位稀疏自编码器（SAE）特征监控与有害方向正交投影钳位（每层耗时 3.6 us，端到端开销仅 0.08%）（算例 28-5）",
+    "source_refs": [
+      "experiments/ch28/28-02/run.py",
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "展示如何在模型内部激活空间以微秒级代价实现零延迟安全免疫",
+    "figure": "28-8",
+    "name": "ch28-in-situ-residual-stream-sae-feature-clamping"
+  },
+  {
+    "figure_id": "图 28-9",
+    "number": 9,
+    "file": "ch28-representation-engineering-harmful-subspace-projection.svg",
+    "asset": "ch28/ch28-representation-engineering-harmful-subspace-projection.svg",
+    "section": "28.3.2",
+    "caption": "表示工程（Representation Engineering）单边门控正交子空间投影：精准剥离有害概念分量且正交补空间正常语义零退化",
+    "source_refs": [
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "从线性代数正交补空间原理解释为何单边投影不会造成良性请求过度拒答",
+    "figure": "28-9",
+    "name": "ch28-representation-engineering-harmful-subspace-projection"
+  },
+  {
+    "figure_id": "图 28-10",
+    "number": 10,
+    "file": "ch28-synthid-text-tournament-sampling-tree-mechanism.svg",
+    "asset": "ch28/ch28-synthid-text-tournament-sampling-tree-mechanism.svg",
+    "section": "28.4.1",
+    "caption": "SynthID-Text 深度 m=30 锦标赛水印采样树（Tournament Sampling）：通过多轮伪随机对决嵌入强统计水印并保持期望输出分布严格无偏（算例 28-6）",
+    "source_refs": [
+      "experiments/ch28/28-03/run.py",
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "对比失真型 Logit 偏置水印与非失真型锦标赛采样水印的数学机制",
+    "figure": "28-10",
+    "name": "ch28-synthid-text-tournament-sampling-tree-mechanism"
+  },
+  {
+    "figure_id": "图 28-11",
+    "number": 11,
+    "file": "ch28-distributed-tp-prng-seed-synchronization-for-watermark.svg",
+    "asset": "ch28/ch28-distributed-tp-prng-seed-synchronization-for-watermark.svg",
+    "section": "28.4.1",
+    "caption": "分布式张量并行（TP=8）采样下的滑动窗口上下文 HMAC 种子（8 Bytes）自同步与跨卡词表分片锦标赛归约",
+    "source_refs": [
+      "experiments/ch28/28-03/run.py",
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "解决多卡分布式并行采样时伪随机数发生器状态一致性的工程关键点",
+    "figure": "28-11",
+    "name": "ch28-distributed-tp-prng-seed-synchronization-for-watermark"
+  },
+  {
+    "figure_id": "图 28-12",
+    "number": 12,
+    "file": "ch28-watermark-token-length-vs-detection-tpr-at-low-fpr.svg",
+    "asset": "ch28/ch28-watermark-token-length-vs-detection-tpr-at-low-fpr.svg",
+    "section": "28.4.1",
+    "caption": "SynthID-Text（m=30）在假阳性率 FPR = 10^-6 下随生成词元长度变化的真阳性检出率曲线（200 词元达 99.2% TPR，困惑度偏差 < 0.01）（算例 28-6）",
+    "source_refs": [
+      "experiments/ch28/28-03/run.py",
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "用中心极限定理推导 30 层锦标赛得分均值在短文本下的高信噪比收敛特性",
+    "figure": "28-12",
+    "name": "ch28-watermark-token-length-vs-detection-tpr-at-low-fpr"
+  },
+  {
+    "figure_id": "图 28-13",
+    "number": 13,
+    "file": "ch28-pickle-arbitrary-code-exploit-vs-safetensors-zero-copy-mmap.svg",
+    "asset": "ch28/ch28-pickle-arbitrary-code-exploit-vs-safetensors-zero-copy-mmap.svg",
+    "section": "28.4.2",
+    "caption": "模型权重序列化对比：存在远程代码执行漏洞与双倍内存拷贝的 Pickle（42.5 s）vs. 4,096 B 页对齐零拷贝 mmap 的 Safetensors（3.4 s，提速 12.5 倍）",
+    "source_refs": [
+      "experiments/ch28/28-03/run.py",
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "剖析 Safetensors 格式如何同时解决模型供应链投毒与百 GB 权重极速加载",
+    "figure": "28-13",
+    "name": "ch28-pickle-arbitrary-code-exploit-vs-safetensors-zero-copy-mmap"
+  },
+  {
+    "figure_id": "图 28-14",
+    "number": 14,
+    "file": "ch28-merkle-tree-weight-signature-and-tee-attestation-boot.svg",
+    "asset": "ch28/ch28-merkle-tree-weight-signature-and-tee-attestation-boot.svg",
+    "section": "28.4.2",
+    "caption": "基于张量分块 Merkle 哈希树签名与 GPU TEE 硬件远程证明的可信模型加载及防篡改启动流水线",
+    "source_refs": [
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "构建从静态磁盘权重文件到运行期 GPU 显存的密码学完整性闭环",
+    "figure": "28-14",
+    "name": "ch28-merkle-tree-weight-signature-and-tee-attestation-boot"
+  },
+  {
+    "figure_id": "图 28-15",
+    "number": 15,
+    "file": "ch28-sovereign-ai-multi-region-compliance-and-audit-architecture.svg",
+    "asset": "ch28/ch28-sovereign-ai-multi-region-compliance-and-audit-architecture.svg",
+    "section": "28.4.2",
+    "caption": "主权 AI 跨管辖区合规基础设施：原始数据不出境、广域网 DiLoCo 伪梯度协同、在线护栏拦截与生成内容水印溯源",
+    "source_refs": [
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "展示主权 AI 架构如何在地缘法规约束下实现跨域协同训练与全生命周期可信治理",
+    "figure": "28-15",
+    "name": "ch28-sovereign-ai-multi-region-compliance-and-audit-architecture"
+  },
+  {
+    "figure_id": "图 28-16",
+    "number": 16,
+    "file": "ch28-decentralized-training-and-trustworthy-ai-infra-synthesis.svg",
+    "asset": "ch28/ch28-decentralized-training-and-trustworthy-ai-infra-synthesis.svg",
+    "section": "28.4.2",
+    "caption": "第 28 章系统工程全景图：从广域网 Streaming DiLoCo 低通信训练、拜占庭容错弹性算力池到异步伴飞/原位护栏与密码学水印安全底座",
+    "source_refs": [
+      "manuscripts/ch28/figure-data.json"
+    ],
+    "TeachingRole": "收束全章四大模块，凝练去中心化训练与内生可信 AI 基础设施的统一设计范式",
+    "figure": "28-16",
+    "name": "ch28-decentralized-training-and-trustworthy-ai-infra-synthesis"
+  }
+]

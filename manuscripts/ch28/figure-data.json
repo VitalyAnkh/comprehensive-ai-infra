@@ -1,0 +1,52 @@
+{
+  "streaming_diloco": {
+    "model_bf16_gb": 140.0,
+    "regions": 4,
+    "step_time_s": 2.4,
+    "std_allreduce_vol_gb": 210.0,
+    "std_wan_bw_gbps": 700.0,
+    "inner_steps_h": 500,
+    "sync_period_s": 1200.0,
+    "base_diloco_avg_gbps": 1.4,
+    "fp4_pseudo_grad_gb": 35.0,
+    "num_shards_m": 25,
+    "shard_size_gb": 1.4,
+    "shard_window_s": 48.0,
+    "streaming_wan_bw_mbps": 350.0,
+    "bw_compression_vs_allreduce_x": 2000.0,
+    "exposed_wan_stall_s": 0.0,
+    "effective_compute_utilization_pct": 99.4
+  },
+  "byzantine_and_dht": {
+    "poisoned_fraction_f": 0.15,
+    "spot_check_rate_p": 0.05,
+    "detection_prob_10rounds_pct": 99.97,
+    "geometric_median_breakdown": 0.5,
+    "spot_hourly_preemption_rate": 0.08,
+    "dht_ettr_pct": 96.8
+  },
+  "guardrail_and_sae_steering": {
+    "serial_ttft_overhead_ms": 45.0,
+    "serial_tail_blocking_ms": 180.0,
+    "speculative_window_k": 8,
+    "sidecar_check_ms": 3.2,
+    "exposed_guardrail_latency_ms": 3.2,
+    "in_situ_layer_latency_us": 3.6,
+    "in_situ_overhead_pct": 0.08
+  },
+  "synthid_text_watermark": {
+    "tournament_depth_m": 30,
+    "token_length": 200,
+    "target_fpr": 1e-06,
+    "achieved_tpr_pct": 99.2,
+    "delta_ppl": 0.006,
+    "tp_seed_sync_bytes_per_step": 8
+  },
+  "safetensors_supply_chain": {
+    "page_alignment_bytes": 4096,
+    "pickle_load_70b_s": 42.5,
+    "safetensors_mmap_70b_s": 3.4,
+    "load_speedup_x": 12.5,
+    "host_ram_extra_copies": 0
+  }
+}
