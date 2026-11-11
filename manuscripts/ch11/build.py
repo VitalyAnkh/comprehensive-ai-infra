@@ -173,6 +173,6 @@ html_path=preview_path(HERE.parent/'11-资源调度与运行环境.html');html_p
 (HERE/'math-validation.json').write_text(json.dumps({'renderer':'KaTeX 0.16.11','expressions':len(maths),'display_expressions':sum(x['display'] for x in maths),'errors':[]},indent=2)+'\n')
 from book_assets import sync_figure_index
 active_assets=sync_figure_index(HERE)
-artifacts=outputs+[HERE/'teaching_revision.py',HERE/'figure-index.json',HERE/'teaching-layout-validation.json',HERE/'figure-data.json',HERE/'platform-design.json',HERE/'platform_design.py',HERE/'extra_figures.py',HERE/'figure-order.json',html_path,md]+active_assets
+artifacts=outputs+[HERE/'teaching_revision.py',HERE/'h2_cloudnative_finops_figures.py',HERE/'figure-index.json',HERE/'teaching-layout-validation.json',HERE/'figure-data.json',HERE/'platform-design.json',HERE/'platform_design.py',HERE/'extra_figures.py',HERE/'figure-order.json',html_path,md]+active_assets
 (HERE/'manifest.json').write_text(json.dumps({'chapter':11,'generator':'manuscripts/ch11/build.py','figures':len(teaching_checks),'font_family':family,'outputs':[{'path':str(p.relative_to(ROOT)),'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in artifacts if not (p.parent==ROOT/'manuscripts' and re.match(r'^[01][0-9]-',p.name))]},ensure_ascii=False,indent=2)+'\n')
 print(f'Built {len(outputs)} figure files, {len(maths)} equations and offline HTML; {len(warnings)} layout warnings.')

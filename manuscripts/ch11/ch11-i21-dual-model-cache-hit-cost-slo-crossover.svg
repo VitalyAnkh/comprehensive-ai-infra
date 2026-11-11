@@ -6,7 +6,7 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-11-09T20:34:22.564480</dc:date>
+    <dc:date>2026-11-12T01:37:58.431827</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -3711,8 +3711,8 @@ z
     </g>
    </g>
    <g id="text_5">
-    <!-- 期望合格成本反超点 (I21)： -->
-    <g style="fill: #14532d" transform="translate(44.683672 275.761232) scale(0.11 -0.11)">
+    <!-- 期望合格成本反超点： -->
+    <g style="fill: #14532d" transform="translate(57.35 276.360216) scale(0.11 -0.11)">
      <defs>
       <path id="SourceHanSansCN-Regular-3b42" d="M 5651 1958
 L 5651 1549
@@ -3970,13 +3970,6 @@ Q 1549 2995 1478 3078
 L 1722 3296
 z
 " transform="scale(0.015625)"/>
-      <path id="SourceHanSansCN-Regular-2a" d="M 646 0
-L 646 4691
-L 1235 4691
-L 1235 0
-L 646 0
-z
-" transform="scale(0.015625)"/>
      </defs>
      <use xlink:href="#SourceHanSansCN-Regular-3b46"/>
      <use xlink:href="#SourceHanSansCN-Regular-3b42" transform="translate(100 0)"/>
@@ -3987,13 +3980,7 @@ z
      <use xlink:href="#SourceHanSansCN-Regular-2810" transform="translate(600 0)"/>
      <use xlink:href="#SourceHanSansCN-Regular-6185" transform="translate(700 0)"/>
      <use xlink:href="#SourceHanSansCN-Regular-44d5" transform="translate(800 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-1" transform="translate(900 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-9" transform="translate(922.40625 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-2a" transform="translate(956.203125 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-7787" transform="translate(985.5 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-7786" transform="translate(1041 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-a" transform="translate(1096.5 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-7782" transform="translate(1130.296875 0)"/>
+     <use xlink:href="#SourceHanSansCN-Regular-7782" transform="translate(900 0)"/>
     </g>
     <!-- h &gt; 84.93% 时 B 成本更省 -->
     <g style="fill: #14532d" transform="translate(49.879453 291.298732) scale(0.11 -0.11)">

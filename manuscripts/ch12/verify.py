@@ -36,7 +36,10 @@ for record in json.loads((HERE/'sources.json').read_text())['sources']:
  h=b.decode().split('oid sha256:')[1].splitlines()[0].strip() if b.startswith(b'version https://git-lfs.github.com/spec/v1') else hashlib.sha256(b).hexdigest()
  check('source:'+record['path'],p.exists() and h==record['sha256'])
 for record in json.loads((HERE/'manifest.json').read_text())['outputs']:
- p=ROOT/record['path'];check('artifact:'+record['path'],p.exists() and hashlib.sha256(p.read_bytes()).hexdigest()==record['sha256'])
+ p=ROOT/record['path']
+ b=p.read_bytes() if p.exists() else b''
+ h=b.decode().split('oid sha256:')[1].splitlines()[0].strip() if b.startswith(b'version https://git-lfs.github.com/spec/v1') else hashlib.sha256(b).hexdigest()
+ check('artifact:'+record['path'],p.exists() and h==record['sha256'])
 links=re.findall(r'\]\(([^)]+)\)',text)
 for url in links:
  parts=urlsplit(url)
@@ -163,7 +166,7 @@ answers['12-14']={'h_min_ms':250+90+260,'k_min':(250+90+260)//20,'disconnect_sur
 check('ufs_flash_streaming',close(1.28/0.40,3.20) and close(1.28/3.20,0.40) and close(1.28*(1-0.75)/3.20,0.10))
 check('vla_action_chunking',25*20==500 and 500-80==420 and 500-(200+80)==220)
 check('case_study_links','../case-studies/macbook-rtx-pro6000.md' in text and '../case-studies/queqiao.md' in text)
-check('extended_exercises',re.findall(r'^\*\*拓展练习 (12-\d+)\s',text,re.M)==[f'12-{i}' for i in range(11,22)])
+check('extended_exercises',re.findall(r'^\*\*拓展练习 (12-\d+)\s',text,re.M)==[f'12-{i}' for i in range(11,24)])
 (HERE/'exercise-check.json').write_text(json.dumps(answers,ensure_ascii=False,indent=2)+'\n')
-report={'passed':not errors,'checks':len(checks),'sections':6,'subsections':len(text_subs),'figures':figure_count,'exercises':21,'sources':len(json.loads((HERE/'sources.json').read_text())['sources']),'local_links':len(links),'chinese_characters':len(re.findall(r'[\u4e00-\u9fff]',text)),'errors':errors}
+report={'passed':not errors,'checks':len(checks),'sections':6,'subsections':len(text_subs),'figures':figure_count,'exercises':23,'sources':len(json.loads((HERE/'sources.json').read_text())['sources']),'local_links':len(links),'chinese_characters':len(re.findall(r'[\u4e00-\u9fff]',text)),'errors':errors}
 (HERE/'validation.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n');print(json.dumps(report,ensure_ascii=False,indent=2));raise SystemExit(bool(errors))

@@ -6,7 +6,7 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-11-09T20:11:57.653128</dc:date>
+    <dc:date>2026-11-12T01:37:35.087257</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -8091,8 +8091,8 @@ z
     </g>
    </g>
    <g id="text_9">
-    <!-- 显存交换代价（D14-02）： -->
-    <g style="fill: #7c2d12" transform="translate(238.2945 262.4744) scale(0.11 -0.11)">
+    <!-- 显存交换代价（双向驻留）： -->
+    <g style="fill: #7c2d12" transform="translate(234.197 262.4744) scale(0.11 -0.11)">
      <defs>
       <path id="SourceHanSansCN-Regular-2f8d" d="M 6125 1702
 L 6125 1254
@@ -8448,24 +8448,6 @@ L 1542 -512
 L 1062 -512
 z
 " transform="scale(0.015625)"/>
-      <path id="SourceHanSansCN-Regular-7789" d="M 2176 0
-L 2176 3066
-Q 2176 3238 2189 3497
-Q 2202 3757 2208 3936
-L 2182 3936
-Q 2093 3776 2000 3619
-Q 1907 3462 1805 3290
-L 736 1728
-L 3354 1728
-L 3354 1261
-L 128 1261
-L 128 1645
-L 2080 4563
-L 2726 4563
-L 2726 0
-L 2176 0
-z
-" transform="scale(0.015625)"/>
      </defs>
      <use xlink:href="#SourceHanSansCN-Regular-3a68"/>
      <use xlink:href="#SourceHanSansCN-Regular-2f8d" transform="translate(100 0)"/>
@@ -8474,14 +8456,12 @@ z
      <use xlink:href="#SourceHanSansCN-Regular-232f" transform="translate(400 0)"/>
      <use xlink:href="#SourceHanSansCN-Regular-2343" transform="translate(500 0)"/>
      <use xlink:href="#SourceHanSansCN-Regular-7463" transform="translate(600 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-25" transform="translate(700 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-7786" transform="translate(768.796875 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-7789" transform="translate(824.296875 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-e" transform="translate(879.796875 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-7785" transform="translate(914.5 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-7787" transform="translate(970 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-7464" transform="translate(1025.5 0)"/>
-     <use xlink:href="#SourceHanSansCN-Regular-7782" transform="translate(1125.5 0)"/>
+     <use xlink:href="#SourceHanSansCN-Regular-280f" transform="translate(700 0)"/>
+     <use xlink:href="#SourceHanSansCN-Regular-2853" transform="translate(800 0)"/>
+     <use xlink:href="#SourceHanSansCN-Regular-6e75" transform="translate(900 0)"/>
+     <use xlink:href="#SourceHanSansCN-Regular-4970" transform="translate(1000 0)"/>
+     <use xlink:href="#SourceHanSansCN-Regular-7464" transform="translate(1100 0)"/>
+     <use xlink:href="#SourceHanSansCN-Regular-7782" transform="translate(1200 0)"/>
     </g>
     <!-- 每设备需驻留 2× 参数副本 -->
     <g style="fill: #7c2d12" transform="translate(239.679812 277.450728) scale(0.11 -0.11)">

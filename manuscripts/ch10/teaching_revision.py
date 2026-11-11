@@ -2,7 +2,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Polygon
-from figure_style import COL,BORDER_COL,TEXT_COL,STYLE,canvas,plot,text,box,arrow,Exporter
+from figure_style import COL,BORDER_COL,TEXT_COL,STYLE,canvas,plot,text,box,card,badge,arrow,Exporter
 
 def draw(here,data):
     out=Exporter(here)
@@ -239,7 +239,7 @@ def draw(here,data):
 
         box(a,.52,.75,.45,.15,'两端相向注入（Stage 0 <-> PP-1）\n气泡减半：(PP/2-1)(F&B+B-3W)','green',11)
         box(a,.52,.54,.45,.16,'配对块 F&B 细粒度重叠：\n正向 EP 通信掩盖于反向计算下','blue',11)
-        box(a,.52,.31,.45,.18,'显存交换代价（D14-02）：\n每设备需驻留 2× 参数副本\n在途激活上限增至 PP+1 份','orange',11)
+        box(a,.52,.31,.45,.18,'显存交换代价（双向驻留）：\n每设备需驻留 2× 参数副本\n在途激活上限增至 PP+1 份','orange',11)
         box(a,.52,.05,.45,.20,'DualPipeV（V 型折叠变体）：\n单卡承载 2 个对称流水阶段\n设备数从 PP 减半至 PP/2','gray',11)
         out.save(f,'ch10-dualpipe-vs-1f1b-schedule')
 
@@ -298,7 +298,7 @@ def draw(here,data):
 
         # New Path-E3 figure 1: ch10-i20-double-buffer-dma-staging-timeline (Fig 10-55, Locked Case I20)
         f,a=canvas(6.4)
-        text(a,.25,.95,'A. 串行 vs 单设备槽 vs 双缓冲 (I20)',12,ha='center')
+        text(a,.25,.95,'A. 串行 vs 单设备槽 vs 双缓冲流水',12,ha='center')
         text(a,.745,.95,'B. 缓冲区复用约束与链路降级翻转',12,ha='center')
         a.plot([.495,.495],[.03,.97],color=COL['line'],ls='--',lw=1.0)
 
@@ -429,6 +429,19 @@ def draw(here,data):
         ax2.grid(True, linestyle=':', alpha=0.5, color='#CBD5E1')
         ax2.legend(frameon=True, loc='upper right', fontsize=11)
         out.save(f, 'ch10-megatron-core-torchtitan-5d-parallel-memory-breakdown')
-    from core_principles_figures import draw as draw_principles
-    draw_principles(10, out)
+        f, a = canvas(4.3)
+        text(a, 0.04, 0.94, 'A. 固定权重版本的在线推理服务', 13.5)
+        card(a, 0.04, 0.65, 0.41, 0.19, '只读权重存储（ROM/HBM）', '固定模型参数 v0', 'blue')
+        card(a, 0.64, 0.65, 0.32, 0.19, '解码生成引擎', '维护可写请求 KV', 'green')
+        arrow(a, (0.45, 0.745), (0.64, 0.745), label='只读复用', color='blue')
+        text(a, 0.04, 0.48, 'B. 强化学习（RL）持续更新的策略回路', 13.5)
+        card(a, 0.04, 0.18, 0.26, 0.20, '训练引擎', '反向传播更新参数', 'orange')
+        card(a, 0.38, 0.18, 0.26, 0.20, '可写权重缓冲', '版本演进 v0 → v1', 'blue')
+        card(a, 0.72, 0.18, 0.24, 0.20, '采样引擎', '切换至新权重 v1', 'green')
+        arrow(a, (0.30, 0.28), (0.38, 0.28), color='orange')
+        arrow(a, (0.64, 0.28), (0.72, 0.28), color='blue')
+        badge(a, 0.50, 0.065, '每次策略更新后同步发布新权重，保证采样与训练策略一致', 'purple', size=11.0)
+        out.save(f, 'figure-10-weight-update')
+    from h2_fp8_nvfp4_figures import draw as draw_h2_fp8_nvfp4
+    data.update(draw_h2_fp8_nvfp4(out))
     out.finish();return out.outputs,out.checks

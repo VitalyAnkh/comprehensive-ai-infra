@@ -178,13 +178,13 @@ def draw(here,data):
 
         box(a,.03,.75,.44,.15,'24×7 预留集群刚性折旧：\nB200 长租 6.79 美元/卡时\n夜间在线波谷大量卡时空转','orange',11)
         box(a,.03,.54,.44,.16,'异步 Batch API（24h 窗口）：\n零售牌价打 5 折（50% 折扣）\n剥离实时 TTFT / TPOT 约束','green',11)
-        box(a,.03,.31,.44,.18,'物理填谷收益（TC-16）：\n夜间拼成最大批次满载运行\n仅付增量电费即可回收折旧','blue',11)
+        box(a,.03,.31,.44,.18,'物理填谷收益（夜间满批）：\n夜间拼成最大批次满载运行\n仅付增量电费即可回收折旧','blue',11)
         box(a,.03,.05,.44,.20,'自建 vs 按量平衡点：\n预留实例需 >78.6% 利用率\n单会话（batch=1）宜用 API','gray',11)
 
         box(a,.52,.75,.45,.15,'小模型 A vs 旗舰模型 B：\nB 牌价高但思考精炼（100 词）\n通过率 98% vs 80%（门槛 75%）','purple',11)
-        box(a,.52,.54,.45,.16,'成本反超交点 h_cost：\nClaude 牌价：h ≥ 79.52%\nI21 调研基线：h ≥ 84.93%','blue',11)
+        box(a,.52,.54,.45,.16,'成本反超交点 h_cost：\nClaude 牌价：h ≥ 79.52%\n双模型基准：h ≥ 84.93%','blue',11)
         box(a,.52,.31,.45,.18,'叠加 6 s 交付期限门槛：\nB 命中 4 s 达标、未中 12 s\n0.98h ≥ 0.90 => h ≥ 91.84%','green',11)
-        box(a,.52,.05,.45,.20,'两级级联路由（TC-17）：\nE[C] = c_r + c_S + r·c_L(h_L)\n跨模型不可直接共享 KV 块','orange',11)
+        box(a,.52,.05,.45,.20,'两级级联路由：\nE[C] = c_r + c_S + r·c_L(h_L)\n跨模型不可直接共享 KV 块','orange',11)
         out.save(f,'ch11-api-pricing-vs-provider-cost-and-routing')
 
         # Path-D new figure 1: ch11-serverless-coldstart-and-hydraserve (Fig 11-54)
@@ -250,7 +250,7 @@ def draw(here,data):
 
         box(a,.03,.75,.44,.15,'模型 A (廉价啰嗦)：p_A = 0.80\n产 2000 词，恒 10s 超期','orange',11)
         box(a,.03,.53,.44,.16,'模型 B (旗舰精炼)：p_B = 0.98\n标价 2× 但仅产 300 词，4s/12s','blue',11)
-        box(a,.03,.30,.44,.17,'期望合格成本反超点 (I21)：\nh > 84.93% 时 B 成本更省','green',11)
+        box(a,.03,.30,.44,.17,'期望合格成本反超点：\nh > 84.93% 时 B 成本更省','green',11)
         box(a,.03,.04,.44,.20,'反直觉结论：高前缀命中率下\n2× 标价旗舰单任务更省','gray',11)
 
         box(a,.52,.75,.45,.15,'约束 1 (6 s 期限)：A 10s 出局\nB 仅在命中 (4s ≤ 6s) 达标','purple',11)
@@ -286,7 +286,7 @@ def draw(here,data):
 
         box(a,.03,.75,.44,.15,'突发扩容 N=16 (84 GB/副本)\n源端 200G，接收端 100G','orange',11)
         arrow(a,(.25,.75),(.25,.66),'data')
-        box(a,.03,.49,.44,.16,'并发单播：源端发 1,344 GB\n耗时 53.76 s (出口打满)','orange',11)
+        box(a,.03,.49,.44,.16,'并发单播：源端发 1,344 GB\n耗时 53.76 s (出口饱和)','orange',11)
         arrow(a,(.25,.49),(.25,.40),'data')
         box(a,.03,.24,.44,.15,'RDMA 40 MB 块链式流水：\n尾延时 15×3.2 ms ≈ 48 ms','blue',11)
         box(a,.03,.04,.44,.15,'链式 16 副本就绪：6.77 s\n消除源端瓶颈，提速 7.94×','green',11)
@@ -300,4 +300,6 @@ def draw(here,data):
     draw_dsec(out)
     from core_principles_figures import draw as draw_principles
     draw_principles(11, out)
+    from h2_cloudnative_finops_figures import draw as draw_h2_cloudnative
+    data.update(draw_h2_cloudnative(out))
     out.finish();return out.outputs,out.checks

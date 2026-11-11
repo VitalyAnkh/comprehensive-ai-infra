@@ -738,5 +738,19 @@
     ],
     "cloud_covered_through": 1,
     "upload_policy": "per-round incremental async; failed upload does not block later uploads"
+  },
+  "11-60": {
+    "gang_admission": "minAvailable",
+    "gateway": "Envoy+ExtProc KV-aware"
+  },
+  "11-61": {
+    "vtc_weight_ratio": 5,
+    "req_fair_share_a_pct": 2.61,
+    "vtc_share_a_pct": 50.0,
+    "p99_ttft_before_s": 4.8,
+    "p99_ttft_after_s": 0.31,
+    "ondemand_usd_per_1m": 0.6,
+    "portfolio_usd_per_1m": 0.3756,
+    "cost_reduction_pct": 37.4
   }
 }

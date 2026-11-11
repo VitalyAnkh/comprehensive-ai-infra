@@ -1,12 +1,12 @@
 {
   "chapter": 11,
   "generator": "manuscripts/ch11/build.py",
-  "figures": 59,
+  "figures": 61,
   "font_family": "Source Han Sans CN",
   "outputs": [
     {
       "path": "manuscripts/ch11/figure-11-1-timeline.svg",
-      "sha256": "d04d8d0b2b1796e6ea96ecb1e10e382ffd73c6c43af7c0686c10278266b3ebc1"
+      "sha256": "dd1ba2a44a8f84eaa82830f201b8f3c4e881a981db9c77e01cbb023be200dea1"
     },
     {
       "path": "manuscripts/ch11/figure-11-1-timeline.png",
@@ -14,11 +14,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-1-timeline.pdf",
-      "sha256": "bf28779f7c0d10844f340f005ef84b40dbdf5aef05b842f29dd2969871be410c"
+      "sha256": "ba050e8c54dae5823e3292d02026caa13bec49e9349130c5b1f1e44758a80bc9"
     },
     {
       "path": "manuscripts/ch11/figure-11-2-boundary.svg",
-      "sha256": "f08a2aa2a21bd00abfa62749642b952b1e5f9ee02215e2b3bbfa06884a5897c6"
+      "sha256": "1d0488f21aacf97de7b802fd2ef70e79cbe5bc7f83355cd6dec8fe16f131a6fb"
     },
     {
       "path": "manuscripts/ch11/figure-11-2-boundary.png",
@@ -26,11 +26,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-2-boundary.pdf",
-      "sha256": "5ef7169c4ebbbfc2641951ca11dde080dee3cbc8d15466fab7107381f5803bc7"
+      "sha256": "ac95fa1523403556ee83e403fd2b3a80dd9069bd82e7fce419b26464f2ebbb30"
     },
     {
       "path": "manuscripts/ch11/figure-11-3-lifecycle.svg",
-      "sha256": "97cbd6170633e23902ec9923533dde81190054118df69e08b6a01f5f4314444f"
+      "sha256": "de8d6011f9abf26427b0a4a607aa2d2e1826d31cb6072232a8aeed299404bbdd"
     },
     {
       "path": "manuscripts/ch11/figure-11-3-lifecycle.png",
@@ -38,11 +38,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-3-lifecycle.pdf",
-      "sha256": "6228aecd4a1ebc9e4ffbcfc95954831cbe32ceba4f9c433e5f41dd093c5f50b6"
+      "sha256": "54b1ff89e3bb1cc6a3855bf87e5172a14f75fa60f8a4d76755887bf554333367"
     },
     {
       "path": "manuscripts/ch11/figure-11-4-placement.svg",
-      "sha256": "5194592bf21b2a589a642724b9ea4f658cd9731eac7ee20786173b03099414aa"
+      "sha256": "da0bd4336a235999f164b671e62dd031a26de89b6292e1cead96b1553eaa55bb"
     },
     {
       "path": "manuscripts/ch11/figure-11-4-placement.png",
@@ -50,11 +50,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-4-placement.pdf",
-      "sha256": "f98b23ae61bb69f1958328adcabc9361de31e0c0677647909d488a5be0adc6c5"
+      "sha256": "78f9d017fc645ed746534b4976c3dda1ff6afae58f404695fa412f5154e7eab8"
     },
     {
       "path": "manuscripts/ch11/figure-11-5-stages.svg",
-      "sha256": "52567965723d8033e330c276161b5f3ff7c4cddd2eeda47114db37e3069f94ec"
+      "sha256": "2834a8d10ee2b2c222879280a4a60f3fc5eb9fd18914fc87ad52b240e334f202"
     },
     {
       "path": "manuscripts/ch11/figure-11-5-stages.png",
@@ -62,11 +62,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-5-stages.pdf",
-      "sha256": "7b8da592ad41d5f6b257a20fc6c477c66a0ec446793b47675ea885d03ccd3594"
+      "sha256": "62c35f63c04fbc30dc7de4bcd4bb25788674d3b2efa3184ff70ac2e891a60a14"
     },
     {
       "path": "manuscripts/ch11/figure-11-6-service.svg",
-      "sha256": "13b484b3fa0a08b89bc889a39074a738ac8f2c565f6fe8ebff9f1564e0ed89c5"
+      "sha256": "5bf020b4d9215bf2d87061818609f977d7ca5e08ba4daadd4a05cf1b523bb99d"
     },
     {
       "path": "manuscripts/ch11/figure-11-6-service.png",
@@ -74,11 +74,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-6-service.pdf",
-      "sha256": "9e4e03193cf21a72b66d22d5330d701d07efc091ecafea1fef1955b1606c7468"
+      "sha256": "7d84e79eacfb25fe51bdfd5adb69fc76abf77d95ec518ef9b2ffbd9bf709dcf7"
     },
     {
       "path": "manuscripts/ch11/figure-11-7-routing.svg",
-      "sha256": "3a7978b4cb45880c2da58b21e7e41654ebd66d64c43279d9a0b3e468f5b4c1a2"
+      "sha256": "5b60e6c0e0c9211aec24337a2110c7d1ba31384994c4c58aa70e1a800dcf6c10"
     },
     {
       "path": "manuscripts/ch11/figure-11-7-routing.png",
@@ -86,11 +86,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-7-routing.pdf",
-      "sha256": "ced6092678e5f605241dae8fdb9fcd50854362f27ebbc5c9523afe1c97d323cd"
+      "sha256": "4e883ce6215853a96bbc141b7ac3cad2f3e9c37cf97cac4f937f008c2dc9ce2e"
     },
     {
       "path": "manuscripts/ch11/figure-11-8-retry.svg",
-      "sha256": "d55854cbb39bdf3b947ab0d42cf8fb4259949bf1c17938000bb6a832e3c9248f"
+      "sha256": "55f44ec2f1368de06551351e36179c999d2c35ed38f7a3c416ec82baeeb5ef92"
     },
     {
       "path": "manuscripts/ch11/figure-11-8-retry.png",
@@ -98,11 +98,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-8-retry.pdf",
-      "sha256": "a5cd083b055746e42c2c88f64641173507f43fc19843ac87095105c278789845"
+      "sha256": "233f7da51ce686bd9610d69148f2a8a12694e5cca6e2b3d7398ee4d49ce9e995"
     },
     {
       "path": "manuscripts/ch11/figure-11-capacity.svg",
-      "sha256": "4c1d15f924311c7e7531b7d76f0229ac03cde6bb484bd4bfe16c6f511fef8f16"
+      "sha256": "deed9a3b0bb79352520804745c1eacd896e1dd99c66e760ea3c8345ba1a7806e"
     },
     {
       "path": "manuscripts/ch11/figure-11-capacity.png",
@@ -110,11 +110,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-capacity.pdf",
-      "sha256": "ed3c8d1f2ee08e0c53320484808ad5484fc6526473b7c86b607f380ba45bea35"
+      "sha256": "52f892405d6093e23b0a04b84e1436b8e198333ffd49650c8412a9fa3bf32d22"
     },
     {
       "path": "manuscripts/ch11/figure-11-pages.svg",
-      "sha256": "e22d6dba53f5365b82c1ed7e7e41c50348784a5cbe09e5cf0109564d07638077"
+      "sha256": "6e6be0d4058bcf4c820d6b6da2c9f006f2f75099e0963b50e3154f43dae89b9d"
     },
     {
       "path": "manuscripts/ch11/figure-11-pages.png",
@@ -122,11 +122,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-pages.pdf",
-      "sha256": "493d824418f661915db621b96912fcdf7b96f4fa64b2be1f22ea22d6370838c3"
+      "sha256": "d7ecafd63904e20b829cff7952f406a86a79c2052d171a9a82615403b4541740"
     },
     {
       "path": "manuscripts/ch11/figure-11-pause.svg",
-      "sha256": "329fe8f2a71dbb956c4c81e03e9001de6dbf32533d48381bc4a41f789f654062"
+      "sha256": "5bbcc8e38c7c710bdfe5f7be46063e60690c1f822ce9b9c6db3966e559791b9a"
     },
     {
       "path": "manuscripts/ch11/figure-11-pause.png",
@@ -134,11 +134,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-pause.pdf",
-      "sha256": "b81d84fdcfb40cbb7138e07c6b4cfc988ac57bfab462e5141c151ca2441f4e8e"
+      "sha256": "a7e9ced0303588d5b46f2914b547eea0173c3570fd946c0238a014d1f12277ad"
     },
     {
       "path": "manuscripts/ch11/figure-11-residency.svg",
-      "sha256": "b2c9bff4065ad0d1947609ac499c993d82a1724deda9787ec3311c32d343f2be"
+      "sha256": "e8b7ed2d88991612c26b3b7c3ed674d069f2c0b041222d23f6a3eefdfbede962"
     },
     {
       "path": "manuscripts/ch11/figure-11-residency.png",
@@ -146,11 +146,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-residency.pdf",
-      "sha256": "fda144ab2f4113984d16bdbe808d261061b36641c6d554a756f34b64612d18e4"
+      "sha256": "e2ce389f84eabcc759efe20904b4e52df47f5a4c81c8c44ffef1573d08342784"
     },
     {
       "path": "manuscripts/ch11/figure-11-queue.svg",
-      "sha256": "59ee41c44024dd4a21df9cf6f3662373d17432cde443a09563ec35497bb0f359"
+      "sha256": "b6456caca551796b37b9bb8a1f50de4166af7c5dd82ee8cc12344c2c71f3ede6"
     },
     {
       "path": "manuscripts/ch11/figure-11-queue.png",
@@ -158,11 +158,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-queue.pdf",
-      "sha256": "5bb3bd667e23fffd3c36cd9846db322c455e8fa295eee97c3d0093123482a87b"
+      "sha256": "ce3af40937f4f3d941ad5420524ea30a37c1f456c58b955fea4ebb4b6a878d7a"
     },
     {
       "path": "manuscripts/ch11/figure-11-rl-stages.svg",
-      "sha256": "7fd854763d77eda7fa156e040c43e99a6aad474527b31f23f3a933745d58e3e0"
+      "sha256": "64af4211073d425d01e774e8cf21d474eb9a0db517d226a0590aa4358f849923"
     },
     {
       "path": "manuscripts/ch11/figure-11-rl-stages.png",
@@ -170,11 +170,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-rl-stages.pdf",
-      "sha256": "c4c8647a3c0ce5805b93dd4da25a6093a604baa2e70124be90239b173d765779"
+      "sha256": "def6f54f21f8449c1bacff37fb50e1b0e94cc53af3c6bef5cfd71536dfdb510e"
     },
     {
       "path": "manuscripts/ch11/figure-11-weights.svg",
-      "sha256": "9e46016b026ef6a08148fb39b85084b0e29e6d50a1a32f888e4324a043a189bd"
+      "sha256": "2b9113175953c4afd64f6ac97d85f780d5949cf247f1aba68bf22d80de0f4e5b"
     },
     {
       "path": "manuscripts/ch11/figure-11-weights.png",
@@ -182,11 +182,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-weights.pdf",
-      "sha256": "4236b5eaef0989d8a4ae7e2efef26149fe5f1469ebe8033886c3c880c076b97f"
+      "sha256": "c85533a65f03e25d34dc5a5f48842028485f24d967bab7d1acb3c462b5b70d5f"
     },
     {
       "path": "manuscripts/ch11/figure-11-thinking.svg",
-      "sha256": "6b77c635c532c8fb71621ac526f472937d277a45bcc6e9b5118e9b582abea9e8"
+      "sha256": "31cfda68b23692bf18b3da27eeb755bb8e358952cdd423c82424cb25fcd90953"
     },
     {
       "path": "manuscripts/ch11/figure-11-thinking.png",
@@ -194,11 +194,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-thinking.pdf",
-      "sha256": "62b48cf5ccf369bc047d74607452160743bc5de076c3c5f2d270ff91707542e3"
+      "sha256": "cde3b0670d2aff0eeb66a6e1456527d26513392540bf07b8cfe488ced12830d7"
     },
     {
       "path": "manuscripts/ch11/figure-11-purchase.svg",
-      "sha256": "5eca39811a820025e5dc7e304e7777d425700dbc5962c083112193d5c510fb11"
+      "sha256": "c84b170273e93dd003a01a17beec2a4e504824e8395941324fa9bdc622228dcd"
     },
     {
       "path": "manuscripts/ch11/figure-11-purchase.png",
@@ -206,11 +206,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-purchase.pdf",
-      "sha256": "58b7d1e37ef68e2fe22d76108319f8a4b143f243d081076cd786b0084ea0397b"
+      "sha256": "8f2283bdfbbf274a1368b8709e3eda0e83c31ab4fff2f81b713869a8c66ba14f"
     },
     {
       "path": "manuscripts/ch11/figure-11-retry-tree.svg",
-      "sha256": "005ad1674d3d3c9dc597804000e99779e3b6a796212f573bafb8c5bf5bf4b151"
+      "sha256": "8e46610c76f3e972d92671d38d4cedc53b44610275e6808e6094c446f7ca7801"
     },
     {
       "path": "manuscripts/ch11/figure-11-retry-tree.png",
@@ -218,11 +218,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-retry-tree.pdf",
-      "sha256": "431155a6fd35e85bce8a5509a0185e02f33bc6562d55ebdf5b028379e815e85e"
+      "sha256": "ab03bd46033527e54f1878abb79501c495ec06c2a1cf5c80db64ed822cec5441"
     },
     {
       "path": "manuscripts/ch11/figure-11-decision.svg",
-      "sha256": "fe293612f4a0668dcea68ca41717599e5d9eeec1ce2f13a6a2ecd23d0a8ef698"
+      "sha256": "d4b247d46d6b3f374c5bf29e4ad9e7cbfac28b1f0fb3f3994c0c6a535f4e92af"
     },
     {
       "path": "manuscripts/ch11/figure-11-decision.png",
@@ -230,11 +230,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-decision.pdf",
-      "sha256": "84b3a0c5bf272eb64a68c40522b7c356177e4a5cbccd65bf779b839791058d89"
+      "sha256": "2373e8f6b606b86948ce9f811bc9d1c32b675f4f7ce984874db3920cb9bffe90"
     },
     {
       "path": "manuscripts/ch11/figure-11-memory-area.svg",
-      "sha256": "90a17e2c2e5b2f7f80d41ee8d312d827c36cd79ceff33f0e1f84ac8482f07c91"
+      "sha256": "ed683732faf1b8ecab718f64a3080026f3eec62a134c48ba9e15afd210b08af1"
     },
     {
       "path": "manuscripts/ch11/figure-11-memory-area.png",
@@ -242,11 +242,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-memory-area.pdf",
-      "sha256": "8fdc93e6d30f56b681811cf3501fae063714882c5eac8fd3c48b6c08bae9c048"
+      "sha256": "28fa5ccf542b5cf53288415d4871152445fa8f57fe0e70bba28ce1eb29fa4aef"
     },
     {
       "path": "manuscripts/ch11/figure-11-capacity-slow.svg",
-      "sha256": "c4c81e3266b9d9490e145a0daf201e7aafb1efc636240be974f0fd7253f3eddf"
+      "sha256": "216ac9144736aebf86406c6800429818eaa30b99c3e650888ecfe13d1aba9cb6"
     },
     {
       "path": "manuscripts/ch11/figure-11-capacity-slow.png",
@@ -254,11 +254,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-capacity-slow.pdf",
-      "sha256": "654f21d19f4282ce713ed7fd79e7cf4c7293b24069e00d41678772fa60578276"
+      "sha256": "62443b2e5b35732696f5f1e95b99b45d05d8534d0a3474ba2560ce852cd987bf"
     },
     {
       "path": "manuscripts/ch11/figure-11-isolation-0.svg",
-      "sha256": "fc00b967ff1ccee06c7cc2ea744cd7c58adcf5768d576fb2a4c5b9bd6f98c491"
+      "sha256": "7e297e24396cc95a082b0d34309a5144f0af587c9f2e19eaaa74c271447bfc92"
     },
     {
       "path": "manuscripts/ch11/figure-11-isolation-0.png",
@@ -266,11 +266,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-isolation-0.pdf",
-      "sha256": "c6b7a714c5cafde72139f6938518403a2e5e2b822163bc27b436f0f81ddaa4d8"
+      "sha256": "068e918091fa77f17d803a564d68b763b24b3b79689c7ccae81319932b46b920"
     },
     {
       "path": "manuscripts/ch11/figure-11-isolation-1.svg",
-      "sha256": "2b029a2d79979b5a6e3f761b05e480c0338ebacab2ea69fac8f93b824a88d890"
+      "sha256": "76ec6cf8e653c20f6b40a180ee9cbd3834683dfc1fbc02909a8becf496e89508"
     },
     {
       "path": "manuscripts/ch11/figure-11-isolation-1.png",
@@ -278,11 +278,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-isolation-1.pdf",
-      "sha256": "54c6f08ef60f5b00cfd17c45749f8fa00ed262dda48ca13747028ce8c36ab111"
+      "sha256": "b24a66e417b1b4d0bac3ccf3189f21d6fe9bd5e4d195f0f5580a7a04aa29e8d2"
     },
     {
       "path": "manuscripts/ch11/figure-11-isolation-2.svg",
-      "sha256": "33d2259fdd781660e9f3feac2c9cbe22602b4368f337b4f65b4e7707d43e3cd8"
+      "sha256": "0f4648139841ac6348ce7a7bbce9562dbaa559b2517856e8f4586c4adb817638"
     },
     {
       "path": "manuscripts/ch11/figure-11-isolation-2.png",
@@ -290,11 +290,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-isolation-2.pdf",
-      "sha256": "7e36e52ac255acf9b59839ce5de2b52511f300d7bd9e3694ff651c1e8f492402"
+      "sha256": "0fc073ad1b8273b2fafe2ac6e9d30f1f3b9bc14574c7d156353740de891875f8"
     },
     {
       "path": "manuscripts/ch11/figure-11-template-runtime.svg",
-      "sha256": "48d16e08cfeb3be9c90da6e6e4ca065d096d175cb2f56fc49f266fdc48d87363"
+      "sha256": "830fcde045143030cf69ae4e271b3e9a14455df34eff78a77b52d99b5c2426d4"
     },
     {
       "path": "manuscripts/ch11/figure-11-template-runtime.png",
@@ -302,11 +302,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-template-runtime.pdf",
-      "sha256": "f55ee82bfb6ef9af6a620aff459335a4d34bdc3c1006ef451c5cade1cf1363dd"
+      "sha256": "44251d90aaa594897527d7128d24345eaee866aebffbb63695988b6832b1fe7b"
     },
     {
       "path": "manuscripts/ch11/figure-11-pause-release.svg",
-      "sha256": "fa385d3511ccc879d53cc9636cf40dd3a72c02f4a6937ddb7efabf913daf976e"
+      "sha256": "f2697d4ca37cc49a3f58165a12acab378ae8d21a3842fea68562061a5b7c3e84"
     },
     {
       "path": "manuscripts/ch11/figure-11-pause-release.png",
@@ -314,11 +314,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-pause-release.pdf",
-      "sha256": "e442e8bf50406148879b68634f5ed28b53b052854e2fffd5cab7f4a35d19d296"
+      "sha256": "037e65bd74368bf24f1b1623561052be171683eaa8a0f7c330398ded5350e86b"
     },
     {
       "path": "manuscripts/ch11/figure-11-residency-rebuild.svg",
-      "sha256": "7b9e0241229b18b7552dfc8df1109541f3b52fbd393fcbe678043369d98fe8dc"
+      "sha256": "aed5538eab3feeb81f01eec66e7d642314572c754d51b1cafc1340be5dd04bbf"
     },
     {
       "path": "manuscripts/ch11/figure-11-residency-rebuild.png",
@@ -326,11 +326,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-residency-rebuild.pdf",
-      "sha256": "e8bca0c90a88127c9abfc59dabd9ecde2bab06c8c7ceade771d411bcbf6c2337"
+      "sha256": "8204142b13fec69d55c00c06976ebefd5fc811e480429e7210f42e2750f3f5aa"
     },
     {
       "path": "manuscripts/ch11/figure-11-prewarm-1.svg",
-      "sha256": "afe720bd683d9d1c774ebffbc22002e8169ad284192b406dfc3d24879cbeae95"
+      "sha256": "fab43340b79d46e500474cea8087b23cbe0adb8ce50a0dea8e47e8c4f943d74c"
     },
     {
       "path": "manuscripts/ch11/figure-11-prewarm-1.png",
@@ -338,11 +338,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-prewarm-1.pdf",
-      "sha256": "c29d732ac7d4dad1b6758eb8b29d0318ef77491a3df62472cc6295d4cd42d63e"
+      "sha256": "62e9bc5e1de2af0dccd5adbdf0ac480eae571cd018d44ff4bbd52384b585a704"
     },
     {
       "path": "manuscripts/ch11/figure-11-prewarm-2.svg",
-      "sha256": "1fbb14269d19e8cf45a382ea85f5dee9d5fb5f133cc537b0256af54bbbbd1783"
+      "sha256": "6825930034a598f00e25112812727facc8defa031a9c7903bed92c84e3112b0b"
     },
     {
       "path": "manuscripts/ch11/figure-11-prewarm-2.png",
@@ -350,11 +350,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-prewarm-2.pdf",
-      "sha256": "8ee7061b82c4a656697b266e74f3f8ca24ca97aa6b4d49f9d3a0ce163cad980d"
+      "sha256": "97cb58133d39f2113acf93c91b726ac88f47e56cbd8cddd09563fc24898ab9c0"
     },
     {
       "path": "manuscripts/ch11/figure-11-prewarm-3.svg",
-      "sha256": "70c3eb38f3a81c4657d86b0f0a46f39c986eaa0c0e1591c91b4b23e02a2b251a"
+      "sha256": "9b4199bac4b91f8c8ab084b341125817ca919cd95d34074ccf749778604be229"
     },
     {
       "path": "manuscripts/ch11/figure-11-prewarm-3.png",
@@ -362,11 +362,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-prewarm-3.pdf",
-      "sha256": "d4750a5305e1b6238704b74c5f982c914e620d56a45278656867a03e41cc8ea2"
+      "sha256": "13c0bc5c4a536a18e93dbcf58b4c85220a7ae345092368df87d6860617efa47d"
     },
     {
       "path": "manuscripts/ch11/figure-11-prewarm-wrong.svg",
-      "sha256": "8b2f5d5edf0e717c5d6cb5b03bb6c90216c135ed570feb17b6cd0e667beec375"
+      "sha256": "1edc03194a62128c2bd55c3ad23ecacffeaf92976c4c5e9fe3fa9b66912738cc"
     },
     {
       "path": "manuscripts/ch11/figure-11-prewarm-wrong.png",
@@ -374,11 +374,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-prewarm-wrong.pdf",
-      "sha256": "26c5732ce5bfba398a45b8f0937605b5e92d572252d6fc53cf2a6cf28ab16a68"
+      "sha256": "450e2eb350dc7f613e056a62be5dada9105b62ff2733ce4adb6b615fa6365812"
     },
     {
       "path": "manuscripts/ch11/figure-11-placement-after.svg",
-      "sha256": "7c8e629c98618dca8f0b4a8868cc87403a96225bfdf12c5f5699cae044b1f689"
+      "sha256": "b201fe7bf8edc295e7e2b5577f1413cd757a8a147d780f1d0276a1031d6793ba"
     },
     {
       "path": "manuscripts/ch11/figure-11-placement-after.png",
@@ -386,11 +386,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-placement-after.pdf",
-      "sha256": "ab28bc4eb50d2b42018656f3100706d51147f7db4f55aff871721c9e4ae64d29"
+      "sha256": "8262aa4ffb0e727066ef55a641428ee9a7fd1fed4142493f218766eb6c6f531c"
     },
     {
       "path": "manuscripts/ch11/figure-11-queue-burst.svg",
-      "sha256": "3fda7e30cdc59a03657a9d61ab3ef0dd5db92d4f0081d1223ef51659977fc2c2"
+      "sha256": "8177e37047628fdcb6f4402faf4787554a7cdd7d5fe2cdb1cd02e8498e25a79a"
     },
     {
       "path": "manuscripts/ch11/figure-11-queue-burst.png",
@@ -398,11 +398,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-queue-burst.pdf",
-      "sha256": "f63515f6ad4e060f8c2256a105ae28011d15f63dfb1ac1fb152db3aef42d67d0"
+      "sha256": "54968784aff95337c28957636388760cbc7ed4dc5f9ff41997c15403bf699642"
     },
     {
       "path": "manuscripts/ch11/figure-11-stages-batch.svg",
-      "sha256": "6e44f4a00916f0d2a53414669dca4ba8acd6e60dc6c44df913a3ab0fe2ce0007"
+      "sha256": "f30acee439de52059178ea622e7c64a9e735009464442377e84dc96e4a21c4b8"
     },
     {
       "path": "manuscripts/ch11/figure-11-stages-batch.png",
@@ -410,11 +410,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-stages-batch.pdf",
-      "sha256": "1147bbbef2177e5cdeaa0606421b0c26d04493ef10aab837e6af59fd2b0317ec"
+      "sha256": "4fbc711a21b9c3b276774cf184e838b87f4802ff9e24c380f0616a0de574a87a"
     },
     {
       "path": "manuscripts/ch11/figure-11-remaining-time.svg",
-      "sha256": "4877c1eed7589195128343a10e393ba341f355f76d4e50573e8900baa239a6b0"
+      "sha256": "55efcdae6b4ce560ab0c0f82d55971cdb9680bfe7fb0821df692f15da010e274"
     },
     {
       "path": "manuscripts/ch11/figure-11-remaining-time.png",
@@ -422,11 +422,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-remaining-time.pdf",
-      "sha256": "410388af3c0cb1363dfe6c47b5a09d81a2ea192d6059eb1e648c3d749e0e918b"
+      "sha256": "3ceb04ee3c36407fdb78d8f516aec29103ae367498d586f26dc0371c57531064"
     },
     {
       "path": "manuscripts/ch11/figure-11-routing-deadline.svg",
-      "sha256": "45a9479e3b8b4687c2214ebd7c1d95ed3be4f7e0a5d7a7184abacad8a9933273"
+      "sha256": "8163d8683fab440f53e6c2af035f301b3a263c1aec2430b951ff5bc1bcfa3207"
     },
     {
       "path": "manuscripts/ch11/figure-11-routing-deadline.png",
@@ -434,11 +434,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-routing-deadline.pdf",
-      "sha256": "ff0836c25d7a62b863f420767af7f74ef845ad3f3d3a13a41eb076259889e348"
+      "sha256": "c5d6b1e67e15518a9a0f2b10fc337e8d6a0abe584249e4571a4cc6e145171d9e"
     },
     {
       "path": "manuscripts/ch11/figure-11-commit-ack.svg",
-      "sha256": "b4dcbdad21ceb157b50b051b8e61e0c97e8e814e3f9f2c5cf59a6fd615db3b6f"
+      "sha256": "bce9b1b3d4f7510b9b66c481d136e4eec5ff6383912617fa282615d3c1443786"
     },
     {
       "path": "manuscripts/ch11/figure-11-commit-ack.png",
@@ -446,11 +446,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-commit-ack.pdf",
-      "sha256": "2a4741858dccffee8aa87fca593449461006e48017c62bd63b528fc6428948c5"
+      "sha256": "9043fe465514004e2e7a32463e0c62568da5e84729c69b816d32b0cd9f452d57"
     },
     {
       "path": "manuscripts/ch11/figure-11-retry-conditional.svg",
-      "sha256": "0d7aa6271776e65f0f8c64356572e21fdbd98c2b48f00001ce7b3a6f83796cb9"
+      "sha256": "0d36bd18d0e95ce8212d9e3e80e5a56d7945c23ecfb8654b5d8bfcd12adfcecc"
     },
     {
       "path": "manuscripts/ch11/figure-11-retry-conditional.png",
@@ -458,11 +458,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-retry-conditional.pdf",
-      "sha256": "a86853976567268bc1c89f3d6e336673bf37f384f5ec33acd9d97ee6a9e90e8b"
+      "sha256": "55d9300292e9d3627133021d6c673f68b6c5d1b8bb4caad3d97c9a2b14afb315"
     },
     {
       "path": "manuscripts/ch11/figure-11-recovery-coverage.svg",
-      "sha256": "5f9ff17cc0fd3ebd876268935fa26ee8f180dbb462c4e53baa7abbe8598c7240"
+      "sha256": "5b891614328bdbf622aa3aa8a0cdf5c35ba796e6f8270206234bbedda8f0d793"
     },
     {
       "path": "manuscripts/ch11/figure-11-recovery-coverage.png",
@@ -470,11 +470,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-recovery-coverage.pdf",
-      "sha256": "7a502638faf37b0398fa4023ed996c2dbae73d778c84fb26927f60d699dc2112"
+      "sha256": "b3e06e1c99c740f8ce5cf108e9ef9c6eacf78ddcee9b68ab751db9184fd38ba1"
     },
     {
       "path": "manuscripts/ch11/figure-11-steady-schedule.svg",
-      "sha256": "04fd1375d1569d77d2e14542d7a958f6a0aed479193cd97ceb1a51a21a380237"
+      "sha256": "05b0203057284a8b35ce5f2ba1904bf14ea0c39d92d9af33f1047a78ddd38006"
     },
     {
       "path": "manuscripts/ch11/figure-11-steady-schedule.png",
@@ -482,11 +482,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-steady-schedule.pdf",
-      "sha256": "f170618c39f66d6855e2cb2af0ace2ab1dd617fe21b9f4e3e252bd391c88f8f4"
+      "sha256": "70df287bc42f1832958640b3fe2273799c30f716c1c75522fd0b255162c92320"
     },
     {
       "path": "manuscripts/ch11/figure-11-lifecycle-crossover.svg",
-      "sha256": "8a55e570e4bab90981c7b6be9ab511b56414c918223f4e7adb9482aba12b3a79"
+      "sha256": "83de4b1149ddfb458ca671a4d791cab8eedd50e5c9f7b6cbaf4323986f5b3e25"
     },
     {
       "path": "manuscripts/ch11/figure-11-lifecycle-crossover.png",
@@ -494,11 +494,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-lifecycle-crossover.pdf",
-      "sha256": "4ea70c1b9f3007b5c6d5bf376ed2735d9c0312ecea91576c486c0b615d711760"
+      "sha256": "a0d82539fa033475d2105b185772d47a792a9e9485496ce75fbabeaaf9027bab"
     },
     {
       "path": "manuscripts/ch11/ch11-sandbox-cxlfork-and-weave-gantt.svg",
-      "sha256": "0df8df405219c54768bd0356f53dca164eaf6b94929bd170d33c66b661e978df"
+      "sha256": "064a827938ec8c4faa86ab0ecaa1f7c0778f8839fc1d8a5bc3b5cd38d4825d24"
     },
     {
       "path": "manuscripts/ch11/ch11-sandbox-cxlfork-and-weave-gantt.png",
@@ -506,23 +506,23 @@
     },
     {
       "path": "manuscripts/ch11/ch11-sandbox-cxlfork-and-weave-gantt.pdf",
-      "sha256": "7fe928240461471c99fdf1f96d639bd5035a4333aa22adcaa2ae06dd19d9e5f3"
+      "sha256": "4d791da0a56bda6f9d3f4acd407f41deeab1033d54fe0e48a6d5457e4a8cd154"
     },
     {
       "path": "manuscripts/ch11/ch11-api-pricing-vs-provider-cost-and-routing.svg",
-      "sha256": "0610cd89cf3f27f4888bac1b53e1b9fcb8682bfbd7acacc5867bb68e41b46446"
+      "sha256": "ea6ea33a05b8a269f8f828297ef73efc66c77a1006f78269166490266e05f4df"
     },
     {
       "path": "manuscripts/ch11/ch11-api-pricing-vs-provider-cost-and-routing.png",
-      "sha256": "bd79401e18c61a807de1bd5fe87bd92534fe599bc5471dd408917a600888e20e"
+      "sha256": "3ce4a0cab284ff2e77922d1e7673c0e7ae6630132db0abe188c7f65474db35e4"
     },
     {
       "path": "manuscripts/ch11/ch11-api-pricing-vs-provider-cost-and-routing.pdf",
-      "sha256": "c8983cc2bc0277a4f788d5adafd46357f49418c280af62f29e6e6535c505005e"
+      "sha256": "eec4adff64a2d9542ed9e4edc4e8aebedb503832707864a12eb1a247700a3781"
     },
     {
       "path": "manuscripts/ch11/ch11-serverless-coldstart-and-hydraserve.svg",
-      "sha256": "1df44e70210f84b28c7dce4c7ce7a1e40f5066226ed5a063eca4a40418662b08"
+      "sha256": "2bbedb27843139a7004fe30b8bcb7355e59fbb1c288119f4340189955789795e"
     },
     {
       "path": "manuscripts/ch11/ch11-serverless-coldstart-and-hydraserve.png",
@@ -530,11 +530,11 @@
     },
     {
       "path": "manuscripts/ch11/ch11-serverless-coldstart-and-hydraserve.pdf",
-      "sha256": "41999e97b36156fec047e1f3ac650a163f165e9ae6cf55aba22518cb6a147bb2"
+      "sha256": "1936f7ba609478e1e4e07dddeda9341638527cd3c211d35c009b0efb2f0d2155"
     },
     {
       "path": "manuscripts/ch11/ch11-weave-rlboost-interleaving-and-spot.svg",
-      "sha256": "84677f482a6df8c78228fa6262f3931231472a3f78d39b18906cf7b579075d84"
+      "sha256": "55a7f117ec5428edc2ff9f89397b6752652252abd86636c159eaacefb3665ac6"
     },
     {
       "path": "manuscripts/ch11/ch11-weave-rlboost-interleaving-and-spot.png",
@@ -542,11 +542,11 @@
     },
     {
       "path": "manuscripts/ch11/ch11-weave-rlboost-interleaving-and-spot.pdf",
-      "sha256": "3c472adf31af374d99066c4247a351ebfd6e18f533821ed08a752b6f77ee3c16"
+      "sha256": "0382e9e854c87460ce1d9fb0220d08ec7f00dc6b73d97ee9f4b6ece88c510253"
     },
     {
       "path": "manuscripts/ch11/ch11-i16-allocation-illusion-vs-effective-progress.svg",
-      "sha256": "9778adf0bceb7cfcd16cb885b219edc815ee377a8df0b716039d9197f0f14c23"
+      "sha256": "d35439a7ed2e711a9d6e9c6e2fdd1b730b7c749dcd83427a6d363c3c040b6c3d"
     },
     {
       "path": "manuscripts/ch11/ch11-i16-allocation-illusion-vs-effective-progress.png",
@@ -554,23 +554,23 @@
     },
     {
       "path": "manuscripts/ch11/ch11-i16-allocation-illusion-vs-effective-progress.pdf",
-      "sha256": "f94d8aa01e880ffb534f3b3e0a4cef5cdc31394c4bdb48e3f7ba143a273b454a"
+      "sha256": "d92546c9d814976908df6664d07da2afad0fefc287ff7ee506d8742959dd6c29"
     },
     {
       "path": "manuscripts/ch11/ch11-i21-dual-model-cache-hit-cost-slo-crossover.svg",
-      "sha256": "15666405f44198babe2e93fbb4916c0a6502512259c6f019955aaf6391ded0e7"
+      "sha256": "5e0a7db0aedf7264b519ce9d3bbeba7bae69d7beb459fd59042d8884b689c75f"
     },
     {
       "path": "manuscripts/ch11/ch11-i21-dual-model-cache-hit-cost-slo-crossover.png",
-      "sha256": "ab4934aae94130582e1b6bab7554ad8c38bdeeb5617c83dec8bab579cf4ab7a1"
+      "sha256": "d2e5135c6141159b4185b226daec744d6cdc0a3e6b967ae3f7c07707c0171a6e"
     },
     {
       "path": "manuscripts/ch11/ch11-i21-dual-model-cache-hit-cost-slo-crossover.pdf",
-      "sha256": "2b8cdd2454a7dcd4beeacfb3c179b4549778fb2afaababe5b25101f0267ab3f9"
+      "sha256": "467e003a461713cb2e81cdc40bac694df6a5b8c992fbe1ded5539bd894fb6d15"
     },
     {
       "path": "manuscripts/ch11/ch11-cumemmap-virtual-memory-sleep-wake-colocation.svg",
-      "sha256": "7aec3394fead0af88d47a35bc992c53a91d6bfaefd2de7e871cb867abd0ac115"
+      "sha256": "acd072e66923fff706419d8761b6cd31349240b6bb34ac4ee184e4087f48ddc6"
     },
     {
       "path": "manuscripts/ch11/ch11-cumemmap-virtual-memory-sleep-wake-colocation.png",
@@ -578,23 +578,23 @@
     },
     {
       "path": "manuscripts/ch11/ch11-cumemmap-virtual-memory-sleep-wake-colocation.pdf",
-      "sha256": "764c876611bd100f15748132a69cbbdfefede6b899b02ac9774ae5683ee01ea6"
+      "sha256": "0bfd799e8d75f18930f6dac159472379d4b3306e79f36e4ef37528408cd1e4b3"
     },
     {
       "path": "manuscripts/ch11/ch11-serverless-gpu-rdma-multicast-cold-start.svg",
-      "sha256": "00c55c3878a5deb2f335945147b0fe41219d8de80ed1f72b0bb3c73184f2f0b7"
+      "sha256": "1df73a9fd6e60430dc649cfbe16ac6c7456dde1c2961528d740b9e495de405b8"
     },
     {
       "path": "manuscripts/ch11/ch11-serverless-gpu-rdma-multicast-cold-start.png",
-      "sha256": "8e9224dfad3c2e866da99a6a7f19508a5ee4d8e24e716eba1b8a8856af472d98"
+      "sha256": "45035bf24e8a2ddc91882feb49116c3a0f725293f763bc09b1f83bb6c04fd4ec"
     },
     {
       "path": "manuscripts/ch11/ch11-serverless-gpu-rdma-multicast-cold-start.pdf",
-      "sha256": "7fd1a78927961b44e04251ac0d38e567c4fa3c5068bf151a8cba61eadd42010a"
+      "sha256": "f17408964f3a541d8148390094b1b4e2b5a5716587e75b3b7f8b917ad76b6014"
     },
     {
       "path": "manuscripts/ch11/figure-11-sandbox-boundaries.svg",
-      "sha256": "91a1244453164099278bc3fcea3fd24e48bebed8d5503376ff15d5eaec38a12c"
+      "sha256": "20dfd72a2b8ef2b74f79304d5c3db193b1cc9259d9c5bd15b8e5a34b6ce2ddd0"
     },
     {
       "path": "manuscripts/ch11/figure-11-sandbox-boundaries.png",
@@ -602,11 +602,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-sandbox-boundaries.pdf",
-      "sha256": "05412b214cb3853a4e73a96bb17500bf88db3ef92c97097a4ad719c79e8aba95"
+      "sha256": "005823a8e0b5cb81755a8f58d46af4e4b756633a4a06f177d9660520738628ac"
     },
     {
       "path": "manuscripts/ch11/figure-11-page-cache-copies.svg",
-      "sha256": "3ba7d7846873b59b701a9c223feb41404751f5ef6ea371c80f947dde7ac5d5d4"
+      "sha256": "3a857766aaf4a808010016890e7f1e7ce166c582d5d06240c0d3a6863a353fd6"
     },
     {
       "path": "manuscripts/ch11/figure-11-page-cache-copies.png",
@@ -614,11 +614,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-page-cache-copies.pdf",
-      "sha256": "740d916c8c47f7fa9c953906ee57b8ec3faf0578c1d0b53a17a311eb9c99e3c6"
+      "sha256": "9079edeca365a6b53f7b297f0e2871e474623dfb18b64edd547b8d1ec1900f0f"
     },
     {
       "path": "manuscripts/ch11/figure-11-page-cache-shared.svg",
-      "sha256": "381f7295b2ba296183eca1829198ee54eedabd692c679282bf8af07bdc8aaff0"
+      "sha256": "64181988c62ab2f061964afe73f4fb4f4948f3471fe2d3270f9c808cee73bb03"
     },
     {
       "path": "manuscripts/ch11/figure-11-page-cache-shared.png",
@@ -626,11 +626,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-page-cache-shared.pdf",
-      "sha256": "fc6b94552f9bd1d12ae911c59c7bf4682b5d418d8fafc25efa86b5ac19f67199"
+      "sha256": "a1ee205e95311878358d55afeb0fc6fd3c32a93452dd91fc953f6a976fcd6d75"
     },
     {
       "path": "manuscripts/ch11/figure-11-preempt-pause.svg",
-      "sha256": "b64a2484497e6673ed4f540640083a1e2023637e335952cef90cea6de8217193"
+      "sha256": "fd2d82612f37244f672be0245506f51ec6acad6cc5cbd0990ce07cb3726456f2"
     },
     {
       "path": "manuscripts/ch11/figure-11-preempt-pause.png",
@@ -638,11 +638,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-preempt-pause.pdf",
-      "sha256": "fd265a7594cd0a79168d032f32eed3186f82d1483f1b7e89d893882efc2aedd2"
+      "sha256": "6554536bccbb1ae5ecedaf2d1a4deea84984ef738342b4e30a2cfe5f558359a4"
     },
     {
       "path": "manuscripts/ch11/figure-11-placement-sampling.svg",
-      "sha256": "ca95c41294b81a86029379f5cc2b457b2ae6757d5e3f2f173668c48cf3789543"
+      "sha256": "d9daafe26e6c78418d83e63d54d504a486577fc81704de053799a27b920ffd33"
     },
     {
       "path": "manuscripts/ch11/figure-11-placement-sampling.png",
@@ -650,11 +650,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-placement-sampling.pdf",
-      "sha256": "79fc2000fb750d1cdfcda7e38c1d527743850ebf77e3b886d5c97387c6cb47f5"
+      "sha256": "751c799c3da61f367ca1281f7088da3603f551dc608c4c0a0ae95a00d40aefba"
     },
     {
       "path": "manuscripts/ch11/figure-11-smt-sibling.svg",
-      "sha256": "c4aa050d4e1ce6a95f2392691ec900c78377f6a706854ea8cc8b096c62e1c322"
+      "sha256": "48c550da6dd6912ef5c2a63d1ead746cff25df1ed1736f7cff7abdf2d86e53bc"
     },
     {
       "path": "manuscripts/ch11/figure-11-smt-sibling.png",
@@ -662,11 +662,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-smt-sibling.pdf",
-      "sha256": "aa3bbbd7be6dd3611ecb553f74a056ab791da3cc5f9185d39ddc0cbdbb9e5bfa"
+      "sha256": "d0c4e8fc1a2e35906190a20418af988a866d3768f76e534bf15002bda8573e33"
     },
     {
       "path": "manuscripts/ch11/figure-11-smt-core-scheduling.svg",
-      "sha256": "a447a25c4bb5d73bcb540c811dde756fba7a96760d627e5e98c31a0d97d26498"
+      "sha256": "28871619219daebfbdc8153403273da06ab26ada5385e80318255bc0e8fc7644"
     },
     {
       "path": "manuscripts/ch11/figure-11-smt-core-scheduling.png",
@@ -674,11 +674,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-smt-core-scheduling.pdf",
-      "sha256": "cd2db2b29cf11b232bc199e2bdb30b3b09efaaad45764b3714b789af0a184db8"
+      "sha256": "e6ccfc2e782ef3d8f55bd680675c16b84e5ee13b8051bccfcb5d20aa4799d071"
     },
     {
       "path": "manuscripts/ch11/figure-11-rollout-owner-before.svg",
-      "sha256": "b02c8b88a523c32fbe6e66177876721f2fab33331349f38314227edf50ee6a9d"
+      "sha256": "b626629ae185909f99d14c68cd6770eb62b69886a7d3753b19017f288c02dbd0"
     },
     {
       "path": "manuscripts/ch11/figure-11-rollout-owner-before.png",
@@ -686,11 +686,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-rollout-owner-before.pdf",
-      "sha256": "738c5a380b48566418697b48d4d64afbaeb36779740fd64b9cbcd9065ece9248"
+      "sha256": "16d1582a1e6e089b35c13209460ad34e6d07af257aa3040c6a54ce440e193770"
     },
     {
       "path": "manuscripts/ch11/figure-11-rollout-owner-after.svg",
-      "sha256": "3274c1518b6cc40049bb919825452cdb9612d44a9f1facb694435fa2d6f577fb"
+      "sha256": "3b26482fe300733c4506d0480e0fffed4b059a59a54643a6b7c923b7c3d92c51"
     },
     {
       "path": "manuscripts/ch11/figure-11-rollout-owner-after.png",
@@ -698,11 +698,11 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-rollout-owner-after.pdf",
-      "sha256": "dfe77f583fe76484f2a88f69c8ab784aa10bc94c2756d7f8d10c3578ee8bf4ec"
+      "sha256": "8451d8d78a1badbd74e3c085a72a696dd77b431c7fa4eb86bb6cac99a76d7937"
     },
     {
       "path": "manuscripts/ch11/figure-11-environment-overlap.svg",
-      "sha256": "436a6c53c269a1d0fceb6e352291ca8dcccfd121876d9a41f96242d99203127c"
+      "sha256": "2bcc0ffb4b65c251d9ec660c6291cb8a2f20d8a99466eb7164816e370dc68180"
     },
     {
       "path": "manuscripts/ch11/figure-11-environment-overlap.png",
@@ -710,23 +710,51 @@
     },
     {
       "path": "manuscripts/ch11/figure-11-environment-overlap.pdf",
-      "sha256": "2002489217323f4d22a7ab6030c4664252f3730ff68ae640a05a96d3ef9f1315"
+      "sha256": "5dc6bd856f812fec7db8effcaf80bac4b06d49ecc91ff12f6f609c3862ab76a4"
+    },
+    {
+      "path": "manuscripts/ch11/ch11-kueue-volcano-gang-topology-and-llmd-kv-gateway-architecture.svg",
+      "sha256": "c39225226e748b4b41453510dbe653b548f86220a4676cab85a8f8d9db7c3b19"
+    },
+    {
+      "path": "manuscripts/ch11/ch11-kueue-volcano-gang-topology-and-llmd-kv-gateway-architecture.png",
+      "sha256": "92015808575e9d14cc8bf080633a4d1c74b4057bf001cc680e6bff49c2a29c44"
+    },
+    {
+      "path": "manuscripts/ch11/ch11-kueue-volcano-gang-topology-and-llmd-kv-gateway-architecture.pdf",
+      "sha256": "15bff39a0266357329a5c00c9110edd88d2e930b77996bdcd40ae92f4c41ab21"
+    },
+    {
+      "path": "manuscripts/ch11/ch11-vtc-fair-queuing-and-finops-capacity-portfolio-tokenomics.svg",
+      "sha256": "08ce483740e469dfa178a1209f1c15cf84b6ede82db5cd913424db3748583124"
+    },
+    {
+      "path": "manuscripts/ch11/ch11-vtc-fair-queuing-and-finops-capacity-portfolio-tokenomics.png",
+      "sha256": "37e0f6315d3a70c596f3deee338cd853bcfb7440cc0d17a048182b14049c896d"
+    },
+    {
+      "path": "manuscripts/ch11/ch11-vtc-fair-queuing-and-finops-capacity-portfolio-tokenomics.pdf",
+      "sha256": "c9c5098a060fa044ab02df8da2a1277df0cd5c918f1a6f28d2e697bb264e86c2"
     },
     {
       "path": "manuscripts/ch11/teaching_revision.py",
-      "sha256": "9ca92f8958bb6344bffa8b4d613570d9524b8407c0249c9b04238edfa7edfff7"
+      "sha256": "c54f9cc5bfbb522ee2c6f205e5d1e18b03dd1be6d32b5fe324e555afac40672c"
+    },
+    {
+      "path": "manuscripts/ch11/h2_cloudnative_finops_figures.py",
+      "sha256": "a6990394f46d096f98d05ee3599c710d0c108dbaf70ebc78fd6f44f3729c213e"
     },
     {
       "path": "manuscripts/ch11/figure-index.json",
-      "sha256": "db2a922057db88556dbb955feed8e6ae9c7e8f57b9ab2ada17e803ce4da3128c"
+      "sha256": "bb3eccadd9c42fdd7d93c07abc209fa7baae7fedd58b7e0576b2d748ec75d7aa"
     },
     {
       "path": "manuscripts/ch11/teaching-layout-validation.json",
-      "sha256": "281949eb285f36ae672ffb3b02a77b8384338de7e6e03cb1af8f2a6480e9599b"
+      "sha256": "37d25fba91c02c38024324bc2a5b70ae6b031290f28a041b961c6d9f827ad667"
     },
     {
       "path": "manuscripts/ch11/figure-data.json",
-      "sha256": "7d8d4c37f4601e4f0f6e1c13f50b2f0885969b1502e45902e2e7632471c9603d"
+      "sha256": "0e6bb859e773a1f75bc13ed9055da462f3bf8f7440fb82f7acfbff06e79f17ef"
     },
     {
       "path": "manuscripts/ch11/platform-design.json",
@@ -746,11 +774,11 @@
     },
     {
       "path": "build/legacy/manuscripts/11-资源调度与运行环境.html",
-      "sha256": "521a108fb52156fe2767bb8bec9c95c7a8278caa03b3ec50d0e6303d4da3c528"
+      "sha256": "f213b7c0922aace706bd41f456ddd7ab6ca0dd9359cad498a078b3a6d5631035"
     },
     {
       "path": "manuscripts/ch11/figure-index.json",
-      "sha256": "db2a922057db88556dbb955feed8e6ae9c7e8f57b9ab2ada17e803ce4da3128c"
+      "sha256": "bb3eccadd9c42fdd7d93c07abc209fa7baae7fedd58b7e0576b2d748ec75d7aa"
     },
     {
       "path": "manuscripts/book_assets.py",

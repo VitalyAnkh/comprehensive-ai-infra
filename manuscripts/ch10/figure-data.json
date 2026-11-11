@@ -15810,6 +15810,19 @@
       128
     ]
   },
+  "10-59": {
+    "bf16_ms": 156.96,
+    "fp8_ms": 109.0,
+    "nvfp4_ms": 72.0,
+    "fp8_speedup": 1.44,
+    "nvfp4_speedup": 2.18
+  },
+  "10-60": {
+    "p_sr": 0.18,
+    "rrmse_100": 0.213437,
+    "rrmse_10000": 0.021344,
+    "cooldown_start_pct": 95.0
+  },
   "mimo_interruptions": {
     "units": "seconds unless fraction, count, ratio or context length",
     "limitation": "Unallocated wall time and pre-restart intervals are not measurements of discarded computation or pure recovery time.",

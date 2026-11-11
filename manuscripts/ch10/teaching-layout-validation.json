@@ -342,6 +342,18 @@
     "text_extent_warnings": []
   },
   {
+    "figure": "ch10-fp8-blockwise-three-gemm-training-and-transpose-datapath",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch10-nvfp4-stochastic-rounding-hadamard-and-precision-cooldown",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
     "figure": "figure-10-mimo-interruptions",
     "width_pt": 420.0,
     "min_label_pt": 11.0,
