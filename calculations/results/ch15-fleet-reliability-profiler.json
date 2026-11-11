@@ -1,0 +1,116 @@
+{
+  "schema": "h2-topic-v1",
+  "calculation": "fleet-reliability-profiler",
+  "chapter": 15,
+  "title": "第 15 章：十万卡 MTBF/热备池排队、eBPF+Dynolog 三级遥测、等待链归因与 Monarch 局部自愈账本",
+  "scenario": {
+    "mega_fleet_gpus": 100000,
+    "per_gpu_mtbf_hours": 50677.0,
+    "node_failure_rate_per_h": 2.0,
+    "node_repair_mttr_h": 12.0,
+    "profiler_fleet_gpus": 16384,
+    "cupti_overhead_frac": 0.08,
+    "ebpf_l0_overhead_frac": 0.0035,
+    "dynolog_l1_amortized_frac": 0.0007,
+    "deepseek_v3_hidden_size": 7168,
+    "b200_hbm_gb": 180
+  },
+  "summary": {
+    "fleet_100k_mtbf_minutes": 30.41,
+    "young_daly_plan_a_opt_ckpt_s": 804.98,
+    "young_daly_plan_b_opt_ckpt_s": 134.16,
+    "fleet_100k_ettr_plan_a_pct": 63.22,
+    "fleet_100k_ettr_plan_b_pct": 92.34,
+    "fleet_100k_gpus_saved_plan_b": 29120,
+    "hot_spare_offered_load_nodes": 24.0,
+    "hot_spare_prob_at_mean24_pct": 55.4,
+    "hot_spare_min_nodes_99_9pct": 40,
+    "hot_spare_prob_at_smin40_pct": 99.901,
+    "hot_spare_pool_ratio_pct": 0.32,
+    "abft_4096_overhead_pct": 0.0732,
+    "oobleck_reconfig_seconds": 1.45,
+    "oobleck_vs_restart_speedup_x": 206.9,
+    "oobleck_retained_throughput_pct": 98.75,
+    "parachute_retained_throughput_pct": 93.75,
+    "kingman_bursty_wq_ms": 829.6,
+    "kingman_bursty_ttft_ms": 909.6,
+    "kingman_bursty_slo_attainment_pct": 48.77,
+    "kingman_bursty_goodput_req_s": 3.45,
+    "kingman_max_safe_utilization_pct": 60.04,
+    "cupti_16k_burned_gpus_exact": 1310.72,
+    "cupti_16k_burned_gpus_rounded": 1311,
+    "cupti_daily_trace_pb": 1.42,
+    "ebpf_dynolog_total_overhead_pct": 0.42,
+    "ebpf_dynolog_burned_gpus": 68.81,
+    "ebpf_dynolog_daily_trace_tb": 1.8,
+    "trace_storage_reduction_x": 788.9,
+    "wait_chain_root_cause_rank": 5,
+    "wait_chain_victim_ranks_stripped": 7,
+    "monarch_isolation_seconds": 0.85,
+    "spmd_global_restart_seconds": 142.0,
+    "monarch_vs_spmd_speedup_x": 167.1
+  },
+  "wait_chain_8rank_timeline": [
+    {
+      "rank": 0,
+      "enter_collective_ms": 60.0,
+      "exit_collective_ms": 204.0,
+      "apparent_nccl_kernel_ms": 144.0,
+      "role": "victim_waiter"
+    },
+    {
+      "rank": 1,
+      "enter_collective_ms": 60.0,
+      "exit_collective_ms": 204.0,
+      "apparent_nccl_kernel_ms": 144.0,
+      "role": "victim_waiter"
+    },
+    {
+      "rank": 2,
+      "enter_collective_ms": 60.0,
+      "exit_collective_ms": 204.0,
+      "apparent_nccl_kernel_ms": 144.0,
+      "role": "victim_waiter"
+    },
+    {
+      "rank": 3,
+      "enter_collective_ms": 60.0,
+      "exit_collective_ms": 204.0,
+      "apparent_nccl_kernel_ms": 144.0,
+      "role": "victim_waiter"
+    },
+    {
+      "rank": 4,
+      "enter_collective_ms": 62.0,
+      "exit_collective_ms": 204.0,
+      "apparent_nccl_kernel_ms": 142.0,
+      "role": "victim_waiter"
+    },
+    {
+      "rank": 5,
+      "enter_collective_ms": 200.0,
+      "exit_collective_ms": 204.0,
+      "apparent_nccl_kernel_ms": 4.0,
+      "role": "root_cause_straggler"
+    },
+    {
+      "rank": 6,
+      "enter_collective_ms": 60.0,
+      "exit_collective_ms": 204.0,
+      "apparent_nccl_kernel_ms": 144.0,
+      "role": "victim_waiter"
+    },
+    {
+      "rank": 7,
+      "enter_collective_ms": 62.0,
+      "exit_collective_ms": 204.0,
+      "apparent_nccl_kernel_ms": 142.0,
+      "role": "victim_waiter"
+    }
+  ],
+  "assumptions": [
+    "算例 15-1 与 15-2：单卡 MTBF=50,677 h 外推至十万卡 MTBF=30.41 min，异步快照+热迁移将 ETTR 从 63.22% 提至 92.34%（净挽回 29,120 卡）；泊松维修队列 L=24.0 台需配置 S_min=40 台（0.32%）达 99.907% 零降级可用率。",
+    "算例 15-7：Oobleck 预实例化模板 1.45 s 重配置（快 206.90x，保留 98.75% 吞吐）；泊松突发流量（Ca=1.0, Cs=1.2）在 rho=0.85 下排队膨胀至 829.60 ms，安全利用率上限为 60.04%。",
+    "算例 15-8 至 15-10：eBPF L0（0.35%）+ Dynolog/Kineto 按需 L1（0.07%）将 16,384 卡遥测损耗控制在 0.42%（对比全量 CUPTI 8% 烧毁 1,310.72 卡），等待链逆向 arg max t_enter 精准锁定 Rank 5。"
+  ]
+}

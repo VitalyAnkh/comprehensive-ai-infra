@@ -1,0 +1,46 @@
+{
+  "schema": "h2-topic-v1",
+  "calculation": "datacenter-power-cooling",
+  "chapter": 14,
+  "title": "第 14 章：800V HVDC 母排铜损、ASHRAE W45 温水液冷、硅微流道直冷与跨园区 DCI 分层训练账本",
+  "scenario": {
+    "rack_power_kw": 132.0,
+    "nextgen_rack_power_kw": 165.0,
+    "busbar_resistance_mohm": 0.5,
+    "coolant_inlet_c": 45.0,
+    "coolant_delta_t_c": 12.0,
+    "campus_grid_mw": 100.0,
+    "diloco_inner_steps": 500,
+    "dci_bandwidth_gbps": 400.0,
+    "rubin_hbm_bw_tbps": 19.2,
+    "deepseek_v3_layers": 61
+  },
+  "summary": {
+    "current_48v_amp": 2750.0,
+    "current_800v_amp": 165.0,
+    "busbar_loss_48v_watt": 3781.25,
+    "busbar_loss_800v_watt": 13.6125,
+    "hvdc_i2r_loss_reduction_x": 277.78,
+    "busbar_loss_800v_165kw_watt": 21.27,
+    "w45_flow_l_per_min_132kw": 159.5,
+    "w45_flow_l_per_min_132kw_rho1": 157.9,
+    "w45_flow_l_per_min_165kw": 199.4,
+    "coldplate_1400w_case_temp_c": 74.2,
+    "microfluidics_2000w_max_inlet_coldplate_c": 21.0,
+    "microfluidics_2000w_max_inlet_notim_c": 61.0,
+    "microfluidics_2000w_max_inlet_jet_c": 69.0,
+    "campus_100mw_elec_saving_musd_per_yr": 70.08,
+    "bess_20pct_2hr_capacity_mwh": 40.0,
+    "dci_671b_naive_per_step_gbps": 2556.2,
+    "dci_671b_diloco_h500_avg_gbps": 5.11,
+    "dci_671b_outer_sync_seconds": 31.58,
+    "dci_inner_500step_window_seconds": 2100.0,
+    "dci_blocking_comm_overhead_pct": 1.48,
+    "active_params_b": 37.0
+  },
+  "assumptions": [
+    "算例 14-1：132 kW 机柜在 R_bus = 0.5 mOhm 下，48 VDC 电流 2,750 A、铜损 3,781.25 W；升级 800 VDC 后电流降至 165 A、铜损降至 13.6125 W（缩减 277.78x）。",
+    "算例 14-4 与 14-8：ASHRAE W45（45°C 进液、12 K 温升）下 132 kW 需水流量 159.5 L/min，1,400 W 芯片壳温 74.2°C < 85°C；2,000 W 芯片采用硅背面微通道直冷消除 R_TIM=0.02°C/W 后最大允许进液温度从 21.0°C 跃升至 61.0–69.0°C。",
+    "跨园区 DCI 分层训练代表同一机构受控双园区 400G 专线（H=500 步外同步开销仅 1.48%，流式分片重叠后暴露为 0），与第 16 章公网不可信算力池严格区分。"
+  ]
+}

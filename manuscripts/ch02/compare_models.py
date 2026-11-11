@@ -16,7 +16,7 @@ c=['| 模型 | 8K prefill（TFLOPs） | 单 token 选中路由专家的 BF16 权
 for x in rows:
  c.append(f"| {name(x)} | {x['prefill_matrix_flops']/1e12:.2f} | "+(f"{x['selected_routed_expert_bf16_bytes']/2**30:.3f}" if x['selected_routed_expert_bf16_bytes'] else '—')+' |')
 md=H.parent/'02-模型架构.md';s=md.read_text()
-for marker,table in [('**表 2-B',b),('**表 2-C',c)]:
+for marker,table in [('*表 2-12',b),('*表 2-13',c)]:
  start=s.index(marker);match=re.search(r'^\|.*(?:\n\|.*)*',s[start:],re.M);a=start+match.start();z=start+match.end();s=s[:a]+'\n'.join(table)+s[z:]
 md.write_text(s)
 (H/'model-comparison.md').write_text(s.split('<!-- MODEL-COMPARISON:START -->')[1].split('<!-- MODEL-COMPARISON:END -->')[0].strip()+'\n')

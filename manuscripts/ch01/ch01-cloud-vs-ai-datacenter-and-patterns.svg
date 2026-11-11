@@ -6,7 +6,7 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-11-09T17:46:58.310939</dc:date>
+    <dc:date>2026-11-11T12:57:52.134542</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -528,8 +528,8 @@ z
 " clip-path="url(#p4600259702)" style="fill: #e2e8f0; stroke: #64748b; stroke-linejoin: miter"/>
    </g>
    <g id="text_1">
-    <!-- A  传统通用云 vs. AI 数据中心：六维架构重心迁移（D11-01） -->
-    <g style="fill: #1e3a8a" transform="translate(51.37457 46.192352) scale(0.115 -0.115)">
+    <!-- A  传统通用云 vs. AI 数据中心：六维架构重心迁移 -->
+    <g style="fill: #1e3a8a" transform="translate(82.67793 46.204032) scale(0.115 -0.115)">
      <defs>
       <path id="SourceHanSansCN-Bold-22" d="M -26 0
 L 1491 4742
@@ -2046,114 +2046,6 @@ Q 3750 992 3546 1120
 L 4128 1498
 z
 " transform="scale(0.015625)"/>
-      <path id="SourceHanSansCN-Bold-7463" d="M 4243 2432
-Q 4243 3117 4416 3686
-Q 4589 4256 4877 4710
-Q 5165 5165 5504 5504
-L 6112 5235
-Q 5792 4896 5533 4477
-Q 5274 4058 5120 3552
-Q 4966 3046 4966 2432
-Q 4966 1824 5120 1315
-Q 5274 806 5533 390
-Q 5792 -26 6112 -371
-L 5504 -640
-Q 5165 -301 4877 153
-Q 4589 608 4416 1177
-Q 4243 1747 4243 2432
-z
-" transform="scale(0.015625)"/>
-      <path id="SourceHanSansCN-Bold-25" d="M 582 0
-L 582 4742
-L 1882 4742
-Q 2611 4742 3132 4486
-Q 3654 4230 3939 3712
-Q 4224 3194 4224 2394
-Q 4224 1594 3942 1062
-Q 3661 531 3149 265
-Q 2637 0 1933 0
-L 582 0
-z
-M 1530 768
-L 1818 768
-Q 2266 768 2589 931
-Q 2912 1094 3085 1456
-Q 3258 1818 3258 2394
-Q 3258 2970 3085 3318
-Q 2912 3667 2589 3824
-Q 2266 3981 1818 3981
-L 1530 3981
-L 1530 768
-z
-" transform="scale(0.015625)"/>
-      <path id="SourceHanSansCN-Bold-7786" d="M 525 0
-L 525 768
-L 1549 768
-L 1549 3629
-L 685 3629
-L 685 4218
-Q 1043 4288 1302 4384
-Q 1562 4480 1786 4614
-L 2483 4614
-L 2483 768
-L 3373 768
-L 3373 0
-L 525 0
-z
-" transform="scale(0.015625)"/>
-      <path id="SourceHanSansCN-Bold-e" d="M 314 1491
-L 314 2170
-L 2061 2170
-L 2061 1491
-L 314 1491
-z
-" transform="scale(0.015625)"/>
-      <path id="SourceHanSansCN-Bold-7785" d="M 1888 -90
-Q 1402 -90 1040 188
-Q 678 467 480 1004
-Q 282 1542 282 2323
-Q 282 3110 480 3638
-Q 678 4166 1040 4435
-Q 1402 4704 1888 4704
-Q 2374 4704 2736 4435
-Q 3098 4166 3296 3638
-Q 3494 3110 3494 2323
-Q 3494 1542 3296 1004
-Q 3098 467 2736 188
-Q 2374 -90 1888 -90
-z
-M 1888 646
-Q 2099 646 2259 796
-Q 2419 947 2508 1315
-Q 2598 1683 2598 2323
-Q 2598 2970 2508 3328
-Q 2419 3686 2259 3827
-Q 2099 3968 1888 3968
-Q 1690 3968 1526 3827
-Q 1363 3686 1267 3328
-Q 1171 2970 1171 2323
-Q 1171 1683 1267 1315
-Q 1363 947 1526 796
-Q 1690 646 1888 646
-z
-" transform="scale(0.015625)"/>
-      <path id="SourceHanSansCN-Bold-7464" d="M 2157 2432
-Q 2157 1747 1984 1177
-Q 1811 608 1526 153
-Q 1242 -301 896 -640
-L 288 -371
-Q 608 -26 867 390
-Q 1126 806 1280 1315
-Q 1434 1824 1434 2432
-Q 1434 3046 1280 3552
-Q 1126 4058 867 4477
-Q 608 4896 288 5235
-L 896 5504
-Q 1242 5165 1526 4710
-Q 1811 4256 1984 3686
-Q 2157 3117 2157 2432
-z
-" transform="scale(0.015625)"/>
      </defs>
      <use xlink:href="#SourceHanSansCN-Bold-22"/>
      <use xlink:href="#SourceHanSansCN-Bold-1" transform="translate(64.09375 0)"/>
@@ -2184,14 +2076,6 @@ z
      <use xlink:href="#SourceHanSansCN-Bold-33f3" transform="translate(1914.296875 0)"/>
      <use xlink:href="#SourceHanSansCN-Bold-63c1" transform="translate(2014.296875 0)"/>
      <use xlink:href="#SourceHanSansCN-Bold-4e0e" transform="translate(2114.296875 0)"/>
-     <use xlink:href="#SourceHanSansCN-Bold-7463" transform="translate(2214.296875 0)"/>
-     <use xlink:href="#SourceHanSansCN-Bold-25" transform="translate(2314.296875 0)"/>
-     <use xlink:href="#SourceHanSansCN-Bold-7786" transform="translate(2385.703125 0)"/>
-     <use xlink:href="#SourceHanSansCN-Bold-7786" transform="translate(2444.703125 0)"/>
-     <use xlink:href="#SourceHanSansCN-Bold-e" transform="translate(2503.703125 0)"/>
-     <use xlink:href="#SourceHanSansCN-Bold-7785" transform="translate(2540.703125 0)"/>
-     <use xlink:href="#SourceHanSansCN-Bold-7786" transform="translate(2599.703125 0)"/>
-     <use xlink:href="#SourceHanSansCN-Bold-7464" transform="translate(2658.703125 0)"/>
     </g>
    </g>
    <g id="text_2">
@@ -7778,8 +7662,8 @@ z
     </g>
    </g>
    <g id="text_8">
-    <!-- B  经典计算机系统六大设计模式在 LLM 系统中的映射（D11-03） -->
-    <g style="fill: #14532d" transform="translate(43.00832 258.586794) scale(0.115 -0.115)">
+    <!-- B  经典计算机系统六大设计模式在 LLM 系统中的映射 -->
+    <g style="fill: #14532d" transform="translate(74.31168 258.610153) scale(0.115 -0.115)">
      <defs>
       <path id="SourceHanSansCN-Bold-23" d="M 582 0
 L 582 4742
@@ -9007,44 +8891,6 @@ L 256 2086
 L 2643 2086
 z
 " transform="scale(0.015625)"/>
-      <path id="SourceHanSansCN-Bold-7788" d="M 1747 -90
-Q 1376 -90 1081 -3
-Q 787 83 560 233
-Q 333 384 166 570
-L 608 1165
-Q 826 966 1085 822
-Q 1344 678 1664 678
-Q 1907 678 2089 752
-Q 2272 826 2371 966
-Q 2470 1107 2470 1306
-Q 2470 1530 2358 1693
-Q 2246 1856 1964 1942
-Q 1683 2029 1171 2029
-L 1171 2707
-Q 1606 2707 1856 2796
-Q 2106 2886 2211 3040
-Q 2317 3194 2317 3392
-Q 2317 3667 2150 3814
-Q 1984 3962 1683 3962
-Q 1434 3962 1219 3850
-Q 1005 3738 794 3539
-L 307 4115
-Q 621 4384 966 4544
-Q 1312 4704 1728 4704
-Q 2182 4704 2531 4560
-Q 2880 4416 3072 4137
-Q 3264 3859 3264 3462
-Q 3264 3091 3059 2832
-Q 2854 2573 2477 2419
-L 2477 2387
-Q 2739 2317 2953 2163
-Q 3168 2010 3293 1782
-Q 3418 1555 3418 1248
-Q 3418 826 3190 525
-Q 2963 224 2582 67
-Q 2202 -90 1747 -90
-z
-" transform="scale(0.015625)"/>
      </defs>
      <use xlink:href="#SourceHanSansCN-Bold-23"/>
      <use xlink:href="#SourceHanSansCN-Bold-1" transform="translate(68.09375 0)"/>
@@ -9074,14 +8920,6 @@ z
      <use xlink:href="#SourceHanSansCN-Bold-4a9b" transform="translate(2059.796875 0)"/>
      <use xlink:href="#SourceHanSansCN-Bold-3a4a" transform="translate(2159.796875 0)"/>
      <use xlink:href="#SourceHanSansCN-Bold-3039" transform="translate(2259.796875 0)"/>
-     <use xlink:href="#SourceHanSansCN-Bold-7463" transform="translate(2359.796875 0)"/>
-     <use xlink:href="#SourceHanSansCN-Bold-25" transform="translate(2459.796875 0)"/>
-     <use xlink:href="#SourceHanSansCN-Bold-7786" transform="translate(2531.203125 0)"/>
-     <use xlink:href="#SourceHanSansCN-Bold-7786" transform="translate(2590.203125 0)"/>
-     <use xlink:href="#SourceHanSansCN-Bold-e" transform="translate(2649.203125 0)"/>
-     <use xlink:href="#SourceHanSansCN-Bold-7785" transform="translate(2686.203125 0)"/>
-     <use xlink:href="#SourceHanSansCN-Bold-7788" transform="translate(2745.203125 0)"/>
-     <use xlink:href="#SourceHanSansCN-Bold-7464" transform="translate(2804.203125 0)"/>
     </g>
    </g>
    <g id="text_9">

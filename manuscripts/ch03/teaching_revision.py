@@ -563,9 +563,9 @@ def draw(here, data):
         ax1.axvline(16.0, ls=':', lw=1.3, color=BORDER_COL['purple'])
         ax1.scatter([16.0, 20.0], [1.0, 1.25], s=55, color=[BORDER_COL['green'], BORDER_COL['orange']], facecolor=[COL['green'], COL['orange']], linewidth=1.5, zorder=5)
         ax1.text(16.4, 0.32, '临界膨胀上限 γ = 16×', ha='left', va='bottom', fontsize=11, weight='bold', color=TEXT_COL['purple'])
-        ax1.text(20.0, 1.06, '20× → 1.25×\n(+25% 反升)', ha='center', va='top', fontsize=11, weight='bold', color=TEXT_COL['orange'])
+        ax1.text(20.0, 0.94, '20× → 1.25×\n(+25% 反升)', ha='center', va='top', fontsize=11, weight='bold', color=TEXT_COL['orange'])
         ax1.set(xlim=(0, 25), ylim=(0, 1.68), xlabel='单任务 Token 膨胀倍数 γ', ylabel='相对成功任务成本')
-        ax1.set_title('A  长思考 Token 膨胀导致的单任务成本反转 (TC-05)', loc='left', fontsize=12, weight='bold', pad=8)
+        ax1.set_title('A  长思考 Token 膨胀导致的单任务成本反转', loc='left', fontsize=12, weight='bold', pad=8)
         ax1.grid(True, linestyle=':', alpha=0.5, color='#CBD5E1')
         ax1.legend(frameon=True, loc='upper left', fontsize=11)
 
@@ -577,7 +577,7 @@ def draw(here, data):
         ax2.scatter([5.0], [100.0], s=60, color=BORDER_COL['blue'], facecolor=COL['blue'], linewidth=1.6, zorder=5)
         ax2.text(5.15, 52, '盈亏平衡点 Q* = 5 亿次', ha='left', va='bottom', fontsize=11, weight='bold', color=COL['ink'])
         ax2.set(xlim=(0, 8.0), ylim=(0, 175), xlabel='累计成功任务量 Q（亿次）', ylabel='成本或节省（万美元）')
-        ax2.set_title('B  超训投入与推理节省的盈亏平衡线 (TC-06)', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.set_title('B  超训投入与推理节省的盈亏平衡线', loc='left', fontsize=12, weight='bold', pad=8)
         ax2.grid(True, linestyle=':', alpha=0.5, color='#CBD5E1')
         ax2.legend(frameon=True, loc='upper left', fontsize=11)
         out.save(f, 'ch03-reasoning-cost-reversal-and-breakeven')
@@ -735,7 +735,7 @@ def draw(here, data):
         mean_hard = [1.50, 1.90, 2.37, 2.87, 3.41, 3.95]
         p95_hard = [3.10, 3.64, 4.19, 4.74, 5.30, 5.85]
         p99_hard = [4.38, 4.94, 5.50, 6.05, 6.61, 7.16]
-        mean_quorum = [0.97, 1.17, 1.46, 1.84, 2.34, 2.89]
+        mean_quorum = [0.97, 1.17, 1.46, 1.84, 2.30, 2.79]
 
         ax1.plot(x_b, p99_hard, color=BORDER_COL['purple'], lw=2.1, marker='^', ms=5.0, label='硬屏障 P99')
         ax1.plot(x_b, p95_hard, color=BORDER_COL['orange'], lw=2.3, marker='s', ms=5.2, label='硬屏障 P95')
@@ -755,23 +755,23 @@ def draw(here, data):
 
         d_stages = np.array([1, 2, 3, 4])
         p95_b1 = d_stages * 3.0966
-        p95_b4 = d_stages * 4.1879
+        p95_b4 = d_stages * 4.1899
         p95_b16 = d_stages * 5.2960
-        quorum_b16 = d_stages * 2.3370
+        p95_quorum_b16 = d_stages * 3.1457
         ax2.plot(d_stages, p95_b16, color=BORDER_COL['orange'], lw=2.4, marker='s', ms=5.5, label='B=16 硬屏障 P95')
         ax2.plot(d_stages, p95_b4, color=BORDER_COL['teal'], lw=2.2, marker='^', ms=5.2, label='B=4 硬屏障 P95')
+        ax2.plot(d_stages, p95_quorum_b16, color=BORDER_COL['green'], lw=2.2, ls='-.', marker='d', ms=5.0, label='16-of-18 早停 P95')
         ax2.plot(d_stages, p95_b1, color=BORDER_COL['blue'], lw=2.2, ls='--', marker='o', ms=5.0, label='B=1 串行 P95')
-        ax2.plot(d_stages, quorum_b16, color=BORDER_COL['green'], lw=2.2, ls='-.', marker='d', ms=5.0, label='16-of-18 早停')
-        ax2.scatter([3, 3, 3], [7.01, 9.29, 15.89], s=55,
-                    color=[BORDER_COL['green'], BORDER_COL['blue'], BORDER_COL['orange']],
-                    facecolor=[COL['green'], COL['blue'], COL['orange']], linewidth=1.5, zorder=5)
-        ax2.annotate('D=3 阶段串联:\n9.29s → 15.89s\n早停收敛至 7.01s',
-                     xy=(3, 15.89), xytext=(2.25, 18.2),
+        ax2.scatter([3, 3, 3], [9.29, 9.44, 15.89], s=55,
+                    color=[BORDER_COL['blue'], BORDER_COL['green'], BORDER_COL['orange']],
+                    facecolor=[COL['blue'], COL['green'], COL['orange']], linewidth=1.5, zorder=5)
+        ax2.annotate('D=3 各阶段 P95 累加:\n9.29s → 15.89s\n早停 P95 压回 9.44s',
+                     xy=(3, 15.89), xytext=(2.36, 18.8),
                      arrowprops=dict(arrowstyle='->', color=BORDER_COL['orange'], lw=1.3),
                      fontsize=11, weight='bold', color=TEXT_COL['orange'])
         ax2.set_xticks(d_stages, ['D=1 阶段', 'D=2 阶段', 'D=3 阶段', 'D=4 阶段'])
-        ax2.set(xlim=(0.8, 4.2), ylim=(1.5, 25.5), xlabel='多阶段串行扇出—汇聚深度 D_stage', ylabel='端到端累计延迟（s）')
-        ax2.set_title('B  多阶段扇出—汇聚工作流 (D_stage = 1..4) 的端到端尾延迟累积', loc='left', fontsize=12, weight='bold', pad=8)
+        ax2.set(xlim=(0.8, 4.2), ylim=(1.5, 26.8), xlabel='多阶段串行扇出—汇聚深度 D_stage', ylabel='各阶段 P95 预算累加（s）')
+        ax2.set_title('B  多阶段扇出—汇聚 (D_stage = 1..4) 各阶段 P95 预算累加', loc='left', fontsize=12, weight='bold', pad=8)
         ax2.grid(True, linestyle=':', alpha=0.5, color='#CBD5E1')
         ax2.legend(frameon=True, loc='upper left', fontsize=11)
         out.save(f, 'ch03-multi-agent-fanout-tail-amplification-barrier')

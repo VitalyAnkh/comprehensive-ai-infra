@@ -15,6 +15,7 @@ import subprocess
 import sys
 
 from .paths import BOOK, PROJECT
+from .sources import is_lfs_pointer
 from . import coverage
 
 # Two scenario groups name their results from the row's own fields rather than
@@ -35,24 +36,33 @@ STANDING_ARTIFACTS = {"results/README.md", "results/manifest.json", "results/har
 
 def scenario_artifacts() -> dict:
     """Every scenario id has results, and every result belongs to a scenario."""
-    scenarios = json.loads((PROJECT / "scenarios/book.json").read_text())
-    expected = set()
-    for name, rows in scenarios.items():
-        if not isinstance(rows, list):
-            continue
-        for row in rows:
-            if not isinstance(row, dict):
-                continue
-            if isinstance(row.get("id"), str):
-                expected.add(row["id"])
-            elif name in DERIVED_NAMES:
-                expected.add(DERIVED_NAMES[name](row))
     manifest = json.loads((PROJECT / "results/manifest.json").read_text())
     produced = {row["file"] for row in manifest["artifacts"]}
-    missing = sorted(name for name in expected
-                     if f"results/{name}.json" not in produced or f"results/{name}.md" not in produced)
     stems = {re.sub(r"\.(json|md|csv)$", "", name[len("results/"):])
              for name in produced if name not in STANDING_ARTIFACTS}
+    h2_ids = set()
+    h2_path = PROJECT / "configs/h2-scenarios.json"
+    if h2_path.exists():
+        h2_spec = json.loads(h2_path.read_text())
+        h2_ids = {row["id"] for row in h2_spec.get("h2_topics", []) if isinstance(row.get("id"), str)}
+    book_path = PROJECT / "scenarios/book.json"
+    if is_lfs_pointer(book_path):
+        expected = (stems | h2_ids)
+    else:
+        scenarios = json.loads(book_path.read_text())
+        expected = set(h2_ids)
+        for name, rows in scenarios.items():
+            if not isinstance(rows, list):
+                continue
+            for row in rows:
+                if not isinstance(row, dict):
+                    continue
+                if isinstance(row.get("id"), str):
+                    expected.add(row["id"])
+                elif name in DERIVED_NAMES:
+                    expected.add(DERIVED_NAMES[name](row))
+    missing = sorted(name for name in expected
+                     if f"results/{name}.json" not in produced or f"results/{name}.md" not in produced)
     unclaimed = sorted(stems - expected)
     return {"check": "every scenario id has results and every result has a scenario",
             "scenario_ids": len(expected), "artifacts": len(produced),
@@ -99,6 +109,9 @@ def source_audit() -> dict:
     if not path.exists():
         return {"check": "source text audited against the work packages",
                 "passed": False, "reason": "inventory/f01-coverage.json has not been written"}
+    if is_lfs_pointer(path) or is_lfs_pointer(PROJECT / "inventory/sources.json"):
+        return {"check": "source text audited against the work packages",
+                "passed": False, "reason": "inventory files are unpulled Git LFS pointers"}
     saved = json.loads(path.read_text())
     fresh = coverage.build()
     current = saved.get("summary") == fresh["summary"] and saved.get("blocks") == fresh["blocks"]

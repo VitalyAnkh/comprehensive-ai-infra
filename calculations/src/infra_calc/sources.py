@@ -9,9 +9,65 @@ from urllib.request import Request, urlopen
 
 from .paths import PROJECT
 
+LFS_POINTER_PREFIX = b"version https://git-lfs.github.com/spec/v1\n"
+
+
+def parse_lfs_pointer(raw: bytes) -> tuple[str, int] | None:
+    """Return (sha256_oid, byte_size) if raw bytes are a valid Git LFS v1 pointer."""
+    if not raw.startswith(LFS_POINTER_PREFIX) or len(raw) > 512:
+        return None
+    try:
+        text = raw.decode("utf-8", errors="strict")
+    except UnicodeDecodeError:
+        return None
+    oid_match = re.search(r"^oid sha256:([0-9a-f]{64})$", text, re.M)
+    size_match = re.search(r"^size (\d+)$", text, re.M)
+    if oid_match is None or size_match is None:
+        return None
+    return oid_match.group(1), int(size_match.group(1))
+
+
+def is_lfs_pointer(path: Path) -> bool:
+    with path.open("rb") as handle:
+        head = handle.read(513)
+    return parse_lfs_pointer(head) is not None
+
+
+def sha256_or_lfs_oid(path: Path) -> str:
+    with path.open("rb") as handle:
+        head = handle.read(513)
+        parsed = parse_lfs_pointer(head)
+        if parsed is not None:
+            return parsed[0]
+        digest = hashlib.sha256(head)
+        while chunk := handle.read(1048576):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def size_or_lfs_size(path: Path) -> int:
+    with path.open("rb") as handle:
+        head = handle.read(513)
+        parsed = parse_lfs_pointer(head)
+        if parsed is not None:
+            return parsed[1]
+    return path.stat().st_size
+
 
 def records() -> list[dict]:
     return json.loads((PROJECT / "configs/sources.lock.json").read_text(encoding="utf-8"))["sources"]
+
+
+def verify_source_record(relative_path: str) -> None:
+    matches = [record for record in records() if record["file"] == relative_path]
+    if len(matches) != 1 or matches[0]["status"] != "downloaded":
+        raise ValueError(f"No downloaded source locked for {relative_path}")
+    expected_bytes = positive_int(matches[0]["bytes"], "locked source bytes", allow_zero=True)
+    path = PROJECT / relative_path
+    if size_or_lfs_size(path) != expected_bytes:
+        raise ValueError(f"Source length mismatch: {relative_path}")
+    if sha256_or_lfs_oid(path) != matches[0]["sha256"]:
+        raise ValueError(f"Source checksum mismatch: {relative_path}")
 
 
 def read_source(relative_path: str) -> bytes:
@@ -20,6 +76,10 @@ def read_source(relative_path: str) -> bytes:
         raise ValueError(f"No downloaded source locked for {relative_path}")
     expected_bytes = positive_int(matches[0]["bytes"], "locked source bytes", allow_zero=True)
     data = (PROJECT / relative_path).read_bytes()
+    if parse_lfs_pointer(data) is not None:
+        raise ValueError(
+            f"Source length mismatch: {relative_path} (Git LFS pointer not hydrated; run 'git lfs pull' or 'python3 calculations/calc.py fetch')"
+        )
     if len(data) != expected_bytes:
         raise ValueError(f"Source length mismatch: {relative_path}")
     actual = hashlib.sha256(data).hexdigest()
@@ -48,7 +108,7 @@ def verify_sources() -> dict:
     checked, unavailable = [], []
     for row in records():
         if row["status"] == "downloaded":
-            read_source(row["file"])
+            verify_source_record(row["file"])
             checked.append(row["file"])
         else:
             unavailable.append({"model": row["model"], "file": row["file"], "error": row["error"]})

@@ -4,7 +4,7 @@
   "matplotlib": "3.11.2",
   "chapter": {
     "file": "manuscripts/01-初识 AI Infra.md",
-    "sha256": "94c8e805f6dbed04791ead7a45270d2546b2511650999688385db1384831acc5"
+    "sha256": "63ac86f4d65c191058ac8eb3eaca517a302df8f1f0fad985afc588479243fc44"
   },
   "outputs": [
     {
@@ -294,18 +294,18 @@
     },
     {
       "path": "manuscripts/ch01/ch01-cloud-vs-ai-datacenter-and-patterns.svg",
-      "bytes": 274336,
-      "sha256": "9738dd3546d6b8db085a1baf9e8e0c93513a6d80850d9beb312222b22192842a"
+      "bytes": 269967,
+      "sha256": "b0250fad2df2b701f3e85709da948363e5ecb4e1d20c0d44fc480374505ae66f"
     },
     {
       "path": "manuscripts/ch01/ch01-cloud-vs-ai-datacenter-and-patterns.png",
-      "bytes": 304286,
-      "sha256": "ee5082cd79be81af790a096bb07d4b463b7d24bfdb45a112c01e4cfa738580e0"
+      "bytes": 299198,
+      "sha256": "29b3f1b50f1e49569b88e53643267531ce69f403a0f59ef5557b0bf1828d3695"
     },
     {
       "path": "manuscripts/ch01/ch01-cloud-vs-ai-datacenter-and-patterns.pdf",
-      "bytes": 52359,
-      "sha256": "d1552d4c22c664c7daf06e0f9c765dfe0d5c0e19fec92102b944cf9b733d0bdf"
+      "bytes": 51522,
+      "sha256": "d9c6b0c3c05f18821ee9e364f2c5153ac263777545d8ec4544a6858090455cb1"
     },
     {
       "path": "manuscripts/ch01/ch01-token-cost-telescoping-chain.svg",
@@ -354,18 +354,18 @@
     },
     {
       "path": "manuscripts/ch01/ch01-five-workload-paradigms-arithmetic-intensity.svg",
-      "bytes": 235077,
-      "sha256": "ef87c114e8774b4b7379196845e3b0f2d9949d447476bbe4fd16667921bd43ad"
+      "bytes": 235315,
+      "sha256": "182bdcff7f5532190ef53a398971a442134fc14a38487289bc2fb8b632eb48af"
     },
     {
       "path": "manuscripts/ch01/ch01-five-workload-paradigms-arithmetic-intensity.png",
-      "bytes": 250846,
-      "sha256": "4e06d5dbeee6413871e4590cfd39deb8532ffa71c1e2720eabec965abcefd701"
+      "bytes": 250412,
+      "sha256": "f5c9ba321df17f987ce2ef7ad2082246a2e9b8e20c34c319dbf6aae32c7ea16f"
     },
     {
       "path": "manuscripts/ch01/ch01-five-workload-paradigms-arithmetic-intensity.pdf",
-      "bytes": 47545,
-      "sha256": "4a7caab54497fb8a7b2fe17844842887ee42d1f8967c4bd9654bfda939707a6d"
+      "bytes": 47597,
+      "sha256": "bfffc33770bcb4c085756e0c4e0ffd636cccbb169e32db2281c59128c65f605b"
     },
     {
       "path": "manuscripts/ch01/ch01-north-star-efficiency-waterfall-chain.svg",
@@ -399,17 +399,17 @@
     },
     {
       "path": "manuscripts/ch01/ch01-thirty-chapter-five-pillar-workload-spectrum.svg",
-      "bytes": 246591,
+      "bytes": 241178,
       "sha256": "03f2b8c69146bce143742cdf6525fcfd7bf43721d5814d39b216246eb66d6ac2"
     },
     {
       "path": "manuscripts/ch01/ch01-thirty-chapter-five-pillar-workload-spectrum.png",
-      "bytes": 257319,
+      "bytes": 255898,
       "sha256": "fb480a977ba1d5817d20ba8b75a53f4c3f8f27bf521b9d6e6fcbea2dfbb56e48"
     },
     {
       "path": "manuscripts/ch01/ch01-thirty-chapter-five-pillar-workload-spectrum.pdf",
-      "bytes": 49437,
+      "bytes": 48658,
       "sha256": "c350e0a2cabc00eaae119f4c4596e2415c2f45d07b16834c5d0780c61f55e5a1"
     },
     {
@@ -429,8 +429,8 @@
     },
     {
       "path": "build/legacy/manuscripts/01-初识 AI Infra.html",
-      "bytes": 8594349,
-      "sha256": "4270c2acb36fe1c3a4dd4ad8cb8ab4a9f84b0d8dcf61b8c035c4725abdb6b94e"
+      "bytes": 8591863,
+      "sha256": "07e64f650c53e4afb50e97367f3758dadb104884de3528427277d305ae1578f6"
     },
     {
       "path": "manuscripts/ch01/figure-index.json",

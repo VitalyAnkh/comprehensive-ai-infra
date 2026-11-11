@@ -66,6 +66,7 @@ from .topics import workload_profiles
 from .topics import qwen35_forward
 from .topics import clos_cut, hash_collision, sm_occupancy, energy_ledger, critical_batch, straggler_max, moe_capacity, wan_loss_model
 from .topics import edge_tiers
+from .topics import storage_kv_io, data_funnel_dedup, datacenter_power_cooling, fleet_reliability_profiler, confidential_tee_wan, posttrain_rlvr_distill, agent_worm_grammar, multimodal_dit_duplex, embodied_wcet_sim, recsys_vector_colpali, science_ozaki_coupling, ai_factory_capstone
 from . import coverage
 from . import delivery
 from . import hardware
@@ -1033,7 +1034,32 @@ def parser() -> argparse.ArgumentParser:
     chunk.add_argument('--format', choices=('json', 'md'), default='json')
     chunk.add_argument('--output', type=Path)
     sub.add_parser("reproduce", help="Generate all currently registered book scenarios")
+    sub.add_parser("reproduce-h2", help="Incrementally generate Ch13-Ch24 Path H2 scenarios and refresh manifest")
     sub.add_parser("verify-results", help="Verify generated files and their code/config inputs are current")
+    h2_p = sub.add_parser("storage-kv-io", help="Ch13 AI storage GDS zero-copy, 3FS CRAQ, KV flash layout, and SSD DWPD")
+    h2_p.add_argument("--inputs", type=Path); h2_p.add_argument("--format", choices=("json", "md"), default="json"); h2_p.add_argument("--output", type=Path)
+    h2_p = sub.add_parser("data-funnel-dedup", help="Ch13 100 PB 7-stage data funnel and exact MinHash-LSH dedup ledger")
+    h2_p.add_argument("--inputs", type=Path); h2_p.add_argument("--format", choices=("json", "md"), default="json"); h2_p.add_argument("--output", type=Path)
+    h2_p = sub.add_parser("datacenter-power-cooling", help="Ch14 800V HVDC vs 48V busbar, ASHRAE W45 liquid cooling, BESS, and DCI")
+    h2_p.add_argument("--inputs", type=Path); h2_p.add_argument("--format", choices=("json", "md"), default="json"); h2_p.add_argument("--output", type=Path)
+    h2_p = sub.add_parser("fleet-reliability-profiler", help="Ch15 100k-GPU MTBF/ETTR, eBPF+Dynolog profiler, wait-chain DAG, and Monarch")
+    h2_p.add_argument("--inputs", type=Path); h2_p.add_argument("--format", choices=("json", "md"), default="json"); h2_p.add_argument("--output", type=Path)
+    h2_p = sub.add_parser("confidential-tee-wan", help="Ch16 Confidential GPU TEE-I/O, PipeLLM, DSec microVMs, and WAN DiLoCo")
+    h2_p.add_argument("--inputs", type=Path); h2_p.add_argument("--format", choices=("json", "md"), default="json"); h2_p.add_argument("--output", type=Path)
+    h2_p = sub.add_parser("posttrain-rlvr-distill", help="Ch17 Varlen SFT packing, 32-bit Top-128 distillation, and async Agentic RL")
+    h2_p.add_argument("--inputs", type=Path); h2_p.add_argument("--format", choices=("json", "md"), default="json"); h2_p.add_argument("--output", type=Path)
+    h2_p = sub.add_parser("agent-worm-grammar", help="Ch18 Agent WORM KV cache, XGrammar bitmask, and multi-agent speculative DAG")
+    h2_p.add_argument("--inputs", type=Path); h2_p.add_argument("--format", choices=("json", "md"), default="json"); h2_p.add_argument("--output", type=Path)
+    h2_p = sub.add_parser("multimodal-dit-duplex", help="Ch19 3D DiT Ulysses+Ring USP and 80 ms full-duplex RVQ speech")
+    h2_p.add_argument("--inputs", type=Path); h2_p.add_argument("--format", choices=("json", "md"), default="json"); h2_p.add_argument("--output", type=Path)
+    h2_p = sub.add_parser("embodied-wcet-sim", help="Ch20 Embodied NV12 DMA-BUF zero-copy, SoC WCET isolation, and World Model sim")
+    h2_p.add_argument("--inputs", type=Path); h2_p.add_argument("--format", choices=("json", "md"), default="json"); h2_p.add_argument("--output", type=Path)
+    h2_p = sub.add_parser("recsys-vector-colpali", help="Ch21 ColPali/PLAID residual multi-vector RAG, Cuckoo hash, and Epoch hot update")
+    h2_p.add_argument("--inputs", type=Path); h2_p.add_argument("--format", choices=("json", "md"), default="json"); h2_p.add_argument("--output", type=Path)
+    h2_p = sub.add_parser("science-ozaki-coupling", help="Ch22 AI4Science 5-domain ledger, Ozaki INT8 FP64, and DLPack in-situ coupling")
+    h2_p.add_argument("--inputs", type=Path); h2_p.add_argument("--format", choices=("json", "md"), default="json"); h2_p.add_argument("--output", type=Path)
+    h2_p = sub.add_parser("ai-factory-capstone", help="Ch23-Ch24 SRAM vs HBM crossover and 100 MW AI Factory full-stack ledger")
+    h2_p.add_argument("--inputs", type=Path); h2_p.add_argument("--format", choices=("json", "md"), default="json"); h2_p.add_argument("--output", type=Path)
     inventory = sub.add_parser("inventory", help="Audit source changes and pending calculation review")
     inventory.add_argument("--refresh", action="store_true")
     sub.add_parser("sync-outline", help="Insert verified generated results into current chapter Markdown")
@@ -1602,6 +1628,38 @@ def main(argv: list[str] | None = None) -> None:
         elif args.command == "reproduce":
             from .reproduce import run
             result = run()
+        elif args.command == "reproduce-h2":
+            from .reproduce import run_h2
+            result = run_h2()
+        elif args.command in {
+            "storage-kv-io": storage_kv_io,
+            "data-funnel-dedup": data_funnel_dedup,
+            "datacenter-power-cooling": datacenter_power_cooling,
+            "fleet-reliability-profiler": fleet_reliability_profiler,
+            "confidential-tee-wan": confidential_tee_wan,
+            "posttrain-rlvr-distill": posttrain_rlvr_distill,
+            "agent-worm-grammar": agent_worm_grammar,
+            "multimodal-dit-duplex": multimodal_dit_duplex,
+            "embodied-wcet-sim": embodied_wcet_sim,
+            "recsys-vector-colpali": recsys_vector_colpali,
+            "science-ozaki-coupling": science_ozaki_coupling,
+            "ai-factory-capstone": ai_factory_capstone,
+        }:
+            h2_dispatch = {
+                "storage-kv-io": storage_kv_io,
+                "data-funnel-dedup": data_funnel_dedup,
+                "datacenter-power-cooling": datacenter_power_cooling,
+                "fleet-reliability-profiler": fleet_reliability_profiler,
+                "confidential-tee-wan": confidential_tee_wan,
+                "posttrain-rlvr-distill": posttrain_rlvr_distill,
+                "agent-worm-grammar": agent_worm_grammar,
+                "multimodal-dit-duplex": multimodal_dit_duplex,
+                "embodied-wcet-sim": embodied_wcet_sim,
+                "recsys-vector-colpali": recsys_vector_colpali,
+                "science-ozaki-coupling": science_ozaki_coupling,
+                "ai-factory-capstone": ai_factory_capstone,
+            }
+            result = _calculate_from_json_inputs(h2_dispatch[args.command].calculate, args.inputs)
         elif args.command == "verify-results":
             from .reproduce import verify_results
             result = verify_results()

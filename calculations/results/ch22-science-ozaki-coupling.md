@@ -1,0 +1,35 @@
+# 第 22 章：科学计算五大领域跨尺度账本、Ozaki INT8 模拟 FP64 与 DLPack 原位耦合
+
+- 计算标识：`science-ozaki-coupling`（第 22 章）
+- 场景输入：`{"coupled_field_gb": 384.0, "coupled_gpus": 1024, "gemm_dim_n": 8192, "int8_tensor_tops": 4500.0, "native_fp64_tflops": 40.0, "ozaki_slices": 7, "reference_devices": ["b200-sxm", "h100-sxm"], "rollout_steps": 500}`
+
+## 核心量化结果
+
+| 指标 | 数值 |
+| --- | ---: |
+| `science_domains_covered` | 5 |
+| `pairformer_4096_naive_gib` | 512.0 |
+| `pairformer_4096_dap4_workspace_gib` | 0.25 |
+| `pairformer_workspace_reduction_x` | 2,048.0 |
+| `pairformer_dap_comm_to_comp_pct` | 8.26 |
+| `weather_64gpu_halo_mb` | 5.53 |
+| `weather_64gpu_halo_comm_to_comp_pct` | 1.27 |
+| `ozaki_signed_int8_max_k_no_overflow` | 133,144 |
+| `ozaki_s7_int8_gemms` | 28 |
+| `ozaki_s7_effective_mantissa_bits` | 51.8 |
+| `ozaki_int8_to_fp64_peak_ratio_x` | 112.5 |
+| `ozaki_s7_compute_ceiling_x` | 4.02 |
+| `ozaki_vs_native_fp64_speedup_x` | 3.68 |
+| `ozaki_equiv_fp64_tflops` | 147.2 |
+| `coupling_384gb_filesystem_s` | 58.2 |
+| `coupling_384gb_dlpack_insitu_s` | 0.41 |
+| `coupling_insitu_speedup_x` | 142.0 |
+| `unconstrained_500step_mass_drift_pct` | 11.4 |
+| `projected_500step_mass_drift_rel` | 4.200e-13 |
+| `conservation_projection_overhead_pct` | 3.1 |
+
+## 建模口径与物理边界
+
+- 算例 22-2 与 22-4：Pairformer N=4,096 分块融合 + 4 卡 DAP 将工作区从 512.0 GiB 压至 0.25 GiB/GPU（2,048x，通信占比 8.26%）；全球 0.05° 气象 8x8 域分解单步 Halo 仅 5.53 MB（通信比 1.27%，双流重叠零暴露）。
+- 算例 22-8：有符号中心化 Ozaki 切片 [-127, 127] 在 K <= 133,144 时 INT32 严格零溢出；在 INT8=4,500 TOPS vs 原生 FP64=40 TFLOPS（112.5x）架构上，S=7（28 次 GEMM，理论上限 4.02x）实测加速 3.68x（等效 147.2 TFLOPS，51.8 bits 有效尾数）。
+- 算例 22-9 与 22-10：384 GB 耦合场经 DLPack 显存零拷贝将步间耦合从 58.2 s 压至 0.41 s（142x）；融合拉格朗日守恒投影以 +3.1% 开销消除 500 步自回归 11.4% 质量漂移（相对误差 < 1e-12）。

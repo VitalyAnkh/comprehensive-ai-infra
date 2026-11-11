@@ -6,7 +6,7 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2026-11-09T17:47:00.314601</dc:date>
+    <dc:date>2026-11-11T12:57:54.577422</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -5456,7 +5456,7 @@ z
     </g>
    </g>
    <g id="text_8">
-    <!-- 4 合成数据工厂 (Ch23) -->
+    <!-- 4 合成数据工厂 (Ch13) -->
     <g style="fill: #14532d" transform="translate(59.738344 190.382118) scale(0.11 -0.11)">
      <defs>
       <path id="SourceHanSansCN-Bold-15" d="M 2157 0
@@ -5914,30 +5914,19 @@ L 1446 0
 L 506 0
 z
 " transform="scale(0.015625)"/>
-      <path id="SourceHanSansCN-Bold-7787" d="M 275 0
-L 275 582
-Q 890 1146 1350 1616
-Q 1811 2086 2067 2480
-Q 2323 2874 2323 3213
-Q 2323 3450 2240 3616
-Q 2157 3782 2000 3872
-Q 1843 3962 1613 3962
-Q 1357 3962 1142 3814
-Q 928 3667 749 3475
-L 250 3962
-Q 570 4320 915 4512
-Q 1261 4704 1734 4704
-Q 2182 4704 2518 4525
-Q 2854 4346 3040 4026
-Q 3226 3706 3226 3277
-Q 3226 2848 2995 2435
-Q 2765 2022 2384 1606
-Q 2003 1190 1549 736
-Q 1734 762 1945 778
-Q 2157 794 2323 794
-L 3450 794
-L 3450 0
-L 275 0
+      <path id="SourceHanSansCN-Bold-7786" d="M 525 0
+L 525 768
+L 1549 768
+L 1549 3629
+L 685 3629
+L 685 4218
+Q 1043 4288 1302 4384
+Q 1562 4480 1786 4614
+L 2483 4614
+L 2483 768
+L 3373 768
+L 3373 0
+L 525 0
 z
 " transform="scale(0.015625)"/>
       <path id="SourceHanSansCN-Bold-7788" d="M 1747 -90
@@ -6004,7 +5993,7 @@ z
      <use xlink:href="#SourceHanSansCN-Bold-9" transform="translate(704.40625 0)"/>
      <use xlink:href="#SourceHanSansCN-Bold-24" transform="translate(742.203125 0)"/>
      <use xlink:href="#SourceHanSansCN-Bold-49" transform="translate(807.796875 0)"/>
-     <use xlink:href="#SourceHanSansCN-Bold-7787" transform="translate(871.796875 0)"/>
+     <use xlink:href="#SourceHanSansCN-Bold-7786" transform="translate(871.796875 0)"/>
      <use xlink:href="#SourceHanSansCN-Bold-7788" transform="translate(930.796875 0)"/>
      <use xlink:href="#SourceHanSansCN-Bold-a" transform="translate(989.796875 0)"/>
     </g>
@@ -6780,7 +6769,7 @@ z
     </g>
    </g>
    <g id="text_10">
-    <!-- 5 科学智能 AI4S (Ch24) -->
+    <!-- 5 科学智能 AI4S (Ch22) -->
     <g style="fill: #134e4a" transform="translate(244.960172 190.382118) scale(0.11 -0.11)">
      <defs>
       <path id="SourceHanSansCN-Bold-16" d="M 1773 -90
@@ -7028,6 +7017,32 @@ Q 3322 307 2934 108
 Q 2547 -90 1997 -90
 z
 " transform="scale(0.015625)"/>
+      <path id="SourceHanSansCN-Bold-7787" d="M 275 0
+L 275 582
+Q 890 1146 1350 1616
+Q 1811 2086 2067 2480
+Q 2323 2874 2323 3213
+Q 2323 3450 2240 3616
+Q 2157 3782 2000 3872
+Q 1843 3962 1613 3962
+Q 1357 3962 1142 3814
+Q 928 3667 749 3475
+L 250 3962
+Q 570 4320 915 4512
+Q 1261 4704 1734 4704
+Q 2182 4704 2518 4525
+Q 2854 4346 3040 4026
+Q 3226 3706 3226 3277
+Q 3226 2848 2995 2435
+Q 2765 2022 2384 1606
+Q 2003 1190 1549 736
+Q 1734 762 1945 778
+Q 2157 794 2323 794
+L 3450 794
+L 3450 0
+L 275 0
+z
+" transform="scale(0.015625)"/>
      </defs>
      <use xlink:href="#SourceHanSansCN-Bold-16"/>
      <use xlink:href="#SourceHanSansCN-Bold-1" transform="translate(59 0)"/>
@@ -7045,7 +7060,7 @@ z
      <use xlink:href="#SourceHanSansCN-Bold-24" transform="translate(783.40625 0)"/>
      <use xlink:href="#SourceHanSansCN-Bold-49" transform="translate(849 0)"/>
      <use xlink:href="#SourceHanSansCN-Bold-7787" transform="translate(913 0)"/>
-     <use xlink:href="#SourceHanSansCN-Bold-7789" transform="translate(972 0)"/>
+     <use xlink:href="#SourceHanSansCN-Bold-7787" transform="translate(972 0)"/>
      <use xlink:href="#SourceHanSansCN-Bold-a" transform="translate(1031 0)"/>
     </g>
    </g>

@@ -2,7 +2,7 @@
 import json
 
 from .paths import PROJECT
-from .sources import records, read_source
+from .sources import records, verify_source_record
 from .units import positive_int, positive_number
 
 
@@ -19,7 +19,7 @@ def catalog() -> dict:
             if identifier not in sources:
                 raise ValueError(f"Hardware source is not locked: {identifier}")
             if identifier not in verified:
-                read_source(sources[identifier]["file"])
+                verify_source_record(sources[identifier]["file"])
                 verified.add(identifier)
         validate_device(device)
     return result

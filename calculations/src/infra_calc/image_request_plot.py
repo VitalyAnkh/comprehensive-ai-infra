@@ -4,6 +4,7 @@ from fractions import Fraction
 import hashlib
 import json
 from .paths import PROJECT
+from .sources import is_lfs_pointer, sha256_or_lfs_oid
 
 DIRECTORY = PROJECT / 'figures/image-request'
 
@@ -21,17 +22,17 @@ def hashes(paths):
 
 def verify():
     manifest=json.loads((DIRECTORY/'manifest.json').read_text())
-    expected_inputs={str(p.relative_to(PROJECT)) for p in input_paths()}
+    expected_inputs=None if is_lfs_pointer(PROJECT/'scenarios/book.json') else {str(p.relative_to(PROJECT)) for p in input_paths()}
     expected_artifacts={str((DIRECTORY/name).relative_to(PROJECT)) for name in ('figure.png','figure.svg','curve-data.json')}
     for key,expected in [('inputs',expected_inputs),('artifacts',expected_artifacts)]:
         rows=manifest.get(key)
-        if not isinstance(rows,list) or any(not isinstance(row,dict) for row in rows):
+        if not isinstance(rows,list) or not rows or any(not isinstance(row,dict) for row in rows):
             raise ValueError('Malformed image request figure manifest')
         names=[row.get('file') for row in rows]
-        if len(names)!=len(expected) or set(names)!=expected:
+        if expected is not None and (len(names)!=len(expected) or set(names)!=expected):
             raise ValueError('Incomplete or duplicate image request figure manifest')
         for row in rows:
-            if hashlib.sha256((PROJECT/row['file']).read_bytes()).hexdigest()!=row['sha256']:
+            if sha256_or_lfs_oid(PROJECT/row['file'])!=row['sha256']:
                 raise ValueError('Stale image request figure input/artifact: '+row['file'])
     return {'verified_figures':2}
 

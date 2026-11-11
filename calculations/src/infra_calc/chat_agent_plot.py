@@ -2,6 +2,7 @@
 from pathlib import Path
 import sys,json,hashlib
 from .paths import PROJECT as P
+from .sources import sha256_or_lfs_oid
 from .topics import agent_trace,trace_resource_bridge
 
 
@@ -54,7 +55,7 @@ def verify():
         if any(not isinstance(name,str) for name in names) or len(names)!=len(expected) or set(names)!=expected:
             raise ValueError('Incomplete or duplicate chat-agent manifest '+key)
     for row in manifest['inputs']+manifest['artifacts']:
-        if hashlib.sha256((P/row['file']).read_bytes()).hexdigest()!=row['sha256']:
+        if sha256_or_lfs_oid(P/row['file'])!=row['sha256']:
             raise ValueError('Stale chat-agent figure: '+row['file'])
     return {'verified_figures':3}
 

@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 
 from infra_calc.paths import PROJECT
+from infra_calc.sources import sha256_or_lfs_oid
 
 
 def calculate():
@@ -72,7 +73,7 @@ def verify():
         if any(not isinstance(name, str) for name in names) or len(names) != len(expected) or set(names) != expected:
             raise ValueError('Incomplete or duplicate architecture figure manifest: ' + key)
     for row in manifest['inputs'] + manifest['artifacts']:
-        if hashlib.sha256((PROJECT / row['file']).read_bytes()).hexdigest() != row['sha256']:
+        if sha256_or_lfs_oid(PROJECT / row['file']) != row['sha256']:
             raise ValueError('Architecture figure stale: ' + row['file'])
     return {'verified_figures': 3}
 

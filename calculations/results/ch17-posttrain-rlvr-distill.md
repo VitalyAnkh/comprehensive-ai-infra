@@ -1,0 +1,38 @@
+# 第 17 章：GRPO 共置重分片、RollPacker 流式重叠、变长 SFT 装箱、32-bit 蒸馏与异步 Agentic RL 账本
+
+- 计算标识：`posttrain-rlvr-distill`（第 17 章）
+- 场景输入：`{"deepseek_v3_vocab_size": 129280, "distill_tokens": 200000000000, "max_seq_len": 65536, "max_staleness_version_lag": 3, "mean_seq_len": 4200, "qwen3_vocab_size": 151936, "top_k_logits": 128}`
+
+## 核心量化结果
+
+| 指标 | 数值 |
+| --- | ---: |
+| `ppo_32b_static_state_gb` | 1,152.0 |
+| `grpo_32b_static_state_gb` | 576.0 |
+| `dapo_32b_kl_free_state_gb` | 512.0 |
+| `zero3_naive_reshard_seconds` | 1.575 |
+| `hybrid_engine_reshard_seconds` | 0.035 |
+| `hybrid_engine_reshard_speedup_x` | 45.0 |
+| `rollpacker_speculative_trajectories` | 1,600 |
+| `rollpacker_overprovision_pct` | 56.25 |
+| `rollpacker_serial_step_seconds` | 60.0 |
+| `rollpacker_stream_overlap_seconds` | 55.0 |
+| `rollpacker_overmigration_counterexample_seconds` | 62.0 |
+| `two_slot_naive_truncation_long_prob_pct` | 25.0 |
+| `sft_pad_to_64k_mfu_pct` | 13.6 |
+| `sft_varlen_unbalanced_mfu_pct` | 41.2 |
+| `sft_varlen_zigzag_mfu_pct` | 56.4 |
+| `sft_varlen_throughput_speedup_x` | 4.15 |
+| `qwen_200b_full_logits_bf16_pb` | 60.7744 |
+| `deepseek_200b_full_logits_bf16_pb` | 51.712 |
+| `top128_unpacked_6b_tb` | 153.6 |
+| `top128_bitpacked_32bit_tb` | 102.4 |
+| `top128_compression_vs_full_x` | 593.5 |
+| `offline_vs_online_teacher_crossover_epochs` | 1.88 |
+| `agentic_rl_sync_gpu_idle_pct` | 68.0 |
+| `agentic_rl_async_bounded_speedup_x` | 2.64 |
+
+## 建模口径与物理边界
+
+- 算例 17-1 至 17-5：GRPO 省去 Critic 与 RM 将 32B 静态状态从 1,152 GB 压至 576 GB；3D-HybridEngine 机内微分组重分片将切换耗时从 1.575 s 压至 0.035 s（45.0x）；RollPacker 流式重叠将步长从 60 s 压至 55 s 并避免 1/2 -> 1/4 长度坍缩。
+- 算例 17-11 至 17-13：cu_seqlens 装箱 + ZigZag 负载均衡将 64k SFT MFU 从 13.6% 提至 56.4%（4.15x）；Qwen3（V=151,936）采用 18-bit ID + 14-bit FP14 打包为 32-bit（4 B/entry），200B 词元 Top-128 仅 102.4 TB；异步有界陈旧度 Agentic RL 提速 2.64x。

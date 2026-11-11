@@ -1,0 +1,48 @@
+{
+  "schema": "h2-topic-v1",
+  "calculation": "multimodal-dit-duplex",
+  "chapter": 19,
+  "title": "第 19 章：三维视频 DiT 序列并行通信、E-PD 解耦配比与全双工 RVQ 语音回滚账本",
+  "scenario": {
+    "video_seconds": 10,
+    "fps": 24,
+    "resolution": "1920x1080",
+    "dit_hidden_dim": 4096,
+    "sp_gpus": 64,
+    "speech_frame_hz": 12.5,
+    "rvq_codebooks": 8,
+    "wan2_2_5b_config_dim": 3072,
+    "qwen3_vl_model_type": "qwen3_vl",
+    "qwen3_omni_model_type": "qwen3_omni_moe"
+  },
+  "summary": {
+    "video_10s_1080p_3d_tokens": 489600,
+    "vae_untiled_1x_gib": 118.6523,
+    "vae_tiled_2x_peak_gib": 1.2514,
+    "vae_tiling_peak_compression_x": 94.8,
+    "dit_single_tensor_mib": 3825.0,
+    "ulysses_64gpu_per_layer_comm_mib": 239.0625,
+    "ring_64gpu_per_layer_comm_mib": 7530.46875,
+    "usp_8x8_cross_node_comm_mib": 836.71875,
+    "usp_8x8_vs_ring_rdma_reduction_x": 9.0,
+    "epd_4gpu_4img_h0_throughput_req_s": 6.0,
+    "epd_4gpu_4img_h75_throughput_req_s": 9.16,
+    "cascade_speech_ttfa_ms": 1280.0,
+    "duplex_speech_ttfa_ms": 164.0,
+    "duplex_vs_cascade_speedup_x": 7.8,
+    "speech_12_5hz_frame_budget_ms": 80.0,
+    "duplex_server_frame_compute_ms": 24.0,
+    "dual_ar_depth_micro_kernels": 384,
+    "dual_ar_eager_frame_ms": 38.54,
+    "dual_ar_cudagraph_frame_ms": 11.5,
+    "dual_ar_cudagraph_speedup_x": 3.35,
+    "barge_in_played_frame": 54,
+    "barge_in_rolled_back_frames": 11,
+    "barge_in_rolled_back_kv_tokens": 187,
+    "barge_in_pointer_reset_ms": 0.12
+  },
+  "assumptions": [
+    "算例 19-2 至 19-6：1080p 视频补齐至 1088 后生成 60×68×120 = 489,600 个词元；3D 因果 VAE 分块将峰值显存从 118.65 GiB 压至 1.25 GiB（94.8x）；8×8 2D-USP（d=4,096）将跨机 RDMA 流量从 7,530.47 MiB 压至 836.72 MiB（9.0x）。",
+    "算例 19-9 至 19-12：原生全双工 S2S 首包延迟 164.0 ms（较串联 1,280.0 ms 快 7.80x）；整步 CUDA Graph 消除 384 个微算子发射风暴（38.54 ms -> 11.50 ms，3.35x）；RTP 游标回滚 11 帧（187 词元）仅需 0.12 ms。"
+  ]
+}

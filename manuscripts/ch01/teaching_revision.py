@@ -354,7 +354,7 @@ def draw(here, data):
 
         # 20. ch01-cloud-vs-ai-datacenter-and-patterns (Path B Fig 1-21)
         f, a = canvas(6.6)
-        card(a, 0.02, 0.52, 0.96, 0.45, 'A  传统通用云 vs. AI 数据中心：六维架构重心迁移（D11-01）', '', 'blue', title_size=11.5)
+        card(a, 0.02, 0.52, 0.96, 0.45, 'A  传统通用云 vs. AI 数据中心：六维架构重心迁移', '', 'blue', title_size=11.5)
         rows_a = [
             (0.755, '传统云：OS/进程接口\n一机切分多租户实例', 'AI 工厂：上下文/模型接口\n多卡聚合单一实例', 'blue', 'green'),
             (0.645, '传统云：异步 RPC 流量\n局部无状态副本容错', 'AI 工厂：高频集合通信\n全局同步屏障扩散', 'gray', 'orange'),
@@ -365,7 +365,7 @@ def draw(here, data):
             box(a, 0.525, y_row, 0.43, 0.092, right_lbl, c_r, size=11)
             arrow(a, (0.475, y_row + 0.046), (0.525, y_row + 0.046), color=BORDER_COL['blue'])
 
-        card(a, 0.02, 0.03, 0.96, 0.46, 'B  经典计算机系统六大设计模式在 LLM 系统中的映射（D11-03）', '', 'green', title_size=11.5)
+        card(a, 0.02, 0.03, 0.96, 0.46, 'B  经典计算机系统六大设计模式在 LLM 系统中的映射', '', 'green', title_size=11.5)
         patterns = [
             (0.045, 0.255, '1 分层与缓存', '页缓存 → 前缀 KV\n与三级状态池', 'blue'),
             (0.355, 0.255, '2 重算换搬运', '重物化 → 检查点\n与 FA 在线重算', 'orange'),
@@ -498,13 +498,13 @@ def draw(here, data):
             card(a, px, 0.68, 0.29, 0.20, ptitle, pbody, pcol, title_size=11, body_size=11)
         card(
             a, 0.045, 0.51, 0.43, 0.145,
-            '4 合成数据工厂 (Ch23)',
+            '4 合成数据工厂 (Ch13)',
             '无首字约束 · 追求吞吐/美元',
             'green', title_size=11, body_size=11
         )
         card(
             a, 0.525, 0.51, 0.43, 0.145,
-            '5 科学智能 AI4S (Ch24)',
+            '5 科学智能 AI4S (Ch22)',
             '三角注意力与长序列通信',
             'teal', title_size=11, body_size=11
         )

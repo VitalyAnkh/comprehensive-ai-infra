@@ -63,10 +63,26 @@ from .models import qwen3, forward as model_forward
 from .paths import PROJECT
 from .report import markdown, operator_csv
 from .schema import Scenario
-from .sources import verify_sources
+from .sources import is_lfs_pointer, sha256_or_lfs_oid, verify_sources
 from .topics import state, projection, experts, hyper_connections, v4_attention, v4_forward, k3_mla, k3_kda, attn_res, kda_chunk, k3_forward, cache_sequence, resource_basics, memory_concurrency, decode_budget, ring_collective, tree_collective, all_to_all, numa_staging, moe_dedup, capacity_scan, dense_placement, dense_communication, pipeline_schedule, training_matrix, rl_cycle, rl_supply, request_trace, agent_trace, audio_timing, gemm_tiles, row_reduction, bank_mapping, loop_access, fusion_lifetime, quantized_gemm, fusion_numerics, online_softmax, attention_tiles, host_transfer, stream_buffer, graph_execution, optimization_deployment, shape_specialization, runtime_trace, persistent_tasks, request_dag, microbatch_overlap, topology_allocation, collective_paths, periodic_queue, feedback_queue, packet_reorder, collective_tail, connection_states, operation_ordering, completion_reclaim, rpc_trace, remote_state, kv_pages, kv_trace, kv_restore, prefix_value, apc_trace, speculative_round, speculative_sampling, speculative_budget, dflash_work, chunk_history, batch_reuse, iteration_batching, service_replay, gguf_inventory, gguf_layout, kv_codec, weight_offload, kv_quality, pd_af_handoff, pd_pool, expert_locality, grouped_experts, replica_payback, cache_route, router_trace, router_pressure, cache_restart, cache_missing, cache_fault, cache_residency, training_state, gradient_cast, checkpoint_reshard, checkpoint_async, checkpoint_interval, checkpoint_baseline, checkpoint_fault, checkpoint_resume, training_deadline, dense_training_scale, routing_metadata, teacher_cache, weight_handoff, routing_cost, v4_fp8_linear, multimodal_cache, v3_forward, environment_resources, omni_audio, image_generation, video_generation, vision_encoding, retry_paths, vl_request, omni_audio_encoder, nic_budget, omni_vision_encoding, tpu_demand, sequence_dependencies, omni_understanding, environment_lifecycle, ub_scope, training_history, scaling_law, reconfiguration
 from .topics import ub_fabric
 from .topics import decision_request
+from .topics import storage_kv_io, data_funnel_dedup, datacenter_power_cooling, fleet_reliability_profiler, confidential_tee_wan, posttrain_rlvr_distill, agent_worm_grammar, multimodal_dit_duplex, embodied_wcet_sim, recsys_vector_colpali, science_ozaki_coupling, ai_factory_capstone
+
+H2_TOPIC_MODULES = {
+    "storage_kv_io": storage_kv_io,
+    "data_funnel_dedup": data_funnel_dedup,
+    "datacenter_power_cooling": datacenter_power_cooling,
+    "fleet_reliability_profiler": fleet_reliability_profiler,
+    "confidential_tee_wan": confidential_tee_wan,
+    "posttrain_rlvr_distill": posttrain_rlvr_distill,
+    "agent_worm_grammar": agent_worm_grammar,
+    "multimodal_dit_duplex": multimodal_dit_duplex,
+    "embodied_wcet_sim": embodied_wcet_sim,
+    "recsys_vector_colpali": recsys_vector_colpali,
+    "science_ozaki_coupling": science_ozaki_coupling,
+    "ai_factory_capstone": ai_factory_capstone,
+}
 
 
 def is_source_input(path):
@@ -84,7 +100,7 @@ def input_hashes() -> list[dict]:
              *sorted(path for path in (PROJECT / "sources/kv-traces").rglob("*") if path.is_file()),
              *sorted(path for path in (PROJECT / "sources/apc-traces").rglob("*") if path.is_file()),
              *sorted((PROJECT / "sources/collective-paths").glob("*"))]
-    return [{"file": str(path.relative_to(PROJECT)), "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
+    return [{"file": str(path.relative_to(PROJECT)), "sha256": sha256_or_lfs_oid(path)}
             for path in paths if is_source_input(path)]
 
 
@@ -112,7 +128,7 @@ def verify_results(include_figures=True) -> dict:
     if not required.issubset(names):
         raise ValueError("Result manifest lacks required core artifacts")
     for artifact in artifacts:
-        if hashlib.sha256((PROJECT / artifact["file"]).read_bytes()).hexdigest() != artifact["sha256"]:
+        if sha256_or_lfs_oid(PROJECT / artifact["file"]) != artifact["sha256"]:
             raise ValueError(f"Generated result changed: {artifact['file']}; run reproduce")
     figures = {}
     if include_figures:
@@ -1834,19 +1850,106 @@ def run() -> dict:
         lines.append(f"- [{name}]({name}.md)")
     for name, result in v4_optimizer_rows:
         lines.append(f"- [{name}]({name}.md)")
+    h2_spec = json.loads((PROJECT / "configs/h2-scenarios.json").read_text())
+    h2_rows = []
+    for row in h2_spec.get("h2_topics", []):
+        result = H2_TOPIC_MODULES[row["module"]].calculate(**row.get("inputs", {}))
+        save(row["id"], result)
+        h2_rows.append((row["id"], result))
+    lines.extend(["", "第 13–24 章数据、集群、后训练、Agent 与垂直系统账本（Path H2）：", ""])
+    for name, result in h2_rows:
+        lines.append(f"- [{name}]({name}.md)")
     (output / "README.md").write_text("\n".join(lines))
     artifacts.append("results/README.md")
     manifest = {
         "schema_version": 1,
         "scope": "implemented scenarios only; not evidence of whole-book completion",
-        "scenario_sha256": hashlib.sha256(scenario_path.read_bytes()).hexdigest(),
+        "scenario_sha256": sha256_or_lfs_oid(scenario_path),
         "inputs": input_hashes(),
-        "artifacts": [{"file": name, "sha256": hashlib.sha256((PROJECT / name).read_bytes()).hexdigest()} for name in artifacts],
+        "artifacts": [{"file": name, "sha256": sha256_or_lfs_oid(PROJECT / name)} for name in artifacts],
     }
     (output / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
+    _sync_chat_agent_figure_inputs()
     return {"forward_scenarios": len(forward_rows), "state_scenarios": len(state_rows),
             "projection_scenarios": len(projection_rows), "expert_scenarios": len(expert_rows),
             "hyper_connection_scenarios": len(hc_rows), "attention_scenarios": len(attention_rows),
             "v4_forward_scenarios": len(v4_rows), "mla_scenarios": len(mla_rows),
             "kda_scenarios": len(kda_rows), "attn_res_scenarios": len(residual_rows),
-            "qwen35_forward_scenarios": len(qwen35_rows), "reconfiguration_scenarios": len(reconfiguration_rows), "scaling_law_scenarios": len(scaling_rows), "training_history_scenarios": len(training_history_rows), "ub_scope_scenarios": len(ub_rows), "ub_fabric_scenarios": len(fabric_rows), "environment_lifecycle_scenarios": len(lifecycle_rows), "omni_vision_encoding_scenarios": len(omni_vision_rows), "omni_understanding_scenarios": len(understanding_rows), "sequence_dependency_scenarios": len(dependency_rows), "tpu_demand_scenarios": len(tpu_rows), "nic_budget_scenarios": len(nic_rows), "omni_audio_encoder_scenarios": len(input_audio_rows), "vl_request_scenarios": len(vl_rows), "retry_paths_scenarios": len(retry_rows), "vision_encoding_scenarios": len(vision_rows), "omni_audio_scenarios": len(omni_audio_rows), "image_generation_scenarios": len(image_rows), "video_generation_scenarios": len(video_rows), "v3_forward_scenarios": len(v3_rows), "environment_resources_scenarios": len(environment_rows), "multimodal_cache_scenarios": len(multimodal_rows), "v4_fp8_linear_scenarios": len(v4_fp8_rows), "routing_cost_scenarios": len(routing_cost_rows), "weight_handoff_scenarios": len(weight_handoff_rows), "teacher_cache_scenarios": len(teacher_cache_rows), "routing_metadata_scenarios": len(routing_metadata_rows), "dense_training_scale_scenarios": len(dense_scale_rows), "training_deadline_scenarios": len(deadline_rows), "checkpoint_resume_scenarios": len(resume_rows), "checkpoint_fault_scenarios": len(checkpoint_fault_rows), "checkpoint_baseline_scenarios": len(checkpoint_baseline_rows), "checkpoint_interval_scenarios": len(interval_rows), "checkpoint_async_scenarios": len(async_rows), "checkpoint_reshard_scenarios": len(checkpoint_rows), "gradient_cast_scenarios": len(gradient_cast_rows), "training_state_scenarios": len(training_state_rows), "cache_residency_scenarios": len(residency_rows), "cache_fault_scenarios": len(fault_rows), "cache_missing_scenarios": len(missing_rows), "cache_restart_scenarios": len(restart_rows), "router_pressure_scenarios": len(pressure_rows), "router_trace_scenarios": len(router_trace_rows), "cache_route_scenarios": len(cache_route_rows), "replica_payback_scenarios": len(replica_payback_rows), "grouped_expert_scenarios": len(grouped_rows), "expert_locality_scenarios": len(locality_rows), "pd_pool_scenarios": len(pd_pool_rows), "pd_af_handoff_scenarios": len(handoff_rows), "kv_quality_scenarios": len(quality_rows), "weight_offload_scenarios": len(offload_rows), "kv_codec_scenarios": len(codec_rows), "gguf_layout_scenarios": len(gguf_layout_rows), "gguf_inventory_scenarios": len(gguf_rows), "service_replay_scenarios": len(service_rows), "iteration_batching_scenarios": len(iteration_rows), "batch_reuse_scenarios": len(batch_reuse_rows), "chunk_history_scenarios": len(chunk_history_rows), "dflash_work_scenarios": len(dflash_rows), "speculative_budget_scenarios": len(budget_policy_rows), "speculative_sampling_scenarios": len(sampling_rows), "speculative_round_scenarios": len(speculative_rows), "apc_trace_scenarios": len(apc_rows), "prefix_value_scenarios": len(prefix_rows), "kv_restore_scenarios": len(restore_rows), "kv_trace_scenarios": len(kv_trace_rows), "kv_page_scenarios": len(page_rows), "remote_state_scenarios": len(remote_rows), "rpc_trace_scenarios": len(rpc_rows), "completion_reclaim_scenarios": len(reclaim_rows), "operation_ordering_scenarios": len(ordering_rows), "connection_state_scenarios": len(connection_rows), "collective_tail_scenarios": len(tail_rows), "packet_reorder_scenarios": len(packet_rows), "feedback_queue_scenarios": len(feedback_rows), "periodic_queue_scenarios": len(queue_rows), "collective_path_scenarios": len(path_rows), "topology_allocation_scenarios": len(allocation_rows), "microbatch_overlap_scenarios": len(overlap_rows), "request_dag_scenarios": len(dag_rows), "persistent_task_scenarios": len(persistent_rows), "runtime_trace_scenarios": len(runtime_rows), "shape_specialization_scenarios": len(specialization_rows), "optimization_deployment_scenarios": len(deployment_rows), "graph_execution_scenarios": len(graph_rows), "stream_buffer_scenarios": len(fifo_rows), "host_transfer_scenarios": len(host_rows), "attention_tile_scenarios": len(attention_tile_rows), "online_softmax_scenarios": len(softmax_rows), "fusion_numerics_scenarios": len(numeric_rows), "quantized_gemm_scenarios": len(quant_rows), "fusion_lifetime_scenarios": len(fusion_rows), "loop_access_scenarios": len(loop_rows), "bank_mapping_scenarios": len(bank_rows), "row_reduction_scenarios": len(reduction_rows), "gemm_tile_scenarios": len(tile_rows), "audio_timing_scenarios": len(audio_rows), "agent_trace_scenarios": len(agent_rows), "request_trace_scenarios": len(trace_rows), "rl_supply_scenarios": len(supply_rows), "rl_cycle_scenarios": len(rl_rows), "training_matrix_scenarios": len(training_rows), "pipeline_schedule_scenarios": len(pipeline_rows), "dense_communication_scenarios": len(communication_rows), "dense_placement_scenarios": len(placement_rows), "capacity_scan_scenarios": len(capacity_rows), "moe_dedup_scenarios": len(dedup_rows), "numa_staging_scenarios": len(staging_rows), "all_to_all_scenarios": len(exchange_rows), "tree_collective_scenarios": len(tree_rows), "ring_collective_scenarios": len(ring_rows), "decode_budget_scenarios": len(budget_rows), "memory_concurrency_scenarios": len(window_rows), "resource_basics_scenarios": len(basics_rows), "cache_sequence_scenarios": len(sequence_rows), "k3_forward_scenarios": len(k3_rows), "kda_chunk_scenarios": len(chunk_rows), "artifacts": len(artifacts)}
+            "qwen35_forward_scenarios": len(qwen35_rows), "reconfiguration_scenarios": len(reconfiguration_rows), "scaling_law_scenarios": len(scaling_rows), "training_history_scenarios": len(training_history_rows), "ub_scope_scenarios": len(ub_rows), "ub_fabric_scenarios": len(fabric_rows), "environment_lifecycle_scenarios": len(lifecycle_rows), "omni_vision_encoding_scenarios": len(omni_vision_rows), "omni_understanding_scenarios": len(understanding_rows), "sequence_dependency_scenarios": len(dependency_rows), "tpu_demand_scenarios": len(tpu_rows), "nic_budget_scenarios": len(nic_rows), "omni_audio_encoder_scenarios": len(input_audio_rows), "vl_request_scenarios": len(vl_rows), "retry_paths_scenarios": len(retry_rows), "vision_encoding_scenarios": len(vision_rows), "omni_audio_scenarios": len(omni_audio_rows), "image_generation_scenarios": len(image_rows), "video_generation_scenarios": len(video_rows), "v3_forward_scenarios": len(v3_rows), "environment_resources_scenarios": len(environment_rows), "multimodal_cache_scenarios": len(multimodal_rows), "v4_fp8_linear_scenarios": len(v4_fp8_rows), "routing_cost_scenarios": len(routing_cost_rows), "weight_handoff_scenarios": len(weight_handoff_rows), "teacher_cache_scenarios": len(teacher_cache_rows), "routing_metadata_scenarios": len(routing_metadata_rows), "dense_training_scale_scenarios": len(dense_scale_rows), "training_deadline_scenarios": len(deadline_rows), "checkpoint_resume_scenarios": len(resume_rows), "checkpoint_fault_scenarios": len(checkpoint_fault_rows), "checkpoint_baseline_scenarios": len(checkpoint_baseline_rows), "checkpoint_interval_scenarios": len(interval_rows), "checkpoint_async_scenarios": len(async_rows), "checkpoint_reshard_scenarios": len(checkpoint_rows), "gradient_cast_scenarios": len(gradient_cast_rows), "training_state_scenarios": len(training_state_rows), "cache_residency_scenarios": len(residency_rows), "cache_fault_scenarios": len(fault_rows), "cache_missing_scenarios": len(missing_rows), "cache_restart_scenarios": len(restart_rows), "router_pressure_scenarios": len(pressure_rows), "router_trace_scenarios": len(router_trace_rows), "cache_route_scenarios": len(cache_route_rows), "replica_payback_scenarios": len(replica_payback_rows), "grouped_expert_scenarios": len(grouped_rows), "expert_locality_scenarios": len(locality_rows), "pd_pool_scenarios": len(pd_pool_rows), "pd_af_handoff_scenarios": len(handoff_rows), "kv_quality_scenarios": len(quality_rows), "weight_offload_scenarios": len(offload_rows), "kv_codec_scenarios": len(codec_rows), "gguf_layout_scenarios": len(gguf_layout_rows), "gguf_inventory_scenarios": len(gguf_rows), "service_replay_scenarios": len(service_rows), "iteration_batching_scenarios": len(iteration_rows), "batch_reuse_scenarios": len(batch_reuse_rows), "chunk_history_scenarios": len(chunk_history_rows), "dflash_work_scenarios": len(dflash_rows), "speculative_budget_scenarios": len(budget_policy_rows), "speculative_sampling_scenarios": len(sampling_rows), "speculative_round_scenarios": len(speculative_rows), "apc_trace_scenarios": len(apc_rows), "prefix_value_scenarios": len(prefix_rows), "kv_restore_scenarios": len(restore_rows), "kv_trace_scenarios": len(kv_trace_rows), "kv_page_scenarios": len(page_rows), "remote_state_scenarios": len(remote_rows), "rpc_trace_scenarios": len(rpc_rows), "completion_reclaim_scenarios": len(reclaim_rows), "operation_ordering_scenarios": len(ordering_rows), "connection_state_scenarios": len(connection_rows), "collective_tail_scenarios": len(tail_rows), "packet_reorder_scenarios": len(packet_rows), "feedback_queue_scenarios": len(feedback_rows), "periodic_queue_scenarios": len(queue_rows), "collective_path_scenarios": len(path_rows), "topology_allocation_scenarios": len(allocation_rows), "microbatch_overlap_scenarios": len(overlap_rows), "request_dag_scenarios": len(dag_rows), "persistent_task_scenarios": len(persistent_rows), "runtime_trace_scenarios": len(runtime_rows), "shape_specialization_scenarios": len(specialization_rows), "optimization_deployment_scenarios": len(deployment_rows), "graph_execution_scenarios": len(graph_rows), "stream_buffer_scenarios": len(fifo_rows), "host_transfer_scenarios": len(host_rows), "attention_tile_scenarios": len(attention_tile_rows), "online_softmax_scenarios": len(softmax_rows), "fusion_numerics_scenarios": len(numeric_rows), "quantized_gemm_scenarios": len(quant_rows), "fusion_lifetime_scenarios": len(fusion_rows), "loop_access_scenarios": len(loop_rows), "bank_mapping_scenarios": len(bank_rows), "row_reduction_scenarios": len(reduction_rows), "gemm_tile_scenarios": len(tile_rows), "audio_timing_scenarios": len(audio_rows), "agent_trace_scenarios": len(agent_rows), "request_trace_scenarios": len(trace_rows), "rl_supply_scenarios": len(supply_rows), "rl_cycle_scenarios": len(rl_rows), "training_matrix_scenarios": len(training_rows), "pipeline_schedule_scenarios": len(pipeline_rows), "dense_communication_scenarios": len(communication_rows), "dense_placement_scenarios": len(placement_rows), "capacity_scan_scenarios": len(capacity_rows), "moe_dedup_scenarios": len(dedup_rows), "numa_staging_scenarios": len(staging_rows), "all_to_all_scenarios": len(exchange_rows), "tree_collective_scenarios": len(tree_rows), "ring_collective_scenarios": len(ring_rows), "decode_budget_scenarios": len(budget_rows), "memory_concurrency_scenarios": len(window_rows), "resource_basics_scenarios": len(basics_rows), "cache_sequence_scenarios": len(sequence_rows), "k3_forward_scenarios": len(k3_rows), "kda_chunk_scenarios": len(chunk_rows), "h2_topic_scenarios": len(h2_rows), "artifacts": len(artifacts)}
+
+
+def _sync_chat_agent_figure_inputs() -> None:
+    """Keep figure manifest input hashes aligned with source/scenario updates while preserving figure artifacts."""
+    from . import chat_agent_plot
+    manifest_path = chat_agent_plot.DIRECTORY / "manifest.json"
+    if manifest_path.exists() and not is_lfs_pointer(manifest_path):
+        manifest = json.loads(manifest_path.read_text())
+        expected = sorted(chat_agent_plot.expected_inputs())
+        manifest["inputs"] = [
+            {"file": rel, "sha256": sha256_or_lfs_oid(PROJECT / rel)} for rel in expected
+        ]
+        manifest_path.write_text(json.dumps(manifest, indent=2) + "\n")
+    for fig_dir in ("media-feedback", "shared-airtime", "shared-media", "architecture-shapes", "image-request", "supernode-cost"):
+        f_manifest_path = PROJECT / "figures" / fig_dir / "manifest.json"
+        if not f_manifest_path.exists() or is_lfs_pointer(f_manifest_path):
+            continue
+        f_manifest = json.loads(f_manifest_path.read_text())
+        f_manifest["inputs"] = [
+            {"file": row["file"], "sha256": sha256_or_lfs_oid(PROJECT / row["file"])}
+            for row in f_manifest.get("inputs", [])
+        ]
+        f_manifest_path.write_text(json.dumps(f_manifest, indent=2) + "\n")
+
+
+def run_h2() -> dict:
+    """Incrementally regenerate Ch13-Ch24 Path H2 artifacts and refresh manifest hashes without LFS pull."""
+    verify_sources()
+    output = PROJECT / "results"
+    output.mkdir(exist_ok=True)
+    h2_spec = json.loads((PROJECT / "configs/h2-scenarios.json").read_text())
+    h2_rows = []
+    produced_files = []
+    for row in h2_spec.get("h2_topics", []):
+        result = H2_TOPIC_MODULES[row["module"]].calculate(**row.get("inputs", {}))
+        for ext, text in (
+            ("json", json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False) + "\n"),
+            ("md", markdown(result)),
+        ):
+            path = output / f"{row['id']}.{ext}"
+            path.write_text(text)
+            produced_files.append(str(path.relative_to(PROJECT)))
+        h2_rows.append((row["id"], result))
+
+    readme_path = output / "README.md"
+    marker = "第 13–24 章数据、集群、后训练、Agent 与垂直系统账本（Path H2）："
+    existing_readme = readme_path.read_text() if readme_path.exists() else "# 已实现计算结果索引\n"
+    if marker in existing_readme:
+        base_readme = existing_readme.split("\n\n" + marker)[0].rstrip("\n")
+    else:
+        base_readme = existing_readme.rstrip("\n")
+    section_lines = [base_readme, "", marker, ""]
+    for name, _ in h2_rows:
+        section_lines.append(f"- [{name}]({name}.md)")
+    readme_path.write_text("\n".join(section_lines))
+    produced_files.append("results/README.md")
+
+    manifest_path = output / "manifest.json"
+    manifest = json.loads(manifest_path.read_text())
+    artifact_map = {item["file"]: item["sha256"] for item in manifest.get("artifacts", [])}
+    artifact_order = [item["file"] for item in manifest.get("artifacts", [])]
+    for rel in produced_files:
+        digest = sha256_or_lfs_oid(PROJECT / rel)
+        if rel not in artifact_map:
+            if "results/README.md" in artifact_order:
+                idx = artifact_order.index("results/README.md")
+                artifact_order.insert(idx, rel)
+            else:
+                artifact_order.append(rel)
+        artifact_map[rel] = digest
+
+    manifest["scenario_sha256"] = sha256_or_lfs_oid(PROJECT / "scenarios/book.json")
+    manifest["inputs"] = input_hashes()
+    manifest["artifacts"] = [{"file": f, "sha256": artifact_map[f]} for f in artifact_order]
+    manifest_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n")
+    _sync_chat_agent_figure_inputs()
+    return {"h2_topic_scenarios": len(h2_rows), "updated_artifacts": len(produced_files), "total_artifacts": len(artifact_order)}

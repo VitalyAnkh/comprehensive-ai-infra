@@ -2476,6 +2476,10 @@
       "sha256": "7cb7b91a89fb7c68640966e4ea34d3a523c6be7ac58325bdb24b199ff2c41a79"
     },
     {
+      "file": "configs/h2-scenarios.json",
+      "sha256": "742eb8f4def1707f5ef98a078acf6da4a33f7f480f11bb4b0f0b6cd1399b0f96"
+    },
+    {
       "file": "configs/hardware.json",
       "sha256": "9c4639ec65ca3b808923a7f332114f800c7930635b6fdac08f49686cddbf0ba2"
     },
@@ -2617,7 +2621,7 @@
     },
     {
       "file": "src/infra_calc/architecture_shape_plot.py",
-      "sha256": "6374bb5020360de986c96a82a54ba4cc69f07030b6b76edb9d9df714b9d042ad"
+      "sha256": "51e9696e32fad6eeb4cadf481474b09a950887e20e3a37f7ef27ee7f5ef4e131"
     },
     {
       "file": "src/infra_calc/capacity_plot.py",
@@ -2625,11 +2629,11 @@
     },
     {
       "file": "src/infra_calc/chat_agent_plot.py",
-      "sha256": "3ad35b41ea082ca23332a3d1459e1f672feb7bbeac324a452131db201bfc1fc3"
+      "sha256": "713a1043097123338ed5502b3e97b7e9563c05f869f16df1eea5445950b9762d"
     },
     {
       "file": "src/infra_calc/cli.py",
-      "sha256": "f6bcc5612a61f47ddbc9d158388d6ed3fabe4f5e69cf4340785bbbdb43880b77"
+      "sha256": "5e5541674850e164ec1e0fe8cbc9876d7c95276178ef911aec29f6936828203f"
     },
     {
       "file": "src/infra_calc/collective_plot.py",
@@ -2645,7 +2649,7 @@
     },
     {
       "file": "src/infra_calc/delivery.py",
-      "sha256": "431005b8c87fcea68ee760db142e9a554cb68e4b3274c30c46b5cc1c543dd9d0"
+      "sha256": "c912e6ec10659876684c5d2a2bcfe1c8dc80476983fb4f1cf65076617b49e80f"
     },
     {
       "file": "src/infra_calc/gguf_header.py",
@@ -2653,11 +2657,11 @@
     },
     {
       "file": "src/infra_calc/hardware.py",
-      "sha256": "19e8ec29e6ab6bdddcf68ab08b5a789f2ecc2a324317ace35aff9db14d8701ee"
+      "sha256": "67023cb8c2980010080bf241d282cda43674dd7821306f8e41f17fd31d8f344a"
     },
     {
       "file": "src/infra_calc/image_request_plot.py",
-      "sha256": "a6745efa6b725d5cafc009a97391bb5fa40bebdfdae2b37765a032c53eb75416"
+      "sha256": "9ec20ba2888a6240520e0f15dbe44ceb8e329f43100b2581513e0788c4a477ad"
     },
     {
       "file": "src/infra_calc/inventory.py",
@@ -2665,7 +2669,7 @@
     },
     {
       "file": "src/infra_calc/media_feedback_plot.py",
-      "sha256": "077e4b22d689fc06fa571741b59841a5645ee60802123f03c5bd54a296ae9054"
+      "sha256": "855acf9e323547d88a2638d391823b5478a9e7701b281ae4750134aece6e256e"
     },
     {
       "file": "src/infra_calc/models/__init__.py",
@@ -2697,11 +2701,11 @@
     },
     {
       "file": "src/infra_calc/report.py",
-      "sha256": "f2694e78fbbf7b293e4503494806d6c4dfec8c638d19f261c4011d59a9473cd2"
+      "sha256": "e6c098a8d3e3d0d9e2c988af3a48ed6fdae87699c53f072f631a4f43952f8fc4"
     },
     {
       "file": "src/infra_calc/reproduce.py",
-      "sha256": "0636e7275c811ec18db153dbbe176f29e810c357d566341e9311274ac7824e57"
+      "sha256": "2d7af806bbe0f21f292ee51a0a4b4fba3ed739c139c259b678efef3e084e544e"
     },
     {
       "file": "src/infra_calc/schema.py",
@@ -2713,11 +2717,11 @@
     },
     {
       "file": "src/infra_calc/shared_media_plot.py",
-      "sha256": "95597f340039c30325c2bc3ae4f387c48a294c01a8eaf002ac5d68dee2e85369"
+      "sha256": "d04b1dbe4cbf122d69e762ee29b7afb5e47643400ea27c24a915019c2186d643"
     },
     {
       "file": "src/infra_calc/sources.py",
-      "sha256": "01f2495e00acd09f54f54f4f7312dfc713d17602388268a5702a5be2f0124a9c"
+      "sha256": "72eb39d681082326d6a7418917413bbe4e0f5e1962bec249e050643d9d7c86a3"
     },
     {
       "file": "src/infra_calc/specialization_plot.py",
@@ -2725,7 +2729,7 @@
     },
     {
       "file": "src/infra_calc/supernode_cost_plot.py",
-      "sha256": "8fc202a2784871a209dd34295c22a39aaaad58ac2457cbe7864989392a634bc8"
+      "sha256": "bbfa82e0e95c49a806395523ad1856a3a5a9afacc3ebdce3f255e6e348034efe"
     },
     {
       "file": "src/infra_calc/topics/__init__.py",
@@ -2734,6 +2738,14 @@
     {
       "file": "src/infra_calc/topics/agent_trace.py",
       "sha256": "a92edc05463551a1241890b63c6981df0eeae9ebeded83956e8ba108d4d99f32"
+    },
+    {
+      "file": "src/infra_calc/topics/agent_worm_grammar.py",
+      "sha256": "96d9e18667a1ec2034f8407fe371586ceb23639068d6754eb1b04d5b71e21d07"
+    },
+    {
+      "file": "src/infra_calc/topics/ai_factory_capstone.py",
+      "sha256": "3e955ba864852701cd5edb3284de18bb846ebcccd8535277d8a193b640c1342c"
     },
     {
       "file": "src/infra_calc/topics/all_to_all.py",
@@ -2852,6 +2864,10 @@
       "sha256": "cbd449217204afcd3d772868809cf2075cdf1286f255f2e26d08ecda458705e5"
     },
     {
+      "file": "src/infra_calc/topics/confidential_tee_wan.py",
+      "sha256": "239455005909d97168f66b0a19af8918419d27b8cbc4ccb472119ec7e0e3f7df"
+    },
+    {
       "file": "src/infra_calc/topics/connection_sequence.py",
       "sha256": "2fafd0eb465cc9b5144f2689db670bfea2d49b57402b3395a273120224fc3744"
     },
@@ -2866,6 +2882,14 @@
     {
       "file": "src/infra_calc/topics/critical_batch.py",
       "sha256": "97d2ea98893ac9cdaae27f3b93297385bea93f996cbc60784ed4bd9c14954682"
+    },
+    {
+      "file": "src/infra_calc/topics/data_funnel_dedup.py",
+      "sha256": "e2bfbfc12cfb834c20c03437107d89fe79c8aa79cf027688f210a084c1dda2af"
+    },
+    {
+      "file": "src/infra_calc/topics/datacenter_power_cooling.py",
+      "sha256": "1da95123ea4a695fafd9e589d5c4d7454a68fd759c085d156129a2d70db26865"
     },
     {
       "file": "src/infra_calc/topics/decision_request.py",
@@ -2902,6 +2926,10 @@
     {
       "file": "src/infra_calc/topics/edge_tiers.py",
       "sha256": "baf6fbb6cadad8a823debdfcb06fca5110e58cab94b00736240d4c54ab9e89bf"
+    },
+    {
+      "file": "src/infra_calc/topics/embodied_wcet_sim.py",
+      "sha256": "56e895fda5fccfb35cc3a7fa6d285bb75e73a1b84593a888fced06c9c1284d39"
     },
     {
       "file": "src/infra_calc/topics/energy_ledger.py",
@@ -2946,6 +2974,10 @@
     {
       "file": "src/infra_calc/topics/fish_wave_export.py",
       "sha256": "2969b8fc0e137650f87ec2d269a1f34a7bae6b23a8312ec9a096bdd7082c8f5d"
+    },
+    {
+      "file": "src/infra_calc/topics/fleet_reliability_profiler.py",
+      "sha256": "a36adc22ca682a2aefea7217902481b2f5583a45e8fa5e087d2abdc38946025f"
     },
     {
       "file": "src/infra_calc/topics/flux_vae_decode.py",
@@ -3132,6 +3164,10 @@
       "sha256": "11d6ed030f9d3f5a50a84db882711614ca4891a1d6929d23dc230370ad2664d5"
     },
     {
+      "file": "src/infra_calc/topics/multimodal_dit_duplex.py",
+      "sha256": "dda8941bf7effd9e4f48f3045ee7fd184cf3d37aafde66f5c892a7f057d88e10"
+    },
+    {
       "file": "src/infra_calc/topics/nic_budget.py",
       "sha256": "de4e2cc8610706d18320c5b1a1955b07131c9b159a204c6f166aa3ea599067d7"
     },
@@ -3200,6 +3236,10 @@
       "sha256": "3e5b9fe84e926073dbc0c57d0b9897948dc1df807a9f98d861ea71c276846ad3"
     },
     {
+      "file": "src/infra_calc/topics/posttrain_rlvr_distill.py",
+      "sha256": "45653afbe464669b04ae00c7a1ad37bc4bc00ae4b3ff9ebb15678a09be579c50"
+    },
+    {
       "file": "src/infra_calc/topics/prefix_value.py",
       "sha256": "b53060d1f85b2adebece0900900f96a0202d011373d077b1feee68902d860040"
     },
@@ -3266,6 +3306,10 @@
     {
       "file": "src/infra_calc/topics/reconfiguration.py",
       "sha256": "27a965408d84764f6d2bcdebf8797e875cc10935eccbffc2822b0663cb514e7b"
+    },
+    {
+      "file": "src/infra_calc/topics/recsys_vector_colpali.py",
+      "sha256": "3ab37e77df3f4caee30772fec4bdd0b2443f75cab4aee1c0432784d1f78a5599"
     },
     {
       "file": "src/infra_calc/topics/reduction_order.py",
@@ -3356,6 +3400,10 @@
       "sha256": "918feb4b3ac87a9cb94b185aabe3d4922217614512283b4ffaf44410590ba47b"
     },
     {
+      "file": "src/infra_calc/topics/science_ozaki_coupling.py",
+      "sha256": "45fc21ad604732a780a16f7243fac11a04138564cb790a216a69e16959a0ab3f"
+    },
+    {
       "file": "src/infra_calc/topics/sequence_dependencies.py",
       "sha256": "1b7ffc459b3e739f838ac6f7c4eee904e598a45e58ee4a1bdbf0b1d968601a75"
     },
@@ -3406,6 +3454,10 @@
     {
       "file": "src/infra_calc/topics/storage_generation_comparison.py",
       "sha256": "30186a1cf575db3c9309e6f49b84548b25b32c08fe1303fc391faab9cabc5cea"
+    },
+    {
+      "file": "src/infra_calc/topics/storage_kv_io.py",
+      "sha256": "dbadaa4ab21540e04bfc2df312eda7ffea1f817c238e98e886778ca254d353ca"
     },
     {
       "file": "src/infra_calc/topics/straggler_max.py",
@@ -14246,8 +14298,104 @@
       "sha256": "f8139451dbcebfca2f38232ae3e8c4afe2d649c1467cbc19e34201a1a359f260"
     },
     {
+      "file": "results/ch13-storage-kv-io.json",
+      "sha256": "a20f70d054d507c32605cb62563876b607ebe8bcca0ae5d56ae23dcf1f65efbb"
+    },
+    {
+      "file": "results/ch13-storage-kv-io.md",
+      "sha256": "dd4a05374e6e719ba0aaf3afe0826c8c646974218570c418dc98965c657bcc3c"
+    },
+    {
+      "file": "results/ch13-data-funnel-dedup.json",
+      "sha256": "1c47f1926c8dccf758838e90351aee96e1d9739bc8f98878b1c5a37ebadf6658"
+    },
+    {
+      "file": "results/ch13-data-funnel-dedup.md",
+      "sha256": "d6a5aa7d06bdb5f1afce74e3415ca13ee22050dcee90bc424487734272d55d33"
+    },
+    {
+      "file": "results/ch14-datacenter-power-cooling.json",
+      "sha256": "f11641b560b665e03f6ba35ed86a7d3d42de9602227a5b47c116fc471f0bd48b"
+    },
+    {
+      "file": "results/ch14-datacenter-power-cooling.md",
+      "sha256": "4c945da6dda33c753a5ae4805a51abbc7b422fe93fdf3b0aac750152159da619"
+    },
+    {
+      "file": "results/ch15-fleet-reliability-profiler.json",
+      "sha256": "848de63446de2ad24c632362d10fb901b0d69a042671f28635de37beb75280d3"
+    },
+    {
+      "file": "results/ch15-fleet-reliability-profiler.md",
+      "sha256": "55947d3800455c2ef41a4721342921c62a06a84e1ba80c32534579e91c23d991"
+    },
+    {
+      "file": "results/ch16-confidential-tee-wan.json",
+      "sha256": "bdcdbd5bd96cc7f41449c1873061b42a47da76e71e5b55253ceb5cb35fba62ef"
+    },
+    {
+      "file": "results/ch16-confidential-tee-wan.md",
+      "sha256": "836be82ad7a60fd8ca93af7d603d59619cbd50a539f25126f19142d7decad13a"
+    },
+    {
+      "file": "results/ch17-posttrain-rlvr-distill.json",
+      "sha256": "56e78fcb6974e719ae6f30d3b458e0f3a10adf3144e099ea53b04da8ff5ce2e0"
+    },
+    {
+      "file": "results/ch17-posttrain-rlvr-distill.md",
+      "sha256": "0acab554787156dbe7556c0731c8adf4cf04b1bfa033749ddd749e6a53dccbfb"
+    },
+    {
+      "file": "results/ch18-agent-worm-grammar.json",
+      "sha256": "e81066856c63b697123e03379fce3828d3efcfdfee8da2b6359674857b5dcf8c"
+    },
+    {
+      "file": "results/ch18-agent-worm-grammar.md",
+      "sha256": "65fc529ab562452e5ae52dfe406bc14080e9eb892be2a312d2d912d5ad92c178"
+    },
+    {
+      "file": "results/ch19-multimodal-dit-duplex.json",
+      "sha256": "653f2c9dfd401788737e2f90694221131f7f49c1605f19dbda99c0ca1496153f"
+    },
+    {
+      "file": "results/ch19-multimodal-dit-duplex.md",
+      "sha256": "46b641e07adf7f6fd0adf603ed3db3c90badbe700f7c2bbda74542fea600d4a3"
+    },
+    {
+      "file": "results/ch20-embodied-wcet-sim.json",
+      "sha256": "29971f2870ca41880161e158e9daf047ff882e45576d23764f8ee4047828cf73"
+    },
+    {
+      "file": "results/ch20-embodied-wcet-sim.md",
+      "sha256": "74613062070414ca143b9442e5e448593c69e947782310c4f1d976791ad408af"
+    },
+    {
+      "file": "results/ch21-recsys-vector-colpali.json",
+      "sha256": "502ab503303a7689516b1d861ab91ce002678cff136139f214e85147da7a1e45"
+    },
+    {
+      "file": "results/ch21-recsys-vector-colpali.md",
+      "sha256": "9258cc7e5c158126aaf1ac328e12df21ad614a5be6bc7d9a914502dbd8318f60"
+    },
+    {
+      "file": "results/ch22-science-ozaki-coupling.json",
+      "sha256": "59d231e276c0fcffcd5b527315e96d4212b79cab1afb7db5796814032a1f2bfa"
+    },
+    {
+      "file": "results/ch22-science-ozaki-coupling.md",
+      "sha256": "72671d454f6cb45cade6b415045b78d9aab659ad038eae3dad2dd601381032c8"
+    },
+    {
+      "file": "results/ch24-ai-factory-capstone.json",
+      "sha256": "642c42c93fcec0e1015453b2d1df26d70c43bb43e750fcf7f7f10dd7e49a6083"
+    },
+    {
+      "file": "results/ch24-ai-factory-capstone.md",
+      "sha256": "4228d8ffb59d0867b0428e6aaaa9793122a801cd34eca93f815c7e3a3ee08ca5"
+    },
+    {
       "file": "results/README.md",
-      "sha256": "a847d61a11ed0ff8204393ec360e7dfefd7678edeeec62a0d98c183efb32e62b"
+      "sha256": "9131c23a2a9af756b32c3e3784ccdb3e17aa47015974dbbc4a54eff45c3656b9"
     }
   ]
 }

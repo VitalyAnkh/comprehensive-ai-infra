@@ -1,0 +1,40 @@
+# 第 20 章：具身双系统 WCET、万环境显存、NV12 零拷贝传感与 64 卡世界模型闭环评测账本
+
+- 计算标识：`embodied-wcet-sim`（第 20 章）
+- 场景输入：`{"fps": 60, "num_cameras": 6, "parallel_sim_envs": 4096, "pixel_format": "NV12 (1.5 B/pixel)", "regression_scenarios": 1000, "resolution": "1920x1200", "total_closed_loop_rollouts": 100000, "world_model_gpus": 64}`
+
+## 核心量化结果
+
+| 指标 | 数值 |
+| --- | ---: |
+| `sys1_to_sys2_freq_ratio` | 100 |
+| `jetson_shared_wcet_ms` | 18.5 |
+| `jetson_shared_deadline_miss_pct` | 28.4 |
+| `jetson_mig_isolated_wcet_ms` | 4.15 |
+| `sim_4096env_pcie_tier_a_gbps` | 24.22 |
+| `sim_4096env_pcie_tier_b_gbps` | 43.39 |
+| `sim_4096env_pcie_tier_b_raw_gbps` | 123.38 |
+| `sim_4096env_gpu_hbm_tier_a_gib` | 8.25 |
+| `sim_4096env_gpu_hbm_tier_b_gib` | 25.52 |
+| `nv12_bytes_per_frame` | 3,456,000 |
+| `raw_camera_ingress_gbps` | 1.244 |
+| `ros2_serialized_dram_gbps` | 11.2 |
+| `dmabuf_iceoryx_dram_gbps` | 2.49 |
+| `dram_bandwidth_reduction_x` | 4.5 |
+| `ros2_sensor_to_vit_p99_ms` | 18.6 |
+| `ros2_sensor_p999_jitter_ms` | 9.4 |
+| `dmabuf_sensor_to_vit_p99_ms` | 0.85 |
+| `dmabuf_sensor_p999_jitter_ms` | 0.14 |
+| `sensor_latency_speedup_x` | 21.88 |
+| `reflex_1khz_deadline_ms` | 1.0 |
+| `reflex_wcet_unisolated_ms` | 1.82 |
+| `reflex_wcet_slc_qos_isolated_ms` | 0.41 |
+| `world_model_64gpu_eval_hours` | 0.4 |
+| `world_model_64gpu_cost_usd` | 768.0 |
+| `physical_robot_eval_cost_usd` | 111,360.0 |
+| `world_model_cost_compression_x` | 145.0 |
+
+## 建模口径与物理边界
+
+- 算例 20-3 与 20-4：System 1/2（200 Hz / 2 Hz = 100:1）经硬件 MIG + 静态图隔离将 WCET 从 18.5 ms（28.4% 违约）压至 4.15 ms（0% 违约）；4,096 环境全驻留 GPU HBM 仅占 8.25 GiB / 25.52 GiB，消除 24.22 / 43.39 GB/s 跨 PCIe 瓶颈。
+- 算例 20-8 至 20-10：6 路 1920x1200@60fps NV12（1.244 GB/s）经 ISP->DMA-BUF/NvSciBuf+Iceoryx 零拷贝将 DRAM 流量从 11.20 压至 2.49 GB/s、延迟从 18.6 ms 压至 0.85 ms；64 卡闭环世界模型对 1,000 个长程操作场景回归评测实现 145x 成本压缩。

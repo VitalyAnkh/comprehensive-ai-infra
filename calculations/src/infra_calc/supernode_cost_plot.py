@@ -4,6 +4,7 @@ from fractions import Fraction
 import hashlib
 import json
 from .paths import PROJECT
+from .sources import sha256_or_lfs_oid
 
 DIRECTORY = PROJECT / 'figures/supernode-cost'
 
@@ -34,7 +35,7 @@ def verify():
         if len(names)!=len(expected) or set(names)!=expected:
             raise ValueError('Incomplete or duplicate supernode figure manifest')
         for row in rows:
-            if hashlib.sha256((PROJECT/row['file']).read_bytes()).hexdigest()!=row['sha256']:
+            if sha256_or_lfs_oid(PROJECT/row['file'])!=row['sha256']:
                 raise ValueError('Stale supernode figure input/artifact: '+row['file'])
     return {'verified_figures':2}
 

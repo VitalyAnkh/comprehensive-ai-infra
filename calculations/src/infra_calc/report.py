@@ -5,7 +5,35 @@ import json
 from fractions import Fraction
 
 
+def _render_h2_topic(result: dict) -> str:
+    lines = [
+        f"# {result.get('title', result['calculation'])}",
+        "",
+        f"- 计算标识：`{result['calculation']}`（第 {result.get('chapter', '?')} 章）",
+        f"- 场景输入：`{json.dumps(result.get('scenario', {}), ensure_ascii=False, sort_keys=True)}`",
+        "",
+        "## 核心量化结果",
+        "",
+        "| 指标 | 数值 |",
+        "| --- | ---: |",
+    ]
+    for key, value in result.get("summary", {}).items():
+        if isinstance(value, (int, float)) and not isinstance(value, bool):
+            formatted = f"{value:,}" if isinstance(value, int) or abs(value) >= 1e-4 else f"{value:.3e}"
+        else:
+            formatted = f"`{json.dumps(value, ensure_ascii=False)}`"
+        lines.append(f"| `{key}` | {formatted} |")
+    if result.get("assumptions"):
+        lines.extend(["", "## 建模口径与物理边界", ""])
+        for item in result["assumptions"]:
+            lines.append(f"- {item}")
+    lines.append("")
+    return "\n".join(lines)
+
+
 def markdown(result: dict) -> str:
+    if result.get("schema") == "h2-topic-v1":
+        return _render_h2_topic(result)
     if result.get("calculation") == "v41-forward":
         from .topics.v41_forward import markdown as render
         return render(result)

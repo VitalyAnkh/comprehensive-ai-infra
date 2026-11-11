@@ -30,8 +30,9 @@ for num,names in enumerate(models,1):
   for op in d['operations']:
    if op['name'].endswith('attn.wo_a.weight'):
     width,total=op['weight_math'];dims.add((width,total//8))
- segment=md.split(f'**表 2-{num}')[1]
- segment=re.split(r'\n(?:\*\*表 2-|### |<!-- MODEL-COMPARISON)',segment,maxsplit=1)[0]
+ group_numeral=['一','二','三','四','五','六'][num-1]
+ segment=md.split(f'**模型明细组{group_numeral}：')[1]
+ segment=re.split(r'\n(?:\*\*模型明细组|### |<!-- MODEL-COMPARISON)',segment,maxsplit=1)[0]
  blocks=re.findall(r'\| 模块及作用.*?(?=\n\n)',segment,re.S)
  rows=[row for block in blocks for row in block.splitlines()[2:]]
  for row in rows:

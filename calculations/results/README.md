@@ -1970,3 +1970,18 @@ V4共享专家FP8复制坐标：
 - [v4-optimizer-flash-mtp-declared-row-muon](v4-optimizer-flash-mtp-declared-row-muon.md)
 - [v4-optimizer-flash-stored-matrices](v4-optimizer-flash-stored-matrices.md)
 - [v4-optimizer-pro-base-declared-row-muon](v4-optimizer-pro-base-declared-row-muon.md)
+
+第 13–24 章数据、集群、后训练、Agent 与垂直系统账本（Path H2）：
+
+- [ch13-storage-kv-io](ch13-storage-kv-io.md)
+- [ch13-data-funnel-dedup](ch13-data-funnel-dedup.md)
+- [ch14-datacenter-power-cooling](ch14-datacenter-power-cooling.md)
+- [ch15-fleet-reliability-profiler](ch15-fleet-reliability-profiler.md)
+- [ch16-confidential-tee-wan](ch16-confidential-tee-wan.md)
+- [ch17-posttrain-rlvr-distill](ch17-posttrain-rlvr-distill.md)
+- [ch18-agent-worm-grammar](ch18-agent-worm-grammar.md)
+- [ch19-multimodal-dit-duplex](ch19-multimodal-dit-duplex.md)
+- [ch20-embodied-wcet-sim](ch20-embodied-wcet-sim.md)
+- [ch21-recsys-vector-colpali](ch21-recsys-vector-colpali.md)
+- [ch22-science-ozaki-coupling](ch22-science-ozaki-coupling.md)
+- [ch24-ai-factory-capstone](ch24-ai-factory-capstone.md)

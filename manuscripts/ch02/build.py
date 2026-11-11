@@ -20,8 +20,9 @@ C={'ink':'#193441','blue':'#246f91','teal':'#138b83','orange':'#c9782b','pale':'
 lock=json.loads((HERE/'sources.json').read_text())
 for row in lock['sources']:
  raw_b=(ROOT/row['path']).read_bytes()
- h=raw_b.decode('utf-8','ignore').split('oid sha256:')[1].split()[0] if raw_b.startswith(b'version https://git-lfs.github.com/spec/v1') else hashlib.sha256(raw_b).hexdigest()
- if h!=row['sha256']:raise SystemExit('Source changed: '+row['path'])
+ h_raw=hashlib.sha256(raw_b).hexdigest()
+ h_lfs=raw_b.decode('utf-8','ignore').split('oid sha256:')[1].split()[0] if raw_b.startswith(b'version https://git-lfs.github.com/spec/v1') else h_raw
+ if row['sha256'] not in {h_raw,h_lfs}:raise SystemExit('Source changed: '+row['path'])
 def load(n):
  p=ROOT/'calculations/results'/f'{n}.json'; txt=p.read_text()
  if txt.startswith('version https://git-lfs.github.com/spec/v1'):

@@ -5,6 +5,7 @@ import hashlib
 import json
 from pathlib import Path
 from .paths import PROJECT
+from .sources import is_lfs_pointer, sha256_or_lfs_oid
 
 DIRECTORY = PROJECT / "figures/shared-media"
 NAMES = (
@@ -53,19 +54,22 @@ def hashes(paths):
 
 def verify():
     manifest = json.loads((DIRECTORY / "manifest.json").read_text())
+    lfs_unpulled = any(
+        is_lfs_pointer(PROJECT / f"results/shared-media-{name}.json") for name in NAMES
+    )
     expected = dict(
-        inputs={str(p.relative_to(PROJECT)) for p in input_paths()},
+        inputs=None if lfs_unpulled else {str(p.relative_to(PROJECT)) for p in input_paths()},
         artifacts={str((DIRECTORY / name).relative_to(PROJECT)) for name in ARTIFACTS},
     )
     for key, names in expected.items():
         rows = manifest.get(key)
-        if not isinstance(rows, list) or any(not isinstance(r, dict) for r in rows):
+        if not isinstance(rows, list) or not rows or any(not isinstance(r, dict) for r in rows):
             raise ValueError("Malformed shared-media figure manifest")
         actual = [r.get("file") for r in rows]
-        if len(actual) != len(names) or set(actual) != names:
+        if names is not None and (len(actual) != len(names) or set(actual) != names):
             raise ValueError("Incomplete or duplicate shared-media figure manifest")
         for row in rows:
-            digest = hashlib.sha256((PROJECT / row["file"]).read_bytes()).hexdigest()
+            digest = sha256_or_lfs_oid(PROJECT / row["file"])
             if digest != row["sha256"]:
                 raise ValueError(
                     "Stale shared-media figure input/artifact: " + row["file"]

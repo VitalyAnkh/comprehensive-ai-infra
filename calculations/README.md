@@ -1103,3 +1103,24 @@ python3 calculations/calc.py training-pipeline-schedule --inputs <json>   # poli
 python3 calculations/calc.py pd-af-handoff --inputs <json>                # kv_layout=gqa|mla：GQA 144 KiB/token 与紧凑 MLA 68.6 KiB/token 的交接与交叉点
 python3 calculations/calc.py chapter2-models --format md                  # 第 2 章五模型统一比较（results/chapter2-model-comparison.json）
 ```
+
+## 第 13–24 章：数据、集群、后训练、Agent 与垂直系统量化计算（Path H2）
+
+[configs/h2-scenarios.json](configs/h2-scenarios.json) 将第 13–24 章的核心工程算例纳入统一离线复算体系，全部基于本地已锁定的 `configs/models/*/config.json` 与 `configs/hardware.json` 运行，无需拉取大型 Git LFS 文件即可增量更新并完成 `verify-results` 全量校验：
+
+```bash
+python3 calculations/calc.py reproduce-h2
+python3 calculations/calc.py verify-results
+python3 calculations/calc.py storage-kv-io --format md              # 第 13 章：GDS 零拷贝、3FS CRAQ 吞吐、KV Flash 块布局与 SSD DWPD
+python3 calculations/calc.py data-funnel-dedup --format md          # 第 13 章：100 PB 七级清洗漏斗与精确 MinHash-LSH 积分去重
+python3 calculations/calc.py datacenter-power-cooling --format md   # 第 14 章：800V HVDC vs 48V 母排、ASHRAE W45 液冷、BESS 与跨园区 DCI
+python3 calculations/calc.py fleet-reliability-profiler --format md # 第 15 章：十万卡 MTBF/ETTR、eBPF+Dynolog 剖析、等待链 DAG 与 Monarch
+python3 calculations/calc.py confidential-tee-wan --format md       # 第 16 章：机密 GPU TEE-I/O、PipeLLM、DSec 微虚机池与广域 DiLoCo
+python3 calculations/calc.py posttrain-rlvr-distill --format md     # 第 17 章：变长 SFT 装箱、32-bit 位打包 Top-128 蒸馏与异步 Agentic RL
+python3 calculations/calc.py agent-worm-grammar --format md         # 第 18 章：多轮 WORM KV 缓存、XGrammar 掩码与多智能体投机工具 DAG
+python3 calculations/calc.py multimodal-dit-duplex --format md      # 第 19 章：3D DiT Ulysses+Ring USP 与 80 ms 全双工语音状态机
+python3 calculations/calc.py embodied-wcet-sim --format md          # 第 20 章：具身 NV12 DMA-BUF 零拷贝、异构 SoC WCET 隔离与世界模型仿真
+python3 calculations/calc.py recsys-vector-colpali --format md      # 第 21 章：ColPali/PLAID 残差多向量检索、Cuckoo 哈希与无锁流式热更新
+python3 calculations/calc.py science-ozaki-coupling --format md     # 第 22 章：科学计算五领域账本、有符号 Ozaki INT8 模拟 FP64 与 DLPack 原位耦合
+python3 calculations/calc.py ai-factory-capstone --format md        # 第 23–24 章：SRAM vs HBM 代际权衡与 100 MW AI 工厂端到端全栈收官账本
+```

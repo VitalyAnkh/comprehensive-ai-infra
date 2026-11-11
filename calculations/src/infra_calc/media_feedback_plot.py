@@ -4,6 +4,7 @@ import hashlib
 import json
 from pathlib import Path
 from .paths import PROJECT
+from .sources import sha256_or_lfs_oid
 
 DIRECTORY = PROJECT / 'figures/media-feedback'
 NAMES = ('mixed-fifo-immediate', 'mixed-fifo-aggregate', 'mixed-priority-immediate', 'mixed-priority-aggregate')
@@ -11,11 +12,7 @@ ARTIFACTS = ('figure.png', 'figure.svg', 'data.json')
 
 
 def digest(path):
-    h = hashlib.sha256()
-    with path.open('rb') as stream:
-        while chunk := stream.read(1048576):
-            h.update(chunk)
-    return h.hexdigest()
+    return sha256_or_lfs_oid(path)
 
 
 def input_paths():

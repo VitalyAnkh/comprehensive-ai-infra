@@ -1,0 +1,16 @@
+{
+  "h2_topics": [
+    {"id": "ch13-storage-kv-io", "command": "storage-kv-io", "module": "storage_kv_io", "chapter": 13, "inputs": {}},
+    {"id": "ch13-data-funnel-dedup", "command": "data-funnel-dedup", "module": "data_funnel_dedup", "chapter": 13, "inputs": {}},
+    {"id": "ch14-datacenter-power-cooling", "command": "datacenter-power-cooling", "module": "datacenter_power_cooling", "chapter": 14, "inputs": {}},
+    {"id": "ch15-fleet-reliability-profiler", "command": "fleet-reliability-profiler", "module": "fleet_reliability_profiler", "chapter": 15, "inputs": {}},
+    {"id": "ch16-confidential-tee-wan", "command": "confidential-tee-wan", "module": "confidential_tee_wan", "chapter": 16, "inputs": {}},
+    {"id": "ch17-posttrain-rlvr-distill", "command": "posttrain-rlvr-distill", "module": "posttrain_rlvr_distill", "chapter": 17, "inputs": {}},
+    {"id": "ch18-agent-worm-grammar", "command": "agent-worm-grammar", "module": "agent_worm_grammar", "chapter": 18, "inputs": {}},
+    {"id": "ch19-multimodal-dit-duplex", "command": "multimodal-dit-duplex", "module": "multimodal_dit_duplex", "chapter": 19, "inputs": {}},
+    {"id": "ch20-embodied-wcet-sim", "command": "embodied-wcet-sim", "module": "embodied_wcet_sim", "chapter": 20, "inputs": {}},
+    {"id": "ch21-recsys-vector-colpali", "command": "recsys-vector-colpali", "module": "recsys_vector_colpali", "chapter": 21, "inputs": {}},
+    {"id": "ch22-science-ozaki-coupling", "command": "science-ozaki-coupling", "module": "science_ozaki_coupling", "chapter": 22, "inputs": {}},
+    {"id": "ch24-ai-factory-capstone", "command": "ai-factory-capstone", "module": "ai_factory_capstone", "chapter": 24, "inputs": {}}
+  ]
+}
