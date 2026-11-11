@@ -1,7 +1,7 @@
 {
   "chapter": 4,
   "generator": "manuscripts/ch04/build.py",
-  "figures": 53,
+  "figures": 55,
   "font_family": "Source Han Sans CN",
   "outputs": [
     {
@@ -449,6 +449,30 @@
       "sha256": "274bbc7ed442da04743197ead2ea920a44c5b386065a78f88c583c92423bfe49"
     },
     {
+      "path": "manuscripts/ch04/ch04-big-five-accelerators-roofline-and-microarchitecture-matrix.svg",
+      "sha256": "4bdf968ec250d8caad68fcd3c41de67fadb305d23e68fbe213fb7ef4fdcacaea"
+    },
+    {
+      "path": "manuscripts/ch04/ch04-big-five-accelerators-roofline-and-microarchitecture-matrix.png",
+      "sha256": "bbc5767165969c36cc49ad39f5a467da9c1c7ef79d23ab253f9d5eb06ace8c59"
+    },
+    {
+      "path": "manuscripts/ch04/ch04-big-five-accelerators-roofline-and-microarchitecture-matrix.pdf",
+      "sha256": "130103f1a7051d6cbc1af09535538279b0f66cbc96ba66632fdacbced62632dd"
+    },
+    {
+      "path": "manuscripts/ch04/ch04-heterogeneous-software-stack-portability-and-amdahl-tail-trap.svg",
+      "sha256": "4306fdfbb3d6885ee27389f40be52b8dd8cd457e8ca6d8f9497a66e62bb97fc4"
+    },
+    {
+      "path": "manuscripts/ch04/ch04-heterogeneous-software-stack-portability-and-amdahl-tail-trap.png",
+      "sha256": "1230dfee1f618fe4b03b041da06c88ab7cb175e5c5dd7af9027fcc0f2f4c23a3"
+    },
+    {
+      "path": "manuscripts/ch04/ch04-heterogeneous-software-stack-portability-and-amdahl-tail-trap.pdf",
+      "sha256": "88f929ca2039a34a1055d8fee823143f44b5206e1ab4ceee5482ad40da64b175"
+    },
+    {
       "path": "manuscripts/ch04/figure-4-l2-structure.svg",
       "sha256": "0674030f896c2f291c04cd0a1bb611ac80b7cf18cbfb6dd56c525d68d24bb181"
     },
@@ -666,7 +690,7 @@
     },
     {
       "path": "manuscripts/ch04/figure-index.json",
-      "sha256": "c5d9c0c2e687ab76ff67f4dbaefab421fe5b1052f8b460f4ab4bf0ebea33e948"
+      "sha256": "66751430bccac7b61b8e4eebc15a5f2341eb349e8271f5f4f5d2d01eb0176297"
     },
     {
       "path": "manuscripts/book_assets.py",
@@ -687,6 +711,10 @@
     {
       "path": "calculations/results/v41-throughline.json",
       "sha256": "dec1c46cf9e0410d35d106b9c48c9b4591301397b9e69a15520a8ae6b8cf403a"
+    },
+    {
+      "path": "manuscripts/ch04/math-validation.json",
+      "sha256": "e17d8e673f1fbf815442dd27f681fb21d3bcc9d33eb1664e9cdf6da4652d6f62"
     }
   ]
 }

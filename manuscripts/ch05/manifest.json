@@ -1,7 +1,7 @@
 {
   "chapter": 5,
   "generator": "manuscripts/ch05/build.py",
-  "figures": 50,
+  "figures": 53,
   "font_family": "Source Han Sans CN",
   "outputs": [
     {
@@ -569,16 +569,52 @@
       "sha256": "d9168c12f3aadce7149e8fea518f278beabe3dfae51c12f4ff4f2b94df94b084"
     },
     {
+      "path": "manuscripts/ch05/ch05-torch-compile-dynamo-aotautograd-mincut-inductor-pipeline.svg",
+      "sha256": "eb1fff9b635a1a9b345a4596c232d9138c13092c5f3d38177120e04b9b5e4420"
+    },
+    {
+      "path": "manuscripts/ch05/ch05-torch-compile-dynamo-aotautograd-mincut-inductor-pipeline.png",
+      "sha256": "9c86b466092c7868e2a8aa8bcd90c1ee808d2b7c3659265e63e3438d6bc4c5a8"
+    },
+    {
+      "path": "manuscripts/ch05/ch05-torch-compile-dynamo-aotautograd-mincut-inductor-pipeline.pdf",
+      "sha256": "d3d05492b219e8614718de3502c9a9a0df84fbf4e5f78afe0a32ab1bc9b8933b"
+    },
+    {
+      "path": "manuscripts/ch05/ch05-nanoflow-pod-attention-intra-gpu-three-pipeline-overlap.svg",
+      "sha256": "202af8e991690ffd79c58167148f0fe0d82c570e2257eaa222a06d175b6e4447"
+    },
+    {
+      "path": "manuscripts/ch05/ch05-nanoflow-pod-attention-intra-gpu-three-pipeline-overlap.png",
+      "sha256": "565e30ba909aebf44160307866adf26e09dd69cd942599973a0f77dfb4979fd7"
+    },
+    {
+      "path": "manuscripts/ch05/ch05-nanoflow-pod-attention-intra-gpu-three-pipeline-overlap.pdf",
+      "sha256": "dbe3d2d304f106ab2f39c24469398d6ed34f93ada4f8e204ef155b750e47e519"
+    },
+    {
+      "path": "manuscripts/ch05/ch05-helion-cute-dsl-and-egraph-equivalence-verification.svg",
+      "sha256": "6b32842082c6c33f86f6a405a833c6e0afcbb2306b192dfdddeab29f83002955"
+    },
+    {
+      "path": "manuscripts/ch05/ch05-helion-cute-dsl-and-egraph-equivalence-verification.png",
+      "sha256": "5fada195b7898927e25bf5617077c52132315998146a88711668cbc63b59697d"
+    },
+    {
+      "path": "manuscripts/ch05/ch05-helion-cute-dsl-and-egraph-equivalence-verification.pdf",
+      "sha256": "79603f6132ef4c7e718ed2b9385277e4dc5760936aaa0b561222ce5d29853944"
+    },
+    {
       "path": "manuscripts/ch05/figure-data.json",
       "sha256": "6bdd234c4154c15f5cb41a3718bbbb402142ed2fb97e37d3ec8cb5317535264a"
     },
     {
       "path": "manuscripts/ch05/figure-index.json",
-      "sha256": "b03a46ce1e5af7113b0c9f1b2a4a4e158c73ac61ae3e421ce0b317a3e5c58e50"
+      "sha256": "3bf354da58fb511d424d894ca349f2be948a223bbc08568f7feababc66755aea"
     },
     {
       "path": "manuscripts/ch05/teaching-layout-check.json",
-      "sha256": "d4bb5293c1c09141ac851a265f1fbbdddd29fd62d1cf108af11109e8e6972f51"
+      "sha256": "5d9ab578321c735cd257d665953d514cc26e075cffed38dcf767124fa213dbb6"
     },
     {
       "path": "build/legacy/manuscripts/05-算子与运行时.html",
@@ -587,10 +623,6 @@
     {
       "path": "build/legacy/manuscripts/05-算子与运行时-5.2-5.3.html",
       "sha256": "85e19dc55387aaccd2d2d8e3e3ebbea5b93df1386a939d4583fa2dc8c36b3ac5"
-    },
-    {
-      "path": "manuscripts/ch05/figure-index.json",
-      "sha256": "b03a46ce1e5af7113b0c9f1b2a4a4e158c73ac61ae3e421ce0b317a3e5c58e50"
     },
     {
       "path": "manuscripts/book_assets.py",
@@ -611,6 +643,46 @@
     {
       "path": "calculations/results/v41-throughline.json",
       "sha256": "dec1c46cf9e0410d35d106b9c48c9b4591301397b9e69a15520a8ae6b8cf403a"
+    },
+    {
+      "path": "manuscripts/ch05/figure-5-vllm-host-overhead.svg",
+      "sha256": "9b1f43004f22e915bccff22d48a8276dbb1f15388bf3c8dcdd26d5249ca36d38"
+    },
+    {
+      "path": "manuscripts/ch05/figure-5-vllm-host-overhead.png",
+      "sha256": "f8498047059fb3e04d0e230f99a6bf67bfa8eda1b9536dd927d0631d8a13b908"
+    },
+    {
+      "path": "manuscripts/ch05/figure-5-vllm-host-overhead.pdf",
+      "sha256": "942aab4fd6952adc6434509420463e3a20254cf26295f7a280ce495836f5e2b1"
+    },
+    {
+      "path": "manuscripts/ch05/figure-5-all-sm-sync-tax.svg",
+      "sha256": "143291ac6857135df6e652d7cbbd422b433bff1231da23b18e6d886bb4079d3f"
+    },
+    {
+      "path": "manuscripts/ch05/figure-5-all-sm-sync-tax.png",
+      "sha256": "6b1457e9b11d6a60ff19b72f61ce86fad3d2458c5ca0fc895592d58ab11b25fb"
+    },
+    {
+      "path": "manuscripts/ch05/figure-5-all-sm-sync-tax.pdf",
+      "sha256": "fe6ce37db1ec68019c0ffcff2e7dc7f2127fe04f3dda830dd7987eccb78a2cbf"
+    },
+    {
+      "path": "manuscripts/ch05/ch05-vllm-v060-multiprocess-and-multistep.svg",
+      "sha256": "f5065ac01ed4266cd72b73022fc8c848f638945eafca8fb62de6f3fa0cace472"
+    },
+    {
+      "path": "manuscripts/ch05/ch05-vllm-v060-multiprocess-and-multistep.png",
+      "sha256": "636a78c941ef3022af1fa809033f19499e172ba1efa070a60099bfa7b3715bae"
+    },
+    {
+      "path": "manuscripts/ch05/ch05-vllm-v060-multiprocess-and-multistep.pdf",
+      "sha256": "c8c9147f9347c9301de29ee1ac8cabd364ec841b58dc8b39f4f12f34036f7564"
+    },
+    {
+      "path": "manuscripts/ch05/math-validation.json",
+      "sha256": "c9c52ca544bdfa565428c0d174ca8685c60607b716b46b16d20f67c1811149e9"
     }
   ]
 }

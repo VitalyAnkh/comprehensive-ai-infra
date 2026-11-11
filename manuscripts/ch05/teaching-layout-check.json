@@ -280,5 +280,23 @@
     "width_pt": 420.0,
     "min_label_pt": 11.0,
     "text_extent_warnings": []
+  },
+  {
+    "figure": "ch05-torch-compile-dynamo-aotautograd-mincut-inductor-pipeline",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch05-nanoflow-pod-attention-intra-gpu-three-pipeline-overlap",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch05-helion-cute-dsl-and-egraph-equivalence-verification",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
   }
 ]

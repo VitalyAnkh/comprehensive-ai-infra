@@ -400,6 +400,8 @@ def draw(here, data=None):
         ax2.set_title('B  算例 5-7：MoE 分组 FP8 GEMM 三种编译模式耗时对比', loc='left', fontsize=12, weight='bold', pad=8)
         ax2.grid(axis='y', linestyle=':', alpha=0.5, color='#CBD5E1')
         out.save(f, 'ch05-jit-compile-time-shape-specialization-register-pressure')
+    from h2_compiler_figures import draw as draw_h2
+    draw_h2(out)
     (here / 'structure-layout-validation.json').write_text(json.dumps(out.checks, ensure_ascii=False, indent=2) + '\n')
     return out.outputs
 

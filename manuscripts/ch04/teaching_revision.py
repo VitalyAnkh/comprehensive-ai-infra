@@ -717,4 +717,6 @@ def draw(here, data, teaching):
     draw_principles(4, out)
     from energy_physics import draw as draw_energy
     data['4-energy'] = draw_energy(out)
+    from h2_accelerators_figures import draw as draw_h2
+    data['4-h2'] = draw_h2(out)
     return out.finish()

@@ -1,202 +1,214 @@
 [
   {
-    "asset": "ch05/figure-5-copy-paths.svg",
-    "number": 1
+    "number": 1,
+    "asset": "ch05/figure-5-copy-paths.svg"
   },
   {
-    "asset": "ch05/figure-5-stream-event.svg",
-    "number": 2
+    "number": 2,
+    "asset": "ch05/figure-5-stream-event.svg"
   },
   {
-    "asset": "ch05/figure-5-1-execution.svg",
-    "number": 3
+    "number": 3,
+    "asset": "ch05/figure-5-1-execution.svg"
   },
   {
-    "asset": "ch05/figure-5-sm-residency.svg",
-    "number": 4
+    "number": 4,
+    "asset": "ch05/figure-5-sm-residency.svg"
   },
   {
-    "asset": "ch05/figure-5-warp-pipeline.svg",
-    "number": 5
+    "number": 5,
+    "asset": "ch05/figure-5-warp-pipeline.svg"
   },
   {
-    "asset": "ch05/figure-5-reuse-steps.svg",
-    "number": 6
+    "number": 6,
+    "asset": "ch05/figure-5-reuse-steps.svg"
   },
   {
-    "asset": "ch05/figure-5-tile-working-set.svg",
-    "number": 7
+    "number": 7,
+    "asset": "ch05/figure-5-tile-working-set.svg"
   },
   {
-    "asset": "ch05/figure-5-2-tiles.svg",
-    "number": 8
+    "number": 8,
+    "asset": "ch05/figure-5-2-tiles.svg"
   },
   {
-    "asset": "ch05/figure-5-tile-residency.svg",
-    "number": 9
+    "number": 9,
+    "asset": "ch05/figure-5-tile-residency.svg"
   },
   {
-    "asset": "ch05/figure-5-3-banks.svg",
-    "number": 10
+    "number": 10,
+    "asset": "ch05/figure-5-3-banks.svg"
   },
   {
-    "asset": "ch05/figure-5-4-reduction.svg",
-    "number": 11
+    "number": 11,
+    "asset": "ch05/figure-5-4-reduction.svg"
   },
   {
-    "asset": "ch05/figure-5-split-axes.svg",
-    "number": 12
+    "number": 12,
+    "asset": "ch05/figure-5-split-axes.svg"
   },
   {
-    "asset": "ch05/figure-5-reduction-order.svg",
-    "number": 13
+    "number": 13,
+    "asset": "ch05/figure-5-reduction-order.svg"
   },
   {
-    "asset": "ch05/figure-5-fusion-path.svg",
-    "number": 14
+    "number": 14,
+    "asset": "ch05/figure-5-fusion-path.svg"
   },
   {
-    "asset": "ch05/figure-5-5-boundaries.svg",
-    "number": 15
+    "number": 15,
+    "asset": "ch05/figure-5-5-boundaries.svg"
   },
   {
-    "asset": "ch05/figure-5-buffer-slots.svg",
-    "number": 16
+    "number": 16,
+    "asset": "ch05/figure-5-buffer-slots.svg"
   },
   {
-    "asset": "ch05/figure-5-6-fusion-buffer.svg",
-    "number": 17
+    "number": 17,
+    "asset": "ch05/figure-5-6-fusion-buffer.svg"
   },
   {
-    "asset": "ch05/figure-5-attention-storage.svg",
-    "number": 18
+    "number": 18,
+    "asset": "ch05/figure-5-attention-storage.svg"
   },
   {
-    "asset": "ch05/figure-5-7-online-softmax.svg",
-    "number": 19
+    "number": 19,
+    "asset": "ch05/figure-5-7-online-softmax.svg"
   },
   {
-    "asset": "ch05/figure-5-8-attention-tradeoff.svg",
-    "number": 20
+    "number": 20,
+    "asset": "ch05/figure-5-8-attention-tradeoff.svg"
   },
   {
-    "asset": "ch05/figure-5-9-polyhedral.svg",
-    "number": 21
+    "number": 21,
+    "asset": "ch05/figure-5-9-polyhedral.svg"
   },
   {
-    "asset": "ch05/figure-5-activation-order.svg",
-    "number": 22
+    "number": 22,
+    "asset": "ch05/figure-5-activation-order.svg"
   },
   {
-    "asset": "ch05/figure-5-quantization-scale.svg",
-    "number": 23
+    "number": 23,
+    "asset": "ch05/figure-5-quantization-scale.svg"
   },
   {
-    "asset": "ch05/figure-5-10-quantization.svg",
-    "number": 24
+    "number": 24,
+    "asset": "ch05/figure-5-10-quantization.svg"
   },
   {
-    "asset": "ch05/figure-5-11-feedback.svg",
-    "number": 25
+    "number": 25,
+    "asset": "ch05/figure-5-11-feedback.svg"
   },
   {
-    "asset": "ch05/figure-5-host-pipeline.svg",
-    "number": 26
+    "number": 26,
+    "asset": "ch05/figure-5-host-pipeline.svg"
   },
   {
-    "asset": "ch05/figure-5-vllm-host-overhead.svg",
-    "number": 27
+    "number": 27,
+    "asset": "ch05/figure-5-vllm-host-overhead.svg"
   },
   {
-    "asset": "ch05/figure-5-launch-vs-graph.svg",
-    "number": 28
+    "number": 28,
+    "asset": "ch05/figure-5-launch-vs-graph.svg"
   },
   {
-    "asset": "ch05/figure-5-12-runtime.svg",
-    "number": 29
+    "number": 29,
+    "asset": "ch05/figure-5-12-runtime.svg"
   },
   {
-    "asset": "ch05/figure-5-runtime-1.svg",
-    "number": 30
+    "number": 30,
+    "asset": "ch05/figure-5-runtime-1.svg"
   },
   {
-    "asset": "ch05/figure-5-runtime-2.svg",
-    "number": 31
+    "number": 31,
+    "asset": "ch05/figure-5-runtime-2.svg"
   },
   {
-    "asset": "ch05/figure-5-runtime-3.svg",
-    "number": 32
+    "number": 32,
+    "asset": "ch05/figure-5-runtime-3.svg"
   },
   {
-    "asset": "ch05/figure-5-graph-address.svg",
-    "number": 33
+    "number": 33,
+    "asset": "ch05/figure-5-graph-address.svg"
   },
   {
-    "asset": "ch05/figure-5-13-graph-copy.svg",
-    "number": 34
+    "number": 34,
+    "asset": "ch05/figure-5-13-graph-copy.svg"
   },
   {
-    "asset": "ch05/ch05-flashinfer-plan-run-and-sleep-vaddr.svg",
-    "number": 35
+    "number": 35,
+    "asset": "ch05/ch05-flashinfer-plan-run-and-sleep-vaddr.svg"
   },
   {
-    "asset": "ch05/figure-5-shape-buckets.svg",
-    "number": 36
+    "number": 36,
+    "asset": "ch05/figure-5-shape-buckets.svg"
   },
   {
-    "asset": "ch05/figure-5-14-specialization.svg",
-    "number": 37
+    "number": 37,
+    "asset": "ch05/figure-5-14-specialization.svg"
   },
   {
-    "asset": "ch05/figure-5-15-persistent.svg",
-    "number": 38
+    "number": 38,
+    "asset": "ch05/figure-5-15-persistent.svg"
   },
   {
-    "asset": "ch05/figure-5-persistent-blocks.svg",
-    "number": 39
+    "number": 39,
+    "asset": "ch05/figure-5-persistent-blocks.svg"
   },
   {
-    "asset": "ch05/figure-5-all-sm-sync-tax.svg",
-    "number": 40
+    "number": 40,
+    "asset": "ch05/figure-5-all-sm-sync-tax.svg"
   },
   {
-    "asset": "ch05/figure-5-16-critical-path.svg",
-    "number": 41
+    "number": 41,
+    "asset": "ch05/figure-5-16-critical-path.svg"
   },
   {
-    "asset": "ch05/figure-5-v41-traffic.svg",
-    "number": 42
+    "number": 42,
+    "asset": "ch05/figure-5-v41-traffic.svg"
   },
   {
-    "asset": "ch05/figure-5-17-request.svg",
-    "number": 43
+    "number": 43,
+    "asset": "ch05/figure-5-17-request.svg"
   },
   {
-    "asset": "ch05/ch05-vllm-v060-multiprocess-and-multistep.svg",
-    "number": 44
+    "number": 44,
+    "asset": "ch05/ch05-vllm-v060-multiprocess-and-multistep.svg"
   },
   {
-    "asset": "ch05/ch05-flashattention4-blackwell-sfu-pipeline.svg",
-    "number": 45
+    "number": 45,
+    "asset": "ch05/ch05-flashattention4-blackwell-sfu-pipeline.svg"
   },
   {
-    "asset": "ch05/ch05-deepgemm-fp8-jit-and-grace-graph.svg",
-    "number": 46
+    "number": 46,
+    "asset": "ch05/ch05-deepgemm-fp8-jit-and-grace-graph.svg"
   },
   {
-    "asset": "ch05/ch05-tilelang-thunderkittens-abstraction-spectrum.svg",
-    "number": 47
+    "number": 47,
+    "asset": "ch05/ch05-tilelang-thunderkittens-abstraction-spectrum.svg"
   },
   {
-    "asset": "ch05/ch05-mirage-mpk-persistent-megakernel-execution.svg",
-    "number": 48
+    "number": 48,
+    "asset": "ch05/ch05-mirage-mpk-persistent-megakernel-execution.svg"
   },
   {
-    "asset": "ch05/ch05-variable-length-split-kv-persistent-tile-scheduler.svg",
-    "number": 49
+    "number": 49,
+    "asset": "ch05/ch05-variable-length-split-kv-persistent-tile-scheduler.svg"
   },
   {
-    "asset": "ch05/ch05-jit-compile-time-shape-specialization-register-pressure.svg",
-    "number": 50
+    "number": 50,
+    "asset": "ch05/ch05-jit-compile-time-shape-specialization-register-pressure.svg"
+  },
+  {
+    "number": 51,
+    "asset": "ch05/ch05-torch-compile-dynamo-aotautograd-mincut-inductor-pipeline.svg"
+  },
+  {
+    "number": 52,
+    "asset": "ch05/ch05-nanoflow-pod-attention-intra-gpu-three-pipeline-overlap.svg"
+  },
+  {
+    "number": 53,
+    "asset": "ch05/ch05-helion-cute-dsl-and-egraph-equivalence-verification.svg"
   }
 ]
