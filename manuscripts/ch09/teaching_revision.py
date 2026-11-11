@@ -168,7 +168,7 @@ def draw(here,data):
         box(a,.52,.04,.45,.15,'免搬 36 MiB 权重，达 13.99 tok/s\n受限于启动开销 $\\alpha$ 与 NUMA 带宽','gray',11)
         out.save(f,'ch09-pd-a100-h20-vs-af-ktransformers')
 
-        # New Path-B figure: ch09-tenant-cache-salt-and-ep-fault-radius (Fig 9-50, D11-07 / D14-04)
+        # New Path-B figure: ch09-tenant-cache-salt-and-ep-fault-radius (Fig 9-50)
         f,a=canvas(6.4)
         text(a,.25,.95,'A. 多租户 cache_salt 隔离',12,ha='center')
         text(a,.745,.95,'B. 64 卡单 Rank 故障恢复',12,ha='center')
@@ -369,4 +369,6 @@ def draw(here,data):
         out.save(f, 'ch09-ktransformers-gpu-mla-and-cpu-amx-routed-experts')
     from v41_case_figures import draw as draw_v41
     draw_v41(9, out)
+    from ch09.h2_slora_figures import draw as draw_h2
+    draw_h2(out)
     out.finish();return out.outputs,out.checks

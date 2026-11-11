@@ -171,7 +171,7 @@ def draw(here,data):
         box(a,.32,.04,.44,.12,'Prefill 0.5 s + Decode 5.0 s','orange',11)
         box(a,.78,.04,.20,.12,'5.5 s\n(+22.2%)','orange',11)
         out.save(f,'ch08-xgrammar-overlap-and-kv-compression-reversal')
-        # Path-B new 420pt 2-panel figure: Goodput under dual SLOs vs U-shaped unit cost curve (Fig 8-40, TC-11~13)
+        # Path-B new 420pt 2-panel figure: Goodput under dual SLOs vs U-shaped unit cost curve (Fig 8-40)
         f,axs=plt.subplots(2,1,figsize=(420/72,6.5))
         f.subplots_adjust(left=.16,right=.95,bottom=.09,top=.86,hspace=.56)
         f.text(.03,.95,'A. 并发批大小 B 对原始吞吐与双重 SLO 有效吞吐（Goodput）的背离',fontsize=12,weight='bold',color=COL['ink'])
@@ -241,9 +241,9 @@ def draw(here,data):
         box(a,.525,.04,.46,.15,'端到端步数与延迟压缩\n40 步 Decode 直接减至 16 步\n实现 2.5× 解码步数无损压缩','purple',11)
         arrow(a,(.475,.325),(.525,.325));arrow(a,(.245,.25),(.245,.19));arrow(a,(.475,.115),(.525,.115))
         out.save(f,'ch08-xgrammar-pda-bitmask-and-jump-forward')
-        # Path-E3 Fig 8-43: Locked Case I10 Lossy KV Compression Length Inflation Paradox & Manifold Calibration
+        # Path-E3 Fig 8-43: Case 8-4 Lossy KV Compression Length Inflation Paradox & Manifold Calibration
         f,a=canvas(6.8)
-        text(a,.02,.965,'A. 锁定算例 I10：有损 KV 压缩“单步提速 20% 但输出膨胀 50%”端到端反转',11.5)
+        text(a,.02,.965,'A. 算例 8-4：有损 KV 压缩“单步提速 20% 但输出膨胀 50%”端到端反转',11.5)
         box(a,.015,.76,.46,.15,'无损 BF16 基线（TTFT=0.50 s）\n步速 v0 = 50 tok/s（20 ms/步）\n一步生成 L0 = 200 tok（199 步）','blue',11)
         box(a,.525,.76,.46,.15,'无损基线端到端耗时 T0\nT0 = 0.50 + 199/50 = 4.480 s\n（L0/v0 连续近似 4.500 s）','green',11)
         arrow(a,(.475,.835),(.525,.835))
@@ -376,4 +376,6 @@ def draw(here,data):
     draw_principles(8, out)
     from v41_case_figures import draw as draw_v41
     draw_v41(8, out)
+    from ch08.h2_quarot_figures import draw as draw_h2
+    draw_h2(out)
     out.finish();return out.outputs,out.checks

@@ -222,5 +222,13 @@
   {
     "name": "ch09-ktransformers-gpu-mla-and-cpu-amx-routed-experts",
     "number": 56
+  },
+  {
+    "name": "ch09-slora-unified-paging-and-bgmv-heterogeneous-batching",
+    "number": 57
+  },
+  {
+    "name": "ch09-serverlessllm-blitzscale-live-weight-multicast-autoscaling",
+    "number": 58
   }
 ]
