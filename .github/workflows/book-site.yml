@@ -36,8 +36,8 @@ jobs:
         run: python scripts/check_no_html.py
       - name: Install website dependencies
         run: |
-          # pdftoppm rasterizes the translations' PDF figures for the English and 繁體中文 sites.
-          sudo apt-get update && sudo apt-get install -y poppler-utils
+          # pdftoppm rasterizes the translations' PDF figures; fall back to PyMuPDF (fitz) if runner apt mirrors fail.
+          (sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=10 -o Acquire::https::Timeout=10 update && sudo apt-get -o Acquire::Retries=2 -o Acquire::http::Timeout=10 -o Acquire::https::Timeout=10 install -y poppler-utils) || pip install pymupdf
           pip install -r website/requirements.txt
       - name: Build and check website
         run: |
