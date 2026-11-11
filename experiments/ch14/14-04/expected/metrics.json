@@ -1,0 +1,22 @@
+{
+  "hvdc_and_vpd": {
+    "current_48v_amp": 2750.0,
+    "current_800v_amp": 165.0,
+    "busbar_loss_48v_watt": 3781.25,
+    "busbar_loss_800v_watt": 13.6125,
+    "hvdc_i2r_loss_reduction_x": 277.78,
+    "busbar_loss_800v_165kw_watt": 21.27,
+    "rack140_loss_48v_watt": 6805.56,
+    "rack140_loss_800v_watt": 24.5,
+    "vpd_72gpu_saving_kw": 13.06
+  },
+  "ashrae_w45_cooling": {
+    "w45_flow_l_per_min_132kw": 159.5,
+    "w45_flow_l_per_min_132kw_rho1": 157.9,
+    "w45_flow_l_per_min_165kw": 199.4,
+    "coldplate_1400w_case_temp_c": 74.2,
+    "microfluidics_2000w_max_inlet_coldplate_c": 21.0,
+    "microfluidics_2000w_max_inlet_notim_c": 61.0,
+    "microfluidics_2000w_max_inlet_jet_c": 69.0
+  }
+}

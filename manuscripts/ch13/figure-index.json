@@ -4,7 +4,7 @@
     "number": 1,
     "file": "ch13-storage-hierarchy-and-access-patterns.svg",
     "asset": "ch13/ch13-storage-hierarchy-and-access-patterns.svg",
-    "section": "13.1.2",
+    "section": "13.1.1",
     "caption": "AI 存储介质金字塔（L1 HBM 至 L5 对象存储）的延迟、IOPS 与带宽量级，以及四类核心 AI 负载的 I/O 访问瓶颈",
     "source_refs": [
       "manuscripts/ch13/figure-data.json"
@@ -18,7 +18,7 @@
     "number": 2,
     "file": "ch13-posix-pagecache-vs-gds-dma.svg",
     "asset": "ch13/ch13-posix-pagecache-vs-gds-dma.svg",
-    "section": "13.2.2",
+    "section": "13.1.2",
     "caption": "算例 13-1：单机 8 盘 PCIe Gen5 NVMe SSD 加载 140 GB 权重时，传统 POSIX 页缓存双重拷贝（280 GB Root Complex 流量，耗时 2.80 s）与 GPUDirect Storage P2P DMA 零拷贝直通（100 GB/s，耗时 1.40 s）对比",
     "source_refs": [
       "manuscripts/ch13/figure-data.json"
@@ -32,7 +32,7 @@
     "number": 3,
     "file": "ch13-3fs-craq-architecture.svg",
     "asset": "ch13/ch13-3fs-craq-architecture.svg",
-    "section": "13.3.3",
+    "section": "13.2.1",
     "caption": "DeepSeek 3FS 的 CRAQ 链式复制协议（链式顺序写与全副本强一致分摊读）及算例 13-2 中 180 节点存储集群实现 6.6 TiB/s 聚合读带宽的网卡—磁盘配比账本",
     "source_refs": [
       "manuscripts/ch13/figure-data.json"
@@ -46,7 +46,7 @@
     "number": 4,
     "file": "ch13-kv-layout-read-amplification.svg",
     "asset": "ch13/ch13-kv-layout-read-amplification.svg",
-    "section": "13.4.2",
+    "section": "13.2.2",
     "caption": "算例 13-3：32 层模型卸载 16-token KV 块时，Layer-major 按层分离布局（触发 4 KiB LBA 读放大 RAF=2.0x 与 800k IOPS 墙，耗时 5.12 ms）与 Block-major 全层打包布局（RAF=1.0x，跑满 12.5 GiB/s，耗时 0.625 ms，提速 8.192x）对比",
     "source_refs": [
       "manuscripts/ch13/figure-data.json"
@@ -60,7 +60,7 @@
     "number": 5,
     "file": "ch13-zns-gc-tail-latency.svg",
     "asset": "ch13/ch13-zns-gc-tail-latency.svg",
-    "section": "13.4.3",
+    "section": "13.2.2",
     "caption": "传统块接口 NVMe SSD 在混写负载下的 FTL 垃圾回收（GC）写放大（WAF=2.5–4.0x）与读尾延迟毛刺，以及 ZNS 分区命名空间 SSD 按会话/检查点生命周期对齐实现 WAF≈1.0x 的机制",
     "source_refs": [
       "manuscripts/ch13/figure-data.json"
@@ -74,7 +74,7 @@
     "number": 6,
     "file": "ch13-multimodal-dataloader-pipeline.svg",
     "asset": "ch13/ch13-multimodal-dataloader-pipeline.svg",
-    "section": "13.5.2",
+    "section": "13.3.1",
     "caption": "多模态训练中 WebDataset 分片打包消除元数据风暴，以及算例 13-4 中每秒 4,096 段 720p 视频（65,536 fps）从主机 CPU 软解码赤字（缺口 160 核）向 DALI + 8×GPU NVDEC 硬件解码卸载的流水线",
     "source_refs": [
       "manuscripts/ch13/figure-data.json"
@@ -88,7 +88,7 @@
     "number": 7,
     "file": "ch13-parquet-lance-vs-webdataset-io.svg",
     "asset": "ch13/ch13-parquet-lance-vs-webdataset-io.svg",
-    "section": "13.5.3",
+    "section": "13.3.1",
     "caption": "WebDataset 行式顺序流与 Parquet/Lance 列式随机偏移寻址在多模态按列投影与课程学习动态采样下的 I/O 机制对比",
     "source_refs": [
       "manuscripts/ch13/figure-data.json"
@@ -102,7 +102,7 @@
     "number": 8,
     "file": "ch13-dsec-erofs-ondemand-container-boot.svg",
     "asset": "ch13/ch13-dsec-erofs-ondemand-container-boot.svg",
-    "section": "13.5.3",
+    "section": "13.3.1",
     "caption": "DSec 平台 8,192 个容器并发启动对比：全量拉取解包（>60 min，单节点写盘 >1,600 GB）与 EROFS 按需块读取 + overlayfs 组合层（35 min，写盘 700 GB，重建复杂度 O(m)+O(k)）",
     "source_refs": [
       "case-studies/dsec-sandbox-platform.md"
@@ -116,7 +116,7 @@
     "number": 9,
     "file": "ch13-faiss-flat-vs-iks-near-storage.svg",
     "asset": "ch13/ch13-faiss-flat-vs-iks-near-storage.svg",
-    "section": "13.6.1",
+    "section": "13.3.2",
     "caption": "2^25×768 向量表（FP16 48 GiB）经 64 GB/s 主机链路搬移（805.306 ms）与 8 分片近存 IKS 内部 1 TB/s 扫描（51.540 ms，查询广播 12,288 B、结果归并 3,072 B）对比",
     "source_refs": [
       "case-studies/retrieval-and-generation.md"
@@ -130,7 +130,7 @@
     "number": 10,
     "file": "ch13-hnsw-memory-vs-diskann-ssd-layout.svg",
     "asset": "ch13/ch13-hnsw-memory-vs-diskann-ssd-layout.svg",
-    "section": "13.6.1",
+    "section": "13.3.2",
     "caption": "HNSW 全内存分层导航图的邻接指针内存膨胀，以及 DiskANN 将 PQ 压缩向量驻留 DRAM、全精度向量与邻居表紧凑对齐 4 KiB NVMe 扇区的混合检索架构",
     "source_refs": [
       "case-studies/retrieval-and-generation.md"
@@ -144,7 +144,7 @@
     "number": 11,
     "file": "ch13-rag-288-requests-calibration-trap.svg",
     "asset": "ch13/ch13-rag-288-requests-calibration-trap.svg",
-    "section": "13.6.2",
+    "section": "13.3.2",
     "caption": "实验 13-01（288 请求 Faiss + Qwen3-8B RAG 管线）：校准集（8 题）预选 k=1 在留出集（16 题）因 q14 跌至 15/16 的失守机制，以及 6 个固定 k=4/16 配置单元 24/24 全通过的实测对比",
     "source_refs": [
       "experiments/ch13/13-01/retrieval-generation/README.md"
@@ -158,7 +158,7 @@
     "number": 12,
     "file": "ch13-rag-topk-kv-blocks-and-rlimit-gap.svg",
     "asset": "ch13/ch13-rag-topk-kv-blocks-and-rlimit-gap.svg",
-    "section": "13.6.2",
+    "section": "13.3.2",
     "caption": "实验 13-01 中检索 k=4 与 k=16 对 vLLM 910 块 KV 池的真实占用（23 块 vs. 77 块）及环境变量守卫漏检 EngineCore 子进程（CUDA 分配器峰值 18.58 GB）的边界审计",
     "source_refs": [
       "experiments/ch13/13-01/retrieval-generation/README.md"
@@ -172,8 +172,8 @@
     "number": 13,
     "file": "ch13-rag-end-to-end-timeline-breakdown.svg",
     "asset": "ch13/ch13-rag-end-to-end-timeline-breakdown.svg",
-    "section": "13.6.2",
-    "caption": "RAG 请求端到端五阶段关键路径分解，以及算例 13-6 中精检少文档（k=8，检索 200 ms + Prefill 110.2 ms）与粗检多文档（k=32，检索 20 ms + Prefill 351.4 ms）的翻转边界",
+    "section": "13.3.2",
+    "caption": "RAG 请求端到端五阶段关键路径分解，以及算例 13-7 中精检少文档（k=8，检索 200 ms + Prefill 110.2 ms）与粗检多文档（k=32，检索 20 ms + Prefill 351.4 ms）的翻转边界",
     "source_refs": [
       "case-studies/retrieval-and-generation.md"
     ],
@@ -186,7 +186,7 @@
     "number": 14,
     "file": "ch13-three-tier-kv-cache-hierarchy.svg",
     "asset": "ch13/ch13-three-tier-kv-cache-hierarchy.svg",
-    "section": "13.7.1",
+    "section": "13.4.1",
     "caption": "HBM—主机 DRAM—RDMA 远端内存—NVMe SSD 四级 KV 缓存池（Mooncake / LMCache / HiCache）的带宽阶梯与拉取替代重算的临界条件",
     "source_refs": [
       "manuscripts/ch13/figure-data.json"
@@ -200,7 +200,7 @@
     "number": 15,
     "file": "ch13-cacheblend-non-prefix-kv-fusion.svg",
     "asset": "ch13/ch13-cacheblend-non-prefix-kv-fusion.svg",
-    "section": "13.7.1",
+    "section": "13.4.1",
     "caption": "RAG 多文档任意顺序拼接下的非前缀 KV 复用：直接拼接缺失交叉注意力 vs. CacheBlend 仅对 10%–15% 高偏差词元执行稀疏重算并与 SSD 拉取流水重叠",
     "source_refs": [
       "manuscripts/ch13/figure-data.json"
@@ -214,7 +214,7 @@
     "number": 16,
     "file": "ch13-ssd-dwpd-endurance-and-admission.svg",
     "asset": "ch13/ch13-ssd-dwpd-endurance-and-admission.svg",
-    "section": "13.7.2",
+    "section": "13.4.1",
     "caption": "算例 13-9：8 卡节点持续以 4 GB/s 换出 KV 状态时高达 33.75 DWPD 的闪存寿命超限风险，以及通过写准入过滤器（α≤8.89%）与 ZNS 分区将寿命拉回 ≤3 DWPD 安全线的机制",
     "source_refs": [
       "manuscripts/ch13/figure-data.json"
@@ -228,7 +228,7 @@
     "number": 17,
     "file": "ch13-storage-diagnosis-workflow.svg",
     "asset": "ch13/ch13-storage-diagnosis-workflow.svg",
-    "section": "13.7.2",
+    "section": "13.4.1",
     "caption": "AI 存储子系统性能与寿命瓶颈的五步定量诊断工作流",
     "source_refs": [
       "manuscripts/ch13/figure-data.json"
@@ -242,12 +242,12 @@
     "number": 18,
     "file": "ch13-full-stack-ai-data-plane.svg",
     "asset": "ch13/ch13-full-stack-ai-data-plane.svg",
-    "section": "13.7.2",
+    "section": "13.4.1",
     "caption": "贯穿预训练数据湖、RAG 向量知识库、多级 KV 缓存池与万级容器镜像的 AI 原生数据底座全景架构图",
     "source_refs": [
       "manuscripts/ch13/figure-data.json"
     ],
-    "TeachingRole": "收束第 13 章全章知识体系，呈现计算—网络—存储深度融合的现代 AI 数据平面",
+    "TeachingRole": "串联第 13 章上半部分存储与缓存体系，呈现计算—网络—存储深度融合的现代 AI 数据平面",
     "name": "ch13-full-stack-ai-data-plane",
     "figure": "13-18"
   },
@@ -256,7 +256,7 @@
     "number": 19,
     "file": "ch13-falconfs-server-side-path-resolution.svg",
     "asset": "ch13/ch13-falconfs-server-side-path-resolution.svg",
-    "section": "13.8.1",
+    "section": "13.4.2",
     "caption": "传统 POSIX 逐跳目录解析（D=6 时每次打开触发 6–7 次 RPC）与 FalconFS（NSDI '26）服务端复合路径解析及混合哈希无锁目录布局对比",
     "source_refs": [
       "research/2026-infra-survey/reading-nsdi-2026.md"
@@ -270,7 +270,7 @@
     "number": 20,
     "file": "ch13-multimodal-tar-webdataset-vs-lance-random.svg",
     "asset": "ch13/ch13-multimodal-tar-webdataset-vs-lance-random.svg",
-    "section": "13.8.1",
+    "section": "13.4.2",
     "caption": "静态顺序 Shuffle（WebDataset Tar 连续分片 / FalconFS）与课程学习及在线难例重采样（Lance O(1) 偏移点查 + Umap 页映射）的磁盘寻道与读放大对比",
     "source_refs": [
       "manuscripts/ch13/figure-data.json"
@@ -284,7 +284,7 @@
     "number": 21,
     "file": "ch13-distvs-helmsman-disaggregated-vector-search.svg",
     "asset": "ch13/ch13-distvs-helmsman-disaggregated-vector-search.svg",
-    "section": "13.8.2",
+    "section": "13.4.2",
     "caption": "DistVS（NSDI '26）计算—内存解耦三级精度筛选（本地 DRAM 粗筛 → 远端内存精筛 → SSD 全精度重排）与 Helmsman（OSDI '26）大规模倒排聚类闪存 ANNS 架构对比",
     "source_refs": [
       "research/2026-infra-survey/reading-nsdi-2026.md",
@@ -299,7 +299,7 @@
     "number": 22,
     "file": "ch13-copilotio-gds-vs-cpu-assisted-io.svg",
     "asset": "ch13/ch13-copilotio-gds-vs-cpu-assisted-io.svg",
-    "section": "13.8.3",
+    "section": "13.4.2",
     "caption": "大块连续裸张量 GPUDirect Storage（GDS）直通与细粒度/需解压场景下 CoPilotIO（OSDI '26）利用主机 CPU 协处理轮询释放 GPU SM 算力的架构对比",
     "source_refs": [
       "research/2026-infra-survey/reading-osdi-2026.md"
@@ -313,7 +313,7 @@
     "number": 23,
     "file": "ch13-umap-moonbright-mmap-and-gpu-page-table.svg",
     "asset": "ch13/ch13-umap-moonbright-mmap-and-gpu-page-table.svg",
-    "section": "13.8.3",
+    "section": "13.4.2",
     "caption": "Umap（OSDI '26）分布式文件系统页粒度矩阵 mmap 按需预取免除容器 OOM 与 MoonBright（OSDI '26）设备端 GPU 页表物化及延迟 TLB 同步协同架构",
     "source_refs": [
       "research/2026-infra-survey/reading-osdi-2026.md"
@@ -327,12 +327,12 @@
     "number": 24,
     "file": "ch13-ai-storage-bandwidth-latency-iops-cube.svg",
     "asset": "ch13/ch13-ai-storage-bandwidth-latency-iops-cube.svg",
-    "section": "13.8.3",
+    "section": "13.4.2",
     "caption": "AI 原生存储底座全场景（检查点、十亿小文件、多级 KV、十亿向量 ANNS、细粒度协同 I/O）在带宽—延迟—IOPS 三维空间的映射总览",
     "source_refs": [
       "manuscripts/ch13/figure-data.json"
     ],
-    "TeachingRole": "总结第 13 章全部存储负载特征与对应系统原语的工程选型总表",
+    "TeachingRole": "总结第 13 章上半部分存储负载特征与对应系统原语的工程选型总表",
     "name": "ch13-ai-storage-bandwidth-latency-iops-cube",
     "figure": "13-24"
   },
@@ -341,7 +341,7 @@
     "number": 25,
     "file": "ch13-nixl-unified-nonblocking-transfer-plane.svg",
     "asset": "ch13/ch13-nixl-unified-nonblocking-transfer-plane.svg",
-    "section": "13.8.4",
+    "section": "13.4.2",
     "caption": "NIXL 跨 HBM、Host DRAM、本地 NVMe 与远端 RDMA 存储池的统一异步传输抽象与路径自动协商",
     "source_refs": [
       "manuscripts/ch13/figure-data.json"
@@ -355,7 +355,7 @@
     "number": 26,
     "file": "ch13-checkpoint-replication-to-erasure-coding-lifecycle.svg",
     "asset": "ch13/ch13-checkpoint-replication-to-erasure-coding-lifecycle.svg",
-    "section": "13.8.4",
+    "section": "13.4.2",
     "caption": "PB 级检查点从热层 3 副本秒级闪存暂存到温冷层 RS(10,4) 纠删码对象归档的容量与恢复带宽瀑布图",
     "source_refs": [
       "manuscripts/ch13/figure-data.json"
@@ -369,7 +369,7 @@
     "number": 27,
     "file": "ch13-lmcache-prefix-kv-compression-and-gds-prefetch.svg",
     "asset": "ch13/ch13-lmcache-prefix-kv-compression-and-gds-prefetch.svg",
-    "section": "13.8.4",
+    "section": "13.4.2",
     "caption": "LMCache / Mooncake Store 跨请求前缀 KV 锚点差分压缩（3.80×）、16 块逐层组 GDS 异步预取与 GPU 解压流水线（713.60 ms 降至 273.02 ms，提速 2.61×）及 DRAM—NVMe—S3 三级冷热分层",
     "source_refs": [
       "manuscripts/ch13/figure-data.json",
@@ -384,7 +384,7 @@
     "number": 28,
     "file": "ch13-checkpoint-and-kv-unified-nvme-pool-qos.svg",
     "asset": "ch13/ch13-checkpoint-and-kv-unified-nvme-pool-qos.svg",
-    "section": "13.8.4",
+    "section": "13.4.2",
     "caption": "训练检查点 1 MiB 突发写与在线 KV 缓存读取共享 NVMe 池时，单一 FIFO 队列队头阻塞（P99 达 13.80 ms）与 NVMe 硬件 WRR（8:2 权重）+ 128 KiB 写微块切片 QoS 隔离（P99 降至 1.35 ms，改善 10.22×）对比",
     "source_refs": [
       "manuscripts/ch13/figure-data.json",
@@ -399,263 +399,263 @@
     "number": 29,
     "file": "ch13-100pb-commoncrawl-to-15t-tokens-curation-funnel.svg",
     "asset": "ch13/ch13-100pb-commoncrawl-to-15t-tokens-curation-funnel.svg",
-    "section": "13.9.1",
+    "section": "13.5.1",
     "caption": "从 100 PB CommonCrawl 原始 WARC 归档经七级提纯漏斗产出 15.0T 精品词元的体积与算力瀑布（算例 13-15）",
     "source_refs": [
-      "experiments/ch23/23-01/run.py",
-      "manuscripts/ch23/figure-data.json"
+      "experiments/ch13/13-02/run.py",
+      "manuscripts/ch13/figure-data.json"
     ],
     "TeachingRole": "展示百 PB 级原始网页经正文抽取、启发式过滤、去重、分级与去污仅留存 2.40% 的全链路账本",
-    "figure": "13-29",
-    "name": "ch13-100pb-commoncrawl-to-15t-tokens-curation-funnel"
+    "name": "ch13-100pb-commoncrawl-to-15t-tokens-curation-funnel",
+    "figure": "13-29"
   },
   {
     "figure_id": "图 13-30",
     "number": 30,
     "file": "ch13-minhash-lsh-band-row-s-curve-probability.svg",
     "asset": "ch13/ch13-minhash-lsh-band-row-s-curve-probability.svg",
-    "section": "13.10.1",
+    "section": "13.5.2",
     "caption": "MinHash LSH 局部敏感哈希在 (b=16, r=8) 分桶配置下的 S 型碰撞概率曲线 P(s) = 1 - (1 - s^r)^b（算例 13-16）",
     "source_refs": [
-      "experiments/ch23/23-01/run.py",
-      "manuscripts/ch23/figure-data.json"
+      "experiments/ch13/13-02/run.py",
+      "manuscripts/ch13/figure-data.json"
     ],
     "TeachingRole": "推导阈值拐点 s* = 0.7071 以及 s=0.80 捕获率 94.70%、s=0.50 误碰率 6.07% 的概率边界",
-    "figure": "13-30",
-    "name": "ch13-minhash-lsh-band-row-s-curve-probability"
+    "name": "ch13-minhash-lsh-band-row-s-curve-probability",
+    "figure": "13-30"
   },
   {
     "figure_id": "图 13-31",
     "number": 31,
     "file": "ch13-distributed-minhash-shuffle-and-gpu-union-find.svg",
     "asset": "ch13/ch13-distributed-minhash-shuffle-and-gpu-union-find.svg",
-    "section": "13.10.2",
+    "section": "13.5.2",
     "caption": "50 亿篇文档模糊去重的分布式流水线：Shingle 哈希、按 Band 洗牌与 GPU 连通分量（Large-Star/Small-Star）聚簇（算例 13-17）",
     "source_refs": [
-      "experiments/ch23/23-01/run.py",
-      "manuscripts/ch23/figure-data.json"
+      "experiments/ch13/13-02/run.py",
+      "manuscripts/ch13/figure-data.json"
     ],
     "TeachingRole": "揭示 2.56 TB 签名跨卡洗牌与分布式图连通分量求解传递性重复簇的系统机理",
-    "figure": "13-31",
-    "name": "ch13-distributed-minhash-shuffle-and-gpu-union-find"
+    "name": "ch13-distributed-minhash-shuffle-and-gpu-union-find",
+    "figure": "13-31"
   },
   {
     "figure_id": "图 13-32",
     "number": 32,
     "file": "ch13-cpu-datatrove-vs-gpu-nemo-curator-throughput.svg",
     "asset": "ch13/ch13-cpu-datatrove-vs-gpu-nemo-curator-throughput.svg",
-    "section": "13.10.2",
+    "section": "13.5.2",
     "caption": "CPU 集群（DataTrove）与 GPU 加速流水线（NeMo Curator + cuDF + cuGraph）在百 TB 语料去重中的耗时（80.0x 加速）与 TCO（降 4.50x）对比（算例 13-17）",
     "source_refs": [
-      "experiments/ch23/23-01/run.py",
-      "manuscripts/ch23/figure-data.json"
+      "experiments/ch13/13-02/run.py",
+      "manuscripts/ch13/figure-data.json"
     ],
     "TeachingRole": "对比 4,096 核 CPU 跑 148 小时与 64 卡 H100 跑 1.85 小时的吞吐与成本账本",
-    "figure": "13-32",
-    "name": "ch13-cpu-datatrove-vs-gpu-nemo-curator-throughput"
+    "name": "ch13-cpu-datatrove-vs-gpu-nemo-curator-throughput",
+    "figure": "13-32"
   },
   {
     "figure_id": "图 13-33",
     "number": 33,
     "file": "ch13-document-fuzzy-dedup-vs-suffix-array-substring-dedup.svg",
     "asset": "ch13/ch13-document-fuzzy-dedup-vs-suffix-array-substring-dedup.svg",
-    "section": "13.10.2",
+    "section": "13.5.2",
     "caption": "文档级 MinHash 模糊去重与基于后缀数组（Suffix Array）的 50 词元级精确重复模板/导航栏剥离协同",
     "source_refs": [
-      "manuscripts/ch23/figure-data.json"
+      "manuscripts/ch13/figure-data.json"
     ],
     "TeachingRole": "阐明宏观整篇模糊去重与微观后缀数组子串切除的互补分工",
-    "figure": "13-33",
-    "name": "ch13-document-fuzzy-dedup-vs-suffix-array-substring-dedup"
+    "name": "ch13-document-fuzzy-dedup-vs-suffix-array-substring-dedup",
+    "figure": "13-33"
   },
   {
     "figure_id": "图 13-34",
     "number": 34,
     "file": "ch13-llm-rubric-distillation-to-fasttext-bert-classifier.svg",
     "asset": "ch13/ch13-llm-rubric-distillation-to-fasttext-bert-classifier.svg",
-    "section": "13.11.1",
+    "section": "13.6.1",
     "caption": "用 70B 教师模型标注 500 万样本蒸馏 110M 轻量级质量分类器（FineWeb-Edu / DCLM）实现 55.82 倍算力节省的三级漏斗（算例 13-18）",
     "source_refs": [
-      "experiments/ch23/23-02/run.py",
-      "manuscripts/ch23/figure-data.json"
+      "experiments/ch13/13-03/run.py",
+      "manuscripts/ch13/figure-data.json"
     ],
     "TeachingRole": "证明教师精标种子与轻量分类器全量推理相比直接用大模型打分节省 98.21% 算力",
-    "figure": "13-34",
-    "name": "ch13-llm-rubric-distillation-to-fasttext-bert-classifier"
+    "name": "ch13-llm-rubric-distillation-to-fasttext-bert-classifier",
+    "figure": "13-34"
   },
   {
     "figure_id": "图 13-35",
     "number": 35,
     "file": "ch13-nemotron-cc-classifier-ensembling-and-rephrasing.svg",
     "asset": "ch13/ch13-nemotron-cc-classifier-ensembling-and-rephrasing.svg",
-    "section": "13.11.1",
+    "section": "13.6.1",
     "caption": "Nemotron-CC 范式：多分类器集成打分分桶与对高知识价值但表述残缺网页的合成改写抢救（Synthetic Rephrasing）",
     "source_refs": [
-      "manuscripts/ch23/figure-data.json"
+      "manuscripts/ch13/figure-data.json"
     ],
     "TeachingRole": "通过多分类器集成与百科风格合成改写突破激进过滤带来的独特词元枯竭墙",
-    "figure": "13-35",
-    "name": "ch13-nemotron-cc-classifier-ensembling-and-rephrasing"
+    "name": "ch13-nemotron-cc-classifier-ensembling-and-rephrasing",
+    "figure": "13-35"
   },
   {
     "figure_id": "图 13-36",
     "number": 36,
     "file": "ch13-benchmark-decontamination-ngram-and-embedding-hybrid.svg",
     "asset": "ch13/ch13-benchmark-decontamination-ngram-and-embedding-hybrid.svg",
-    "section": "13.11.2",
+    "section": "13.6.1",
     "caption": "防止评测集刷榜失真的双层去污管线（13-gram 子串匹配 + 稠密语义向量近邻剔除防止同义改写与跨语言污染）",
     "source_refs": [
-      "manuscripts/ch23/figure-data.json"
+      "manuscripts/ch13/figure-data.json"
     ],
     "TeachingRole": "构建字面 n-gram 自动机与稠密向量检索结合的评测基准防泄漏防线",
-    "figure": "13-36",
-    "name": "ch13-benchmark-decontamination-ngram-and-embedding-hybrid"
+    "name": "ch13-benchmark-decontamination-ngram-and-embedding-hybrid",
+    "figure": "13-36"
   },
   {
     "figure_id": "图 13-37",
     "number": 37,
     "file": "ch13-doremi-regmix-domain-weight-optimization.svg",
     "asset": "ch13/ch13-doremi-regmix-domain-weight-optimization.svg",
-    "section": "13.11.2",
+    "section": "13.6.1",
     "caption": "基于小型代理模型（Proxy Model）的领域配比寻优（DoReMi / RegMix）与三阶段预训练动态退火曲线",
     "source_refs": [
-      "manuscripts/ch23/figure-data.json"
+      "manuscripts/ch13/figure-data.json"
     ],
     "TeachingRole": "展示如何用小模型网格搜索最优领域配比并在预训练末段执行高纯度数据极速退火",
-    "figure": "13-37",
-    "name": "ch13-doremi-regmix-domain-weight-optimization"
+    "name": "ch13-doremi-regmix-domain-weight-optimization",
+    "figure": "13-37"
   },
   {
     "figure_id": "图 13-38",
     "number": 38,
     "file": "ch13-online-serving-vs-offline-synthetic-factory-roofline.svg",
     "asset": "ch13/ch13-online-serving-vs-offline-synthetic-factory-roofline.svg",
-    "section": "13.12.1",
+    "section": "13.6.2",
     "caption": "在线低延迟服务（B=32，MFU 11.2%）与离线合成数据工厂（B=2,048，MFU 58.4%，吞吐升 7.20 倍、成本降 13.16 倍）的 Roofline 跃迁（算例 13-19）",
     "source_refs": [
-      "experiments/ch23/23-02/run.py",
-      "manuscripts/ch23/figure-data.json"
+      "experiments/ch13/13-03/run.py",
+      "manuscripts/ch13/figure-data.json"
     ],
     "TeachingRole": "阐明卸下实时延迟枷锁后通过超大批量将自回归解码推入 Tensor Core 计算饱和区的经济学",
-    "figure": "13-38",
-    "name": "ch13-online-serving-vs-offline-synthetic-factory-roofline"
+    "name": "ch13-online-serving-vs-offline-synthetic-factory-roofline",
+    "figure": "13-38"
   },
   {
     "figure_id": "图 13-39",
     "number": 39,
     "file": "ch13-synthetic-data-generator-verifier-rejection-funnel.svg",
     "asset": "ch13/ch13-synthetic-data-generator-verifier-rejection-funnel.svg",
-    "section": "13.12.2",
-    "caption": "推理与代码合成数据工厂的“多样化种子 -> 高温批量采样 -> 沙箱测试验证（31.25%）-> 自纠重写（综合良率 58.75%）”闭环账本（算例 13-19）",
+    "section": "13.6.2",
+    "caption": "推理与代码合成数据工厂的“多样化种子 -> 高温批量采样 -> 沙箱测试验证（31.25%）-> 自纠重写（综合良率 58.75%）”校验账本（算例 13-19）",
     "source_refs": [
-      "experiments/ch23/23-02/run.py",
-      "manuscripts/ch23/figure-data.json"
+      "experiments/ch13/13-03/run.py",
+      "manuscripts/ch13/figure-data.json"
     ],
     "TeachingRole": "利用外部确定性沙箱验证器与错误轨迹重写防止模型自噬并将验证词元成本锁定在 0.075 美元/M",
-    "figure": "13-39",
-    "name": "ch13-synthetic-data-generator-verifier-rejection-funnel"
+    "name": "ch13-synthetic-data-generator-verifier-rejection-funnel",
+    "figure": "13-39"
   },
   {
     "figure_id": "图 13-40",
     "number": 40,
     "file": "ch13-slack-capacity-harvesting-for-synthetic-generation.svg",
     "asset": "ch13/ch13-slack-capacity-harvesting-for-synthetic-generation.svg",
-    "section": "13.12.1",
+    "section": "13.6.2",
     "caption": "利用在线推理集群昼夜波谷与训练维护空窗自动拉起离线合成数据作业的零边际硬件成本收割架构",
     "source_refs": [
-      "experiments/ch23/23-02/run.py",
-      "manuscripts/ch23/figure-data.json"
+      "experiments/ch13/13-03/run.py",
+      "manuscripts/ch13/figure-data.json"
     ],
     "TeachingRole": "通过毫秒级抢占式波谷算力收割将离线合成 GPU 小时单价再压降 45%",
-    "figure": "13-40",
-    "name": "ch13-slack-capacity-harvesting-for-synthetic-generation"
+    "name": "ch13-slack-capacity-harvesting-for-synthetic-generation",
+    "figure": "13-40"
   },
   {
     "figure_id": "图 13-41",
     "number": 41,
     "file": "ch13-pdf-scientific-ocr-layout-math-extraction-pipeline.svg",
     "asset": "ch13/ch13-pdf-scientific-ocr-layout-math-extraction-pipeline.svg",
-    "section": "13.9.1",
+    "section": "13.6.2",
     "caption": "高质量学术论文与教材 PDF 语料的版面分析、公式 LaTeX 还原与多模态图文交错提取流水线",
     "source_refs": [
-      "manuscripts/ch23/figure-data.json"
+      "manuscripts/ch13/figure-data.json"
     ],
     "TeachingRole": "解决传统 PDF 文本提取破坏分栏与数学公式的难题，解锁高阶 STEM 专业文献",
-    "figure": "13-41",
-    "name": "ch13-pdf-scientific-ocr-layout-math-extraction-pipeline"
+    "name": "ch13-pdf-scientific-ocr-layout-math-extraction-pipeline",
+    "figure": "13-41"
   },
   {
     "figure_id": "图 13-42",
     "number": 42,
     "file": "ch13-tokenized-dataset-mmap-shuffling-and-sequence-packing.svg",
     "asset": "ch13/ch13-tokenized-dataset-mmap-shuffling-and-sequence-packing.svg",
-    "section": "13.11.2",
+    "section": "13.6.2",
     "caption": "万亿词元二进制索引（.bin/.idx mmap）的确定性全局伪随机洗牌与最佳适应序列打包（Best-Fit Packing）零填充损耗",
     "source_refs": [
-      "manuscripts/ch23/figure-data.json"
+      "manuscripts/ch13/figure-data.json"
     ],
     "TeachingRole": "通过 Feistel 块级置换与最佳适应无截断打包消除长文档腰斩与跨文档注意力串扰",
-    "figure": "13-42",
-    "name": "ch13-tokenized-dataset-mmap-shuffling-and-sequence-packing"
+    "name": "ch13-tokenized-dataset-mmap-shuffling-and-sequence-packing",
+    "figure": "13-42"
   },
   {
     "figure_id": "图 13-43",
     "number": 43,
     "file": "ch13-data-lineage-copyright-optout-and-audit-ledger.svg",
     "asset": "ch13/ch13-data-lineage-copyright-optout-and-audit-ledger.svg",
-    "section": "13.11.2",
+    "section": "13.6.2",
     "caption": "面向合规与可追溯性的语料血缘账本（Data Provenance）、版权退订剔除与训练批次精确回溯索引",
     "source_refs": [
-      "manuscripts/ch23/figure-data.json"
+      "manuscripts/ch13/figure-data.json"
     ],
     "TeachingRole": "建立从每个训练 Batch 反向追溯至原始网页 SHA-256 与许可证标签的密码学审计链路",
-    "figure": "13-43",
-    "name": "ch13-data-lineage-copyright-optout-and-audit-ledger"
+    "name": "ch13-data-lineage-copyright-optout-and-audit-ledger",
+    "figure": "13-43"
   },
   {
     "figure_id": "图 13-44",
     "number": 44,
     "file": "ch13-exascale-data-and-synthetic-factory-master-architecture.svg",
     "asset": "ch13/ch13-exascale-data-and-synthetic-factory-master-architecture.svg",
-    "section": "13.12.2",
-    "caption": "百亿亿次 Token 数据工程与合成数据工厂从原始爬虫、GPU 去重到闭环合成退火的全栈总图",
+    "section": "13.6.2",
+    "caption": "百亿亿次 Token 数据工程与合成数据工厂从原始爬虫、GPU 去重到离线合成退火的全栈总图",
     "source_refs": [
-      "experiments/ch23/23-01/run.py",
-      "experiments/ch23/23-02/run.py",
-      "manuscripts/ch23/figure-data.json"
+      "experiments/ch13/13-02/run.py",
+      "experiments/ch13/13-03/run.py",
+      "manuscripts/ch13/figure-data.json"
     ],
-    "TeachingRole": "收束第 23 章七级提纯漏斗、GPU 连通分量去重、分类器蒸馏与合成数据工厂的完整体系",
-    "figure": "13-44",
-    "name": "ch13-exascale-data-and-synthetic-factory-master-architecture"
+    "TeachingRole": "串联第 13 章下半部分七级提纯漏斗、GPU 连通分量去重、分类器蒸馏与合成数据工厂的完整体系",
+    "name": "ch13-exascale-data-and-synthetic-factory-master-architecture",
+    "figure": "13-44"
   },
   {
     "figure_id": "图 13-45",
     "number": 45,
     "file": "ch13-mineru-olmocr-pdf-layout-and-formula-gpu-pipeline.svg",
     "asset": "ch13/ch13-mineru-olmocr-pdf-layout-and-formula-gpu-pipeline.svg",
-    "section": "13.12.2",
+    "section": "13.6.2",
     "caption": "百万册级复杂学术 PDF 版面解析与公式还原（MinerU / olmOCR 混合快慢分流与跨页子区域 TensorRT 动态批处理，吞吐提速 35.27 倍）（算例 13-20）",
     "source_refs": [
-      "experiments/ch23/23-03/run.py",
-      "manuscripts/ch23/figure-data.json"
+      "experiments/ch13/13-05/run.py",
+      "manuscripts/ch13/figure-data.json"
     ],
     "TeachingRole": "通过 65% 原生数字页正文直抽与跨页公式框 TensorRT 动态批处理将单卡吞吐从 1.60 页/s 推高至 56.43 页/s",
-    "figure": "13-45",
-    "name": "ch13-mineru-olmocr-pdf-layout-and-formula-gpu-pipeline"
+    "name": "ch13-mineru-olmocr-pdf-layout-and-formula-gpu-pipeline",
+    "figure": "13-45"
   },
   {
     "figure_id": "图 13-46",
     "number": 46,
     "file": "ch13-repo-level-ast-dependency-topological-packing.svg",
     "asset": "ch13/ch13-repo-level-ast-dependency-topological-packing.svg",
-    "section": "13.12.2",
+    "section": "13.6.2",
     "caption": "代码仓库级跨文件 AST 依赖图提取、Tarjan 强连通破环与 Kahn 拓扑排序序列打包（因果依赖覆盖率从 42.50% 跃升至 95.00%）（算例 13-21）",
     "source_refs": [
-      "experiments/ch23/23-03/run.py",
-      "manuscripts/ch23/figure-data.json"
+      "experiments/ch13/13-05/run.py",
+      "manuscripts/ch13/figure-data.json"
     ],
     "TeachingRole": "消除路径字母序拼接导致的跨文件定义盲区，使 64k 代码预训练跨文件 API 困惑度降低 39.85%",
-    "figure": "13-46",
-    "name": "ch13-repo-level-ast-dependency-topological-packing"
+    "name": "ch13-repo-level-ast-dependency-topological-packing",
+    "figure": "13-46"
   }
 ]

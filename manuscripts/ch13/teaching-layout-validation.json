@@ -1,284 +1,278 @@
-{
-  "chapter": "ch13",
-  "figure_count": 46,
-  "all_passed": true,
-  "total_warnings": 0,
-  "figures": [
-    {
-      "figure": "13-1",
-      "file": "ch13-storage-hierarchy-and-access-patterns.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-2",
-      "file": "ch13-posix-pagecache-vs-gds-dma.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-3",
-      "file": "ch13-3fs-craq-architecture.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-4",
-      "file": "ch13-kv-layout-read-amplification.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-5",
-      "file": "ch13-zns-gc-tail-latency.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-6",
-      "file": "ch13-multimodal-dataloader-pipeline.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-7",
-      "file": "ch13-parquet-lance-vs-webdataset-io.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-8",
-      "file": "ch13-dsec-erofs-ondemand-container-boot.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-9",
-      "file": "ch13-faiss-flat-vs-iks-near-storage.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-10",
-      "file": "ch13-hnsw-memory-vs-diskann-ssd-layout.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-11",
-      "file": "ch13-rag-288-requests-calibration-trap.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-12",
-      "file": "ch13-rag-topk-kv-blocks-and-rlimit-gap.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-13",
-      "file": "ch13-rag-end-to-end-timeline-breakdown.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-14",
-      "file": "ch13-three-tier-kv-cache-hierarchy.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-15",
-      "file": "ch13-cacheblend-non-prefix-kv-fusion.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-16",
-      "file": "ch13-ssd-dwpd-endurance-and-admission.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-17",
-      "file": "ch13-storage-diagnosis-workflow.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-18",
-      "file": "ch13-full-stack-ai-data-plane.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-19",
-      "file": "ch13-falconfs-server-side-path-resolution.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-20",
-      "file": "ch13-multimodal-tar-webdataset-vs-lance-random.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-21",
-      "file": "ch13-distvs-helmsman-disaggregated-vector-search.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-22",
-      "file": "ch13-copilotio-gds-vs-cpu-assisted-io.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-23",
-      "file": "ch13-umap-moonbright-mmap-and-gpu-page-table.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-24",
-      "file": "ch13-ai-storage-bandwidth-latency-iops-cube.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-25",
-      "file": "ch13-nixl-unified-nonblocking-transfer-plane.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-26",
-      "file": "ch13-checkpoint-replication-to-erasure-coding-lifecycle.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-27",
-      "file": "ch13-lmcache-prefix-kv-compression-and-gds-prefetch.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-28",
-      "file": "ch13-checkpoint-and-kv-unified-nvme-pool-qos.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-29",
-      "file": "ch13-100pb-commoncrawl-to-15t-tokens-curation-funnel.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-30",
-      "file": "ch13-minhash-lsh-band-row-s-curve-probability.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-31",
-      "file": "ch13-distributed-minhash-shuffle-and-gpu-union-find.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-32",
-      "file": "ch13-cpu-datatrove-vs-gpu-nemo-curator-throughput.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-33",
-      "file": "ch13-document-fuzzy-dedup-vs-suffix-array-substring-dedup.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-34",
-      "file": "ch13-llm-rubric-distillation-to-fasttext-bert-classifier.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-35",
-      "file": "ch13-nemotron-cc-classifier-ensembling-and-rephrasing.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-36",
-      "file": "ch13-benchmark-decontamination-ngram-and-embedding-hybrid.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-37",
-      "file": "ch13-doremi-regmix-domain-weight-optimization.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-38",
-      "file": "ch13-online-serving-vs-offline-synthetic-factory-roofline.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-39",
-      "file": "ch13-synthetic-data-generator-verifier-rejection-funnel.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-40",
-      "file": "ch13-slack-capacity-harvesting-for-synthetic-generation.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-41",
-      "file": "ch13-pdf-scientific-ocr-layout-math-extraction-pipeline.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-42",
-      "file": "ch13-tokenized-dataset-mmap-shuffling-and-sequence-packing.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-43",
-      "file": "ch13-data-lineage-copyright-optout-and-audit-ledger.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-44",
-      "file": "ch13-exascale-data-and-synthetic-factory-master-architecture.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-45",
-      "file": "ch13-mineru-olmocr-pdf-layout-and-formula-gpu-pipeline.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "13-46",
-      "file": "ch13-repo-level-ast-dependency-topological-packing.svg",
-      "passed": true,
-      "warnings": []
-    }
-  ]
-}
+[
+  {
+    "figure": "ch13-storage-hierarchy-and-access-patterns",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-posix-pagecache-vs-gds-dma",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-3fs-craq-architecture",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-kv-layout-read-amplification",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-zns-gc-tail-latency",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-multimodal-dataloader-pipeline",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-parquet-lance-vs-webdataset-io",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-dsec-erofs-ondemand-container-boot",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-faiss-flat-vs-iks-near-storage",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-hnsw-memory-vs-diskann-ssd-layout",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-rag-288-requests-calibration-trap",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-rag-topk-kv-blocks-and-rlimit-gap",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-rag-end-to-end-timeline-breakdown",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-three-tier-kv-cache-hierarchy",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-cacheblend-non-prefix-kv-fusion",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-ssd-dwpd-endurance-and-admission",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-storage-diagnosis-workflow",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-full-stack-ai-data-plane",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-falconfs-server-side-path-resolution",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-distvs-helmsman-disaggregated-vector-search",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-copilotio-gds-vs-cpu-assisted-io",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-umap-moonbright-mmap-and-gpu-page-table",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-multimodal-tar-webdataset-vs-lance-random",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-ai-storage-bandwidth-latency-iops-cube",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-nixl-unified-nonblocking-transfer-plane",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-checkpoint-replication-to-erasure-coding-lifecycle",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-lmcache-prefix-kv-compression-and-gds-prefetch",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-checkpoint-and-kv-unified-nvme-pool-qos",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-100pb-commoncrawl-to-15t-tokens-curation-funnel",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-minhash-lsh-band-row-s-curve-probability",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-distributed-minhash-shuffle-and-gpu-union-find",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-cpu-datatrove-vs-gpu-nemo-curator-throughput",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-document-fuzzy-dedup-vs-suffix-array-substring-dedup",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-llm-rubric-distillation-to-fasttext-bert-classifier",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-nemotron-cc-classifier-ensembling-and-rephrasing",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-benchmark-decontamination-ngram-and-embedding-hybrid",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-doremi-regmix-domain-weight-optimization",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-online-serving-vs-offline-synthetic-factory-roofline",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-synthetic-data-generator-verifier-rejection-funnel",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-slack-capacity-harvesting-for-synthetic-generation",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-pdf-scientific-ocr-layout-math-extraction-pipeline",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-tokenized-dataset-mmap-shuffling-and-sequence-packing",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-data-lineage-copyright-optout-and-audit-ledger",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-exascale-data-and-synthetic-factory-master-architecture",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-mineru-olmocr-pdf-layout-and-formula-gpu-pipeline",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch13-repo-level-ast-dependency-topological-packing",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  }
+]

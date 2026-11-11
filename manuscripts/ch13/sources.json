@@ -2,12 +2,28 @@
   "chapter": "ch13",
   "sources": [
     {
-      "path": "manuscripts/13-存储系统与数据工程.md",
-      "sha256": "ef19a7115d8e27e59a0ff8d2845dabc117952efbcaa11d2711134cf826c18658"
+      "path": "manuscripts/ch13/build.py",
+      "sha256": "cb8fb4c2b77bf0b979e2d9c0bf85554cd9114d1a2ab5ff35a31f4c69d29af2c7"
+    },
+    {
+      "path": "manuscripts/ch13/figure-data.json",
+      "sha256": "2b18b4efa5dead092787840791df061f2b82773e29f3b62b7bd651e97757e4bf"
     },
     {
       "path": "manuscripts/ch13/figure-index.json",
-      "sha256": "65fe370f471b865220fbe45c01c7c61e186082391145f1ba2a0e666eb7e4b271"
+      "sha256": "b57d3d215b5bd58a20e1e07877a5f64d2126233760e444ea78d1db1ac2bf160e"
+    },
+    {
+      "path": "manuscripts/13-存储系统与数据工程.md",
+      "sha256": "a52c9be542c4fb88c002139f523b892979061488b3d63737484fb84ab3abb767"
+    },
+    {
+      "path": "calculations/results/ch13-storage-kv-io.json",
+      "sha256": "a20f70d054d507c32605cb62563876b607ebe8bcca0ae5d56ae23dcf1f65efbb"
+    },
+    {
+      "path": "calculations/results/ch13-data-funnel-dedup.json",
+      "sha256": "1c47f1926c8dccf758838e90351aee96e1d9739bc8f98878b1c5a37ebadf6658"
     },
     {
       "path": "experiments/ch13/13-02/run.py",
@@ -24,10 +40,6 @@
     {
       "path": "experiments/ch13/13-05/run.py",
       "sha256": "f447e1ee7fa9e626f4f79bd67a7eb8f6a34ab35ddb3b010c63c9a12c3b487011"
-    },
-    {
-      "path": "experiments/ch13/13-06/run.py",
-      "sha256": "f5434157c3e575c62047314aad1d5225295bb00edf2f13b096e994eafe5b34b0"
     }
   ]
 }

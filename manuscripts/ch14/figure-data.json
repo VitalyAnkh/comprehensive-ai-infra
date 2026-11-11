@@ -1,6 +1,6 @@
 {
-  "chapter": 15,
-  "title": "吉瓦级 AI 数据中心、电力热学与跨地域协同训练",
+  "chapter": 14,
+  "title": "智算中心与电力热学系统",
   "power_chain": {
     "substation_kv": "110-220 kV",
     "mv_distribution_kv": "10-35 kV",
@@ -31,17 +31,26 @@
     "fan_power_overhead_pct": "10-20%"
   },
   "logicfolding": {
-    "voltage_v": [0.85, 0.55],
+    "voltage_v": [
+      0.85,
+      0.55
+    ],
     "v2_ratio": 0.4187,
     "total_power_ratio": 0.75,
-    "area_ratio": 0.60,
+    "area_ratio": 0.6,
     "power_density_ratio": 1.25
   },
   "tapas_asplos25": {
     "row_power_cap_kw": 100.0,
     "deadline_s": 1.0,
-    "candidate_rows_kw": [102.0, 86.0],
-    "candidate_latency_s": [0.8, 1.3],
+    "candidate_rows_kw": [
+      102.0,
+      86.0
+    ],
+    "candidate_latency_s": [
+      0.8,
+      1.3
+    ],
     "reconfig_cost_s": 3.0,
     "per_request_saving_s": 0.1,
     "breakeven_requests": 30
@@ -53,18 +62,18 @@
     "inner_steps_H": 500,
     "bandwidth_compression": 500
   },
-  "hvdc_vpd_example_15_11": {
+  "hvdc_vpd_example_14_11": {
     "rack_power_kw": 140.0,
     "bus_resistance_mohm": 0.8,
     "current_48v_a": 2916.67,
     "current_800v_a": 175.0,
     "i2r_loss_48v_w": 6805.56,
-    "i2r_loss_800v_w": 24.50,
+    "i2r_loss_800v_w": 24.5,
     "loss_reduction_ratio": 277.78,
     "copper_area_48v_mm2": 1458.33,
-    "copper_area_800v_mm2": 87.50
+    "copper_area_800v_mm2": 87.5
   },
-  "sofc_ere_example_15_12": {
+  "sofc_ere_example_14_12": {
     "it_power_mw": 100.0,
     "pue": 1.08,
     "total_power_mw": 108.0,

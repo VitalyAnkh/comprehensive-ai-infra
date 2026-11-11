@@ -1,6 +1,6 @@
 # 实验 13-04：分布式 KV Cache 前缀压缩预取（LMCache / Mooncake Store）与共享 NVMe 存储池 QoS 隔离仿真
 
-本实验复现第 13 章 13.8.4 节“分布式 KV Cache 存储池与对象存储冷热分层（LMCache / Mooncake Store 跨请求 Prefix 压缩与 GDS 异步预取）”中的三组核心系统账本：
+本实验复现第 13 章 13.4.2 节中分布式 KV 缓存存储池与对象存储冷热分层（LMCache / Mooncake Store 跨请求前缀压缩与 GDS 异步预取）的三组核心系统账本：
 
 1. **LMCache / CacheGen 跨请求前缀 KV 压缩与逐层 GDS 异步预取流水线**：
    - 针对 $L = 64$ 层、上下文长度 $S = 65,536$（$64\mathrm{K}$）、每层每词元 KV 状态 $2,048\ \mathrm{B}$ 的长上下文请求，原始前缀 KV 体积为 $8,192.0\ \mathrm{MiB}$（$8.0\ \mathrm{GiB}$）；

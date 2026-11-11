@@ -1,13 +1,20 @@
 {
-  "chapter": "ch14",
   "sources": [
     {
-      "path": "manuscripts/14-智算中心与电力热学系统.md",
-      "sha256": "031d66b2103939b2cb3c19ec70d55ed6170c9b39da865432b8071dd3453f79e7"
+      "path": "manuscripts/ch14/build.py",
+      "sha256": "e2f78ecc12c94dad49f62666dc1746aaa715183eee8c6d02271a82a1961c19de"
+    },
+    {
+      "path": "manuscripts/ch14/figure-data.json",
+      "sha256": "0b51fd9973089fbb6860b8f3274abc82af44f384f8935c51e88ce5fabc8cc684"
     },
     {
       "path": "manuscripts/ch14/figure-index.json",
-      "sha256": "7f8f6d380c2264b56949bf7416112696ae6c684c440f1aadc03f61ee523217b3"
+      "sha256": "7ee4d1c38cc87dbe6acfe3a1023933eb0fc54069375537854ed65d69c44e4a7f"
+    },
+    {
+      "path": "calculations/results/ch14-datacenter-power-cooling.json",
+      "sha256": "f11641b560b665e03f6ba35ed86a7d3d42de9602227a5b47c116fc471f0bd48b"
     },
     {
       "path": "experiments/ch14/14-01/run.py",
@@ -20,6 +27,18 @@
     {
       "path": "experiments/ch14/14-03/run.py",
       "sha256": "abf63a73a1808f2c310fa0211613640831a5334c58909adba9b9b7f4124e7ae5"
+    },
+    {
+      "path": "experiments/ch14/14-04/run.py",
+      "sha256": "2b0be3673c7c76821187beca8852e05b137be4aab26266c9a389ce40a7b75760"
+    },
+    {
+      "path": "experiments/ch14/14-05/run.py",
+      "sha256": "9e278155403c9a68d006efcb3590389a5d95a73c2bda472089799f33fa02dd9d"
+    },
+    {
+      "path": "manuscripts/14-智算中心与电力热学系统.md",
+      "sha256": "1e9104e15f978a2131b3b795aa9fcd3a43b59814ee50cb7b2ec65aaf0b26aa70"
     }
   ]
 }

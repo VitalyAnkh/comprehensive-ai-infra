@@ -2,568 +2,572 @@
   "chapter": "ch13",
   "outputs": [
     {
-      "path": "manuscripts/ch13/ch13-storage-hierarchy-and-access-patterns.svg",
-      "sha256": "6ca19269835f31107d024c0801297f1fe05e810d5f2ea4c32c2e39816a76f5ab"
+      "path": "manuscripts/ch13/ch13-100pb-commoncrawl-to-15t-tokens-curation-funnel.pdf",
+      "sha256": "ed12e57cdc0f9294514bd0e5aa7aeb91f00aea50ec807446d0cf18eee01eeae1"
     },
     {
-      "path": "manuscripts/ch13/ch13-storage-hierarchy-and-access-patterns.png",
-      "sha256": "98b0dd1436c93664d10095232f6f6c36f8931eef1368c019ee27f3ec96d30cad"
+      "path": "manuscripts/ch13/ch13-100pb-commoncrawl-to-15t-tokens-curation-funnel.png",
+      "sha256": "26cbadbb50036bdc1e7ab96ac771570e7baee13272e5e8446617a6c840169ec4"
     },
     {
-      "path": "manuscripts/ch13/ch13-storage-hierarchy-and-access-patterns.pdf",
-      "sha256": "e9f8d79313b51d334045424e317c0371283dc3561f449dcce973e90e12a50786"
+      "path": "manuscripts/ch13/ch13-100pb-commoncrawl-to-15t-tokens-curation-funnel.svg",
+      "sha256": "4898d4a4f94db5426a57e7a26af8dff6e789be00045dbeddbc69cf7e9bfd1472"
     },
     {
-      "path": "manuscripts/ch13/ch13-posix-pagecache-vs-gds-dma.svg",
-      "sha256": "ec34473806f5acc5abda8b2b7eb3d18a4c0e1ec60b432582ab7f8c1818623c5e"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-posix-pagecache-vs-gds-dma.png",
-      "sha256": "51c48e9e077681d2a84430bd9a1b5186dd219e2c83bd8018eb3bfb9591c896be"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-posix-pagecache-vs-gds-dma.pdf",
-      "sha256": "f47d05b8200749e47a0d4803f205f1d6b73a11dc1ef614a05c58eea580e461f0"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-3fs-craq-architecture.svg",
-      "sha256": "4eae524acaa0e585bc4b6b4d26d7dc01e13f5b24d7bcbec0f71238985c948f80"
+      "path": "manuscripts/ch13/ch13-3fs-craq-architecture.pdf",
+      "sha256": "d904dffd9006aa398214966207e9dba899c51e7a786be0dc898f1ab89c9bb1a8"
     },
     {
       "path": "manuscripts/ch13/ch13-3fs-craq-architecture.png",
       "sha256": "8bd557e52f7b5e5b3a133dcc0883ba8a582c50aa40d32a89d6d727bfc35bbc44"
     },
     {
-      "path": "manuscripts/ch13/ch13-3fs-craq-architecture.pdf",
-      "sha256": "8198ce5283a2af7cc834874a71e6b7085f0247721fc86c3a944fc2870206807a"
+      "path": "manuscripts/ch13/ch13-3fs-craq-architecture.svg",
+      "sha256": "715b842c5807fb65cfb7003bb2ddd43e33dab8d489f4e7d8c7dac498632a5502"
     },
     {
-      "path": "manuscripts/ch13/ch13-kv-layout-read-amplification.svg",
-      "sha256": "ddebba64bf89a5a4d28644ac5625d3ea32285fd2679ce2045756f2caf574fe29"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-kv-layout-read-amplification.png",
-      "sha256": "25243ea5241c7be9706fc8d49e56fe8ab56b4f685c59358d1d833169cff2543b"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-kv-layout-read-amplification.pdf",
-      "sha256": "44c95c017b66657551b9c6e0b4397388329e4457cd7b534ea40026da922aaeb6"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-zns-gc-tail-latency.svg",
-      "sha256": "141d3bc9692d84315a641186766e42f769086fb811d35a0c046a119c8fad34aa"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-zns-gc-tail-latency.png",
-      "sha256": "3d9bc93c499bcd5d195d16496f8e4048e39cdddddb514e966d938e65dc3ffe44"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-zns-gc-tail-latency.pdf",
-      "sha256": "75bdb5cb51dd4d5c0dcf640031c61d618dc77f8e1105d754cb12f5e92a1e9523"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-multimodal-dataloader-pipeline.svg",
-      "sha256": "54674fff5159a75f49ba3e608f1e5bfa5ad0094bf4e5ee9dbdc3209e55ec393f"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-multimodal-dataloader-pipeline.png",
-      "sha256": "9fdd1664267669bf7664e1ce22d297c2b34a71156cbc8179e0312e69518e9d8b"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-multimodal-dataloader-pipeline.pdf",
-      "sha256": "466a74c8caec5b9beeba3be0e8fa967e45bff2364e1675bde5a4b480a3489d34"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-parquet-lance-vs-webdataset-io.svg",
-      "sha256": "3dec3aafec61b8e674a19dc1757ce0e042fc750f808810766761f65564bcfb35"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-parquet-lance-vs-webdataset-io.png",
-      "sha256": "40516f118f1b7872d4312684b5c98e225433907d3c961ef3bae9836facd1e355"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-parquet-lance-vs-webdataset-io.pdf",
-      "sha256": "3ba1481651a6195da4e51792b27b6b7a8afae28e48ea7c6c604c607c785c3624"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-dsec-erofs-ondemand-container-boot.svg",
-      "sha256": "e6b3a9ce8f0da515f4c7f92347eca3a3c4b315152623a30ea1c3b0cdd921bed3"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-dsec-erofs-ondemand-container-boot.png",
-      "sha256": "2f0536d2c10970aa1105fee923070f50863502964e6687a99c619885028013c9"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-dsec-erofs-ondemand-container-boot.pdf",
-      "sha256": "38279c93524eccde013677c61d3234b184196af48eebcf4b78e128d84fbe0c9e"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-faiss-flat-vs-iks-near-storage.svg",
-      "sha256": "38345a98ba63d53eb2f20824c728342f4af2b0f6bb226fae7f444daa0688405a"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-faiss-flat-vs-iks-near-storage.png",
-      "sha256": "964604dc8a3848e689e1ebbdbf42381b5c490f53e6bab88ce6b33ae4dd5e384b"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-faiss-flat-vs-iks-near-storage.pdf",
-      "sha256": "cc5535aa0e34c6913f4624948771d9925db12b41c00cb74c6c6ef39fe6c226da"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-hnsw-memory-vs-diskann-ssd-layout.svg",
-      "sha256": "5be22312c9f5586aa5fb7ecd6ed536913828771e0e245f2e7098290e52e60ae7"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-hnsw-memory-vs-diskann-ssd-layout.png",
-      "sha256": "054b547970d690acb0cd3d3bb63c8cc73e796d91be0e1e7138182dbaf5e2cc08"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-hnsw-memory-vs-diskann-ssd-layout.pdf",
-      "sha256": "adc78ee7df1897b4ae32622876752a74004d65b03610110a7ea5e267bc40a2b1"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-rag-288-requests-calibration-trap.svg",
-      "sha256": "f037bb7c6065633def359ff9593970e7d80049c8fc69c281320da01fd34573c9"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-rag-288-requests-calibration-trap.png",
-      "sha256": "7b73abc80dc2774d6bd199ec86942cb5c34e10028b9173a7f61ad695a214e083"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-rag-288-requests-calibration-trap.pdf",
-      "sha256": "c6f8f65c8310642c7af7d011ab573d46a11d994ca2bb3ab0d24e855b3bb7090d"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-rag-topk-kv-blocks-and-rlimit-gap.svg",
-      "sha256": "a7a8ba44be75467f3bcc99d8c0507bd8da5c7e907595a2b80b5fb0f74644c3d4"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-rag-topk-kv-blocks-and-rlimit-gap.png",
-      "sha256": "395c8aed2b3e66bfebbfa388cbcb44cc2a0c3f3b8a093ed865b1097a186a8121"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-rag-topk-kv-blocks-and-rlimit-gap.pdf",
-      "sha256": "df4618faf0d3fd3803cea7b8cd8dc38c252720853f9946da140993048896a347"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-rag-end-to-end-timeline-breakdown.svg",
-      "sha256": "88c65ec39ff74337eea10cfb0ac02a3287bad9730b3f1eaee92bf5de6152e036"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-rag-end-to-end-timeline-breakdown.png",
-      "sha256": "b5a7405b7340c3a16d65ca20ccfef2c41512fc74bba53053aa9a7dafd650d0b8"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-rag-end-to-end-timeline-breakdown.pdf",
-      "sha256": "6309672d059c99ae1d2ff0c203cd42759eded560519fd19c58ca9b55d4482448"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-three-tier-kv-cache-hierarchy.svg",
-      "sha256": "864dd7f3e73deec1af08ba5cb486e98c58f7e1e838a89ad290d941899bf99505"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-three-tier-kv-cache-hierarchy.png",
-      "sha256": "0f5a622029d99c1387e53ae115fc26ff9ad1748bbc8e886109916cf9d37a85b7"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-three-tier-kv-cache-hierarchy.pdf",
-      "sha256": "19e3781443d9066b08b9dfcfd57a484781937e7d2fea65a4c22f5e90aabb8acd"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-cacheblend-non-prefix-kv-fusion.svg",
-      "sha256": "0a785a0b9cefd0c48498b748ae5c6c8d65ccb4e724c0f6d8a0951f938f90a164"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-cacheblend-non-prefix-kv-fusion.png",
-      "sha256": "30b0bc92c01068148d4969f8b723238d4259cc895abda3a132a6e958895ccf05"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-cacheblend-non-prefix-kv-fusion.pdf",
-      "sha256": "4646b51b53bd95e24510a20a26ba1760059924e738e4c63a7acb71d398abee5b"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-ssd-dwpd-endurance-and-admission.svg",
-      "sha256": "28822b85a4d7073ce7faf92cc661be7072764cb0ad66442fe5461dbfe6d35cb8"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-ssd-dwpd-endurance-and-admission.png",
-      "sha256": "8c8bd8ea8f3e01a2bc65e7c600f9bd285a8a60eabcc40835a71cf0be87c229bf"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-ssd-dwpd-endurance-and-admission.pdf",
-      "sha256": "f70ce6bb88c34d36b90b590d54b76c185547045b64cd71a8472e06bdd6cae9f2"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-storage-diagnosis-workflow.svg",
-      "sha256": "f56d8fd9c7a24ee976f8cb7203d78dc460f2aaec4df313cb199c40bb65d5ecbd"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-storage-diagnosis-workflow.png",
-      "sha256": "79bf39fe8fa58e4338e375b795227777c6f18ee8dbba4b93c6ef1b02a633a67b"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-storage-diagnosis-workflow.pdf",
-      "sha256": "e0001823e2e54a8f3d7b5797cad6fec8347ca41dcbf4f96f6f942b28f920efef"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-full-stack-ai-data-plane.svg",
-      "sha256": "d000e6204835de018646a5d9ff35fdbbb4646204c1f06e3c232da2ebe2bb66c6"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-full-stack-ai-data-plane.png",
-      "sha256": "062ac35620f1b2c1005f87535887e04a7feb55094e14132ad51e05f9aed9eb6b"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-full-stack-ai-data-plane.pdf",
-      "sha256": "93e82014c082dd151572764546378d285be896e78f4f597ed9267329a2b66157"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-falconfs-server-side-path-resolution.svg",
-      "sha256": "a963ea0fd987b36d1d2b62fd50d0b2481bdd9c595ce8fb65899e2afb823047c4"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-falconfs-server-side-path-resolution.png",
-      "sha256": "913062082e54ab1d25df7e6cfc85d60754bcefb17546eff363de486210304e5b"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-falconfs-server-side-path-resolution.pdf",
-      "sha256": "69701ddad4278b4322393ef334a7b9a598999f1eec8b6b769cf22de4800121e6"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-multimodal-tar-webdataset-vs-lance-random.svg",
-      "sha256": "61af75090f83566b3de784e228acca976b9f1b407a74ac20ba43cc23bca7ab95"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-multimodal-tar-webdataset-vs-lance-random.png",
-      "sha256": "4b610ac1781aef2bccff1f8cee1c12249d8dd52580816db9898738d08cfdc86e"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-multimodal-tar-webdataset-vs-lance-random.pdf",
-      "sha256": "298a798f2310d66b0037afaa7c5d41a4bd40f6f2dcea3ae952f6fd094fa6e76e"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-distvs-helmsman-disaggregated-vector-search.svg",
-      "sha256": "45a57f35eccea86d8005f8860cfe3223c4ed2f435cd1a2ed63ffe7a173d22bef"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-distvs-helmsman-disaggregated-vector-search.png",
-      "sha256": "86e316fa41134c20ab05c3684cac581ef5feb7673401aef1917200cd83342547"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-distvs-helmsman-disaggregated-vector-search.pdf",
-      "sha256": "ba8370cd0d024da1042a28444478a6a2dc3024ad02c27830fcf5e21889d1179b"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-copilotio-gds-vs-cpu-assisted-io.svg",
-      "sha256": "46e6d0e8b02bf1a154fe0cf548e17be71fbbf99bb53ee30b02c8c00a3ff236cc"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-copilotio-gds-vs-cpu-assisted-io.png",
-      "sha256": "5486b7c9df3ef3f149ef2c4544ca0940f81e48f2b4e96debee1ac86f4ae8ee07"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-copilotio-gds-vs-cpu-assisted-io.pdf",
-      "sha256": "f5580174f83febc9a247a6f7666daa77ac9aa0acd46a777ac48fdf4e2654d505"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-umap-moonbright-mmap-and-gpu-page-table.svg",
-      "sha256": "4c8e0fe900d6e7e6f89baa3fd1af09eb293364591ba1631d504394e2128f632c"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-umap-moonbright-mmap-and-gpu-page-table.png",
-      "sha256": "df1bdd9cf2f93c6a7190f2b396f2df226cc6958faf0fdc741211b39e6e9d9008"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-umap-moonbright-mmap-and-gpu-page-table.pdf",
-      "sha256": "cce2f64d84470eee42a5d0a5bfd0fcd792c0e5834cc75db3d5a6654daf22a267"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-ai-storage-bandwidth-latency-iops-cube.svg",
-      "sha256": "3d46e3318e9e4363867a73a8e22610de3c5fb265c845ca557d373a13f2d46178"
+      "path": "manuscripts/ch13/ch13-ai-storage-bandwidth-latency-iops-cube.pdf",
+      "sha256": "eaa9efbcc775bacf214c7343a95a31e435a561d2098254062b4e54278e2d8fa8"
     },
     {
       "path": "manuscripts/ch13/ch13-ai-storage-bandwidth-latency-iops-cube.png",
       "sha256": "301f16c54a4412f7850739e4a1e421aac48185021b2e96177300bffce2bbd9c0"
     },
     {
-      "path": "manuscripts/ch13/ch13-ai-storage-bandwidth-latency-iops-cube.pdf",
-      "sha256": "f9aefdaa7e7986e0ecfd08c133d9c3cbf44b11e5e89f1bb0c71c318683619d18"
+      "path": "manuscripts/ch13/ch13-ai-storage-bandwidth-latency-iops-cube.svg",
+      "sha256": "b0dfb4b165b0d7f8ca6ad5782b9e255bb64db7c3bafef29f3f3ed3693f7b24a6"
     },
     {
-      "path": "manuscripts/ch13/ch13-nixl-unified-nonblocking-transfer-plane.svg",
-      "sha256": "c516b10b9fe1b791ae635e67f16041022f8a552655665bfebd55ce8c774d518d"
+      "path": "manuscripts/ch13/ch13-benchmark-decontamination-ngram-and-embedding-hybrid.pdf",
+      "sha256": "9d0eddeb50bc8a0f653d005636d83e30ae8133adb203760980f56e57eb495703"
     },
     {
-      "path": "manuscripts/ch13/ch13-nixl-unified-nonblocking-transfer-plane.png",
-      "sha256": "a4394b925b2ef9d64e8309f816fb4c7c9dde5597e0487aa502505e38be164d1a"
+      "path": "manuscripts/ch13/ch13-benchmark-decontamination-ngram-and-embedding-hybrid.png",
+      "sha256": "38d016ff6396727ea85a82078152efe6428b9f40e3fdd61f6089cb9a20d845bf"
     },
     {
-      "path": "manuscripts/ch13/ch13-nixl-unified-nonblocking-transfer-plane.pdf",
-      "sha256": "ff89e7cfc7462530d592efbd2f1c312f092ece3ef6d47e16be61a02b26dc5eec"
+      "path": "manuscripts/ch13/ch13-benchmark-decontamination-ngram-and-embedding-hybrid.svg",
+      "sha256": "e2ab450b164076b925538eb11721f1129ee93e49c044a55a40592f50c973c0bd"
     },
     {
-      "path": "manuscripts/ch13/ch13-checkpoint-replication-to-erasure-coding-lifecycle.svg",
-      "sha256": "0961eea103e81671d4b34542520ea508ce309914baceeaa2fd08f676e9ffa507"
+      "path": "manuscripts/ch13/ch13-cacheblend-non-prefix-kv-fusion.pdf",
+      "sha256": "945c85d8ae889acd8da874a26bf853969732c93567c18274234a0033163e8952"
     },
     {
-      "path": "manuscripts/ch13/ch13-checkpoint-replication-to-erasure-coding-lifecycle.png",
-      "sha256": "dca6464f1a5eb16bc0558da16cc9d7f1f395352ba2502929fdcef6eb23f97ec3"
+      "path": "manuscripts/ch13/ch13-cacheblend-non-prefix-kv-fusion.png",
+      "sha256": "30b0bc92c01068148d4969f8b723238d4259cc895abda3a132a6e958895ccf05"
     },
     {
-      "path": "manuscripts/ch13/ch13-checkpoint-replication-to-erasure-coding-lifecycle.pdf",
-      "sha256": "67e8005e1e3cf64c2935e36efe1e3fb9bcb3fdc0d67a5b9c6ea8a9ea5f6147ad"
+      "path": "manuscripts/ch13/ch13-cacheblend-non-prefix-kv-fusion.svg",
+      "sha256": "7a827c91d42c9d760cf759e990c6b2bd41b327cfd89d8a5acb3f630cde40c4c0"
     },
     {
-      "path": "manuscripts/ch13/ch13-lmcache-prefix-kv-compression-and-gds-prefetch.svg",
-      "sha256": "6b6eff22e4989ed7f806696a431cbc171d4b69f6fd40093500ce7ddadf0dc847"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-lmcache-prefix-kv-compression-and-gds-prefetch.png",
-      "sha256": "3bd9bf5b5e9b63a946172d7695a3052f9aafc6404e4f40e5316d1c969aa7849d"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-lmcache-prefix-kv-compression-and-gds-prefetch.pdf",
-      "sha256": "bb3c045cbe186812ddf9e448df0f2c580b8cb9da1dabea7087d2f1349cbbd435"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-checkpoint-and-kv-unified-nvme-pool-qos.svg",
-      "sha256": "aceea810a5d54d8cdcb0812c2368a32ade5818284c8d5ac4e155abd7ea0a6c4e"
+      "path": "manuscripts/ch13/ch13-checkpoint-and-kv-unified-nvme-pool-qos.pdf",
+      "sha256": "ca2a30e8ec1ebff26012e40c237346c98e815c64434fcb9b8e7782c3120f8c72"
     },
     {
       "path": "manuscripts/ch13/ch13-checkpoint-and-kv-unified-nvme-pool-qos.png",
       "sha256": "9c805b996aa03f6b5a4d171451352ca2cc7a8b205e7964b49b6018df4e58d551"
     },
     {
-      "path": "manuscripts/ch13/ch13-checkpoint-and-kv-unified-nvme-pool-qos.pdf",
-      "sha256": "f4935620e88fb131c006538037acac9701f2d295d1eb62569fa7aaff367b086c"
+      "path": "manuscripts/ch13/ch13-checkpoint-and-kv-unified-nvme-pool-qos.svg",
+      "sha256": "4d5495860a748d1a1865bdfe60244e06e538533ff63fe5f005f810234807d510"
     },
     {
-      "path": "manuscripts/ch13/ch13-100pb-commoncrawl-to-15t-tokens-curation-funnel.svg",
-      "sha256": "b0054a7c8cf94beeb4b037d4f415d2fbc7ba78d2fd8ac20b7307a210da05494f"
+      "path": "manuscripts/ch13/ch13-checkpoint-replication-to-erasure-coding-lifecycle.pdf",
+      "sha256": "0871411930852a8195a331b0e0f37d78b2aafb6bbc5c4c9a876a0d76aa9cdd68"
     },
     {
-      "path": "manuscripts/ch13/ch13-100pb-commoncrawl-to-15t-tokens-curation-funnel.png",
-      "sha256": "a5924cce0ed3aaba70026944d8f21b36c06b756347c6eb2954dc4dea7ad8cf7f"
+      "path": "manuscripts/ch13/ch13-checkpoint-replication-to-erasure-coding-lifecycle.png",
+      "sha256": "403a447439556d656175ba417fe31ef75554cfff9a9a98a2e3ab5e8db7436430"
     },
     {
-      "path": "manuscripts/ch13/ch13-100pb-commoncrawl-to-15t-tokens-curation-funnel.pdf",
-      "sha256": "d154c50f306e0d697f99ac28a7b2d60b4db55dd62c16b3e87f74ea07615dfbea"
+      "path": "manuscripts/ch13/ch13-checkpoint-replication-to-erasure-coding-lifecycle.svg",
+      "sha256": "6984b5f8bd56f673b0da649807e67b25ff2b52769d39852a88c90efa5694a34b"
     },
     {
-      "path": "manuscripts/ch13/ch13-minhash-lsh-band-row-s-curve-probability.svg",
-      "sha256": "ca92692b181828b7a1a8968365343c94223a94ece57c588e95b4b8e34e296a34"
+      "path": "manuscripts/ch13/ch13-copilotio-gds-vs-cpu-assisted-io.pdf",
+      "sha256": "e53fd203c7eb1556fdd2a30c7f64508ed62c73b6af769bdadb089df16655955f"
     },
     {
-      "path": "manuscripts/ch13/ch13-minhash-lsh-band-row-s-curve-probability.png",
-      "sha256": "496a23080619a900feb9dad3525b1ac83214c852fddfcdfe148bbcf0bf9d3fd1"
+      "path": "manuscripts/ch13/ch13-copilotio-gds-vs-cpu-assisted-io.png",
+      "sha256": "5486b7c9df3ef3f149ef2c4544ca0940f81e48f2b4e96debee1ac86f4ae8ee07"
     },
     {
-      "path": "manuscripts/ch13/ch13-minhash-lsh-band-row-s-curve-probability.pdf",
-      "sha256": "459a24da0c34acb0bd96be475eac5ee395299ccbd3020d373e1d3c7ba494a5b8"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-distributed-minhash-shuffle-and-gpu-union-find.svg",
-      "sha256": "dca7509d24b1bdd0e2f68e0d63a4ddca142ac56e46679a1a7132388266274a05"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-distributed-minhash-shuffle-and-gpu-union-find.png",
-      "sha256": "3d17661219450fa3dc48e5a39577616bf46998cd247eb23802e3a6e0566492b6"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-distributed-minhash-shuffle-and-gpu-union-find.pdf",
-      "sha256": "c4d278eee0b81945d0062e0efaa4681a2dbbd2f23282098c65d789b4251a17d9"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-cpu-datatrove-vs-gpu-nemo-curator-throughput.svg",
-      "sha256": "aee3921bab0d86e3b240ae9a4abe7d628f572cb50a0d58f3d4251e90109ba4d1"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-cpu-datatrove-vs-gpu-nemo-curator-throughput.png",
-      "sha256": "d0421646356ff933ca8bc0527ae0e4adb3541c5defb2e773834d93ab7fac9b2d"
+      "path": "manuscripts/ch13/ch13-copilotio-gds-vs-cpu-assisted-io.svg",
+      "sha256": "1c956e959b34237448056cd5dc4fbbc9c3dbceef000ba34eab7dd09abbf6e444"
     },
     {
       "path": "manuscripts/ch13/ch13-cpu-datatrove-vs-gpu-nemo-curator-throughput.pdf",
-      "sha256": "e50175f774c7e6e74e5b61e05881c5223ea899bdbc10dde409df9d7c2ad42a23"
+      "sha256": "5f0d6c92098b0186e1fa0b350f7395965d0a2104fa7d3dff033f29e6292eeef0"
     },
     {
-      "path": "manuscripts/ch13/ch13-document-fuzzy-dedup-vs-suffix-array-substring-dedup.svg",
-      "sha256": "51db5f7442f8faf33049c3952577199e7f4ab420e54f4314d19b74709b4284e0"
+      "path": "manuscripts/ch13/ch13-cpu-datatrove-vs-gpu-nemo-curator-throughput.png",
+      "sha256": "2725074fa8ab7a25cb30e9bfa2315e8006404cf04551cdbba0c075bbf80cf467"
     },
     {
-      "path": "manuscripts/ch13/ch13-document-fuzzy-dedup-vs-suffix-array-substring-dedup.png",
-      "sha256": "b1030a8fe424e64aaaa6355f3e9af5c12d13b27e5ad947ce23a23053fc19bf09"
+      "path": "manuscripts/ch13/ch13-cpu-datatrove-vs-gpu-nemo-curator-throughput.svg",
+      "sha256": "3f26d1e674dc67f1a283358cb71669c3f0e8628dcc077dd764bca07133598408"
     },
     {
-      "path": "manuscripts/ch13/ch13-document-fuzzy-dedup-vs-suffix-array-substring-dedup.pdf",
-      "sha256": "5a66a40c436f07d01e838df8f15540fcbda4c3087dfc7c0afb2cab421018446d"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-llm-rubric-distillation-to-fasttext-bert-classifier.svg",
-      "sha256": "492113c30600a6a4458481a6a03dcd1c70be2cb2b3e4cd9a32a4db618bfaca54"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-llm-rubric-distillation-to-fasttext-bert-classifier.png",
-      "sha256": "d09872e818a4aa41d4af7afd5fa3dedbe1cabbc76cb2fea83f4cfa161ae23667"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-llm-rubric-distillation-to-fasttext-bert-classifier.pdf",
-      "sha256": "ddc0ad6c069b56206237e1cd56daba98d7d4ae88134a1bfe5b126feac974487e"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-nemotron-cc-classifier-ensembling-and-rephrasing.svg",
-      "sha256": "896a235a8d8f90486e05ac5f22bc27ad3df66e751a0d06a79923fb234d58a36f"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-nemotron-cc-classifier-ensembling-and-rephrasing.png",
-      "sha256": "8b89705330de53b60e5931a1fd7bbb61fff6f75dbb4cf210895985864eb4852f"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-nemotron-cc-classifier-ensembling-and-rephrasing.pdf",
-      "sha256": "ecc45704536d06a7ffaa3dfd9a34b4e4a3543a90d8216bb3c6f24c2eb2afe3ee"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-benchmark-decontamination-ngram-and-embedding-hybrid.svg",
-      "sha256": "aab3fb75077aa1c7553a2ca1df890f912115ba1881639dffbd74acec45a5a15a"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-benchmark-decontamination-ngram-and-embedding-hybrid.png",
-      "sha256": "7c9fb9acf2875842359b03f80a0f6714b82df48810059b4b98fe6bfc3c06159e"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-benchmark-decontamination-ngram-and-embedding-hybrid.pdf",
-      "sha256": "6977b7fe0e12a3d88db4b16ecd586dd99261925f764b50be76f40330dc79ea6b"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-doremi-regmix-domain-weight-optimization.svg",
-      "sha256": "9c06b5b73762d23c022a07ebd541b6098dba19afe40b600fcd02589722b37c4e"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-doremi-regmix-domain-weight-optimization.png",
-      "sha256": "ba9e64629bb609a229137aa0bda58d1a465fb344b6848f5949846f31051ec74a"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-doremi-regmix-domain-weight-optimization.pdf",
-      "sha256": "8284fe201e845ca0caf3ded393c352924433c4588548f41b30bacb1d155a6302"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-online-serving-vs-offline-synthetic-factory-roofline.svg",
-      "sha256": "8c63f7d568aff6b3b01816a114ac7a1a0e1eeef32e20e6d8eea2331cfe86a6f3"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-online-serving-vs-offline-synthetic-factory-roofline.png",
-      "sha256": "e133e0d0e4b11f235c6c26241fcfb0b8b55901457de0aa3ec4f67c99526133a0"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-online-serving-vs-offline-synthetic-factory-roofline.pdf",
-      "sha256": "1a32bc9b797667a4424f4d0cbd24c2ecde7dced825a953504569220ead5c8d44"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-synthetic-data-generator-verifier-rejection-funnel.svg",
-      "sha256": "d33afa3531ee0e39a0f6414a5f4aba42f48f20cd4aa57cb7d30710ac9c9a6893"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-synthetic-data-generator-verifier-rejection-funnel.png",
-      "sha256": "912c4de522a386dabc5ee63f76f4a8890be9f01a23684522b46700b4496d987b"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-synthetic-data-generator-verifier-rejection-funnel.pdf",
-      "sha256": "1a056b55170d570618679eaf646b309f539592e4d2613593c0befad4ed05e639"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-slack-capacity-harvesting-for-synthetic-generation.svg",
-      "sha256": "fc09e5955cc71f5533fd81977c8d141ef4573b1439caac193b82dc5c74a82aca"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-slack-capacity-harvesting-for-synthetic-generation.png",
-      "sha256": "72db3a68a621f585de704b1e9034cf4bac505cf26eac7c6aba71b41aef03abe2"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-slack-capacity-harvesting-for-synthetic-generation.pdf",
-      "sha256": "9c8e23c25b098c64b7ec96f82dac6e990470ea5bb56825bba3cae49321bdcf57"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-pdf-scientific-ocr-layout-math-extraction-pipeline.svg",
-      "sha256": "e71bd08372024798646fb1f73fc8cbd7334aeb4a7d754d6dcc2bf2eace6ac291"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-pdf-scientific-ocr-layout-math-extraction-pipeline.png",
-      "sha256": "818e7a74284b84ffbe58cf87b50269ee035671fcf8cc88a0aad864195d17edee"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-pdf-scientific-ocr-layout-math-extraction-pipeline.pdf",
-      "sha256": "be82b78004bf16b95a1638a5d0e4f8e77daeceafcf574d6b9feb726c3b1aed8f"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-tokenized-dataset-mmap-shuffling-and-sequence-packing.svg",
-      "sha256": "1493ba557f964c47c53b1e43432c33e5620bb8ed68caa03ffbd61a378311b967"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-tokenized-dataset-mmap-shuffling-and-sequence-packing.png",
-      "sha256": "dd67f556230467deaad59bb2d6dd9ad431a21f317afb47386d5be075314c3d4c"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-tokenized-dataset-mmap-shuffling-and-sequence-packing.pdf",
-      "sha256": "9348ab8a7b2d19dfab1116873d48d9b6a4a8184315dc609997899c306eebc303"
-    },
-    {
-      "path": "manuscripts/ch13/ch13-data-lineage-copyright-optout-and-audit-ledger.svg",
-      "sha256": "48195b3f84fb47a534f9e4c32a141261f3fff2337bb80ab1cb4c83b6621bf169"
+      "path": "manuscripts/ch13/ch13-data-lineage-copyright-optout-and-audit-ledger.pdf",
+      "sha256": "5cea4fc9f5453e4ce72fb306b0d1629e05cc17955c00f8be5a2587ef21a41fb9"
     },
     {
       "path": "manuscripts/ch13/ch13-data-lineage-copyright-optout-and-audit-ledger.png",
       "sha256": "dc2150146c1fba7595a9f5816ca60d131d2a181ccd3b53cf6f71aa1d6e203491"
     },
     {
-      "path": "manuscripts/ch13/ch13-data-lineage-copyright-optout-and-audit-ledger.pdf",
-      "sha256": "9e011e0f44f9f0bd32f2dfd15fb8ad49ffd8a5441f331ee2bff6a0006312a7e8"
+      "path": "manuscripts/ch13/ch13-data-lineage-copyright-optout-and-audit-ledger.svg",
+      "sha256": "c9e5b7101de1f7e32bd46746c9015825f6e4853e535881ca53e2e835e9607788"
     },
     {
-      "path": "manuscripts/ch13/ch13-exascale-data-and-synthetic-factory-master-architecture.svg",
-      "sha256": "c0e87cc48bcc514f0255ab59cc5f7bb831785af91a4ba48444844ed791561b4f"
+      "path": "manuscripts/ch13/ch13-distributed-minhash-shuffle-and-gpu-union-find.pdf",
+      "sha256": "276004b4e92546d3e9c7c4eb6bd23e6ceabc4e49d88405e88214151a4d1aba3a"
     },
     {
-      "path": "manuscripts/ch13/ch13-exascale-data-and-synthetic-factory-master-architecture.png",
-      "sha256": "83e3fa5194ada37f042ca268133c6f8a3c2352bd2501b51d47ad3d36467cb81b"
+      "path": "manuscripts/ch13/ch13-distributed-minhash-shuffle-and-gpu-union-find.png",
+      "sha256": "762d07f264876e68ccd5c9b1472574a892485ef01e8d1f40390257222da29d8c"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-distributed-minhash-shuffle-and-gpu-union-find.svg",
+      "sha256": "eab0f1fc1ec7927c4f1efcbc16b2de07b0b3af2287366f22eb2d7a45977b58dd"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-distvs-helmsman-disaggregated-vector-search.pdf",
+      "sha256": "fde0bfb134213500ebbb678a4a00d4e6320220f71f30e5c115cbae01cf7ab5ba"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-distvs-helmsman-disaggregated-vector-search.png",
+      "sha256": "86e316fa41134c20ab05c3684cac581ef5feb7673401aef1917200cd83342547"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-distvs-helmsman-disaggregated-vector-search.svg",
+      "sha256": "09b423c1d5aec39603d01b28a3c52781f3cee4930e2677f6ebf5e629e7629817"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-document-fuzzy-dedup-vs-suffix-array-substring-dedup.pdf",
+      "sha256": "421a07ca41dc9dc8a8d62dabcd80d263b899f71bcae97928a217ddb97dcf445c"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-document-fuzzy-dedup-vs-suffix-array-substring-dedup.png",
+      "sha256": "b1030a8fe424e64aaaa6355f3e9af5c12d13b27e5ad947ce23a23053fc19bf09"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-document-fuzzy-dedup-vs-suffix-array-substring-dedup.svg",
+      "sha256": "0a4a0f2cf4c5d1c34473b512d3a4a96d4010a300c3da2e01fd162dbda54e7c6d"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-doremi-regmix-domain-weight-optimization.pdf",
+      "sha256": "702d7ae64ced0dbe6fcb8e1ee4b1a4f339200e4f04deecf7d05e17ad35c253db"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-doremi-regmix-domain-weight-optimization.png",
+      "sha256": "ba9e64629bb609a229137aa0bda58d1a465fb344b6848f5949846f31051ec74a"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-doremi-regmix-domain-weight-optimization.svg",
+      "sha256": "3209e90d280aa82ace26462adaf69ceb91316f1b53b1b640ec4c0c959a27e7f3"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-dsec-erofs-ondemand-container-boot.pdf",
+      "sha256": "8f8101ccca362885ca0ba0aa4345d19ef6c9d9cc0920d4d6ea1b9e3f431e9378"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-dsec-erofs-ondemand-container-boot.png",
+      "sha256": "2f0536d2c10970aa1105fee923070f50863502964e6687a99c619885028013c9"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-dsec-erofs-ondemand-container-boot.svg",
+      "sha256": "ae50b979682a39d36c93af413aa6f52100c4e10086479e96d171df5af5b84108"
     },
     {
       "path": "manuscripts/ch13/ch13-exascale-data-and-synthetic-factory-master-architecture.pdf",
-      "sha256": "58fd28d689bff73d0342499a988ec4d595763c564eaeca882ff649a70d63c8c8"
+      "sha256": "f54ff8a2b07754280a471ae1c4c2ff6f35a7bfedb51b24a490957de244556f1c"
     },
     {
-      "path": "manuscripts/ch13/ch13-mineru-olmocr-pdf-layout-and-formula-gpu-pipeline.svg",
-      "sha256": "823589051af41824b36ff018c976fb41a24665a02ab25b5583f0342b78069625"
+      "path": "manuscripts/ch13/ch13-exascale-data-and-synthetic-factory-master-architecture.png",
+      "sha256": "db4073d5f4a88169cbff4e3eb68a3411451390a696585a5710a18f92476d61b7"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-exascale-data-and-synthetic-factory-master-architecture.svg",
+      "sha256": "27a23dd4475432e2804dbaf86a51924ba403ee530e979e0d3b272771093b0a57"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-faiss-flat-vs-iks-near-storage.pdf",
+      "sha256": "db239b6ea0fef441aacd7421310799e0afb5cb1e277505faebfa2a6bc8e534b9"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-faiss-flat-vs-iks-near-storage.png",
+      "sha256": "964604dc8a3848e689e1ebbdbf42381b5c490f53e6bab88ce6b33ae4dd5e384b"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-faiss-flat-vs-iks-near-storage.svg",
+      "sha256": "2b5154a546de392c0299e32e360206a4469b1a987868f4d9a82f8ee0d30173cc"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-falconfs-server-side-path-resolution.pdf",
+      "sha256": "fc2d57417e4044a695274f25a0e8f77e5189a68bf5d3bfce4af7e1e27151de0f"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-falconfs-server-side-path-resolution.png",
+      "sha256": "913062082e54ab1d25df7e6cfc85d60754bcefb17546eff363de486210304e5b"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-falconfs-server-side-path-resolution.svg",
+      "sha256": "e372d4468d96a189f6b200932d9896e81c19f70fbdb9f9dd4b1e27f44382d708"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-full-stack-ai-data-plane.pdf",
+      "sha256": "11e5b42e67befa4d780001fd23c9b1614df9f5a06da59a5fdbe147fa3c9207aa"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-full-stack-ai-data-plane.png",
+      "sha256": "062ac35620f1b2c1005f87535887e04a7feb55094e14132ad51e05f9aed9eb6b"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-full-stack-ai-data-plane.svg",
+      "sha256": "d73abea5e40f9b716aa8db752129570f87bcaabc7a952906c237259f218db814"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-hnsw-memory-vs-diskann-ssd-layout.pdf",
+      "sha256": "feba3c31779985a022677e196656dee0866ab5913322b49bc0994e3ad47cc032"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-hnsw-memory-vs-diskann-ssd-layout.png",
+      "sha256": "054b547970d690acb0cd3d3bb63c8cc73e796d91be0e1e7138182dbaf5e2cc08"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-hnsw-memory-vs-diskann-ssd-layout.svg",
+      "sha256": "5d13217cb00f56027e920945cfa94f0ae87366077afeb029f45647b62f4cc2aa"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-kv-layout-read-amplification.pdf",
+      "sha256": "1edcf6f54c3a4ad1194568ef7294bf198531bb3d875d5b44971203d6b2b2b9e3"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-kv-layout-read-amplification.png",
+      "sha256": "25243ea5241c7be9706fc8d49e56fe8ab56b4f685c59358d1d833169cff2543b"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-kv-layout-read-amplification.svg",
+      "sha256": "96df96412605084db58dd747bfb62b27198ac89908e7cbb7ba5abfb782ab309d"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-llm-rubric-distillation-to-fasttext-bert-classifier.pdf",
+      "sha256": "a5d9a05eb1963ca0f742b0b69359a3115b0f5db4c2f6b27df7255ee73a3418ff"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-llm-rubric-distillation-to-fasttext-bert-classifier.png",
+      "sha256": "2c704b32655927c54caa97d8619822011b41be02a9479817e7c1b9534e4891a7"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-llm-rubric-distillation-to-fasttext-bert-classifier.svg",
+      "sha256": "2a42760614e1b88d94680c58d5f0e4304ed8c944f11ae848e4177b46abb177d2"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-lmcache-prefix-kv-compression-and-gds-prefetch.pdf",
+      "sha256": "c514fceb8dce57a84356c4ad0812a24fea26da04ee695bf83be7b3b3defc9b97"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-lmcache-prefix-kv-compression-and-gds-prefetch.png",
+      "sha256": "3bd9bf5b5e9b63a946172d7695a3052f9aafc6404e4f40e5316d1c969aa7849d"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-lmcache-prefix-kv-compression-and-gds-prefetch.svg",
+      "sha256": "07c40d541bf3cbed2dc62f554adf06770b03eda3c4d9dd0c74516bb3ef25a483"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-mineru-olmocr-pdf-layout-and-formula-gpu-pipeline.pdf",
+      "sha256": "3f56e588536b31ab0f71f73eab3b3cc15be6ac4799179e574b4b5ddb897e097f"
     },
     {
       "path": "manuscripts/ch13/ch13-mineru-olmocr-pdf-layout-and-formula-gpu-pipeline.png",
       "sha256": "132ab91ad60a05c94364187943d20c1c04095413e36bbbaff9bfd328b3b449d6"
     },
     {
-      "path": "manuscripts/ch13/ch13-mineru-olmocr-pdf-layout-and-formula-gpu-pipeline.pdf",
-      "sha256": "36420074454baead98e92189b1a3236ecd16520447bddb4ebe014d89c3127b00"
+      "path": "manuscripts/ch13/ch13-mineru-olmocr-pdf-layout-and-formula-gpu-pipeline.svg",
+      "sha256": "d527dc8cff2261236e06f1f72909cf68ebcd2040b91694eabbaf54bc689eff1a"
     },
     {
-      "path": "manuscripts/ch13/ch13-repo-level-ast-dependency-topological-packing.svg",
-      "sha256": "032236abde6c60364e529052b41a1ed1210004960424df3f64c727a38241f619"
+      "path": "manuscripts/ch13/ch13-minhash-lsh-band-row-s-curve-probability.pdf",
+      "sha256": "515b9d6c36bb24a8e7f215851498f7f492bf1886739a369cc73b5a85c8e61a21"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-minhash-lsh-band-row-s-curve-probability.png",
+      "sha256": "7ade72f962a4758c9543139e985f84c560e80a2e0e6b7acf13aeb42091ca5613"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-minhash-lsh-band-row-s-curve-probability.svg",
+      "sha256": "03f2add060b279a242ff01761ebdc66c43422fa5dcb6ad358840569837a8f303"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-multimodal-dataloader-pipeline.pdf",
+      "sha256": "c239717b0d1dc3051be8b44aa5e4a10a24545cd8caef27fb608fe3ee7c37fe2d"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-multimodal-dataloader-pipeline.png",
+      "sha256": "9fdd1664267669bf7664e1ce22d297c2b34a71156cbc8179e0312e69518e9d8b"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-multimodal-dataloader-pipeline.svg",
+      "sha256": "670f9908dea58df5152b5a20130f96927aca95c8db9aa5f58dc596cd5a9144cd"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-multimodal-tar-webdataset-vs-lance-random.pdf",
+      "sha256": "0754847d04a0be7b0021ef48a767f90d4244ebb3824693d5f87d7f77c9754177"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-multimodal-tar-webdataset-vs-lance-random.png",
+      "sha256": "4b610ac1781aef2bccff1f8cee1c12249d8dd52580816db9898738d08cfdc86e"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-multimodal-tar-webdataset-vs-lance-random.svg",
+      "sha256": "dc2c7e9a7761be7d16b268b578dea976ce8ca12b95d057ed4896b323eab3585e"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-nemotron-cc-classifier-ensembling-and-rephrasing.pdf",
+      "sha256": "0c13d37828df4b3d15979fbf142a1459e9af2fd48cc03060d03d4936791f8a65"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-nemotron-cc-classifier-ensembling-and-rephrasing.png",
+      "sha256": "834517485e2ff8c2fdb3b0debc6bde9ba6d8756b379b9a0e20d89cc997b688c7"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-nemotron-cc-classifier-ensembling-and-rephrasing.svg",
+      "sha256": "abcc9f831b5cbabe4127732456bad4abb4dfc6523232c9a313ad4b93e870c224"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-nixl-unified-nonblocking-transfer-plane.pdf",
+      "sha256": "85bc370cc43e7a725e4c2abdeda47d9fd4d66b12943c8eddebf8be81daa888b4"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-nixl-unified-nonblocking-transfer-plane.png",
+      "sha256": "943b931be0d4509e05f104f7541d8a3146412194b2c2bb848b210bf9e20b9953"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-nixl-unified-nonblocking-transfer-plane.svg",
+      "sha256": "4e2efb697cd20444b9796419d9c641e43ed8964cc00281e9c6ca86526d7076d7"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-online-serving-vs-offline-synthetic-factory-roofline.pdf",
+      "sha256": "5fb4639b9c27b83b8cd29787fb7190627032cee6ada0a64f7af0f73c79ab2d44"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-online-serving-vs-offline-synthetic-factory-roofline.png",
+      "sha256": "985ffef0d9083ef15d09d02eb2068b64b2de9d50c905737a7e40e12399a8d0e3"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-online-serving-vs-offline-synthetic-factory-roofline.svg",
+      "sha256": "bfd66e1d3645e7ceb5ffea667704492a110716fbabeec8c88c42b1392213d391"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-parquet-lance-vs-webdataset-io.pdf",
+      "sha256": "bd20c9e7ec7053f197681a9e9819f785262bd6c47af66d5de47daa6725d39f05"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-parquet-lance-vs-webdataset-io.png",
+      "sha256": "40516f118f1b7872d4312684b5c98e225433907d3c961ef3bae9836facd1e355"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-parquet-lance-vs-webdataset-io.svg",
+      "sha256": "d50ece7bf93d27385fa56281395826b7bb9d0830d5c3397a47dc7100516dbaff"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-pdf-scientific-ocr-layout-math-extraction-pipeline.pdf",
+      "sha256": "d84d7badee5497622e1d5733b244695e6d80f8cd79f492a910f8e1d8f70858ee"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-pdf-scientific-ocr-layout-math-extraction-pipeline.png",
+      "sha256": "818e7a74284b84ffbe58cf87b50269ee035671fcf8cc88a0aad864195d17edee"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-pdf-scientific-ocr-layout-math-extraction-pipeline.svg",
+      "sha256": "272f9a9b34405049cd1ac95a4fd8f2d837bd69a83d39f8118d167b4707f1aa00"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-posix-pagecache-vs-gds-dma.pdf",
+      "sha256": "f12f4b56e24212145a0d49bd151c14e747a744a57e827e51d5df500bf23dafe0"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-posix-pagecache-vs-gds-dma.png",
+      "sha256": "51c48e9e077681d2a84430bd9a1b5186dd219e2c83bd8018eb3bfb9591c896be"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-posix-pagecache-vs-gds-dma.svg",
+      "sha256": "d841196e06306f8b452da0a53cd58a5c22442a164b9dcbc9c02416d0eda304d4"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-rag-288-requests-calibration-trap.pdf",
+      "sha256": "f29d9be92ab898a17a07bb96e7e23e5b8cae5f63c5f88a5d15724c491d4517ea"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-rag-288-requests-calibration-trap.png",
+      "sha256": "7b73abc80dc2774d6bd199ec86942cb5c34e10028b9173a7f61ad695a214e083"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-rag-288-requests-calibration-trap.svg",
+      "sha256": "a8c87e90bd3e83e04653fec95be567bb2fbec6c2cf5de54edb80e8a33aa1d8b3"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-rag-end-to-end-timeline-breakdown.pdf",
+      "sha256": "2d01cca9e3074f26fc18b36f5cee2e3fa57101ff7eee858f8806657a8787ab0e"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-rag-end-to-end-timeline-breakdown.png",
+      "sha256": "b5a7405b7340c3a16d65ca20ccfef2c41512fc74bba53053aa9a7dafd650d0b8"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-rag-end-to-end-timeline-breakdown.svg",
+      "sha256": "438e23ac5b02e27dd731e6110fbde274e8fbb50e36005bf3f84e391ccc2f7c24"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-rag-topk-kv-blocks-and-rlimit-gap.pdf",
+      "sha256": "0e0cf191617cba4091353c88eb3fcee45a8e35ac12e42c5548596d9720cf9a85"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-rag-topk-kv-blocks-and-rlimit-gap.png",
+      "sha256": "395c8aed2b3e66bfebbfa388cbcb44cc2a0c3f3b8a093ed865b1097a186a8121"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-rag-topk-kv-blocks-and-rlimit-gap.svg",
+      "sha256": "a94a2e53a41ae979dd4e53ea2be0a9936080ef522f3e32332f8d41007a2baa78"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-repo-level-ast-dependency-topological-packing.pdf",
+      "sha256": "158a1a45134b469e5af61e86dbba78cf504d6c81df4145fd5f8fa6e5876ae61e"
     },
     {
       "path": "manuscripts/ch13/ch13-repo-level-ast-dependency-topological-packing.png",
       "sha256": "c05aab205398dff52fb3d5d7bce2c31ee12118a3b557fa1dddc5459291f92926"
     },
     {
-      "path": "manuscripts/ch13/ch13-repo-level-ast-dependency-topological-packing.pdf",
-      "sha256": "752ec5bc0571b58b165b76ee30dc2165b3ea51e36bd2020439e93d1d0a7d3c9c"
+      "path": "manuscripts/ch13/ch13-repo-level-ast-dependency-topological-packing.svg",
+      "sha256": "bdf3c0646bb3cf45ee571b4091fac4f2330dc18ff3a3971d0fd2443e4ae6ec4b"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-slack-capacity-harvesting-for-synthetic-generation.pdf",
+      "sha256": "639eb56a35cb2764f76db9f04596478aabd7aa73271e9a64986bef1ad71efa30"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-slack-capacity-harvesting-for-synthetic-generation.png",
+      "sha256": "72db3a68a621f585de704b1e9034cf4bac505cf26eac7c6aba71b41aef03abe2"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-slack-capacity-harvesting-for-synthetic-generation.svg",
+      "sha256": "e27ef58709800a1807592a268e7714fd3d8de0d3ae97689edf77bc6c97e2ae46"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-ssd-dwpd-endurance-and-admission.pdf",
+      "sha256": "db0a352d074ec3e08a1072d87b7cc9c7878caae48110a818c29cf12584289cf6"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-ssd-dwpd-endurance-and-admission.png",
+      "sha256": "8c8bd8ea8f3e01a2bc65e7c600f9bd285a8a60eabcc40835a71cf0be87c229bf"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-ssd-dwpd-endurance-and-admission.svg",
+      "sha256": "26dac4d0c1d0ab617c19736b950e55dd8e44be2b12854496b2c360fa4c9b23e3"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-storage-diagnosis-workflow.pdf",
+      "sha256": "836785531a1b2001385732e3987ad22f9d3a41dbddc08917e9776b2e08a09106"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-storage-diagnosis-workflow.png",
+      "sha256": "79bf39fe8fa58e4338e375b795227777c6f18ee8dbba4b93c6ef1b02a633a67b"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-storage-diagnosis-workflow.svg",
+      "sha256": "2bf481ee20e0636bfe425aa64a7adac05c80a68528f3ce1194dea5882ea8ce6d"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-storage-hierarchy-and-access-patterns.pdf",
+      "sha256": "27f5ef781a246271ef5c9c411d3370791339b719b85ca17bbed9b0675b807384"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-storage-hierarchy-and-access-patterns.png",
+      "sha256": "98b0dd1436c93664d10095232f6f6c36f8931eef1368c019ee27f3ec96d30cad"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-storage-hierarchy-and-access-patterns.svg",
+      "sha256": "89a78940f05b2b367b5d760214742f7cde433a66e6eccdf7c10e504388fe8c8e"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-synthetic-data-generator-verifier-rejection-funnel.pdf",
+      "sha256": "065d0b270e835ea4e626431438ecce1ba7462a7a10ed8a45c734c54131125f1e"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-synthetic-data-generator-verifier-rejection-funnel.png",
+      "sha256": "e09858089e55ba8d16bcc74a01701fef8af4d18a3a844d1b0bfd970b24856f4d"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-synthetic-data-generator-verifier-rejection-funnel.svg",
+      "sha256": "c35a816531f6779796132c8a134fb2f50fc9434d24d6d7347c6d2d0c542ec5b7"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-three-tier-kv-cache-hierarchy.pdf",
+      "sha256": "5318f3d1c2aa4306accdbb234e2de6cd26b5f0e68bbdec369587ff9ea0b645e1"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-three-tier-kv-cache-hierarchy.png",
+      "sha256": "0f5a622029d99c1387e53ae115fc26ff9ad1748bbc8e886109916cf9d37a85b7"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-three-tier-kv-cache-hierarchy.svg",
+      "sha256": "5c6a3afcec043fcec423e3415e89da2898e13d0787689dc79982a9737fd1b97f"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-tokenized-dataset-mmap-shuffling-and-sequence-packing.pdf",
+      "sha256": "bd8ec8463dba93d8cc1f83f75d96fe76ee178f00e57141adff6fd9d08c695b34"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-tokenized-dataset-mmap-shuffling-and-sequence-packing.png",
+      "sha256": "dd67f556230467deaad59bb2d6dd9ad431a21f317afb47386d5be075314c3d4c"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-tokenized-dataset-mmap-shuffling-and-sequence-packing.svg",
+      "sha256": "ff37334b25a3d4ff489bdef60daed7bc243d491ea29f45db0000ec7739f7aa65"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-umap-moonbright-mmap-and-gpu-page-table.pdf",
+      "sha256": "3831ae5505ba85c8dd2c7f44a5a8656d7a55946b7b6739057052cd7b0b59801b"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-umap-moonbright-mmap-and-gpu-page-table.png",
+      "sha256": "f300db5235fe4f3aff48be4fd6b00ad5026d206be531327ab8433df72b03dd43"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-umap-moonbright-mmap-and-gpu-page-table.svg",
+      "sha256": "19ba773a2a03d71505188605fd7f1600e1c898238b62b66095cc80ae86095474"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-zns-gc-tail-latency.pdf",
+      "sha256": "f199c1384a51a04324c149cc8e22859ecde52e992bd42832c5f28493bf14f3a1"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-zns-gc-tail-latency.png",
+      "sha256": "3d9bc93c499bcd5d195d16496f8e4048e39cdddddb514e966d938e65dc3ffe44"
+    },
+    {
+      "path": "manuscripts/ch13/ch13-zns-gc-tail-latency.svg",
+      "sha256": "febe46dd337618331874e1a112eee598b18bf786968775b5c9fe8c2b82e560f5"
+    },
+    {
+      "path": "manuscripts/ch13/figure-data.json",
+      "sha256": "2b18b4efa5dead092787840791df061f2b82773e29f3b62b7bd651e97757e4bf"
     },
     {
       "path": "manuscripts/ch13/figure-index.json",
-      "sha256": "65fe370f471b865220fbe45c01c7c61e186082391145f1ba2a0e666eb7e4b271"
+      "sha256": "b57d3d215b5bd58a20e1e07877a5f64d2126233760e444ea78d1db1ac2bf160e"
     },
     {
       "path": "manuscripts/ch13/teaching-layout-validation.json",
-      "sha256": "f8806f7df7b574e89e05423361f352ad70457a7bb29272b0c56dd66f15956250"
+      "sha256": "4ab588a59caa97927cde4862b6a9d006d2c9f30e7aaa5e097739e1d02b5b43b3"
     },
     {
       "path": "manuscripts/ch13/math-validation.json",
-      "sha256": "456250dd503b086b7ff2ee320148ff5127bb1d0fdee4ca10caede2f6f0f88801"
+      "sha256": "876c6101d336eb6242257c8fa20c8112c15fecd8d38e39bb9400753e23998890"
     }
   ]
 }

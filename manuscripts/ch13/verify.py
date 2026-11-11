@@ -35,15 +35,27 @@ md = HERE.parent / '13-存储系统与数据工程.md'
 s = md.read_text(encoding='utf-8')
 page = preview_path(md).read_text(encoding='utf-8')
 
-expected_headings = ["13.1", "13.1.1", "13.1.2", "13.2", "13.2.1", "13.2.2", "13.2.3", "13.3", "13.3.1", "13.3.2", "13.3.3", "13.4", "13.4.1", "13.4.2", "13.4.3", "13.5", "13.5.1", "13.5.2", "13.5.3", "13.6", "13.6.1", "13.6.2", "13.7", "13.7.1", "13.7.2", "13.8", "13.8.1", "13.8.2", "13.8.3", "13.8.4", "13.9", "13.9.1", "13.9.2", "13.10", "13.10.1", "13.10.2", "13.11", "13.11.1", "13.11.2", "13.12", "13.12.1", "13.12.2"]
+expected_headings = [
+    "13.1", "13.1.1", "13.1.2",
+    "13.2", "13.2.1", "13.2.2",
+    "13.3", "13.3.1", "13.3.2",
+    "13.4", "13.4.1", "13.4.2",
+    "13.5", "13.5.1", "13.5.2",
+    "13.6", "13.6.1", "13.6.2",
+]
 found_headings = re.findall(r'^#{2,3} (13\.\d+(?:\.\d+)?) ', s, re.M)
 check('all sections and subsections match outline', found_headings == expected_headings)
+check('zero H5+ headings', not re.findall(r'^#{5,}\s+', s, re.M))
+check('zero ASCII-digit-prefixed H4 headings', not re.findall(r'^####\s+[0-9]+', s, re.M))
 
 h2s = re.findall(r'^## (.+)$', s, re.M)
 check('last H2 is 本章小结', len(h2s) >= 5 and h2s[-1].strip() == '本章小结')
 
 exercises = re.findall(r'^(?:>\s*)?\*\*(?:(?:练习|实验|习题|拓展练习|思考题)\s+)?13-(\d+)\b(?!\s*解答)', s, re.M)
 check('sequential exercises 13-1 to 13-31', exercises == [str(i) for i in range(1, 31 + 1)])
+
+solutions = re.findall(r'^####\s+(?:练习|实验)\s+13-(\d+)\s+解答$', s, re.M)
+check('complete sequential solutions 13-1 to 13-31', solutions == [str(i) for i in range(1, 31 + 1)])
 
 py_blocks = re.findall(r'^```python\b', s, re.M)
 cpp_blocks = re.findall(r'^```cpp\b', s, re.M)
@@ -94,9 +106,43 @@ math_val = json.loads((HERE / 'math-validation.json').read_text(encoding='utf-8'
 check('KaTeX math validation zero errors', not math_val.get('errors'))
 
 layout_val = json.loads((HERE / 'teaching-layout-validation.json').read_text(encoding='utf-8'))
-check('layout validation zero warnings', layout_val.get('total_warnings', 0) == 0 and layout_val.get('all_passed', False))
+if isinstance(layout_val, list):
+    check('layout validation zero warnings', len(layout_val) == 46 and all(not r.get('warnings') for r in layout_val))
+else:
+    check('layout validation zero warnings', layout_val.get('total_warnings', 0) == 0 and layout_val.get('all_passed', False))
 
 check('HTML preview generated and non-empty', '<html' in page and len(page) > 10000)
+
+calc_kv = json.loads((ROOT / 'calculations/results/ch13-storage-kv-io.json').read_text(encoding='utf-8'))['summary']
+calc_dedup = json.loads((ROOT / 'calculations/results/ch13-data-funnel-dedup.json').read_text(encoding='utf-8'))['summary']
+exp_13_02 = json.loads((ROOT / 'experiments/ch13/13-02/expected/metrics.json').read_text(encoding='utf-8'))
+check(
+    'golden calc storage-kv-io invariants match manuscript',
+    calc_kv['gds_bandwidth_gbps'] == 100.0
+    and calc_kv['gds_140gb_load_seconds'] == 1.4
+    and calc_kv['threefs_180node_read_tibps'] == 6.6
+    and calc_kv['ref_32layer_block_vs_layer_speedup_x'] == 8.192
+    and calc_kv['qwen3_8b_kv_bytes_per_token'] == 147456
+    and calc_kv['kv_write_admission_max_pct_waf1_5'] == 8.89
+    and calc_kv['kv_write_admission_max_pct_zns_waf1_0'] == 13.33
+    and '147{,}456' in s
+    and '8.192' in s
+    and '8.89%' in s,
+)
+check(
+    'golden calc data-funnel-dedup invariants match manuscript and 13-02',
+    calc_dedup['final_curated_corpus_pb'] == 2.4
+    and calc_dedup['net_byte_retention_pct'] == 2.4
+    and calc_dedup['final_curated_tokens_trillion'] == 15.0
+    and calc_dedup['b16_r8_inflection_s_star'] == 0.7071
+    and calc_dedup['b16_r8_p_at_0_80_pct'] == 94.7
+    and calc_dedup['minhash_64gpu_shuffle_gb'] == 2520.0
+    and calc_dedup['gpu_vs_cpu_wall_speedup_x'] == 80.0
+    and calc_dedup['gpu_vs_cpu_cost_reduction_x'] == 4.5
+    and exp_13_02['curation_funnel']['after_decontam_pb'] == 2.4
+    and '0.7071' in s
+    and '2{,}520.0' in s,
+)
 
 exp_dir = ROOT / 'experiments' / 'ch13'
 for suite in sorted(exp_dir.glob('*')):

@@ -1,164 +1,158 @@
-{
-  "chapter": "ch14",
-  "figure_count": 26,
-  "all_passed": true,
-  "total_warnings": 0,
-  "figures": [
-    {
-      "figure": "14-1",
-      "file": "ch14-gigawatt-ai-factory-power-chain.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "14-2",
-      "file": "ch14-physical-vs-economic-feasibility.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "14-3",
-      "file": "ch14-site-conditions-tco-sensitivity.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "14-4",
-      "file": "ch14-synchronous-training-power-swing.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "14-5",
-      "file": "ch14-rubin-power-smoothing-and-maxlps.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "14-6",
-      "file": "ch14-runtime-staggered-microbatch-power.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "14-7",
-      "file": "ch14-ashrae-w45-cdu-liquid-cooling-loop.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "14-8",
-      "file": "ch14-logicfolding-power-density-paradox.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "14-9",
-      "file": "ch14-thermal-throttling-straggler-amplification.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "14-10",
-      "file": "ch14-tapas-thermal-power-routing-breakeven.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "14-11",
-      "file": "ch14-multi-datacenter-dci-optical-latency.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "14-12",
-      "file": "ch14-cross-dc-pipeline-and-hierarchical-dp.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "14-13",
-      "file": "ch14-diloco-inner-outer-optimization.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "14-14",
-      "file": "ch14-streaming-diloco-chunked-sync.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "14-15",
-      "file": "ch14-single-campus-vs-multi-campus-decision.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "14-16",
-      "file": "ch14-power-thermal-wan-co-design-summary.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "14-17",
-      "file": "ch14-single-phase-vs-two-phase-microfluidics.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "14-18",
-      "file": "ch14-campus-bess-peak-shaving-and-arbitrage.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "14-19",
-      "file": "ch14-kareus-dynamic-static-energy-consolidation.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "14-20",
-      "file": "ch14-dips-wan-backbone-parameter-sync.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "14-21",
-      "file": "ch14-embodied-carbon-vs-operational-carbon-lifecycle.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "14-22",
-      "file": "ch14-gigawatt-campus-master-engineering-ledger.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "14-23",
-      "file": "ch14-48v-vs-800v-hvdc-and-vertical-power-delivery.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "14-24",
-      "file": "ch14-sofc-microgrid-and-heat-recovery-ere-loop.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "14-25",
-      "file": "ch14-in-silicon-microfluidic-cooling-thermal-resistance.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "14-26",
-      "file": "ch14-gw-campus-smr-gas-bess-microgrid-frequency-control.svg",
-      "passed": true,
-      "warnings": []
-    }
-  ]
-}
+[
+  {
+    "figure": "ch14-gigawatt-ai-factory-power-chain",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch14-physical-vs-economic-feasibility",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch14-site-conditions-tco-sensitivity",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch14-synchronous-training-power-swing",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch14-rubin-power-smoothing-and-maxlps",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch14-runtime-staggered-microbatch-power",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch14-ashrae-w45-cdu-liquid-cooling-loop",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch14-logicfolding-power-density-paradox",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch14-thermal-throttling-straggler-amplification",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch14-tapas-thermal-power-routing-breakeven",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch14-multi-datacenter-dci-optical-latency",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch14-cross-dc-pipeline-and-hierarchical-dp",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch14-diloco-inner-outer-optimization",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch14-streaming-diloco-chunked-sync",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch14-single-campus-vs-multi-campus-decision",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch14-power-thermal-wan-co-design-summary",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch14-single-phase-vs-two-phase-microfluidics",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch14-campus-bess-peak-shaving-and-arbitrage",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch14-kareus-dynamic-static-energy-consolidation",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch14-dips-wan-backbone-parameter-sync",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch14-embodied-carbon-vs-operational-carbon-lifecycle",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch14-gigawatt-campus-master-engineering-ledger",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch14-48v-vs-800v-hvdc-and-vertical-power-delivery",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch14-sofc-microgrid-and-heat-recovery-ere-loop",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch14-in-silicon-microfluidic-cooling-thermal-resistance",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch14-gw-campus-smr-gas-bess-microgrid-frequency-control",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  }
+]

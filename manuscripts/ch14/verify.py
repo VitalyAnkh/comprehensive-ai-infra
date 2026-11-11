@@ -38,12 +38,16 @@ page = preview_path(md).read_text(encoding='utf-8')
 expected_headings = ["14.1", "14.1.1", "14.1.2", "14.1.3", "14.2", "14.2.1", "14.2.2", "14.2.3", "14.3", "14.3.1", "14.3.2", "14.3.3", "14.4", "14.4.1", "14.4.2", "14.4.3", "14.5", "14.5.1", "14.5.2", "14.6", "14.6.1", "14.6.2", "14.6.3", "14.6.4"]
 found_headings = re.findall(r'^#{2,3} (14\.\d+(?:\.\d+)?) ', s, re.M)
 check('all sections and subsections match outline', found_headings == expected_headings)
+check('zero H5+ headings', not re.findall(r'^#{5,}\s+', s, re.M))
+check('zero ASCII-digit-prefixed H4 headings', not re.findall(r'^####\s+[0-9]+', s, re.M))
 
 h2s = re.findall(r'^## (.+)$', s, re.M)
 check('last H2 is 本章小结', len(h2s) >= 5 and h2s[-1].strip() == '本章小结')
 
 exercises = re.findall(r'^(?:>\s*)?\*\*(?:(?:练习|实验|习题|拓展练习|思考题)\s+)?14-(\d+)\b(?!\s*解答)', s, re.M)
 check('sequential exercises 14-1 to 14-18', exercises == [str(i) for i in range(1, 18 + 1)])
+derivs = re.findall(r'^>\s*-\s*\*\*参考(?:推导与答案|验证断言与(?:期望输出|推导))要点\*\*：', s, re.M)
+check('all 18 exercises include step-by-step reference derivations', len(derivs) == 18)
 
 py_blocks = re.findall(r'^```python\b', s, re.M)
 cpp_blocks = re.findall(r'^```cpp\b', s, re.M)
@@ -83,7 +87,7 @@ check('local links exist', not missing)
 
 defs = re.findall(r'^\[\^([^\]]+)\]:', s, re.M)
 refs = re.findall(r'\[\^([^\]]+)\](?!:)', s)
-check('all footnotes used and defined once', set(refs) <= set(defs) and len(defs) == len(set(defs)) and len(defs) == 21)
+check('all footnotes used and defined once', set(refs) <= set(defs) and len(defs) == len(set(defs)) and len(defs) == 22)
 
 for name, key in [('sources.json', 'sources'), ('manifest.json', 'outputs')]:
     data = json.loads((HERE / name).read_text(encoding='utf-8'))[key]
@@ -94,9 +98,34 @@ math_val = json.loads((HERE / 'math-validation.json').read_text(encoding='utf-8'
 check('KaTeX math validation zero errors', not math_val.get('errors'))
 
 layout_val = json.loads((HERE / 'teaching-layout-validation.json').read_text(encoding='utf-8'))
-check('layout validation zero warnings', layout_val.get('total_warnings', 0) == 0 and layout_val.get('all_passed', False))
+if isinstance(layout_val, list):
+    check('layout validation zero warnings', len(layout_val) == 26 and all(not r.get('warnings') for r in layout_val))
+else:
+    check('layout validation zero warnings', layout_val.get('total_warnings', 0) == 0 and layout_val.get('all_passed', False))
 
 check('HTML preview generated and non-empty', '<html' in page and len(page) > 10000)
+calc_dc = json.loads((ROOT / 'calculations/results/ch14-datacenter-power-cooling.json').read_text(encoding='utf-8'))['summary']
+exp_14_04 = json.loads((ROOT / 'experiments/ch14/14-04/expected/metrics.json').read_text(encoding='utf-8'))
+exp_14_05 = json.loads((ROOT / 'experiments/ch14/14-05/expected/metrics.json').read_text(encoding='utf-8'))
+check(
+    'golden calc datacenter-power-cooling matches manuscript and 14-04/14-05',
+    calc_dc['current_48v_amp'] == 2750.0
+    and calc_dc['current_800v_amp'] == 165.0
+    and calc_dc['hvdc_i2r_loss_reduction_x'] == 277.78
+    and calc_dc['w45_flow_l_per_min_132kw'] == 159.5
+    and calc_dc['w45_flow_l_per_min_132kw_rho1'] == 157.9
+    and calc_dc['w45_flow_l_per_min_165kw'] == 199.4
+    and calc_dc['coldplate_1400w_case_temp_c'] == 74.2
+    and calc_dc['dci_671b_outer_sync_seconds'] == 31.58
+    and calc_dc['dci_blocking_comm_overhead_pct'] == 1.48
+    and calc_dc['campus_100mw_elec_saving_musd_per_yr'] == 70.08
+    and exp_14_04['ashrae_w45_cooling']['w45_flow_l_per_min_132kw'] == 159.5
+    and exp_14_04['ashrae_w45_cooling']['w45_flow_l_per_min_132kw_rho1'] == 157.9
+    and exp_14_05['controlled_optical_dci']['dci_671b_outer_sync_seconds'] == 31.58
+    and '159.5' in s
+    and '157.9' in s
+    and '157.8' not in s,
+)
 
 exp_dir = ROOT / 'experiments' / 'ch14'
 for suite in sorted(exp_dir.glob('*')):

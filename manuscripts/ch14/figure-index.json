@@ -8,11 +8,9 @@
     "caption": "吉瓦级 AI 工厂从 220 kV 变电站到机柜 800 VDC 母排与液冷 CDU 的全链路供电及铜损分解（算例 14-1）",
     "source_refs": [
       "references/files/specs/nvidia-rubin-system.md",
-      "manuscripts/ch15/figure-data.json"
+      "manuscripts/ch14/figure-data.json"
     ],
-    "TeachingRole": "建立从高压电网到机柜 800 VDC 直流母排的四级转换链路与铜损缩减 277.8 倍账本",
-    "name": "ch14-gigawatt-ai-factory-power-chain",
-    "figure": "14-1"
+    "TeachingRole": "建立从高压电网到机柜 800 VDC 直流母排的四级转换链路与铜损缩减 277.8 倍账本"
   },
   {
     "figure_id": "图 14-2",
@@ -20,14 +18,12 @@
     "file": "ch14-physical-vs-economic-feasibility.svg",
     "asset": "ch14/ch14-physical-vs-economic-feasibility.svg",
     "section": "14.1.2",
-    "caption": "物理可行域与经济可行域双边界及 P_domain × GB/W 口径错配高估警示图（算例 14-2，D11-08）",
+    "caption": "物理可行域与经济可行域双边界及 P_domain × GB/W 口径错配高估警示图（算例 14-2）",
     "source_refs": [
       "research/draft11-outline-audit/report.md",
-      "manuscripts/ch15/figure-data.json"
+      "manuscripts/ch14/figure-data.json"
     ],
-    "TeachingRole": "揭示漏扣 28% 非 GPU 固定功耗与 20% 显存运行余量导致的容量虚胖",
-    "name": "ch14-physical-vs-economic-feasibility",
-    "figure": "14-2"
+    "TeachingRole": "揭示漏扣 28% 非 GPU 固定功耗与 20% 显存运行余量导致的容量虚胖"
   },
   {
     "figure_id": "图 14-3",
@@ -35,14 +31,12 @@
     "file": "ch14-site-conditions-tco-sensitivity.svg",
     "asset": "ch14/ch14-site-conditions-tco-sensitivity.svg",
     "section": "14.1.3",
-    "caption": "站点条件（电价、供电上限、并网延期折旧与散热阈值）作为一等设计输入的 TCO 敏感性矩阵（算例 14-3，D11-09）",
+    "caption": "站点条件（电价、供电上限、并网延期折旧与散热阈值）作为一等设计输入的 TCO 敏感性矩阵（算例 14-3）",
     "source_refs": [
       "research/draft11-outline-audit/report.md",
-      "manuscripts/ch15/figure-data.json"
+      "manuscripts/ch14/figure-data.json"
     ],
-    "TeachingRole": "量化电价差（2.10 亿美元）与并网延期 6 个月（3.33 亿美元折旧）对集群选址的决定性影响",
-    "name": "ch14-site-conditions-tco-sensitivity",
-    "figure": "14-3"
+    "TeachingRole": "量化电价差（2.10 亿美元）与并网延期 6 个月（3.33 亿美元折旧）对集群选址的决定性影响"
   },
   {
     "figure_id": "图 14-4",
@@ -53,11 +47,9 @@
     "caption": "十万卡同步训练在 GEMM 计算期与 AllReduce 通信期周期性切换引发的 85 MW 电网阶跃冲击波形",
     "source_refs": [
       "references/files/specs/nvidia-rubin-system.md",
-      "manuscripts/ch15/figure-data.json"
+      "manuscripts/ch14/figure-data.json"
     ],
-    "TeachingRole": "展示毫秒级同步屏障如何将微观算子切换放大为宏观电网频率冲击",
-    "name": "ch14-synchronous-training-power-swing",
-    "figure": "14-4"
+    "TeachingRole": "展示毫秒级同步屏障如何将微观算子切换放大为宏观电网频率冲击"
   },
   {
     "figure_id": "图 14-5",
@@ -70,9 +62,7 @@
       "references/files/specs/nvidia-rubin-system.md",
       "references/text/nvidia-rubin-arch.txt"
     ],
-    "TeachingRole": "解析机架级储能反馈控制与 DSX MaxLPS 如何在固定兆瓦配额下多塞入 40% 算力",
-    "name": "ch14-rubin-power-smoothing-and-maxlps",
-    "figure": "14-5"
+    "TeachingRole": "解析机架级储能反馈控制与 DSX MaxLPS 如何在固定兆瓦配额下多塞入 40% 算力"
   },
   {
     "figure_id": "图 14-6",
@@ -83,11 +73,9 @@
     "caption": "运行时软件协同抑峰：流水线微批次错峰注入、斜坡限幅器与空闲期受控保底核时序对比",
     "source_refs": [
       "references/files/specs/nvidia-rubin-system.md",
-      "manuscripts/ch15/figure-data.json"
+      "manuscripts/ch14/figure-data.json"
     ],
-    "TeachingRole": "展示软件调度如何与硬件储能协同平抑集群级 dP/dt 斜率",
-    "name": "ch14-runtime-staggered-microbatch-power",
-    "figure": "14-6"
+    "TeachingRole": "展示软件调度如何与硬件储能协同平抑集群级 dP/dt 斜率"
   },
   {
     "figure_id": "图 14-7",
@@ -100,9 +88,7 @@
       "references/text/ashrae-liquid-cooling.txt",
       "references/files/specs/nvidia-rubin-system.md"
     ],
-    "TeachingRole": "建立风冷物理极限（1,900 CFM/砖）与 132 kW 液冷机柜 Q = m_dot·c_p·ΔT 流量账本",
-    "name": "ch14-ashrae-w45-cdu-liquid-cooling-loop",
-    "figure": "14-7"
+    "TeachingRole": "建立风冷物理极限（1,900 CFM/砖）与 132 kW 液冷机柜 Q = m_dot·c_p·ΔT 流量账本"
   },
   {
     "figure_id": "图 14-8",
@@ -113,11 +99,9 @@
     "caption": "LogicFolding 降压节能（0.85 V → 0.55 V）与面积缩减更快导致的功率密度反升（0.75/0.60 = 1.25x，算例 14-5）",
     "source_refs": [
       "case-studies/logicfolding-energy.md",
-      "manuscripts/ch15/figure-data.json"
+      "manuscripts/ch14/figure-data.json"
     ],
-    "TeachingRole": "阐明总功耗下降不等于散热变易：投影面积压缩 40% 会将单位面积热流密度推高 25%",
-    "name": "ch14-logicfolding-power-density-paradox",
-    "figure": "14-8"
+    "TeachingRole": "阐明总功耗下降不等于散热变易：投影面积压缩 40% 会将单位面积热流密度推高 25%"
   },
   {
     "figure_id": "图 14-9",
@@ -128,11 +112,9 @@
     "caption": "单颗过热 GPU 触发降频 15% 如何通过同步 AllReduce 屏障拖慢整组 1,024 张卡的有效吞吐",
     "source_refs": [
       "research/2026-infra-survey/verify_tapas_reading.py",
-      "manuscripts/ch15/figure-data.json"
+      "manuscripts/ch14/figure-data.json"
     ],
-    "TeachingRole": "揭示局部冷板微水道堵塞或进液偏温如何经集合通信屏障放大为全局 15% 算力损失",
-    "name": "ch14-thermal-throttling-straggler-amplification",
-    "figure": "14-9"
+    "TeachingRole": "揭示局部冷板微水道堵塞或进液偏温如何经集合通信屏障放大为全局 15% 算力损失"
   },
   {
     "figure_id": "图 14-10",
@@ -143,11 +125,9 @@
     "caption": "TAPAS（ASPLOS '25）热感知与功率封顶重配置（[102, 86] kW 削峰至 ≤ 100 kW，3.0 s 停顿在 30 请求处回本，算例 14-6）",
     "source_refs": [
       "research/2026-infra-survey/verify_tapas_reading.py",
-      "manuscripts/ch15/figure-data.json"
+      "manuscripts/ch14/figure-data.json"
     ],
-    "TeachingRole": "用受控算例验证功率/温度与延迟双约束下的路由可行集及重配置回本阈值",
-    "name": "ch14-tapas-thermal-power-routing-breakeven",
-    "figure": "14-10"
+    "TeachingRole": "用受控算例验证功率/温度与延迟双约束下的路由可行集及重配置回本阈值"
   },
   {
     "figure_id": "图 14-11",
@@ -157,11 +137,9 @@
     "section": "14.4.1",
     "caption": "跨 1,000 km 广域光网（RTT = 10 ms，BDP = 2.0 GB）的传播延迟与四类并行维度的跨城可迁移性边界",
     "source_refs": [
-      "manuscripts/ch15/figure-data.json"
+      "manuscripts/ch14/figure-data.json"
     ],
-    "TeachingRole": "从光纤折射率物理极限推导为何 TP/EP 严禁跨城而 PP/低频 DP 可以跨城",
-    "name": "ch14-multi-datacenter-dci-optical-latency",
-    "figure": "14-11"
+    "TeachingRole": "从光纤折射率物理极限推导为何 TP/EP 严禁跨城而 PP/低频 DP 可以跨城"
   },
   {
     "figure_id": "图 14-12",
@@ -171,11 +149,9 @@
     "section": "14.4.2",
     "caption": "跨园区流水线并行（Cross-DC PP）与园区内 NVLink/RoCE + 园区际 DWDM 分层数据并行时序",
     "source_refs": [
-      "manuscripts/ch15/figure-data.json"
+      "manuscripts/ch14/figure-data.json"
     ],
-    "TeachingRole": "推导用微批次计算掩盖 10 ms 广域网 RTT 的临界条件与两级规约流量缩减比",
-    "name": "ch14-cross-dc-pipeline-and-hierarchical-dp",
-    "figure": "14-12"
+    "TeachingRole": "推导用微批次计算掩盖 10 ms 广域网 RTT 的临界条件与两级规约流量缩减比"
   },
   {
     "figure_id": "图 14-13",
@@ -185,11 +161,9 @@
     "section": "14.4.3",
     "caption": "DiLoCo 内循环 H = 500 步独立更新与外循环 Nesterov 伪梯度同步将跨城带宽需求压缩 500 倍的机制（算例 14-7）",
     "source_refs": [
-      "manuscripts/ch15/figure-data.json"
+      "manuscripts/ch14/figure-data.json"
     ],
-    "TeachingRole": "剖析外循环伪梯度同步如何换取 500 倍广域网带宽缩减及其额外显存代价",
-    "name": "ch14-diloco-inner-outer-optimization",
-    "figure": "14-13"
+    "TeachingRole": "剖析外循环伪梯度同步如何换取 500 倍广域网带宽缩减及其额外显存代价"
   },
   {
     "figure_id": "图 14-14",
@@ -199,11 +173,9 @@
     "section": "14.4.3",
     "caption": "全量阻塞式外循环同步与 Streaming DiLoCo 分片流水重叠同步的广域网链路利用率对比",
     "source_refs": [
-      "manuscripts/ch15/figure-data.json"
+      "manuscripts/ch14/figure-data.json"
     ],
-    "TeachingRole": "展示如何将第 H 步的突发全量伪梯度通信摊平至整个内循环窗口以消除 DCI 拥塞",
-    "name": "ch14-streaming-diloco-chunked-sync",
-    "figure": "14-14"
+    "TeachingRole": "展示如何将第 H 步的突发全量伪梯度通信摊平至整个内循环窗口以消除 DCI 拥塞"
   },
   {
     "figure_id": "图 14-15",
@@ -214,11 +186,9 @@
     "caption": "单园区等待变电站扩容 vs. 多园区跨城协同训练的完成工期与成本交点决策树",
     "source_refs": [
       "research/draft11-outline-audit/report.md",
-      "manuscripts/ch15/figure-data.json"
+      "manuscripts/ch14/figure-data.json"
     ],
-    "TeachingRole": "联合并网延期折旧与广域网专线租金给出单园区与多园区方案的定量切换准则",
-    "name": "ch14-single-campus-vs-multi-campus-decision",
-    "figure": "14-15"
+    "TeachingRole": "联合并网延期折旧与广域网专线租金给出单园区与多园区方案的定量切换准则"
   },
   {
     "figure_id": "图 14-16",
@@ -229,11 +199,9 @@
     "caption": "从芯片结温、机柜液冷、变电站功率平滑到跨地域光网的吉瓦级 AI 基础设施全景图",
     "source_refs": [
       "references/files/specs/nvidia-rubin-system.md",
-      "manuscripts/ch15/figure-data.json"
+      "manuscripts/ch14/figure-data.json"
     ],
-    "TeachingRole": "收束第 15 章供电、散热、瞬态功率与跨城光网的四层物理协同体系",
-    "name": "ch14-power-thermal-wan-co-design-summary",
-    "figure": "14-16"
+    "TeachingRole": "收束第 14 章供电、散热、瞬态功率与跨城光网的四层物理协同体系"
   },
   {
     "figure_id": "图 14-17",
@@ -244,11 +212,9 @@
     "caption": "单相冷板、两相相变浸没/冷板与硅背面微通道直冷的热阻网络（R_TIM, R_conv）与千瓦级芯片结温边界",
     "source_refs": [
       "references/text/ashrae-liquid-cooling.txt",
-      "experiments/ch15/15-01/run.py"
+      "experiments/ch14/14-01/run.py"
     ],
-    "TeachingRole": "对比显热、汽化潜热与硅背面微流道消除 R_TIM=0.02 °C/W 带来的 +40 °C 进液温度提升",
-    "name": "ch14-single-phase-vs-two-phase-microfluidics",
-    "figure": "14-17"
+    "TeachingRole": "对比显热、汽化潜热与硅背面微流道消除 R_TIM=0.02 °C/W 带来的 +40 °C 进液温度提升"
   },
   {
     "figure_id": "图 14-18",
@@ -259,11 +225,9 @@
     "caption": "百兆瓦级园区储能（BESS）在 50 ms 训练脉冲平滑、日内峰谷电价套利与电网掉电备电中的三重能量流",
     "source_refs": [
       "references/files/specs/nvidia-rubin-system.md",
-      "experiments/ch15/15-02/run.py"
+      "experiments/ch14/14-02/run.py"
     ],
-    "TeachingRole": "量化 100 MWh 园区储能在毫秒平抑、分钟调频与小时峰谷套利中的年收益与投资回收期",
-    "name": "ch14-campus-bess-peak-shaving-and-arbitrage",
-    "figure": "14-18"
+    "TeachingRole": "量化 100 MWh 园区储能在毫秒平抑、分钟调频与小时峰谷套利中的年收益与投资回收期"
   },
   {
     "figure_id": "图 14-19",
@@ -274,11 +238,9 @@
     "caption": "Kareus（OSDI '26）动静态能耗分解：低负载下全卡浅度降频的高静态漏电税 vs. 负载紧缩合并 + 空闲卡深度休眠",
     "source_refs": [
       "research/2026-infra-survey/reading-osdi-2026.md",
-      "experiments/ch15/15-02/run.py"
+      "experiments/ch14/14-02/run.py"
     ],
-    "TeachingRole": "证明在 40% 负载下紧缩合并休眠可将单卡等效功耗从 388 W 压至 280–289 W",
-    "name": "ch14-kareus-dynamic-static-energy-consolidation",
-    "figure": "14-19"
+    "TeachingRole": "证明在 40% 负载下紧缩合并休眠可将单卡等效功耗从 388 W 压至 280–289 W"
   },
   {
     "figure_id": "图 14-20",
@@ -289,11 +251,9 @@
     "caption": "Di-PS（NSDI '26）跨地域训练的广域网链路段带宽调度与层间异步梯度传输重叠",
     "source_refs": [
       "research/2026-infra-survey/reading-nsdi-2026.md",
-      "experiments/ch15/15-02/run.py"
+      "experiments/ch14/14-02/run.py"
     ],
-    "TeachingRole": "展示异构跨集群训练如何通过异步参数服务器与伪梯度阻尼容忍百毫秒级 WAN RTT",
-    "name": "ch14-dips-wan-backbone-parameter-sync",
-    "figure": "14-20"
+    "TeachingRole": "展示异构跨集群训练如何通过异步参数服务器与伪梯度阻尼容忍百毫秒级 WAN RTT"
   },
   {
     "figure_id": "图 14-21",
@@ -303,11 +263,9 @@
     "section": "14.6.3",
     "caption": "AI 数据中心 3–5 年生命周期内隐含碳（Embodied Carbon：晶圆制造与基建）与运行碳（Operational Carbon：发电结构）的权衡曲线",
     "source_refs": [
-      "manuscripts/ch15/figure-data.json"
+      "manuscripts/ch14/figure-data.json"
     ],
-    "TeachingRole": "阐明先进制程晶圆隐含碳与电网碳强度 CI(t) 在园区全生命周期中的权衡",
-    "name": "ch14-embodied-carbon-vs-operational-carbon-lifecycle",
-    "figure": "14-21"
+    "TeachingRole": "阐明先进制程晶圆隐含碳与电网碳强度 CI(t) 在园区全生命周期中的权衡"
   },
   {
     "figure_id": "图 14-22",
@@ -317,12 +275,10 @@
     "section": "14.6.3",
     "caption": "吉瓦级 AI 园区从电网并网、储能平滑、微通道液冷到跨城光网协同的完整工程总账本",
     "source_refs": [
-      "experiments/ch15/15-01/run.py",
-      "experiments/ch15/15-02/run.py"
+      "experiments/ch14/14-01/run.py",
+      "experiments/ch14/14-02/run.py"
     ],
-    "TeachingRole": "汇总结温、液冷、储能套利、动静态能耗与跨城协同训练的工程总账本",
-    "name": "ch14-gigawatt-campus-master-engineering-ledger",
-    "figure": "14-22"
+    "TeachingRole": "汇总结温、液冷、储能套利、动静态能耗与跨城协同训练的工程总账本"
   },
   {
     "figure_id": "图 14-23",
@@ -332,11 +288,9 @@
     "section": "14.6.4",
     "caption": "120–250 kW 超高密机柜中传统 48V 铜排瓶颈 vs. 800V HVDC 高压直流母线与芯片背部垂直供电（VPD）的损耗对比",
     "source_refs": [
-      "manuscripts/ch15/figure-data.json"
+      "manuscripts/ch14/figure-data.json"
     ],
-    "TeachingRole": "量化 140 kW 机柜从 48V 升级至 800V HVDC 及垂直供电（VPD）带来的 277.8 倍母排焦耳损耗下降",
-    "name": "ch14-48v-vs-800v-hvdc-and-vertical-power-delivery",
-    "figure": "14-23"
+    "TeachingRole": "量化 140 kW 机柜从 48V 升级至 800V HVDC 及垂直供电（VPD）带来的 277.8 倍母排焦耳损耗下降"
   },
   {
     "figure_id": "图 14-24",
@@ -344,13 +298,11 @@
     "file": "ch14-sofc-microgrid-and-heat-recovery-ere-loop.svg",
     "asset": "ch14/ch14-sofc-microgrid-and-heat-recovery-ere-loop.svg",
     "section": "14.6.4",
-    "caption": "吉瓦级 AI 园区现场 SOFC/燃气微网、BESS 储能与 60°C 液冷余热回收（ERE < 1.0）综合能量闭环",
+    "caption": "吉瓦级 AI 园区现场 SOFC/燃气微网、BESS 储能与 60°C 液冷余热回收（ERE < 1.0）综合能量复用系统",
     "source_refs": [
-      "manuscripts/ch15/figure-data.json"
+      "manuscripts/ch14/figure-data.json"
     ],
-    "TeachingRole": "建立现场 SOFC 微网直供与 60°C 液冷废热区域供暖回收（ERE = 0.43 < 1.0）的能量复用方程",
-    "name": "ch14-sofc-microgrid-and-heat-recovery-ere-loop",
-    "figure": "14-24"
+    "TeachingRole": "建立现场 SOFC 微网直供与 60°C 液冷废热区域供暖回收（ERE = 0.43 < 1.0）的能量复用方程"
   },
   {
     "figure_id": "图 14-25",
@@ -360,12 +312,10 @@
     "section": "14.6.4",
     "caption": "硅内三维分水微通道直冷（Direct-to-Silicon Microfluidics，热通量 277.8 W/cm²）截面流场与冷板界面热阻消融对比",
     "source_refs": [
-      "experiments/ch15/15-03/run.py",
-      "manuscripts/ch15/figure-data.json"
+      "experiments/ch14/14-03/run.py",
+      "manuscripts/ch14/figure-data.json"
     ],
-    "TeachingRole": "量化 2,500 W 芯片在硅内三维分水微通道直冷下总热阻降至 0.0100 K/W（降 2.80×）与 1.65 W 泵功账本",
-    "name": "ch14-in-silicon-microfluidic-cooling-thermal-resistance",
-    "figure": "14-25"
+    "TeachingRole": "量化 2,500 W 芯片在硅内三维分水微通道直冷下总热阻降至 0.0100 K/W（降 2.80×）与 1.65 W 泵功账本"
   },
   {
     "figure_id": "图 14-26",
@@ -373,13 +323,11 @@
     "file": "ch14-gw-campus-smr-gas-bess-microgrid-frequency-control.svg",
     "asset": "ch14/ch14-gw-campus-smr-gas-bess-microgrid-frequency-control.svg",
     "section": "14.6.4",
-    "caption": "1.2 GW 园区孤岛微网（300 MW SMR + 600 MW 燃机 + 400 MW 构网型 BESS）在 450 MW 训练阶跃下的 RoCoF 与电热联合调频闭环",
+    "caption": "1.2 GW 园区孤岛微网（300 MW SMR + 600 MW 燃机 + 400 MW 构网型 BESS）在 450 MW 训练阶跃下的 RoCoF 与电热联合调频控制",
     "source_refs": [
-      "experiments/ch15/15-03/run.py",
-      "manuscripts/ch15/figure-data.json"
+      "experiments/ch14/14-03/run.py",
+      "manuscripts/ch14/figure-data.json"
     ],
-    "TeachingRole": "推导 1.2 GW 孤岛微网转子摇摆方程及构网型 BESS 虚拟惯量（13.5 s）压制 RoCoF 至 1.50 Hz/s 的整定准则",
-    "name": "ch14-gw-campus-smr-gas-bess-microgrid-frequency-control",
-    "figure": "14-26"
+    "TeachingRole": "推导 1.2 GW 孤岛微网转子摇摆方程及构网型 BESS 虚拟惯量（13.5 s）压制 RoCoF 至 1.50 Hz/s 的整定准则"
   }
 ]

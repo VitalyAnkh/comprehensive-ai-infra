@@ -1,0 +1,20 @@
+{
+  "controlled_optical_dci": {
+    "total_params_b": 671.0,
+    "active_params_b": 37.0,
+    "deepseek_v3_layers": 61,
+    "dci_671b_naive_per_step_gbps": 2556.2,
+    "dci_671b_diloco_h500_avg_gbps": 5.11,
+    "dci_671b_outer_sync_seconds": 31.58,
+    "dci_inner_500step_window_seconds": 2100.0,
+    "dci_blocking_comm_overhead_pct": 1.48,
+    "streaming_shard_sync_seconds": 0.518,
+    "streaming_shard_window_seconds": 34.43,
+    "streaming_exposed_stall_seconds": 0.0
+  },
+  "campus_economics": {
+    "campus_100mw_elec_saving_musd_per_yr": 70.08,
+    "campus_100mw_3yr_saving_musd": 210.24,
+    "bess_20pct_2hr_capacity_mwh": 40.0
+  }
+}
