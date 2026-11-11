@@ -1,7 +1,7 @@
 {
   "chapter": 6,
   "generator": "manuscripts/ch06/build.py",
-  "figures": 67,
+  "figures": 69,
   "supplementary_figures": 1,
   "font_family": "Source Han Sans CN",
   "outputs": [
@@ -774,6 +774,30 @@
       "sha256": "1b697613c88217533f97d9b9cb2a365aa7f8729ed90737fb7d17dad718e6bf0a"
     },
     {
+      "path": "manuscripts/ch06/ch06-five-global-supernode-architectures-topology-and-bandwidth-comparison.svg",
+      "sha256": "69e727e9cbcbf20929ca434041f0e3432e70428812b8280403c7fba32398947e"
+    },
+    {
+      "path": "manuscripts/ch06/ch06-five-global-supernode-architectures-topology-and-bandwidth-comparison.png",
+      "sha256": "d56875a6102cfcbb3f5e9206773f7d27907c50461fb2f6ca26540973bdf3f034"
+    },
+    {
+      "path": "manuscripts/ch06/ch06-five-global-supernode-architectures-topology-and-bandwidth-comparison.pdf",
+      "sha256": "771eb0212d1e6e3dca59a9b719b418055c109f1469c87268f140709e513b7261"
+    },
+    {
+      "path": "manuscripts/ch06/ch06-ocs-reconfigurable-3d-torus-vs-all-to-all-switch-fault-resilience.svg",
+      "sha256": "f6808048e9ab7aa0e881db3d658f79806bcccc0b3b16485575389767e96b4847"
+    },
+    {
+      "path": "manuscripts/ch06/ch06-ocs-reconfigurable-3d-torus-vs-all-to-all-switch-fault-resilience.png",
+      "sha256": "76e787a29836bddb36f47a3601484437b51b004899a60538a247ed7ed88672bb"
+    },
+    {
+      "path": "manuscripts/ch06/ch06-ocs-reconfigurable-3d-torus-vs-all-to-all-switch-fault-resilience.pdf",
+      "sha256": "0454560244c9c4027ec23b006344876f6a509a8e76009c59d6cc4788c6408b3f"
+    },
+    {
       "path": "manuscripts/ub_ep_figures.py",
       "sha256": "c211fe09010e2b037fa5df0d3a82d3fb676958831180c83657225f85d8f65010"
     },
@@ -795,15 +819,15 @@
     },
     {
       "path": "manuscripts/ch06/teaching_revision.py",
-      "sha256": "6c38e4489d08a43fdfa9c8be58dbb420a66c9428e6341c9da92e2f0c385896c6"
+      "sha256": "d79f47cb121bde5ddea3a37532e8c6d1f082f8f966128b91fec0e1261db12dd9"
     },
     {
       "path": "manuscripts/ch06/figure-index.json",
-      "sha256": "229f3e642aa93179c5ec708afd29c8236459e498f78c64aee8beeb88dc74087b"
+      "sha256": "796cc4c8ae5fd224131ac2bbc982ea069896ffe27300b27bb0ad57612d87c8c4"
     },
     {
       "path": "manuscripts/ch06/teaching-layout-validation.json",
-      "sha256": "7c6d2abe4e769918508ef62ab84b99b296a4dd61159220e9f8a50b9aa559f3b0"
+      "sha256": "46f21e42f0d6d787d7ed07813e8a7ee0b108f45a279ac5e893a4553a8a775a1d"
     },
     {
       "path": "manuscripts/ch06/visual_examples.py",
@@ -830,10 +854,6 @@
       "sha256": "327c5d5390b75f61a698a8389cb34da3fe950f76b4d3d9b0864734fac3a532ce"
     },
     {
-      "path": "manuscripts/ch06/figure-index.json",
-      "sha256": "229f3e642aa93179c5ec708afd29c8236459e498f78c64aee8beeb88dc74087b"
-    },
-    {
       "path": "manuscripts/book_assets.py",
       "sha256": "7cd23c7016f9ee9ddeadb52b04c16ad8f9dcf95304feca55bf3ba9988a87a4bb"
     },
@@ -852,6 +872,74 @@
     {
       "path": "calculations/results/v41-throughline.json",
       "sha256": "dec1c46cf9e0410d35d106b9c48c9b4591301397b9e69a15520a8ae6b8cf403a"
+    },
+    {
+      "path": "manuscripts/ch06/figure-6-context-dependency.svg",
+      "sha256": "d0009f43cdb145174aaf6ec1a1ec2b5e7e1da6a82d9b70238a9eb98b60e5712f"
+    },
+    {
+      "path": "manuscripts/ch06/figure-6-context-dependency.png",
+      "sha256": "7d999bae55da9a877b8ab1517652c3fd04ea6982b1d3f933366ed66a757f88e4"
+    },
+    {
+      "path": "manuscripts/ch06/figure-6-context-dependency.pdf",
+      "sha256": "eeeb622a8e55b55c1e09752be6e516e12c8b2cce307576d0b62a3dafb2550980"
+    },
+    {
+      "path": "manuscripts/ch06/figure-6-pool-window-caching.svg",
+      "sha256": "7621e976f210fee9da2a9ae2dadc893a9e30103b037bd2f31a192a97fc336f2e"
+    },
+    {
+      "path": "manuscripts/ch06/figure-6-pool-window-caching.png",
+      "sha256": "fef9dea7aebcf4cd8b8b37850e9259572956adfc711aa699b6de797257265730"
+    },
+    {
+      "path": "manuscripts/ch06/figure-6-pool-window-caching.pdf",
+      "sha256": "aaef5285507c69b382cec47004d2db8288a39b51991d537bf0c9198446ff2d3c"
+    },
+    {
+      "path": "manuscripts/ch06/figure-6-v41-kv-storage-scaling.svg",
+      "sha256": "3535e4bffee05dca170ca70bb0d415d140bb3044dce2038116c19f3733d630cc"
+    },
+    {
+      "path": "manuscripts/ch06/figure-6-v41-kv-storage-scaling.png",
+      "sha256": "f20149a5bfffeab3131f17aff0a8278b130af8fe528aca5c87df6747926901bf"
+    },
+    {
+      "path": "manuscripts/ch06/figure-6-v41-kv-storage-scaling.pdf",
+      "sha256": "3cd2876f1d9582d3b6496e79de7572315cc934ff4254c9bbd7abdfdeaaaf0438"
+    },
+    {
+      "path": "manuscripts/ch06/ch06-switch-radix-and-cpo-tradeoff.svg",
+      "sha256": "d0d4678979f1013d5bc4de34e2f3d47646a3c7c115ae95d7cd54fbc98ef78adb"
+    },
+    {
+      "path": "manuscripts/ch06/ch06-switch-radix-and-cpo-tradeoff.png",
+      "sha256": "a386719092547d27fe8f8cab1e3646ca2c575dfc58a1142af36770072084a460"
+    },
+    {
+      "path": "manuscripts/ch06/ch06-switch-radix-and-cpo-tradeoff.pdf",
+      "sha256": "12a20f247324a9bb4d41f71e541c60852e0c366c7bcef84f404bb0ebfe50663b"
+    },
+    {
+      "path": "manuscripts/ch06/ch06-vera-rubin-nvl72-vs-tpu7x-pod.svg",
+      "sha256": "c42a49d4bf82154b1583aaed9412a4ad9bb5f958f22af80fac8694969c32809e"
+    },
+    {
+      "path": "manuscripts/ch06/ch06-vera-rubin-nvl72-vs-tpu7x-pod.png",
+      "sha256": "70fdaeebd46ff98e322009a231a48b2029f02425f14ed1f301918027769ef409"
+    },
+    {
+      "path": "manuscripts/ch06/ch06-vera-rubin-nvl72-vs-tpu7x-pod.pdf",
+      "sha256": "f6617ceb88eae069d3d7d08c3b8a6f424951d490ea66f00a9e1c28cab0331119"
+    },
+    {
+      "path": "manuscripts/ch06/h2_supernode_figures.py",
+      "sha256": "1f67d1cc1ac1e28e9302f3a923cbd0b4aaae354c0f861284c9e177cf8ea60298"
+    },
+    {
+      "path": "manuscripts/ch06/math-validation.json",
+      "sha256": "51b6fdc3f53b7ff8722b1c883a9973af03033aec9aa1d3159c87e95f17b78499"
     }
   ]
 }

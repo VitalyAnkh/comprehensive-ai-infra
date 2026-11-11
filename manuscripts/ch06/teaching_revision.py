@@ -367,4 +367,6 @@ def draw(here,data):
         ax2.grid(True, linestyle=':', alpha=0.5, color='#CBD5E1')
         ax2.legend(frameon=True, loc='upper left', fontsize=11)
         out.save(f, 'ch06-nvswitch-full-bisection-vs-3d-torus-collective-scaling')
+    from h2_supernode_figures import draw as draw_h2
+    draw_h2(out)
     out.finish();return out.outputs,out.checks

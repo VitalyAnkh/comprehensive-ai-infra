@@ -1,7 +1,7 @@
 {
   "chapter": 7,
   "generator": "manuscripts/ch07/build.py",
-  "figures": 71,
+  "figures": 73,
   "font_family": "Source Han Sans CN",
   "outputs": [
     {
@@ -857,6 +857,30 @@
       "sha256": "3a1741b22adb84e458756e2e047e818a44bc07ccaca796a9ac4a14d9f63341fd"
     },
     {
+      "path": "manuscripts/ch07/ch07-rocev2-pfc-gobackn-vs-uec-packet-spraying-direct-placement.svg",
+      "sha256": "7dfbec34ed7b6ee23ddaa43538403de79bd1a032c6d4eb111f9f97a42c80b530"
+    },
+    {
+      "path": "manuscripts/ch07/ch07-rocev2-pfc-gobackn-vs-uec-packet-spraying-direct-placement.png",
+      "sha256": "364afcfa1a61d2757ab96605c9c9c601bc793660a9c4605dbdc5cac22cce91a3"
+    },
+    {
+      "path": "manuscripts/ch07/ch07-rocev2-pfc-gobackn-vs-uec-packet-spraying-direct-placement.pdf",
+      "sha256": "a639904112be87ec692352b1f84da3016e3ada87746ed4b316554b932025b6b9"
+    },
+    {
+      "path": "manuscripts/ch07/ch07-ib-rocev2-spectrumx-uec-ai-fabric-quantitative-radar.svg",
+      "sha256": "efe786afe6e10cfe24c98bcad8c7f49edb52bdbe0c8352a9719eb9db8bba373d"
+    },
+    {
+      "path": "manuscripts/ch07/ch07-ib-rocev2-spectrumx-uec-ai-fabric-quantitative-radar.png",
+      "sha256": "d2e5106a630e8b3ef14e9f36d2c1c9002828f4fdf3a746d3c711d62243fca685"
+    },
+    {
+      "path": "manuscripts/ch07/ch07-ib-rocev2-spectrumx-uec-ai-fabric-quantitative-radar.pdf",
+      "sha256": "0b6fc2132b7206114ade02b28d3c0a6b1cd80e59ebaffaa3f54d9061e738eafe"
+    },
+    {
       "path": "manuscripts/ub_ep_figures.py",
       "sha256": "c211fe09010e2b037fa5df0d3a82d3fb676958831180c83657225f85d8f65010"
     },
@@ -870,15 +894,15 @@
     },
     {
       "path": "manuscripts/ch07/teaching_revision.py",
-      "sha256": "51716df5babffd821fdc1d76d942d9de36b7ba90972eadf54a2cdccb817037e4"
+      "sha256": "d6386267bc01309c529bc68b250c6d9cc2740003b28827e83b84443238b22cae"
     },
     {
       "path": "manuscripts/ch07/figure-index.json",
-      "sha256": "ec1f34e1d02557e2e4f1a2fd79ea2a777c621afa69313b0f221bc56557372f3a"
+      "sha256": "64295f9d30eeb16584b8bc3cf3e3b49e43cd66292e9b2e39eeb937fbbba839b5"
     },
     {
       "path": "manuscripts/ch07/teaching-layout-validation.json",
-      "sha256": "8fa3c7f765fce8ab63a6079a48dc42738f03dfc6f5c2d58c35a95dc7a6e33c83"
+      "sha256": "c04c0b40163aa2a0460a202ee9c58e91c47e7f300ab085346bc5aeb22ddaa59e"
     },
     {
       "path": "manuscripts/ch07/figure-data.json",
@@ -891,10 +915,6 @@
     {
       "path": "build/legacy/manuscripts/07-数据中心网络.html",
       "sha256": "968b1412a78c004ca29c6722078b70f7e213c94723fa7ba45e2d6c76b7bc44d3"
-    },
-    {
-      "path": "manuscripts/ch07/figure-index.json",
-      "sha256": "ec1f34e1d02557e2e4f1a2fd79ea2a777c621afa69313b0f221bc56557372f3a"
     },
     {
       "path": "manuscripts/book_assets.py",
@@ -915,6 +935,14 @@
     {
       "path": "calculations/results/v41-throughline.json",
       "sha256": "dec1c46cf9e0410d35d106b9c48c9b4591301397b9e69a15520a8ae6b8cf403a"
+    },
+    {
+      "path": "manuscripts/ch07/h2_uec_figures.py",
+      "sha256": "93662f591e93b7c4ed7c99b9f991e5da724193a9855136d199019d355c0f604e"
+    },
+    {
+      "path": "manuscripts/ch07/math-validation.json",
+      "sha256": "d36b47460376ae962d3e10f349fe38d5b7f63fdd088756921cb63adc7c6dcfa4"
     }
   ]
 }
