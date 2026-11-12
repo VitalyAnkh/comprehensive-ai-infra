@@ -1,8 +1,8 @@
 {
-  "chapter": 20,
-  "title": "十万卡集群可靠性工程、静默数据损坏（SDC）防御与基准评测科学",
+  "chapter": 15,
+  "title": "集群可靠性与基准评测",
   "cluster_reliability_100k": {
-    "source": "Meta Llama 3 405B (16,384 H100, 54d) & MLSys '26 #33",
+    "source": "Meta Llama 3 405B (16,384 H100, 54d) & MLSys 2026",
     "llama3_16k_gpus": 16384,
     "llama3_days": 54,
     "llama3_interruptions": 419,
@@ -28,14 +28,14 @@
     }
   },
   "sdc_defense_and_opguard": {
-    "source": "Safeguarding LLM Training at Scale (OSDI '26 #71) & OpGuard (OSDI '26 #72)",
+    "source": "Safeguarding LLM Training at Scale (OSDI 2026) & OpGuard (OSDI 2026)",
     "production_validation_gpu_hours": 35000000,
     "abft_gemm_4096_overhead_pct": 0.0732,
     "microbatch_rerun_ms": 50.0,
     "checkpoint_rollback_hours": 2.0
   },
   "straggler_and_benchmark_science": {
-    "source": "case-studies/collective-paths-and-diagnosis.md & case-studies/optimization-evaluation-and-deployment.md & Blink (OSDI '26 #23)",
+    "source": "case-studies/collective-paths-and-diagnosis.md & case-studies/optimization-evaluation-and-deployment.md & Blink (OSDI 2026)",
     "collective_arrival_skew_ms": [0.0, 0.0, 0.0, 2.0],
     "exchange_window_ms": 0.4,
     "double_bw_savings_ms": 0.2,
@@ -56,7 +56,7 @@
     }
   },
   "chaos_gameday_and_frontier_bridge": {
-    "source": "experiments/ch20/20-02/run.py (100K-GPU Chaos Fault Injection & Chapters 21-24 Bridge)",
+    "source": "experiments/ch15/15-02/run.py (100K-GPU Chaos Fault Injection & Chapters 16-24 Bridge)",
     "total_injected_faults": 200,
     "detected_faults": 199,
     "overall_recall_pct": 99.5,
@@ -73,15 +73,15 @@
       "observed_healthy_duration_ms": 2.4,
       "wait_share_pct": 83.33
     },
-    "four_new_frontiers_ch21_ch24": {
-      "ch21_agentic": "95% WORM KV + 12 ms MicroVM CoW + 76.92 s Telemetry Drain",
-      "ch22_speech": "<200 ms Full-Duplex S2S + 12.5 Hz Mimi RVQ + Cursor KV Rollback",
-      "ch23_data_factory": "0.5% MinHash/Classifier/Influence Funnel + Mid-Training Mix",
-      "ch24_ai4science": "O(N^3) Triangle Attention + 3D FFT/Equivariance + 24-Ch Synthesis"
+    "part4_tail_and_part5_frontiers_ch16_ch24": {
+      "ch16_confidential": "H100/Blackwell TEE Bounce-Buffer vs NVLink Inline Encryption + Streaming DiLoCo WAN",
+      "ch17_post_training": "Varlen SFT Bin-Packing + Top-K Logprob Distillation + Bounded-Staleness Agentic RL",
+      "ch18_ch20_agents_multimodal_embodied": "XGrammar Bitmask + Multi-Agent DAG + 3D DiT/Duplex S2S + DMA-BUF WorldEval",
+      "ch21_ch24_retrieval_science_codesign": "ColPali PLAID + Ozaki INT8-FP64 + Hardware-Algorithm Co-Design + 100 MW Factory"
     }
   },
   "oobleck_and_bursty_goodput": {
-    "source": "experiments/ch20/20-03/run.py (Oobleck SOSP '23 Pipeline Templates & Kingman Bursty Goodput)",
+    "source": "experiments/ch15/15-03/run.py (Oobleck SOSP '23 Pipeline Templates & Kingman Bursty Goodput)",
     "oobleck_reconfig_sec": 1.45,
     "full_restart_sec": 300.0,
     "reconfig_speedup_x": 206.9,
@@ -97,5 +97,35 @@
     "goodput_bursty_req_s": 3.45,
     "goodput_drop_pct": 51.27,
     "max_safe_utilization_pct": 60.04
+  },
+  "observability_and_wait_chain_forensics": {
+    "source": "calculations/results/ch15-fleet-reliability-profiler.json & experiments/ch15/15-04..05/run.py",
+    "fleet_gpus": 16384,
+    "always_on_cupti_overhead_pct": 8.0,
+    "cupti_burned_gpus": 1310.72,
+    "cupti_daily_trace_pb": 1.42,
+    "ebpf_l0_plus_dynolog_l1_overhead_pct": 0.42,
+    "tiered_burned_gpus": 68.81,
+    "tiered_daily_trace_tb": 1.8,
+    "storage_reduction_x": 788.89,
+    "wait_chain_8rank": {
+      "root_cause_rank": 5,
+      "root_cause_enter_ms": 200.0,
+      "root_cause_apparent_allreduce_ms": 4.0,
+      "victim_count": 7,
+      "victim_apparent_wait_ms_range": [142.0, 144.0]
+    },
+    "flight_recorder_ring_buffer": {
+      "ring_slots": 2048,
+      "mismatch_seq_id": 18451,
+      "slot_index": 51,
+      "verdict": "COLL_TYPE_MISMATCH_DEADLOCK",
+      "retention_window_s": 6.4
+    },
+    "monarch_actor_mesh": {
+      "monarch_recovery_s": 0.85,
+      "spmd_full_restart_s": 142.0,
+      "recovery_speedup_x": 167.06
+    }
   }
 }

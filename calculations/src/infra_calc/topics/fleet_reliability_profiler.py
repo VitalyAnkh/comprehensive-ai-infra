@@ -46,7 +46,7 @@ def calculate(
     offered_load_l = round(node_failure_rate_per_h * node_repair_mttr_h, 2)           # 24.0 nodes
     prob_no_exhaust_at_mean_pct = round(_poisson_cdf(offered_load_l, int(offered_load_l)) * 100.0, 2)  # 55.40%
     min_spares_999 = next(s for s in range(1, 100) if _poisson_cdf(offered_load_l, s) >= 0.999)        # 40 nodes
-    prob_at_s_min_pct = round(_poisson_cdf(offered_load_l, min_spares_999) * 100.0, 3)                 # 99.907%
+    prob_at_s_min_pct = round(_poisson_cdf(offered_load_l, min_spares_999) * 100.0, 3)                 # 99.901%
     spare_pool_ratio_pct = round(min_spares_999 / (mega_fleet_gpus / 8.0) * 100.0, 2)                  # 0.32%
 
     # 3. 算例 15-3: ABFT checksum overhead on 4096x4096 GEMM: 6*N^2 / (2*N^3) = 3/4096 = 0.0732%
@@ -153,7 +153,7 @@ def calculate(
         },
         "wait_chain_8rank_timeline": ranks_timeline,
         "assumptions": [
-            "算例 15-1 与 15-2：单卡 MTBF=50,677 h 外推至十万卡 MTBF=30.41 min，异步快照+热迁移将 ETTR 从 63.22% 提至 92.34%（净挽回 29,120 卡）；泊松维修队列 L=24.0 台需配置 S_min=40 台（0.32%）达 99.907% 零降级可用率。",
+            "算例 15-1 与 15-2：单卡 MTBF=50,677 h 外推至十万卡 MTBF=30.41 min，异步快照+热迁移将 ETTR 从 63.22% 提至 92.34%（净挽回 29,120 卡）；泊松维修队列 L=24.0 台需配置 S_min=40 台（0.32%）达 99.901% 零降级可用率。",
             "算例 15-7：Oobleck 预实例化模板 1.45 s 重配置（快 206.90x，保留 98.75% 吞吐）；泊松突发流量（Ca=1.0, Cs=1.2）在 rho=0.85 下排队膨胀至 829.60 ms，安全利用率上限为 60.04%。",
             "算例 15-8 至 15-10：eBPF L0（0.35%）+ Dynolog/Kineto 按需 L1（0.07%）将 16,384 卡遥测损耗控制在 0.42%（对比全量 CUPTI 8% 烧毁 1,310.72 卡），等待链逆向 arg max t_enter 精准锁定 Rank 5。",
         ],

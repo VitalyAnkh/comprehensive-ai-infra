@@ -16,9 +16,9 @@ def main() -> None:
     assert actual["dsec_and_dax"]["ro_no_dax_total_gb"] == 3264.0
     assert actual["dsec_and_dax"]["ro_with_dax_total_gb"] == 864.0
     assert actual["dsec_and_dax"]["net_host_ram_saved_gb"] == 2400.0
-    assert actual["i19_audit_drain"]["backlog_mib"] == 46.875
-    assert actual["i19_audit_drain"]["t_overflow_32m_s"] == 81.92
-    assert abs(actual["i19_audit_drain"]["t_drain_s"] - 76.9231) < 1e-4
+    assert actual["audit_log_drain"]["backlog_mib"] == 46.875
+    assert actual["audit_log_drain"]["t_overflow_32m_s"] == 81.92
+    assert abs(actual["audit_log_drain"]["t_drain_s"] - 76.9231) < 1e-4
     print("Experiment 16-02 verified successfully.")
 
 

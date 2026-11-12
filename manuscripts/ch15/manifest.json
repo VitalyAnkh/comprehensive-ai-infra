@@ -1,257 +1,308 @@
 {
-  "chapter": "ch15",
   "outputs": [
     {
-      "path": "manuscripts/ch15/ch15-cluster-mtbf-scaling-and-llama3-failures.svg",
-      "sha256": "470b499c85ea775368fe5e361cdba74577dd1e0db8df63f06998eef2c3ab548c"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-cluster-mtbf-scaling-and-llama3-failures.png",
-      "sha256": "dcfcf9ac579dd6fd70345b87b5bb4cf27132854c7a67f2ca081ac49ba5797720"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-cluster-mtbf-scaling-and-llama3-failures.pdf",
-      "sha256": "97bfc6defc7391b65897c051052e1dff0fffe771c843162a57935df4a4c022d8"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-hot-spare-pool-queuing-dimensioning.svg",
-      "sha256": "18f93ec0245c3ae484e64a4111b99d44c1226788d3c67ad549efe47972ce6b83"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-hot-spare-pool-queuing-dimensioning.png",
-      "sha256": "7f2d49bd6ed8f51c705222e592209d81f871504767a7cc082b1a1c9efa2160da"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-hot-spare-pool-queuing-dimensioning.pdf",
-      "sha256": "3e63b88ff69108dc446b31fa27b26e3a556a25fa835fb7d431f58fa26d0bc6eb"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-sdc-bitflip-allreduce-contamination.svg",
-      "sha256": "8fd10f290452b71ea651aa9f373e5cc5d57858fc2eabab0880487a024c729b49"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-sdc-bitflip-allreduce-contamination.png",
-      "sha256": "203c8b4f79aad3d2adf7c674f5c8d497502acd992a7e3c58c05adc7dcd3419a7"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-sdc-bitflip-allreduce-contamination.pdf",
-      "sha256": "7ea25b1230035fa604aa665a24d853b5eea3e5896a9841964f01bfe83286e180"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-abft-checksum-matrix-multiplication.svg",
-      "sha256": "759f32435efa1d1771123fca17789b73e06995b10088c4b1fdf25d783a9f9c57"
+      "path": "manuscripts/ch15/ch15-abft-checksum-matrix-multiplication.pdf",
+      "sha256": "c8b2d8643e983f0304f6a5491de3c2767ba9b8598b153394ec8a8bb4f2f829f9"
     },
     {
       "path": "manuscripts/ch15/ch15-abft-checksum-matrix-multiplication.png",
-      "sha256": "f31baa2605f646d6e702e74ce090b06fc7e59939b8ebf4f61a7c4c80225068d7"
+      "sha256": "58173630dbf939f7186b89e67279d668537c73e23398b37e8bd78c04ba4886e6"
     },
     {
-      "path": "manuscripts/ch15/ch15-abft-checksum-matrix-multiplication.pdf",
-      "sha256": "3774ed620e7961dc93ce8cb04f118e8886afde5a4c84f1838ab04aca187b2fdd"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-safeguarding-sdc-and-opguard-bitwise-debug.svg",
-      "sha256": "2f0dabe0d16ec9d94347ad1d71e3dc9b479bdeec378fa3ed804d8aae5b4acf65"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-safeguarding-sdc-and-opguard-bitwise-debug.png",
-      "sha256": "7b55af3191a174aae25db1bbc4ccb9d3e2dbab92c1d4a52cbee5c7b47860e004"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-safeguarding-sdc-and-opguard-bitwise-debug.pdf",
-      "sha256": "062ec800ca88ed0b636c78ea2893c979b6782244d139d1e9a3eea591b3f9903e"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-microbatch-rerun-vs-checkpoint-rollback.svg",
-      "sha256": "5c7e60f8881ffc6b93d8e122d1ad0e80428bf696925711a108ae03595e45ca49"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-microbatch-rerun-vs-checkpoint-rollback.png",
-      "sha256": "69948bb1671009fea1ffc7d8757e1a99654aa6d5d298c0d549cb3a32a85999f5"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-microbatch-rerun-vs-checkpoint-rollback.pdf",
-      "sha256": "67104da7dc90f4f296f6334f7acdb6bbef0c8ec53afa97179504e1a9cd2383de"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-trainmover-subsecond-hot-migration.svg",
-      "sha256": "a20b874db1699818d60b615d5a88b988dc306cd9deb74ae00e3b4c5551bf875f"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-trainmover-subsecond-hot-migration.png",
-      "sha256": "a0fc530faaf4ccb9a5dd52c236c42b4d3dd8ba1966699fc1754a9745e2f25144"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-trainmover-subsecond-hot-migration.pdf",
-      "sha256": "34345eb2d061645fb1c70a98da60f123074f6c97245e6cc139126f063bcbf421"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-nccl-flight-recorder-straggler-blame.svg",
-      "sha256": "8ebca2c67ffa86e8152b5134e37a90433251d2a3eee426e329d31688d125c643"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-nccl-flight-recorder-straggler-blame.png",
-      "sha256": "afc15b5a981549a652f851e8231603f961f6c67e41c40f15ee6b40954f075c63"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-nccl-flight-recorder-straggler-blame.pdf",
-      "sha256": "31f19293b611c2a7a85990272c36f7db553cc22ba0e608a551ba9ec8e2a01f54"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-optical-ber-fec-gray-failure-detection.svg",
-      "sha256": "0851c7a6667368dd14e5de7ee496d3ab004eddea7c98da2a026680983988dd26"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-optical-ber-fec-gray-failure-detection.png",
-      "sha256": "3aa1fa4f8a483b5b897910b072b08e45b360c3a5bc78b29e5c6b3f9716b6d277"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-optical-ber-fec-gray-failure-detection.pdf",
-      "sha256": "fb772e41a45f9397b3be0853a975abf7d5e78929b4b5bbaad0d0173c8663cc8c"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-five-benchmark-gaming-traps.svg",
-      "sha256": "f12ace396b3ab7344c01280c670293a3a67f6da06a6c7800bfaaf70ad1141c22"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-five-benchmark-gaming-traps.png",
-      "sha256": "2fc012d67d26effbea614536d7c58a4fb4c963939b1c2a0e3497319d432e33f2"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-five-benchmark-gaming-traps.pdf",
-      "sha256": "a323703f146a4b03e9d1fec3680f35b5d34341c54684a3a534ea79625bb1abf7"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-flashinfer-bench-cceval-and-blink-profiling.svg",
-      "sha256": "10969be78b572cdb71f5ad2c16ddfb265ee00518663ec0e1b17118899d021d52"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-flashinfer-bench-cceval-and-blink-profiling.png",
-      "sha256": "de043f7cda199c4dc60157071b90260ac107dec9f64dde1c12a834117359dab2"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-flashinfer-bench-cceval-and-blink-profiling.pdf",
-      "sha256": "13be4772187954ce2bf2582804b7dad34555646d406dfa84a173042cff95bfc3"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-effective-training-time-ratio-ettr-model.svg",
-      "sha256": "5e9c0ff562edb7fa6b87f7272367424faf7a64a8e03ffea32234b15af0139aa8"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-effective-training-time-ratio-ettr-model.png",
-      "sha256": "fde50a04b35e624b4532fc6326e56730238b0e2373e27513ba7139b93cab4d79"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-effective-training-time-ratio-ettr-model.pdf",
-      "sha256": "243407580d1230249c9d6d07079184aefadd1f6617ea50072aef401968fde5bf"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-automated-burn-in-fleet-health-pipeline.svg",
-      "sha256": "a2841f50ba67b8c094386477b6dcd96b46a4d408059428ff3ea7583504c3f905"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-automated-burn-in-fleet-health-pipeline.png",
-      "sha256": "e1c7cc488f7c790436f09a9b219fe9eb9c36d5611ecb25f4a2cdd5bc6e55e8bf"
+      "path": "manuscripts/ch15/ch15-abft-checksum-matrix-multiplication.svg",
+      "sha256": "c95292a041167fdfaececf2915557ddbb4b654f0826d6319645df14f225b628a"
     },
     {
       "path": "manuscripts/ch15/ch15-automated-burn-in-fleet-health-pipeline.pdf",
-      "sha256": "e71bc5d4c5f67aeab5aa8281c59e87c293dd226f9738feb9287d97306b04937e"
+      "sha256": "8baa895fd5054a0428d1a21ab36fe1c134a270824edc591b784d1a6fc557545a"
     },
     {
-      "path": "manuscripts/ch15/ch15-twenty-chapter-dual-track-master-ledger.svg",
-      "sha256": "0bd623dcfb11d98664d66e54926057179c1c50941293d09ba0ed66f1249c4da8"
+      "path": "manuscripts/ch15/ch15-automated-burn-in-fleet-health-pipeline.png",
+      "sha256": "e7459d880487e772ef826edda49c4a897c46b8675cdfc8e1cfe2d2f91d86d833"
     },
     {
-      "path": "manuscripts/ch15/ch15-twenty-chapter-dual-track-master-ledger.png",
-      "sha256": "6735c5c4b38eb5b7ebbb36da1fef14b665f6ddf7838f01b96cad34fe8aa0d3f3"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-twenty-chapter-dual-track-master-ledger.pdf",
-      "sha256": "d7b3997cef97338ff577ef06fa4c40836ea1ed33f80cb46b29b96514c2dc6dd6"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-twenty-chapter-architecture-knowledge-graph.svg",
-      "sha256": "99aac3adbc33d63fc62443ce4ca467332b547c2422a59a400f06c96096c78bfc"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-twenty-chapter-architecture-knowledge-graph.png",
-      "sha256": "0a8e092a0b2ae7855e642bd0afc7b6c07f31de57737d7a5f4a4ca1c3330a4ff3"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-twenty-chapter-architecture-knowledge-graph.pdf",
-      "sha256": "31606e8579d7c1f3ed0ca74f45e81eef5427f3e386d813842f18d3ed3c451815"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-ten-first-principles-of-ai-infra.svg",
-      "sha256": "aecfc85754dd17c5d56d79345f2dcc1833ceb07c4f974efb73a78ec10d0e3d45"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-ten-first-principles-of-ai-infra.png",
-      "sha256": "b75aa78c9f0cc0422c563d2feb3e75989655638d6b533208ed59a8f3228ded02"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-ten-first-principles-of-ai-infra.pdf",
-      "sha256": "4a346f93c7156e041ed8edd246f3f94555e64c832ad974a05456f19417e02803"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-chaos-fault-injection-and-canary-rollout-gate.svg",
-      "sha256": "d5b296e7f41c837eb6297b9d11be48b627cc0fb1e36cae80c670a67078a80568"
-    },
-    {
-      "path": "manuscripts/ch15/ch15-chaos-fault-injection-and-canary-rollout-gate.png",
-      "sha256": "69b0d5cbead364a5b7fd658e978d85fa9ac5d86d45da4cf98f4cf034a6b6b486"
+      "path": "manuscripts/ch15/ch15-automated-burn-in-fleet-health-pipeline.svg",
+      "sha256": "3447fa5421befd1da5f5afd8babdb0b60133369a5d0d57830e1f9a8e18224052"
     },
     {
       "path": "manuscripts/ch15/ch15-chaos-fault-injection-and-canary-rollout-gate.pdf",
-      "sha256": "3d3eaf313768a68d752cba7469ff3250695fb34d466b0b0fccb1c1d2b1dfe77d"
+      "sha256": "c95d350732456d5094d5907f91fbe2386614c1b4efb67b84a914c32c57ad22d0"
     },
     {
-      "path": "manuscripts/ch15/ch15-core-cluster-to-four-new-frontiers-bridge.svg",
-      "sha256": "4d839d7f5a41232ffabdce65549fbf12d0597a3e28b29a8639ef4ed483f7a1a6"
+      "path": "manuscripts/ch15/ch15-chaos-fault-injection-and-canary-rollout-gate.png",
+      "sha256": "69504b8e2c388408a0715f92c2e33f838d5fef41f3fd27199c8f329d167e57f8"
     },
     {
-      "path": "manuscripts/ch15/ch15-core-cluster-to-four-new-frontiers-bridge.png",
-      "sha256": "90f23294dee76ec0dd2c23b99ae861e815583df92e85f1c95b3f3ad5bd18b0eb"
+      "path": "manuscripts/ch15/ch15-chaos-fault-injection-and-canary-rollout-gate.svg",
+      "sha256": "1155cde01eb9e495b6f44df6a298e8d8193e349857154bcc9f02e6c88db05464"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-cluster-mtbf-scaling-and-llama3-failures.pdf",
+      "sha256": "83bffa7bfeb4378562fcda1c5cb573aaeb751469ae9358c543b7187566ba976c"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-cluster-mtbf-scaling-and-llama3-failures.png",
+      "sha256": "459595c45f83d4346cb802b597d353f43e0b6e9df9c89a853422b821e092d271"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-cluster-mtbf-scaling-and-llama3-failures.svg",
+      "sha256": "43bdeb1266b312c738e3692d68aa327b222edc7ef5bd3321f02bc846d17f5296"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-collective-wait-chain-victim-vs-root-cause-attribution-dag.pdf",
+      "sha256": "a4f9033c32f7d98e6fe21984791a02c50b8f89055d3cbe4c0e2079286d673c36"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-collective-wait-chain-victim-vs-root-cause-attribution-dag.png",
+      "sha256": "5b0670ff805736276060dd98a6d084b85cf04482295792df45dc303a2aeba39a"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-collective-wait-chain-victim-vs-root-cause-attribution-dag.svg",
+      "sha256": "c42f8c1330889e47201ab0594bfdc75bed2cda9ea8e0d3216fc37f55f56fb8de"
     },
     {
       "path": "manuscripts/ch15/ch15-core-cluster-to-four-new-frontiers-bridge.pdf",
-      "sha256": "218241684f55a09f12d0e657e5b6fad77e018cb79198479ff28e9c6b4d539097"
+      "sha256": "154aac355cb1caaa5ca4bbc542065d3f7ffb35131f84b8be5b82a6e4024fac27"
     },
     {
-      "path": "manuscripts/ch15/ch15-oobleck-pre-instantiated-pipeline-template-failover.svg",
-      "sha256": "7c1038711a65356e61b5582c7583cb9064c987914f94c86338bdc3066bda2de2"
+      "path": "manuscripts/ch15/ch15-core-cluster-to-four-new-frontiers-bridge.png",
+      "sha256": "1af6dcb8586560949416e9f2dc8474df75812056531ec47f8dbb3a94fe97e65e"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-core-cluster-to-four-new-frontiers-bridge.svg",
+      "sha256": "d3861fabcc973b14e707a2513f20eac723f6e3e25eecefb0509a0fe475134a82"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-ebpf-strobelight-dynolog-kineto-three-tier-observability.pdf",
+      "sha256": "b00614449ed0aaaa62c02a05e9b966e49a1e93d2a5cfad09805766f517817cd7"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-ebpf-strobelight-dynolog-kineto-three-tier-observability.png",
+      "sha256": "b24213cc7a679c3369cb743b7c0b89763925384ccc57349a807a214151dfbc65"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-ebpf-strobelight-dynolog-kineto-three-tier-observability.svg",
+      "sha256": "52c107479152a030a73271b32aa4699ffe5dbbe06316e2de2aee514225e99f6e"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-effective-training-time-ratio-ettr-model.pdf",
+      "sha256": "105566d30d8ff1c7c4d13b2935167edac46b89b14e0ab476a31b2dd02e3d2f19"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-effective-training-time-ratio-ettr-model.png",
+      "sha256": "b505aac32f689c21f5163ee0eccc146b8554c23b7636c0b7cd63b646269af98b"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-effective-training-time-ratio-ettr-model.svg",
+      "sha256": "9320c33afb5813b97dc3b0e5b0ea4ac957d59871a33ad3d54a49d888c2bd3811"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-five-benchmark-gaming-traps.pdf",
+      "sha256": "d5364afe01e27c8d49dcdd2dd5958b1476e802b4e47f4b948246a3e03e5bd616"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-five-benchmark-gaming-traps.png",
+      "sha256": "d0b9be18747a3fcf39862c630d5c86ebf1d176076fe70af2735cd0c4d9823c66"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-five-benchmark-gaming-traps.svg",
+      "sha256": "d42ddfc403e0142d2e0319d6d89c47e56378821053571b1f958506f831dbf9e8"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-flashinfer-bench-cceval-and-blink-profiling.pdf",
+      "sha256": "7e6776bd596b6fad13d37a3f79268d90094c122a0507445e3c4eb74f1d331527"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-flashinfer-bench-cceval-and-blink-profiling.png",
+      "sha256": "20bbe378451c2d54e528dbb460611480ba0952e58af9cae1ea5daff06f53c4ec"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-flashinfer-bench-cceval-and-blink-profiling.svg",
+      "sha256": "c8f97f6fa2ee4dd71ee4c5b1b949d57b0c2937c7fa11007f3406d073f8610402"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-goodput-sla-under-bursty-poisson-traffic.pdf",
+      "sha256": "9d7c081ef94affade3e8c29dbd834b348096d964447949244ef372f4edb9d6b3"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-goodput-sla-under-bursty-poisson-traffic.png",
+      "sha256": "7bc181880bd88feb14a6fcf192570709355bec526845835ed336a69ebf1f1eff"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-goodput-sla-under-bursty-poisson-traffic.svg",
+      "sha256": "957c9304bfc28c456f30dde615139bdd4d5cc04eb654c2f58807d132c31d1101"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-hot-spare-pool-queuing-dimensioning.pdf",
+      "sha256": "cf88c80f2f1d48a6d5198d5b314434a167405503278d64bf6f297f23e67ce9ff"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-hot-spare-pool-queuing-dimensioning.png",
+      "sha256": "87507b63c5a2c0597ac83278bff3741aece841b5fadb352820c3b9f9fb5c221b"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-hot-spare-pool-queuing-dimensioning.svg",
+      "sha256": "39597fb5c8b4c6d55915196e46210261dd46539b999cfd60b91d02a7fac2ee67"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-microbatch-rerun-vs-checkpoint-rollback.pdf",
+      "sha256": "38fb6d183a53940c1e8fc007c5afbb20d5929275664143b4e326a86b7972f06c"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-microbatch-rerun-vs-checkpoint-rollback.png",
+      "sha256": "262d08a55585ccfde6cb5fe4410087653ba96a2696baa115af669906740d284f"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-microbatch-rerun-vs-checkpoint-rollback.svg",
+      "sha256": "307ce24d1507e63e278a54f0dd7ec68b0c284308aa32cbfe4db037d7506a6f27"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-monarch-single-controller-actor-mesh-fault-isolation.pdf",
+      "sha256": "1303048fd2b3dfbddf7d2cdaab5ab6f88f494cacb337615f5c6500c60661c7a1"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-monarch-single-controller-actor-mesh-fault-isolation.png",
+      "sha256": "3d40f1c5f606b56df0176e75efee68728d20b3e6c68edf5d9f9d6d07a9abf340"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-monarch-single-controller-actor-mesh-fault-isolation.svg",
+      "sha256": "790e8a4bcf93cb7b5e8140de20ed8ca3cfa8b208d0f2fc23980fc1033bf3d4d5"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-nccl-flight-recorder-ring-buffer-deadlock-forensics.pdf",
+      "sha256": "08a6dcc66a16136293c3c1d214a8c01c073fc077a9cdc351214232028b20103b"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-nccl-flight-recorder-ring-buffer-deadlock-forensics.png",
+      "sha256": "efc62ac6fa397cc3886d394b02214ca84da159b30445d706f21689a68a83bf6c"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-nccl-flight-recorder-ring-buffer-deadlock-forensics.svg",
+      "sha256": "d72d423b4a69c96ee89bfa462fc0bcbf32d234e90a6eda8ed314cee5f163cf19"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-nccl-flight-recorder-straggler-blame.pdf",
+      "sha256": "1c4da4460e5fd6586861b938a3e52aba83d89b2c804766e34709a9ab47362480"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-nccl-flight-recorder-straggler-blame.png",
+      "sha256": "50f642410b06c7f677e03f3b3d99faadce547e195965a2bcfdb6a245b64c0696"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-nccl-flight-recorder-straggler-blame.svg",
+      "sha256": "12e60d10fb22c085627187e79f6d74199413b4b796de87b1dd5c1111fa5f9e9c"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-oobleck-pre-instantiated-pipeline-template-failover.pdf",
+      "sha256": "8cb746d1fed47fb6d2e2b4c599acd0b65b8295ec78dcfb75d9386c593238f24f"
     },
     {
       "path": "manuscripts/ch15/ch15-oobleck-pre-instantiated-pipeline-template-failover.png",
       "sha256": "c5d792e045ca192226ddc3377744a1f88cdd4b1d99c82f4c3c02cb094ea7b3f8"
     },
     {
-      "path": "manuscripts/ch15/ch15-oobleck-pre-instantiated-pipeline-template-failover.pdf",
-      "sha256": "949d7578f271927cd8f7851256bcca44ee61119e12b02ff2ade42903846082a9"
+      "path": "manuscripts/ch15/ch15-oobleck-pre-instantiated-pipeline-template-failover.svg",
+      "sha256": "63c5781d19b22cbd4715604f5e7e41a6e2c22912cff138b6ad2aa22b112178c7"
     },
     {
-      "path": "manuscripts/ch15/ch15-goodput-sla-under-bursty-poisson-traffic.svg",
-      "sha256": "24eb9489e17a7db22e6338c7f3c17962e4dc0927da1dfa1b4021c74e58f173f1"
+      "path": "manuscripts/ch15/ch15-optical-ber-fec-gray-failure-detection.pdf",
+      "sha256": "985a3d92ef04b65d17e1af08fc8171298f211b6d7ac5c867409b2888113ce9c4"
     },
     {
-      "path": "manuscripts/ch15/ch15-goodput-sla-under-bursty-poisson-traffic.png",
-      "sha256": "0ab763d31b6fc5716bc726ee6b3d437488c96a846896c795bb98c2d9eb9635d8"
+      "path": "manuscripts/ch15/ch15-optical-ber-fec-gray-failure-detection.png",
+      "sha256": "c95133a506f1220ced0db51d30e9ddd066d8ce4c915d12bc9ce6d1706e7900a8"
     },
     {
-      "path": "manuscripts/ch15/ch15-goodput-sla-under-bursty-poisson-traffic.pdf",
-      "sha256": "3be29557d2bb0a9380472ee391b2c63e5c74fc908a468fa04c2efb27acd2e46e"
+      "path": "manuscripts/ch15/ch15-optical-ber-fec-gray-failure-detection.svg",
+      "sha256": "4a6b6a905913efc8c96586ca28594116f7709e8aad0a79c2230ad45c79cfe7a1"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-safeguarding-sdc-and-opguard-bitwise-debug.pdf",
+      "sha256": "d83ca55dac1d36b248708ad98c3d1453b451533cbe8f60d3cce94e32150f74e9"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-safeguarding-sdc-and-opguard-bitwise-debug.png",
+      "sha256": "6532504b659247521aefeb233f6edf4dde2fd6f2a9bbac4ea8b692530c486479"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-safeguarding-sdc-and-opguard-bitwise-debug.svg",
+      "sha256": "3d64687a06b5410acacfd4b60cc2054525f36e794d96674f2f55526441923945"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-sdc-bitflip-allreduce-contamination.pdf",
+      "sha256": "03734f3aeea1182410788dc85af40c05a3e025526be1caafd5bf7e86aed22190"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-sdc-bitflip-allreduce-contamination.png",
+      "sha256": "63dc432ab49f2316b9a2f36b532e020b2f2dacd46014ac3eea0952dcd38fe65a"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-sdc-bitflip-allreduce-contamination.svg",
+      "sha256": "10e07ae9651ac9cbb7b34305060c6c00b1ffec73f8ce1be052ddd115e8030ee6"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-ten-first-principles-of-ai-infra.pdf",
+      "sha256": "091c93c69792cf03f6c873937b877aaa387e6d1f0f005731c5befd2ea184f64f"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-ten-first-principles-of-ai-infra.png",
+      "sha256": "676c6140b3c65b89497889262991712cf0a5574f598ce9b8eed3803213554519"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-ten-first-principles-of-ai-infra.svg",
+      "sha256": "3db8d581f7d26700e57566801ee0adcc8b9290961a8a89c95851872ae98f569b"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-trainmover-subsecond-hot-migration.pdf",
+      "sha256": "9bad747b4d0ecbf30382a8a5dbe57d1f93f90dc8772577bb5f023fcc7883e0bb"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-trainmover-subsecond-hot-migration.png",
+      "sha256": "829c1fc10632a026167bb613264f894e33af15ad9d1b2cdab03433b0f6b50304"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-trainmover-subsecond-hot-migration.svg",
+      "sha256": "95010281e5a7f0d3ba4d7f3603eebfc17a23f331ca57878986b67cd73789ab09"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-twenty-chapter-architecture-knowledge-graph.pdf",
+      "sha256": "0c52f4e69c145408f8d715f7beb0e3d526195ffb38a7263d974ac0bef5c05ad9"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-twenty-chapter-architecture-knowledge-graph.png",
+      "sha256": "93b0fdeca4f43ddc63317a52b826bdd7d6ee6859391f124f686e422d603343d2"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-twenty-chapter-architecture-knowledge-graph.svg",
+      "sha256": "8c98c5811e56581cc42adefb3fe95c6ff7310a110e855e395a4a68081d4b75ba"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-twenty-chapter-dual-track-master-ledger.pdf",
+      "sha256": "c6df7673c40532f89214f3d4f0bc6b623b4cd878522916dd8562178db631ae08"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-twenty-chapter-dual-track-master-ledger.png",
+      "sha256": "6d4edb33f63661137ae4dbefdebb63f9a427198480616cec9e4e07d65fcf9989"
+    },
+    {
+      "path": "manuscripts/ch15/ch15-twenty-chapter-dual-track-master-ledger.svg",
+      "sha256": "2713bc01d6f0ce01962ebd8107bcbea24af87ee32ca036b52d8796bbd83df69e"
+    },
+    {
+      "path": "manuscripts/ch15/figure-data.json",
+      "sha256": "d7745a899308886ed30ee047f0fa2f22fb5b95380962617d15f7a2cca436f96e"
     },
     {
       "path": "manuscripts/ch15/figure-index.json",
-      "sha256": "cf15862b96a62cd98e456d20dc01196f2203ee2cf91590e6a3ddbf47c2d0eae1"
+      "sha256": "7f9985ff361f74ee77c4ce5f1d8015e88a4e176f459ebafa0d3a6cfef138d174"
     },
     {
       "path": "manuscripts/ch15/teaching-layout-validation.json",
-      "sha256": "9aecb0be0127785b3007819a7ab88355937b933211878a33e15d53222693daba"
+      "sha256": "c51270b8be323bcded743c42376361d0c2389f3d6b790acaac7d82e54a4ad3ac"
     },
     {
       "path": "manuscripts/ch15/math-validation.json",
-      "sha256": "9c41ef177b615b507f65ea3462f3ac12be5b4375ac39cdc1b36500873f015d56"
+      "sha256": "7c6113a875f6ced95c31330d7714531445cfb1b8041a8ad84e2125c23462ccac"
     }
   ]
 }

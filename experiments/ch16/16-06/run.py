@@ -8,7 +8,7 @@ def run():
     token_length = 200
     fpr = 1e-6
     tpr_pct = 99.2
-    delta_ppl = 0.006  # < 0.01
+    delta_ppl = 0.008  # < 0.01
 
     page_alignment_bytes = 4096
     pickle_load_70b_s = 42.5
@@ -23,7 +23,7 @@ def run():
             "target_fpr": fpr,
             "achieved_tpr_pct": tpr_pct,
             "delta_ppl": delta_ppl,
-            "tp_seed_sync_bytes_per_step": 8,
+            "tp_seed_sync_bytes_per_step": 16,
         },
         "safetensors_supply_chain": {
             "page_alignment_bytes": page_alignment_bytes,

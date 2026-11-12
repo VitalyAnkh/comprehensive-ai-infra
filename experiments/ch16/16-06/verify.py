@@ -9,7 +9,8 @@ def verify():
     res = json.loads((base / "results" / "summary.json").read_text(encoding="utf-8"))
     assert exp == res, "Mismatch between expected and results"
     assert res["synthid_text_watermark"]["achieved_tpr_pct"] == 99.2
-    assert res["synthid_text_watermark"]["delta_ppl"] < 0.01
+    assert res["synthid_text_watermark"]["delta_ppl"] == 0.008
+    assert res["synthid_text_watermark"]["tp_seed_sync_bytes_per_step"] == 16
     assert res["safetensors_supply_chain"]["page_alignment_bytes"] == 4096
     print("Experiment 16-06 verified successfully.")
 

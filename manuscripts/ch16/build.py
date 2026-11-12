@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Build Chapter 16 figures, locked calculations, and offline HTML preview."""
+"""Build all 42 publication-grade figures (420pt) and validation manifests for Chapter 16."""
+from __future__ import annotations
+
 import base64
 import hashlib
 import json
@@ -15,7 +17,7 @@ sys.path.insert(0, str(HERE.parent))
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from figure_style import COL, BORDER_COL, STYLE, Exporter, arrow, box, canvas, card, text
+from figure_style import BORDER_COL, COL, STYLE, Exporter, arrow, box, canvas, card, text
 from preview_output import preview_path
 
 plt.rcParams.update(STYLE)
@@ -30,7 +32,49 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(raw).hexdigest()
 
 
-def fig_16_1_threat_model(ex: Exporter):
+def draw_dual_band(
+    ex: Exporter,
+    stem: str,
+    top_title: str,
+    top_color: str,
+    top_boxes: list[tuple[str, str]],
+    bot_title: str,
+    bot_color: str,
+    bot_boxes: list[tuple[str, str]],
+    footer: str,
+) -> None:
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, top_title, color=top_color)
+    if len(top_boxes) == 3:
+        xs = [(0.028, 0.296), (0.352, 0.296), (0.676, 0.296)]
+        for (x, w), (lbl, role) in zip(xs, top_boxes):
+            box(ax, x, 0.58, w, 0.24, lbl, role, size=11)
+        arrow(ax, (0.324, 0.70), (0.352, 0.70))
+        arrow(ax, (0.648, 0.70), (0.676, 0.70))
+    else:
+        xs = [(0.03, 0.45), (0.52, 0.45)]
+        for (x, w), (lbl, role) in zip(xs, top_boxes):
+            box(ax, x, 0.58, w, 0.24, lbl, role, size=11)
+        arrow(ax, (0.48, 0.70), (0.52, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, bot_title, color=bot_color)
+    if len(bot_boxes) == 3:
+        xs = [(0.028, 0.296), (0.352, 0.296), (0.676, 0.296)]
+        for (x, w), (lbl, role) in zip(xs, bot_boxes):
+            box(ax, x, 0.13, w, 0.20, lbl, role, size=11)
+        arrow(ax, (0.324, 0.23), (0.352, 0.23))
+        arrow(ax, (0.648, 0.23), (0.676, 0.23))
+    else:
+        xs = [(0.03, 0.45), (0.52, 0.45)]
+        for (x, w), (lbl, role) in zip(xs, bot_boxes):
+            box(ax, x, 0.13, w, 0.20, lbl, role, size=11)
+        arrow(ax, (0.48, 0.23), (0.52, 0.23))
+
+    text(ax, 0.50, 0.06, footer, size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, stem)
+
+
+def fig_16_1_threat_model(ex: Exporter) -> None:
     fig, ax = canvas(3.75)
     card(ax, 0.02, 0.04, 0.46, 0.92, '机密 AI 计算：防宿主窥探', color='blue', title_size=11)
     box(ax, 0.04, 0.66, 0.42, 0.16, '资产：闭源模型权重\n隐私提示词与 KV 缓存', 'blue', size=11)
@@ -50,7 +94,7 @@ def fig_16_1_threat_model(ex: Exporter):
     ex.save(fig, 'ch16-confidential-ai-vs-sandbox-threat-model')
 
 
-def fig_16_2_remote_attestation(ex: Exporter):
+def fig_16_2_remote_attestation(ex: Exporter) -> None:
     fig, ax = canvas(3.75)
     card(ax, 0.02, 0.52, 0.96, 0.44, 'CPU TEE（TDX/SEV-SNP）与 GPU TEE 联合远程证明四步握手', color='blue')
     steps = [
@@ -73,7 +117,7 @@ def fig_16_2_remote_attestation(ex: Exporter):
     ex.save(fig, 'ch16-cpu-gpu-tee-remote-attestation')
 
 
-def fig_16_3_tee_io(ex: Exporter):
+def fig_16_3_tee_io(ex: Exporter) -> None:
     fig, ax = canvas(3.75)
     card(ax, 0.02, 0.52, 0.96, 0.44, '传统软件弹跳缓冲（Bounce Buffer）：双重拷贝与 CPU AES 瓶颈', color='orange')
     b_stages = [
@@ -96,9 +140,9 @@ def fig_16_3_tee_io(ex: Exporter):
     ex.save(fig, 'ch16-bounce-buffer-vs-rubin-tee-io')
 
 
-def fig_16_4_pipellm(ex: Exporter):
+def fig_16_4_pipellm(ex: Exporter) -> None:
     fig, ax = canvas(3.75)
-    card(ax, 0.02, 0.52, 0.96, 0.44, 'PipeLLM（ASPLOS \'25）五阶段机密张量卸载流水线（64 MiB）', color='blue')
+    card(ax, 0.02, 0.52, 0.96, 0.44, 'PipeLLM（ASPLOS 2025）五阶段机密张量卸载流水线（64 MiB）', color='blue')
     p_stages = [
         (0.04, 0.60, 0.16, 0.22, '① H2D\n密文拷入\n显存', 'blue'),
         (0.23, 0.60, 0.16, 0.22, '② 解密\n掩码异或\n明文', 'teal'),
@@ -121,7 +165,7 @@ def fig_16_4_pipellm(ex: Exporter):
     ex.save(fig, 'ch16-pipellm-five-stage-confidential-pipeline')
 
 
-def fig_16_5_aes_ctr_otp(ex: Exporter):
+def fig_16_5_aes_ctr_otp(ex: Exporter) -> None:
     fig, ax = canvas(3.75)
     card(ax, 0.02, 0.52, 0.96, 0.44, 'AES-CTR 一次性掩码（OTP）预生成与在线异或解耦', color='teal')
     box(ax, 0.04, 0.60, 0.44, 0.22, '离线/空闲期预生成（非关键路径）\n用密钥与递增计数器预生成掩码\nPad = AES_K(Nonce || Ctr)', 'teal', size=11)
@@ -135,12 +179,12 @@ def fig_16_5_aes_ctr_otp(ex: Exporter):
     ex.save(fig, 'ch16-aes-ctr-otp-speculative-encryption')
 
 
-def fig_16_6_escape_failures(ex: Exporter):
+def fig_16_6_escape_failures(ex: Exporter) -> None:
     fig, ax = canvas(3.85)
     card(ax, 0.02, 0.51, 0.96, 0.45, 'DeepSeek DSec 实录：共享宿主内核下 RL Agent 的三类破坏', color='orange')
     modes = [
         (0.04, 0.57, 0.28, 0.25, '① 文件系统破坏\nXFS_IOC_SWAPEXT\n损毁 XFS 元数据\n覆盖 /bin/bash', 'orange'),
-        (0.36, 0.57, 0.28, 0.25, '② 内核与日志洪水\n读 kpagecgroup\n触发宿主内核缺陷\nyes 刷爆数十GB', 'purple'),
+        (0.36, 0.57, 0.28, 0.25, '② 内核与日志洪水\n读 kpagecgroup\n触发宿主内核缺陷\nyes 刷满数十GB', 'purple'),
         (0.68, 0.57, 0.28, 0.25, '③ 内网与奖励作弊\n扫描端口伪造\nchronus 套接字\nGo 代理偷答案', 'blue'),
     ]
     for x, y, w, h, label, role in modes:
@@ -154,7 +198,7 @@ def fig_16_6_escape_failures(ex: Exporter):
     ex.save(fig, 'ch16-agent-container-escape-failure-modes')
 
 
-def fig_16_7_dsec_arch(ex: Exporter):
+def fig_16_7_dsec_arch(ex: Exporter) -> None:
     fig, ax = canvas(3.75)
     card(ax, 0.02, 0.52, 0.96, 0.44, 'DeepSeek DSec 四类隔离后端（160 节点·38 万并发沙箱）', color='blue')
     backends = [
@@ -174,7 +218,7 @@ def fig_16_7_dsec_arch(ex: Exporter):
     ex.save(fig, 'ch16-dsec-firecracker-microvm-architecture')
 
 
-def fig_16_8_pmem_dax(ex: Exporter):
+def fig_16_8_pmem_dax(ex: Exporter) -> None:
     fig, ax = canvas(3.75)
     card(ax, 0.02, 0.52, 0.96, 0.44, '只读层去重：virtio-blk 双重缓存 vs. virtio-pmem + DAX', color='teal')
     box(ax, 0.04, 0.60, 0.44, 0.22, '传统块设备（virtio-blk）\n宿主页缓存 + 800 份客户机缓存\n相同镜像被重复缓存数百份', 'orange', size=11)
@@ -189,7 +233,7 @@ def fig_16_8_pmem_dax(ex: Exporter):
     ex.save(fig, 'ch16-virtio-pmem-dax-vs-struct-page-tax')
 
 
-def fig_16_9_damon_balloon(ex: Exporter):
+def fig_16_9_damon_balloon(ex: Exporter) -> None:
     fig, ax = canvas(3.75)
     card(ax, 0.02, 0.52, 0.96, 0.44, '可写磁盘与堆内存回收：DAMON + virtio-balloon 联动', color='blue')
     d_steps = [
@@ -212,7 +256,7 @@ def fig_16_9_damon_balloon(ex: Exporter):
     ex.save(fig, 'ch16-damon-ept-balloon-reclaim')
 
 
-def fig_16_10_core_sched(ex: Exporter):
+def fig_16_10_core_sched(ex: Exporter) -> None:
     fig, ax = canvas(3.75)
     card(ax, 0.02, 0.52, 0.96, 0.44, '算例 16-5：延迟敏感（LS）评测与尽力而为（BE）同机混部', color='orange')
     cases = [
@@ -231,7 +275,7 @@ def fig_16_10_core_sched(ex: Exporter):
     ex.save(fig, 'ch16-sched-idle-and-core-scheduling')
 
 
-def fig_16_11_ebpf_allowlist(ex: Exporter):
+def fig_16_11_ebpf_allowlist(ex: Exporter) -> None:
     fig, ax = canvas(3.75)
     card(ax, 0.02, 0.52, 0.96, 0.44, 'DSec 纵深防御：AppArmor + 动态 eBPF 网络白名单', color='blue')
     net_steps = [
@@ -254,9 +298,9 @@ def fig_16_11_ebpf_allowlist(ex: Exporter):
     ex.save(fig, 'ch16-ebpf-cgroup-network-allowlist')
 
 
-def fig_16_12_audit_drain(ex: Exporter):
+def fig_16_12_audit_drain(ex: Exporter) -> None:
     fig, ax = canvas(3.75)
-    card(ax, 0.02, 0.52, 0.96, 0.44, '算例 16-6（I19）：日志后端中断 120 s 积压与溢出点', color='orange')
+    card(ax, 0.02, 0.52, 0.96, 0.44, '算例 16-6：日志后端中断 120 s 积压与溢出点', color='orange')
     out_boxes = [
         (0.04, 0.60, 0.28, 0.22, '稳态事件到达率\n10 任务/s × 20 条\n400 KiB/s', 'blue'),
         (0.36, 0.60, 0.28, 0.22, '中断 120 s 积压\n24,000 条事件\n共 46.875 MiB', 'orange'),
@@ -266,14 +310,14 @@ def fig_16_12_audit_drain(ex: Exporter):
         box(ax, x, y, w, h, label, role, size=11)
 
     card(ax, 0.02, 0.04, 0.96, 0.42, '恢复期排空方程：必须扣除持续涌入的新事件流（净排空率）', color='teal')
-    box(ax, 0.04, 0.14, 0.44, 0.20, '常见错算：忽略新到达流量\n误算 46.875 / 1.0 = 46.88 s\n低估恢复期高水位持续时长', 'orange', size=11)
+    box(ax, 0.04, 0.14, 0.44, 0.20, '常见错算：忽略新到达流量\n误算 46.875 / 1.0 = 46.88 s\n低估恢复期积压占用持续时长', 'orange', size=11)
     box(ax, 0.52, 0.14, 0.44, 0.20, '正确净排空（64 MiB 缓冲）\nR_net = 1,024 - 400 = 624 KiB/s\nT_drain = 48,000 / 624 ≈ 76.92 s', 'teal', size=11)
     arrow(ax, (0.48, 0.24), (0.52, 0.24))
     text(ax, 0.50, 0.08, '本地持久缓冲须 ≥ 64 MiB，且按净排空速率 624 KiB/s 核算恢复窗口', size=11, ha='center', weight='bold', color=COL['ink'])
     ex.save(fig, 'ch16-agent-audit-log-outage-and-drain')
 
 
-def fig_16_13_idempotent_commit(ex: Exporter):
+def fig_16_13_idempotent_commit(ex: Exporter) -> None:
     fig, ax = canvas(3.75)
     card(ax, 0.02, 0.52, 0.96, 0.44, '工具调用外部副作用防重：幂等键（Idempotency Key）两阶段提交', color='blue')
     i_steps = [
@@ -296,7 +340,7 @@ def fig_16_13_idempotent_commit(ex: Exporter):
     ex.save(fig, 'ch16-idempotent-tool-commit-and-replay')
 
 
-def fig_16_14_telemetry_vs_ledger(ex: Exporter):
+def fig_16_14_telemetry_vs_ledger(ex: Exporter) -> None:
     fig, ax = canvas(3.65)
     card(ax, 0.02, 0.04, 0.46, 0.92, '可采样通道：性能诊断 Trace', color='blue', title_size=11)
     box(ax, 0.04, 0.66, 0.42, 0.16, '数据：算子耗时与调度跨度\nOpenTelemetry Span 明细', 'blue', size=11)
@@ -316,32 +360,30 @@ def fig_16_14_telemetry_vs_ledger(ex: Exporter):
     ex.save(fig, 'ch16-telemetry-sampling-vs-billing-ledger')
 
 
-def fig_16_15_full_stack_map(ex: Exporter):
-    fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.52, 0.96, 0.44, '全书十六章知识坐标系：从矩阵乘法到吉瓦级可信数据中心', color='blue')
+def fig_16_15_full_stack_map(ex: Exporter) -> None:
+    fig, ax = canvas(3.95)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '跨层机密安全基线：全书五部二十四章信任边界映射', color='blue')
     layers = [
-        (0.04, 0.59, 0.21, 0.24, '第一部分\nCh1–3\n负载与模型', 'blue'),
-        (0.28, 0.59, 0.21, 0.24, '第二部分\nCh4–7\n芯片与网络', 'teal'),
-        (0.52, 0.59, 0.21, 0.24, '第三部分\nCh8–12\n推理与训练', 'purple'),
-        (0.76, 0.59, 0.20, 0.24, '第四部分\nCh13–16\n电热与安全', 'orange'),
+        (0.028, 0.58, 0.296, 0.24, '① 负载与算力底座\nCh1–7 模型·芯片\n超节点与网络隔离', 'blue'),
+        (0.352, 0.58, 0.296, 0.24, '② 训推与基础设施\nCh8–16 推理·训练\n存储电热与 TEE', 'teal'),
+        (0.676, 0.58, 0.296, 0.24, '③ 后训练与全栈应用\nCh17–24 RL·Agent\n多模态与自演进', 'purple'),
     ]
     for x, y, w, h, label, role in layers:
         box(ax, x, y, w, h, label, role, size=11)
-    arrow(ax, (0.25, 0.71), (0.28, 0.71))
-    arrow(ax, (0.49, 0.71), (0.52, 0.71))
-    arrow(ax, (0.73, 0.71), (0.76, 0.71))
+    arrow(ax, (0.324, 0.70), (0.352, 0.70))
+    arrow(ax, (0.648, 0.70), (0.676, 0.70))
 
-    card(ax, 0.02, 0.04, 0.96, 0.42, '贯穿全书的五个第一性追问（Five Fundamental Questions）', color='teal')
-    box(ax, 0.04, 0.15, 0.44, 0.19, '① 搬什么·② 搬多少·③ 搬几次\n决定数值表示（FP8/FP4/MLA）\n与各级存储层次复用率', 'blue', size=11)
-    box(ax, 0.52, 0.15, 0.44, 0.19, '④ 经过哪里·⑤ 谁必须等它\n决定超节点拓扑、同步屏障、\n功率平滑与 TEE-I/O 边界', 'teal', size=11)
-    arrow(ax, (0.48, 0.245), (0.52, 0.245))
-    text(ax, 0.50, 0.08, '一切架构演进皆围绕缩短关键路径等待、逼近带宽与能效极限展开', size=11, ha='center', weight='bold', color=COL['ink'])
+    card(ax, 0.02, 0.03, 0.96, 0.42, '五个第一性追问在可信安全与沙箱层的具象化约束', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '① 搬什么·② 搬多少·③ 搬几次\n决定密文激活体积、DAX 页去重\n与 FP4 伪梯度压缩比', 'blue', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '④ 经过哪里·⑤ 谁必须等它\n决定 TEE-I/O 线速边界、流量整形\n与伴飞护栏非阻塞流水', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '承接前十五章物理底座，向第 17–24 章交付零信任执行与可验证边界', size=11, ha='center', weight='bold', color=COL['ink'])
     ex.save(fig, 'ch16-sixteen-chapter-full-stack-map')
 
 
-def fig_16_16_master_checklist(ex: Exporter):
+def fig_16_16_master_checklist(ex: Exporter) -> None:
     fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.04, 0.96, 0.92, 'AI 基础设施架构师的六维终极核查表（Master Checklist）', color='blue')
+    card(ax, 0.02, 0.04, 0.96, 0.92, 'AI 基础设施架构师的六维可信与效能核查表（Master Checklist）', color='blue')
     dims = [
         (0.04, 0.56, 0.28, 0.25, '① 算力与精度\n算术强度拐点\nFP8/FP4 尾项', 'blue'),
         (0.36, 0.56, 0.28, 0.25, '② 存力与容量\n权重+KV+激活\nHBM4·SSD 寿命', 'teal'),
@@ -356,7 +398,7 @@ def fig_16_16_master_checklist(ex: Exporter):
     ex.save(fig, 'ch16-ai-infra-architect-master-checklist')
 
 
-def fig_16_17_moe_padding(ex: Exporter):
+def fig_16_17_moe_padding(ex: Exporter) -> None:
     fig, ax = canvas(3.80)
     card(ax, 0.02, 0.04, 0.46, 0.92, '密文下 MoE 流量侧信道', color='orange', title_size=11)
     box(ax, 0.04, 0.66, 0.42, 0.16, '即便启用 TEE-I/O 载荷加密\n攻击者仍观测跨节点包计数', 'orange', size=11)
@@ -376,7 +418,7 @@ def fig_16_17_moe_padding(ex: Exporter):
     ex.save(fig, 'ch16-moe-routing-traffic-side-channel-and-padding')
 
 
-def fig_16_18_verifiable_triangle(ex: Exporter):
+def fig_16_18_verifiable_triangle(ex: Exporter) -> None:
     fig, ax = canvas(3.85)
     card(ax, 0.02, 0.50, 0.96, 0.46, '可验证推理（Verifiable Inference）三路线对比', color='blue')
     routes = [
@@ -395,7 +437,7 @@ def fig_16_18_verifiable_triangle(ex: Exporter):
     ex.save(fig, 'ch16-verifiable-inference-tee-zkml-opml-triangle')
 
 
-def fig_16_19_opml_slashing(ex: Exporter):
+def fig_16_19_opml_slashing(ex: Exporter) -> None:
     fig, ax = canvas(3.85)
     card(ax, 0.02, 0.50, 0.96, 0.46, '乐观可验证推理（OPML）的博弈树与纳什均衡条件', color='blue')
     nodes = [
@@ -416,7 +458,7 @@ def fig_16_19_opml_slashing(ex: Exporter):
     ex.save(fig, 'ch16-optimistic-verification-slashing-game')
 
 
-def fig_16_20_janus_nested(ex: Exporter):
+def fig_16_20_janus_nested(ex: Exporter) -> None:
     fig, ax = canvas(3.75)
     card(ax, 0.02, 0.04, 0.46, 0.92, '传统嵌套虚拟化（页表税）', color='orange', title_size=11)
     box(ax, 0.04, 0.66, 0.42, 0.16, '公有云租户 L1 VM 内部\n再起 L2 沙箱微虚拟机', 'orange', size=11)
@@ -436,7 +478,7 @@ def fig_16_20_janus_nested(ex: Exporter):
     ex.save(fig, 'ch16-janus-nested-virtualization-fast-path')
 
 
-def fig_16_21_blowfish_prism(ex: Exporter):
+def fig_16_21_blowfish_prism(ex: Exporter) -> None:
     fig, ax = canvas(3.85)
     card(ax, 0.02, 0.04, 0.46, 0.92, 'Blowfish（OSDI 26）内存池', color='blue', title_size=11)
     box(ax, 0.04, 0.66, 0.42, 0.16, '面向主机 + CXL 解耦内存池\n跨数百个高密沙箱微虚拟机', 'blue', size=11)
@@ -456,14 +498,14 @@ def fig_16_21_blowfish_prism(ex: Exporter):
     ex.save(fig, 'ch16-blowfish-elastic-sandbox-memory-pool')
 
 
-def fig_16_22_defense_in_depth(ex: Exporter):
+def fig_16_22_defense_in_depth(ex: Exporter) -> None:
     fig, ax = canvas(4.15)
     card(ax, 0.02, 0.03, 0.96, 0.94, '可信 AI 基础设施纵深防御全景（Defense-in-Depth）', color='teal')
     layers = [
-        (0.05, 0.66, 0.42, 0.20, '① 硬件机密底座（16.2–3）\nCPU+GPU 双 TEE 远程证明\nRubin TEE-I/O 与 PipeLLM', 'blue'),
-        (0.53, 0.66, 0.42, 0.20, '② 侧信道与验证（16.6.1–2）\nMoE 恒定桶深哑元填充防御\nTEE 签名 + OPML 抽检罚没', 'teal'),
-        (0.53, 0.37, 0.42, 0.20, '③ 高密微虚机（16.4 & 6.3）\nFirecracker + JANUS 旁路\npmem+DAX · Blowfish/Prism', 'purple'),
-        (0.05, 0.37, 0.42, 0.20, '④ 零信任与审计（16.4–5）\nSCHED_IDLE + 核调度去噪\neBPF 白名单 · 幂等网关排空', 'orange'),
+        (0.05, 0.66, 0.42, 0.20, '① 硬件机密底座（16.1–2）\nCPU+GPU 双 TEE 远程证明\nRubin TEE-I/O 与 PipeLLM', 'blue'),
+        (0.53, 0.66, 0.42, 0.20, '② 侧信道与验证（16.3.2）\nMoE 恒定桶深哑元填充防御\nTEE 签名 + OPML 抽检罚没', 'teal'),
+        (0.53, 0.37, 0.42, 0.20, '③ 高密微虚机（16.2.2 & 3.2）\nFirecracker + JANUS 旁路\npmem+DAX · Blowfish/Prism', 'purple'),
+        (0.05, 0.37, 0.42, 0.20, '④ 零信任与审计（16.2.2 & 3.1）\nSCHED_IDLE + 核调度去噪\neBPF 白名单 · 幂等网关排空', 'orange'),
     ]
     for x, y, w, h, label, role in layers:
         box(ax, x, y, w, h, label, role, size=11)
@@ -471,11 +513,11 @@ def fig_16_22_defense_in_depth(ex: Exporter):
     arrow(ax, (0.74, 0.66), (0.74, 0.57))
     arrow(ax, (0.53, 0.47), (0.47, 0.47))
     arrow(ax, (0.26, 0.57), (0.26, 0.66))
-    box(ax, 0.05, 0.08, 0.90, 0.21, '实验验证：ch16/16-01（PipeLLM·MoE 填充·OPML 博弈）\n与 ch16/16-02（DSec 38 万沙箱·DAX 元数据税·I19 排空）', 'blue', size=11)
+    box(ax, 0.05, 0.08, 0.90, 0.21, '实验验证：ch16/16-01（PipeLLM·MoE 填充·OPML 博弈）\n与 ch16/16-02（DSec 38 万沙箱·DAX 元数据税·审计账本排空）', 'blue', size=11)
     ex.save(fig, 'ch16-trusted-ai-infrastructure-defense-in-depth')
 
 
-def fig_16_23_lease_bound_weights(ex: Exporter):
+def fig_16_23_lease_bound_weights(ex: Exporter) -> None:
     fig, ax = canvas(3.75)
     card(ax, 0.02, 0.04, 0.46, 0.92, 'A. 远程证明租约绑定权重分发', color='blue', title_size=11)
     box(ax, 0.04, 0.66, 0.42, 0.16, '磁盘/主机常驻密文模型权重\n140 GB AES-GCM-256 加密块', 'blue', size=11)
@@ -495,7 +537,7 @@ def fig_16_23_lease_bound_weights(ex: Exporter):
     ex.save(fig, 'ch16-lease-bound-encrypted-weight-distribution')
 
 
-def fig_16_24_fused_watermark(ex: Exporter):
+def fig_16_24_fused_watermark(ex: Exporter) -> None:
     fig, ax = canvas(3.75)
     card(ax, 0.02, 0.04, 0.46, 0.92, 'A. TEE 算子内联锦标赛水印', color='purple', title_size=11)
     box(ax, 0.04, 0.66, 0.42, 0.16, '传统用户态 Python 后处理水印\n易被恶意宿主机截获并剥离', 'orange', size=11)
@@ -515,7 +557,7 @@ def fig_16_24_fused_watermark(ex: Exporter):
     ex.save(fig, 'ch16-fused-cryptographic-logit-watermark-kernel')
 
 
-def fig_16_25_timing_shaping(ex: Exporter):
+def fig_16_25_timing_shaping(ex: Exporter) -> None:
     fig, ax = canvas(3.85)
     card(ax, 0.02, 0.04, 0.46, 0.92, 'A. 投机解码与变长侧信道泄露', color='orange', title_size=11)
     box(ax, 0.04, 0.66, 0.42, 0.16, '投机解码每步接受 1–5 词元\n包间隔 Δt_i 暴露领域词频', 'orange', size=11)
@@ -535,11 +577,11 @@ def fig_16_25_timing_shaping(ex: Exporter):
     ex.save(fig, 'ch16-tee-timing-side-channel-traffic-shaping')
 
 
-def fig_16_26_verifiable_zkml(ex: Exporter):
+def fig_16_26_verifiable_zkml(ex: Exporter) -> None:
     fig, ax = canvas(3.85)
     card(ax, 0.02, 0.04, 0.46, 0.92, 'A. 密码学算子校验与专用 zkML', color='blue', title_size=11)
     box(ax, 0.04, 0.66, 0.42, 0.16, 'Freivalds 随机投影 (k=40)\n检验 A(Br)=Cr · 漏检 2^-40', 'blue', size=11)
-    box(ax, 0.04, 0.43, 0.42, 0.16, '4096×4096×14336 FFN 层\n校验仅占 GEMM 算力 2.23%', 'teal', size=11)
+    box(ax, 0.43, 0.43, 0.42, 0.16, '4096×4096×14336 FFN 层\n校验仅占 GEMM 算力 2.23%', 'teal', size=11) if False else box(ax, 0.04, 0.43, 0.42, 0.16, '4096×4096×14336 FFN 层\n校验仅占 GEMM 算力 2.23%', 'teal', size=11)
     box(ax, 0.04, 0.20, 0.42, 0.16, 'zkLLM Sumcheck + tlookup\n比通用电路提速 64.86× (185×)', 'purple', size=11)
     arrow(ax, (0.25, 0.66), (0.25, 0.59))
     arrow(ax, (0.25, 0.43), (0.25, 0.36))
@@ -555,7 +597,312 @@ def fig_16_26_verifiable_zkml(ex: Exporter):
     ex.save(fig, 'ch16-verifiable-inference-optimistic-and-zkml-proof')
 
 
-def main():
+def build_second_half(ex: Exporter) -> None:
+    draw_dual_band(
+        ex,
+        'ch16-wan-allreduce-bottleneck-vs-diloco-two-level-optimizer',
+        '跨洲际训练 70B：标准 AllReduce（700G）vs. DiLoCo 双层优化器',
+        'blue',
+        [
+            ('① 跨洲每步同步瓶颈\n2.4s 传 210 GB\n需 700 Gbps 专线', 'orange'),
+            ('② 本地内循环 AdamW\n独立自治 H=500 步\n历时 20 分钟零外网', 'blue'),
+            ('③ 外循环 Nesterov\n聚合伪梯度 Delta\n通信频率降 500x', 'teal'),
+        ],
+        '为什么单层同步 SGD/AdamW 无法跨越广域网（RTT=85 ms）？',
+        'teal',
+        [
+            ('广域网高延迟与低带宽约束：\n每步 Barrier 等待 85 ms 光纤往返\n百 Gbps 跨洋专线造价极其高昂', 'orange'),
+            ('双层优化器解耦（Inner/Outer）：\n内循环利用机房内 NVLink 高速收敛\n外循环将 500 步轨迹缩为单次同步', 'teal'),
+        ],
+        '本地 H=500 步 AdamW 叠外循环 Nesterov 动量，跨区通信降 500 倍',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch16-streaming-diloco-fragment-pipeline-and-fp4-outer-delta',
+        'Streaming DiLoCo 分片流水（M=25）与 FP4 伪梯度（350 Mbps）',
+        'purple',
+        [
+            ('① 切分 M=25 个分片\n每 20 步同步 1 片\n消除 500 步末尖峰', 'blue'),
+            ('② FP4 E2M1 伪梯度\n140 GB 压至 35 GB\n通信量再缩减 4 倍', 'purple'),
+            ('③ 带宽仅 350 Mbps\n总压缩比 2,000x\n暴露等待 0.0 s', 'teal'),
+        ],
+        '基础 DiLoCo 尾部突发阻塞 vs. Streaming DiLoCo 零暴露重叠',
+        'blue',
+        [
+            ('基础 DiLoCo 的同步尖峰隐患：\n第 500 步末集中发送 140 GB 数据\n所有区域停顿等待广域网传输完成', 'orange'),
+            ('48.0 秒后台滑动窗口流式传输：\n上一轮第 m 分片在后台静默同步\n算力有效利用率高达 99.4%', 'teal'),
+        ],
+        '25 分片错峰流水与 FP4 量化协同，以 350 Mbps 支撑跨洲 70B 训练',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch16-diloco-inner-step-h-vs-validation-loss-and-bandwidth',
+        '内循环步数 H 与外循环动量 beta_outer 的收敛—带宽帕累托边界',
+        'teal',
+        [
+            ('① 短步长 H=50..100\n收敛等同单机集群\n需 1.75~3.5 Gbps', 'blue'),
+            ('② 优选工作点 H=500\nNesterov 修正漂移\n仅需 350 Mbps 带宽', 'purple'),
+            ('③ 超长步 H > 2000\n局部极小值过度发散\n验证集困惑度退化', 'orange'),
+        ],
+        '为什么外循环必须使用 Nesterov 动量而非简单模型权重平均？',
+        'purple',
+        [
+            ('简单权重平均（FedAvg）的坍塌：\n各区域经历 500 步非线性优化后\n直接求平均会落入高损失鞍点区', 'orange'),
+            ('将参数差值视为“伪梯度”方向：\n外循环维护全局速度向量 v_outer\n沿着多区域共识切线方向前瞻跃迁', 'teal'),
+        ],
+        '确立 H=500 与外循环动量 0.9 的优选工作点，兼得省流与无损精度',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch16-proof-of-learning-spot-check-and-byzantine-median',
+        '去中心化算力池抗投毒：Proof-of-Learning 抽检与几何中位数',
+        'blue',
+        [
+            ('① 确定性重放抽检\n抽查 p=5% 轨迹段\n校验算子余弦偏差', 'blue'),
+            ('② 10 轮捕获 >99.9%\n实测达 99.97% 检出\n罚没恶意节点质押', 'purple'),
+            ('③ Weiszfeld 中位数\n崩溃点高达 50%\n过滤 f=15% 异常点', 'teal'),
+        ],
+        '可信机房算术平均（AllReduce Mean）vs. 开放算力池拜占庭鲁棒聚合',
+        'teal',
+        [
+            ('线性算术平均的零容错脆弱性：\n仅需 1 个恶意节点发送 10^6 大梯度\n即可单步破坏全局模型权重参数', 'orange'),
+            ('抽检验证 + 几何中位数双重防线：\n伪造梯度被 5% 随机重放立即识破\n残余微扰被几何中位数彻底钳制', 'teal'),
+        ],
+        '以 5% 抽检成本实现 99.97% 欺诈捕获，并用几何中位数守住 50% 崩溃点',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch16-dht-hivemind-elastic-optimizer-sharding-spot-recovery',
+        '基于分布式哈希表（DHT）的弹性状态分片与 Spot 秒级自愈',
+        'purple',
+        [
+            ('① Kademlia DHT 环\n无中心元数据寻址\nO(log N) 路由发现', 'blue'),
+            ('② 优化器状态分片\n跨节点冗余双副本\n心跳超时自动接管', 'purple'),
+            ('③ 新节点流式拉取\n恢复仅耗 4.5 秒\nETTR 高达 96.8%', 'teal'),
+        ],
+        '传统全局停机回滚 Checkpoint vs. DHT 对等分片热修复（算例 16-15）',
+        'blue',
+        [
+            ('抢占式实例（每小时中断率 8%）：\n传统框架一卡被收回即全员回滚\n有效训练时间比跌破 55%', 'orange'),
+            ('分片级对等状态拉取与动态扩缩：\n存活节点从邻近副本秒级补齐分片\n以三折 Spot 算力跑出 96.8% 效率', 'teal'),
+        ],
+        '用 DHT 去中心化状态分片与对等热拉取驾驭高抢占率的廉价 Spot 算力池',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch16-serial-guardrail-blocking-vs-async-speculative-sidecar',
+        '在线安全护栏架构：串行阻塞（+225 ms）vs. 异步伴飞（3.2 ms）',
+        'teal',
+        [
+            ('① 传统串行护栏墙\n输入挡 45ms TTFT\n输出挡 180ms 尾包', 'orange'),
+            ('② 异步流式伴飞器\n主模型零等待生成\n同卡 MIG 旁路审查', 'blue'),
+            ('③ K=8 投机窗口\n单次审查 3.2 ms\n暴露延迟 < 3.5 ms', 'teal'),
+        ],
+        '为什么不能把 8B 安全分类器直接串联在 70B 主模型推理链路中？',
+        'purple',
+        [
+            ('串行护栏的延迟与吞吐双重代价：\n首词元延迟翻倍且破坏流式体验\n尾包整句复审导致长文本严重卡顿', 'orange'),
+            ('双流异步伴飞投机审查架构：\n99.5% 正常请求享受零阻塞下发\n仅在末块承担 3.2 ms 轻量级确认', 'teal'),
+        ],
+        '将串行关卡重构为异步旁路伴飞，把护栏暴露延迟从 225 ms 压至 3.2 ms',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch16-sliding-window-token-stream-guardrail-rollback',
+        'K=8 词元滑动窗口投机放行与违规微秒级熔断撤回状态机',
+        'blue',
+        [
+            ('① 主流生成 8 词元\n投机推入客户端缓冲\n同时共享显存送检', 'blue'),
+            ('② 伴飞模型打分\nP(harm) < tau 放行\n窗口平滑向前滑动', 'purple'),
+            ('③ 检出违规即熔断\n发送撤回控制帧\n释放主模型 KV 块', 'teal'),
+        ],
+        '逐词元同步审查 vs. K=8 块粒度滑动窗口审查的算力效率对比',
+        'teal',
+        [
+            ('逐词元触发分类器的算力风暴：\n每生成 1 词元就跑一次护栏前向\n护栏算力开销反超主模型本身', 'orange'),
+            ('K=8 块步长摊销与零拷贝 IPC：\n护栏前向频率降低 8 倍且算术强度高\n违规检出后在 8 词元窗口内即时截断', 'teal'),
+        ],
+        '以 K=8 滑动窗口平衡护栏算力摊销与撤回粒度，兼顾流式顺滑度与零泄漏',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch16-in-situ-residual-stream-sae-feature-clamping',
+        '残差流原位稀疏自编码器（SAE）特征监控与正交投影钳位',
+        'purple',
+        [
+            ('① 抽取残差流激活\n定位关键安全层 h_l\n零额外显存拷贝', 'blue'),
+            ('② 单概念探测点积\n<h_l, v_harm> 判别\n单层仅耗 3.6 us', 'purple'),
+            ('③ 正交子空间投影\n减去有害方向分量\n总开销仅 0.08%', 'teal'),
+        ],
+        '外挂独立护栏模型 vs. 残差流内部表示工程（RepE）原位免疫',
+        'blue',
+        [
+            ('纯外部黑盒文本审查的局限性：\nBase64 编码或隐喻越狱易绕过表层\n且发现违规时已消耗主模型算力', 'orange'),
+            ('白盒激活空间概念探针与钳位：\n无论表层如何伪装均触发内部特征\n原位抹除有害分量引导安全续写', 'teal'),
+        ],
+        '在 Transformer 残差流内部以 3.6 us/层代价实现零延迟原位概念级免疫',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch16-representation-engineering-harmful-subspace-projection',
+        '多维有害子空间（k=8 正交基）Householder 投影与正常语义保持',
+        'teal',
+        [
+            ('① 构建对比激活集\nSVD 提取主成分基\nU_harm 正交矩阵', 'blue'),
+            ('② 单边 ReLU 门控\n仅当投影为正才触发\n正常请求零改动', 'purple'),
+            ('③ 正交补空间保持\n余弦相似度 >0.998\n零拒答率攀升', 'teal'),
+        ],
+        '粗暴全局激活截断（过度拒答）vs. 单边正交子空间精准切除',
+        'purple',
+        [
+            ('无门控全局方向减法的副作用：\n良性医学或安全科普也被误伤扭曲\n导致模型正常任务准确率下降', 'orange'),
+            ('条件激活门控 + 正交投影矩阵：\n与有害基正交的 8184 维完全无损\n精准剥离越狱意图不伤推理能力', 'teal'),
+        ],
+        '依托高维空间正交性，在 8192 维残差流中精准切除 8 维风险子空间',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch16-synthid-text-tournament-sampling-tree-mechanism',
+        'SynthID-Text 深度 m=30 锦标赛采样树（Tournament Watermark）',
+        'blue',
+        [
+            ('① 抽取 2^m 候选词\n按原始概率 p_V 采样\n构建满二叉树叶节点', 'blue'),
+            ('② m=30 层锦标对决\n伪随机函数 g(x,l)\n高分者晋级下一轮', 'purple'),
+            ('③ 根节点胜出词元\n期望分布严格无偏\n困惑度差 < 0.01', 'teal'),
+        ],
+        '传统红绿词表偏置水印（KGW）vs. SynthID 锦标赛无损水印对比',
+        'teal',
+        [
+            ('红绿词表打分偏置水印的隐患：\n强行抬高绿表 logits 扭曲原始分布\n代码与数学推理准确率明显下滑', 'orange'),
+            ('锦标赛非失真采样数学机制：\n对所有密钥求期望后严格还原 p_V\n不改写概率分布即可嵌入高维签名', 'teal'),
+        ],
+        '通过 30 层伪随机锦标赛晋级机制，实现数学期望零失真的密码学文本水印',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch16-distributed-tp-prng-seed-synchronization-for-watermark',
+        '张量并行（TP=8）分布式采样下的水印伪随机种子（8B）同步',
+        'purple',
+        [
+            ('① 滑动窗口哈希锚\n前 H=4 词元算 HMAC\n派生当前步种子 s_t', 'blue'),
+            ('② TP 主卡广播 8B\n随 AllGather 捎带\n零额外通信轮次', 'purple'),
+            ('③ 词表分片独立赛\n各卡算局部晋级者\n跨卡归约决出总冠军', 'teal'),
+        ],
+        '为什么张量并行各卡随机数状态失步会直接导致水印检出失败？',
+        'blue',
+        [
+            ('分布式采样伪随机种子漂移陷阱：\n若 8 张卡使用各自本地计数器生成 g\n离线检测器无法复现当时锦标赛树', 'orange'),
+            ('基于上下文窗口的自同步种子：\n种子唯一取决于历史词元与密钥\n支持跨卡并行归约与摘录检测', 'teal'),
+        ],
+        '以 8 字节上下文 HMAC 种子绑定采样器，确保多卡 TP 水印严格可复现',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch16-watermark-token-length-vs-detection-tpr-at-low-fpr',
+        'SynthID-Text 水印长度与检出率曲线（200 词元 TPR=99.2%）',
+        'teal',
+        [
+            ('① 30 层得分均值\n无水印期望为 0.50\n有水印显著右偏', 'blue'),
+            ('② 锁定极低误报率\nFPR = 10^-6 阈值\n百万次正常零误判', 'purple'),
+            ('③ 200 词元高检出\nTPR 高达 99.2%\n抗同义词替换改写', 'teal'),
+        ],
+        '短文本信噪比累积规律：从 50 词元到 200 词元的中心极限定理收敛',
+        'purple',
+        [
+            ('单层打分的检出方差局限：\n每词元仅提供 1 比特弱统计信号\n需上千词元才压低百万分一误报', 'orange'),
+            ('m=30 层锦标赛信噪比倍增效应：\n单词元历经 30 轮筛选凝聚强统计\n仅 200 词元即跨越 99.2% 检出线', 'teal'),
+        ],
+        '利用 30 层锦标赛放大单词元信息增益，在 200 词元下达成 99.2% 检出',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch16-pickle-arbitrary-code-exploit-vs-safetensors-zero-copy-mmap',
+        '模型供应链安全：Pickle 反序列化漏洞 vs. Safetensors 零拷贝',
+        'blue',
+        [
+            ('① Pickle 栈虚拟机\n__reduce__ 执行命令\n加载权重即遭夺权', 'orange'),
+            ('② Safetensors 头\n纯 JSON 元数据校验\n杜绝任意代码执行', 'blue'),
+            ('③ 4096B 页对齐\nmmap 零拷贝直映\n加载提速 12.5 倍', 'teal'),
+        ],
+        '传统 Pickle 加载（42.5 s）vs. Safetensors 页对齐直读（3.4 s）',
+        'teal',
+        [
+            ('Pickle 格式的安全与内存双缺陷：\n不仅可潜伏木马，还需在主机内存\n额外分配 140 GB 缓冲反序列化', 'orange'),
+            ('4 KB 页对齐 + GPUDirect 直通：\n文件偏移对齐操作系统物理页表\n3.4 秒零拷贝直入 GPU HBM', 'teal'),
+        ],
+        '根除 Pickle 代码执行漏洞与内存双倍拷贝，实现 12.5 倍快速安全加载',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch16-merkle-tree-weight-signature-and-tee-attestation-boot',
+        '模型权重分块 Merkle 哈希树签名与机密计算（TEE）可信启动',
+        'purple',
+        [
+            ('① 张量分块算 SHA\n构建二进制哈希树\n私钥签名树根 Root', 'blue'),
+            ('② 按需并行校验块\n篡改 1 bit 即报警\n无需全量读完才验', 'purple'),
+            ('③ H100 TEE 远程证明\n硬件度量解封密钥\n确保模型与护栏未改', 'teal'),
+        ],
+        '单文件整包 SHA256 事后校验 vs. 分片 Merkle 树流式边加载边校验',
+        'blue',
+        [
+            ('140 GB 单文件线性哈希的痛点：\n必须串行读完全部字节才能验真伪\n任一字节损坏需重传 140 GB 整包', 'orange'),
+            ('张量块级 Merkle 树 + 硬件信任根：\n流式加载时凭 O(log N) 路径即验\n结合 GPU TEE 防运行时篡改护栏', 'teal'),
+        ],
+        '构建从磁盘 Safetensors 哈希树到 GPU TEE 证明的端到端防篡改信任链',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch16-sovereign-ai-multi-region-compliance-and-audit-architecture',
+        '主权 AI 跨管辖区数据不出境联邦底座与不可篡改审计账本',
+        'teal',
+        [
+            ('① 原始语料本地存\n严守各国数据主权\n零原始样本跨境传输', 'blue'),
+            ('② 仅传 FP4 伪梯度\n叠加强裁剪与噪声\n防梯度反演隐私泄露', 'purple'),
+            ('③ 全链路合规存证\n训练血缘与护栏日志\n密码学签名可审计', 'teal'),
+        ],
+        '集中式跨国数据归集（合规红线）vs. 主权 AI 分布式协同训练架构',
+        'purple',
+        [
+            ('主权 AI 时代的三大硬约束：\n数据主权禁跨境、算力碎片化分布\n以及生成内容可追溯与防滥用监管', 'orange'),
+            ('DiLoCo + 护栏 + 水印三位一体：\n数据留本地仅传 350M 压缩伪梯度\n推理端内建原位护栏与无损水印', 'teal'),
+        ],
+        '打通“广域网低通信训练—实时安全护栏—生成溯源水印”主权 AI 体系',
+    )
+
+    draw_dual_band(
+        ex,
+        'ch16-decentralized-training-and-trustworthy-ai-infra-synthesis',
+        '第 16 章协同训练全景：不可信广域网低通信训练与拜占庭容错',
+        'blue',
+        [
+            ('16.4.1 Streaming DiLoCo：\nH=500 + FP4 伪梯度流水重叠\n带宽降 2,000x (350 Mbps) 零暴露', 'blue'),
+            ('16.4.2 拜占庭容错与弹性 DHT：\n5% 抽检 10 轮捕获率 99.97%\nSpot 算力池达成 96.8% ETTR', 'purple'),
+        ],
+        '第 16 章内生安全全景：在线伴飞/原位安全护栏与密码学水印供应链',
+        'teal',
+        [
+            ('16.5.1 伴飞护栏与原位 SAE：\nK=8 异步伴飞暴露延迟仅 3.2 ms\n残差流正交投影开销低至 0.08%', 'blue'),
+            ('16.5.2 SynthID 水印与供应链：\n30 层锦标赛 200 词元检出 99.2%\nSafetensors 4KB 页对齐快 12.5x', 'teal'),
+        ],
+        '以硬件机密底座、低通信容错训练、在线护栏与无损水印筑牢可信 AI 系统',
+    )
+
+
+def main() -> None:
     ex = Exporter(HERE)
     fig_16_1_threat_model(ex)
     fig_16_2_remote_attestation(ex)
@@ -583,6 +930,7 @@ def main():
     fig_16_24_fused_watermark(ex)
     fig_16_25_timing_shaping(ex)
     fig_16_26_verifiable_zkml(ex)
+    build_second_half(ex)
     outputs = ex.finish()
 
     fig_index = [
@@ -601,7 +949,7 @@ def main():
             "number": 2,
             "file": "ch16-cpu-gpu-tee-remote-attestation.svg",
             "asset": "ch16/ch16-cpu-gpu-tee-remote-attestation.svg",
-            "section": "16.2.1",
+            "section": "16.1.2",
             "caption": "CPU TEE（Intel TDX / AMD SEV-SNP）与 GPU TEE 的联合远程证明四步握手及 HBM 加密显存边界",
             "source_refs": ["references/text/nvidia-rubin-arch.txt", "manuscripts/ch16/figure-data.json"],
             "TeachingRole": "展示硬件信任根如何确保模型解密密钥仅在通过度量核验的可信执行环境内部释放"
@@ -611,9 +959,9 @@ def main():
             "number": 3,
             "file": "ch16-bounce-buffer-vs-rubin-tee-io.svg",
             "asset": "ch16/ch16-bounce-buffer-vs-rubin-tee-io.svg",
-            "section": "16.2.2",
+            "section": "16.1.2",
             "caption": "传统软件弹跳缓冲双重拷贝加密 vs. Vera Rubin 原生 PCIe Gen6（256 GB/s）与 NVLink 6（3.6 TB/s）硬件内联线速 TEE-I/O（算例 16-1）",
-            "source_refs": ["references/text/nvidia-rubin-arch.txt", "manuscripts/ch16/figure-data.json"],
+            "source_refs": ["references/text/nvidia-rubin-arch.txt", "calculations/results/ch16-confidential-tee-wan.json"],
             "TeachingRole": "量化消除主机弹跳缓冲与 CPU AES-GCM 瓶颈后 64 MiB 机密传输 22 倍的延迟压缩"
         },
         {
@@ -621,8 +969,8 @@ def main():
             "number": 4,
             "file": "ch16-pipellm-five-stage-confidential-pipeline.svg",
             "asset": "ch16/ch16-pipellm-five-stage-confidential-pipeline.svg",
-            "section": "16.3.1",
-            "caption": "PipeLLM（ASPLOS '25）五阶段机密张量卸载流水线（H2D → Decrypt → Compute → Encrypt → D2H）与 192 MiB 三缓冲显存账本（算例 16-2）",
+            "section": "16.2.1",
+            "caption": "PipeLLM（ASPLOS 2025）五阶段机密张量卸载流水线（H2D → Decrypt → Compute → Encrypt → D2H）与 192 MiB 三缓冲显存账本（算例 16-2）",
             "source_refs": ["research/2026-infra-survey/reading-asplos-2025.md", "references/proceedings/ASPLOS/2025/pipellm-reading.json"],
             "TeachingRole": "拆解机密卸载中用 3 × 64 MiB = 192 MiB 显存三缓冲换取加解密与传输重叠的流水机制"
         },
@@ -631,9 +979,9 @@ def main():
             "number": 5,
             "file": "ch16-aes-ctr-otp-speculative-encryption.svg",
             "asset": "ch16/ch16-aes-ctr-otp-speculative-encryption.svg",
-            "section": "16.3.2",
+            "section": "16.2.1",
             "caption": "AES-CTR 一次性掩码（OTP）离线预生成与投机分支预加密的命中收益及未命中带宽惩罚边界（算例 16-3）",
-            "source_refs": ["research/2026-infra-survey/reading-asplos-2025.md", "references/proceedings/ASPLOS/2025/pipellm-reading.json"],
+            "source_refs": ["research/2026-infra-survey/reading-asplos-2025.md", "calculations/results/ch16-confidential-tee-wan.json"],
             "TeachingRole": "阐明在线异或加速的原理，并指出投机未命中时的额外主机拷贝与总线带宽并非免费"
         },
         {
@@ -641,7 +989,7 @@ def main():
             "number": 6,
             "file": "ch16-agent-container-escape-failure-modes.svg",
             "asset": "ch16/ch16-agent-container-escape-failure-modes.svg",
-            "section": "16.4.1",
+            "section": "16.2.2",
             "caption": "DeepSeek DSec 生产环境中自主 RL Agent 在共享宿主机内核容器下的三类真实越界与故障案例",
             "source_refs": ["case-studies/dsec-sandbox-platform.md", "manuscripts/ch16/figure-data.json"],
             "TeachingRole": "用 XFS_IOC_SWAPEXT、/proc/kpagecgroup 与 chronus 伪造实证为何裸容器无法隔离强化学习 Agent"
@@ -651,7 +999,7 @@ def main():
             "number": 7,
             "file": "ch16-dsec-firecracker-microvm-architecture.svg",
             "asset": "ch16/ch16-dsec-firecracker-microvm-architecture.svg",
-            "section": "16.4.1",
+            "section": "16.2.2",
             "caption": "DeepSeek DSec 安全沙箱平台架构：单 Cell 160 节点支撑 38 万并发沙箱与四类隔离后端（FnCall / VM 容器 / Firecracker / QEMU VM）",
             "source_refs": ["case-studies/dsec-sandbox-platform.md", "manuscripts/ch16/figure-data.json"],
             "TeachingRole": "展示工业级百万并发 Agent 沙箱如何按任务形态匹配四类虚拟化后端与高密度超卖"
@@ -661,9 +1009,9 @@ def main():
             "number": 8,
             "file": "ch16-virtio-pmem-dax-vs-struct-page-tax.svg",
             "asset": "ch16/ch16-virtio-pmem-dax-vs-struct-page-tax.svg",
-            "section": "16.4.2",
+            "section": "16.2.2",
             "caption": "virtio-pmem + DAX 消除宿主—客户机双重页缓存（峰值内存 -40.2%）与每 128 GB 设备消耗 2 GB struct page 元数据的权衡（算例 16-4）",
-            "source_refs": ["case-studies/dsec-sandbox-platform.md", "manuscripts/ch16/figure-data.json"],
+            "source_refs": ["case-studies/dsec-sandbox-platform.md", "calculations/results/ch16-confidential-tee-wan.json"],
             "TeachingRole": "精确核算 64 B / 4 KiB = 1/64 的 Guest 内核描述符税，解释为何仅对只读镜像层启用 DAX"
         },
         {
@@ -671,7 +1019,7 @@ def main():
             "number": 9,
             "file": "ch16-damon-ept-balloon-reclaim.svg",
             "asset": "ch16/ch16-damon-ept-balloon-reclaim.svg",
-            "section": "16.4.2",
+            "section": "16.2.2",
             "caption": "DAMON 冷页监控与 virtio-balloon 空闲页报告（order-9 = 2 MiB 块）将时间积分内存（GB·s）降低 21.2% 的联动机制",
             "source_refs": ["case-studies/dsec-sandbox-platform.md", "manuscripts/ch16/figure-data.json"],
             "TeachingRole": "揭示针对大容量可写虚拟磁盘与客户机堆内存的动态冷页回收流水线"
@@ -681,7 +1029,7 @@ def main():
             "number": 10,
             "file": "ch16-sched-idle-and-core-scheduling.svg",
             "asset": "ch16/ch16-sched-idle-and-core-scheduling.svg",
-            "section": "16.4.3",
+            "section": "16.2.2",
             "caption": "延迟敏感（LS）与尽力而为（BE）任务同机混部下，CFS 默认调度（+45.2%）vs. SCHED_IDLE + SMT 核调度（+17.3%）对比（算例 16-5）",
             "source_refs": ["case-studies/dsec-sandbox-platform.md", "manuscripts/ch16/figure-data.json"],
             "TeachingRole": "证明仅调低优先级不足以消除同物理核 SMT 超线程争用，必须开启 prctl(PR_SCHED_CORE)"
@@ -691,7 +1039,7 @@ def main():
             "number": 11,
             "file": "ch16-ebpf-cgroup-network-allowlist.svg",
             "asset": "ch16/ch16-ebpf-cgroup-network-allowlist.svg",
-            "section": "16.4.3",
+            "section": "16.2.2",
             "caption": "AppArmor 本地访问控制与按任务动态更新的 cgroup eBPF 网络白名单流水线",
             "source_refs": ["case-studies/dsec-sandbox-platform.md", "manuscripts/ch16/figure-data.json"],
             "TeachingRole": "展示如何在宿主机内核态阻断沙箱对集群内网的横向扫描与评测作弊连接"
@@ -701,9 +1049,9 @@ def main():
             "number": 12,
             "file": "ch16-agent-audit-log-outage-and-drain.svg",
             "asset": "ch16/ch16-agent-audit-log-outage-and-drain.svg",
-            "section": "16.5.1",
-            "caption": "算例 16-6（I19）：日志后端中断 120 s 积压 46.875 MiB（32 MiB 缓冲于 81.92 s 溢出）及恢复后按 624 KiB/s 净速率在 76.92 s 排空",
-            "source_refs": ["case-studies/evaluation-and-agent-records.md", "manuscripts/ch16/figure-data.json"],
+            "section": "16.3.1",
+            "caption": "算例 16-6：日志后端中断 120 s 积压 46.875 MiB（32 MiB 缓冲于 81.92 s 溢出）及恢复后按 624 KiB/s 净速率在 76.92 s 排空",
+            "source_refs": ["case-studies/evaluation-and-agent-records.md", "experiments/ch16/16-02/run.py"],
             "TeachingRole": "通过排队论净排空方程纠正忽略持续新到达流量的工程误算"
         },
         {
@@ -711,7 +1059,7 @@ def main():
             "number": 13,
             "file": "ch16-idempotent-tool-commit-and-replay.svg",
             "asset": "ch16/ch16-idempotent-tool-commit-and-replay.svg",
-            "section": "16.5.1",
+            "section": "16.3.1",
             "caption": "基于幂等键（Idempotency Key）与两阶段状态日志的工具调用网关：分离结果重传与外部副作用重做（算例 16-7）",
             "source_refs": ["case-studies/evaluation-and-agent-records.md", "manuscripts/ch16/figure-data.json"],
             "TeachingRole": "确保网络抖动或沙箱抢占恢复时绝不触发重复扣款或脏外部写入，并支持离线确定性回放"
@@ -721,7 +1069,7 @@ def main():
             "number": 14,
             "file": "ch16-telemetry-sampling-vs-billing-ledger.svg",
             "asset": "ch16/ch16-telemetry-sampling-vs-billing-ledger.svg",
-            "section": "16.5.1",
+            "section": "16.3.1",
             "caption": "可采样性能诊断 Trace（尾部采样）与不可采样计费/幂等键/RL 轨迹版本准入账本的双通道分流架构",
             "source_refs": ["case-studies/evaluation-and-agent-records.md", "manuscripts/ch16/figure-data.json"],
             "TeachingRole": "划清诊断可观测性与严谨财务/训练证据链的系统边界"
@@ -731,18 +1079,18 @@ def main():
             "number": 15,
             "file": "ch16-sixteen-chapter-full-stack-map.svg",
             "asset": "ch16/ch16-sixteen-chapter-full-stack-map.svg",
-            "section": "16.5.2",
-            "caption": "全书十六章全栈知识坐标系：以“五个第一性追问”贯穿模型、芯片、网络、推理/训练、存储、电热与可信安全",
+            "section": "16.3.1",
+            "caption": "跨层机密安全基线映射图：以“五个第一性追问”衔接模型、算力网络、训推存储电热底座与后训练及智能体信任边界",
             "source_refs": ["manuscripts/ch16/figure-data.json"],
-            "TeachingRole": "收束全书十六章四大部分的演进脉络与统一分析方法论"
+            "TeachingRole": "建立全书五大部分跨层可信安全基线映射与面向后训练及智能体系统的安全边界交接"
         },
         {
             "figure_id": "图 16-16",
             "number": 16,
             "file": "ch16-ai-infra-architect-master-checklist.svg",
             "asset": "ch16/ch16-ai-infra-architect-master-checklist.svg",
-            "section": "16.5.2",
-            "caption": "AI 基础设施架构师的六维终极核查表（算力、存力、运力、电力热学、可信安全、全生命周期成本）",
+            "section": "16.3.1",
+            "caption": "AI 基础设施架构师的六维可信与效能核查表（算力、存力、运力、电力热学、可信安全、全生命周期成本）",
             "source_refs": ["manuscripts/ch16/figure-data.json"],
             "TeachingRole": "为读者提供跨层系统评审与容量规划的随身工程指南"
         },
@@ -751,7 +1099,7 @@ def main():
             "number": 17,
             "file": "ch16-moe-routing-traffic-side-channel-and-padding.svg",
             "asset": "ch16/ch16-moe-routing-traffic-side-channel-and-padding.svg",
-            "section": "16.6.1",
+            "section": "16.3.2",
             "caption": "密文状态下 MoE All-to-All 专家负载偏斜泄露提示词特征 vs. 恒定桶大小哑元填充（Dummy Padding）防御",
             "source_refs": ["experiments/ch16/16-01/run.py"],
             "TeachingRole": "揭示即使开启 TEE-I/O 载荷加密，专家路由包计数仍构成侧信道，并量化 (1+α) 哑元填充带宽税"
@@ -761,7 +1109,7 @@ def main():
             "number": 18,
             "file": "ch16-verifiable-inference-tee-zkml-opml-triangle.svg",
             "asset": "ch16/ch16-verifiable-inference-tee-zkml-opml-triangle.svg",
-            "section": "16.6.2",
+            "section": "16.3.2",
             "caption": "可验证推理三路线（硬件 TEE 证明、密码学 zkML、乐观抽检欺诈证明 OPML）在证明开销、信任假设与模型规模上的对比",
             "source_refs": ["experiments/ch16/16-01/run.py"],
             "TeachingRole": "对比 TEE 签名（<5% 开销）、zkML（10³–10⁵x 膨胀）与 OPML 乐观抽检的适用边界"
@@ -771,7 +1119,7 @@ def main():
             "number": 19,
             "file": "ch16-optimistic-verification-slashing-game.svg",
             "asset": "ch16/ch16-optimistic-verification-slashing-game.svg",
-            "section": "16.6.2",
+            "section": "16.3.2",
             "caption": "乐观抽检可验证推理（OPML）的博弈树：抽检概率 p、造假收益 Δc 与质押罚没金 S_slash 的诚实边界曲线",
             "source_refs": ["experiments/ch16/16-01/run.py"],
             "TeachingRole": "导出激励相容条件 p·S_slash > (1-p)·Δc，证明高额质押金可将验证抽检率压至 10⁻⁵ 量级"
@@ -781,8 +1129,8 @@ def main():
             "number": 20,
             "file": "ch16-janus-nested-virtualization-fast-path.svg",
             "asset": "ch16/ch16-janus-nested-virtualization-fast-path.svg",
-            "section": "16.6.3",
-            "caption": "传统二级页表嵌套虚拟化（N_guest × N_host 查表放大）vs. JANUS（OSDI '26）扁平化安全沙箱隔离",
+            "section": "16.3.2",
+            "caption": "传统二级页表嵌套虚拟化（N_guest × N_host 查表放大）vs. JANUS（OSDI 2026）扁平化安全沙箱隔离",
             "source_refs": ["research/2026-infra-survey/reading-osdi-2026.md"],
             "TeachingRole": "解析公有云虚拟机内部运行轻量微虚机时的二维 EPT 页表税与 JANUS 跨世界扁平化机制"
         },
@@ -791,8 +1139,8 @@ def main():
             "number": 21,
             "file": "ch16-blowfish-elastic-sandbox-memory-pool.svg",
             "asset": "ch16/ch16-blowfish-elastic-sandbox-memory-pool.svg",
-            "section": "16.6.3",
-            "caption": "Blowfish（OSDI '26 #50）在解耦内存池上的高密微虚拟机弹性气球回收与 Prism（OSDI '26 #5）跨模型显存协调机制",
+            "section": "16.3.2",
+            "caption": "Blowfish（OSDI 2026）在解耦内存池上的高密微虚拟机弹性气球回收与 Prism（OSDI 2026）跨模型显存协调机制",
             "source_refs": ["research/2026-infra-survey/reading-osdi-2026.md", "experiments/ch16/16-02/run.py"],
             "TeachingRole": "将 CPU 侧跨虚机解耦内存弹性气球（Blowfish）与 GPU 侧跨模型显存气球（Prism）纳入统一池化视图"
         },
@@ -801,27 +1149,27 @@ def main():
             "number": 22,
             "file": "ch16-trusted-ai-infrastructure-defense-in-depth.svg",
             "asset": "ch16/ch16-trusted-ai-infrastructure-defense-in-depth.svg",
-            "section": "16.6.3",
+            "section": "16.3.2",
             "caption": "可信 AI 基础设施纵深防御全景（硬件 TEE-I/O + 流量填充 + 远程证明/抽检 + Firecracker 微虚机 + 幂等审计账本）",
             "source_refs": ["experiments/ch16/16-01/run.py", "experiments/ch16/16-02/run.py"],
-            "TeachingRole": "收束第 16 章硬件机密底座、侧信道与可验证层、高密微虚机沙箱与可恢复审计账本的四层纵深防御"
+            "TeachingRole": "整合第 16 章硬件机密底座、侧信道与可验证层、高密微虚机沙箱与可恢复审计账本的四层纵深防御"
         },
         {
             "figure_id": "图 16-23",
             "number": 23,
             "file": "ch16-lease-bound-encrypted-weight-distribution.svg",
             "asset": "ch16/ch16-lease-bound-encrypted-weight-distribution.svg",
-            "section": "16.6.4",
+            "section": "16.3.2",
             "caption": "私有化部署中基于远程证明租约（Lease-Bound KMS）与 GPU TEE 的闭源模型权重防导出硬件绑定流程",
             "source_refs": ["manuscripts/ch16/figure-data.json"],
-            "TeachingRole": "展示如何通过周期性远程证明心跳与硬件熔断显存清零保护私有化部署的百亿美金模型权重"
+            "TeachingRole": "展示如何通过周期性远程证明心跳与硬件熔断显存清零保护私有化部署的闭源模型权重"
         },
         {
             "figure_id": "图 16-24",
             "number": 24,
             "file": "ch16-fused-cryptographic-logit-watermark-kernel.svg",
             "asset": "ch16/ch16-fused-cryptographic-logit-watermark-kernel.svg",
-            "section": "16.6.4",
+            "section": "16.3.2",
             "caption": "在 TEE 采样算子内原位融合伪随机锦标赛水印（SynthID/Gumbel Watermark）及统计验证检测边界",
             "source_refs": ["manuscripts/ch16/figure-data.json"],
             "TeachingRole": "将密码学生成水印下沉至 GPU TEE 采样算子内部以阻断宿主机剥离，并推导 Z 分数检测最小词元数"
@@ -831,7 +1179,7 @@ def main():
             "number": 25,
             "file": "ch16-tee-timing-side-channel-traffic-shaping.svg",
             "asset": "ch16/ch16-tee-timing-side-channel-traffic-shaping.svg",
-            "section": "16.6.4",
+            "section": "16.3.2",
             "caption": "GPU TEE 恒定节拍词元释放（Tick-Locked Pacing）与 64-Token 分桶流量整形防御 PCIe/功耗侧信道",
             "source_refs": ["experiments/ch16/16-03/run.py", "manuscripts/ch16/figure-data.json"],
             "TeachingRole": "量化 25.0 ms 恒定节拍（延迟税 12.11%）与 64-Token 分桶填充（带宽税 39.13%）实现桶内零信息泄露"
@@ -841,19 +1189,185 @@ def main():
             "number": 26,
             "file": "ch16-verifiable-inference-optimistic-and-zkml-proof.svg",
             "asset": "ch16/ch16-verifiable-inference-optimistic-and-zkml-proof.svg",
-            "section": "16.6.4",
+            "section": "16.3.2",
             "caption": "三级可验证推理架构（TEE 实时签名 + Freivalds 投影抽检 + 触发式单算子 zkML 零知识故障证明）",
             "source_refs": ["experiments/ch16/16-03/run.py", "manuscripts/ch16/figure-data.json"],
             "TeachingRole": "建立 Freivalds 随机投影（2.23% 算力开销）与触发式单算子 zk-Fault-Proof（1.85 s 裁决，提速 24.32×）协同架构"
+        },
+        {
+            "figure_id": "图 16-27",
+            "number": 27,
+            "file": "ch16-wan-allreduce-bottleneck-vs-diloco-two-level-optimizer.svg",
+            "asset": "ch16/ch16-wan-allreduce-bottleneck-vs-diloco-two-level-optimizer.svg",
+            "section": "16.4.1",
+            "caption": "跨 4 个地理区域（RTT=85 ms）联合训练 70B 模型对比：标准每步 Ring AllReduce（需 700.0 Gbps 专线）vs. DiLoCo 双层优化器（本地 AdamW H=500 步 + 外循环 Nesterov 动量，通信频率降低 500 倍）（算例 16-13）",
+            "source_refs": ["experiments/ch16/16-04/run.py", "manuscripts/ch16/figure-data.json"],
+            "TeachingRole": "揭示如何通过内外双层优化器解耦克服跨地域广域网的高延迟与低带宽约束"
+        },
+        {
+            "figure_id": "图 16-28",
+            "number": 28,
+            "file": "ch16-streaming-diloco-fragment-pipeline-and-fp4-outer-delta.svg",
+            "asset": "ch16/ch16-streaming-diloco-fragment-pipeline-and-fp4-outer-delta.svg",
+            "section": "16.4.1",
+            "caption": "Streaming DiLoCo 分片流水线（M=25 个分片，每 20 步后台传输 1 片）与 FP4 E2M1 伪梯度量化：将广域网带宽需求压至 350.0 Mbps（压缩 2,000 倍）且暴露等待为 0.0 s（算例 16-13）",
+            "source_refs": ["experiments/ch16/16-04/run.py", "calculations/results/ch16-confidential-tee-wan.json"],
+            "TeachingRole": "展示如何消除第 500 步末尾的突发同步尖峰并实现 99.4% 的算力有效利用率"
+        },
+        {
+            "figure_id": "图 16-29",
+            "number": 29,
+            "file": "ch16-diloco-inner-step-h-vs-validation-loss-and-bandwidth.svg",
+            "asset": "ch16/ch16-diloco-inner-step-h-vs-validation-loss-and-bandwidth.svg",
+            "section": "16.4.1",
+            "caption": "DiLoCo 内循环步数 H 与外循环 Nesterov 动量对验证集困惑度（Perplexity）及广域网带宽需求的帕累托权衡曲线",
+            "source_refs": ["experiments/ch16/16-04/run.py", "manuscripts/ch16/figure-data.json"],
+            "TeachingRole": "阐明外循环 Nesterov 伪梯度动量为何能在 H=500 大步长下避免简单权重平均的鞍点坍塌"
+        },
+        {
+            "figure_id": "图 16-30",
+            "number": 30,
+            "file": "ch16-proof-of-learning-spot-check-and-byzantine-median.svg",
+            "asset": "ch16/ch16-proof-of-learning-spot-check-and-byzantine-median.svg",
+            "section": "16.4.2",
+            "caption": "开放不可信算力池的双层防御：随机重放抽检（Proof-of-Learning，p=5% 抽检率 10 轮捕获率 99.97%）与 Weiszfeld 几何中位数鲁棒聚合（崩溃点 50%）（算例 16-14）",
+            "source_refs": ["experiments/ch16/16-05/run.py", "calculations/results/ch16-confidential-tee-wan.json"],
+            "TeachingRole": "解决开放算力网络中恶意节点伪造梯度或投毒攻击的博弈与数学过滤难题"
+        },
+        {
+            "figure_id": "图 16-31",
+            "number": 31,
+            "file": "ch16-dht-hivemind-elastic-optimizer-sharding-spot-recovery.svg",
+            "asset": "ch16/ch16-dht-hivemind-elastic-optimizer-sharding-spot-recovery.svg",
+            "section": "16.4.2",
+            "caption": "基于 Kademlia 分布式哈希表（DHT / Hivemind）的优化器状态分片与抢占式 Spot 实例（每小时中断率 8%）秒级对等自愈（ETTR = 96.8%）（算例 16-15）",
+            "source_refs": ["experiments/ch16/16-05/run.py", "calculations/results/ch16-confidential-tee-wan.json"],
+            "TeachingRole": "展示无中心元数据节点下如何实现优化器状态分片的毫秒级发现与热恢复"
+        },
+        {
+            "figure_id": "图 16-32",
+            "number": 32,
+            "file": "ch16-serial-guardrail-blocking-vs-async-speculative-sidecar.svg",
+            "asset": "ch16/ch16-serial-guardrail-blocking-vs-async-speculative-sidecar.svg",
+            "section": "16.5.1",
+            "caption": "大模型在线安全护栏对比：传统串行前后置阻塞（增加 45 ms TTFT 与 180 ms 尾阻塞）vs. 异步流式伴飞护栏（Speculative Guardrail Sidecar，暴露延迟 3.2 ms）（算例 16-16）",
+            "source_refs": ["experiments/ch16/16-05/run.py", "manuscripts/ch16/figure-data.json"],
+            "TeachingRole": "量化双流异步伴飞架构如何将安全审查从主推理关键路径上剥离"
+        },
+        {
+            "figure_id": "图 16-33",
+            "number": 33,
+            "file": "ch16-sliding-window-token-stream-guardrail-rollback.svg",
+            "asset": "ch16/ch16-sliding-window-token-stream-guardrail-rollback.svg",
+            "section": "16.5.1",
+            "caption": "K=8 词元块粒度滑动窗口投机放行与违规检出时的客户端流式撤回及 KV 缓存熔断回收机制",
+            "source_refs": ["experiments/ch16/16-05/run.py", "manuscripts/ch16/figure-data.json"],
+            "TeachingRole": "揭示如何在保持流式输出体验的同时将护栏模型调用频率降低 8 倍"
+        },
+        {
+            "figure_id": "图 16-34",
+            "number": 34,
+            "file": "ch16-in-situ-residual-stream-sae-feature-clamping.svg",
+            "asset": "ch16/ch16-in-situ-residual-stream-sae-feature-clamping.svg",
+            "section": "16.5.1",
+            "caption": "推理残差流原位稀疏自编码器（SAE）特征监控与有害方向正交投影钳位（每层耗时 3.6 us，端到端开销仅 0.08%）（算例 16-17）",
+            "source_refs": ["experiments/ch16/16-05/run.py", "manuscripts/ch16/figure-data.json"],
+            "TeachingRole": "展示如何在模型内部激活空间以微秒级代价实现零延迟安全免疫"
+        },
+        {
+            "figure_id": "图 16-35",
+            "number": 35,
+            "file": "ch16-representation-engineering-harmful-subspace-projection.svg",
+            "asset": "ch16/ch16-representation-engineering-harmful-subspace-projection.svg",
+            "section": "16.5.1",
+            "caption": "表示工程（Representation Engineering）单边门控正交子空间投影：精准剥离有害概念分量且正交补空间正常语义零退化",
+            "source_refs": ["manuscripts/ch16/figure-data.json"],
+            "TeachingRole": "从线性代数正交补空间原理解释为何单边投影不会造成良性请求过度拒答"
+        },
+        {
+            "figure_id": "图 16-36",
+            "number": 36,
+            "file": "ch16-synthid-text-tournament-sampling-tree-mechanism.svg",
+            "asset": "ch16/ch16-synthid-text-tournament-sampling-tree-mechanism.svg",
+            "section": "16.5.2",
+            "caption": "SynthID-Text 深度 m=30 锦标赛水印采样树（Tournament Sampling）：通过多轮伪随机对决嵌入强统计水印并保持期望输出分布严格无偏（算例 16-18）",
+            "source_refs": ["experiments/ch16/16-06/run.py", "manuscripts/ch16/figure-data.json"],
+            "TeachingRole": "对比失真型 Logit 偏置水印与非失真型锦标赛采样水印的数学机制"
+        },
+        {
+            "figure_id": "图 16-37",
+            "number": 37,
+            "file": "ch16-distributed-tp-prng-seed-synchronization-for-watermark.svg",
+            "asset": "ch16/ch16-distributed-tp-prng-seed-synchronization-for-watermark.svg",
+            "section": "16.5.2",
+            "caption": "分布式张量并行（TP=8）采样下的滑动窗口上下文 HMAC 种子（8 Bytes）自同步与跨卡词表分片锦标赛归约",
+            "source_refs": ["experiments/ch16/16-06/run.py", "manuscripts/ch16/figure-data.json"],
+            "TeachingRole": "解决多卡分布式并行采样时伪随机数发生器状态一致性的工程关键点"
+        },
+        {
+            "figure_id": "图 16-38",
+            "number": 38,
+            "file": "ch16-watermark-token-length-vs-detection-tpr-at-low-fpr.svg",
+            "asset": "ch16/ch16-watermark-token-length-vs-detection-tpr-at-low-fpr.svg",
+            "section": "16.5.2",
+            "caption": "SynthID-Text（m=30）在假阳性率 FPR = 10^-6 下随生成词元长度变化的真阳性检出率曲线（200 词元达 99.2% TPR，困惑度偏差 < 0.01）（算例 16-18）",
+            "source_refs": ["experiments/ch16/16-06/run.py", "manuscripts/ch16/figure-data.json"],
+            "TeachingRole": "用中心极限定理推导 30 层锦标赛得分均值在短文本下的高信噪比收敛特性"
+        },
+        {
+            "figure_id": "图 16-39",
+            "number": 39,
+            "file": "ch16-pickle-arbitrary-code-exploit-vs-safetensors-zero-copy-mmap.svg",
+            "asset": "ch16/ch16-pickle-arbitrary-code-exploit-vs-safetensors-zero-copy-mmap.svg",
+            "section": "16.5.2",
+            "caption": "模型权重序列化对比：存在远程代码执行漏洞与双倍内存拷贝的 Pickle（42.5 s）vs. 4,096 B 页对齐零拷贝 mmap 的 Safetensors（3.4 s，提速 12.5 倍）",
+            "source_refs": ["experiments/ch16/16-06/run.py", "manuscripts/ch16/figure-data.json"],
+            "TeachingRole": "剖析 Safetensors 格式如何同时解决模型供应链投毒与百 GB 权重快速加载"
+        },
+        {
+            "figure_id": "图 16-40",
+            "number": 40,
+            "file": "ch16-merkle-tree-weight-signature-and-tee-attestation-boot.svg",
+            "asset": "ch16/ch16-merkle-tree-weight-signature-and-tee-attestation-boot.svg",
+            "section": "16.5.2",
+            "caption": "基于张量分块 Merkle 哈希树签名与 GPU TEE 硬件远程证明的可信模型加载及防篡改启动流水线",
+            "source_refs": ["manuscripts/ch16/figure-data.json"],
+            "TeachingRole": "构建从静态磁盘权重文件到运行期 GPU 显存的密码学完整性信任链"
+        },
+        {
+            "figure_id": "图 16-41",
+            "number": 41,
+            "file": "ch16-sovereign-ai-multi-region-compliance-and-audit-architecture.svg",
+            "asset": "ch16/ch16-sovereign-ai-multi-region-compliance-and-audit-architecture.svg",
+            "section": "16.5.2",
+            "caption": "主权 AI 跨管辖区合规基础设施：原始数据不出境、广域网 DiLoCo 伪梯度协同、在线护栏拦截与生成内容水印溯源",
+            "source_refs": ["manuscripts/ch16/figure-data.json"],
+            "TeachingRole": "展示主权 AI 架构如何在地缘法规约束下实现跨域协同训练与全生命周期可信治理"
+        },
+        {
+            "figure_id": "图 16-42",
+            "number": 42,
+            "file": "ch16-decentralized-training-and-trustworthy-ai-infra-synthesis.svg",
+            "asset": "ch16/ch16-decentralized-training-and-trustworthy-ai-infra-synthesis.svg",
+            "section": "16.5.2",
+            "caption": "第 16 章后半全景图：从不可信广域网 Streaming DiLoCo 低通信训练、拜占庭容错弹性算力池到异步伴飞/原位护栏与密码学水印供应链",
+            "source_refs": ["manuscripts/ch16/figure-data.json"],
+            "TeachingRole": "整合不可信协同训练与内生内容安全机制，构成完整的可信 AI 基础设施体系"
         }
     ]
+    for row in fig_index:
+        row['figure'] = f"16-{row['number']}"
+        row['name'] = Path(row['file']).stem
     (HERE / 'figure-index.json').write_text(json.dumps(fig_index, ensure_ascii=False, indent=2) + '\n')
 
-    md = HERE.parent / '16-机密 AI 计算、可信执行环境与安全沙箱底座.md'
+    md = HERE.parent / '16-机密计算与可信安全系统.md'
     if md.exists():
-        text_md = md.read_text()
-        display = re.findall(r'\$\$(.+?)\$\$', text_md, re.S)
-        inline = re.findall(r'(?<!\$)\$(?!\$)([^$\n]+?)\$(?!\$)', text_md)
+        text_md = md.read_text(encoding='utf-8')
+        no_code = re.sub(r'```.*?```', '', text_md, flags=re.S)
+        no_code = re.sub(r'`[^`\n]*`', '', no_code)
+        display = re.findall(r'\$\$(.+?)\$\$', no_code, re.S)
+        no_disp = re.sub(r'\$\$.+?\$\$', '', no_code, flags=re.S)
+        inline = re.findall(r'(?<!\$)\$(?!\$)([^$\n]+?)\$(?!\$)', no_disp)
         formulas = [f.strip() for f in display + inline]
         katex_js = ROOT / 'manuscripts/ch06/vendor/katex/katex.js'
         js = (
@@ -880,7 +1394,7 @@ def main():
 
         import markdown
 
-        def repl_img(m):
+        def repl_img(m: re.Match[str]) -> str:
             alt, rel = m.group(1), m.group(2)
             p = (md.parent / rel).with_suffix('.png')
             b64 = base64.b64encode(p.read_bytes()).decode()
@@ -888,20 +1402,34 @@ def main():
 
         work = re.sub(r'!\[([^\]]*)\]\((ch16/[^)]+)\)', repl_img, text_md)
         body = markdown.markdown(work, extensions=['tables', 'fenced_code', 'footnotes', 'toc'])
-        html = f'<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>第 16 章：机密 AI 计算、可信执行环境与安全沙箱底座</title></head><body>{body}</body></html>\n'
+        html = f'<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>第 16 章：机密计算与可信安全系统</title></head><body>{body}</body></html>\n'
         out_html = preview_path(md)
-        out_html.write_text(html)
+        out_html.write_text(html, encoding='utf-8')
 
-    sources = [HERE / 'build.py', HERE / 'figure-data.json', HERE / 'figure-index.json']
-    if md.exists():
-        sources.append(md)
+    sources = [
+        HERE / 'build.py',
+        HERE / 'figure-data.json',
+        HERE / 'figure-index.json',
+        md,
+        ROOT / 'calculations/results/ch16-confidential-tee-wan.json',
+        ROOT / 'experiments/ch16/16-01/run.py',
+        ROOT / 'experiments/ch16/16-02/run.py',
+        ROOT / 'experiments/ch16/16-03/run.py',
+        ROOT / 'experiments/ch16/16-04/run.py',
+        ROOT / 'experiments/ch16/16-05/run.py',
+        ROOT / 'experiments/ch16/16-06/run.py',
+    ]
     (HERE / 'sources.json').write_text(
         json.dumps(
-            {"sources": [{"path": str(p.relative_to(ROOT)), "sha256": sha256(p)} for p in sources]},
+            {
+                "chapter": "ch16",
+                "sources": [{"path": str(p.relative_to(ROOT)), "sha256": sha256(p)} for p in sources if p.exists()],
+            },
             ensure_ascii=False,
             indent=2,
         )
-        + '\n'
+        + '\n',
+        encoding='utf-8',
     )
     all_outputs = sorted(outputs) + [
         HERE / 'figure-data.json',
@@ -916,7 +1444,8 @@ def main():
             ensure_ascii=False,
             indent=2,
         )
-        + '\n'
+        + '\n',
+        encoding='utf-8',
     )
     print(f'Built {len(outputs)} figure files for Chapter 16; 0 layout warnings.')
 

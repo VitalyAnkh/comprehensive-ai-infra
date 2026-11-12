@@ -1,128 +1,146 @@
-{
-  "chapter": "ch15",
-  "figure_count": 20,
-  "all_passed": true,
-  "total_warnings": 0,
-  "figures": [
-    {
-      "figure": "15-1",
-      "file": "ch15-cluster-mtbf-scaling-and-llama3-failures.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "15-2",
-      "file": "ch15-hot-spare-pool-queuing-dimensioning.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "15-3",
-      "file": "ch15-sdc-bitflip-allreduce-contamination.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "15-4",
-      "file": "ch15-abft-checksum-matrix-multiplication.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "15-5",
-      "file": "ch15-safeguarding-sdc-and-opguard-bitwise-debug.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "15-6",
-      "file": "ch15-microbatch-rerun-vs-checkpoint-rollback.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "15-7",
-      "file": "ch15-trainmover-subsecond-hot-migration.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "15-8",
-      "file": "ch15-nccl-flight-recorder-straggler-blame.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "15-9",
-      "file": "ch15-optical-ber-fec-gray-failure-detection.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "15-10",
-      "file": "ch15-five-benchmark-gaming-traps.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "15-11",
-      "file": "ch15-flashinfer-bench-cceval-and-blink-profiling.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "15-12",
-      "file": "ch15-effective-training-time-ratio-ettr-model.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "15-13",
-      "file": "ch15-automated-burn-in-fleet-health-pipeline.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "15-14",
-      "file": "ch15-twenty-chapter-dual-track-master-ledger.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "15-15",
-      "file": "ch15-twenty-chapter-architecture-knowledge-graph.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "15-16",
-      "file": "ch15-ten-first-principles-of-ai-infra.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "15-17",
-      "file": "ch15-chaos-fault-injection-and-canary-rollout-gate.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "15-18",
-      "file": "ch15-core-cluster-to-four-new-frontiers-bridge.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "15-19",
-      "file": "ch15-oobleck-pre-instantiated-pipeline-template-failover.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "15-20",
-      "file": "ch15-goodput-sla-under-bursty-poisson-traffic.svg",
-      "passed": true,
-      "warnings": []
-    }
-  ]
-}
+[
+  {
+    "figure": "ch15-cluster-mtbf-scaling-and-llama3-failures",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch15-hot-spare-pool-queuing-dimensioning",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch15-sdc-bitflip-allreduce-contamination",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch15-abft-checksum-matrix-multiplication",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch15-safeguarding-sdc-and-opguard-bitwise-debug",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch15-microbatch-rerun-vs-checkpoint-rollback",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch15-trainmover-subsecond-hot-migration",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch15-nccl-flight-recorder-straggler-blame",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch15-optical-ber-fec-gray-failure-detection",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch15-five-benchmark-gaming-traps",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch15-flashinfer-bench-cceval-and-blink-profiling",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch15-effective-training-time-ratio-ettr-model",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch15-automated-burn-in-fleet-health-pipeline",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch15-twenty-chapter-dual-track-master-ledger",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch15-twenty-chapter-architecture-knowledge-graph",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch15-ten-first-principles-of-ai-infra",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch15-chaos-fault-injection-and-canary-rollout-gate",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch15-core-cluster-to-four-new-frontiers-bridge",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch15-oobleck-pre-instantiated-pipeline-template-failover",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch15-goodput-sla-under-bursty-poisson-traffic",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch15-ebpf-strobelight-dynolog-kineto-three-tier-observability",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch15-collective-wait-chain-victim-vs-root-cause-attribution-dag",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch15-nccl-flight-recorder-ring-buffer-deadlock-forensics",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch15-monarch-single-controller-actor-mesh-fault-isolation",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  }
+]

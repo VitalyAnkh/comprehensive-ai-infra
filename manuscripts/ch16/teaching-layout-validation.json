@@ -1,260 +1,254 @@
-{
-  "chapter": "ch16",
-  "figure_count": 42,
-  "all_passed": true,
-  "total_warnings": 0,
-  "figures": [
-    {
-      "figure": "16-1",
-      "file": "ch16-confidential-ai-vs-sandbox-threat-model.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-2",
-      "file": "ch16-cpu-gpu-tee-remote-attestation.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-3",
-      "file": "ch16-bounce-buffer-vs-rubin-tee-io.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-4",
-      "file": "ch16-pipellm-five-stage-confidential-pipeline.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-5",
-      "file": "ch16-aes-ctr-otp-speculative-encryption.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-6",
-      "file": "ch16-agent-container-escape-failure-modes.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-7",
-      "file": "ch16-dsec-firecracker-microvm-architecture.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-8",
-      "file": "ch16-virtio-pmem-dax-vs-struct-page-tax.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-9",
-      "file": "ch16-damon-ept-balloon-reclaim.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-10",
-      "file": "ch16-sched-idle-and-core-scheduling.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-11",
-      "file": "ch16-ebpf-cgroup-network-allowlist.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-12",
-      "file": "ch16-agent-audit-log-outage-and-drain.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-13",
-      "file": "ch16-idempotent-tool-commit-and-replay.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-14",
-      "file": "ch16-telemetry-sampling-vs-billing-ledger.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-15",
-      "file": "ch16-sixteen-chapter-full-stack-map.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-16",
-      "file": "ch16-ai-infra-architect-master-checklist.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-17",
-      "file": "ch16-moe-routing-traffic-side-channel-and-padding.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-18",
-      "file": "ch16-verifiable-inference-tee-zkml-opml-triangle.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-19",
-      "file": "ch16-optimistic-verification-slashing-game.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-20",
-      "file": "ch16-janus-nested-virtualization-fast-path.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-21",
-      "file": "ch16-blowfish-elastic-sandbox-memory-pool.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-22",
-      "file": "ch16-trusted-ai-infrastructure-defense-in-depth.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-23",
-      "file": "ch16-lease-bound-encrypted-weight-distribution.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-24",
-      "file": "ch16-fused-cryptographic-logit-watermark-kernel.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-25",
-      "file": "ch16-tee-timing-side-channel-traffic-shaping.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-26",
-      "file": "ch16-verifiable-inference-optimistic-and-zkml-proof.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-27",
-      "file": "ch16-wan-allreduce-bottleneck-vs-diloco-two-level-optimizer.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-28",
-      "file": "ch16-streaming-diloco-fragment-pipeline-and-fp4-outer-delta.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-29",
-      "file": "ch16-diloco-inner-step-h-vs-validation-loss-and-bandwidth.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-30",
-      "file": "ch16-proof-of-learning-spot-check-and-byzantine-median.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-31",
-      "file": "ch16-dht-hivemind-elastic-optimizer-sharding-spot-recovery.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-32",
-      "file": "ch16-serial-guardrail-blocking-vs-async-speculative-sidecar.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-33",
-      "file": "ch16-sliding-window-token-stream-guardrail-rollback.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-34",
-      "file": "ch16-in-situ-residual-stream-sae-feature-clamping.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-35",
-      "file": "ch16-representation-engineering-harmful-subspace-projection.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-36",
-      "file": "ch16-synthid-text-tournament-sampling-tree-mechanism.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-37",
-      "file": "ch16-distributed-tp-prng-seed-synchronization-for-watermark.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-38",
-      "file": "ch16-watermark-token-length-vs-detection-tpr-at-low-fpr.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-39",
-      "file": "ch16-pickle-arbitrary-code-exploit-vs-safetensors-zero-copy-mmap.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-40",
-      "file": "ch16-merkle-tree-weight-signature-and-tee-attestation-boot.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-41",
-      "file": "ch16-sovereign-ai-multi-region-compliance-and-audit-architecture.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "16-42",
-      "file": "ch16-decentralized-training-and-trustworthy-ai-infra-synthesis.svg",
-      "passed": true,
-      "warnings": []
-    }
-  ]
-}
+[
+  {
+    "figure": "ch16-confidential-ai-vs-sandbox-threat-model",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-cpu-gpu-tee-remote-attestation",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-bounce-buffer-vs-rubin-tee-io",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-pipellm-five-stage-confidential-pipeline",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-aes-ctr-otp-speculative-encryption",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-agent-container-escape-failure-modes",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-dsec-firecracker-microvm-architecture",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-virtio-pmem-dax-vs-struct-page-tax",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-damon-ept-balloon-reclaim",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-sched-idle-and-core-scheduling",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-ebpf-cgroup-network-allowlist",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-agent-audit-log-outage-and-drain",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-idempotent-tool-commit-and-replay",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-telemetry-sampling-vs-billing-ledger",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-sixteen-chapter-full-stack-map",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-ai-infra-architect-master-checklist",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-moe-routing-traffic-side-channel-and-padding",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-verifiable-inference-tee-zkml-opml-triangle",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-optimistic-verification-slashing-game",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-janus-nested-virtualization-fast-path",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-blowfish-elastic-sandbox-memory-pool",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-trusted-ai-infrastructure-defense-in-depth",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-lease-bound-encrypted-weight-distribution",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-fused-cryptographic-logit-watermark-kernel",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-tee-timing-side-channel-traffic-shaping",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-verifiable-inference-optimistic-and-zkml-proof",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-wan-allreduce-bottleneck-vs-diloco-two-level-optimizer",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-streaming-diloco-fragment-pipeline-and-fp4-outer-delta",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-diloco-inner-step-h-vs-validation-loss-and-bandwidth",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-proof-of-learning-spot-check-and-byzantine-median",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-dht-hivemind-elastic-optimizer-sharding-spot-recovery",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-serial-guardrail-blocking-vs-async-speculative-sidecar",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-sliding-window-token-stream-guardrail-rollback",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-in-situ-residual-stream-sae-feature-clamping",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-representation-engineering-harmful-subspace-projection",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-synthid-text-tournament-sampling-tree-mechanism",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-distributed-tp-prng-seed-synchronization-for-watermark",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-watermark-token-length-vs-detection-tpr-at-low-fpr",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-pickle-arbitrary-code-exploit-vs-safetensors-zero-copy-mmap",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-merkle-tree-weight-signature-and-tee-attestation-boot",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-sovereign-ai-multi-region-compliance-and-audit-architecture",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch16-decentralized-training-and-trustworthy-ai-infra-synthesis",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  }
+]

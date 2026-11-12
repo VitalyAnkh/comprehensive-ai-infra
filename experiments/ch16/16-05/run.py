@@ -4,7 +4,7 @@ from pathlib import Path
 
 
 def run():
-    # Proof-of-Learning & Byzantine Aggregation (Example 28-2)
+    # Proof-of-Learning & Byzantine Aggregation (Example 16-14)
     poisoned_fraction_f = 0.15
     spot_check_rate_p = 0.05
     # If an attacker corrupts k=16 segments per outer round of H=500 steps, over 10 outer rounds:
@@ -14,11 +14,11 @@ def run():
     detection_prob_pct = round((1.0 - miss_prob) * 100.0, 2)  # 99.97% (> 99.9%)
     geometric_median_breakdown = 0.50
 
-    # DHT Elastic Spot Coordinator (Example 28-3)
+    # DHT Elastic Spot Coordinator (Example 16-15)
     spot_hourly_preemption_rate = 0.08
     dht_ettr_pct = 96.8
 
-    # Async Speculative Guardrail Sidecar (Example 28-4 & 28-5)
+    # Async Speculative Guardrail Sidecar (Example 16-16 & 16-17)
     serial_ttft_overhead_ms = 45.0
     serial_tail_blocking_ms = 180.0
     speculative_window_k = 8

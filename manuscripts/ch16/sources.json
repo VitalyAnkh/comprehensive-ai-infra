@@ -2,12 +2,24 @@
   "chapter": "ch16",
   "sources": [
     {
-      "path": "manuscripts/16-机密计算与可信安全系统.md",
-      "sha256": "c999d3519f95987b0a3c9696568de0cd82a914822f2553331e6622b1870395d3"
+      "path": "manuscripts/ch16/build.py",
+      "sha256": "c17052e56b70708e8b7c88286460ae0019fecd7517160b5df3bc3cd9ae4a8e82"
+    },
+    {
+      "path": "manuscripts/ch16/figure-data.json",
+      "sha256": "f3b211996ea01d2b79fb8509a83b346c0129acd6274d696ba28104d97b4e6ebc"
     },
     {
       "path": "manuscripts/ch16/figure-index.json",
-      "sha256": "edcc434eb2dc7ced81322937c2e9611179330dd91d06c48872d49647c640d9c2"
+      "sha256": "b49290566dd40f30dc6df98999b01bdb490d24f1590ed18ff5da1a8553670f41"
+    },
+    {
+      "path": "manuscripts/16-机密计算与可信安全系统.md",
+      "sha256": "37195c42cd9c2c0c4fd2401be3238a2cfa153cda538ed270e86ce5a865e7c03d"
+    },
+    {
+      "path": "calculations/results/ch16-confidential-tee-wan.json",
+      "sha256": "bdcdbd5bd96cc7f41449c1873061b42a47da76e71e5b55253ceb5cb35fba62ef"
     },
     {
       "path": "experiments/ch16/16-01/run.py",
@@ -15,7 +27,7 @@
     },
     {
       "path": "experiments/ch16/16-02/run.py",
-      "sha256": "44c173e84e3b01be1045124713214b4ab1bcc80bbdd57c1ea749e05d1a9b81c6"
+      "sha256": "b0287d1e7900df6078b326a28c5eeca4d35f1fb7d6e9886ddb38bbf00f6803e9"
     },
     {
       "path": "experiments/ch16/16-03/run.py",
@@ -27,11 +39,11 @@
     },
     {
       "path": "experiments/ch16/16-05/run.py",
-      "sha256": "d52ad1dab458e93769937748b04f6967b774f9e0d1de92ca17f9aaa499ce6b5d"
+      "sha256": "396c77cf743e512204862b6d53100b855a99dc0cd43e52128a58dffecd413967"
     },
     {
       "path": "experiments/ch16/16-06/run.py",
-      "sha256": "0a895ddf7d8e7b71d447efff084c48ecc5d21f8548ae29476061a0876df0d61a"
+      "sha256": "d2d4423ce6932667683b939ed1ecfb313bffff86424cbb0b2048b098e72f506f"
     }
   ]
 }

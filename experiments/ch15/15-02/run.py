@@ -11,7 +11,7 @@ RESULTS_PATH = HERE / "results" / "summary.json"
 
 
 def compute_metrics() -> dict:
-    # 1. 100K-GPU Chaos GameDay Fault Injection Audit (Ex 20-6 & Ex 20-12)
+    # 1. 100K-GPU Chaos GameDay Fault Injection Audit (Ex 15-6 & Ex 15-12)
     categories = {
         "sdc_bitflip": {"injected": 50, "detected": 50, "mttd_sec": 0.042, "mttr_sec": 0.592},
         "compute_pcie_straggler": {"injected": 50, "detected": 50, "mttd_sec": 3.20, "mttr_sec": 4.40},
@@ -30,7 +30,7 @@ def compute_metrics() -> dict:
     manual_mttr_sec = 1500.0  # 25 min manual SRE intervention
     mttr_speedup_x = round(manual_mttr_sec / mean_auto_mttr_sec, 2)  # 389.61x
 
-    # 2. 8-Rank Collective Arrival Skew Matrix Straggler Localization (Ex 20-6 & Ex 20-12)
+    # 2. 8-Rank Collective Arrival Skew Matrix Straggler Localization (Ex 15-6 & Ex 15-12)
     enqueue_ts_ms = [10.0, 10.0, 10.0, 10.0, 10.0, 12.0, 10.0, 10.0]
     ring_xfer_ms = 0.40
     min_enqueue_ms = min(enqueue_ts_ms)
@@ -43,25 +43,25 @@ def compute_metrics() -> dict:
     healthy_wait_share_pct = round(arrival_skew_ms / healthy_observed_duration_ms * 100.0, 2)  # 83.33%
     healthy_xfer_share_pct = round(ring_xfer_ms / healthy_observed_duration_ms * 100.0, 2)  # 16.67%
 
-    # 3. TrainMover Virtual Rank Sub-Second Hot-Swap Latency Breakdown (Ex 20-6 & Ex 20-12)
+    # 3. TrainMover Virtual Rank Sub-Second Hot-Swap Latency Breakdown (Ex 15-6 & Ex 15-12)
     qp_remap_sec = 0.08
     rdma_state_push_sec = 0.60
     trainmover_total_recovery_sec = round(qp_remap_sec + rdma_state_push_sec, 2)  # 0.68 s
     global_restart_sec = 300.0
     trainmover_speedup_x = round(global_restart_sec / trainmover_total_recovery_sec, 2)  # 441.18x
 
-    # 4. Four Benchmark Gaming De-biasing & Canary Gate Verifications (Ex 20-5, Ex 20-7, Ex 20-8 & Ex 20-12)
+    # 4. Four Benchmark Gaming De-biasing & Canary Gate Verifications (Ex 15-5, Ex 15-7, Ex 15-8 & Ex 15-12)
     # (1) Candidate A=[10, 200], B=[50, 50] on Base=[100, 100]: 5.25x arith mean vs 0.9524x true equal-freq speedup
     arith_speedup_a = round((100.0 / 10.0 + 100.0 / 200.0) / 2.0, 2)  # 5.25x
     true_speedup_a_equal_freq = round((100.0 + 100.0) / (10.0 + 200.0), 4)  # 0.9524x (regression!)
-    # Exercise 20-7 variant: X=[10,240], Y=[40,60] on Base=[80,120]
+    # Exercise 15-7 variant: X=[10,240], Y=[40,60] on Base=[80,120]
     arith_speedup_x = round((80.0 / 10.0 + 120.0 / 240.0) / 2.0, 2)  # 4.25x
     arith_speedup_y = round((80.0 / 40.0 + 120.0 / 60.0) / 2.0, 2)  # 2.00x
     true_speedup_x_equal_freq = round((80.0 + 120.0) / (10.0 + 240.0), 2)  # 0.80x
     true_speedup_y_equal_freq = round((80.0 + 120.0) / (40.0 + 60.0), 2)  # 2.00x
     crossover_p_x_beats_y = round(6.0 / 7.0, 4)  # 0.8571 (85.71%)
 
-    # (2) Linear thermal drift: delta = 8.0 us -> AABB bias = -16.0 us (and Ex 20-8 delta = 12.0 us -> -24.0 us) vs ABBA = 0.0 us
+    # (2) Linear thermal drift: delta = 8.0 us -> AABB bias = -16.0 us (and Ex 15-8 delta = 12.0 us -> -24.0 us) vs ABBA = 0.0 us
     aabb_bias_8us_drift = round(-2.0 * 8.0, 2)  # -16.0 us
     aabb_systematic_bias_us = round(-2.0 * 12.0, 2)  # -24.0 us
     abba_systematic_bias_us = 0.0

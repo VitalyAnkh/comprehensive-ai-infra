@@ -18,8 +18,8 @@ def main() -> None:
     assert actual["cluster_reliability_100k"]["ettr_fast_pct"] == 92.34
     assert actual["cluster_reliability_100k"]["ettr_traditional_linear_pct"] == 49.83
     assert actual["cluster_reliability_100k"]["ettr_fast_linear_pct"] == 92.55
-    assert actual["cluster_reliability_100k"]["ettr_traditional_exact_pct"] == 58.92
-    assert actual["cluster_reliability_100k"]["ettr_fast_exact_pct"] == 92.69
+    assert actual["cluster_reliability_100k"]["ettr_traditional_exact_pct"] == 58.78
+    assert actual["cluster_reliability_100k"]["ettr_fast_exact_pct"] == 92.70
     assert actual["cluster_reliability_100k"]["min_spares_999"] == 40
     assert actual["abft_sdc_defense"]["abft_overhead_4096_pct"] < 0.5
     assert actual["abft_sdc_defense"]["detected_sdc_coord"] == [2, 3]

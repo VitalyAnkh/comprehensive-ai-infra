@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Experiment 16-02: DSec sandbox memory ledger, virtio-pmem DAX struct page tax, and I19 audit drain."""
+"""Experiment 16-02: DSec sandbox memory ledger, virtio-pmem DAX struct page tax, and Section 16.3.1 audit log drain."""
 from __future__ import annotations
 
 import json
@@ -28,7 +28,7 @@ def compute_metrics() -> dict:
     ro_with_dax_total_gb = ro_image_gb + total_guest_struct_page_gb  # 864.0 GB
     net_host_ram_saved_gb = ro_no_dax_total_gb - ro_with_dax_total_gb  # 2,400.0 GB
 
-    # 2. I19 audit log outage backlog and net drain time (Example 16-6 & Exercise 16-10)
+    # 2. Section 16.3.1 audit log outage backlog and net drain time (Example 16-6 & Exercise 16-10)
     r_in_kibs = 10 * 20 * 2  # 400 KiB/s
     t_out_s = 120.0
     backlog_kib = r_in_kibs * t_out_s  # 48,000 KiB
@@ -55,7 +55,7 @@ def compute_metrics() -> dict:
             "ro_with_dax_total_gb": ro_with_dax_total_gb,
             "net_host_ram_saved_gb": net_host_ram_saved_gb,
         },
-        "i19_audit_drain": {
+        "audit_log_drain": {
             "r_in_kibs": r_in_kibs,
             "backlog_kib": backlog_kib,
             "backlog_mib": backlog_mib,

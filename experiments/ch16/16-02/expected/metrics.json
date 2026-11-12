@@ -16,7 +16,7 @@
     "ro_with_dax_total_gb": 864.0,
     "net_host_ram_saved_gb": 2400.0
   },
-  "i19_audit_drain": {
+  "audit_log_drain": {
     "r_in_kibs": 400,
     "backlog_kib": 48000.0,
     "backlog_mib": 46.875,

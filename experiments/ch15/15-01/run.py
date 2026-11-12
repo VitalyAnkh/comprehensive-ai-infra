@@ -25,7 +25,7 @@ def compute_metrics() -> dict:
     r_traditional_sec = 300.0
     tau_exact_a = math.sqrt(2.0 * c_traditional_sec * m_cluster_sec)
     tau_opt_traditional_sec = round(tau_exact_a, 2)  # 804.98 s
-    # (a) Steady-state production ETTR benchmark (Ex 20-1 & figure-data.json): 63.22% vs 92.34%
+    # (a) Steady-state production ETTR benchmark (Ex 15-1 & figure-data.json): 63.22% vs 92.34%
     ettr_traditional_pct = 63.22
     # (b) First-order linear approximation: (tau/(tau+C)) * (1 - (0.5*tau + R)/M) -> 49.83% (49.81% with rounded tau)
     ettr_traditional_linear_pct = round(
@@ -34,8 +34,13 @@ def compute_metrics() -> dict:
         * 100.0,
         2,
     )  # 49.83%
-    # (c) Cycle-time amortized ratio -> 58.92%
-    ettr_traditional_exact_pct = 58.92
+    # (c) Renewal-cycle expectation ratio: tau / ((tau + C) * (1 + (R + 0.5*tau)/M)) -> 58.78%
+    ettr_traditional_exact_pct = round(
+        tau_exact_a
+        / ((tau_exact_a + c_traditional_sec) * (1.0 + (r_traditional_sec + 0.5 * tau_exact_a) / m_cluster_sec))
+        * 100.0,
+        2,
+    )  # 58.78%
 
     c_fast_sec = 5.0
     r_trainmover_sec = 5.0
@@ -47,8 +52,13 @@ def compute_metrics() -> dict:
         * (1.0 - (tau_exact_b / 2.0 + r_trainmover_sec) / m_cluster_sec)
         * 100.0,
         2,
-    )  # 92.56%
-    ettr_fast_exact_pct = 92.69
+    )  # 92.55%
+    ettr_fast_exact_pct = round(
+        tau_exact_b
+        / ((tau_exact_b + c_fast_sec) * (1.0 + (r_trainmover_sec + 0.5 * tau_exact_b) / m_cluster_sec))
+        * 100.0,
+        2,
+    )  # 92.70%
 
     # 2. Hot-Spare Pool sizing via Poisson repair queue (lambda = 2.0 /h, MTTR = 12.0 h -> L = 24.0)
     lam_per_hour = 2.0

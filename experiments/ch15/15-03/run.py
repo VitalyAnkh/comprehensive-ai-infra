@@ -12,7 +12,7 @@ RESULTS_PATH = ROOT / "results" / "summary.json"
 
 
 def compute_metrics() -> dict:
-    # 1. Worked Example 20-7(1): Oobleck 32 pipelines x 8 stages, F = 2 node failures
+    # 1. Worked Example 15-7(1): Oobleck 32 pipelines x 8 stages, F = 2 node failures
     num_pipelines = 32
     stages_per_pipeline = 8
     failed_nodes = 2
@@ -29,13 +29,13 @@ def compute_metrics() -> dict:
     )
     parachute_retained_throughput_pct = round(100.0 * healthy_pipes / num_pipelines, 2)
 
-    # Exercise 20-13: 64 pipelines x 8 stages (512 nodes), F = 4 failed nodes, degraded eff = 0.82
+    # Exercise 15-13: 64 pipelines x 8 stages (512 nodes), F = 4 failed nodes, degraded eff = 0.82
     ex13_para_pct = round(100.0 * (64 - 4) / 64, 2)
     ex13_oob_exact = (60 * 1.00 + 4 * 0.82) / 64
     ex13_oob_pct = round(100.0 * ex13_oob_exact, 2)
     ex13_saved_node_hours_per_day = round(512 * (ex13_oob_exact - (60 / 64)) * 24.0, 2)
 
-    # 2. Worked Example 20-7(2): Bursty Poisson (Ca=1.0, Cs=1.2) vs. Uniform (Ca=0, Cs=0) at rho = 0.85
+    # 2. Worked Example 15-7(2): Bursty Poisson (Ca=1.0, Cs=1.2) vs. Uniform (Ca=0, Cs=0) at rho = 0.85
     service_ms = 120.0
     prefill_ms = 80.0
     slo_ttft_ms = 500.0
@@ -61,7 +61,7 @@ def compute_metrics() -> dict:
     odds = target_wq_ms / (var_factor * service_ms)
     max_safe_utilization_pct = round(100.0 * (odds / (1.0 + odds)), 2)
 
-    # Exercise 20-14: rho = 0.80, Ts = 100.0 ms, T_prefill = 60.0 ms, Ca = Cs = 1.5
+    # Exercise 15-14: rho = 0.80, Ts = 100.0 ms, T_prefill = 60.0 ms, Ca = Cs = 1.5
     ex14_wq_bursty_ms = round((0.80 / 0.20) * (0.5 * (1.5 ** 2 + 1.5 ** 2)) * 100.0, 2)
     ex14_ttft_bursty_ms = round(60.0 + ex14_wq_bursty_ms, 2)
     ex14_inflation_x = round(ex14_ttft_bursty_ms / 60.0, 2)
@@ -79,9 +79,9 @@ def compute_metrics() -> dict:
             "reconfig_speedup_x": reconfig_speedup_x,
             "oobleck_retained_throughput_pct": oobleck_retained_throughput_pct,
             "parachute_retained_throughput_pct": parachute_retained_throughput_pct,
-            "ex20_13_parachute_pct": ex13_para_pct,
-            "ex20_13_oobleck_pct": ex13_oob_pct,
-            "ex20_13_saved_node_hours_per_day": ex13_saved_node_hours_per_day,
+            "ex15_13_parachute_pct": ex13_para_pct,
+            "ex15_13_oobleck_pct": ex13_oob_pct,
+            "ex15_13_saved_node_hours_per_day": ex13_saved_node_hours_per_day,
         },
         "bursty_goodput_vs_uniform": {
             "rho": rho,
@@ -97,9 +97,9 @@ def compute_metrics() -> dict:
             "goodput_bursty_req_s": goodput_bursty_req_s,
             "goodput_drop_pct": goodput_drop_pct,
             "max_safe_utilization_pct": max_safe_utilization_pct,
-            "ex20_14_wq_bursty_ms": ex14_wq_bursty_ms,
-            "ex20_14_ttft_bursty_ms": ex14_ttft_bursty_ms,
-            "ex20_14_inflation_x": ex14_inflation_x,
+            "ex15_14_wq_bursty_ms": ex14_wq_bursty_ms,
+            "ex15_14_ttft_bursty_ms": ex14_ttft_bursty_ms,
+            "ex15_14_inflation_x": ex14_inflation_x,
         },
     }
 

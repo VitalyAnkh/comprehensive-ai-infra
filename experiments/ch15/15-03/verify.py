@@ -19,9 +19,9 @@ def main() -> None:
     assert oob["reconfig_speedup_x"] == 206.90
     assert oob["oobleck_retained_throughput_pct"] == 98.75
     assert oob["parachute_retained_throughput_pct"] == 93.75
-    assert oob["ex20_13_parachute_pct"] == 93.75
-    assert oob["ex20_13_oobleck_pct"] == 98.88
-    assert oob["ex20_13_saved_node_hours_per_day"] == 629.76
+    assert oob["ex15_13_parachute_pct"] == 93.75
+    assert oob["ex15_13_oobleck_pct"] == 98.88
+    assert oob["ex15_13_saved_node_hours_per_day"] == 629.76
 
     gp = actual["bursty_goodput_vs_uniform"]
     assert gp["ttft_uniform_ms"] == 80.00
@@ -33,9 +33,9 @@ def main() -> None:
     assert gp["goodput_bursty_req_s"] == 3.45
     assert gp["goodput_drop_pct"] == 51.27
     assert gp["max_safe_utilization_pct"] == 60.04
-    assert gp["ex20_14_wq_bursty_ms"] == 900.00
-    assert gp["ex20_14_ttft_bursty_ms"] == 960.00
-    assert gp["ex20_14_inflation_x"] == 16.00
+    assert gp["ex15_14_wq_bursty_ms"] == 900.00
+    assert gp["ex15_14_ttft_bursty_ms"] == 960.00
+    assert gp["ex15_14_inflation_x"] == 16.00
     print("Experiment 15-03 verified successfully.")
 
 

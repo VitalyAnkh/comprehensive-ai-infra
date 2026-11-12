@@ -5,8 +5,8 @@
     "token_length": 200,
     "target_fpr": 1e-06,
     "achieved_tpr_pct": 99.2,
-    "delta_ppl": 0.006,
-    "tp_seed_sync_bytes_per_step": 8
+    "delta_ppl": 0.008,
+    "tp_seed_sync_bytes_per_step": 16
   },
   "safetensors_supply_chain": {
     "page_alignment_bytes": 4096,

@@ -1,25 +1,52 @@
 {
-  "chapter": "ch15",
   "sources": [
     {
-      "path": "manuscripts/15-集群可靠性与基准评测.md",
-      "sha256": "4488b7e5fa4255dafd6458ae0d80c2641acde0ff2be2bcd93adcb9de8885b944"
+      "path": "manuscripts/ch15/build.py",
+      "sha256": "be04a22c247f9cb4c6c8ebf54da4e9ef372098bbac13b47b01031eaef9e7be4e"
+    },
+    {
+      "path": "manuscripts/ch15/figure-data.json",
+      "sha256": "d7745a899308886ed30ee047f0fa2f22fb5b95380962617d15f7a2cca436f96e"
     },
     {
       "path": "manuscripts/ch15/figure-index.json",
-      "sha256": "cf15862b96a62cd98e456d20dc01196f2203ee2cf91590e6a3ddbf47c2d0eae1"
+      "sha256": "7f9985ff361f74ee77c4ce5f1d8015e88a4e176f459ebafa0d3a6cfef138d174"
+    },
+    {
+      "path": "calculations/results/ch15-fleet-reliability-profiler.json",
+      "sha256": "16317f034d88c108e9f6f14b96c3eb018cd02e045ac8ad633178ef3927566f9b"
+    },
+    {
+      "path": "case-studies/collective-paths-and-diagnosis.md",
+      "sha256": "6b6e75e04cc76dffb7ef114a3d0dd3aa2b084b58f8527396432ad57ca4513e99"
+    },
+    {
+      "path": "case-studies/optimization-evaluation-and-deployment.md",
+      "sha256": "3bc4fcaa406a7413546dff1f7545ef1463cc832bea955583db299d2132dd1031"
     },
     {
       "path": "experiments/ch15/15-01/run.py",
-      "sha256": "1578709dfc6b68d5213170b2add43450a19018ecf61d7dc2003a2a587763a9a4"
+      "sha256": "eea796ad510904574f580eff367818957f1fd95efafb87fefcebfee206467018"
     },
     {
       "path": "experiments/ch15/15-02/run.py",
-      "sha256": "349d1b3868918b93a2d188153acc48cb74499dff0a4fc2ad8175e5082420f9b4"
+      "sha256": "78615c31d07faabc97829a41de0c3eb7848339917eace731f67770d34adf54f8"
     },
     {
       "path": "experiments/ch15/15-03/run.py",
-      "sha256": "be7571cb84021beda51cb7dcbc854a8979201826fea86984f33f6152ac5430b1"
+      "sha256": "841b407f1e9a970d71fd27e14577b90130cd643ea32f16b154c7f10adf893591"
+    },
+    {
+      "path": "experiments/ch15/15-04/run.py",
+      "sha256": "5b23e7cf3e21b260c753a5ed3c9b542b077eaebd0cf0e3b6381f346667828fd3"
+    },
+    {
+      "path": "experiments/ch15/15-05/run.py",
+      "sha256": "55b3f43fbb1731528c13aff026f9c14bce41870c2a15a6dd3407fe507be65325"
+    },
+    {
+      "path": "manuscripts/15-集群可靠性与基准评测.md",
+      "sha256": "e7ae3d6e7f66dbadbc7de9621e1ed0914c65086dd43d7cde3594150bffc4f103"
     }
   ]
 }

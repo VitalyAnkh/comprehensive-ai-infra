@@ -1,0 +1,45 @@
+{
+  "experiment_id": "15-05",
+  "wait_chain_8rank": {
+    "root_cause_rank": 5,
+    "victim_ranks_stripped": 7,
+    "root_enter_ms": 200.0,
+    "collective_exit_ms": 204.0,
+    "true_wire_transfer_ms": 4.0,
+    "root_host_stall_ms": 140.0,
+    "root_apparent_nccl_ms": 4.0,
+    "max_victim_apparent_nccl_ms": 144.0,
+    "apparent_nccl_ms_by_rank": {
+      "0": 144.0,
+      "1": 144.0,
+      "2": 144.0,
+      "3": 144.0,
+      "4": 142.0,
+      "5": 4.0,
+      "6": 144.0,
+      "7": 142.0
+    }
+  },
+  "monarch_vs_spmd": {
+    "monarch_isolation_seconds": 0.85,
+    "spmd_global_restart_seconds": 142.0,
+    "monarch_vs_spmd_speedup_x": 167.1
+  },
+  "forensics_capstones": {
+    "ex15_17_kineto_multihop": {
+      "root_cause_rank": 2,
+      "rank3_tp_victim_wait_ms": 85.0,
+      "rank6_pp_victim_wait_ms": 85.0,
+      "healthy_dp_victim_wait_ms": 85.0,
+      "corrupted_step_ms": 165.0
+    },
+    "ex15_18_flight_recorder": {
+      "ring_capacity_entries": 2048,
+      "incident_a_divergent_rank": 4,
+      "incident_a_diagnosis": "COLL_TYPE_MISMATCH_DEADLOCK",
+      "incident_b_seq": 2099,
+      "incident_b_ring_slot": 51,
+      "ring_retention_window_sec": 6.4
+    }
+  }
+}
