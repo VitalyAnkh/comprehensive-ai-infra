@@ -1,0 +1,27 @@
+{
+  "experiment_id": "17-05",
+  "distillation_32bit_ledger": {
+    "distill_tokens": 200000000000,
+    "qwen3_vocab_size": 151936,
+    "deepseek_v3_vocab_size": 129280,
+    "top_k_logits": 128,
+    "qwen_200b_full_logits_bf16_pb": 60.7744,
+    "deepseek_200b_full_logits_bf16_pb": 51.712,
+    "qwen_100b_full_logits_bf16_pb": 30.3872,
+    "top128_unpacked_6b_tb": 153.6,
+    "top128_bitpacked_32bit_tb": 102.4,
+    "top128_compression_vs_full_x": 593.5,
+    "codec_token_id_lossless": true,
+    "codec_max_abs_err": 0.125,
+    "offline_vs_online_teacher_crossover_epochs": 1.88,
+    "minitron_tensor_core_128_aligned": true,
+    "minitron_pruned_layers": 48
+  },
+  "bounded_staleness_agentic_rl": {
+    "max_staleness_version_lag": 3,
+    "agentic_rl_sync_gpu_idle_pct": 68.0,
+    "sync_updates_per_hour": 4.5,
+    "async_bounded_updates_per_hour": 11.88,
+    "agentic_rl_async_bounded_speedup_x": 2.64
+  }
+}

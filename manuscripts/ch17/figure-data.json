@@ -1,12 +1,13 @@
 {
-  "chapter": 18,
-  "title": "大规模后训练（RLVR）、异步强化学习与推理时扩展系统",
+  "chapter": 17,
+  "title": "后训练与强化学习系统",
   "ppo_vs_grpo_32b": {
     "model_params_b": 32,
     "train_state_per_param_bytes": 16,
     "infer_state_per_param_bytes": 2,
     "ppo_4model_state_gb": 1152,
     "grpo_2model_state_gb": 576,
+    "dapo_kl_free_state_gb": 512,
     "state_saving_pct": 50.0,
     "group_size_G": [8, 64],
     "rollout_wall_time_share_pct": [70, 90]
@@ -30,6 +31,7 @@
     "two_slot_first_long_prob": 0.25,
     "serial_step_s": 60,
     "stream_trainer_step_s": 55,
+    "overmigration_counterexample_s": 62,
     "per_microbatch_avg_biased": 2.0,
     "total_token_normalized_avg": 2.5
   },
@@ -83,5 +85,33 @@
     "unclipped_prod_is": 9.3132,
     "vtrace_rho_bar": 1.2,
     "vtrace_c_bar": 1.0
+  },
+  "sft_varlen_and_dpo": {
+    "max_seq_len": 65536,
+    "mean_seq_len": 4200,
+    "pad_to_max_mfu_pct": 13.6,
+    "varlen_unbalanced_mfu_pct": 41.2,
+    "varlen_zigzag_mfu_pct": 56.4,
+    "throughput_speedup_x": 4.15,
+    "dpo_ref_cache_bytes_per_pair": 8,
+    "dpo_compute_saving_pct": 25.0
+  },
+  "minitron_32bit_distill": {
+    "qwen3_vocab_size": 151936,
+    "deepseek_v3_vocab_size": 129280,
+    "distill_tokens": 200000000000,
+    "top_k": 128,
+    "qwen3_full_logits_pb": 60.7744,
+    "deepseek_full_logits_pb": 51.712,
+    "top128_unpacked_6b_tb": 153.6,
+    "top128_bitpacked_32bit_tb": 102.4,
+    "compression_vs_full_x": 593.5,
+    "offline_vs_online_crossover_epochs": 1.88
+  },
+  "async_agentic_rl_32turn": {
+    "turns": 32,
+    "sync_gpu_idle_pct": 68.0,
+    "max_staleness_delta": 3,
+    "async_bounded_speedup_x": 2.64
   }
 }

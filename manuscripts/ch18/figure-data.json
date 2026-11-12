@@ -1,8 +1,8 @@
 {
-  "chapter": 21,
-  "title": "自主智能体基础设施（Agentic Infra）、Computer Use 沙箱与分层 KV 记忆底座",
+  "chapter": 18,
+  "title": "自主智能体系统",
   "agentic_worm_40turns": {
-    "source": "experiments/ch21/21-01/run.py (40-Turn ReAct / SWE-Agent WORM Loop)",
+    "source": "experiments/ch18/18-01/run.py (40-Turn ReAct / SWE-Agent WORM Loop)",
     "turns_k": 40,
     "initial_prompt_tokens": 2000,
     "action_tokens_per_turn": 200,
@@ -17,7 +17,7 @@
     "prefill_to_decode_ratio": 205.0
   },
   "tool_wait_phase_diagram": {
-    "source": "experiments/ch21/21-01/run.py (Tool-Wait Hiatus Retain vs Offload vs Recompute)",
+    "source": "experiments/ch18/18-01/run.py (Tool-Wait Hiatus Retain vs Offload vs Recompute)",
     "prefix_tokens": 65536,
     "kv_kib_per_token": 144.0,
     "kv_size_gib": 9.0,
@@ -31,7 +31,7 @@
     "ttft_speedup_vs_recompute_x": 2.67
   },
   "kv_global_router_and_cachegen": {
-    "source": "experiments/ch21/21-01/run.py (NVIDIA Dynamo / SGLang HiCache + CacheGen)",
+    "source": "experiments/ch18/18-01/run.py (NVIDIA Dynamo / SGLang HiCache + CacheGen)",
     "ttft_node_a_ms": 170.0,
     "ttft_node_b_ms": 510.0,
     "ttft_node_c_ms": 320.0,
@@ -48,7 +48,7 @@
     "critical_raw_bw_gib_s": 18.0
   },
   "firecracker_cow_and_mcts_tree": {
-    "source": "experiments/ch21/21-02/run.py (Firecracker MicroVM 12 ms CoW + MCTS Tree Rollback)",
+    "source": "experiments/ch18/18-02/run.py (Firecracker MicroVM 12 ms CoW + MCTS Tree Rollback)",
     "cold_boot_ms": 1500.0,
     "vmm_clone_ms": 3.2,
     "uffd_hydrate_ms": 8.8,
@@ -62,8 +62,8 @@
     "ram_saving_pct": 89.06,
     "total_sync_rollback_ms": 8.5
   },
-  "locked_case_i19_telemetry_drain": {
-    "source": "experiments/ch21/21-02/run.py (Locked Case I19 Audit Telemetry Backlog Overflow & Drain)",
+  "audit_telemetry_backlog_drain": {
+    "source": "experiments/ch18/18-02/run.py (Example 18-4 Audit Telemetry Backlog Overflow & Drain)",
     "telemetry_rate_kib_s": 400.0,
     "buffer_cap_mib": 32.0,
     "time_to_overflow_sec": 81.92,
@@ -75,7 +75,7 @@
     "drain_time_sec": 76.92
   },
   "mcp_dynamic_tool_rag": {
-    "source": "experiments/ch21/21-02/run.py (MCP Dynamic Tool RAG & HippoRAG 2)",
+    "source": "experiments/ch18/18-02/run.py (MCP Dynamic Tool RAG & HippoRAG 2)",
     "total_mcp_tools": 1000,
     "tokens_per_tool_schema": 180,
     "full_schema_tokens": 180000,
@@ -85,7 +85,7 @@
     "schema_compression_x": 125.0
   },
   "gui_roi_and_speculative_dag": {
-    "source": "experiments/ch21/21-03/run.py (GUI Incremental ROI Vision Cache & Speculative Tool DAG)",
+    "source": "experiments/ch18/18-03/run.py (GUI Incremental ROI Vision Cache & Speculative Tool DAG)",
     "steps": 30,
     "naive_total_tokens": 180000,
     "opt_total_tokens": 24600,
@@ -99,5 +99,34 @@
     "dag_speedup_x": 1.61,
     "dag_latency_reduction_pct": 37.88,
     "breakeven_hit_prob_pct": 1.25
+  },
+  "xgrammar_bitmask_64": {
+    "source": "calculations/results/ch18-agent-worm-grammar.json & experiments/ch18/18-04/run.py",
+    "qwen3_vocab_size": 151936,
+    "deepseek_v3_vocab_size": 129280,
+    "qwen3_uint32_words": 4748,
+    "qwen3_bytes_per_req": 18992,
+    "deepseek_uint32_words": 4040,
+    "deepseek_bytes_per_req": 16160,
+    "batch_64_mib": 1.159,
+    "pcie_h2d_us": 23.59,
+    "gpu_decode_step_ms": 8.5,
+    "naive_sync_cpu_ms": 38.4,
+    "naive_throughput_loss_pct": 81.9,
+    "xgrammar_async_cpu_ms": 2.1,
+    "xgrammar_throughput_loss_pct": 0.0
+  },
+  "multi_agent_dag_and_speculative_readonly": {
+    "source": "calculations/results/ch18-agent-worm-grammar.json & experiments/ch18/18-05/run.py",
+    "fanout_12": 12,
+    "fanout_16_required_branch_percentile_pct": 99.937,
+    "branch_p99_s": 6.2,
+    "barrier_12_p99_s": 19.8,
+    "quorum_10_of_12_p99_s": 7.4,
+    "quorum_tail_reduction_pct": 62.6,
+    "readonly_tool_ms": 245.0,
+    "readonly_hit_prob": 0.86,
+    "readonly_saved_ms": 210.7,
+    "readonly_extra_query_overhead_pct": 16.3
   }
 }

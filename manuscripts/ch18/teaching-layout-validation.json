@@ -1,116 +1,134 @@
-{
-  "chapter": "ch18",
-  "figure_count": 18,
-  "all_passed": true,
-  "total_warnings": 0,
-  "figures": [
-    {
-      "figure": "18-1",
-      "file": "ch18-single-turn-chat-vs-multi-turn-agent-worm-loop.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "18-2",
-      "file": "ch18-tool-wait-hbm-retain-recompute-offload-phase-diagram.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "18-3",
-      "file": "ch18-four-tier-kv-cache-hierarchy-dynamo-lmcache.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "18-4",
-      "file": "ch18-kv-aware-global-radix-router-ttft-tradeoff.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "18-5",
-      "file": "ch18-cachegen-anchor-delta-entropy-kv-streaming.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "18-6",
-      "file": "ch18-microvm-snapshot-cow-userfaultfd-12ms-fork.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "18-7",
-      "file": "ch18-synchronized-kv-and-sandbox-mcts-tree-forking.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "18-8",
-      "file": "ch18-computer-use-gui-webrtc-frame-diff-pipeline.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "18-9",
-      "file": "ch18-mcp-gateway-dynamic-tool-rag-and-auth-isolation.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "18-10",
-      "file": "ch18-idempotent-outbox-and-speculative-tool-prefetch.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "18-11",
-      "file": "ch18-i19-telemetry-backlog-buffer-overflow-and-drain.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "18-12",
-      "file": "ch18-prompt-injection-taint-tracking-dual-llm-firewall.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "18-13",
-      "file": "ch18-hipporag2-graph-vector-episodic-memory-consolidation.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "18-14",
-      "file": "ch18-multi-agent-dag-scheduler-and-token-budget-allocation.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "18-15",
-      "file": "ch18-agentic-cluster-cpu-gpu-sandbox-pool-sizing.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "18-16",
-      "file": "ch18-autonomous-agent-infrastructure-full-stack-map.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "18-17",
-      "file": "ch18-speculative-tool-execution-and-rollback-dag.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "18-18",
-      "file": "ch18-gui-incremental-region-of-interest-vision-token-cache.svg",
-      "passed": true,
-      "warnings": []
-    }
-  ]
-}
+[
+  {
+    "figure": "ch18-single-turn-chat-vs-multi-turn-agent-worm-loop",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch18-tool-wait-hbm-retain-recompute-offload-phase-diagram",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch18-four-tier-kv-cache-hierarchy-dynamo-lmcache",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch18-kv-aware-global-radix-router-ttft-tradeoff",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch18-cachegen-anchor-delta-entropy-kv-streaming",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch18-microvm-snapshot-cow-userfaultfd-12ms-fork",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch18-synchronized-kv-and-sandbox-mcts-tree-forking",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch18-computer-use-gui-webrtc-frame-diff-pipeline",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch18-mcp-gateway-dynamic-tool-rag-and-auth-isolation",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch18-idempotent-outbox-and-speculative-tool-prefetch",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch18-audit-telemetry-backlog-buffer-overflow-and-drain",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch18-prompt-injection-taint-tracking-dual-llm-firewall",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch18-hipporag2-graph-vector-episodic-memory-consolidation",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch18-multi-agent-dag-scheduler-and-token-budget-allocation",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch18-agentic-cluster-cpu-gpu-sandbox-pool-sizing",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch18-autonomous-agent-infrastructure-full-stack-map",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch18-speculative-tool-execution-and-rollback-dag",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch18-gui-incremental-region-of-interest-vision-token-cache",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch18-xgrammar-context-independent-token-bitmask-cache",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch18-cpu-pda-async-bitmask-and-gpu-logits-overlap-timeline",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch18-multi-agent-dag-fanout-tail-latency-amplification-curve",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch18-speculative-readonly-tool-execution-and-saga-compensation",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  }
+]

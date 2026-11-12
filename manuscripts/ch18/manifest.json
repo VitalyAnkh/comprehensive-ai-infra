@@ -1,233 +1,284 @@
 {
-  "chapter": "ch18",
   "outputs": [
     {
-      "path": "manuscripts/ch18/ch18-single-turn-chat-vs-multi-turn-agent-worm-loop.svg",
-      "sha256": "de54cc9bd7f929add4bf1aedee423c70a10e38124e7d8db196c03d71f67eefb4"
+      "path": "manuscripts/ch18/ch18-agentic-cluster-cpu-gpu-sandbox-pool-sizing.pdf",
+      "sha256": "6726ac85b598e93340f638d2701a37c8c1e2b28890beed3370c05d6d86233d61"
     },
     {
-      "path": "manuscripts/ch18/ch18-single-turn-chat-vs-multi-turn-agent-worm-loop.png",
-      "sha256": "7f3e2330517500924e24e6ae540bc1a6f938f88c4baa5f6c57ad25626f2f53aa"
+      "path": "manuscripts/ch18/ch18-agentic-cluster-cpu-gpu-sandbox-pool-sizing.png",
+      "sha256": "66c227553e763fbb47f2f51562e5ef2d9c9abf806b14e6f41727da376e59a4f4"
     },
     {
-      "path": "manuscripts/ch18/ch18-single-turn-chat-vs-multi-turn-agent-worm-loop.pdf",
-      "sha256": "2e94b79d9059b829f42803e15f5dfa1d4f8255c03fb14d9d2bb99595f63e9956"
+      "path": "manuscripts/ch18/ch18-agentic-cluster-cpu-gpu-sandbox-pool-sizing.svg",
+      "sha256": "4388782ce7d960deae41fc2ceaf9b584b8c20200ffa3e390332ba410822aa547"
     },
     {
-      "path": "manuscripts/ch18/ch18-tool-wait-hbm-retain-recompute-offload-phase-diagram.svg",
-      "sha256": "f39c26c2effaf63e505339c0c3a61d31775c74e9b6e16966df6a887aca1260f5"
+      "path": "manuscripts/ch18/ch18-audit-telemetry-backlog-buffer-overflow-and-drain.pdf",
+      "sha256": "6704e02b02f3f481741b03c2f7a5b6503df0ec14c2ec9488122043888ed72aac"
     },
     {
-      "path": "manuscripts/ch18/ch18-tool-wait-hbm-retain-recompute-offload-phase-diagram.png",
-      "sha256": "fdfd463dba5373b04d38f2077e30010b0ba07f45ebb94954707ed4705b146700"
+      "path": "manuscripts/ch18/ch18-audit-telemetry-backlog-buffer-overflow-and-drain.png",
+      "sha256": "3b4c7b6f00ea4074eaa4b4800fe4a83f0bbb7051acd25b225e96df613f66daaf"
     },
     {
-      "path": "manuscripts/ch18/ch18-tool-wait-hbm-retain-recompute-offload-phase-diagram.pdf",
-      "sha256": "0b3c8408118a3e935f65e42ace1c1ea486d5dc5f1f8c56f5ffa8ab3a530fc3ad"
+      "path": "manuscripts/ch18/ch18-audit-telemetry-backlog-buffer-overflow-and-drain.svg",
+      "sha256": "4f21dfc9c5184fb6bfb2c850acb07ac9b18df9d87496d74aa5c6426aae64d336"
     },
     {
-      "path": "manuscripts/ch18/ch18-four-tier-kv-cache-hierarchy-dynamo-lmcache.svg",
-      "sha256": "d8596d0815f4ba09968caddb11ee2b242bdf3d47991a7bd58ab4481d093eb5d5"
+      "path": "manuscripts/ch18/ch18-autonomous-agent-infrastructure-full-stack-map.pdf",
+      "sha256": "f6aabb1f5bf9625dd3179cdc729bc33baac5d6adfa21a958f501caca2080c25c"
+    },
+    {
+      "path": "manuscripts/ch18/ch18-autonomous-agent-infrastructure-full-stack-map.png",
+      "sha256": "44fac7f25c7a37fe17fbdf16916f0058301a2a4500fd2657361217fda4c67f99"
+    },
+    {
+      "path": "manuscripts/ch18/ch18-autonomous-agent-infrastructure-full-stack-map.svg",
+      "sha256": "24adf016f8f5bf63c6ee9bd46d3aa0d50ce5f9b43f9b995dfcfefa232ee28e96"
+    },
+    {
+      "path": "manuscripts/ch18/ch18-cachegen-anchor-delta-entropy-kv-streaming.pdf",
+      "sha256": "a1e16de2968a0daed1e8ce02109eac0735cf710fcad5eba01fa56844746bd64f"
+    },
+    {
+      "path": "manuscripts/ch18/ch18-cachegen-anchor-delta-entropy-kv-streaming.png",
+      "sha256": "042e325245ee11461ac1fb8cece86a824deec3fc175cafbec67b6fce82b606f8"
+    },
+    {
+      "path": "manuscripts/ch18/ch18-cachegen-anchor-delta-entropy-kv-streaming.svg",
+      "sha256": "8a71670170d6ce8d27c58cbd8d94e612c948b0403de6ec8f19c837106afc2b7c"
+    },
+    {
+      "path": "manuscripts/ch18/ch18-computer-use-gui-webrtc-frame-diff-pipeline.pdf",
+      "sha256": "f429cbf0d44b54b6fa3f578fc22efc741ad07326b6651a0bcd4f784a498075ef"
+    },
+    {
+      "path": "manuscripts/ch18/ch18-computer-use-gui-webrtc-frame-diff-pipeline.png",
+      "sha256": "a463e5294c23da0c8c9f87afc7b296603a84bedfacaf7709eef62f4603ecdf82"
+    },
+    {
+      "path": "manuscripts/ch18/ch18-computer-use-gui-webrtc-frame-diff-pipeline.svg",
+      "sha256": "119955e91ef0d952f0a51fac4384daf51738097e135dc647e9ca679e36d2ce81"
+    },
+    {
+      "path": "manuscripts/ch18/ch18-cpu-pda-async-bitmask-and-gpu-logits-overlap-timeline.pdf",
+      "sha256": "0fb7aeefdb856ccc6a53b086dd23b9a5e1e0bcaf98150ddd2150000e332a556c"
+    },
+    {
+      "path": "manuscripts/ch18/ch18-cpu-pda-async-bitmask-and-gpu-logits-overlap-timeline.png",
+      "sha256": "c2539a34ee1e665c1d90ca9a5dd1e750ce1b58240ca122dcc365a5bba38c586c"
+    },
+    {
+      "path": "manuscripts/ch18/ch18-cpu-pda-async-bitmask-and-gpu-logits-overlap-timeline.svg",
+      "sha256": "7fcc533175a85a902a80dc7a1060520a838fa05d47ff593959775170e61997a7"
+    },
+    {
+      "path": "manuscripts/ch18/ch18-four-tier-kv-cache-hierarchy-dynamo-lmcache.pdf",
+      "sha256": "da735db0577f13f1819fc13672beea037c2e3e2496142729a667b352a30e3ff6"
     },
     {
       "path": "manuscripts/ch18/ch18-four-tier-kv-cache-hierarchy-dynamo-lmcache.png",
       "sha256": "8f5675a323028263f753b12531e133baeaece2967747f92b68f02e7448e27758"
     },
     {
-      "path": "manuscripts/ch18/ch18-four-tier-kv-cache-hierarchy-dynamo-lmcache.pdf",
-      "sha256": "91c915aaf037e6fc13c322adf67c3eb6c69be31de4433559b9bfba536ed6a842"
+      "path": "manuscripts/ch18/ch18-four-tier-kv-cache-hierarchy-dynamo-lmcache.svg",
+      "sha256": "105931ce854edf98ae48e0f6c72756d06b1093a48e53262a4591453aaa8a704c"
     },
     {
-      "path": "manuscripts/ch18/ch18-kv-aware-global-radix-router-ttft-tradeoff.svg",
-      "sha256": "5f5d6fcc988df7b4a4b87ff9ead39460159d7bdfb540ab31d8936b07bc79e414"
+      "path": "manuscripts/ch18/ch18-gui-incremental-region-of-interest-vision-token-cache.pdf",
+      "sha256": "61e09844241acb53ab08beda27aaa184bf0f9095a6c9c047b6834b916d4d67a4"
     },
     {
-      "path": "manuscripts/ch18/ch18-kv-aware-global-radix-router-ttft-tradeoff.png",
-      "sha256": "e9dda4069a626c33ca78adf5aeb3a295bb3a1aa112851f3fd33264ceb64eedcf"
+      "path": "manuscripts/ch18/ch18-gui-incremental-region-of-interest-vision-token-cache.png",
+      "sha256": "b8efe8a2337588b277ed21ed21a202773f1cdb2d5c68ed26e2a2b833994de554"
     },
     {
-      "path": "manuscripts/ch18/ch18-kv-aware-global-radix-router-ttft-tradeoff.pdf",
-      "sha256": "28124f1b41cd372615486d3b69ab65607a20c6e8b2b1c5d50c282e35190770bb"
+      "path": "manuscripts/ch18/ch18-gui-incremental-region-of-interest-vision-token-cache.svg",
+      "sha256": "cfe18eb903a79ca8163e0deb9685885173a2f8ee80c0dba17621b89a35c401c0"
     },
     {
-      "path": "manuscripts/ch18/ch18-cachegen-anchor-delta-entropy-kv-streaming.svg",
-      "sha256": "6ae38a935060669c154ef7e95e57ac3d41244d5c2a68398ccc542e5abec48899"
+      "path": "manuscripts/ch18/ch18-hipporag2-graph-vector-episodic-memory-consolidation.pdf",
+      "sha256": "290beece5189582fb29b49842cf6d6ec2acf6baf02b472d9708b831e297aede5"
     },
     {
-      "path": "manuscripts/ch18/ch18-cachegen-anchor-delta-entropy-kv-streaming.png",
-      "sha256": "482f6b0e23d53bcde79759681a20e1d02e2ebc752faabf2ef15e0789aee6d647"
+      "path": "manuscripts/ch18/ch18-hipporag2-graph-vector-episodic-memory-consolidation.png",
+      "sha256": "7bcf6c843445c01066ab00e61c8e7f5eccdcdc18f4fab40d06cc1f2238ac362f"
     },
     {
-      "path": "manuscripts/ch18/ch18-cachegen-anchor-delta-entropy-kv-streaming.pdf",
-      "sha256": "d10cff17d1d3111c5c9c43efcf8c700af6106b4b1fa5d692c83565a1dc32ea7d"
+      "path": "manuscripts/ch18/ch18-hipporag2-graph-vector-episodic-memory-consolidation.svg",
+      "sha256": "1cf50962f8046664b446bbd2fbdbde7c9a93700660de1202f62899d74c41dde0"
     },
     {
-      "path": "manuscripts/ch18/ch18-microvm-snapshot-cow-userfaultfd-12ms-fork.svg",
-      "sha256": "5d4b5fb64622107910030a2566afeeb7d976d03acca1fadcf3f7b5cb32b43769"
-    },
-    {
-      "path": "manuscripts/ch18/ch18-microvm-snapshot-cow-userfaultfd-12ms-fork.png",
-      "sha256": "f465bda0ada4f34f609b1c116d2cca309213172252cc46f267070231a7959240"
-    },
-    {
-      "path": "manuscripts/ch18/ch18-microvm-snapshot-cow-userfaultfd-12ms-fork.pdf",
-      "sha256": "1c0ab0cf104cc0a6dc3fd227abae5fdc3115930652ca1c15018f3e921e767313"
-    },
-    {
-      "path": "manuscripts/ch18/ch18-synchronized-kv-and-sandbox-mcts-tree-forking.svg",
-      "sha256": "6c0a82a42f3a7c5298a207aa75567a4e52636891e6a0e1c86c1b46a2a1275d60"
-    },
-    {
-      "path": "manuscripts/ch18/ch18-synchronized-kv-and-sandbox-mcts-tree-forking.png",
-      "sha256": "0c8a2f824697fc697f5ccfa332fdad4afea0911c5534a6064fef4a27d5610dbd"
-    },
-    {
-      "path": "manuscripts/ch18/ch18-synchronized-kv-and-sandbox-mcts-tree-forking.pdf",
-      "sha256": "310a49d61f74c8465d544dce88e4f211ad2202446e2b69e74447ce260140c459"
-    },
-    {
-      "path": "manuscripts/ch18/ch18-computer-use-gui-webrtc-frame-diff-pipeline.svg",
-      "sha256": "fd095c8ff1ca8561d632babddd93023c32f253d716695aa8564e306e50d7c105"
-    },
-    {
-      "path": "manuscripts/ch18/ch18-computer-use-gui-webrtc-frame-diff-pipeline.png",
-      "sha256": "c90e31c8d716b84b77fa8bf4d94b5a972d059f204b346f325511ca356941bb06"
-    },
-    {
-      "path": "manuscripts/ch18/ch18-computer-use-gui-webrtc-frame-diff-pipeline.pdf",
-      "sha256": "db9dab4e54cd85a2f6de327494987c8456d6c728b74fb53ca01a3b5ceac2a375"
-    },
-    {
-      "path": "manuscripts/ch18/ch18-mcp-gateway-dynamic-tool-rag-and-auth-isolation.svg",
-      "sha256": "3258d83e1687120e1a1f1b105db37b555d0596a14453eed54db1dedcd838b514"
-    },
-    {
-      "path": "manuscripts/ch18/ch18-mcp-gateway-dynamic-tool-rag-and-auth-isolation.png",
-      "sha256": "9571465709195307cb959351bdad24110db00cbd60a6870540e2f942876c0cf1"
-    },
-    {
-      "path": "manuscripts/ch18/ch18-mcp-gateway-dynamic-tool-rag-and-auth-isolation.pdf",
-      "sha256": "7c94ff55e47b5ab48dd48908e06673c055fdfbb5d69aaf286feb044319f6da29"
-    },
-    {
-      "path": "manuscripts/ch18/ch18-idempotent-outbox-and-speculative-tool-prefetch.svg",
-      "sha256": "2892e25a03392bc49c7c992a1160859e086e4f4d67fb0c41e2791627691e6abe"
+      "path": "manuscripts/ch18/ch18-idempotent-outbox-and-speculative-tool-prefetch.pdf",
+      "sha256": "cf9b0303cc96f07251fb8c5c30564d7d012221f4df9966159ab217ca25ec073e"
     },
     {
       "path": "manuscripts/ch18/ch18-idempotent-outbox-and-speculative-tool-prefetch.png",
       "sha256": "f02b7422a62f9683d3fe700c68a192749aed100a0346711217a0220f97882d2c"
     },
     {
-      "path": "manuscripts/ch18/ch18-idempotent-outbox-and-speculative-tool-prefetch.pdf",
-      "sha256": "64e5dcc48929ba1a45cdf9d09ffdcd5ab16b7227aec3251d027f79fb1997af17"
+      "path": "manuscripts/ch18/ch18-idempotent-outbox-and-speculative-tool-prefetch.svg",
+      "sha256": "d552c171a1e64576b6a5320ab0bb2e569e82fafa163d74dc6d964e6ab798a1a8"
     },
     {
-      "path": "manuscripts/ch18/ch18-i19-telemetry-backlog-buffer-overflow-and-drain.svg",
-      "sha256": "6698d24086fc960e738490f270e2ba89302b9ed084c0a5cd5c391fed660e3ae6"
+      "path": "manuscripts/ch18/ch18-kv-aware-global-radix-router-ttft-tradeoff.pdf",
+      "sha256": "3583c45b43013c2ea6d97c3579bf67dbbbbffc5751edc56e473520cd61c09d80"
     },
     {
-      "path": "manuscripts/ch18/ch18-i19-telemetry-backlog-buffer-overflow-and-drain.png",
-      "sha256": "7cfa5032ad50803ed39c6eda04187a82c0a2d7463e05f1518f643a125a762ac3"
+      "path": "manuscripts/ch18/ch18-kv-aware-global-radix-router-ttft-tradeoff.png",
+      "sha256": "0cce80878ada7b8e16ded87e17bf803e23d839be94505eca7433250a4ee7e06b"
     },
     {
-      "path": "manuscripts/ch18/ch18-i19-telemetry-backlog-buffer-overflow-and-drain.pdf",
-      "sha256": "a30e2940acdd042cad93903f12d2367abd15e73c801f9e430709a4ef860966f8"
+      "path": "manuscripts/ch18/ch18-kv-aware-global-radix-router-ttft-tradeoff.svg",
+      "sha256": "af1b7f52991eed8cad0f9bd6cdcd0df059b08c042e4b472538eba8fd8d6deb8a"
     },
     {
-      "path": "manuscripts/ch18/ch18-prompt-injection-taint-tracking-dual-llm-firewall.svg",
-      "sha256": "6fb490798ce44b23a8648d28e7f452e5bf19590e9da98f6b2fed5d3116753625"
+      "path": "manuscripts/ch18/ch18-mcp-gateway-dynamic-tool-rag-and-auth-isolation.pdf",
+      "sha256": "8ee54baea7f83fd5b0de98e2c0d66fac7df4d0765477750a969680498ca45411"
     },
     {
-      "path": "manuscripts/ch18/ch18-prompt-injection-taint-tracking-dual-llm-firewall.png",
-      "sha256": "c752ca9e34819d55445eeed1d3650418958c8bca8a509624f6937aa8cbb63919"
+      "path": "manuscripts/ch18/ch18-mcp-gateway-dynamic-tool-rag-and-auth-isolation.png",
+      "sha256": "93155c4cc1af506f1d07f81c514a16ab81e8b6b8916ee58aaa6a52f6f1e64ed1"
     },
     {
-      "path": "manuscripts/ch18/ch18-prompt-injection-taint-tracking-dual-llm-firewall.pdf",
-      "sha256": "f86d52169dfdd126225d1bcd66df2fba65bb5f732ec5c8e5b603de3a7801e720"
+      "path": "manuscripts/ch18/ch18-mcp-gateway-dynamic-tool-rag-and-auth-isolation.svg",
+      "sha256": "240ea1381c7a1cf0b00b23c0d916ba41c3e15af374baa15cfa24e99fdc06fdb3"
     },
     {
-      "path": "manuscripts/ch18/ch18-hipporag2-graph-vector-episodic-memory-consolidation.svg",
-      "sha256": "e6a83c7d963828d6051ac903962d55bc66917f252b4bd4008a9295ada9fc39d7"
+      "path": "manuscripts/ch18/ch18-microvm-snapshot-cow-userfaultfd-12ms-fork.pdf",
+      "sha256": "c34a752e282fe526355b7fc762fa9a6094db477b1ac7155c2ffc3c5a5e7197a2"
     },
     {
-      "path": "manuscripts/ch18/ch18-hipporag2-graph-vector-episodic-memory-consolidation.png",
-      "sha256": "8c552f01d75ad04d6f0ad9e1942e0569501e31825c39136cf8a54ead0e45fbb6"
+      "path": "manuscripts/ch18/ch18-microvm-snapshot-cow-userfaultfd-12ms-fork.png",
+      "sha256": "0f1f7ba8fb0499252f20f63e0917e83c672bbdb45356dc7b01edeab322d74db5"
     },
     {
-      "path": "manuscripts/ch18/ch18-hipporag2-graph-vector-episodic-memory-consolidation.pdf",
-      "sha256": "f5f170144c27ac078e53d86197b796af24c1c5c85f2dfe8170d16aa062b82a5b"
+      "path": "manuscripts/ch18/ch18-microvm-snapshot-cow-userfaultfd-12ms-fork.svg",
+      "sha256": "f342500f0e65f50af2d94d157a879ce2d96d1b726fde992e2cb6d9333e90a9ac"
     },
     {
-      "path": "manuscripts/ch18/ch18-multi-agent-dag-scheduler-and-token-budget-allocation.svg",
-      "sha256": "a4732370a5c6e91db2dbf632afa915b33b0a9f6fad4262655ecdce7cd81c1ac5"
+      "path": "manuscripts/ch18/ch18-multi-agent-dag-fanout-tail-latency-amplification-curve.pdf",
+      "sha256": "0ce4b1db7acd2a71f5aea57fd6aca8e8a45fe4184c8e259777988094cba7edd8"
+    },
+    {
+      "path": "manuscripts/ch18/ch18-multi-agent-dag-fanout-tail-latency-amplification-curve.png",
+      "sha256": "730d6346afeb1875127e45180f97f6c564fbca7fedfa79ec7e3fa1de2ad47f12"
+    },
+    {
+      "path": "manuscripts/ch18/ch18-multi-agent-dag-fanout-tail-latency-amplification-curve.svg",
+      "sha256": "d9040f19a0d37502038e5db7ef7b699c5b2626a6f1bec533fb4167cf16b7f97f"
+    },
+    {
+      "path": "manuscripts/ch18/ch18-multi-agent-dag-scheduler-and-token-budget-allocation.pdf",
+      "sha256": "229a66d3dd1fe2fbaff99ca3b487994c4176b38e523443dbf8c02499b82c6965"
     },
     {
       "path": "manuscripts/ch18/ch18-multi-agent-dag-scheduler-and-token-budget-allocation.png",
       "sha256": "352b486809e2e6d2bb2120b9f14e2ddb483a2cd17066582d4634112bebfe072d"
     },
     {
-      "path": "manuscripts/ch18/ch18-multi-agent-dag-scheduler-and-token-budget-allocation.pdf",
-      "sha256": "c1313679f59fb3e9aa200a3fb2f5813c9f9da208a8ef159b4f233d9d5f12995a"
+      "path": "manuscripts/ch18/ch18-multi-agent-dag-scheduler-and-token-budget-allocation.svg",
+      "sha256": "29dae70d1f6ed1491fcd4e2843d7c5f87aa8d71fbd0183d3f620ec71f02d6176"
     },
     {
-      "path": "manuscripts/ch18/ch18-agentic-cluster-cpu-gpu-sandbox-pool-sizing.svg",
-      "sha256": "085c477ca574a7728475d901c7b86fab0e1ddef1e9c514e6c43a23c8826b62e1"
+      "path": "manuscripts/ch18/ch18-prompt-injection-taint-tracking-dual-llm-firewall.pdf",
+      "sha256": "b456123ab6e4744ec967fc9c490a39d162db7e3096849019479be746d19b7667"
     },
     {
-      "path": "manuscripts/ch18/ch18-agentic-cluster-cpu-gpu-sandbox-pool-sizing.png",
-      "sha256": "26de519fb0b1f13e1f1ce14c873389cc4a30222bbddb612c89064bf6e1c9e431"
+      "path": "manuscripts/ch18/ch18-prompt-injection-taint-tracking-dual-llm-firewall.png",
+      "sha256": "c752ca9e34819d55445eeed1d3650418958c8bca8a509624f6937aa8cbb63919"
     },
     {
-      "path": "manuscripts/ch18/ch18-agentic-cluster-cpu-gpu-sandbox-pool-sizing.pdf",
-      "sha256": "c455f8ce576b17d8fcabd20a1d333cf7fa04e7f25d1f5a6d28dda9be9f0cc217"
+      "path": "manuscripts/ch18/ch18-prompt-injection-taint-tracking-dual-llm-firewall.svg",
+      "sha256": "09493fc95ee7044117962250af95655ab2e93050bb86e320c3ea142b84ae54bd"
     },
     {
-      "path": "manuscripts/ch18/ch18-autonomous-agent-infrastructure-full-stack-map.svg",
-      "sha256": "6fb46f7b10d78192f005a9983988fc340c244be324be559bc2a5862b864879b4"
+      "path": "manuscripts/ch18/ch18-single-turn-chat-vs-multi-turn-agent-worm-loop.pdf",
+      "sha256": "14612a5e82299278b4081b0c55bb7e4d4de3be563a85223a3a252ee6206d78b8"
     },
     {
-      "path": "manuscripts/ch18/ch18-autonomous-agent-infrastructure-full-stack-map.png",
-      "sha256": "25946fed87104890c6a889abff9f32545d54928214d8c9d97663d40bbb7346ee"
+      "path": "manuscripts/ch18/ch18-single-turn-chat-vs-multi-turn-agent-worm-loop.png",
+      "sha256": "d4eaa3e3e8d81fe17c284e889694ea542af171f87b1c5dcc55e650e86e0f534c"
     },
     {
-      "path": "manuscripts/ch18/ch18-autonomous-agent-infrastructure-full-stack-map.pdf",
-      "sha256": "eed704616d1a2f1cb5fdf37dc673902d32ef30ac7465f49fd5a825a5f443cfe2"
+      "path": "manuscripts/ch18/ch18-single-turn-chat-vs-multi-turn-agent-worm-loop.svg",
+      "sha256": "12eaa32be877057852268ca52a0f6cc05f2585dcfc7e3f34cea22af80f20cac0"
     },
     {
-      "path": "manuscripts/ch18/ch18-speculative-tool-execution-and-rollback-dag.svg",
-      "sha256": "d13ee7f3145bbadd27f11ace1c81ad30a3251cc9f52755f58d8d64b8c3c2038b"
+      "path": "manuscripts/ch18/ch18-speculative-readonly-tool-execution-and-saga-compensation.pdf",
+      "sha256": "5aa2e459da60e904645f8a99587be74771c5dfc84fd54eb93f2bbe9bc62c2ceb"
     },
     {
-      "path": "manuscripts/ch18/ch18-speculative-tool-execution-and-rollback-dag.png",
-      "sha256": "0ce6a768e56e5954f774351b072cbb86a092e19b8a111b7335de7eadb5e26330"
+      "path": "manuscripts/ch18/ch18-speculative-readonly-tool-execution-and-saga-compensation.png",
+      "sha256": "3eebb29d2236d0a24dafdfb6c57d420b1931b2dc425ecd6c9b1675624746d70c"
+    },
+    {
+      "path": "manuscripts/ch18/ch18-speculative-readonly-tool-execution-and-saga-compensation.svg",
+      "sha256": "25cb45ac484a9a497aefb0723547f2c860ee7de1e51d74540d03306be595959a"
     },
     {
       "path": "manuscripts/ch18/ch18-speculative-tool-execution-and-rollback-dag.pdf",
-      "sha256": "1100eba94d0530248dc19acc3a704c255e722428dd79c0c5978342733648fc12"
+      "sha256": "b860b03e6f58c344fdeba449558f94f038f0653c52c647e3fdf714fe6d13bb64"
     },
     {
-      "path": "manuscripts/ch18/ch18-gui-incremental-region-of-interest-vision-token-cache.svg",
-      "sha256": "dc672a25ec419e447dd54e2a5eb58823e743af14cfae2e93079f4cb76d053335"
+      "path": "manuscripts/ch18/ch18-speculative-tool-execution-and-rollback-dag.png",
+      "sha256": "e0baa2bc0601872cdd542acb298da670f64d8fd43de34b1d1bf395a9344ddf08"
     },
     {
-      "path": "manuscripts/ch18/ch18-gui-incremental-region-of-interest-vision-token-cache.png",
-      "sha256": "d331c944fd6e17b932fe1f20c760df314119f1bec0106ac35662cc6336eda273"
+      "path": "manuscripts/ch18/ch18-speculative-tool-execution-and-rollback-dag.svg",
+      "sha256": "f4c23c165754a5c8c16e0762cc68e54390e9de45ead7e56e9445144fb5d90f64"
     },
     {
-      "path": "manuscripts/ch18/ch18-gui-incremental-region-of-interest-vision-token-cache.pdf",
-      "sha256": "2cf080d19a3ca450dc95f0156185b8b4aa9f749fd41f68ea499f1266e1a82c6e"
+      "path": "manuscripts/ch18/ch18-synchronized-kv-and-sandbox-mcts-tree-forking.pdf",
+      "sha256": "08da1e1a80205a4960040d3792802c6d2f2823382ac0968c242409c90c9a924d"
+    },
+    {
+      "path": "manuscripts/ch18/ch18-synchronized-kv-and-sandbox-mcts-tree-forking.png",
+      "sha256": "eecbb24261da9611308474c4358f370f554c830de3d078d1c62cfdb356914d9a"
+    },
+    {
+      "path": "manuscripts/ch18/ch18-synchronized-kv-and-sandbox-mcts-tree-forking.svg",
+      "sha256": "9b7e0bc2828a76699f95251e368373d8ddbfd33921274489799d9ba33102e129"
+    },
+    {
+      "path": "manuscripts/ch18/ch18-tool-wait-hbm-retain-recompute-offload-phase-diagram.pdf",
+      "sha256": "c38c97851e4e2b6994db44feda9c612703b1026e3a8fe8d0d31029eeca05ad55"
+    },
+    {
+      "path": "manuscripts/ch18/ch18-tool-wait-hbm-retain-recompute-offload-phase-diagram.png",
+      "sha256": "23f1d69e53f440da15e8d7275ea2b5eb3ebc2ede52cc1cf862873ad89a1e916f"
+    },
+    {
+      "path": "manuscripts/ch18/ch18-tool-wait-hbm-retain-recompute-offload-phase-diagram.svg",
+      "sha256": "b3ce9299c53d10f5434575bb676e81f1fe315b7e1752bb968875f4f351c8ad4a"
+    },
+    {
+      "path": "manuscripts/ch18/ch18-xgrammar-context-independent-token-bitmask-cache.pdf",
+      "sha256": "f0108d3f6a3f483462d7407e99f70571998d10973aafbce59415b71dced23205"
+    },
+    {
+      "path": "manuscripts/ch18/ch18-xgrammar-context-independent-token-bitmask-cache.png",
+      "sha256": "1d0370850a8f0a1d23fc47a964ea5486c3f91823f8480f9d74fc1db08ddb28eb"
+    },
+    {
+      "path": "manuscripts/ch18/ch18-xgrammar-context-independent-token-bitmask-cache.svg",
+      "sha256": "019f7edd1bb60a72c9010c48a6849f2e606f6c4bfb3edecda586d2a6b6244830"
+    },
+    {
+      "path": "manuscripts/ch18/figure-data.json",
+      "sha256": "1c0b8ccc53ad34c204a4a61073ab77140eee894f3105acfc73ef151c0320a48e"
     },
     {
       "path": "manuscripts/ch18/figure-index.json",
-      "sha256": "5e9d888a41122a208030882a05938acf39d00c67058ee10d8f4bc566225c1ee9"
+      "sha256": "b6882e51fa2e1056a1a14676891b2a68041c39c8d8f7e4616698498e4014016b"
     },
     {
       "path": "manuscripts/ch18/teaching-layout-validation.json",
-      "sha256": "22c91bf0c813587cad499d49a0e2a0e634bc20eb4fde57c1fc29d18efe317a92"
+      "sha256": "99584b342259aa02c78f0d52da132f48ad0e02131286d3224c576d792014edc1"
     },
     {
       "path": "manuscripts/ch18/math-validation.json",
-      "sha256": "b4de2edacf610c94dbc36f278fb140eb5b060d0ec3998c1f8c55c2292b00ddee"
+      "sha256": "dd31f4197a078ad194c8029370d7d4e2ce959cd1b2bb45d0dcbd3b8a7591beda"
     }
   ]
 }

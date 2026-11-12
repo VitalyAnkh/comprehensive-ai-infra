@@ -7,8 +7,8 @@
     "section": "18.1.1",
     "caption": "单轮对话（Read-Once）与 40 轮自主智能体（WORM 95.12% 前缀复用 + 长工具等待空窗）的显存与算力时间线对比（算例 18-1）",
     "source_refs": [
-      "experiments/ch21/21-01/run.py",
-      "manuscripts/ch21/figure-data.json"
+      "experiments/ch18/18-01/run.py",
+      "manuscripts/ch18/figure-data.json"
     ],
     "TeachingRole": "揭示多轮智能体 95.12% 预填充词元为历史前缀重读且预填充/解码比达 205:1 的物理特征",
     "figure": "18-1",
@@ -22,8 +22,8 @@
     "section": "18.1.2",
     "caption": "工具等待时长 t_wait 与前缀长度 L_prefix 构成的“HBM 驻留 vs. 分层换出 vs. 丢弃重算”三维最优决策相图（t* = 2.16 s）",
     "source_refs": [
-      "experiments/ch21/21-01/run.py",
-      "manuscripts/ch21/figure-data.json"
+      "experiments/ch18/18-01/run.py",
+      "manuscripts/ch18/figure-data.json"
     ],
     "TeachingRole": "推导工具等待期 HBM 租金与 PCIe 换入/重算耗时的三段式切换边界",
     "figure": "18-2",
@@ -37,7 +37,7 @@
     "section": "18.2.1",
     "caption": "GPU HBM ↔ Host DRAM ↔ Local NVMe ↔ Remote RDMA Pool 四级分层 KV 缓存架构与块级哈希去重",
     "source_refs": [
-      "manuscripts/ch21/figure-data.json"
+      "manuscripts/ch18/figure-data.json"
     ],
     "TeachingRole": "构建跨节点共享的四级 KV 记忆存储池与逐层异步 DMA 预取流水",
     "figure": "18-3",
@@ -51,8 +51,8 @@
     "section": "18.2.1",
     "caption": "KV 感知全局路由器（NVIDIA Dynamo / SGLang HiCache）在节点排队延迟与前缀缓存命中率之间的联合寻优（算例 18-2）",
     "source_refs": [
-      "experiments/ch21/21-01/run.py",
-      "manuscripts/ch21/figure-data.json"
+      "experiments/ch18/18-01/run.py",
+      "manuscripts/ch18/figure-data.json"
     ],
     "TeachingRole": "证明综合排队与命中率的全局路由可将 64K 智能体请求 TTFT 从 510 ms 压至 170 ms（快 3.00 倍）",
     "figure": "18-4",
@@ -66,8 +66,8 @@
     "section": "18.2.2",
     "caption": "CacheGen 利用锚点残差量化与算术编码实现 4.21 倍流式压缩并在 50 Gbps 网络上击败本地重算（算例 18-2）",
     "source_refs": [
-      "experiments/ch21/21-01/run.py",
-      "manuscripts/ch21/figure-data.json"
+      "experiments/ch18/18-01/run.py",
+      "manuscripts/ch18/figure-data.json"
     ],
     "TeachingRole": "确立跨机架传输 KV 缓存战胜本地 GPU 重算的临界带宽阈值与熵编码收益",
     "figure": "18-5",
@@ -81,8 +81,8 @@
     "section": "18.3.1",
     "caption": "传统容器/虚机冷启动（1,500 ms）vs. Firecracker 内存快照 + userfaultfd 惰性缺页加载实现 12.0 ms 极速克隆（算例 18-3）",
     "source_refs": [
-      "experiments/ch21/21-02/run.py",
-      "manuscripts/ch21/figure-data.json"
+      "experiments/ch18/18-02/run.py",
+      "manuscripts/ch18/figure-data.json"
     ],
     "TeachingRole": "拆解微虚机写时复制快照与按需工作集预取实现 125 倍启动加速的内核机理",
     "figure": "18-6",
@@ -96,8 +96,8 @@
     "section": "18.3.2",
     "caption": "面向智能体树搜索（Tree-of-Actions）的 PagedAttention KV 块表与沙箱 OverlayFS/内存快照同步分叉与 8.50 ms 回滚",
     "source_refs": [
-      "experiments/ch21/21-02/run.py",
-      "manuscripts/ch21/figure-data.json"
+      "experiments/ch18/18-02/run.py",
+      "manuscripts/ch18/figure-data.json"
     ],
     "TeachingRole": "实现模型内部 KV 记忆与外部沙箱文件系统/内存状态的原子级同步树状回溯",
     "figure": "18-7",
@@ -111,7 +111,7 @@
     "section": "18.3.2",
     "caption": "Computer-Use 桌面沙箱的脏矩形帧差分流（Dirty-Rect Streaming）、无障碍树（AXTree）混合提取与焦点放大流水线",
     "source_refs": [
-      "manuscripts/ch21/figure-data.json"
+      "manuscripts/ch18/figure-data.json"
     ],
     "TeachingRole": "通过脏矩形编码与 DOM/AXTree 结构化锚点将 GUI 智能体单步视觉开销压降 85%",
     "figure": "18-8",
@@ -125,8 +125,8 @@
     "section": "18.4.1",
     "caption": "模型上下文协议（MCP）安全网关：按需语义检索挂载 Top-8 工具 Schema（省 99.20% 词元）与零信任凭据隔离（算例 18-5）",
     "source_refs": [
-      "experiments/ch21/21-02/run.py",
-      "manuscripts/ch21/figure-data.json"
+      "experiments/ch18/18-02/run.py",
+      "manuscripts/ch18/figure-data.json"
     ],
     "TeachingRole": "解决万级企业工具全量挂载引发的 18 万词元上下文膨胀与凭据泄露风险",
     "figure": "18-9",
@@ -140,7 +140,7 @@
     "section": "18.4.1",
     "caption": "只读工具投机预取与写操作工具基于幂等键（Idempotency Key）和事务外发箱（Outbox）的精确一次执行保障",
     "source_refs": [
-      "manuscripts/ch21/figure-data.json"
+      "manuscripts/ch18/figure-data.json"
     ],
     "TeachingRole": "防止智能体超时重试或投机执行在外部世界引发重复扣款或重复下单事故",
     "figure": "18-10",
@@ -149,17 +149,17 @@
   {
     "figure_id": "图 18-11",
     "number": 11,
-    "file": "ch18-i19-telemetry-backlog-buffer-overflow-and-drain.svg",
-    "asset": "ch18/ch18-i19-telemetry-backlog-buffer-overflow-and-drain.svg",
+    "file": "ch18-audit-telemetry-backlog-buffer-overflow-and-drain.svg",
+    "asset": "ch18/ch18-audit-telemetry-backlog-buffer-overflow-and-drain.svg",
     "section": "18.4.1",
-    "caption": "锁定算例 I19：审计遥测断网期间 400 KiB/s 积压曲线（81.92 s 触顶 32 MiB、120 s 累积 46.875 MiB）与恢复后 76.92 s 排空过程（算例 18-4）",
+    "caption": "审计遥测断网期间 400 KiB/s 积压曲线（81.92 s 触顶 32 MiB、120 s 累积 46.875 MiB）与恢复后 76.92 s 净速率排空过程（算例 18-4）",
     "source_refs": [
-      "experiments/ch21/21-02/run.py",
-      "manuscripts/ch21/figure-data.json"
+      "experiments/ch18/18-02/run.py",
+      "manuscripts/ch18/figure-data.json"
     ],
     "TeachingRole": "精确复算断网期间内存缓冲触顶时刻、外发箱溢写体积与净排空速率下的恢复时长",
     "figure": "18-11",
-    "name": "ch18-i19-telemetry-backlog-buffer-overflow-and-drain"
+    "name": "ch18-audit-telemetry-backlog-buffer-overflow-and-drain"
   },
   {
     "figure_id": "图 18-12",
@@ -169,7 +169,7 @@
     "section": "18.4.1",
     "caption": "防御间接提示词注入（Indirect Prompt Injection）的特权控制流与非受信数据流双 LLM 污点追踪防火墙",
     "source_refs": [
-      "manuscripts/ch21/figure-data.json"
+      "manuscripts/ch18/figure-data.json"
     ],
     "TeachingRole": "通过动态污点标签与控制面/数据面物理隔离阻断外部网页或邮件中的隐藏越权指令",
     "figure": "18-12",
@@ -183,7 +183,7 @@
     "section": "18.4.2",
     "caption": "HippoRAG 2 / Mem0 结合向量检索、知识图谱个性化 PageRank 与后台异步记忆提炼的长期记忆底座",
     "source_refs": [
-      "manuscripts/ch21/figure-data.json"
+      "manuscripts/ch18/figure-data.json"
     ],
     "TeachingRole": "利用海马体图谱索引与新皮层异步巩固突破上下文窗口限制并降低 96% 预填充开销",
     "figure": "18-13",
@@ -197,7 +197,7 @@
     "section": "18.4.2",
     "caption": "复杂软件工程任务中 Planner—Coder—Tester 多智能体 DAG 拓扑调度、公共前缀广播与动态词元预算熔断",
     "source_refs": [
-      "manuscripts/ch21/figure-data.json"
+      "manuscripts/ch18/figure-data.json"
     ],
     "TeachingRole": "通过边际增益监控与 DAG 预算熔断消除多智能体无限循环空谈风暴",
     "figure": "18-14",
@@ -211,7 +211,7 @@
     "section": "18.3.2",
     "caption": "大规模 Agentic 云平台中 GPU 推理池、大容量 DRAM/NVMe KV 缓存池与高密 CPU 沙箱池的 Little 定律配比模型",
     "source_refs": [
-      "manuscripts/ch21/figure-data.json"
+      "manuscripts/ch18/figure-data.json"
     ],
     "TeachingRole": "依据推理活跃期与工具执行期的 1:12 驻留比指导异构计算与存储池容量规划",
     "figure": "18-15",
@@ -225,11 +225,11 @@
     "section": "18.4.2",
     "caption": "自主智能体基础设施从四级分层 KV 记忆、12 ms CoW 微虚机沙箱到幂等安全网关的全栈总图",
     "source_refs": [
-      "experiments/ch21/21-01/run.py",
-      "experiments/ch21/21-02/run.py",
-      "manuscripts/ch21/figure-data.json"
+      "experiments/ch18/18-01/run.py",
+      "experiments/ch18/18-02/run.py",
+      "manuscripts/ch18/figure-data.json"
     ],
-    "TeachingRole": "收束第 21 章记忆分层化、环境可分叉化与工具执行幂等化的完整工程体系",
+    "TeachingRole": "收束第 18 章记忆分层化、环境可分叉化与工具执行幂等化的完整工程体系",
     "figure": "18-16",
     "name": "ch18-autonomous-agent-infrastructure-full-stack-map"
   },
@@ -241,8 +241,8 @@
     "section": "18.4.2",
     "caption": "多智能体工作流 DAG 关键路径投机工具预执行（Speculative Tool Execution）与 CoW 沙箱毫秒级误判回滚流水线（算例 18-7）",
     "source_refs": [
-      "experiments/ch21/21-03/run.py",
-      "manuscripts/ch21/figure-data.json"
+      "experiments/ch18/18-03/run.py",
+      "manuscripts/ch18/figure-data.json"
     ],
     "TeachingRole": "展示 Draft 投机预启动工具与 12 ms CoW 回滚如何将 4 阶段 DAG 延迟从 8,000 ms 压至 4,969.6 ms（1.61x）",
     "figure": "18-17",
@@ -256,11 +256,71 @@
     "section": "18.4.2",
     "caption": "GUI 智能体（OSWorld / WebArena）增量脏矩形 ROI 视觉块哈希复用与 Set-of-Marks 可交互 DOM 剪枝流水线（算例 18-6）",
     "source_refs": [
-      "experiments/ch21/21-03/run.py",
-      "manuscripts/ch21/figure-data.json"
+      "experiments/ch18/18-03/run.py",
+      "manuscripts/ch18/figure-data.json"
     ],
     "TeachingRole": "证明 12.5% 脏矩形视觉缓存与可交互 DOM 剪枝实现 7.32 倍词元压缩与 5.37 倍 ViT 编码提速",
     "figure": "18-18",
     "name": "ch18-gui-incremental-region-of-interest-vision-token-cache"
+  },
+  {
+    "figure_id": "图 18-19",
+    "number": 19,
+    "file": "ch18-xgrammar-context-independent-token-bitmask-cache.svg",
+    "asset": "ch18/ch18-xgrammar-context-independent-token-bitmask-cache.svg",
+    "section": "18.5.1",
+    "caption": "XGrammar 上下文无关词元二分（约 99% 静态预编译缓存 vs. <1% 动态栈检）与双主线模型紧凑 uint32 位掩码结构（算例 18-8）",
+    "source_refs": [
+      "calculations/results/ch18-agent-worm-grammar.json",
+      "experiments/ch18/18-04/run.py"
+    ],
+    "TeachingRole": "量化 Qwen3（4,748 字/18,992 B，B=64 仅 1.16 MiB）与 DeepSeek-V3（4,040 字/16,160 B）的紧凑位掩码账本",
+    "figure": "18-19",
+    "name": "ch18-xgrammar-context-independent-token-bitmask-cache"
+  },
+  {
+    "figure_id": "图 18-20",
+    "number": 20,
+    "file": "ch18-cpu-pda-async-bitmask-and-gpu-logits-overlap-timeline.svg",
+    "asset": "ch18/ch18-cpu-pda-async-bitmask-and-gpu-logits-overlap-timeline.svg",
+    "section": "18.5.2",
+    "caption": "朴素同步状态机阻塞（38.4 ms，吞吐折损 81.9%）vs. XGrammar CPU 异步合成（2.10 ms）与 GPU 解码步（8.50 ms）无气泡重叠流水线（算例 18-8）",
+    "source_refs": [
+      "calculations/results/ch18-agent-worm-grammar.json",
+      "experiments/ch18/18-04/run.py"
+    ],
+    "TeachingRole": "证明 CPU 异步掩码合成 + PCIe 23.6 μs DMA 可完全隐藏于 GPU 前向步下实现零吞吐损失",
+    "figure": "18-20",
+    "name": "ch18-cpu-pda-async-bitmask-and-gpu-logits-overlap-timeline"
+  },
+  {
+    "figure_id": "图 18-21",
+    "number": 21,
+    "file": "ch18-multi-agent-dag-fanout-tail-latency-amplification-curve.svg",
+    "asset": "ch18/ch18-multi-agent-dag-fanout-tail-latency-amplification-curve.svg",
+    "section": "18.6.1",
+    "caption": "多智能体并行扇出极值统计尾延迟放大（K=12 同步栅栏 6.2 s → 19.8 s）与关键路径松弛度抢占 + 10/12 Quorum 收敛（7.4 s，省 62.6%，算例 18-9）",
+    "source_refs": [
+      "calculations/results/ch18-agent-worm-grammar.json",
+      "experiments/ch18/18-05/run.py"
+    ],
+    "TeachingRole": "推导顺序统计量 F(T_join,q)=q^(1/K) 并给出关键路径抢占与定额提前汇聚的系统解法",
+    "figure": "18-21",
+    "name": "ch18-multi-agent-dag-fanout-tail-latency-amplification-curve"
+  },
+  {
+    "figure_id": "图 18-22",
+    "number": 22,
+    "file": "ch18-speculative-readonly-tool-execution-and-saga-compensation.svg",
+    "asset": "ch18/ch18-speculative-readonly-tool-execution-and-saga-compensation.svg",
+    "section": "18.6.2",
+    "caption": "流式部分 JSON 只读工具提前投机（省 210.7 ms，额外查询 16.3%）、有副作用写操作逆序 LIFO Saga 补偿与三层词元预算护栏（算例 18-10）",
+    "source_refs": [
+      "calculations/results/ch18-agent-worm-grammar.json",
+      "experiments/ch18/18-05/run.py"
+    ],
+    "TeachingRole": "划清只读投机、本地 CoW 快照回退与跨外部服务逆向 Saga 冲正的精确职责边界",
+    "figure": "18-22",
+    "name": "ch18-speculative-readonly-tool-execution-and-saga-compensation"
   }
 ]

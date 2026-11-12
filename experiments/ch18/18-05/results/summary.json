@@ -1,0 +1,28 @@
+{
+  "experiment_id": "18-05",
+  "multi_agent_dag_tail": {
+    "fanout_k": 12,
+    "single_branch_p99_s": 6.2,
+    "k12_required_branch_percentile": 99.916,
+    "k16_required_branch_percentile": 99.937,
+    "k12_barrier_join_p99_seconds": 19.8,
+    "quorum_10of12_branch_quantile": 0.96102,
+    "quorum_10of12_raw_p99_seconds": 3.28,
+    "k12_quorum_slack_p99_seconds": 7.4,
+    "tail_latency_reduction_pct": 62.6
+  },
+  "speculative_tool_and_saga": {
+    "tool_query_latency_ms": 245.0,
+    "speculative_hit_prob": 0.86,
+    "speculative_tool_saved_latency_ms": 210.7,
+    "speculative_tool_wasted_query_pct": 16.3,
+    "saga_consistent": true,
+    "mutating_speculation_blocked": true,
+    "lifo_compensation_log": [
+      "hold_inventory:item_42",
+      "create_ticket:INC_108",
+      "cancel_ticket:INC_108",
+      "release_inventory:item_42"
+    ]
+  }
+}

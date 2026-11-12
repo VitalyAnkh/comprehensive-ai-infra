@@ -12,7 +12,7 @@ RESULTS_PATH = HERE / "results" / "baseline.json"
 
 
 def compute_metrics() -> dict:
-    # 1. DistRS heavy-tail conditional remaining time & 216,000-token sunk-work boundary (Example 18-8 & Exercise 18-10)
+    # 1. DistRS heavy-tail conditional remaining time & 216,000-token sunk-work boundary (Example 17-8 & Exercise 17-10)
     tasks_bimodal = [1.0] * 9 + [100.0]
     unconditional_mean_s = round(sum(tasks_bimodal) / len(tasks_bimodal), 2)  # 10.9 s
     elapsed_s = 10.0
@@ -21,12 +21,12 @@ def compute_metrics() -> dict:
     estimation_error_ratio = round(cond_rem_10s / naive_rem_10s, 1)  # 100.0x
     sunk_work_tokens = 6 * 60 * 600  # 216,000 tokens
 
-    # Exercise 18-10 trimodal distribution: 80% 2s, 15% 20s, 5% 200s
+    # Exercise 17-10 trimodal distribution: 80% 2s, 15% 20s, 5% 200s
     trimodal_mean_s = round(0.80 * 2.0 + 0.15 * 20.0 + 0.05 * 200.0, 2)  # 14.6 s
     trimodal_cond_rem_15s = round((0.15 * (20.0 - 15.0) + 0.05 * (200.0 - 15.0)) / (0.15 + 0.05), 2)  # 50.0 s
     trimodal_cond_rem_25s = round(200.0 - 25.0, 2)  # 175.0 s
 
-    # 2. Geo-distributed heterogeneous async RL bandwidth & IS ratio filtering (Example 18-9 & Exercise 18-13)
+    # 2. Geo-distributed heterogeneous async RL bandwidth & IS ratio filtering (Example 17-9 & Exercise 17-13)
     num_trajs = 1024
     avg_len = 16384
     total_tokens = num_trajs * avg_len  # 16,777,216 tokens
@@ -48,7 +48,7 @@ def compute_metrics() -> dict:
     sample_logprob_diffs = [0.08, 0.12, -0.04, 0.16]
     seq_geom_is_ratio = round(math.exp(sum(sample_logprob_diffs) / len(sample_logprob_diffs)), 4)  # exp(0.08) = 1.0833
 
-    # 3. PagedAttention CoW tree search memory saving & Speculative ToT latency (Exercises 18-11 & 18-12)
+    # 3. PagedAttention CoW tree search memory saving & Speculative ToT latency (Exercises 17-11 & 17-12)
     root_tokens = 2048
     b1, l1 = 8, 256
     b2, l2 = 4, 256

@@ -1,6 +1,6 @@
 {
   "experiment_id": "18-03",
-  "gui_incremental_roi_cache_ex21_6": {
+  "gui_incremental_roi_cache_ex18_6": {
     "steps": 30,
     "naive_total_tokens": 180000,
     "opt_total_tokens": 24600,
@@ -10,7 +10,7 @@
     "opt_vit_total_ms": 251.62,
     "vit_speedup_x": 5.37
   },
-  "speculative_dag_execution_ex21_7": {
+  "speculative_dag_execution_ex18_7": {
     "num_stages": 4,
     "seq_total_ms": 8000.0,
     "hit_stage_ms": 1050.0,
@@ -21,7 +21,7 @@
     "latency_reduction_pct": 37.88,
     "breakeven_hit_prob_pct": 1.25
   },
-  "exercises_21_11_and_21_12": {
+  "exercises_18_11_and_18_12": {
     "p11_naive_tokens": 320000,
     "p11_opt_tokens": 35680,
     "p11_token_compression_x": 8.97,

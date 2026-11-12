@@ -7,8 +7,8 @@
     "section": "17.1.1",
     "caption": "PPO 四模型（Actor/Critic/Ref/RM）与 GRPO/DAPO（消去 Critic + 组采样 G 条轨迹）的显存与计算量对比（算例 17-1）",
     "source_refs": [
-      "manuscripts/ch18/figure-data.json",
-      "experiments/ch18/18-01/run.py"
+      "manuscripts/ch17/figure-data.json",
+      "experiments/ch17/17-01/run.py"
     ],
     "TeachingRole": "量化 32B 模型下 PPO 1,152 GB（36Ψ）与 GRPO 576 GB（18Ψ）的 50% 状态显存削减",
     "figure": "17-1",
@@ -22,7 +22,7 @@
     "section": "17.1.2",
     "caption": "RLVR 单步训练时间线分解——为何自回归 Rollout 占据 70%–90% 墙钟时间且算术强度极低",
     "source_refs": [
-      "manuscripts/ch18/figure-data.json"
+      "manuscripts/ch17/figure-data.json"
     ],
     "TeachingRole": "从 Decode 访存带宽受限与 Prefill/Backward 算力密集的反差解释 Rollout 主导现象",
     "figure": "17-2",
@@ -34,11 +34,12 @@
     "file": "ch17-verl-3d-hybrid-engine-zero-redundancy-reshard.svg",
     "asset": "ch17/ch17-verl-3d-hybrid-engine-zero-redundancy-reshard.svg",
     "section": "17.2.1",
-    "caption": "veRL（HybridFlow）3D-HybridEngine 训练态（ZeRO+TP+PP）与生成态（微张量并行）的零冗余内存重分片机制",
+    "caption": "veRL（HybridFlow）3D-HybridEngine 训练态（ZeRO+TP+PP）与生成态（微张量并行）的零冗余内存重分片机制（算例 17-2）",
     "source_refs": [
-      "manuscripts/ch18/figure-data.json"
+      "manuscripts/ch17/figure-data.json",
+      "calculations/results/ch17-posttrain-rlvr-distill.json"
     ],
-    "TeachingRole": "解析子网格微分组 AllGather 如何消除训练态与推理态的并行拓扑冲突",
+    "TeachingRole": "解析子网格微分组 AllGather 如何将切换耗时从 1.575 s 压至 0.035 s（提速 45.0x）",
     "figure": "17-3",
     "name": "ch17-verl-3d-hybrid-engine-zero-redundancy-reshard"
   },
@@ -51,7 +52,7 @@
     "caption": "训推共置（veRL）与物理训推分离及互补错峰池化（Weave OSDI '26，算例 17-3）对比",
     "source_refs": [
       "case-studies/rl-scheduling-and-recovery.md",
-      "experiments/ch18/18-01/run.py"
+      "experiments/ch17/17-01/run.py"
     ],
     "TeachingRole": "复算 Weave 互补作业（360/120 s 与 120/360 s）共享 216 H20 与 152 H800 的削峰收益",
     "figure": "17-4",
@@ -63,7 +64,7 @@
     "file": "ch17-long-cot-power-law-straggler-bubble.svg",
     "asset": "ch17/ch17-long-cot-power-law-straggler-bubble.svg",
     "section": "17.3.1",
-    "caption": "长思维链（Long-CoT）输出长度幂律分布引发的同步 Rollout 尾部巨大 GPU 空泡",
+    "caption": "长思维链（Long-CoT）输出长度幂律分布引发的同步 Rollout 尾部 GPU 空泡",
     "source_refs": [
       "case-studies/rollout-tail-and-sampling.md"
     ],
@@ -77,10 +78,10 @@
     "file": "ch17-rollpacker-tail-migration-and-cp-scaling.svg",
     "asset": "ch17/ch17-rollpacker-tail-migration-and-cp-scaling.svg",
     "section": "17.3.2",
-    "caption": "RollPacker（NSDI '26）尾部存活请求紧缩迁移、双槽位长度偏差（1/2 → 1/4）与微批均值平均（2.0）vs. 全局总词元归一化（2.5）对比（算例 17-5 & 18-6）",
+    "caption": "RollPacker（NSDI '26）尾部存活请求紧缩迁移、双槽位长度偏差（1/2 → 1/4）与微批均值平均（2.0）vs. 全局总词元归一化（2.5）对比（算例 17-5 & 17-6）",
     "source_refs": [
       "case-studies/rollout-tail-and-sampling.md",
-      "experiments/ch18/18-01/run.py"
+      "experiments/ch17/17-01/run.py"
     ],
     "TeachingRole": "严格证明不均等微批下按微批均值平均会产生 2.0 vs 2.5 的梯度偏置",
     "figure": "17-6",
@@ -92,7 +93,7 @@
     "file": "ch17-seer-divided-and-conquered-speculative-rollout.svg",
     "asset": "ch17/ch17-seer-divided-and-conquered-speculative-rollout.svg",
     "section": "17.3.2",
-    "caption": "Seer（OSDI '26）分段征服长尾 Rollout 与组内共享前缀投机解码加速",
+    "caption": "Seer（OSDI '26）分段治理长尾 Rollout 与组内共享前缀投机解码加速",
     "source_refs": [
       "research/2026-infra-survey/reading-osdi-2026.md",
       "case-studies/rollout-tail-and-sampling.md"
@@ -111,7 +112,7 @@
     "source_refs": [
       "case-studies/rollout-tail-and-sampling.md"
     ],
-    "TeachingRole": "允许未完长轨迹保留 KV 跨训练步续生，将集群有效利用率推高至 >88%",
+    "TeachingRole": "允许未完长轨迹保留 KV 跨训练步续生，将集群有效利用率提升至 >88%",
     "figure": "17-8",
     "name": "ch17-staleness-bounded-partial-rollout-pipeline"
   },
@@ -138,9 +139,9 @@
     "caption": "RobustRL（OSDI '26）区分无状态 Rollout 故障与有状态 Learner 故障的非对称容错（790 s vs. 490 s，净省 300 s，算例 17-7）",
     "source_refs": [
       "case-studies/rl-scheduling-and-recovery.md",
-      "experiments/ch18/18-01/run.py"
+      "experiments/ch17/17-01/run.py"
     ],
-    "TeachingRole": "复算保留已完成 Rollout 轨迹将训练侧故障恢复耗时从 790 s 压至 490 s 的锁定账本",
+    "TeachingRole": "复算保留已完成 Rollout 轨迹将训练侧故障恢复耗时从 790 s 压至 490 s 的定量账本",
     "figure": "17-10",
     "name": "ch17-robustrl-role-based-fault-isolation"
   },
@@ -153,7 +154,7 @@
     "caption": "DistRS（NSDI '26）将沙箱验证与长尾生成流式重叠及基于条件剩余时间 E[S-e | S>e]（90 s vs. 0.9 s）与 216,000 词元阈值的超期裁剪（算例 17-8）",
     "source_refs": [
       "case-studies/reward-deadlines-and-feedback.md",
-      "experiments/ch18/18-01/run.py"
+      "experiments/ch17/17-01/run.py"
     ],
     "TeachingRole": "证明重尾验证分布下朴素剩余时间估计（0.9 s）与真实条件期望（90.0 s）的百倍误差",
     "figure": "17-11",
@@ -167,7 +168,7 @@
     "section": "17.4.2",
     "caption": "推理时扩展（Best-of-N / PRM 树搜索）利用 PagedAttention 写时复制（CoW）共享父节点 KV 缓存",
     "source_refs": [
-      "manuscripts/ch18/figure-data.json"
+      "manuscripts/ch17/figure-data.json"
     ],
     "TeachingRole": "解析页表引用计数 CoW 与树注意力如何消除树状搜索的物理拷贝与显存膨胀",
     "figure": "17-12",
@@ -198,7 +199,7 @@
     "source_refs": [
       "case-studies/rl-scheduling-and-recovery.md"
     ],
-    "TeachingRole": "消除慢速外部沙箱执行期间巨量 KV 缓存死占 HBM 导致的算力饥饿",
+    "TeachingRole": "消除慢速外部沙箱执行期间巨量 KV 缓存滞留 HBM 导致的算力饥饿",
     "figure": "17-14",
     "name": "ch17-multi-turn-tool-env-rl-state-suspension"
   },
@@ -225,9 +226,9 @@
     "caption": "DAPO 动态过滤全对（r=1）与全错（r=0）零梯度提示词及 RollPacker 1,600 选 1,024 投机池",
     "source_refs": [
       "case-studies/rollout-tail-and-sampling.md",
-      "experiments/ch18/18-01/run.py"
+      "experiments/ch17/17-01/run.py"
     ],
-    "TeachingRole": "结合 +56.25% 投机超采池与在线零方差过滤确保训练微批 100% 满载有效梯度",
+    "TeachingRole": "结合 +56.25% 投机超采池与在线零方差过滤确保训练微批 100% 充盈有效梯度",
     "figure": "17-16",
     "name": "ch17-dapo-dynamic-sampling-zero-variance-filter"
   },
@@ -251,11 +252,11 @@
     "file": "ch17-rlvr-and-test-time-compute-closed-loop.svg",
     "asset": "ch17/ch17-rlvr-and-test-time-compute-closed-loop.svg",
     "section": "17.4.2",
-    "caption": "测试时搜索合成高价值轨迹 → 沙箱验证 → 异步 RLVR 更新 → 蒸馏回直觉模型的自我演进总账本",
+    "caption": "测试时搜索合成高价值轨迹 → 沙箱验证 → 异步 RLVR 更新 → 蒸馏回直觉模型的演进总账本",
     "source_refs": [
-      "experiments/ch18/18-01/run.py"
+      "experiments/ch17/17-01/run.py"
     ],
-    "TeachingRole": "收束第 18 章 RLVR 显存账本、训推池化、长尾治理与推理时搜索的工程总图",
+    "TeachingRole": "收束第 17 章 RLVR 显存账本、训推池化、长尾治理与推理时搜索的工程总图",
     "figure": "17-18",
     "name": "ch17-rlvr-and-test-time-compute-closed-loop"
   },
@@ -267,8 +268,8 @@
     "section": "17.4.3",
     "caption": "跨地域闲置推理算力异步收割 Rollout 轨迹、Token ID 极窄带宽回传与中心 Learner 重要性采样过滤架构（算例 17-9）",
     "source_refs": [
-      "manuscripts/ch18/figure-data.json",
-      "experiments/ch18/18-02/run.py"
+      "manuscripts/ch17/figure-data.json",
+      "experiments/ch17/17-02/run.py"
     ],
     "TeachingRole": "复算 10 B/tok 紧凑回传将 1,024×16K 轨迹从 2,473.9 GB 压缩 14,745.6x 至 160.0 MiB 的广域网账本",
     "figure": "17-19",
@@ -282,8 +283,8 @@
     "section": "17.4.3",
     "caption": "RLVR 训练中奖励黑客（长度失控与熵坍缩）的在线监控指标相图与自适应 KL 制动熔断机制",
     "source_refs": [
-      "manuscripts/ch18/figure-data.json",
-      "experiments/ch18/18-02/run.py"
+      "manuscripts/ch17/figure-data.json",
+      "experiments/ch17/17-02/run.py"
     ],
     "TeachingRole": "建立基于 (KL 散度, 输出长度, 策略熵) 的两级在线奖励黑客制动与检查点回滚状态机",
     "figure": "17-20",
@@ -297,8 +298,8 @@
     "section": "17.4.3",
     "caption": "多轮工具交互强化学习（SWE-RL / DeepResearch-RL）中容器环境快照（OverlayFS + CRIU）与 Paged KV 树状分叉架构（算例 17-10）",
     "source_refs": [
-      "manuscripts/ch18/figure-data.json",
-      "experiments/ch18/18-03/run.py"
+      "manuscripts/ch17/figure-data.json",
+      "experiments/ch17/17-03/run.py"
     ],
     "TeachingRole": "推导 16 条叶分支下容器+KV 树分叉将沙箱 CPU 耗时从 672.0 s 压至 114.0 s（5.89x）并省 84.38% 前缀 KV 的账本",
     "figure": "17-21",
@@ -312,11 +313,71 @@
     "section": "17.4.3",
     "caption": "异步离策略强化学习中连乘重要性采样爆炸与 V-trace（ρ̄, c̄ 双重截断）/ TIS 轨迹修正及环境观测掩码机制",
     "source_refs": [
-      "manuscripts/ch18/figure-data.json",
-      "experiments/ch18/18-03/run.py"
+      "manuscripts/ch17/figure-data.json",
+      "experiments/ch17/17-03/run.py"
     ],
-    "TeachingRole": "对比 10 步未截断连乘 IS（9.31x 爆炸）与 V-trace 双重截断递推及环境观测掩码置零的收敛保障",
+    "TeachingRole": "对比 10 步未截断连乘 IS（9.31x 膨胀）与 V-trace 双重截断递推及环境观测掩码置零的收敛保障",
     "figure": "17-22",
     "name": "ch17-asynchronous-off-policy-importance-sampling-clipping"
+  },
+  {
+    "figure_id": "图 17-23",
+    "number": 23,
+    "file": "ch17-sft-varlen-binpacking-cuseqlens-and-quadratic-load-balance.svg",
+    "asset": "ch17/ch17-sft-varlen-binpacking-cuseqlens-and-quadratic-load-balance.svg",
+    "section": "17.5.1",
+    "caption": "64K 长序列 SFT 从 Pad-to-Max（MFU 13.6%）、cu_seqlens 变长装箱（41.2%）到二次计算量均衡 + ZigZag Ring（56.4%，提速 4.15x）及预缓存 DPO 流水线（算例 17-11）",
+    "source_refs": [
+      "calculations/results/ch17-posttrain-rlvr-distill.json",
+      "experiments/ch17/17-04/run.py"
+    ],
+    "TeachingRole": "证明消除填充后还须按 ΣL_i² 均衡跨 DP 注意力工作量并对称切块才能释放 4.15x 有效吞吐",
+    "figure": "17-23",
+    "name": "ch17-sft-varlen-binpacking-cuseqlens-and-quadratic-load-balance"
+  },
+  {
+    "figure_id": "图 17-24",
+    "number": 24,
+    "file": "ch17-minitron-structured-pruning-and-online-vs-offline-distillation.svg",
+    "asset": "ch17/ch17-minitron-structured-pruning-and-online-vs-offline-distillation.svg",
+    "section": "17.5.2",
+    "caption": "Minitron 硬件对齐结构化剪枝与 18-bit ID + 14-bit FP14 单字 32-bit 位打包 Top-128 缓存（102.4 TB，压缩 593.5x）对比在线 NVFP4 教师的 1.88 轮翻转点（算例 17-12）",
+    "source_refs": [
+      "calculations/results/ch17-posttrain-rlvr-distill.json",
+      "experiments/ch17/17-05/run.py"
+    ],
+    "TeachingRole": "揭示大词表 V>65,535 下 uint16 溢出风险，确立 32-bit 紧凑打包与在线低比特伴飞的经济边界",
+    "figure": "17-24",
+    "name": "ch17-minitron-structured-pruning-and-online-vs-offline-distillation"
+  },
+  {
+    "figure_id": "图 17-25",
+    "number": 25,
+    "file": "ch17-multi-turn-agentic-rl-prefix-tree-and-sandbox-pool.svg",
+    "asset": "ch17/ch17-multi-turn-agentic-rl-prefix-tree-and-sandbox-pool.svg",
+    "section": "17.6.1",
+    "caption": "集群级多轮 Agentic RL 的异构 GPU—微虚机沙箱池利特尔法则配比与跨轮次前缀树增量 KV 复用架构",
+    "source_refs": [
+      "calculations/results/ch17-posttrain-rlvr-distill.json",
+      "experiments/ch17/17-05/run.py"
+    ],
+    "TeachingRole": "以高密微虚机槽位承接 8–90 s 容器编译长尾，消除同步绑卡造成的 68% GPU 空转",
+    "figure": "17-25",
+    "name": "ch17-multi-turn-agentic-rl-prefix-tree-and-sandbox-pool"
+  },
+  {
+    "figure_id": "图 17-26",
+    "number": 26,
+    "file": "ch17-bounded-staleness-off-policy-importance-sampling-stability.svg",
+    "asset": "ch17/ch17-bounded-staleness-off-policy-importance-sampling-stability.svg",
+    "section": "17.6.2",
+    "caption": "有界陈旧度（Δ_max = 3）异步离策略 Rényi 方差护栏、2.64x 有效更新步增益与第四部分全栈底座咬合总图（算例 17-13）",
+    "source_refs": [
+      "calculations/results/ch17-posttrain-rlvr-distill.json",
+      "experiments/ch17/17-05/run.py"
+    ],
+    "TeachingRole": "收束第 13–17 章存储、供电液冷、可观测容错、机密沙箱与后训练进化管线的跨层协同",
+    "figure": "17-26",
+    "name": "ch17-bounded-staleness-off-policy-importance-sampling-stability"
   }
 ]

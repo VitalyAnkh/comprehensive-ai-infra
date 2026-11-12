@@ -10,7 +10,7 @@
     "ram_saving_pct": 89.06,
     "total_sync_rollback_ms": 8.5
   },
-  "locked_case_i19_telemetry_drain": {
+  "audit_telemetry_outage_drain": {
     "telemetry_rate_kib_s": 400.0,
     "buffer_cap_mib": 32.0,
     "time_to_overflow_sec": 81.92,

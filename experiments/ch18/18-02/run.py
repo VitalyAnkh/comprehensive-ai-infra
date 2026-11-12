@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Experiment 18-02: Firecracker 12 ms CoW snapshot fork, MCTS synchronized rollback, Locked Case I19 telemetry drain, and MCP Tool RAG."""
+"""Experiment 18-02: Firecracker 12 ms CoW snapshot fork, MCTS synchronized rollback, audit telemetry outage drain, and MCP Tool RAG."""
 from __future__ import annotations
 
 import json
@@ -11,7 +11,7 @@ RESULTS_PATH = HERE / "results" / "summary.json"
 
 
 def compute_metrics() -> dict:
-    # 1. Firecracker MicroVM CoW Snapshot Fork & MCTS Tree-of-Actions Synchronized Rollback (Ex 21-3)
+    # 1. Firecracker MicroVM CoW Snapshot Fork & MCTS Tree-of-Actions Synchronized Rollback (Ex 18-3)
     cold_boot_ms = 1500.0
     vmm_clone_ms = 3.2
     uffd_working_set_mib = 5.50
@@ -31,7 +31,7 @@ def compute_metrics() -> dict:
     sandbox_cow_rollback_ms = 8.35
     total_sync_rollback_ms = round(kv_block_rollback_ms + sandbox_cow_rollback_ms, 2)  # 8.50 ms
 
-    # 2. Locked Case I19: Audit Telemetry Outage Backlog Overflow & Recovery Drain (Ex 21-4)
+    # 2. Audit Telemetry Outage Backlog Overflow & Recovery Drain (Ex 18-4)
     telemetry_rate_kib_s = 400.0
     buffer_cap_mib = 32.0
     buffer_cap_kib = buffer_cap_mib * 1024.0  # 32,768 KiB
@@ -47,7 +47,7 @@ def compute_metrics() -> dict:
     net_drain_rate_kib_s = uplink_bw_kib_s - telemetry_rate_kib_s  # 624 KiB/s
     drain_time_sec = round(accumulated_kib / net_drain_rate_kib_s, 2)  # 76.92 s
 
-    # 3. MCP Dynamic Tool RAG & HippoRAG 2 Episodic Memory Consolidation (Ex 21-5)
+    # 3. MCP Dynamic Tool RAG & HippoRAG 2 Episodic Memory Consolidation (Ex 18-5)
     total_mcp_tools = 1000
     tokens_per_tool_schema = 180
     full_schema_tokens = total_mcp_tools * tokens_per_tool_schema  # 180,000 tokens
@@ -68,7 +68,7 @@ def compute_metrics() -> dict:
             "ram_saving_pct": ram_saving_pct,
             "total_sync_rollback_ms": total_sync_rollback_ms,
         },
-        "locked_case_i19_telemetry_drain": {
+        "audit_telemetry_outage_drain": {
             "telemetry_rate_kib_s": telemetry_rate_kib_s,
             "buffer_cap_mib": buffer_cap_mib,
             "time_to_overflow_sec": time_to_overflow_sec,

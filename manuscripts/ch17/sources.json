@@ -2,12 +2,24 @@
   "chapter": "ch17",
   "sources": [
     {
-      "path": "manuscripts/17-后训练与强化学习系统.md",
-      "sha256": "35fa948d3a308fd0f15470d3ffddca0197a2f8fa5422b642a0eda3fdf5d1a02b"
+      "path": "manuscripts/ch17/build.py",
+      "sha256": "4aab627134af84cc3ce3f2a3e127b1fbc20262afa121fcd810afb860790d0f67"
+    },
+    {
+      "path": "manuscripts/ch17/figure-data.json",
+      "sha256": "1adb6ce824aee678a8cac4bc00851f79beee64002837b1170884df34c514a2d0"
     },
     {
       "path": "manuscripts/ch17/figure-index.json",
-      "sha256": "e0a597f6e83991448f3747803aa5aa1808ebd1953848312a7fbcb6a1c7ad3619"
+      "sha256": "c46aa906c9a9785db2c64d718ab91a5198c599d41a209af8b6285b1df7bde122"
+    },
+    {
+      "path": "manuscripts/17-后训练与强化学习系统.md",
+      "sha256": "22e34a09f34365cfcf9add6b3fdd40d5b936f547366ed898b62f7313c008fc1b"
+    },
+    {
+      "path": "calculations/results/ch17-posttrain-rlvr-distill.json",
+      "sha256": "56e78fcb6974e719ae6f30d3b458e0f3a10adf3144e099ea53b04da8ff5ce2e0"
     },
     {
       "path": "experiments/ch17/17-01/run.py",
@@ -15,11 +27,19 @@
     },
     {
       "path": "experiments/ch17/17-02/run.py",
-      "sha256": "e018fe093e73fba737123690d7e9aa87aecccfe68f70363792d27b7211d3fd84"
+      "sha256": "0c02206db79ef3b655fb1b90a624b68ce58637fb8393ca0dba5cae5ad5f04761"
     },
     {
       "path": "experiments/ch17/17-03/run.py",
-      "sha256": "f950c2c12eb2a511ea3aced67cc944ec0e905f332f4f0eef0426f12f35891006"
+      "sha256": "1385f8f951e3688b06483b773b84cd63977d6153aa12f3d24ae9fd6abd98abda"
+    },
+    {
+      "path": "experiments/ch17/17-04/run.py",
+      "sha256": "1facb2a5b7ecaa34060870ad54d31db4e94ad7a2114a34c3ef99f1dda45639ba"
+    },
+    {
+      "path": "experiments/ch17/17-05/run.py",
+      "sha256": "79c3694dee040d743b1a775f7f9e348d8852acc512ebd57fc61b703ae2d8e513"
     }
   ]
 }

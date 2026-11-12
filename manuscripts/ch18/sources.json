@@ -2,24 +2,44 @@
   "chapter": "ch18",
   "sources": [
     {
-      "path": "manuscripts/18-自主智能体系统.md",
-      "sha256": "de425b87f4de11f7855c2bf8d95a283f939f7a30360f78ac0622ccab4f11921c"
+      "path": "manuscripts/ch18/build.py",
+      "sha256": "9f1544c050aa6e5219ce9f3f35759af2ef150f4400daf9465b58de7c7e0949d8"
+    },
+    {
+      "path": "manuscripts/ch18/figure-data.json",
+      "sha256": "1c0b8ccc53ad34c204a4a61073ab77140eee894f3105acfc73ef151c0320a48e"
     },
     {
       "path": "manuscripts/ch18/figure-index.json",
-      "sha256": "5e9d888a41122a208030882a05938acf39d00c67058ee10d8f4bc566225c1ee9"
+      "sha256": "b6882e51fa2e1056a1a14676891b2a68041c39c8d8f7e4616698498e4014016b"
+    },
+    {
+      "path": "manuscripts/18-自主智能体系统.md",
+      "sha256": "4e056d47a39e36a799c65d5da487020702a8c00316e402943ed2317bea2a1059"
+    },
+    {
+      "path": "calculations/results/ch18-agent-worm-grammar.json",
+      "sha256": "dcfc0fa5896b7c57a455b55176e438fd9cf10389986e39b520e51d31d156cb5f"
     },
     {
       "path": "experiments/ch18/18-01/run.py",
-      "sha256": "25f52c4ebbacbff5ceeadf892a4fcd43804796b010101cbd06ec91f5e9f9c42c"
+      "sha256": "b8c1df51a73299e056a412bd27afe944b25df4c60fc005470f2aaa985e131818"
     },
     {
       "path": "experiments/ch18/18-02/run.py",
-      "sha256": "e75dd64059eac80c8f39d234cd833517e46a38424636a0058e8b24f9e5bb4b16"
+      "sha256": "1a52d62dcec175428fe8dae72fa9a1ea450dd43eb2473f7e868a1959975251d7"
     },
     {
       "path": "experiments/ch18/18-03/run.py",
-      "sha256": "7046227797d39145f9af2ce5c7e9a537cfa902bbacc515f551cc94dfa508bd6b"
+      "sha256": "abef3d7388ff7fd29ff543c43d70ea99af33d783d369bc95aa5c097a269f4bfc"
+    },
+    {
+      "path": "experiments/ch18/18-04/run.py",
+      "sha256": "15fbbcf21c36b5c4185cae017aebda73320672f26044f6c1a6338bae39e72f65"
+    },
+    {
+      "path": "experiments/ch18/18-05/run.py",
+      "sha256": "d3afb018a065764c0658df5be3fb78d485f958a19c3219ae4bed2fede1f630ed"
     }
   ]
 }

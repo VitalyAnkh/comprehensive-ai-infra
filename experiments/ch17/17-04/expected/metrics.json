@@ -1,0 +1,26 @@
+{
+  "experiment_id": "17-04",
+  "sft_varlen_and_zigzag": {
+    "max_seq_len": 65536,
+    "mean_seq_len": 4200,
+    "pad_token_utilization_pct": 6.41,
+    "sft_pad_to_64k_mfu_pct": 13.6,
+    "sft_varlen_unbalanced_mfu_pct": 41.2,
+    "sft_varlen_zigzag_mfu_pct": 56.4,
+    "sft_varlen_zigzag_exact_mfu_pct": 56.44,
+    "sft_varlen_throughput_speedup_x": 4.15,
+    "naive_quad_max_to_mean": 2.766,
+    "balanced_quad_max_to_mean": 2.735,
+    "rank0_cu_seqlens_len": 2,
+    "rank0_total_packed_tokens": 52000,
+    "rank0_position_reset_verified": true,
+    "zigzag_cp4_equal_causal_blocks": true
+  },
+  "preference_alignment_ledger": {
+    "dpo_32b_static_state_gb": 576.0,
+    "simpo_32b_static_state_gb": 512.0,
+    "dpo_forward_evals_per_pair": 4,
+    "simpo_forward_evals_per_pair": 2,
+    "simpo_step_flop_saving_pct": 25.0
+  }
+}

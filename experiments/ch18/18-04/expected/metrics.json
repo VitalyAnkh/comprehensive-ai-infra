@@ -1,0 +1,28 @@
+{
+  "experiment_id": "18-04",
+  "bitmask_memory_ledger": {
+    "batch_size": 64,
+    "qwen3_vocab_size": 151936,
+    "qwen3_bitmask_uint32_words": 4748,
+    "qwen3_bitmask_bytes_per_req": 18992,
+    "qwen3_bitmask_kib_per_req": 18.55,
+    "qwen3_batch64_bitmask_mib": 1.16,
+    "deepseek_v3_vocab_size": 129280,
+    "deepseek_bitmask_uint32_words": 4040,
+    "deepseek_bitmask_bytes_per_req": 16160,
+    "deepseek_bitmask_kib_per_req": 15.78,
+    "pcie_h2d_dma_us": 23.58,
+    "adaptive_merge_verified": true
+  },
+  "async_pda_gpu_overlap": {
+    "gpu_decode_step_ms": 8.5,
+    "naive_fsm_cpu_ms": 38.4,
+    "naive_total_step_ms": 46.9,
+    "naive_fsm_throughput_drop_pct": 81.9,
+    "xgrammar_per_req_us": 32.8125,
+    "xgrammar_batch64_cpu_ms": 2.1,
+    "xgrammar_effective_step_ms": 8.5,
+    "xgrammar_throughput_loss_pct": 0.0,
+    "max_zero_overhead_batch_size": 259
+  }
+}

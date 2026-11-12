@@ -17,9 +17,9 @@ def main() -> None:
     assert actual["firecracker_cow_and_mcts_tree"]["cow_tree_ram_mib"] == 896.0
     assert actual["firecracker_cow_and_mcts_tree"]["ram_saving_pct"] == 89.06
     assert actual["firecracker_cow_and_mcts_tree"]["total_sync_rollback_ms"] == 8.5
-    assert actual["locked_case_i19_telemetry_drain"]["time_to_overflow_sec"] == 81.92
-    assert actual["locked_case_i19_telemetry_drain"]["accumulated_mib"] == 46.875
-    assert actual["locked_case_i19_telemetry_drain"]["drain_time_sec"] == 76.92
+    assert actual["audit_telemetry_outage_drain"]["time_to_overflow_sec"] == 81.92
+    assert actual["audit_telemetry_outage_drain"]["accumulated_mib"] == 46.875
+    assert actual["audit_telemetry_outage_drain"]["drain_time_sec"] == 76.92
     assert actual["mcp_dynamic_tool_rag"]["schema_reduction_pct"] == 99.2
     assert actual["mcp_dynamic_tool_rag"]["schema_compression_x"] == 125.0
     print("Experiment 18-02 verified successfully.")

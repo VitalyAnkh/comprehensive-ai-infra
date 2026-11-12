@@ -11,7 +11,7 @@ RESULTS_PATH = HERE / "results" / "summary.json"
 
 
 def compute_metrics() -> dict:
-    # 1. Worked Example 21-6: 30-step GUI Incremental ROI Vision Token Cache & SoM DOM Pruning
+    # 1. Worked Example 18-6: 30-step GUI Incremental ROI Vision Token Cache & SoM DOM Pruning
     steps_ex6 = 30
     full_vis_tokens_ex6 = 2400
     raw_dom_tokens_ex6 = 3600
@@ -33,7 +33,7 @@ def compute_metrics() -> dict:
     opt_vit_total_ms_ex6 = round(full_vit_ms_ex6 + (steps_ex6 - 1) * inc_vit_step_ms_ex6, 2)  # 251.62
     vit_speedup_x_ex6 = round(naive_vit_total_ms_ex6 / (full_vit_ms_ex6 + (steps_ex6 - 1) * inc_vit_step_ms_ex6), 2)  # 5.37
 
-    # 2. Worked Example 21-7: 4-Stage Multi-Agent DAG Speculative Tool Execution
+    # 2. Worked Example 18-7: 4-Stage Multi-Agent DAG Speculative Tool Execution
     stages_ex7 = 4
     t_llm_ex7 = 600.0
     t_tool_ex7 = 1400.0
@@ -51,7 +51,7 @@ def compute_metrics() -> dict:
     latency_reduction_pct_ex7 = round(100.0 * (1.0 - expected_total_ms_ex7 / seq_total_ms_ex7), 2)  # 37.88
     breakeven_hit_prob_pct_ex7 = round(100.0 * t_rollback_ex7 / (miss_stage_ms_ex7 - hit_stage_ms_ex7), 2)  # 1.25
 
-    # 3. Exercise 21-11 & Exercise 21-12
+    # 3. Exercise 18-11 & Exercise 18-12
     steps_p11 = 40
     naive_tokens_p11 = steps_p11 * (3200 + 4800)  # 320,000
     opt_tokens_p11 = (3200 + 500) + (steps_p11 - 1) * (320 + 500)  # 35,680
@@ -67,7 +67,7 @@ def compute_metrics() -> dict:
 
     return {
         "experiment_id": "18-03",
-        "gui_incremental_roi_cache_ex21_6": {
+        "gui_incremental_roi_cache_ex18_6": {
             "steps": steps_ex6,
             "naive_total_tokens": naive_total_tokens_ex6,
             "opt_total_tokens": opt_total_tokens_ex6,
@@ -77,7 +77,7 @@ def compute_metrics() -> dict:
             "opt_vit_total_ms": opt_vit_total_ms_ex6,
             "vit_speedup_x": vit_speedup_x_ex6,
         },
-        "speculative_dag_execution_ex21_7": {
+        "speculative_dag_execution_ex18_7": {
             "num_stages": stages_ex7,
             "seq_total_ms": seq_total_ms_ex7,
             "hit_stage_ms": hit_stage_ms_ex7,
@@ -88,7 +88,7 @@ def compute_metrics() -> dict:
             "latency_reduction_pct": latency_reduction_pct_ex7,
             "breakeven_hit_prob_pct": breakeven_hit_prob_pct_ex7,
         },
-        "exercises_21_11_and_21_12": {
+        "exercises_18_11_and_18_12": {
             "p11_naive_tokens": naive_tokens_p11,
             "p11_opt_tokens": opt_tokens_p11,
             "p11_token_compression_x": token_comp_p11,

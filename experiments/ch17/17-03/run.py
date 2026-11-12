@@ -11,7 +11,7 @@ SUMMARY_PATH = HERE / "results" / "summary.json"
 
 
 def compute_metrics() -> dict:
-    # 1. SWE-RL 4x4 CoW Trajectory Tree Forking (Example 18-10 Part 1 & Exercise 18-15)
+    # 1. SWE-RL 4x4 CoW Trajectory Tree Forking (Example 17-10 Part 1 & Exercise 17-15)
     b1, b2 = 4, 4
     num_leaves = b1 * b2  # 16
     t_setup_s = 18.0
@@ -33,7 +33,7 @@ def compute_metrics() -> dict:
     forked_prefix_kv_slots = l_prompt + b1 * (prefix_turns * l_turn_act_obs)  # 4096 + 4 * 4096 = 20,480
     prefix_kv_saving_pct = round((1.0 - forked_prefix_kv_slots / linear_prefix_kv_slots) * 100.0, 2)  # 84.38%
 
-    # 2. Off-policy IS explosion vs. V-trace / TIS clipping (Example 18-10 Part 2 & Exercise 18-16)
+    # 2. Off-policy IS explosion vs. V-trace / TIS clipping (Example 17-10 Part 2 & Exercise 17-16)
     step_is_ratio = 1.25
     horizon = 10
     unclipped_prod_is = round(step_is_ratio ** horizon, 4)  # 9.3132

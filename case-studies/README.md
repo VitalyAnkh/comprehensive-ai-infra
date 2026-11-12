@@ -30,7 +30,7 @@
 | [检索与生成的协同预算](retrieval-and-generation.md) | 3、13 |
 | [训练投入与 Scaling Law 历史比较](scaling-history.md) | 3 |
 | [训练计算量的核算](training-compute.md) | 3、10 |
-| [请求分布与推理资源配置](workload-and-provisioning.md) | 3 |
+| [请求分布与推理资源配置](workload-and-provisioning.md) | 3、14 |
 
 ## 第 4 章 · 加速器架构
 
@@ -59,7 +59,7 @@
 | [模型与算子核对笔记](model-operator-examples.md) | 5 |
 | [自动优化的成绩与部署收益](optimization-evaluation-and-deployment.md) | 5 |
 | [流式交接的顺序与缓冲](stream-order-and-buffer.md) | 5 |
-| [RL 阶段切换与权重分发](weight-handoff.md) | 5、10 |
+| [RL 阶段切换与权重分发](weight-handoff.md) | 5、10、17 |
 
 ## 第 6 章 · 超节点
 
@@ -88,14 +88,14 @@
 | 案例 | 引用章节 |
 | --- | :--: |
 | [分块执行、阶段分离与请求迁移](chunking-and-state-transfer.md) | 8、9 |
-| [历史草稿、验证产出与 RL 供给](history-drafts-and-rollout.md) | 8 |
+| [历史草稿、验证产出与 RL 供给](history-drafts-and-rollout.md) | 8、13、17 |
 | [混合模型的前缀状态与恢复成本](hybrid-prefix-state.md) | 2、8 |
 | [从业务要求推算推理与训练系统](inference-training-scenarios.md) | 8 |
 | [KV 位宽、容量与执行成本](kv-quantization-and-execution.md) | 8 |
-| [多 LoRA 服务：共享权重之后还要算什么](multi-lora-serving.md) | 8 |
+| [多 LoRA 服务：共享权重之后还要算什么](multi-lora-serving.md) | 8、9 |
 | [推测解码的执行成本与动态预算](speculative-execution.md) | 8 |
-| [工具参数生成中的 CPU 工作与状态](structured-generation.md) | 8、11 |
-| [张量压缩、解压与传输](tensor-codec-and-transfer.md) | 8 |
+| [工具参数生成中的 CPU 工作与状态](structured-generation.md) | 8、11、16、18 |
+| [张量压缩、解压与传输](tensor-codec-and-transfer.md) | 8、18 |
 | [权重卸载的容量、流量与执行位置](weight-offload-execution.md) | 8、9 |
 
 ## 第 9 章 · 分布式推理
@@ -103,8 +103,9 @@
 | 案例 | 引用章节 |
 | --- | :--: |
 | [缓存事件与路由判断](cache-events-and-routing.md) | 9 |
-| [KV 缓存的取回、共享与路由](cache-tiers-and-routing.md) | 9 |
+| [KV 缓存的取回、共享与路由](cache-tiers-and-routing.md) | 9、18 |
 | [专家分派、重排与扩缩容](expert-dispatch-and-resizing.md) | 9、10 |
+| [多 LoRA 服务：共享权重之后还要算什么](multi-lora-serving.md) | 8、9 |
 | [异构推理的两种切分：A100／H20 与 KTransformers](pd-af-heterogeneous.md) | 9 |
 
 ## 第 10 章 · 训练系统
@@ -112,24 +113,24 @@
 | 案例 | 引用章节 |
 | --- | :--: |
 | [检查点布局、后台保存与推理加载](checkpoint-layout-and-loading.md) | 10 |
-| [MiMo-V2.6 两次 RL 运行的中断与恢复](mimo-v26-rl-interruptions.md) | 10 |
-| [RL 作业的交错执行与故障恢复](rl-scheduling-and-recovery.md) | 10、11 |
-| [RL 中的状态、版本与可复现性](rl-state-and-reproducibility.md) | 10 |
-| [RL 长尾、样本选择与流式训练](rollout-tail-and-sampling.md) | 10、11 |
+| [MiMo-V2.6 两次 RL 运行的中断与恢复](mimo-v26-rl-interruptions.md) | 10、17 |
+| [RL 作业的交错执行与故障恢复](rl-scheduling-and-recovery.md) | 10、11、17 |
+| [RL 中的状态、版本与可复现性](rl-state-and-reproducibility.md) | 10、17 |
+| [RL 长尾、样本选择与流式训练](rollout-tail-and-sampling.md) | 10、11、17 |
 | [训练卸载中的转换、传输与更新位置](training-offload-and-casting.md) | 10 |
 
 ## 第 11 章 · 资源调度与运行环境
 
 | 案例 | 引用章节 |
 | --- | :--: |
-| [DSec：Agent RL 沙箱平台的资源与状态](dsec-sandbox-platform.md) | 11、13、16 |
-| [优化结果与 Agent 执行记录](evaluation-and-agent-records.md) | 11、16 |
+| [DSec：Agent RL 沙箱平台的资源与状态](dsec-sandbox-platform.md) | 11、13、16、17、18 |
+| [优化结果与 Agent 执行记录](evaluation-and-agent-records.md) | 11、15、16、18 |
 | [调度、模型路由与云端环境：扩写依据](platform-routing.md) | 11 |
-| [可抢占 rollout 的权重准备与有效产出](preemptible-rollout-and-weight-readiness.md) | 11 |
-| [RL 验证的剩余时间与资源配置](reward-deadlines-and-feedback.md) | 11 |
+| [可抢占 rollout 的权重准备与有效产出](preemptible-rollout-and-weight-readiness.md) | 11、17 |
+| [RL 验证的剩余时间与资源配置](reward-deadlines-and-feedback.md) | 11、17 |
 | [模型路由：从 token 单价算到任务成本](routing-cost-and-completion.md) | 11 |
-| [一名 24×7 数字员工的 serving 成本](single-agent-serving-cost.md) | 11、23 |
-| [快照恢复、首次访问与环境容量](snapshot-residency-and-first-use.md) | 11 |
+| [一名 24×7 数字员工的 serving 成本](single-agent-serving-cost.md) | 11、18、23 |
+| [快照恢复、首次访问与环境容量](snapshot-residency-and-first-use.md) | 11、18 |
 
 ## 第 12 章 · 端边云协同
 
@@ -143,13 +144,14 @@
 | --- | :--: |
 | [检索与生成的协同预算](retrieval-and-generation.md) | 3、13 |
 | [历史草稿、验证产出与 RL 供给](history-drafts-and-rollout.md) | 8、13、17 |
-| [DSec：Agent RL 沙箱平台的资源与状态](dsec-sandbox-platform.md) | 11、13、16 |
+| [DSec：Agent RL 沙箱平台的资源与状态](dsec-sandbox-platform.md) | 11、13、16、17、18 |
 
 ## 第 14 章 · 智算中心与电力热学系统
 
 | 案例 | 引用章节 |
 | --- | :--: |
 | [LogicFolding：芯片内部的数据移动与能耗](logicfolding-energy.md) | 1、4、14 |
+| [请求分布与推理资源配置](workload-and-provisioning.md) | 3、14 |
 
 ## 第 15 章 · 集群可靠性与基准评测
 
@@ -159,37 +161,40 @@
 | [自动优化的成绩与部署收益](optimization-evaluation-and-deployment.md) | 5、15 |
 | [集合通信的实际路径与等待来源](collective-paths-and-diagnosis.md) | 6、7、10、15 |
 | [配置预测接近时，应该补测什么](profile-and-plan-ranking.md) | 6、10、15 |
-| [优化结果与 Agent 执行记录](evaluation-and-agent-records.md) | 11、15、16 |
+| [优化结果与 Agent 执行记录](evaluation-and-agent-records.md) | 11、15、16、18 |
 
 ## 第 16 章 · 机密计算与可信安全系统
 
 | 案例 | 引用章节 |
 | --- | :--: |
-| [DSec：Agent RL 沙箱平台的资源与状态](dsec-sandbox-platform.md) | 11、13、16、17 |
-| [优化结果与 Agent 执行记录](evaluation-and-agent-records.md) | 11、15、16 |
-| [工具参数生成中的 CPU 工作与状态](structured-generation.md) | 8、11、16 |
+| [DSec：Agent RL 沙箱平台的资源与状态](dsec-sandbox-platform.md) | 11、13、16、17、18 |
+| [优化结果与 Agent 执行记录](evaluation-and-agent-records.md) | 11、15、16、18 |
+| [工具参数生成中的 CPU 工作与状态](structured-generation.md) | 8、11、16、18 |
 
 ## 第 17 章 · 后训练与强化学习系统
 
 | 案例 | 引用章节 |
 | --- | :--: |
 | [RL 阶段切换与权重分发](weight-handoff.md) | 5、10、17 |
-| [历史草稿、验证产出与 RL 供给](history-drafts-and-rollout.md) | 8、17 |
+| [历史草稿、验证产出与 RL 供给](history-drafts-and-rollout.md) | 8、13、17 |
 | [MiMo-V2.6 两次 RL 运行的中断与恢复](mimo-v26-rl-interruptions.md) | 10、17 |
 | [RL 作业的交错执行与故障恢复](rl-scheduling-and-recovery.md) | 10、11、17 |
 | [RL 中的状态、版本与可复现性](rl-state-and-reproducibility.md) | 10、17 |
 | [RL 长尾、样本选择与流式训练](rollout-tail-and-sampling.md) | 10、11、17 |
 | [可抢占 rollout 的权重准备与有效产出](preemptible-rollout-and-weight-readiness.md) | 11、17 |
 | [RL 验证的剩余时间与资源配置](reward-deadlines-and-feedback.md) | 11、17 |
-| [DSec：Agent RL 沙箱平台的资源与状态](dsec-sandbox-platform.md) | 11、13、16、17 |
+| [DSec：Agent RL 沙箱平台的资源与状态](dsec-sandbox-platform.md) | 11、13、16、17、18 |
 
 ## 第 18 章 · 自主智能体系统
 
 | 案例 | 引用章节 |
 | --- | :--: |
 | [KV 缓存的取回、共享与路由](cache-tiers-and-routing.md) | 9、18 |
+| [张量压缩、解压与传输](tensor-codec-and-transfer.md) | 8、18 |
 | [DSec：Agent RL 沙箱平台的资源与状态](dsec-sandbox-platform.md) | 11、13、16、17、18 |
 | [快照恢复、首次访问与环境容量](snapshot-residency-and-first-use.md) | 11、18 |
+| [优化结果与 Agent 执行记录](evaluation-and-agent-records.md) | 11、15、16、18 |
+| [工具参数生成中的 CPU 工作与状态](structured-generation.md) | 8、11、16、18 |
 | [一名 24×7 数字员工的 serving 成本](single-agent-serving-cost.md) | 11、18、23 |
 
 ## 第 19 章 · 多模态生成与实时语音
@@ -226,7 +231,7 @@
 | 案例 | 引用章节 |
 | --- | :--: |
 | [OpenTallas：从不可变权重到系统可行性的案例与习题](opentallas.md) | 4、23 |
-| [一名 24×7 数字员工的 serving 成本](single-agent-serving-cost.md) | 11、23 |
+| [一名 24×7 数字员工的 serving 成本](single-agent-serving-cost.md) | 11、18、23 |
 | [混合模型的前缀状态与恢复成本](hybrid-prefix-state.md) | 2、8、23 |
 | [推测解码的执行成本与动态预算](speculative-execution.md) | 8、23 |
 | [加速器架构与执行比较](accelerator-architecture.md) | 4、23 |

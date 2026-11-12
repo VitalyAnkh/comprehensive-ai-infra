@@ -1,7 +1,7 @@
 # 第 18 章：智能体 WORM 状态复用、CacheGen 跨网回本、XGrammar 位掩码与多智能体 DAG 尾延迟账本
 
 - 计算标识：`agent-worm-grammar`（第 18 章）
-- 场景输入：`{"batch_size": 64, "deepseek_v3_vocab_size": 129280, "fanout_k": 12, "gpu_decode_step_ms": 8.5, "naive_fsm_cpu_ms": 38.4, "normal_z99_ref": 0.1107, "qwen3_vocab_size": 151936, "single_branch_p99_s": 6.2, "worm_turns": 40}`
+- 场景输入：`{"batch_size": 64, "deepseek_v3_vocab_size": 129280, "fanout_k": 12, "gpu_decode_step_ms": 8.5, "naive_fsm_cpu_ms": 38.4, "normal_z99_ref": 2.3263, "qwen3_vocab_size": 151936, "single_branch_p99_s": 6.2, "worm_turns": 40}`
 
 ## 核心量化结果
 

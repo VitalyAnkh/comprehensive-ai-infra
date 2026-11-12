@@ -11,7 +11,7 @@ RESULTS_PATH = HERE / "results" / "summary.json"
 
 
 def compute_metrics() -> dict:
-    # 1. 40-turn Agentic WORM (Write-Once-Read-Many) context loop (Ex 21-1)
+    # 1. 40-turn Agentic WORM (Write-Once-Read-Many) context loop (Ex 18-1)
     turns_k = 40
     l0_tokens = 2000
     act_tokens = 200
@@ -27,7 +27,7 @@ def compute_metrics() -> dict:
     total_decode_tokens = turns_k * act_tokens  # 8,000 tokens
     prefill_to_decode_ratio = round(cumulative_prefill_tokens / total_decode_tokens, 1)  # 205.0
 
-    # 2. Tool-Wait Hiatus three-regime crossover at L = 65,536 tokens on Qwen3-8B (144 KiB/tok) (Ex 21-1)
+    # 2. Tool-Wait Hiatus three-regime crossover at L = 65,536 tokens on Qwen3-8B (144 KiB/tok) (Ex 18-1)
     prefix_tokens = 65536
     kv_kib_per_token = 144.0
     kv_size_gib = round(prefix_tokens * kv_kib_per_token / (1024.0 * 1024.0), 2)  # 9.00 GiB
@@ -41,7 +41,7 @@ def compute_metrics() -> dict:
     hbm_cost_saving_at_15s_pct = round((1.0 - crossover_wait_sec / tool_wait_sec) * 100.0, 2)  # 85.60%
     ttft_speedup_vs_recompute_x = round(recompute_ms / swap_in_ms, 2)  # 2.67x
 
-    # 3. Four-Tier KV-Aware Global Radix Router (Dynamo / HiCache) (Ex 21-2)
+    # 3. Four-Tier KV-Aware Global Radix Router (Dynamo / HiCache) (Ex 18-2)
     # Candidate A: queue 120 ms, 90% HBM hit -> 50 ms prefill = 170 ms
     # Candidate B (naive least-loaded): queue 10 ms, 0% hit -> 500 ms prefill = 510 ms
     # Candidate C (remote RDMA hit): queue 20 ms, 80% RDMA hit (200 ms) + 20% miss (100 ms) = 320 ms
@@ -50,7 +50,7 @@ def compute_metrics() -> dict:
     ttft_node_c_ms = 320.0
     router_ttft_speedup_x = round(ttft_node_b_ms / ttft_node_a_ms, 2)  # 3.00x
 
-    # 4. CacheGen Anchor-Delta Entropy Streaming over 50 Gbps (5.81 GiB/s usable) cross-rack link (Ex 21-2)
+    # 4. CacheGen Anchor-Delta Entropy Streaming over 50 Gbps (5.81 GiB/s usable) cross-rack link (Ex 18-2)
     orig_bits = 16.0
     cachegen_bits = 3.80
     cachegen_compression_x = round(orig_bits / cachegen_bits, 2)  # 4.21x
