@@ -1,6 +1,6 @@
 {
-  "chapter": 25,
-  "title": "生成式推荐系统（Generative Recommenders）、万亿参数稀疏表（DLRM）与十亿级 GPU 向量检索引擎",
+  "chapter": 21,
+  "title": "推荐检索与向量数据库",
   "three_tier_embedding_cache": {
     "num_rows": 20000000000,
     "embed_dim": 128,
@@ -70,5 +70,43 @@
     "sustainable_qps": 210000,
     "recall_at_10_pct": 95.4,
     "p99_latency_ms": 2.85
+  },
+  "colpali_plaid_late_interaction": {
+    "num_pages": 50000000,
+    "patches_per_page": 1030,
+    "embed_dim": 128,
+    "bf16_kb_per_page": 263.68,
+    "bf16_50m_tb": 13.18,
+    "bf16_1b_tb": 263.7,
+    "plaid_2bit_bytes_per_vec": 34.0,
+    "plaid_2bit_50m_tb": 1.75,
+    "plaid_2bit_compression_x": 7.53,
+    "plaid_1bit_bytes_per_vec": 17.5,
+    "plaid_1bit_50m_gb": 901.3,
+    "plaid_1bit_1b_tb": 18.0,
+    "plaid_1bit_compression_x": 14.6,
+    "plaid_maxsim_p99_ms": 14.2
+  },
+  "hybrid_retrieval_rerank_funnel": {
+    "bm25_p99_ms": 6.4,
+    "cuvs_p99_ms": 9.8,
+    "rrf_p99_ms": 0.8,
+    "recall_k1": 1000,
+    "rerank_k2": 64,
+    "cross_encoder_0_6b_p99_ms": 14.6,
+    "gateway_rpc_ms": 2.4,
+    "e2e_p99_ms": 27.6
+  },
+  "streaming_admission_and_epoch_hot_update": {
+    "daily_exposure_clicks": 4000000000,
+    "raw_sparse_table_tb": 2.4,
+    "cuckoo_freq_threshold": 5,
+    "cuckoo_tau5_embedding_shrink_pct": 68.5,
+    "cuckoo_embedding_active_gb": 756.0,
+    "stream_updates_per_sec": 2500000,
+    "hot_update_rwlock_p99_ms": 18.4,
+    "hot_update_epoch_lockfree_p99_ms": 1.15,
+    "hot_update_tail_reduction_x": 16.0,
+    "hot_update_epoch_memory_overhead_pct": 6.2
   }
 }

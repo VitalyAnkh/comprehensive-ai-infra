@@ -1,0 +1,18 @@
+{
+  "experiment_id": "22-05",
+  "insitu_dlpack_coupling": {
+    "coupled_field_gb": 384.0,
+    "coupled_gpus": 1024,
+    "per_gpu_field_mb": 375.0,
+    "filesystem_staged_s": 58.2,
+    "dlpack_insitu_s": 0.41,
+    "coupling_insitu_speedup_x": 142.0
+  },
+  "conservation_law_projection": {
+    "rollout_steps": 500,
+    "unconstrained_500step_mass_drift_pct": 11.4,
+    "projected_500step_mass_drift_rel": 4.2e-13,
+    "conservation_projection_overhead_pct": 3.1,
+    "numerical_projection_rel_error_below_1e12": true
+  }
+}

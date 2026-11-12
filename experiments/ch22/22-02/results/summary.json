@@ -18,14 +18,25 @@
     "comm_to_comp_ratio_pct": 1.27,
     "exposed_halo_ms": 0.0
   },
-  "grand_encyclopedia_ledger": {
-    "total_chapters": 24,
-    "total_parts": 4,
-    "total_chapter_figures": 883,
-    "total_production_code_blocks": 166,
-    "total_worked_examples": 192,
-    "total_exercise_blocks": 432,
-    "total_unique_exercise_ids": 431,
-    "total_experiment_suites": 147
+  "five_domain_scientific_ledger": {
+    "science_domains_covered": 5,
+    "domains": [
+      "biomolecular_af3",
+      "genomics_evo2_hyena",
+      "weather_sfno_graphcast",
+      "dft_quantum_chemistry",
+      "fusion_tokamak_control"
+    ],
+    "pairformer_4096_naive_gib": 512.0,
+    "pairformer_4096_dap4_workspace_gib": 0.25,
+    "pairformer_workspace_reduction_x": 2048.0,
+    "pairformer_dap_comm_to_comp_pct": 8.26,
+    "evo2_1m_mixer_reduction_x": 20763.8,
+    "weather_64gpu_halo_mb": 5.53,
+    "weather_64gpu_halo_comm_to_comp_pct": 1.27,
+    "ozaki_s7_vs_native_fp64_speedup_x": 3.68,
+    "ozaki_equiv_fp64_tflops": 147.2,
+    "tokamak_opt_wcet_us": 68.5,
+    "tokamak_headroom_us": 131.5
   }
 }

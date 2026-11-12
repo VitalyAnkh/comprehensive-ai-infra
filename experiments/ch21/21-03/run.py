@@ -11,7 +11,7 @@ RESULTS_PATH = HERE / "results" / "summary.json"
 
 
 def compute_metrics() -> dict:
-    # 1. 1B Vector (D=768, FP16) GPU cuVS CAGRA vs CPU HNSW Build (Ex 25-5)
+    # 1. 1B Vector (D=768, FP16) GPU cuVS CAGRA vs CPU HNSW Build (Ex 21-5)
     num_vectors = 1_000_000_000
     dim = 768
     fp16_bytes = 2
@@ -21,7 +21,7 @@ def compute_metrics() -> dict:
     gpu_cagra_minutes = round(gpu_cagra_hours * 60.0, 1)  # 40.8 min
     build_speedup_x = round(cpu_hnsw_hours / gpu_cagra_hours, 2)  # 16.91x
 
-    # 2. DiskANN 4 KB Sector Alignment & Beam Search (Ex 25-6)
+    # 2. DiskANN 4 KB Sector Alignment & Beam Search (Ex 21-6)
     pq_bytes_per_vec = 64
     dram_pq_gb = round((num_vectors * pq_bytes_per_vec) / 1e9, 1)  # 64.0 GB
     out_degree_r = 64

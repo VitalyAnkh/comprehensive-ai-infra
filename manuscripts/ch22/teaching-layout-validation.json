@@ -1,116 +1,134 @@
-{
-  "chapter": "ch22",
-  "figure_count": 18,
-  "all_passed": true,
-  "total_warnings": 0,
-  "figures": [
-    {
-      "figure": "22-1",
-      "file": "ch22-llm-1d-tokens-vs-ai4science-four-structural-domains.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "22-2",
-      "file": "ch22-alphafold3-boltz1-two-stage-disaggregated-pipeline.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "22-3",
-      "file": "ch22-mmseqs2-gpu-kmer-prefilter-and-smith-waterman.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "22-4",
-      "file": "ch22-pairformer-triangle-multiplication-and-attention-o-n3.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "22-5",
-      "file": "ch22-chunked-triangle-attention-and-dynamic-axial-parallelism.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "22-6",
-      "file": "ch22-all-atom-diffusion-module-multi-sample-batching.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "22-7",
-      "file": "ch22-evo2-stripedhyena2-multi-scale-hyena-attention-backbone.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "22-8",
-      "file": "ch22-flashfftconv-monarch-decomposition-tensor-core.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "22-9",
-      "file": "ch22-sfno-spherical-harmonics-and-2d-grid-decomposition.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "22-10",
-      "file": "ch22-spatial-domain-halo-exchange-computation-overlap.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "22-11",
-      "file": "ch22-era5-petabyte-zarr-gds-direct-streaming-dataloader.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "22-12",
-      "file": "ch22-mace-equivariant-message-passing-and-verlet-neighbor-list.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "22-13",
-      "file": "ch22-ai-in-the-loop-hybrid-hpc-pde-solver-and-surrogate.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "22-14",
-      "file": "ch22-autonomous-wet-lab-active-learning-closed-loop.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "22-15",
-      "file": "ch22-tokamak-plasma-tearing-mode-sub-ms-rl-control.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "22-16",
-      "file": "ch22-single-cell-atlas-sparse-gene-expression-dataloader.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "22-17",
-      "file": "ch22-twenty-four-chapter-encyclopedia-knowledge-atlas.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "22-18",
-      "file": "ch22-unified-laws-across-all-24-chapters-synthesis.svg",
-      "passed": true,
-      "warnings": []
-    }
-  ]
-}
+[
+  {
+    "figure": "ch22-llm-1d-tokens-vs-ai4science-four-structural-domains",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-alphafold3-boltz1-two-stage-disaggregated-pipeline",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-mmseqs2-gpu-kmer-prefilter-and-smith-waterman",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-pairformer-triangle-multiplication-and-attention-o-n3",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-chunked-triangle-attention-and-dynamic-axial-parallelism",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-all-atom-diffusion-module-multi-sample-batching",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-evo2-stripedhyena2-multi-scale-hyena-attention-backbone",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-flashfftconv-monarch-decomposition-tensor-core",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-sfno-spherical-harmonics-and-2d-grid-decomposition",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-spatial-domain-halo-exchange-computation-overlap",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-era5-petabyte-zarr-gds-direct-streaming-dataloader",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-mace-equivariant-message-passing-and-verlet-neighbor-list",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-ai-in-the-loop-hybrid-hpc-pde-solver-and-surrogate",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-autonomous-wet-lab-active-learning-closed-loop",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-tokamak-plasma-tearing-mode-sub-ms-rl-control",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-single-cell-atlas-sparse-gene-expression-dataloader",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-five-domain-scientific-ai-workload-atlas",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-unified-laws-across-all-24-chapters-synthesis",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-ozaki-scheme-fp64-mantissa-slicing-on-int8-tensor-cores",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-ozaki-slice-count-accuracy-vs-speedup-crossover",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-insitu-mpi-dlpack-gpu-coupling-vs-filesystem-io-wall",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch22-conservation-law-projection-layer-long-rollout-stability",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  }
+]

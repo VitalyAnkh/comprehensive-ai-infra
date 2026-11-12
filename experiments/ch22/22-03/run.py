@@ -11,22 +11,20 @@ RESULTS_PATH = HERE / "results" / "summary.json"
 
 
 def compute_metrics() -> dict:
-    # 1. Tokamak 4,000 Hz (250 us period, 200.0 us compute budget) Tearing-Mode RL Control (Ex 24-6)
+    # 1. Tokamak 4,000 Hz (250 us period, 200.0 us compute budget) Tearing-Mode RL Control (Ex 22-5)
     control_freq_hz = 4000
     cycle_period_us = round(1e6 / control_freq_hz, 1)  # 250.0 us
     hard_budget_us = 200.0
-    unopt_total_us = round(42.0 + 95.0 + 180.0 + 83.0 + 35.0, 1)  # 435.0 us
-    opt_daq_rdma_us = 6.5
-    opt_eq_surrogate_us = 18.0
-    opt_tearing_forecast_us = 24.5
-    opt_actor_policy_us = 14.0
-    opt_coil_tx_us = 5.5
+    unopt_total_us = round(140.0 + 185.0 + 75.0 + 35.0, 1)  # 435.0 us
+    opt_daq_rdma_us = 14.0
+    opt_eq_surrogate_us = 31.0
+    opt_tearing_forecast_rl_us = 17.0
+    opt_safety_coil_tx_us = 6.5
     opt_total_us = round(
         opt_daq_rdma_us
         + opt_eq_surrogate_us
-        + opt_tearing_forecast_us
-        + opt_actor_policy_us
-        + opt_coil_tx_us,
+        + opt_tearing_forecast_rl_us
+        + opt_safety_coil_tx_us,
         1,
     )  # 68.5 us
     speedup_x = round(unopt_total_us / opt_total_us, 2)  # 6.35x
@@ -37,7 +35,7 @@ def compute_metrics() -> dict:
     coil_response_ms = 12.0
     actuation_margin_ms = round(forecast_lead_ms - coil_response_ms, 1)  # 16.5 ms
 
-    # 2. 100M Single-Cell Atlas (10^8 cells x 20,480 genes, 7.50% non-zero) CSR Sparse Compression (Ex 24-7)
+    # 2. 100M Single-Cell Atlas (10^8 cells x 20,480 genes, 7.50% non-zero) CSR Sparse Compression (Ex 22-6)
     n_cells = 100_000_000
     g_total = 20_480
     nnz_density = 0.075

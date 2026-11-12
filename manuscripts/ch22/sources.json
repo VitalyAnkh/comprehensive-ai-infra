@@ -1,25 +1,44 @@
 {
-  "chapter": "ch22",
   "sources": [
     {
-      "path": "manuscripts/22-科学计算智能系统.md",
-      "sha256": "9ce80293b46df1569fe70c043295260e541ad73d7a74f24276bc5c092e623f0a"
+      "path": "manuscripts/ch22/build.py",
+      "sha256": "62e0cfc06228217c600153088f6a8d047b39fba8912d98141bd6208d2c72220a"
+    },
+    {
+      "path": "manuscripts/ch22/figure-data.json",
+      "sha256": "2dfbb8581a7020fd56b3dd5eba892bb00034112a82b2d1cd8765f033bf9835dd"
     },
     {
       "path": "manuscripts/ch22/figure-index.json",
-      "sha256": "eac2bdc0185494d267223f087e7631f8aa456f32f6d959fc25182e293b9b6c4c"
+      "sha256": "c1a044e7bcbbaf5d68f4cb245cafc5a677811775bd514eb1dabd4db398e7cbad"
+    },
+    {
+      "path": "calculations/results/ch22-science-ozaki-coupling.json",
+      "sha256": "59d231e276c0fcffcd5b527315e96d4212b79cab1afb7db5796814032a1f2bfa"
     },
     {
       "path": "experiments/ch22/22-01/run.py",
-      "sha256": "d21ba2eac39320e6b98361d868d7171910242ed7133ca7c0030668b8683a6390"
+      "sha256": "8c037498c49e6edb93af064debda32961b22ec9144b0fb90db841088071bf898"
     },
     {
       "path": "experiments/ch22/22-02/run.py",
-      "sha256": "4c676196d611caa9c7ba6d16c3deeb24a8a04eb792e46681f9af429da5b14a00"
+      "sha256": "0af7e74c64dc7c04718341b8c87055be5bc3a1b0c6e14c6f79f09d1fe24047cf"
     },
     {
       "path": "experiments/ch22/22-03/run.py",
-      "sha256": "b2ee6a853f4b96c86d7f6adc7d80a08403ae3dabea4bb066d221bc6481481561"
+      "sha256": "45d262fc85cc757cf7256a1c67da10cc59fdef35e197c9a62b3edf7d5c3ea522"
+    },
+    {
+      "path": "experiments/ch22/22-04/run.py",
+      "sha256": "1742136be95a029fc55d81412069497719202a0bec6db245fcde6f53f38aea78"
+    },
+    {
+      "path": "experiments/ch22/22-05/run.py",
+      "sha256": "0b87764dd3d99e95adf7c97a1de79ae2cc317572bc5f61d00c00d2347174552b"
+    },
+    {
+      "path": "manuscripts/22-科学计算智能系统.md",
+      "sha256": "bc828882fdcadc45896d834615e70fadc24dbdc0f6bda3d67c6b51c603e9fe38"
     }
   ]
 }

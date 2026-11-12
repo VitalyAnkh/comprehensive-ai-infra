@@ -11,7 +11,7 @@ RESULTS_PATH = HERE / "results" / "summary.json"
 
 
 def compute_metrics() -> dict:
-    # 1. 10.0 TB Trillion-Parameter DLRM Three-Tier Embedding Cache (Ex 25-1)
+    # 1. 10.0 TB Trillion-Parameter DLRM Three-Tier Embedding Cache (Ex 21-1)
     num_rows = 20_000_000_000  # 2 x 10^10 feature IDs
     embed_dim = 128
     bytes_per_row = 500  # 256B FP16 weight + 230B quantized optimizer state + 14B metadata
@@ -33,7 +33,7 @@ def compute_metrics() -> dict:
     weighted_latency_us = round(p_hbm * t_hbm_us + p_cxl * t_cxl_us + p_ssd * t_ssd_us, 2)  # 2.19 us
     pure_ssd_speedup_x = round(t_ssd_us / weighted_latency_us, 1)  # 29.7x
 
-    # 2. 64-GPU TorchRec Sparse All-to-All Sharding & Dense Overlap (Ex 25-2)
+    # 2. 64-GPU TorchRec Sparse All-to-All Sharding & Dense Overlap (Ex 21-2)
     num_gpus = 64
     batch_per_gpu = 2048
     pooling_factor_l = 320

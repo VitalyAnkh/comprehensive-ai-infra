@@ -1,233 +1,284 @@
 {
-  "chapter": "ch22",
   "outputs": [
     {
-      "path": "manuscripts/ch22/ch22-llm-1d-tokens-vs-ai4science-four-structural-domains.svg",
-      "sha256": "ecfd1befce2436e3026c1140779fa27b322a4f5680f3dcb5133780d4f00b144a"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-llm-1d-tokens-vs-ai4science-four-structural-domains.png",
-      "sha256": "26def636547cd1b6e7d134af1b3fe6cad7f246138887c88e21d04b9553a5578a"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-llm-1d-tokens-vs-ai4science-four-structural-domains.pdf",
-      "sha256": "40b296aed92a586093d55c368f6c6aaa535a3d04fc0af17344fa23ac0b931039"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-alphafold3-boltz1-two-stage-disaggregated-pipeline.svg",
-      "sha256": "b4058eff0ee5cc9c8c01239da617b66a7fbac3384c93c887c34c2413cc6ec9a7"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-alphafold3-boltz1-two-stage-disaggregated-pipeline.png",
-      "sha256": "e34c35560d2dd2abd1a6783ac798e23c6cf4fbc3435ab5a01a1a4cf3d0350824"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-alphafold3-boltz1-two-stage-disaggregated-pipeline.pdf",
-      "sha256": "bdfdedb08a50c3b33fd7199437537fbc0fc1cda403fc7d569de3b1784b5ddd94"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-mmseqs2-gpu-kmer-prefilter-and-smith-waterman.svg",
-      "sha256": "ce968b644be2ccb920de528f82f5239cbbdaac0a1988d9b965d138b6f87bb802"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-mmseqs2-gpu-kmer-prefilter-and-smith-waterman.png",
-      "sha256": "d859f93003c9f749188bfcbca94e18b3976f30a5efef2ebc3c2829ec2716bebe"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-mmseqs2-gpu-kmer-prefilter-and-smith-waterman.pdf",
-      "sha256": "43196ab67b288f911b94f831048e34c533bc5b2ab016543aa45b6197bf7747b5"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-pairformer-triangle-multiplication-and-attention-o-n3.svg",
-      "sha256": "c5195116517e678365af163c785ceddce3fe86ac8de48a7b11464e40ff07a21f"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-pairformer-triangle-multiplication-and-attention-o-n3.png",
-      "sha256": "73ebc73777bda26e70bf34cda04995f9290e2bc5e434a98c9f86c202b7cced9d"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-pairformer-triangle-multiplication-and-attention-o-n3.pdf",
-      "sha256": "ec1af22a7fa006432a99d6d217f02533b55eb20f31c348cd8eb27e0b6c39ecc5"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-chunked-triangle-attention-and-dynamic-axial-parallelism.svg",
-      "sha256": "3e574f4c27d5f9099c6327a08a5f40b66c10dfac29163b4ad03d64631db556f5"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-chunked-triangle-attention-and-dynamic-axial-parallelism.png",
-      "sha256": "d7c9059baadf7d0c1a6440b6fbff3636602b1b4b87ec1259138496bafc73741e"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-chunked-triangle-attention-and-dynamic-axial-parallelism.pdf",
-      "sha256": "b65d6582d4eb3520d7cbd4a82468a44a3084d1f40fd686d7f1a1f86677883bb2"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-all-atom-diffusion-module-multi-sample-batching.svg",
-      "sha256": "293b7d2a93ee173bef530b1654cb5ae6b1d658d05a6209cfea5cfdd6fb1d0260"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-all-atom-diffusion-module-multi-sample-batching.png",
-      "sha256": "97e3a2c40402c62ee79c57a8ca40fc80278fe7d3adda0e95b0d9e7f14565c080"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-all-atom-diffusion-module-multi-sample-batching.pdf",
-      "sha256": "69c549c060882120249867024d76420c948675aa8f1c9e78aa628c981a0783d3"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-evo2-stripedhyena2-multi-scale-hyena-attention-backbone.svg",
-      "sha256": "b62651115ab888492102b4c2e962407220f63e5f203c58562459aa4722c063a4"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-evo2-stripedhyena2-multi-scale-hyena-attention-backbone.png",
-      "sha256": "d4d77eb12230294d5f06ce44ccef493acb8851701c9ac2895208605d72d279b8"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-evo2-stripedhyena2-multi-scale-hyena-attention-backbone.pdf",
-      "sha256": "0bb5a13ee7b68b566f4a1603a26925571dd2d3b181b66a8089a23085b8c09d3a"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-flashfftconv-monarch-decomposition-tensor-core.svg",
-      "sha256": "5af625315d9ec5c1b91154274a2b8e89608cfb3fa6c8db2ecf8b300bcfb08a6a"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-flashfftconv-monarch-decomposition-tensor-core.png",
-      "sha256": "3a1424bae711698011f6ff62dd9c3cc3b8a3fdfa7f71b860ad706b31937cca70"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-flashfftconv-monarch-decomposition-tensor-core.pdf",
-      "sha256": "dc388326080eca47597121940d3792457b594989a3474e1b8129646587fee4c7"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-sfno-spherical-harmonics-and-2d-grid-decomposition.svg",
-      "sha256": "86eef3de91452b74abe159446529b61be2984bbe61e653d03cc2237474b6163d"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-sfno-spherical-harmonics-and-2d-grid-decomposition.png",
-      "sha256": "0f2a92d686bcf7a45ae20f36dbe85c0aef31fdf80b9a3c3c753690d684f1a003"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-sfno-spherical-harmonics-and-2d-grid-decomposition.pdf",
-      "sha256": "1094984d524f6f01fe649c857037c3dd3e7eedcc46eda3af80a1aa53bf1a5320"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-spatial-domain-halo-exchange-computation-overlap.svg",
-      "sha256": "fd6eeb68464cccf728f2b05c49b6e0fe557af463cd99dbdcbc7be2dd94268d4a"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-spatial-domain-halo-exchange-computation-overlap.png",
-      "sha256": "e881c5545f92284f081964e9459fbf4499a15a16ffa74e3a75121acea9055a98"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-spatial-domain-halo-exchange-computation-overlap.pdf",
-      "sha256": "b9f6fcc8d100a1d79c14998976e997619b443d719fcd289cc34ad9b69958e587"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-era5-petabyte-zarr-gds-direct-streaming-dataloader.svg",
-      "sha256": "0faab58839cb07ae20b2eb464a811d85ab7d895cade83c0d345e737befc45a8c"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-era5-petabyte-zarr-gds-direct-streaming-dataloader.png",
-      "sha256": "59fa46e8eb25ea888b1b50724e248face85c6b8735cfe02960c3cbd33cedfbe9"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-era5-petabyte-zarr-gds-direct-streaming-dataloader.pdf",
-      "sha256": "3c927cd70f06ee4224bc7b3df829c44f5da09b1e6b562c5dd54c3d101a44c2bf"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-mace-equivariant-message-passing-and-verlet-neighbor-list.svg",
-      "sha256": "c04aa2285cd915644809e332541e6608d4e41e318a19a014dad70e40c580f4b4"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-mace-equivariant-message-passing-and-verlet-neighbor-list.png",
-      "sha256": "6f3158a7f5464add57ccb94fa4e48497b4c7bb8a9f4fe4592564c0f519cd8b7b"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-mace-equivariant-message-passing-and-verlet-neighbor-list.pdf",
-      "sha256": "a46fc45be37fd93c3396de8783fdcfc3fe231d2c34cab5fc18bbd51fda9a8e31"
-    },
-    {
-      "path": "manuscripts/ch22/ch22-ai-in-the-loop-hybrid-hpc-pde-solver-and-surrogate.svg",
-      "sha256": "13a4129b3f8daab22a314a3d79447aed143df0851a2fbc994fb5a7b8ce4b340c"
+      "path": "manuscripts/ch22/ch22-ai-in-the-loop-hybrid-hpc-pde-solver-and-surrogate.pdf",
+      "sha256": "4570ffa50a8a62e99be86e49429983416b226d18a60f5b745514a13279a6e9a4"
     },
     {
       "path": "manuscripts/ch22/ch22-ai-in-the-loop-hybrid-hpc-pde-solver-and-surrogate.png",
-      "sha256": "5f91927c9b2ead6b5ca736ad9dc03b539d530f7f77ad2d380baa48927d760f3b"
+      "sha256": "6f854151d82b4d12e949d9ba243e3fe47bb7fae7d93dd0a56adb7d35c8c1055d"
     },
     {
-      "path": "manuscripts/ch22/ch22-ai-in-the-loop-hybrid-hpc-pde-solver-and-surrogate.pdf",
-      "sha256": "a1a9e8f7dd429fa132bb54ff4691cafa9797e882297bea1532974ca4477b85ea"
+      "path": "manuscripts/ch22/ch22-ai-in-the-loop-hybrid-hpc-pde-solver-and-surrogate.svg",
+      "sha256": "af8bf990ee11af284205dbc459f498b9c1042e511fe39b576b8f4c77137626fb"
     },
     {
-      "path": "manuscripts/ch22/ch22-autonomous-wet-lab-active-learning-closed-loop.svg",
-      "sha256": "90d16389e1dbb00bf91a9e252dbfe16cbace96297633b21301836148d7007e55"
+      "path": "manuscripts/ch22/ch22-all-atom-diffusion-module-multi-sample-batching.pdf",
+      "sha256": "6cd8e3cbc25939872b3b2369a58f4419d00584c91138e80f049f7cff41612f3a"
     },
     {
-      "path": "manuscripts/ch22/ch22-autonomous-wet-lab-active-learning-closed-loop.png",
-      "sha256": "584da71ea51a84f5de3d4218b71828ca806620bb0e6753367c1c319c87ce61f9"
+      "path": "manuscripts/ch22/ch22-all-atom-diffusion-module-multi-sample-batching.png",
+      "sha256": "9a5317b4937dbca3980c245dce553a50736499387826ab874eb0281c2ed5660e"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-all-atom-diffusion-module-multi-sample-batching.svg",
+      "sha256": "d916068efeacc126934a4c550310443868172747040051e4fba4187f64a857cc"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-alphafold3-boltz1-two-stage-disaggregated-pipeline.pdf",
+      "sha256": "bd145454fec06e05e40eb57b54c73805c13c96820fb5a14187a4a78cdf15fa16"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-alphafold3-boltz1-two-stage-disaggregated-pipeline.png",
+      "sha256": "116f7bc4f392e1deaabc6142903dac348cc2564df71e63fbcd8c960492b041b2"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-alphafold3-boltz1-two-stage-disaggregated-pipeline.svg",
+      "sha256": "202cb1b6b7a885e015a096d65030d3148618a7a278667eb6415feebb1cd19fa0"
     },
     {
       "path": "manuscripts/ch22/ch22-autonomous-wet-lab-active-learning-closed-loop.pdf",
-      "sha256": "83b5fd7f42bf1fd16b47cd3cd1eeacd8a7d7be1f43745dd8c129d9ad0c69ff56"
+      "sha256": "746e08be1b297e58a0498986435cf20d298159a6f5601f4b0e7e3d8cfb83d360"
     },
     {
-      "path": "manuscripts/ch22/ch22-tokamak-plasma-tearing-mode-sub-ms-rl-control.svg",
-      "sha256": "0ee6e9e57461fe47add710e149eaf71dddd3cd7a76cd2a23815b471a4be96b94"
+      "path": "manuscripts/ch22/ch22-autonomous-wet-lab-active-learning-closed-loop.png",
+      "sha256": "505a64e5cd50d00da3f6b7d66c2cbcce65b72da3f9cd6bad9fd16aae26fbd1fb"
     },
     {
-      "path": "manuscripts/ch22/ch22-tokamak-plasma-tearing-mode-sub-ms-rl-control.png",
-      "sha256": "b691a6adc2ca6bc00923113d763bf8cb088e10a5e009dabe686555633a9d5fe5"
+      "path": "manuscripts/ch22/ch22-autonomous-wet-lab-active-learning-closed-loop.svg",
+      "sha256": "c6e7e6fd453594258a15bd1ad04e46b154b19ff2e1376dbb944e039d54d6ba52"
     },
     {
-      "path": "manuscripts/ch22/ch22-tokamak-plasma-tearing-mode-sub-ms-rl-control.pdf",
-      "sha256": "78e04c7e25e5f3bb3c84d4df941e8c22552a9276dff0257f348817919e063216"
+      "path": "manuscripts/ch22/ch22-chunked-triangle-attention-and-dynamic-axial-parallelism.pdf",
+      "sha256": "9d3adfcc3552cd2b8653e79a0cab521a331aca83cf69dcedc7fff6dc2114fd13"
     },
     {
-      "path": "manuscripts/ch22/ch22-single-cell-atlas-sparse-gene-expression-dataloader.svg",
-      "sha256": "5b259468e26692446bd57cb6ebab07bac16fb0a8a3d1c40ba3f9d01128f09f9d"
+      "path": "manuscripts/ch22/ch22-chunked-triangle-attention-and-dynamic-axial-parallelism.png",
+      "sha256": "f283791c6de38b9698095ec1c4207054f7dc67dda46ec33db522f536877c091c"
     },
     {
-      "path": "manuscripts/ch22/ch22-single-cell-atlas-sparse-gene-expression-dataloader.png",
-      "sha256": "d6c7c81178b6b775af36abfa516a7515e30b73c41513f228b27f96e0952eeefa"
+      "path": "manuscripts/ch22/ch22-chunked-triangle-attention-and-dynamic-axial-parallelism.svg",
+      "sha256": "37d9513c651f0e0273aee94622562b4e27a8e3f9f64132873690f893ac7fa26d"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-conservation-law-projection-layer-long-rollout-stability.pdf",
+      "sha256": "0182419521727a7b6db08bf1942a6a1eee196a51a3905cdaffb407c8a9d200fb"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-conservation-law-projection-layer-long-rollout-stability.png",
+      "sha256": "75e9c2ec343e8baadf53f35f9204ae7ae06a4403a5557688c621efec50225377"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-conservation-law-projection-layer-long-rollout-stability.svg",
+      "sha256": "7185bcba08195b21bf06d12623229e2fa930abac94b746045b07a9dff8eb8b72"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-era5-petabyte-zarr-gds-direct-streaming-dataloader.pdf",
+      "sha256": "aa99c1f6eb7f6b44192d83cfeb31089fbbd45f7380c94a25bd7b603c5858b10a"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-era5-petabyte-zarr-gds-direct-streaming-dataloader.png",
+      "sha256": "1945508e86e8a8ecd8ed3a5ce7881f65ee85a8d1e9698fcc2c79c05d9c8f0507"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-era5-petabyte-zarr-gds-direct-streaming-dataloader.svg",
+      "sha256": "1298455784640af8bc9a33c858087e22fe254b9e67ff2a11ee0e7b414d5115f4"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-evo2-stripedhyena2-multi-scale-hyena-attention-backbone.pdf",
+      "sha256": "fd92fe275256feff02bde17a499d8d722dc283770b0e6254b5a73a48d1552481"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-evo2-stripedhyena2-multi-scale-hyena-attention-backbone.png",
+      "sha256": "f51be6458eca53b74647d102f935e92147bccd386ad5747125289e6a4176579f"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-evo2-stripedhyena2-multi-scale-hyena-attention-backbone.svg",
+      "sha256": "142d34dd05b155ec62493451bf05396a7adfd536d428c91dc1707e3c6e590161"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-five-domain-scientific-ai-workload-atlas.pdf",
+      "sha256": "dadcb328511632c465e99b204aa320180b393c170b1c7cdae3272acbd905b6b0"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-five-domain-scientific-ai-workload-atlas.png",
+      "sha256": "7647cd03c4329d5ffb481c6a4315dee957b1bd0993928fc7f4d2fc429a1ff055"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-five-domain-scientific-ai-workload-atlas.svg",
+      "sha256": "34b3cba7ee4c676f378694722e3d2f3bb41906bb3c68915f780ff9b035978919"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-flashfftconv-monarch-decomposition-tensor-core.pdf",
+      "sha256": "784aa12ccb1622626d807254d91ead1b1ff2b38de16c26c76311ae0d6c8181bf"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-flashfftconv-monarch-decomposition-tensor-core.png",
+      "sha256": "f3089cb44bbce55b482dbf5b40e2764049b5aeb83eb44749579990c92bee6ab1"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-flashfftconv-monarch-decomposition-tensor-core.svg",
+      "sha256": "61a54a7722ad80ad7a0bfc9cc4ec41e40a01f99659974c2a8e4a0ee223895eeb"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-insitu-mpi-dlpack-gpu-coupling-vs-filesystem-io-wall.pdf",
+      "sha256": "c3dbe36f3bf865da736976a17dc087f49d36425aedc78a5c7af4e245b3cfa416"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-insitu-mpi-dlpack-gpu-coupling-vs-filesystem-io-wall.png",
+      "sha256": "3d5d0dc0ed54bbab3d8888eb588f9cde714f076fd15bfd9407974465e27fb265"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-insitu-mpi-dlpack-gpu-coupling-vs-filesystem-io-wall.svg",
+      "sha256": "4c40e9adef125236d1e2454658d741b482c1ccef7d5b2b422e396bac2aa0412f"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-llm-1d-tokens-vs-ai4science-four-structural-domains.pdf",
+      "sha256": "f826c0a35de037e94f6fca37b3a9f4eaae7c7c932d5ce6e0dfac05d03f193a50"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-llm-1d-tokens-vs-ai4science-four-structural-domains.png",
+      "sha256": "f947826a47bd0bd5ad3c0f041d517b07f24c247b1c2648a4399fdc0f94dc6d5a"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-llm-1d-tokens-vs-ai4science-four-structural-domains.svg",
+      "sha256": "e868e64704168ac5435e5c69b83dd2ffbc30983e5dde143588457a5b48a3f240"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-mace-equivariant-message-passing-and-verlet-neighbor-list.pdf",
+      "sha256": "ecb002b9a7693bb1480c194a4eccf504418877d99b60540a82154ba212134b14"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-mace-equivariant-message-passing-and-verlet-neighbor-list.png",
+      "sha256": "461c8ca826e467d76082806efd2904ab80e72131c42e96dd5fe4ca290a88bc5b"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-mace-equivariant-message-passing-and-verlet-neighbor-list.svg",
+      "sha256": "40cc23bc43e5f9c35d7557065ca2bf41e23854217444c7ea0d1593de09a7d73a"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-mmseqs2-gpu-kmer-prefilter-and-smith-waterman.pdf",
+      "sha256": "6320e1da01b50ec65f82a9718c21881a9ad81e247d2ceedbd790a7fb4a69097e"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-mmseqs2-gpu-kmer-prefilter-and-smith-waterman.png",
+      "sha256": "28f7b39f18884f65f007034fdba12d8ff7906f02cddd781ccac382f94d1bfb9f"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-mmseqs2-gpu-kmer-prefilter-and-smith-waterman.svg",
+      "sha256": "d56e569ac33826b55a6e6bd05ef9b131deca02f0a5cc5e6f625fa591218ef867"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-ozaki-scheme-fp64-mantissa-slicing-on-int8-tensor-cores.pdf",
+      "sha256": "08cc221eda5ea609693bca0997a59371bb7d73905602dc7496173aeb3db43f06"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-ozaki-scheme-fp64-mantissa-slicing-on-int8-tensor-cores.png",
+      "sha256": "814ab295fd6e36cbeb31744bf92f3c45bf0d7b875eba23fbd6598dfeda82c990"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-ozaki-scheme-fp64-mantissa-slicing-on-int8-tensor-cores.svg",
+      "sha256": "084f96253b32133548b59756e9ad3f30249255ceb7444477b06ffc570300bb99"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-ozaki-slice-count-accuracy-vs-speedup-crossover.pdf",
+      "sha256": "128b6427359614d1d6c6854a3baf0cbfbd7bf7567227bbec78fb54f8e345a38f"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-ozaki-slice-count-accuracy-vs-speedup-crossover.png",
+      "sha256": "21240fcea5628f97443966e20e90d90a1fb13520baa6cb1c41a7d34c69f50b18"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-ozaki-slice-count-accuracy-vs-speedup-crossover.svg",
+      "sha256": "314a803f7a7e271290fc8f03957698a93dc5e3dc452d9eb476ea30433600d36e"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-pairformer-triangle-multiplication-and-attention-o-n3.pdf",
+      "sha256": "af87166dbdb96c142256535bdb58ab3a261f9020f1cdb86005d4a4c3cb4edc03"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-pairformer-triangle-multiplication-and-attention-o-n3.png",
+      "sha256": "d7c13f0c944e7800fb6669890175e67e2b072a9f8eb1ec069e896712588f1e93"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-pairformer-triangle-multiplication-and-attention-o-n3.svg",
+      "sha256": "2e87756e7ae08ed4a73fc1bee8d424f76a0a95679d0c9ddd802c67da5853b8ff"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-sfno-spherical-harmonics-and-2d-grid-decomposition.pdf",
+      "sha256": "4ff8fa102cc0a122fdcb43c84e2a8fec2af31a13db8f5526061c896bc2674d3f"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-sfno-spherical-harmonics-and-2d-grid-decomposition.png",
+      "sha256": "8ed2120c3bd127be74d2df8efe1d49ba2577bf8af187fa2f576dc0847066f622"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-sfno-spherical-harmonics-and-2d-grid-decomposition.svg",
+      "sha256": "a8205d6c4c0972af1d5a5f276800f56e473f108c735d3f80e535d42a24f98bb3"
     },
     {
       "path": "manuscripts/ch22/ch22-single-cell-atlas-sparse-gene-expression-dataloader.pdf",
-      "sha256": "dee4b7b8fc4d5f3b6ec83e0131abcc4f7cd0b154540b6f6b80ff70e0af84717c"
+      "sha256": "f738e70027e177acd7443ddd5fb7841c6ecae2be291022f14766298aa091dd8c"
     },
     {
-      "path": "manuscripts/ch22/ch22-twenty-four-chapter-encyclopedia-knowledge-atlas.svg",
-      "sha256": "18962aa93260a34481d6290b414486fb05e835ab7b95d456a23ed73d9621bca5"
+      "path": "manuscripts/ch22/ch22-single-cell-atlas-sparse-gene-expression-dataloader.png",
+      "sha256": "38b493532e099009077e9270cb0d94f9c876223d6a30114752f368b0a5911359"
     },
     {
-      "path": "manuscripts/ch22/ch22-twenty-four-chapter-encyclopedia-knowledge-atlas.png",
-      "sha256": "997be9e4eba2ea87bd6db0c4c6906f493dd2ac06c58e75b09df0102b359756a3"
+      "path": "manuscripts/ch22/ch22-single-cell-atlas-sparse-gene-expression-dataloader.svg",
+      "sha256": "c8500fe3f577cd54362e919415d3a0415ded5580ebd3461ca5e68e4353bd83fd"
     },
     {
-      "path": "manuscripts/ch22/ch22-twenty-four-chapter-encyclopedia-knowledge-atlas.pdf",
-      "sha256": "6952bfba7c1b451d6ca4b0b314cc1b797f680e46a39a8bce747d161b36a9db08"
+      "path": "manuscripts/ch22/ch22-spatial-domain-halo-exchange-computation-overlap.pdf",
+      "sha256": "23cf248ff6cc5b6d7d6ed4c9d78d8fad530d733760fa5669a054e0d1ddd3d1d9"
     },
     {
-      "path": "manuscripts/ch22/ch22-unified-laws-across-all-24-chapters-synthesis.svg",
-      "sha256": "ef62cfb4235ea7a1d3951f947c77b0038c36df2929e26f622bf1b658e54417ed"
+      "path": "manuscripts/ch22/ch22-spatial-domain-halo-exchange-computation-overlap.png",
+      "sha256": "19db72c9a4b01d87505a878dd9f25c6016ce135a807d106f5c34b7885ac98e0b"
     },
     {
-      "path": "manuscripts/ch22/ch22-unified-laws-across-all-24-chapters-synthesis.png",
-      "sha256": "a58ce4dabfa980c2e5577aebcc58090bbe70d201d4ab70351830a7ed76de24d9"
+      "path": "manuscripts/ch22/ch22-spatial-domain-halo-exchange-computation-overlap.svg",
+      "sha256": "85fa9f8fbb78a90fadcebbf9c6d3eefba800505be540dc9c6b783a8f2417a6db"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-tokamak-plasma-tearing-mode-sub-ms-rl-control.pdf",
+      "sha256": "791471142b9ae142ce02850893625f34ff27f9afcc276a7f75080b6cc82d26ae"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-tokamak-plasma-tearing-mode-sub-ms-rl-control.png",
+      "sha256": "35c262efdd2e446180e32dfa1cc00ffc01b36a78bfe03f19c316ebd82b869ed1"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-tokamak-plasma-tearing-mode-sub-ms-rl-control.svg",
+      "sha256": "cc8b1d564ad7e1e7e246644b5fb949eb31f03994bd1718bfea33ab8f9c9895dd"
     },
     {
       "path": "manuscripts/ch22/ch22-unified-laws-across-all-24-chapters-synthesis.pdf",
-      "sha256": "4ca477d20feb59c07bb780e29620cf649c2838ab1bb934fb7e10ae875d94d5af"
+      "sha256": "12818eebd04228a0ce4b02999da0d3a565ec5fc63ffecf3245ba6e7e3b785306"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-unified-laws-across-all-24-chapters-synthesis.png",
+      "sha256": "2e2cda663d5db84fe23d5cf1489f866509e27255872b7ed8192a47aec6e90239"
+    },
+    {
+      "path": "manuscripts/ch22/ch22-unified-laws-across-all-24-chapters-synthesis.svg",
+      "sha256": "7a8b4ea06df92c4233b93b85ec93b78af63aa3a5bf3c1dcf05188288c46c1bb8"
+    },
+    {
+      "path": "manuscripts/ch22/figure-data.json",
+      "sha256": "2dfbb8581a7020fd56b3dd5eba892bb00034112a82b2d1cd8765f033bf9835dd"
     },
     {
       "path": "manuscripts/ch22/figure-index.json",
-      "sha256": "eac2bdc0185494d267223f087e7631f8aa456f32f6d959fc25182e293b9b6c4c"
+      "sha256": "c1a044e7bcbbaf5d68f4cb245cafc5a677811775bd514eb1dabd4db398e7cbad"
     },
     {
       "path": "manuscripts/ch22/teaching-layout-validation.json",
-      "sha256": "143fe6cf3829fb4cc449d91a24057f32c654ff461381d8b309b9e55ec20eea69"
+      "sha256": "71c133ef3b17d025afad8ef5e1bcbb495ded5821f9eeab47ef09648fc9c4d019"
     },
     {
       "path": "manuscripts/ch22/math-validation.json",
-      "sha256": "026a712881778789b516824c611df2975cf75d3254f46479afb50076d6efe290"
+      "sha256": "9cb61e22e410381677b4945059c61b9c3af689edfdf7af9b69c417a497f8bab6"
     }
   ]
 }

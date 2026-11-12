@@ -1,21 +1,56 @@
 {
-  "chapter": 21,
   "sources": [
     {
-      "path": "manuscripts/21-推荐检索与向量数据库.md",
-      "sha256": "1d31cbc64b1a0722d46ce90d697f61d778d588a9635ed4b57ad63a47d7423cd2"
+      "path": "manuscripts/ch21/build.py",
+      "sha256": "573df4db7e2b3508558fab518e311ec43e80c2e2605c9acf2433cfd3ef3580f6"
+    },
+    {
+      "path": "manuscripts/ch21/figure-data.json",
+      "sha256": "d524c9a523fc1ad52a1a4e42a376713904ad9ad12e1093c0e01da567ec4e9be5"
     },
     {
       "path": "manuscripts/ch21/figure-index.json",
-      "sha256": "a907119ffa5f89a7303356306c7b4b0bc28b14212d9aa2f5c89fd59b2f0b74d9"
+      "sha256": "f90ef611b1b7ec18902cfe473aa0c43f1ad8548e716067e2d3ad67cd93698da7"
     },
     {
-      "path": "manuscripts/ch21/math-validation.json",
-      "sha256": "a14a0e441f9d9310501f4ffaeda07825b3487a4948565c0c03a071beedb87349"
+      "path": "calculations/results/ch21-recsys-vector-colpali.json",
+      "sha256": "3d1083f2452b1d0c65bb715f45d45f227b2f2e4df8c580fe6d37a867d8c6521f"
     },
     {
-      "path": "manuscripts/ch21/teaching-layout-validation.json",
-      "sha256": "0b880ffc7d184f1f9c06c932e2a6f6c65dc53815693deec63b0c3737f3643947"
+      "path": "case-studies/generative-recsys-and-colpali-rag.md",
+      "sha256": "a6b8e923355c026180c194c09f4708712777df6555433bbd9c778adfda6ebf95"
+    },
+    {
+      "path": "case-studies/retrieval-and-generation.md",
+      "sha256": "3f01c3d8dc03df598d3b4ccaef13c521707346dfdfe5aac7efada70fbd06abf2"
+    },
+    {
+      "path": "case-studies/memory-criticality-and-tiering.md",
+      "sha256": "ab15ac5e84a015baf7cc1bc7a08c4043dcc16970cb59ba27888dcdc732c04dcc"
+    },
+    {
+      "path": "experiments/ch21/21-01/run.py",
+      "sha256": "de4f28ba2269ac3dfbd7ab853cca6b9f3526fcb5192a5b097611c82a7e0d5658"
+    },
+    {
+      "path": "experiments/ch21/21-02/run.py",
+      "sha256": "e36ff0da99297204f53c9ddd9536e22e00f109009eb053a231509c0766786483"
+    },
+    {
+      "path": "experiments/ch21/21-03/run.py",
+      "sha256": "252655c6d155282868c501461a833d8087572ea5ad5a68c22b753ffee2ff4395"
+    },
+    {
+      "path": "experiments/ch21/21-04/run.py",
+      "sha256": "fc4ff2920618bd613995a38de040dc10fa319af928d2a917ae3a4931a0344b77"
+    },
+    {
+      "path": "experiments/ch21/21-05/run.py",
+      "sha256": "80b381797e25ecc568d7edfa9b3b38a559a6ba8749212183c915b62e3efd40a8"
+    },
+    {
+      "path": "manuscripts/21-推荐检索与向量数据库.md",
+      "sha256": "5685a1aab81925cb228a93ba008e803ebfdb734b675552f6681f7bcc6e10243a"
     }
   ]
 }

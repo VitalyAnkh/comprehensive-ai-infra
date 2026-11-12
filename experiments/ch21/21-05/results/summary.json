@@ -1,0 +1,21 @@
+{
+  "experiment_id": "21-05",
+  "cuckoo_admission_and_ttl": {
+    "daily_exposure_clicks": 4000000000,
+    "raw_sparse_table_tb": 2.4,
+    "cuckoo_freq_threshold": 5,
+    "admitted_fraction": 0.365,
+    "active_fraction_after_30d_ttl": 0.315,
+    "cuckoo_tau5_embedding_shrink_pct": 68.5,
+    "cuckoo_embedding_active_gb": 756.0
+  },
+  "epoch_lockfree_hot_update": {
+    "stream_updates_per_sec": 2500000,
+    "num_segments": 4096,
+    "fanout_lookups_per_req": 320,
+    "hot_update_rwlock_p99_ms": 18.4,
+    "hot_update_epoch_lockfree_p99_ms": 1.15,
+    "hot_update_tail_reduction_x": 16.0,
+    "hot_update_epoch_memory_overhead_pct": 6.2
+  }
+}

@@ -1,6 +1,6 @@
 {
-  "chapter": 24,
-  "title": "科学智能（AI for Science）基础设施：生物大分子、百万碱基基因组与物理场网格系统",
+  "chapter": 22,
+  "title": "科学计算智能系统",
   "msa_and_disaggregation": {
     "cpu_msa_sec": 2700.0,
     "gpu_msa_sec": 1.2,
@@ -52,21 +52,15 @@
     "comm_to_compute_ratio_pct": 1.27,
     "exposed_halo_ms": 0.0
   },
-  "grand_encyclopedia_synthesis": {
-    "total_chapters": 24,
-    "total_parts": 4,
-    "total_figures": 883,
-    "total_production_code_blocks": 166,
-    "total_worked_examples": 192,
-    "total_exercises": 432,
-    "total_unique_exercise_ids": 431,
-    "total_experiment_suites": 147
-  },
   "tokamak_sub_ms_rl_control": {
     "control_freq_hz": 4000,
     "cycle_period_us": 250.0,
     "hard_budget_us": 200.0,
     "unopt_total_us": 435.0,
+    "rdma_dma_us": 14.0,
+    "sram_efit_us": 31.0,
+    "sram_rl_actor_us": 17.0,
+    "safety_interlock_us": 6.5,
     "opt_total_us": 68.5,
     "speedup_x": 6.35,
     "budget_util_pct": 34.25,
@@ -85,5 +79,37 @@
     "seq_compression_x": 13.33,
     "attn_flop_reduction_x": 177.78,
     "e2e_training_speedup_x": 20.0
+  },
+  "five_domain_scientific_ledger": {
+    "science_domains_covered": 5,
+    "pairformer_workspace_reduction_x": 2048.0,
+    "pairformer_dap_comm_to_comp_pct": 8.26,
+    "weather_halo_comm_to_comp_pct": 1.27,
+    "ozaki_equiv_fp64_tflops": 147.2,
+    "tokamak_headroom_us": 131.5
+  },
+  "ozaki_fp64_emulation": {
+    "int8_tensor_tops": 4500.0,
+    "native_fp64_tflops": 40.0,
+    "peak_ratio_x": 112.5,
+    "signed_int8_max_k_no_overflow": 133144,
+    "ozaki_slices": 7,
+    "s7_int8_gemms": 28,
+    "s7_effective_mantissa_bits": 51.8,
+    "s7_compute_ceiling_x": 4.02,
+    "s7_speedup_x": 3.68,
+    "s7_equiv_fp64_tflops": 147.2
+  },
+  "insitu_dlpack_conservation": {
+    "coupled_field_gb": 384.0,
+    "coupled_gpus": 1024,
+    "per_gpu_field_mb": 375.0,
+    "filesystem_staged_s": 58.2,
+    "dlpack_insitu_s": 0.41,
+    "coupling_speedup_x": 142.0,
+    "rollout_steps": 500,
+    "unconstrained_500step_mass_drift_pct": 11.4,
+    "projected_500step_mass_drift_rel": 4.2e-13,
+    "conservation_projection_overhead_pct": 3.1
   }
 }

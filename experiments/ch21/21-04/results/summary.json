@@ -1,0 +1,33 @@
+{
+  "experiment_id": "21-04",
+  "colpali_plaid_compression": {
+    "num_pages": 50000000,
+    "patches_per_page": 1030,
+    "embed_dim": 128,
+    "colpali_bf16_kb_per_page": 263.68,
+    "colpali_50m_bf16_tb": 13.18,
+    "colpali_100m_bf16_tb": 26.37,
+    "colpali_1b_bf16_tb": 263.7,
+    "plaid_2bit_bytes_per_vec": 34.0,
+    "plaid_2bit_50m_tb": 1.75,
+    "plaid_2bit_compression_x": 7.53,
+    "plaid_1bit_bytes_per_vec": 17.5,
+    "plaid_1bit_50m_gb": 901.3,
+    "plaid_1bit_100m_tb": 1.8,
+    "plaid_1bit_1b_tb": 18.0,
+    "plaid_1bit_compression_x": 14.6,
+    "plaid_maxsim_p99_ms": 14.2
+  },
+  "hybrid_rerank_budget": {
+    "recall_k1": 1000,
+    "rerank_k2": 64,
+    "bm25_wand_p99_ms": 6.4,
+    "cuvs_cagra_p99_ms": 9.8,
+    "parallel_recall_ms": 9.8,
+    "rrf_fusion_ms": 0.8,
+    "cross_encoder_0_6b_k64_ms": 14.6,
+    "rpc_budget_ms": 2.4,
+    "core_retrieval_rerank_ms": 25.2,
+    "hybrid_bm25_cuvs_ce_p99_ms": 27.6
+  }
+}

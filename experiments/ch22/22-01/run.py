@@ -11,7 +11,7 @@ RESULTS_PATH = HERE / "results" / "summary.json"
 
 
 def compute_metrics() -> dict:
-    # 1. AlphaFold 3 / Boltz-1 Two-Stage Disaggregation & MMseqs2-GPU Acceleration (Ex 24-1)
+    # 1. AlphaFold 3 / Boltz-1 Two-Stage Disaggregation & MMseqs2-GPU Acceleration (Ex 22-1)
     cpu_msa_search_sec = 2700.0  # 45 minutes JackHMMER/HHblits CPU search
     gpu_pairformer_diffusion_sec = 48.0  # 5 seeds x 5 diffusion samples on H100
     coupled_total_sec = round(cpu_msa_search_sec + gpu_pairformer_diffusion_sec, 2)  # 2,748.0 s
@@ -24,7 +24,7 @@ def compute_metrics() -> dict:
     end_to_end_speedup_x = round(coupled_total_sec / disaggregated_total_sec, 2)  # 55.85x
     stage2_gpu_utilization_pct = round((gpu_pairformer_diffusion_sec / disaggregated_total_sec) * 100.0, 2)  # 97.56%
 
-    # 2. Pairformer O(N^2) Pair Memory & O(N^3) Chunked Triangle Attention + Dynamic Axial Parallelism (Ex 24-2)
+    # 2. Pairformer O(N^2) Pair Memory & O(N^3) Chunked Triangle Attention + Dynamic Axial Parallelism (Ex 22-2)
     n_res = 4096
     pair_channels_cz = 128
     num_heads = 4

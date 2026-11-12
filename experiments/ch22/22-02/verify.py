@@ -18,13 +18,13 @@ def main() -> None:
     assert actual["sfno_2d_halo_overlap"]["halo_volume_mb"] == 5.53
     assert actual["sfno_2d_halo_overlap"]["comm_to_comp_ratio_pct"] == 1.27
     assert actual["sfno_2d_halo_overlap"]["exposed_halo_ms"] == 0.0
-    assert actual["grand_encyclopedia_ledger"]["total_chapters"] == 24
-    assert actual["grand_encyclopedia_ledger"]["total_chapter_figures"] == 883
-    assert actual["grand_encyclopedia_ledger"]["total_production_code_blocks"] == 166
-    assert actual["grand_encyclopedia_ledger"]["total_worked_examples"] == 192
-    assert actual["grand_encyclopedia_ledger"]["total_exercise_blocks"] == 432
-    assert actual["grand_encyclopedia_ledger"]["total_unique_exercise_ids"] == 431
-    assert actual["grand_encyclopedia_ledger"]["total_experiment_suites"] == 147
+    ledger = actual["five_domain_scientific_ledger"]
+    assert ledger["science_domains_covered"] == 5
+    assert ledger["pairformer_workspace_reduction_x"] == 2048.0
+    assert ledger["pairformer_dap_comm_to_comp_pct"] == 8.26
+    assert ledger["ozaki_s7_vs_native_fp64_speedup_x"] == 3.68
+    assert ledger["ozaki_equiv_fp64_tflops"] == 147.2
+    assert ledger["tokamak_opt_wcet_us"] == 68.5
     print("Experiment 22-02 verified successfully.")
 
 

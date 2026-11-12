@@ -2,7 +2,7 @@
 
 这里是正文算例背后的展开材料：具体模型、硬件与系统案例的完整推算、来源核对和取舍说明。正文只保留结论与关键推导，脚注链接到对应案例。
 
-下表按引用的章节分组；“引用章节”列出所有链接到该案例的章（全库 74 篇案例已 100% 接入正文第 1～24 章）。
+下表按引用的章节分组；“引用章节”列出所有链接到该案例的章（全库 76 篇案例已 100% 接入正文第 1～24 章）。
 
 ## 第 1 章 · 初识 AI Infra
 
@@ -27,7 +27,7 @@
 | [作者材料：上下文与技术判断](author-context-and-design.md) | 3、8、12 |
 | [多模态输入的字节、状态与阶段放置](multimodal-stage-placement.md) | 3、12、19、20 |
 | [Queqiao 语音传输案例](queqiao.md) | 3、12、19 |
-| [检索与生成的协同预算](retrieval-and-generation.md) | 3、13 |
+| [检索与生成的协同预算](retrieval-and-generation.md) | 3、13、21 |
 | [训练投入与 Scaling Law 历史比较](scaling-history.md) | 3 |
 | [训练计算量的核算](training-compute.md) | 3、10 |
 | [请求分布与推理资源配置](workload-and-provisioning.md) | 3、14 |
@@ -48,7 +48,7 @@
 
 | 案例 | 引用章节 |
 | --- | :--: |
-| [注意力分块：容量、重读与计算安排](attention-tiles-and-io.md) | 5 |
+| [注意力分块：容量、重读与计算安排](attention-tiles-and-io.md) | 5、22 |
 | [片上容量与数据复用](buffer-capacity-and-data-movement.md) | 5 |
 | [缓存、图执行与资源重配的取舍](cache-and-reconfiguration.md) | 5、8、11 |
 | [从性能反馈到推理、训练优化](execution-feedback.md) | 5 |
@@ -67,8 +67,8 @@
 | --- | :--: |
 | [集合通信的实际路径与等待来源](collective-paths-and-diagnosis.md) | 6、7、10 |
 | [通信调优、计算争用与卸载](communication-tuning.md) | 6、7 |
-| [分层内存：容量、等待与迁移收益](memory-criticality-and-tiering.md) | 6、9 |
-| [矩阵形状、通信分块与执行条件](mesh-shape-and-slicing.md) | 6 |
+| [分层内存：容量、等待与迁移收益](memory-criticality-and-tiering.md) | 6、9、21 |
+| [矩阵形状、通信分块与执行条件](mesh-shape-and-slicing.md) | 6、22 |
 | [具体模型的并行推算](model-parallelism.md) | 6、7 |
 | [专家执行、容量与服务启动的取舍](moe-and-startup.md) | 6、7、9 |
 | [集合通信的物理路径与作业错峰](network-planning-and-collectives.md) | 6、7 |
@@ -142,7 +142,7 @@
 
 | 案例 | 引用章节 |
 | --- | :--: |
-| [检索与生成的协同预算](retrieval-and-generation.md) | 3、13 |
+| [检索与生成的协同预算](retrieval-and-generation.md) | 3、13、21 |
 | [历史草稿、验证产出与 RL 供给](history-drafts-and-rollout.md) | 8、13、17 |
 | [DSec：Agent RL 沙箱平台的资源与状态](dsec-sandbox-platform.md) | 11、13、16、17、18 |
 
@@ -217,6 +217,7 @@
 
 | 案例 | 引用章节 |
 | --- | :--: |
+| [生成式推荐前缀摊销、多模态晚交互压缩与无锁流式热更新](generative-recsys-and-colpali-rag.md) | 21 |
 | [检索与生成的协同预算](retrieval-and-generation.md) | 3、13、21 |
 | [分层内存：容量、等待与迁移收益](memory-criticality-and-tiering.md) | 6、9、21 |
 
@@ -224,6 +225,7 @@
 
 | 案例 | 引用章节 |
 | --- | :--: |
+| [低精度张量核双精度数值仿真与超算显存原位耦合](scientific-ai-and-ozaki-fp64.md) | 22 |
 | [注意力分块：容量、重读与计算安排](attention-tiles-and-io.md) | 5、22 |
 | [矩阵形状、通信分块与执行条件](mesh-shape-and-slicing.md) | 6、22 |
 

@@ -1,136 +1,134 @@
-{
-  "chapter": 21,
-  "total_figures": 16,
-  "total_warnings": 0,
-  "all_passed": true,
-  "figures": [
-    {
-      "figure": "21-1",
-      "file": "ch21-trillion-param-dlrm-three-tier-hbm-cxl-ssd-embedding.svg",
-      "width_pt": 420.0,
-      "min_label_pt": 11.0,
-      "text_extent_warnings": [],
-      "passed": true
-    },
-    {
-      "figure": "21-2",
-      "file": "ch21-zipf-power-law-hot-embedding-cache-hit-curve.svg",
-      "width_pt": 420.0,
-      "min_label_pt": 11.0,
-      "text_extent_warnings": [],
-      "passed": true
-    },
-    {
-      "figure": "21-3",
-      "file": "ch21-torchrec-all-to-all-sparse-lookup-and-bucket-sharding.svg",
-      "width_pt": 420.0,
-      "min_label_pt": 11.0,
-      "text_extent_warnings": [],
-      "passed": true
-    },
-    {
-      "figure": "21-4",
-      "file": "ch21-cascade-dlrm-vs-generative-recommender-hstu-paradigm.svg",
-      "width_pt": 420.0,
-      "min_label_pt": 11.0,
-      "text_extent_warnings": [],
-      "passed": true
-    },
-    {
-      "figure": "21-5",
-      "file": "ch21-hstu-pointwise-aggregated-attention-and-stochastic-length.svg",
-      "width_pt": 420.0,
-      "min_label_pt": 11.0,
-      "text_extent_warnings": [],
-      "passed": true
-    },
-    {
-      "figure": "21-6",
-      "file": "ch21-m-falcon-candidate-microbatch-prefix-amortization.svg",
-      "width_pt": 420.0,
-      "min_label_pt": 11.0,
-      "text_extent_warnings": [],
-      "passed": true
-    },
-    {
-      "figure": "21-7",
-      "file": "ch21-hstu-online-event-streaming-and-delta-kv-update.svg",
-      "width_pt": 420.0,
-      "min_label_pt": 11.0,
-      "text_extent_warnings": [],
-      "passed": true
-    },
-    {
-      "figure": "21-8",
-      "file": "ch21-cpu-hnsw-vs-gpu-cuvs-cagra-graph-build-pipeline.svg",
-      "width_pt": 420.0,
-      "min_label_pt": 11.0,
-      "text_extent_warnings": [],
-      "passed": true
-    },
-    {
-      "figure": "21-9",
-      "file": "ch21-cagra-warp-splitting-distance-and-two-stage-pruning.svg",
-      "width_pt": 420.0,
-      "min_label_pt": 11.0,
-      "text_extent_warnings": [],
-      "passed": true
-    },
-    {
-      "figure": "21-10",
-      "file": "ch21-ivf-pq-shared-memory-lut-asymmetric-distance-kernel.svg",
-      "width_pt": 420.0,
-      "min_label_pt": 11.0,
-      "text_extent_warnings": [],
-      "passed": true
-    },
-    {
-      "figure": "21-11",
-      "file": "ch21-diskann-4kb-sector-aligned-vector-and-neighbor-layout.svg",
-      "width_pt": 420.0,
-      "min_label_pt": 11.0,
-      "text_extent_warnings": [],
-      "passed": true
-    },
-    {
-      "figure": "21-12",
-      "file": "ch21-diskann-io-uring-gds-beam-search-pipeline.svg",
-      "width_pt": 420.0,
-      "min_label_pt": 11.0,
-      "text_extent_warnings": [],
-      "passed": true
-    },
-    {
-      "figure": "21-13",
-      "file": "ch21-freshdiskann-streaming-insert-delete-consolidation.svg",
-      "width_pt": 420.0,
-      "min_label_pt": 11.0,
-      "text_extent_warnings": [],
-      "passed": true
-    },
-    {
-      "figure": "21-14",
-      "file": "ch21-graphrag-hierarchical-community-and-vector-hybrid-retrieval.svg",
-      "width_pt": 420.0,
-      "min_label_pt": 11.0,
-      "text_extent_warnings": [],
-      "passed": true
-    },
-    {
-      "figure": "21-15",
-      "file": "ch21-search-ads-rec-gpu-fleet-tco-and-sla-roofline.svg",
-      "width_pt": 420.0,
-      "min_label_pt": 11.0,
-      "text_extent_warnings": [],
-      "passed": true
-    },
-    {
-      "figure": "21-16",
-      "file": "ch21-generative-recommendation-and-vector-engine-synthesis.svg",
-      "width_pt": 420.0,
-      "min_label_pt": 11.0,
-      "text_extent_warnings": [],
-      "passed": true
-    }
-  ]
-}
+[
+  {
+    "figure": "ch21-trillion-param-dlrm-three-tier-hbm-cxl-ssd-embedding",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-zipf-power-law-hot-embedding-cache-hit-curve",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-torchrec-all-to-all-sparse-lookup-and-bucket-sharding",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-cascade-dlrm-vs-generative-recommender-hstu-paradigm",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-hstu-pointwise-aggregated-attention-and-stochastic-length",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-m-falcon-candidate-microbatch-prefix-amortization",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-hstu-online-event-streaming-and-delta-kv-update",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-cpu-hnsw-vs-gpu-cuvs-cagra-graph-build-pipeline",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-cagra-warp-splitting-distance-and-two-stage-pruning",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-ivf-pq-shared-memory-lut-asymmetric-distance-kernel",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-diskann-4kb-sector-aligned-vector-and-neighbor-layout",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-diskann-io-uring-gds-beam-search-pipeline",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-freshdiskann-streaming-insert-delete-consolidation",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-graphrag-hierarchical-community-and-vector-hybrid-retrieval",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-search-ads-rec-gpu-fleet-tco-and-sla-roofline",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-generative-recommendation-and-vector-engine-synthesis",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-colpali-visual-patch-late-interaction-maxsim-architecture",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-plaid-centroid-pruning-and-2bit-residual-compression",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-three-way-hybrid-retrieval-and-cross-encoder-rerank-funnel",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-streaming-feature-pipeline-flink-to-online-embedding-sync",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-rcu-epoch-lockfree-embedding-hot-update-vs-rwlock-tail",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch21-cuckoo-admission-filter-and-ttl-eviction-memory-curve",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  }
+]

@@ -11,14 +11,14 @@ RESULTS_PATH = HERE / "results" / "summary.json"
 
 
 def compute_metrics() -> dict:
-    # 1. HSTU Stochastic Length Compression (Ex 25-3)
+    # 1. HSTU Stochastic Length Compression (Ex 21-3)
     full_seq_len = 8192
     keep_ratio_gamma = 0.6604  # effective length 5,410 / 8,192 -> quadratic FLOP ratio = 0.4375 (56.25% reduction)
     effective_seq_len = 5410
     stochastic_beta = 0.75
     quadratic_flop_reduction_pct = 56.2
 
-    # 2. M-FALCON Candidate Microbatch Prefix Amortization (Ex 25-4)
+    # 2. M-FALCON Candidate Microbatch Prefix Amortization (Ex 21-4)
     l_hist = 4096
     m_candidates = 1024
     d_model = 1024

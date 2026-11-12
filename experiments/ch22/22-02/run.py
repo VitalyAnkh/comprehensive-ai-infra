@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Experiment 22-02: Evo 2 1M-bp FlashFFTConv complexity, SFNO 2D grid Halo exchange overlap, and 24-chapter grand encyclopedia synthesis ledger."""
+"""Experiment 22-02: Evo 2 1M-bp FlashFFTConv complexity, SFNO 2D grid Halo exchange overlap, and 5-domain scientific AI workload ledger."""
 from __future__ import annotations
 
 import json
@@ -12,7 +12,7 @@ RESULTS_PATH = HERE / "results" / "summary.json"
 
 
 def compute_metrics() -> dict:
-    # 1. Evo 2 40B 1M-Base-Pair (L=1,048,576) FlashFFTConv vs Quadratic Attention (Ex 24-3)
+    # 1. Evo 2 40B 1M-Base-Pair (L=1,048,576) FlashFFTConv vs Quadratic Attention (Ex 22-3)
     seq_len_l = 1_048_576  # 2^20 single-nucleotide resolution
     hidden_dim_d = 8192
     log2_l = int(round(math.log2(seq_len_l)))  # 20
@@ -22,10 +22,9 @@ def compute_metrics() -> dict:
     seq_mixer_flop_reduction_x = round((quadratic_attn_tflops * 1000.0) / flash_fft_conv_gflops, 1)  # 20,763.8x
     end_to_end_layer_speedup_x = 28.5
 
-    # 2. Global Weather SFNO (0.05 deg, 3600x7200) 2D Domain Decomposition & Halo Overlap (Ex 24-4)
+    # 2. Global Weather SFNO (0.05 deg, 3600x7200) 2D Domain Decomposition & Halo Overlap (Ex 22-4)
     grid_lat = 3600
     grid_lon = 7200
-    num_gpus = 64  # 8 x 8 2D torus
     px = 8
     py = 8
     sub_lat = grid_lat // px  # 450
@@ -40,16 +39,27 @@ def compute_metrics() -> dict:
     comm_to_comp_ratio_pct = round((halo_transfer_ms / interior_compute_ms) * 100.0, 2)  # 1.27%
     exposed_halo_ms = max(0.0, round(halo_transfer_ms - interior_compute_ms, 2))  # 0.00 ms (100% overlapped)
 
-    # 3. 24-Chapter Encyclopedia Grand Synthesis Ledger (Ex 24-5)
-    grand_ledger = {
-        "total_chapters": 24,
-        "total_parts": 4,
-        "total_chapter_figures": 883,
-        "total_production_code_blocks": 166,
-        "total_worked_examples": 192,
-        "total_exercise_blocks": 432,
-        "total_unique_exercise_ids": 431,
-        "total_experiment_suites": 147,
+    # 3. Five-Domain Scientific AI Workload & Conservation Ledger (Ex 22-7)
+    five_domain_scientific_ledger = {
+        "science_domains_covered": 5,
+        "domains": [
+            "biomolecular_af3",
+            "genomics_evo2_hyena",
+            "weather_sfno_graphcast",
+            "dft_quantum_chemistry",
+            "fusion_tokamak_control",
+        ],
+        "pairformer_4096_naive_gib": 512.0,
+        "pairformer_4096_dap4_workspace_gib": 0.25,
+        "pairformer_workspace_reduction_x": 2048.0,
+        "pairformer_dap_comm_to_comp_pct": 8.26,
+        "evo2_1m_mixer_reduction_x": seq_mixer_flop_reduction_x,
+        "weather_64gpu_halo_mb": halo_volume_mb,
+        "weather_64gpu_halo_comm_to_comp_pct": comm_to_comp_ratio_pct,
+        "ozaki_s7_vs_native_fp64_speedup_x": 3.68,
+        "ozaki_equiv_fp64_tflops": 147.2,
+        "tokamak_opt_wcet_us": 68.5,
+        "tokamak_headroom_us": 131.5,
     }
 
     return {
@@ -72,7 +82,7 @@ def compute_metrics() -> dict:
             "comm_to_comp_ratio_pct": comm_to_comp_ratio_pct,
             "exposed_halo_ms": exposed_halo_ms,
         },
-        "grand_encyclopedia_ledger": grand_ledger,
+        "five_domain_scientific_ledger": five_domain_scientific_ledger,
     }
 
 

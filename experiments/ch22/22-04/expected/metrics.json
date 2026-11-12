@@ -1,0 +1,45 @@
+{
+  "experiment_id": "22-04",
+  "hardware_profile": {
+    "int8_tensor_tops": 4500.0,
+    "native_fp64_tflops": 40.0,
+    "int8_to_fp64_peak_ratio_x": 112.5,
+    "signed_int8_max_k_no_overflow": 133144
+  },
+  "ozaki_s7_benchmark": {
+    "gemm_dim_n": 8192,
+    "ozaki_slices_s": 7,
+    "num_int8_gemms": 28,
+    "effective_mantissa_bits": 51.8,
+    "compute_ceiling_x": 4.02,
+    "vs_native_fp64_speedup_x": 3.68,
+    "equiv_fp64_tflops": 147.2,
+    "numerical_test_rel_frobenius_less_than_1e14": true
+  },
+  "slice_sweep": {
+    "S=5": {
+      "int8_gemms": 15,
+      "effective_mantissa_bits": 37.2,
+      "compute_ceiling_x": 7.5,
+      "end_to_end_speedup_x": 6.67
+    },
+    "S=6": {
+      "int8_gemms": 21,
+      "effective_mantissa_bits": 44.6,
+      "compute_ceiling_x": 5.36,
+      "end_to_end_speedup_x": 4.85
+    },
+    "S=7": {
+      "int8_gemms": 28,
+      "effective_mantissa_bits": 51.8,
+      "compute_ceiling_x": 4.02,
+      "end_to_end_speedup_x": 3.68
+    },
+    "S=8": {
+      "int8_gemms": 36,
+      "effective_mantissa_bits": 53.0,
+      "compute_ceiling_x": 3.12,
+      "end_to_end_speedup_x": 2.88
+    }
+  }
+}
