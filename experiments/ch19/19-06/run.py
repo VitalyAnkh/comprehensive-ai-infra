@@ -11,7 +11,7 @@ RESULTS_PATH = HERE / "results" / "summary.json"
 
 
 def compute_metrics() -> dict:
-    # 1. Worked Example 22-6: 3D Avatar Lip-Sync & < 40 ms Audio-Video Jitter Alignment
+    # 1. Worked Example 19-14: 3D Avatar Lip-Sync & < 40 ms Audio-Video Jitter Alignment
     vocoder_ms = 6.50
     avatar_render_ms = 28.50
     nvenc_encode_ms = 4.00
@@ -28,7 +28,7 @@ def compute_metrics() -> dict:
     skew_reduction_pct = round(100.0 * (1.0 - aligned_steady_skew_ms / raw_steady_skew_ms), 2)  # 59.09
     avatar_ttfa_ms = round(base_audio_ttfa_ms + audio_hold_delay_ms, 2)  # 190.00
 
-    # 2. Worked Example 22-7: Global Anycast Edge WebRTC SFU & Private Backbone RVQ Mesh
+    # 2. Worked Example 19-15: Global Anycast Edge WebRTC SFU & Private Backbone RVQ Mesh
     client_aec_ms = 25.00
     pub_rtt_ms = 110.00
     pub_jb_ms = 65.00
@@ -56,7 +56,7 @@ def compute_metrics() -> dict:
     bw_compression_x = round(opus_bi_kbps / rvq_bi_kbps, 2)  # 43.64
     bw_saving_pct = round(100.0 * (1.0 - rvq_bi_kbps / opus_bi_kbps), 2)  # 97.71
 
-    # 3. Exercises 22-11 & 22-12
+    # 3. Exercises 19-27 & 19-28
     p11_raw_steady_skew_ms = round((27.0 - 5.0) + 16.0, 2)  # 38.00
     p11_raw_p99_skew_ms = round(p11_raw_steady_skew_ms + 12.0, 2)  # 50.00
     p11_aligned_steady_skew_ms = round(p11_raw_steady_skew_ms - 22.0, 2)  # 16.00
@@ -70,7 +70,7 @@ def compute_metrics() -> dict:
 
     return {
         "experiment_id": "19-06",
-        "avatar_lipsync_alignment_ex22_6": {
+        "avatar_lipsync_alignment_ex19_14": {
             "vis_path_ms": vis_path_ms,
             "raw_steady_skew_ms": raw_steady_skew_ms,
             "raw_p99_skew_ms": raw_p99_skew_ms,
@@ -79,7 +79,7 @@ def compute_metrics() -> dict:
             "skew_reduction_pct": skew_reduction_pct,
             "avatar_ttfa_ms": avatar_ttfa_ms,
         },
-        "global_edge_sfu_mesh_ex22_7": {
+        "global_edge_sfu_mesh_ex19_15": {
             "net_direct_ms": net_direct_ms,
             "net_edge_ms": net_edge_ms,
             "net_reduction_pct": net_reduction_pct,
@@ -89,7 +89,7 @@ def compute_metrics() -> dict:
             "bw_compression_x": bw_compression_x,
             "bw_saving_pct": bw_saving_pct,
         },
-        "exercises_22_11_and_22_12": {
+        "exercises_19_27_and_19_28": {
             "p11_raw_steady_skew_ms": p11_raw_steady_skew_ms,
             "p11_raw_p99_skew_ms": p11_raw_p99_skew_ms,
             "p11_aligned_steady_skew_ms": p11_aligned_steady_skew_ms,

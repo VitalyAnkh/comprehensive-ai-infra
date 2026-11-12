@@ -12,7 +12,7 @@ RESULTS_PATH = HERE / "results" / "summary.json"
 
 
 def compute_metrics() -> dict:
-    # 1. Cascaded ASR-LLM-TTS vs Native Full-Duplex S2S TTFA latency breakdown (Ex 22-1)
+    # 1. Cascaded ASR-LLM-TTS vs Native Full-Duplex S2S TTFA latency breakdown (Example 19-9)
     cascaded_stages_ms = {
         "vad_silence_wait_ms": 480.0,
         "streaming_asr_ms": 220.0,
@@ -34,7 +34,7 @@ def compute_metrics() -> dict:
     human_perception_threshold_ms = 200.0
     ttfa_speedup_x = round(cascaded_total_ttfa_ms / duplex_total_ttfa_ms, 2)  # 7.80x
 
-    # 2. RVQ Neural Audio Codec (Mimi 12.5 Hz, Q=8 codebooks, V=2048) bitrate equation (Ex 22-2)
+    # 2. RVQ Neural Audio Codec (Mimi 12.5 Hz, Q=8 codebooks, V=2048) bitrate equation (Example 19-10)
     pcm_sample_rate_hz = 24000
     pcm_bits_per_sample = 16
     raw_pcm_kbps = round(pcm_sample_rate_hz * pcm_bits_per_sample / 1000.0, 2)  # 384.0 kbps
@@ -49,7 +49,7 @@ def compute_metrics() -> dict:
     rvq_bitrate_kbps = round(tokens_per_sec_per_stream * bits_per_token / 1000.0, 2)  # 1.10 kbps
     codec_compression_x = round(raw_pcm_kbps / rvq_bitrate_kbps, 2)  # 349.09x
 
-    # 3. Temporal (7B, 1 step) + Depth (100M, Q=8 steps) GPU Roofline & Full-Step CUDA Graph (Ex 22-3)
+    # 3. Temporal (7B, 1 step) + Depth (100M, Q=8 steps) GPU Roofline & Full-Step CUDA Graph (Example 19-11)
     temporal_step_ms = 3.50
     depth_layers = 6
     kernels_per_layer = 8

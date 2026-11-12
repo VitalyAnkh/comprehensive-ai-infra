@@ -1,8 +1,9 @@
 {
-  "chapter": 19,
-  "title": "具身智能（VLA）、实时控制与大规模物理仿真底座",
+  "chapter": 20,
+  "title": "具身智能与物理仿真",
+  "golden_calc_source": "calculations/results/ch20-embodied-wcet-sim.json",
   "embodied_latency_and_dual_loop": {
-    "source": "experiments/ch19/19-01/run.py & VLALagBench",
+    "source": "experiments/ch20/20-01/run.py & VLALagBench",
     "arm_velocity_m_s": 0.50,
     "contact_tolerance_mm": 5.0,
     "max_safe_latency_ms": 10.0,
@@ -28,7 +29,7 @@
     }
   },
   "gpu_native_physics_simulation_4096": {
-    "source": "experiments/ch19/19-01/run.py (Isaac Lab / MuJoCo Warp / Genesis)",
+    "source": "experiments/ch20/20-01/run.py (Isaac Lab / MuJoCo Warp / Genesis)",
     "num_envs": 4096,
     "pcie_roundtrip_bandwidth_gb_s": 43.39,
     "hbm_budget_mib": {
@@ -46,7 +47,7 @@
     }
   },
   "edge_shadow_mode_and_sim2real": {
-    "source": "experiments/ch19/19-01/run.py",
+    "source": "experiments/ch20/20-01/run.py",
     "raw_sensor_rate_mb_s": 180.0,
     "raw_daily_tb_per_robot": 2.592,
     "trigger_rate_pct": 0.5,
@@ -54,7 +55,7 @@
     "bandwidth_reduction_x": 200.0
   },
   "three_tier_wbc_and_fast_tokenizer": {
-    "source": "experiments/ch19/19-02/run.py (Visuotactile WBC + Physical Intelligence FAST DCT Tokenizer)",
+    "source": "experiments/ch20/20-02/run.py (Visuotactile WBC + Physical Intelligence FAST DCT Tokenizer)",
     "tier1_vlm_hz": 2.0,
     "tier2_flow_hz": 100.0,
     "tier3_wbc_tactile_hz": 1000.0,
@@ -84,7 +85,7 @@
     }
   },
   "closed_loop_3dgs_and_dual_thor_watchdog": {
-    "source": "experiments/ch19/19-03/run.py (StreetGaussians / NeuRAD 3DGS + Dual Drive Thor ASIL-D Watchdog)",
+    "source": "experiments/ch20/20-03/run.py (StreetGaussians / NeuRAD 3DGS + Dual Drive Thor ASIL-D Watchdog)",
     "total_gaussians": 2500000,
     "cull_ratio": 0.72,
     "active_gaussians": 700000,
@@ -106,5 +107,56 @@
     "watchdog_lateral_drift_mm": 3.02,
     "restart_250ms_lateral_drift_mm": 351.25,
     "drift_reduction_x": 116.31
+  },
+  "dmabuf_iceoryx_sensor_pipeline": {
+    "source": "experiments/ch20/20-04/run.py & calculations/results/ch20-embodied-wcet-sim.json",
+    "num_cameras": 6,
+    "resolution": "1920x1200",
+    "fps": 60,
+    "pixel_format": "NV12 (1.5 B/pixel)",
+    "nv12_bytes_per_frame": 3456000,
+    "raw_camera_ingress_gbps": 1.244,
+    "ros2_dram_traversals": 9,
+    "ros2_serialized_dram_gbps": 11.2,
+    "ros2_sensor_to_vit_p99_ms": 18.6,
+    "ros2_sensor_p999_jitter_ms": 9.4,
+    "dmabuf_dram_traversals": 2,
+    "dmabuf_iceoryx_dram_gbps": 2.49,
+    "dram_bandwidth_reduction_x": 4.5,
+    "dmabuf_sensor_to_vit_p99_ms": 0.85,
+    "dmabuf_sensor_p999_jitter_ms": 0.14,
+    "sensor_latency_speedup_x": 21.88,
+    "iceoryx_slots_per_camera": 6,
+    "iceoryx_total_slots": 36,
+    "iceoryx_pool_mib": 118.65
+  },
+  "soc_slc_qos_and_closed_loop_world_model_eval": {
+    "source": "experiments/ch20/20-05/run.py & calculations/results/ch20-embodied-wcet-sim.json",
+    "slc_total_mib": 64,
+    "slc_ways": 16,
+    "rt_mpc_ways": 2,
+    "rt_mpc_slc_mib": 8,
+    "pva_sys1_ways": 4,
+    "pva_sys1_slc_mib": 16,
+    "gpu_sys2_ways": 10,
+    "gpu_sys2_slc_mib": 40,
+    "non_rt_dram_cap_gbps": 205.0,
+    "reflex_1khz_deadline_ms": 1.0,
+    "reflex_wcet_unisolated_ms": 1.82,
+    "reflex_wcet_slc_qos_isolated_ms": 0.41,
+    "reflex_wcet_speedup_x": 4.44,
+    "world_model_gpus": 64,
+    "regression_scenarios": 1000,
+    "rollouts_per_scenario": 100,
+    "total_closed_loop_rollouts": 100000,
+    "world_model_64gpu_eval_hours": 0.4,
+    "world_model_64gpu_cost_usd": 768.0,
+    "physical_robot_eval_cost_usd": 111360.0,
+    "world_model_cost_compression_x": 145.0,
+    "wall_clock_speedup_x": 833.33,
+    "policy_a_open_loop_mse": 0.0048,
+    "policy_a_collision_pct": 1.1,
+    "policy_b_open_loop_mse": 0.0041,
+    "policy_b_collision_pct": 14.2
   }
 }

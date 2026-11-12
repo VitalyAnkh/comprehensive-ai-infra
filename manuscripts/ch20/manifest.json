@@ -1,257 +1,296 @@
 {
-  "chapter": "ch20",
   "outputs": [
     {
-      "path": "manuscripts/ch20/ch20-cloud-llm-slo-vs-embodied-hard-realtime.svg",
-      "sha256": "c22851baaff6fa759f12c3e672fea40075b241d2f47a23bed5991f464a66f1be"
+      "path": "manuscripts/ch20/ch20-3dgs-neural-reconstruction-sim2real-loop.pdf",
+      "sha256": "6e28981537a02e3fdbdf5bf3e34e9a91b97d8cce4951c3f2bbaa69f3785ceee1"
     },
     {
-      "path": "manuscripts/ch20/ch20-cloud-llm-slo-vs-embodied-hard-realtime.png",
-      "sha256": "ec52c9c6affc649ebfe3f6d41f12595c7b1148b5f98de1e77306f139c34cb269"
+      "path": "manuscripts/ch20/ch20-3dgs-neural-reconstruction-sim2real-loop.png",
+      "sha256": "e7ff14a6700135df92759e3da1e8de1cdb0bbd66ddd4458959f0a02302c551fb"
     },
     {
-      "path": "manuscripts/ch20/ch20-cloud-llm-slo-vs-embodied-hard-realtime.pdf",
-      "sha256": "bdeeab0666d627b1359197da6fe5ab03079dcb341066bc9d8c30ee73a097a6f5"
+      "path": "manuscripts/ch20/ch20-3dgs-neural-reconstruction-sim2real-loop.svg",
+      "sha256": "9311331048d27af38ec75a1aef4d8ff20b1113b10dc887defca2503825d5dc80"
     },
     {
-      "path": "manuscripts/ch20/ch20-vlalagbench-latency-vs-dynamic-grasp-success.svg",
-      "sha256": "3b20fe523360898aa9fb3fdb33212b1ef30bb05d9e4319d01861a3db9f9901bd"
+      "path": "manuscripts/ch20/ch20-3dgs-neural-sensor-closed-loop-re-simulation.pdf",
+      "sha256": "1be5dc19d303e1b960d8efe02c06b2696bc91adc02d21e1cdbf95982e1354977"
     },
     {
-      "path": "manuscripts/ch20/ch20-vlalagbench-latency-vs-dynamic-grasp-success.png",
-      "sha256": "77ac566a1bf51110e298644285b60f70acdb7fac6a9d3a7e38e73a721660b433"
+      "path": "manuscripts/ch20/ch20-3dgs-neural-sensor-closed-loop-re-simulation.png",
+      "sha256": "1ab72ccaa12f1d5a6d4c2d5a335014a238a03e3d227c72371d530cefe6d31812"
     },
     {
-      "path": "manuscripts/ch20/ch20-vlalagbench-latency-vs-dynamic-grasp-success.pdf",
-      "sha256": "f5d362582fa0aacdf29b44835747772562df08371500cf9c780f080fd3d46e13"
-    },
-    {
-      "path": "manuscripts/ch20/ch20-action-chunking-and-temporal-ensembling.svg",
-      "sha256": "ee9e49220ee76715990e977a8b070aae439b5efd2a4033d18b1de0215dee3280"
-    },
-    {
-      "path": "manuscripts/ch20/ch20-action-chunking-and-temporal-ensembling.png",
-      "sha256": "bc38ff5632b7e8ec911de26efa29dfa2b671c1d8fa256fd4d1d095fa18f909b1"
+      "path": "manuscripts/ch20/ch20-3dgs-neural-sensor-closed-loop-re-simulation.svg",
+      "sha256": "24e3bd4f507e140926159b27386131bb283b92adc70c3ace89179e72f06a0d12"
     },
     {
       "path": "manuscripts/ch20/ch20-action-chunking-and-temporal-ensembling.pdf",
-      "sha256": "45743bde3fcecce7f4986f2afe43d82d60e7cb33fb49f1abcb00bebb066545e2"
+      "sha256": "53f71d62d5143fa753f3d82e82de8a66c8a2de55250f68a25dcbd8620990d7e9"
     },
     {
-      "path": "manuscripts/ch20/ch20-system2-vlm-system1-flow-matching-dual-loop.svg",
-      "sha256": "8adf019f9548fff96498b32ba4e8a58b37f222c5b75fdb9b9d59a843cdb79457"
+      "path": "manuscripts/ch20/ch20-action-chunking-and-temporal-ensembling.png",
+      "sha256": "0e5f889f2df649482786c57152a8ef6e5eff24e694ca38e6300c2fde03b54fc7"
     },
     {
-      "path": "manuscripts/ch20/ch20-system2-vlm-system1-flow-matching-dual-loop.png",
-      "sha256": "f715080f1813eb802891053b4c3c3be017c2d05108389dbdaaeb854ee9031653"
+      "path": "manuscripts/ch20/ch20-action-chunking-and-temporal-ensembling.svg",
+      "sha256": "707d58ae326d3694e3ff65d0172734961150695c3275bba5ff4c0a952adc6141"
     },
     {
-      "path": "manuscripts/ch20/ch20-system2-vlm-system1-flow-matching-dual-loop.pdf",
-      "sha256": "d0474ebcad870bb5722ea9ffac3f6e28ceeb70d987168d37a9b06cb746e81e1b"
+      "path": "manuscripts/ch20/ch20-camera-isp-dmabuf-nvscibuf-zerocopy-vs-ros2-copy-pipeline.pdf",
+      "sha256": "c1aed4d41dedb29f4ef394fffbf1df034e7bb0aed93efcb49a25954edb7d9af4"
     },
     {
-      "path": "manuscripts/ch20/ch20-jetson-thor-mig-rtos-deterministic-isolation.svg",
-      "sha256": "7081587611e410b38bd3e72655e8626237d225c827b631af4efcee4b62e78d2b"
+      "path": "manuscripts/ch20/ch20-camera-isp-dmabuf-nvscibuf-zerocopy-vs-ros2-copy-pipeline.png",
+      "sha256": "fee9030ca8b881cbfe9b6c9390c6a5e26124cada2bf02a3d8081c3a444b49a17"
     },
     {
-      "path": "manuscripts/ch20/ch20-jetson-thor-mig-rtos-deterministic-isolation.png",
-      "sha256": "d874f596af94fb803a3546a96b751db257905f921e21bc4d6a62b6fc43c6ca35"
+      "path": "manuscripts/ch20/ch20-camera-isp-dmabuf-nvscibuf-zerocopy-vs-ros2-copy-pipeline.svg",
+      "sha256": "13043cde5d004cea90ef3139423aace8a8b84a60e012763f93360a10aa757d0f"
     },
     {
-      "path": "manuscripts/ch20/ch20-jetson-thor-mig-rtos-deterministic-isolation.pdf",
-      "sha256": "16b829dc6ee283825e154237cb68ec4e6c5ef598889af769ffb237c6b9d4d826"
+      "path": "manuscripts/ch20/ch20-closed-loop-neural-world-model-policy-regression-harness.pdf",
+      "sha256": "3ae5419cc3816e45fd6267c412eacb09057e1529a503915a73d74d72e61ac3d9"
     },
     {
-      "path": "manuscripts/ch20/ch20-flow-matching-ode-steps-vs-control-jitter.svg",
-      "sha256": "540cdea8629e19be0e32343171bfa1116036db4d1df82fe755050177638f529d"
+      "path": "manuscripts/ch20/ch20-closed-loop-neural-world-model-policy-regression-harness.png",
+      "sha256": "7178bc20f2e5fe100bd7d9ce84e3cafeb0544253d089fab3d6dfec5f392134d2"
     },
     {
-      "path": "manuscripts/ch20/ch20-flow-matching-ode-steps-vs-control-jitter.png",
-      "sha256": "6b86661eccbe42f79b66ae3f67c80f8d8e43afcd1c82dff8ce7819cb3de6bb1f"
+      "path": "manuscripts/ch20/ch20-closed-loop-neural-world-model-policy-regression-harness.svg",
+      "sha256": "1a63db7372c5fdbe8db1559ba88f3f6fb11c92d07a683f7072cf12957beaacba"
     },
     {
-      "path": "manuscripts/ch20/ch20-flow-matching-ode-steps-vs-control-jitter.pdf",
-      "sha256": "1fa6b29fa712bb0ec4dc10641115f1de4c695b94a79b9afe87381cd9b1e5db62"
+      "path": "manuscripts/ch20/ch20-cloud-llm-slo-vs-embodied-hard-realtime.pdf",
+      "sha256": "c6d1516fa0d7946b29c4b383ec05990e533f86a8bf481a51a6af0dea85fd0012"
     },
     {
-      "path": "manuscripts/ch20/ch20-cpu-sim-pcie-bottleneck-vs-gpu-native-sim.svg",
-      "sha256": "8f635e856d310dde8a22b7187b239624026c4f64473c4b81242c08fd03577071"
+      "path": "manuscripts/ch20/ch20-cloud-llm-slo-vs-embodied-hard-realtime.png",
+      "sha256": "cae3cac7006a1605cc0aa3c214a14dde5fd0b1386a3aaaf0278e0dc1321d79f4"
     },
     {
-      "path": "manuscripts/ch20/ch20-cpu-sim-pcie-bottleneck-vs-gpu-native-sim.png",
-      "sha256": "7a48d99e7cfb3eaed0edc77d8fc2ad304b70cee55ad5962858b6289caa545f16"
-    },
-    {
-      "path": "manuscripts/ch20/ch20-cpu-sim-pcie-bottleneck-vs-gpu-native-sim.pdf",
-      "sha256": "9e828d96424ef7940211b54952c81e00e983bdce15dfebdd8ef53c52918fe8ee"
-    },
-    {
-      "path": "manuscripts/ch20/ch20-physics-renderer-policy-three-way-sm-budget.svg",
-      "sha256": "ccb0ec24a6273f17cd478014579ce7570291daa9c24fbb2cac14e0e4f020c7e5"
-    },
-    {
-      "path": "manuscripts/ch20/ch20-physics-renderer-policy-three-way-sm-budget.png",
-      "sha256": "d1e8ec43eaa7ab038fdef4dbfe423b75226137f8f163e4d99a3459645dd609dd"
-    },
-    {
-      "path": "manuscripts/ch20/ch20-physics-renderer-policy-three-way-sm-budget.pdf",
-      "sha256": "e59a2e9eebdb0d38042badfb18e051776d8383c787c61575d4702074b52fbc6f"
-    },
-    {
-      "path": "manuscripts/ch20/ch20-contact-divergence-warp-inefficiency.svg",
-      "sha256": "5af43d96fabfb920c9294167692808ab7666d9ef0abe81d12ac0335702329ddb"
-    },
-    {
-      "path": "manuscripts/ch20/ch20-contact-divergence-warp-inefficiency.png",
-      "sha256": "0602456e00f01300f876438812b49b1f9d9b2000fa9676b06f5e341dcf784c2a"
+      "path": "manuscripts/ch20/ch20-cloud-llm-slo-vs-embodied-hard-realtime.svg",
+      "sha256": "b0cf9e021a50fa043d5c22a4bd07a6c1214a1cfbf0cdb9a66ec17dbcd154d5c0"
     },
     {
       "path": "manuscripts/ch20/ch20-contact-divergence-warp-inefficiency.pdf",
-      "sha256": "652fcc7022f97ea3c76d240e1f5eea75e24b5b861eb151921a925b2f52e97089"
+      "sha256": "1d5b381259d44365f3f7d3853484cb72ee63c8d65fb478721ad05570c04141b6"
     },
     {
-      "path": "manuscripts/ch20/ch20-multi-camera-tiled-rendering-zero-copy-tensor.svg",
-      "sha256": "3c6dc3363e5f700dcfbffa98c7ac4c6329a37b8cc1a369b124866fab4d1f2a93"
+      "path": "manuscripts/ch20/ch20-contact-divergence-warp-inefficiency.png",
+      "sha256": "0259ca22cae62cfeab3666691f5a79a7ea51a483ea4331ed9749804989b79fda"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-contact-divergence-warp-inefficiency.svg",
+      "sha256": "3ad6d10050937773bbdccb429f3cad0937d41be89885d376b5e1d3104615f5eb"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-cpu-sim-pcie-bottleneck-vs-gpu-native-sim.pdf",
+      "sha256": "8d5eb39bad99a7d87c9a029ccf0cc57684085834cca08e5918d89f16f25814c8"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-cpu-sim-pcie-bottleneck-vs-gpu-native-sim.png",
+      "sha256": "fa7a6a661deaf195eea8b4f3d7e8d14fa78ed8586ba956cc0a5f14e364ab0174"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-cpu-sim-pcie-bottleneck-vs-gpu-native-sim.svg",
+      "sha256": "87b051203b795e3d811497b57b5ab607fc9faf0dfb9f4e1d95e983ede758d2da"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-dual-thor-soc-safety-fallback-watchdog-pipeline.pdf",
+      "sha256": "d04d3ded1f226896d8da6c4f248d4fb8c51ca4be10ef241c9b6bdd7d1914bf01"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-dual-thor-soc-safety-fallback-watchdog-pipeline.png",
+      "sha256": "80277c581c5e47914ca239ab93b8e555f018ee17ec8a6f6bc8987986da394fdb"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-dual-thor-soc-safety-fallback-watchdog-pipeline.svg",
+      "sha256": "f5b78b51fff3a6746d8e7a643ba2a4eaacccb922c97d83144ae441a7e3570203"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-embodied-ai-full-stack-infrastructure-map.pdf",
+      "sha256": "c5937a3720bdb35936cc20a7ee973292367bd58b1c2aa6703ee9c37120ac0f5b"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-embodied-ai-full-stack-infrastructure-map.png",
+      "sha256": "f895365ddc0a09f6b2e9cfae32b0247dfb8e76cf55716ee5fbf53b740f991cbc"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-embodied-ai-full-stack-infrastructure-map.svg",
+      "sha256": "8f39930545fd6574a18dc409420f87787446d169105f310123ec6993e7642abb"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-fast-dct-frequency-action-tokenization.pdf",
+      "sha256": "175aecdb1ab3623bc51d32db550d6e65c626439ee257f285bde52df8ec4b388d"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-fast-dct-frequency-action-tokenization.png",
+      "sha256": "6bde608a36e85f4859b4c89198711025baadcf48d1f81b285ed3a0c2784dbed8"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-fast-dct-frequency-action-tokenization.svg",
+      "sha256": "da89356ffb3fa49f40affa1c2cd8bce60a4b8fda110970189041b2ce5d18bf50"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-flow-matching-ode-steps-vs-control-jitter.pdf",
+      "sha256": "ea3dd4086721800dca85804efe7c1f489fa2f7e44f7ced4ae916a2acf5e3f6b0"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-flow-matching-ode-steps-vs-control-jitter.png",
+      "sha256": "7109c06437b2d5d2c469ae85da7c8051db8bdf4febf1212fdd51c952e8e769c1"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-flow-matching-ode-steps-vs-control-jitter.svg",
+      "sha256": "51eb17e9c98f1435f1e7e9acbfc49e37f154cde8d47316df4bf5c5ce199bb496"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-heterogeneous-soc-slc-partitioning-and-memory-qos-isolation.pdf",
+      "sha256": "7d334a28a2050d2b21600f00ab40b3022c7017d04c565a1eaef4afb7c490765b"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-heterogeneous-soc-slc-partitioning-and-memory-qos-isolation.png",
+      "sha256": "58acb25b01128eb74fa7f9b3c1fe3affe27b7fb3709a1abd75e022863c20b9be"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-heterogeneous-soc-slc-partitioning-and-memory-qos-isolation.svg",
+      "sha256": "0526bfe15167de69c27b1d10ab150acf37c5d8fc187d4437884b812a908f3bfc"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-jetson-thor-mig-rtos-deterministic-isolation.pdf",
+      "sha256": "8c89418ce12062cc114b10c2a528cedbd682d385368bbd3630d48b08c65656cd"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-jetson-thor-mig-rtos-deterministic-isolation.png",
+      "sha256": "5924efaeef11554d1fbc3cc2f5ac23cfeb63e3a535ec12f12a2b97c236e99d9f"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-jetson-thor-mig-rtos-deterministic-isolation.svg",
+      "sha256": "7e90f9c87d4f1a2c26ccaf262da4da8b5304034fe1e40e126e1334d8f9f414cc"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-multi-camera-tiled-rendering-zero-copy-tensor.pdf",
+      "sha256": "05f8b2af4bbb7f2b6cc76bf1eec2be6a136ee4560b4dc933875eb6048bbe6530"
     },
     {
       "path": "manuscripts/ch20/ch20-multi-camera-tiled-rendering-zero-copy-tensor.png",
       "sha256": "55eaabbdd503450d4a795c8e1029316a30e1556ea44b32b037f5bc1af5013809"
     },
     {
-      "path": "manuscripts/ch20/ch20-multi-camera-tiled-rendering-zero-copy-tensor.pdf",
-      "sha256": "4b4a1326ecaa5ee90a71b089a3012f5e4a4618932a34a7fd4266268a61ea2079"
-    },
-    {
-      "path": "manuscripts/ch20/ch20-multi-sensor-ptp-hardware-trigger-alignment.svg",
-      "sha256": "701389ef631c3fd429865fbf20ce270464fa9632c1ad568f97ea6a82c7d77b2c"
-    },
-    {
-      "path": "manuscripts/ch20/ch20-multi-sensor-ptp-hardware-trigger-alignment.png",
-      "sha256": "e838c05d070ffae7be67f129a7e9c6ac879184a336a64a6f6b995c5ba8a02bdc"
+      "path": "manuscripts/ch20/ch20-multi-camera-tiled-rendering-zero-copy-tensor.svg",
+      "sha256": "afe697dac44676f9363ca0953f5fb15c78a07d40605c46f0d7dc63644422f676"
     },
     {
       "path": "manuscripts/ch20/ch20-multi-sensor-ptp-hardware-trigger-alignment.pdf",
-      "sha256": "1f8fc3cfcde1815f5375aa683de4ffdc42f1a7c17b7cc023178795d621bac68c"
+      "sha256": "eb486d8e95b0ddb91460149dadf24e93ee185c0f6863b96c1e95783b47e05c4c"
     },
     {
-      "path": "manuscripts/ch20/ch20-shadow-mode-disagreement-edge-trigger.svg",
-      "sha256": "4c641bc126e3a7b7c22c1503b247768f8f287f708cbbffdae4d0eec6b77b020b"
+      "path": "manuscripts/ch20/ch20-multi-sensor-ptp-hardware-trigger-alignment.png",
+      "sha256": "a62bc9fc69a4b533fc81dd3fbffa3cefce71d56e46a36b9aa486447bd02ca040"
     },
     {
-      "path": "manuscripts/ch20/ch20-shadow-mode-disagreement-edge-trigger.png",
-      "sha256": "be5aa88a649c890b983a0065c0d9b672345be233b84cdcf3e422e1c312f06d13"
-    },
-    {
-      "path": "manuscripts/ch20/ch20-shadow-mode-disagreement-edge-trigger.pdf",
-      "sha256": "c09bb01c340ca530b2072a42f5bcfe8b78d7d2d3722202a2732b6d8f71f2b388"
-    },
-    {
-      "path": "manuscripts/ch20/ch20-3dgs-neural-reconstruction-sim2real-loop.svg",
-      "sha256": "942a791e041826dccefd989350643ab8268a0648bdf16284e6f3ea85a299748f"
-    },
-    {
-      "path": "manuscripts/ch20/ch20-3dgs-neural-reconstruction-sim2real-loop.png",
-      "sha256": "92c1863248925bfcfc88d98ba1a926fb82a961574d515ac5f5623e207475e0e2"
-    },
-    {
-      "path": "manuscripts/ch20/ch20-3dgs-neural-reconstruction-sim2real-loop.pdf",
-      "sha256": "6fa51bede8895b784114256a45071f1bd92bda695b38afc54047db9f1701118f"
-    },
-    {
-      "path": "manuscripts/ch20/ch20-onboard-vs-mec-edge-offload-safety-fallback.svg",
-      "sha256": "68ce806468e235ae2144114cf5042a0a90403fab3ec8457c14e772ccff939d78"
-    },
-    {
-      "path": "manuscripts/ch20/ch20-onboard-vs-mec-edge-offload-safety-fallback.png",
-      "sha256": "1bc2073b574fe81f616fd2652991d801ff6c9872c52b22785d9e7b465d3d58fb"
+      "path": "manuscripts/ch20/ch20-multi-sensor-ptp-hardware-trigger-alignment.svg",
+      "sha256": "540af2746268d3bde726ef62982d6d46d1163b7259767b99a454bb5e13bc70e4"
     },
     {
       "path": "manuscripts/ch20/ch20-onboard-vs-mec-edge-offload-safety-fallback.pdf",
-      "sha256": "5253a9ba9681b4f74de6e6097b0859c4b1822ff7a19241822156fccbdb33793e"
+      "sha256": "c75991632c6ab013b7e5a32b2f718f6c5ce3bbd48ad4fcce0d7a092ecd04583d"
     },
     {
-      "path": "manuscripts/ch20/ch20-vla-early-exit-and-token-pruning-wcet.svg",
-      "sha256": "4e97918e0e00ae830be1e35e022cd0be8ae3adf2b2c2c350715ed93ee9bfe7b4"
+      "path": "manuscripts/ch20/ch20-onboard-vs-mec-edge-offload-safety-fallback.png",
+      "sha256": "06ac2c54f22abc7ece832b4edca940f9ca532054237f244bee59bc09c873eb65"
     },
     {
-      "path": "manuscripts/ch20/ch20-vla-early-exit-and-token-pruning-wcet.png",
-      "sha256": "4ce2073b57cdfd9fdea61514e41d5617dbc47c5f2d791a804f15c28c37bb95f7"
+      "path": "manuscripts/ch20/ch20-onboard-vs-mec-edge-offload-safety-fallback.svg",
+      "sha256": "7c71676f9915c21f8ac85d2157f7536b6973df759a2a8f4a29747e4f985e29e8"
     },
     {
-      "path": "manuscripts/ch20/ch20-vla-early-exit-and-token-pruning-wcet.pdf",
-      "sha256": "b3598007d8a55cc4d2bfd6c764f4e938ce93bf8e500211f25212a33f8005f46c"
+      "path": "manuscripts/ch20/ch20-physics-renderer-policy-three-way-sm-budget.pdf",
+      "sha256": "2da5a0807870ea299036827831785eb37bb062c728f65b70260dab896e4c1175"
     },
     {
-      "path": "manuscripts/ch20/ch20-embodied-ai-full-stack-infrastructure-map.svg",
-      "sha256": "c9cbcf039c4d78afdf9181bc2e60f81269cce4dfb1a8fadde2e264c521df839d"
+      "path": "manuscripts/ch20/ch20-physics-renderer-policy-three-way-sm-budget.png",
+      "sha256": "e3cabe090641248d3dbbdae474542e841461c461acc546feda4ee841f66c05fe"
     },
     {
-      "path": "manuscripts/ch20/ch20-embodied-ai-full-stack-infrastructure-map.png",
-      "sha256": "4f53991df849a45127b9ba6995db29ac6691f549f74702dff6e52fabd657f115"
+      "path": "manuscripts/ch20/ch20-physics-renderer-policy-three-way-sm-budget.svg",
+      "sha256": "90eb074add50150c0f82578daef51b443ff0247b12704120c97d0199958fc68f"
     },
     {
-      "path": "manuscripts/ch20/ch20-embodied-ai-full-stack-infrastructure-map.pdf",
-      "sha256": "4ef778636de489f776480f269fcdf661c695a1785aaa313606d5d5b45a2c1c91"
+      "path": "manuscripts/ch20/ch20-shadow-mode-disagreement-edge-trigger.pdf",
+      "sha256": "a7b142ebed98af864c7fc567c49293f4faf504377d3c4ea6b7501d68c305c482"
     },
     {
-      "path": "manuscripts/ch20/ch20-three-tier-vlm-flow-wbc-humanoid-control.svg",
-      "sha256": "c3ebd22f3f3afab690a4992f8d506741979047a881f98f70034c5b49fd8eb584"
+      "path": "manuscripts/ch20/ch20-shadow-mode-disagreement-edge-trigger.png",
+      "sha256": "83a5f0d340f69064c317acefaa44b8233e7e2a269be1f2608cafb309da7a08a8"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-shadow-mode-disagreement-edge-trigger.svg",
+      "sha256": "34416abe828d8d46f26fec09b0c5b84995c575b0b5241b2ea089b21ba3cdd195"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-system2-vlm-system1-flow-matching-dual-loop.pdf",
+      "sha256": "0f8ebdc5d10dc90a057f6fabc04c1f9fed11a3b56b8f55b6f0349efc095bd1c3"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-system2-vlm-system1-flow-matching-dual-loop.png",
+      "sha256": "bca792739db442fe3715bb3025b3f95890dece8d00c19d9c4a4c33318f319ca8"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-system2-vlm-system1-flow-matching-dual-loop.svg",
+      "sha256": "14ce2211c0588be41eb3f54df4a9764d48085f7a05b48c13bbb891a4648112f4"
+    },
+    {
+      "path": "manuscripts/ch20/ch20-three-tier-vlm-flow-wbc-humanoid-control.pdf",
+      "sha256": "324d562504fc4393657d43b7cadaa441c5ae9698e40d52d5a21d4f82a4eae984"
     },
     {
       "path": "manuscripts/ch20/ch20-three-tier-vlm-flow-wbc-humanoid-control.png",
       "sha256": "c23bed43d11bd7a748320f557380b459b144c39cefc242f30904b3d8f001feb4"
     },
     {
-      "path": "manuscripts/ch20/ch20-three-tier-vlm-flow-wbc-humanoid-control.pdf",
-      "sha256": "13529442fc992fd8d2121277fb5b8302f772a2a607a50933935ea3a77a765981"
+      "path": "manuscripts/ch20/ch20-three-tier-vlm-flow-wbc-humanoid-control.svg",
+      "sha256": "09db95220a0f31dded0a975fdd18bf710bab5972f49857b78cb531990c738c16"
     },
     {
-      "path": "manuscripts/ch20/ch20-fast-dct-frequency-action-tokenization.svg",
-      "sha256": "6ccbc63d47e6c50fec403018c531f70c5293f64368cd72048e06602be3cf59a3"
+      "path": "manuscripts/ch20/ch20-vla-early-exit-and-token-pruning-wcet.pdf",
+      "sha256": "2698f8a1770d7261db7b6eddadc778982c815a9b6a1ed4133dbe8a0cc1d75b08"
     },
     {
-      "path": "manuscripts/ch20/ch20-fast-dct-frequency-action-tokenization.png",
-      "sha256": "ffce466fa60f014279e9bdac9f09ddab2804237ee2c4b0558d076eece934e07c"
+      "path": "manuscripts/ch20/ch20-vla-early-exit-and-token-pruning-wcet.png",
+      "sha256": "4ce2073b57cdfd9fdea61514e41d5617dbc47c5f2d791a804f15c28c37bb95f7"
     },
     {
-      "path": "manuscripts/ch20/ch20-fast-dct-frequency-action-tokenization.pdf",
-      "sha256": "3c97d04a47624bb30d03978f0f31d6980837c925d4682d841ba3fe190964a7cf"
+      "path": "manuscripts/ch20/ch20-vla-early-exit-and-token-pruning-wcet.svg",
+      "sha256": "b10e62f66e22e71517f7eed4df3f9fee88a8f8db45230a145c6647cfa938fde5"
     },
     {
-      "path": "manuscripts/ch20/ch20-3dgs-neural-sensor-closed-loop-re-simulation.svg",
-      "sha256": "3b6989b0a6244d5998f4d986b360c9dd5ceb4e50ef9240a60280a1063361104c"
+      "path": "manuscripts/ch20/ch20-vlalagbench-latency-vs-dynamic-grasp-success.pdf",
+      "sha256": "c004ffbb388ff1a7b72ed18a8185d7d7856ce89b149d0b2268c7011dc01400f3"
     },
     {
-      "path": "manuscripts/ch20/ch20-3dgs-neural-sensor-closed-loop-re-simulation.png",
-      "sha256": "a13c79e66da9d505976fe9aeffd64046b180afe838508144af2c4c4307d32255"
+      "path": "manuscripts/ch20/ch20-vlalagbench-latency-vs-dynamic-grasp-success.png",
+      "sha256": "44f57e8e1a52223ee415dddbef524663bb915841157bca1f57688d881a35786e"
     },
     {
-      "path": "manuscripts/ch20/ch20-3dgs-neural-sensor-closed-loop-re-simulation.pdf",
-      "sha256": "659b27537133b969a2a36ad92ee7acb5b31387eddb5ff984afdeeb1a673bb58e"
+      "path": "manuscripts/ch20/ch20-vlalagbench-latency-vs-dynamic-grasp-success.svg",
+      "sha256": "712c65e40c0b1805e17b31d8e0ebcbf6037f18d83ce271e49c391327bf3646db"
     },
     {
-      "path": "manuscripts/ch20/ch20-dual-thor-soc-safety-fallback-watchdog-pipeline.svg",
-      "sha256": "2aa88834fe85cb20ac3179815b63659f1bfa3153c239fe79ec9d7d0d23937a13"
-    },
-    {
-      "path": "manuscripts/ch20/ch20-dual-thor-soc-safety-fallback-watchdog-pipeline.png",
-      "sha256": "6cdfd568097bb978831aad88dee95233bdb4aa336bd820fdbc451e70a442f9c4"
-    },
-    {
-      "path": "manuscripts/ch20/ch20-dual-thor-soc-safety-fallback-watchdog-pipeline.pdf",
-      "sha256": "b1b423326b70c3b5451a41cd1a33f33d76dcad3b546abde92fe0266f57103d6b"
+      "path": "manuscripts/ch20/figure-data.json",
+      "sha256": "989feb49269bf633a8f1721654f27286c6fe675c889939ff2b44da872c9e058c"
     },
     {
       "path": "manuscripts/ch20/figure-index.json",
-      "sha256": "a901291684c6808901c7fd66be23ea0ed6f84af4f4a10881312b97edb2922eed"
+      "sha256": "d03e7d1362cce020490549497231738adfe17fc2081da905549cb25cfadf256f"
     },
     {
       "path": "manuscripts/ch20/teaching-layout-validation.json",
-      "sha256": "1721d543fc99ba847dbce9351b403318e4a12283bebe68b2055c17dfe08642a2"
+      "sha256": "e2f4992803cac048d4447ff495fc8c764343e86848e95bbfde1e0f6675af8903"
     },
     {
       "path": "manuscripts/ch20/math-validation.json",
-      "sha256": "387ed4db36ff097ba0ed9f6d97942a1209e226f71e71c25a381265d4c9c65ec9"
+      "sha256": "eae711a21672259e9672aa4d9f76c5df6288d86a8b3efc9c83ca2aa0ff1c1675"
     }
   ]
 }

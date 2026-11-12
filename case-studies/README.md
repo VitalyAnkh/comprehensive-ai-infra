@@ -2,7 +2,7 @@
 
 这里是正文算例背后的展开材料：具体模型、硬件与系统案例的完整推算、来源核对和取舍说明。正文只保留结论与关键推导，脚注链接到对应案例。
 
-下表按引用的章节分组；“引用章节”列出所有链接到该案例的章（全库 73 篇案例已 100% 接入正文第 1～24 章）。
+下表按引用的章节分组；“引用章节”列出所有链接到该案例的章（全库 74 篇案例已 100% 接入正文第 1～24 章）。
 
 ## 第 1 章 · 初识 AI Infra
 
@@ -18,15 +18,15 @@
 | 案例 | 引用章节 |
 | --- | :--: |
 | [从模型结构计算容量、工作量与访问量](model-resource-accounting.md) | 2、7 |
-| [理解之外：Omni、语音、图像与视频生成](generative-multimodal-models.md) | 2、3 |
+| [理解之外：Omni、语音、图像与视频生成](generative-multimodal-models.md) | 2、3、19 |
 
 ## 第 3 章 · 推理与训练负载
 
 | 案例 | 引用章节 |
 | --- | :--: |
 | [作者材料：上下文与技术判断](author-context-and-design.md) | 3、8、12 |
-| [多模态输入的字节、状态与阶段放置](multimodal-stage-placement.md) | 3、12 |
-| [Queqiao 语音传输案例](queqiao.md) | 3、12 |
+| [多模态输入的字节、状态与阶段放置](multimodal-stage-placement.md) | 3、12、19、20 |
+| [Queqiao 语音传输案例](queqiao.md) | 3、12、19 |
 | [检索与生成的协同预算](retrieval-and-generation.md) | 3、13 |
 | [训练投入与 Scaling Law 历史比较](scaling-history.md) | 3 |
 | [训练计算量的核算](training-compute.md) | 3、10 |
@@ -40,7 +40,7 @@
 | [从负载变化理解芯片演进](architecture-evolution.md) | 4 |
 | [从算子利用率到执行中的等待](component-utilization-and-overlap.md) | 4 |
 | [算子拆分、融合与量化边界](kernel-orchestration-and-quantization.md) | 4、5 |
-| [MacBook 与 RTX PRO 6000：从存储组织到本地推理](macbook-rtx-pro6000.md) | 4、5、12 |
+| [MacBook 与 RTX PRO 6000：从存储组织到本地推理](macbook-rtx-pro6000.md) | 4、5、12、20 |
 | [访存并发与带宽估算](memory-bandwidth-and-concurrency.md) | 4 |
 | [OpenTallas：从不可变权重到系统可行性的案例与习题](opentallas.md) | 4、23 |
 
@@ -202,13 +202,14 @@
 | 案例 | 引用章节 |
 | --- | :--: |
 | [理解之外：Omni、语音、图像与视频生成](generative-multimodal-models.md) | 2、3、19 |
-| [多模态输入的字节、状态与阶段放置](multimodal-stage-placement.md) | 3、12、19 |
+| [多模态输入的字节、状态与阶段放置](multimodal-stage-placement.md) | 3、12、19、20 |
 | [Queqiao 语音传输案例](queqiao.md) | 3、12、19 |
 
 ## 第 20 章 · 具身智能与物理仿真
 
 | 案例 | 引用章节 |
 | --- | :--: |
+| [端侧异构 SoC 零拷贝传感与闭环神经世界模型回归评测](embodied-soc-and-world-model.md) | 20 |
 | [多模态输入的字节、状态与阶段放置](multimodal-stage-placement.md) | 3、12、19、20 |
 | [MacBook 与 RTX PRO 6000：从存储组织到本地推理](macbook-rtx-pro6000.md) | 4、5、12、20 |
 

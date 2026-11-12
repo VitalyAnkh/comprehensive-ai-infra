@@ -21,11 +21,11 @@ def main() -> None:
     assert sim["opt_fps"] == 59.52
     assert sim["render_speedup_x"] == 4.46
     assert sim["meets_30hz_hil_sla"] is True
-    assert sim["ex19_13_8cam_2lidar_naive_ms"] == 104.00
-    assert sim["ex19_13_8cam_2lidar_naive_fps"] == 9.62
-    assert sim["ex19_13_8cam_2lidar_opt_ms"] == 22.00
-    assert sim["ex19_13_8cam_2lidar_opt_fps"] == 45.45
-    assert sim["ex19_13_speedup_x"] == 4.73
+    assert sim["ex20_13_8cam_2lidar_naive_ms"] == 104.00
+    assert sim["ex20_13_8cam_2lidar_naive_fps"] == 9.62
+    assert sim["ex20_13_8cam_2lidar_opt_ms"] == 22.00
+    assert sim["ex20_13_8cam_2lidar_opt_fps"] == 45.45
+    assert sim["ex20_13_speedup_x"] == 4.73
 
     wd = actual["dual_thor_safety_watchdog"]
     assert wd["takeover_latency_ms"] == 12.50
@@ -33,9 +33,9 @@ def main() -> None:
     assert wd["watchdog_lateral_drift_mm"] == 3.02
     assert wd["restart_250ms_lateral_drift_mm"] == 351.25
     assert wd["drift_reduction_x"] == 116.31
-    assert wd["ex19_14_watchdog_drift_mm"] == 2.50
-    assert wd["ex19_14_restart_200ms_drift_mm"] == 190.00
-    assert wd["ex19_14_reduction_x"] == 76.00
+    assert wd["ex20_14_watchdog_drift_mm"] == 2.50
+    assert wd["ex20_14_restart_200ms_drift_mm"] == 190.00
+    assert wd["ex20_14_reduction_x"] == 76.00
     print("Experiment 20-03 verified successfully.")
 
 

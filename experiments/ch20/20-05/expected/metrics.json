@@ -1,0 +1,55 @@
+{
+  "experiment_id": "20-05",
+  "soc_slc_qos_isolation_ex20_9": {
+    "slc_total_mib": 64,
+    "slc_total_ways": 16,
+    "reserved_rt_ways": 2,
+    "reserved_pva_sys1_ways": 4,
+    "reserved_gpu_sys2_ways": 10,
+    "peak_dram_gbps": 273.0,
+    "non_rt_bw_cap_gbps": 205.0,
+    "non_rt_bw_cap_pct": 75.1,
+    "reflex_1khz_deadline_ms": 1.0,
+    "reflex_wcet_unisolated_ms": 1.82,
+    "reflex_wcet_slc_qos_isolated_ms": 0.41,
+    "wcet_speedup_x": 4.44,
+    "wcet_margin_ms": 0.59
+  },
+  "world_model_regression_ex20_10": {
+    "regression_scenarios": 1000,
+    "rollouts_per_scenario": 100,
+    "total_closed_loop_rollouts": 100000,
+    "world_model_gpus": 64,
+    "world_model_64gpu_eval_hours": 0.4,
+    "world_model_gpu_hours": 25.6,
+    "world_model_64gpu_cost_usd": 768.0,
+    "physical_robot_eval_cost_usd": 111360.0,
+    "world_model_cost_compression_x": 145.0,
+    "wall_time_speedup_x": 833.32,
+    "policy_comparison": {
+      "policy_a_conservative_flow": {
+        "open_loop_action_mse": 0.0048,
+        "closed_loop_collision_violation_pct": 1.1,
+        "closed_loop_task_success_pct": 89.5,
+        "release_gate_passed": true
+      },
+      "policy_b_overfit_mse": {
+        "open_loop_action_mse": 0.0041,
+        "closed_loop_collision_violation_pct": 14.2,
+        "closed_loop_task_success_pct": 54.0,
+        "release_gate_passed": false
+      }
+    }
+  },
+  "exercises_20_17_and_20_18": {
+    "ex17_min_rt_ways": 3,
+    "ex17_non_rt_cap_gbps": 140.8,
+    "ex17_isolated_wcet_ms": 0.48,
+    "ex18_base_hours": 0.5,
+    "ex18_base_cost_usd": 1920.0,
+    "ex18_phys_cost_usd": 278400.0,
+    "ex18_early_stop_saving_pct": 21.5,
+    "ex18_early_stop_hours": 0.3925,
+    "ex18_early_stop_cost_usd": 1507.2
+  }
+}

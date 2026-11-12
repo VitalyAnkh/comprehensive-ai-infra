@@ -8,6 +8,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 EXPECTED_PATH = HERE / "expected" / "metrics.json"
+SUMMARY_PATH = HERE / "results" / "summary.json"
 
 
 def compute_metrics() -> dict:
@@ -97,9 +98,11 @@ def compute_metrics() -> dict:
 
 def main() -> None:
     metrics = compute_metrics()
-    EXPECTED_PATH.parent.mkdir(parents=True, exist_ok=True)
-    EXPECTED_PATH.write_text(json.dumps(metrics, indent=2, ensure_ascii=False) + "\n")
-    print(json.dumps(metrics, indent=2, ensure_ascii=False))
+    payload = json.dumps(metrics, indent=2, ensure_ascii=False) + "\n"
+    for p in (EXPECTED_PATH, SUMMARY_PATH):
+        p.parent.mkdir(parents=True, exist_ok=True)
+        p.write_text(payload)
+    print(payload.strip())
 
 
 if __name__ == "__main__":

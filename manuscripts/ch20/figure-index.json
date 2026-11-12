@@ -7,8 +7,8 @@
     "section": "20.1.1",
     "caption": "云端对话软实时 SLO 与物理世界闭环控制硬实时截止期（盲飞位移 Δx = v·Δt_inf，算例 20-1）对比",
     "source_refs": [
-      "experiments/ch19/19-01/run.py",
-      "manuscripts/ch19/figure-data.json"
+      "experiments/ch20/20-01/run.py",
+      "manuscripts/ch20/figure-data.json"
     ],
     "TeachingRole": "建立时间延迟向物理空间碰撞误差转化的第一性原理公式",
     "figure": "20-1",
@@ -22,10 +22,10 @@
     "section": "20.1.2",
     "caption": "VLALagBench 实证规律：静态操作 vs. 动态操作随推理延迟 Δt_inf 增大的成功率退化曲线",
     "source_refs": [
-      "experiments/ch19/19-01/run.py",
-      "manuscripts/ch19/figure-data.json"
+      "experiments/ch20/20-01/run.py",
+      "manuscripts/ch20/figure-data.json"
     ],
-    "TeachingRole": "揭示观测过时（Observation Staleness）导致 100 ms 以上动态抓取成功率崩塌的机理",
+    "TeachingRole": "揭示观测过时（Observation Staleness）导致 100 ms 以上动态抓取成功率退化的机理",
     "figure": "20-2",
     "name": "ch20-vlalagbench-latency-vs-dynamic-grasp-success"
   },
@@ -37,7 +37,7 @@
     "section": "20.1.3",
     "caption": "动作块预测（Action Chunking H 步）与滑动窗口指数加权时间集成（Temporal Ensembling）时序图",
     "source_refs": [
-      "manuscripts/ch19/figure-data.json"
+      "manuscripts/ch20/figure-data.json"
     ],
     "TeachingRole": "剖析动作块长度在抑制高频抖动与引入开环盲区之间的工程权衡",
     "figure": "20-3",
@@ -51,10 +51,11 @@
     "section": "20.2.1",
     "caption": "System 2（2 Hz 多模态 VLM 慢思考）+ System 1（100 Hz Flow-Matching 动作头快反射）双频异步架构",
     "source_refs": [
-      "experiments/ch19/19-01/run.py",
-      "manuscripts/ch19/figure-data.json"
+      "experiments/ch20/20-01/run.py",
+      "manuscripts/ch20/figure-data.json",
+      "calculations/results/ch20-embodied-wcet-sim.json"
     ],
-    "TeachingRole": "展示 50:1 双频异步协同如何兼顾大模型语义泛化与 10 ms 硬实时闭环控制",
+    "TeachingRole": "展示双频异步协同如何兼顾大模型语义泛化与 10 ms 硬实时力控反馈",
     "figure": "20-4",
     "name": "ch20-system2-vlm-system1-flow-matching-dual-loop"
   },
@@ -66,9 +67,11 @@
     "section": "20.2.2",
     "caption": "NVIDIA Jetson Thor / Drive Thor 上利用 GPU MIG 分区与无锁共享内存隔离 System 2 干扰的 WCET 保障",
     "source_refs": [
-      "experiments/ch19/19-01/run.py"
+      "experiments/ch20/20-01/run.py",
+      "manuscripts/ch20/figure-data.json",
+      "calculations/results/ch20-embodied-wcet-sim.json"
     ],
-    "TeachingRole": "解析硬件级缓存/带宽隔离与 PREEMPT_RT 核绑定如何锁定 WCET ≤ 4.2 ms",
+    "TeachingRole": "解析硬件级缓存/带宽隔离与 PREEMPT_RT 核绑定如何保障 WCET ≤ 4.2 ms",
     "figure": "20-5",
     "name": "ch20-jetson-thor-mig-rtos-deterministic-isolation"
   },
@@ -80,7 +83,8 @@
     "section": "20.2.1",
     "caption": "动作生成头中 DDPM 多步采样 vs. Flow-Matching 少步确定性 ODE 积分的周期稳定性对比",
     "source_refs": [
-      "experiments/ch19/19-01/run.py"
+      "experiments/ch20/20-01/run.py",
+      "manuscripts/ch20/figure-data.json"
     ],
     "TeachingRole": "说明最优传输直线流匹配与静态 CUDA Graph 如何消除扩散采样抖动",
     "figure": "20-6",
@@ -92,12 +96,13 @@
     "file": "ch20-cpu-sim-pcie-bottleneck-vs-gpu-native-sim.svg",
     "asset": "ch20/ch20-cpu-sim-pcie-bottleneck-vs-gpu-native-sim.svg",
     "section": "20.3.1",
-    "caption": "传统 CPU 物理仿真 + PCIe 往返（43.39 GB/s 瓶颈）vs. GPU 原生万级并行仿真的数据零搬移闭环",
+    "caption": "传统 CPU 物理仿真 + PCIe 往返（43.39 GB/s 瓶颈）vs. GPU 原生万级并行仿真的数据零搬移架构",
     "source_refs": [
-      "experiments/ch19/19-01/run.py",
-      "manuscripts/ch19/figure-data.json"
+      "experiments/ch20/20-01/run.py",
+      "manuscripts/ch20/figure-data.json",
+      "calculations/results/ch20-embodied-wcet-sim.json"
     ],
-    "TeachingRole": "定量证明 4,096 环境跨 PCIe 传输观测必撞带宽墙，必须全驻留 GPU 显存",
+    "TeachingRole": "定量证明 4,096 环境跨 PCIe 传输观测必遇带宽墙，必须全驻留 GPU 显存",
     "figure": "20-7",
     "name": "ch20-cpu-sim-pcie-bottleneck-vs-gpu-native-sim"
   },
@@ -109,8 +114,9 @@
     "section": "20.3.2",
     "caption": "单张 GPU 内刚体接触求解器、批量光线追踪渲染器与 VLA 策略网络的三方显存（25.52 GiB）与 SM 分配",
     "source_refs": [
-      "experiments/ch19/19-01/run.py",
-      "manuscripts/ch19/figure-data.json"
+      "experiments/ch20/20-01/run.py",
+      "manuscripts/ch20/figure-data.json",
+      "calculations/results/ch20-embodied-wcet-sim.json"
     ],
     "TeachingRole": "核算 4,096 并行环境在 HBM 与 132 个 SM（CUDA/RT/Tensor Core）上的协同账本",
     "figure": "20-8",
@@ -124,7 +130,7 @@
     "section": "20.3.2",
     "caption": "4,096 个并行仿真环境中稀疏多点碰撞导致的 SIMT Warp 分支发散与流式紧缩重排序",
     "source_refs": [
-      "manuscripts/ch19/figure-data.json"
+      "manuscripts/ch20/figure-data.json"
     ],
     "TeachingRole": "展示按活跃接触对流式紧缩（Stream Compaction）如何解决 GPU 物理求解分支发散",
     "figure": "20-9",
@@ -138,7 +144,7 @@
     "section": "20.3.1",
     "caption": "多环境相机画布拼接渲染（Tiled Rendering）直接映射为 PyTorch 张量避免逐环境小 Kernel 启动",
     "source_refs": [
-      "manuscripts/ch19/figure-data.json"
+      "manuscripts/ch20/figure-data.json"
     ],
     "TeachingRole": "通过单次大画布光追与 DLPack 零拷贝映射消除 8,192 次微调用开销",
     "figure": "20-10",
@@ -152,7 +158,7 @@
     "section": "20.4.1",
     "caption": "多目相机曝光、激光雷达扫描、IMU 与关节力矩传感器的微秒级硬件 PTP 时间戳对齐",
     "source_refs": [
-      "manuscripts/ch19/figure-data.json"
+      "manuscripts/ch20/figure-data.json"
     ],
     "TeachingRole": "对比软件接收时间戳抖动与硬件曝光触发 + SE(3) 插值对齐的精度差异",
     "figure": "20-11",
@@ -166,8 +172,8 @@
     "section": "20.4.2",
     "caption": "真机影子模式（Shadow Mode）：利用策略动作分歧度触发 0.5% 难例切片回传（省带宽 200 倍，算例 20-5）",
     "source_refs": [
-      "experiments/ch19/19-01/run.py",
-      "manuscripts/ch19/figure-data.json"
+      "experiments/ch20/20-01/run.py",
+      "manuscripts/ch20/figure-data.json"
     ],
     "TeachingRole": "核算机载环形黑匣子与边缘难例触发将单机日传数据从 2.592 TB 压至 12.96 GB",
     "figure": "20-12",
@@ -179,11 +185,11 @@
     "file": "ch20-3dgs-neural-reconstruction-sim2real-loop.svg",
     "asset": "ch20/ch20-3dgs-neural-reconstruction-sim2real-loop.svg",
     "section": "20.4.2",
-    "caption": "利用真机难例日志构建 3D 高斯泼溅（3DGS）可微数字孪生场景并用于闭环重仿真的完整流水线",
+    "caption": "利用真机难例日志构建 3D 高斯泼溅（3DGS）可微数字孪生场景并用于交互式重仿真的完整流水线",
     "source_refs": [
-      "manuscripts/ch19/figure-data.json"
+      "manuscripts/ch20/figure-data.json"
     ],
-    "TeachingRole": "结合 3DGS 新视角合成与物理碰撞网格实现照片级反事实闭环重仿真",
+    "TeachingRole": "结合 3DGS 新视角合成与物理碰撞网格实现照片级反事实交互重仿真",
     "figure": "20-13",
     "name": "ch20-3dgs-neural-reconstruction-sim2real-loop"
   },
@@ -192,12 +198,12 @@
     "number": 14,
     "file": "ch20-onboard-vs-mec-edge-offload-safety-fallback.svg",
     "asset": "ch20/ch20-onboard-vs-mec-edge-offload-safety-fallback.svg",
-    "section": "20.2.2",
+    "section": "20.4.3",
     "caption": "机载端侧计算与局域 5G/Wi-Fi 7 边缘卸载的抖动边界及本地控制屏障安全护盾（CBF）",
     "source_refs": [
-      "manuscripts/ch19/figure-data.json"
+      "manuscripts/ch20/figure-data.json"
     ],
-    "TeachingRole": "确立仅卸载慢速语义规划、端侧保留高频闭环与 1,000 Hz 安全护盾的容错边界",
+    "TeachingRole": "确立仅卸载慢速语义规划、端侧保留高频控制环与 1,000 Hz 安全护盾的容错边界",
     "figure": "20-14",
     "name": "ch20-onboard-vs-mec-edge-offload-safety-fallback"
   },
@@ -206,10 +212,10 @@
     "number": 15,
     "file": "ch20-vla-early-exit-and-token-pruning-wcet.svg",
     "asset": "ch20/ch20-vla-early-exit-and-token-pruning-wcet.svg",
-    "section": "20.2.2",
+    "section": "20.4.3",
     "caption": "面向硬实时截止期的多视角视觉词元固定配额剪枝（VLA-Pruner）与层早退机制",
     "source_refs": [
-      "manuscripts/ch19/figure-data.json"
+      "manuscripts/ch20/figure-data.json"
     ],
     "TeachingRole": "说明为何必须采用固定 Top-K 词元配额才能保持静态张量形状与 CUDA Graph 兼容性",
     "figure": "20-15",
@@ -223,9 +229,10 @@
     "section": "20.4.3",
     "caption": "具身智能从万级 GPU 物理仿真、双频实时机载推理到车队影子数据飞轮的全栈基础设施总图",
     "source_refs": [
-      "experiments/ch19/19-01/run.py"
+      "experiments/ch20/20-01/run.py",
+      "manuscripts/ch20/figure-data.json"
     ],
-    "TeachingRole": "收束第 19 章硬实时控制、GPU 原生仿真与 Sim-to-Real 数据闭环的工程总账本",
+    "TeachingRole": "收束第 20 章硬实时控制、GPU 原生仿真与 Sim-to-Real 数据飞轮的工程总账本",
     "figure": "20-16",
     "name": "ch20-embodied-ai-full-stack-infrastructure-map"
   },
@@ -237,8 +244,8 @@
     "section": "20.4.4",
     "caption": "人形机器人三级实时控制架构（2 Hz VLM 语义规划 → 100 Hz Flow-Matching 末端轨迹 → 1,000 Hz WBC/MPC 全身力矩平衡与触觉反射）",
     "source_refs": [
-      "experiments/ch19/19-02/run.py",
-      "manuscripts/ch19/figure-data.json"
+      "experiments/ch20/20-02/run.py",
+      "manuscripts/ch20/figure-data.json"
     ],
     "TeachingRole": "剖析 1,000 Hz 视触觉初生打滑反射与 28-DoF 全身动力学二次规划（WCET = 800 μs）的三级解耦",
     "figure": "20-17",
@@ -252,8 +259,8 @@
     "section": "20.4.4",
     "caption": "时域逐帧离散化动作 Token 在高频采样下的边际信息坍缩 vs. FAST（离散余弦变换 DCT + BPE）频域动作压缩",
     "source_refs": [
-      "experiments/ch19/19-02/run.py",
-      "manuscripts/ch19/figure-data.json"
+      "experiments/ch20/20-02/run.py",
+      "manuscripts/ch20/figure-data.json"
     ],
     "TeachingRole": "证明利用机械轨迹低通特性将 700 个时域动作值压缩为 80 个频域词元（8.75× 压缩）的机理",
     "figure": "20-18",
@@ -265,12 +272,12 @@
     "file": "ch20-3dgs-neural-sensor-closed-loop-re-simulation.svg",
     "asset": "ch20/ch20-3dgs-neural-sensor-closed-loop-re-simulation.svg",
     "section": "20.4.4",
-    "caption": "端到端自动驾驶 3D 高斯泼溅（3DGS）动静态解耦与相机+激光雷达闭环重渲染流水线（算例 20-7）",
+    "caption": "端到端自动驾驶 3D 高斯泼溅（3DGS）动静态解耦与相机+激光雷达重渲染流水线（算例 20-7）",
     "source_refs": [
-      "experiments/ch19/19-03/run.py",
-      "manuscripts/ch19/figure-data.json"
+      "experiments/ch20/20-03/run.py",
+      "manuscripts/ch20/figure-data.json"
     ],
-    "TeachingRole": "剖析动静态高斯图解耦、72% 视锥剔除与批量瓦片光栅+RT Core 激光求交实现 16.80 ms (59.52 FPS) 闭环仿真的架构",
+    "TeachingRole": "剖析动静态高斯图解耦、72% 视锥剔除与批量瓦片光栅+RT Core 激光求交实现 16.80 ms (59.52 FPS) 仿真的架构",
     "figure": "20-19",
     "name": "ch20-3dgs-neural-sensor-closed-loop-re-simulation"
   },
@@ -280,13 +287,64 @@
     "file": "ch20-dual-thor-soc-safety-fallback-watchdog-pipeline.svg",
     "asset": "ch20/ch20-dual-thor-soc-safety-fallback-watchdog-pipeline.svg",
     "section": "20.4.4",
-    "caption": "车载双 Orin/Thor 异构 SoC 的 ASIL-D Simplex 安全降级接管（Safety Fallback Watchdog，12.50 ms 闭环）流水线",
+    "caption": "车载双 Orin/Thor 异构 SoC 的 ASIL-D Simplex 安全降级接管（Safety Fallback Watchdog，12.50 ms 响应）流水线",
     "source_refs": [
-      "experiments/ch19/19-03/run.py",
-      "manuscripts/ch19/figure-data.json"
+      "experiments/ch20/20-03/run.py",
+      "manuscripts/ch20/figure-data.json"
     ],
     "TeachingRole": "对比 12.50 ms 双芯片 ASIL-D 看门狗热备接管（横向偏离 3.02 mm）与 250 ms 软件重启（偏离 351.25 mm）的安全边界",
     "figure": "20-20",
     "name": "ch20-dual-thor-soc-safety-fallback-watchdog-pipeline"
+  },
+  {
+    "figure_id": "图 20-21",
+    "number": 21,
+    "file": "ch20-camera-isp-dmabuf-nvscibuf-zerocopy-vs-ros2-copy-pipeline.svg",
+    "asset": "ch20/ch20-camera-isp-dmabuf-nvscibuf-zerocopy-vs-ros2-copy-pipeline.svg",
+    "section": "20.5.1",
+    "caption": "6 路 1920×1200@60fps NV12 相机在传统 ROS 2 套接字序列化路径（9 次 DRAM 遍历 = 11.20 GB/s，P99 18.60 ms）与 ISP → DMA-BUF / NvSciBuf + Iceoryx 零拷贝硬件同步路径（2.49 GB/s，P99 0.85 ms）的对比（算例 20-8）",
+    "source_refs": [
+      "experiments/ch20/20-04/run.py",
+      "manuscripts/ch20/figure-data.json",
+      "calculations/results/ch20-embodied-wcet-sim.json",
+      "case-studies/embodied-soc-and-world-model.md"
+    ],
+    "TeachingRole": "定量揭示 4 次 CPU 内存拷贝如何吞噬 11.20 GB/s DRAM 带宽并制造 18.60 ms 传感黑洞，以及硬件零拷贝 21.88 倍提速机理",
+    "figure": "20-21",
+    "name": "ch20-camera-isp-dmabuf-nvscibuf-zerocopy-vs-ros2-copy-pipeline"
+  },
+  {
+    "figure_id": "图 20-22",
+    "number": 22,
+    "file": "ch20-heterogeneous-soc-slc-partitioning-and-memory-qos-isolation.svg",
+    "asset": "ch20/ch20-heterogeneous-soc-slc-partitioning-and-memory-qos-isolation.svg",
+    "section": "20.5.1",
+    "caption": "边缘异构 SoC 64 MiB（16 路）片上系统级缓存（SLC）路掩码硬分区与内存控制器 Urgent QoS 带宽配额将 1 kHz 力控 MPC WCET 从 1.82 ms 压至 0.41 ms（算例 20-9）",
+    "source_refs": [
+      "experiments/ch20/20-05/run.py",
+      "manuscripts/ch20/figure-data.json",
+      "calculations/results/ch20-embodied-wcet-sim.json",
+      "case-studies/embodied-soc-and-world-model.md"
+    ],
+    "TeachingRole": "阐明仅靠计算核心隔离仍会因共享 SLC 驱逐与内存总线拥塞突破 1 ms 力控截止期，必须协同配置缓存路分区与带宽限额",
+    "figure": "20-22",
+    "name": "ch20-heterogeneous-soc-slc-partitioning-and-memory-qos-isolation"
+  },
+  {
+    "figure_id": "图 20-23",
+    "number": 23,
+    "file": "ch20-closed-loop-neural-world-model-policy-regression-harness.svg",
+    "asset": "ch20/ch20-closed-loop-neural-world-model-policy-regression-harness.svg",
+    "section": "20.5.2",
+    "caption": "基于 3DGS 与动作条件视频世界模型的 64 卡并行策略回归评测器：拦截开环 MSE 倒挂失稳候选并相对物理真机实现 145.0 倍成本压缩（算例 20-10）",
+    "source_refs": [
+      "experiments/ch20/20-05/run.py",
+      "manuscripts/ch20/figure-data.json",
+      "calculations/results/ch20-embodied-wcet-sim.json",
+      "case-studies/embodied-soc-and-world-model.md"
+    ],
+    "TeachingRole": "破解具身策略开环动作误差与真机安全性倒挂悖论，核算 100,000 条轨迹在 24 分钟内完成上线前安全包络验证的经济账本",
+    "figure": "20-23",
+    "name": "ch20-closed-loop-neural-world-model-policy-regression-harness"
   }
 ]

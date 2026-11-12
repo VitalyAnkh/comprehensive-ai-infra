@@ -11,7 +11,7 @@ SUMMARY_PATH = HERE / "results" / "summary.json"
 
 
 def compute_metrics() -> dict:
-    # 1. Block-causal rolling KV cache pool (Example 17-8 & Exercise 17-15)
+    # 1. Block-causal rolling KV cache pool (Example 19-8 & Exercise 19-15)
     chunk_rgb_frames = 3
     tokens_per_chunk = 3600  # (720/16) * (1280/16) = 45 * 80
     sink_chunks = 1
@@ -43,7 +43,7 @@ def compute_metrics() -> dict:
     )  # 3076.17 GiB
     kv_compression_ratio_10min = round(ten_min_chunks / active_chunks, 2)  # 666.67x
 
-    # 2. 4-step DMD block-causal latency with PAB + TeaCache (Example 17-8 & Exercise 17-16)
+    # 2. 4-step DMD block-causal latency with PAB + TeaCache (Example 19-8 & Exercise 19-16)
     dmd_steps = 4
     spatial_ffn_ms = 18.0
     temporal_causal_ms = 16.0

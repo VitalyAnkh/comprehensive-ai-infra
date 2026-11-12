@@ -8,10 +8,11 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 EXPECTED_PATH = HERE / "expected" / "metrics.json"
 RESULTS_PATH = HERE / "results" / "baseline.json"
+SUMMARY_PATH = HERE / "results" / "summary.json"
 
 
 def compute_metrics() -> dict:
-    # 1. E-P-D-G 4-GPU stage placement & EC cache hit rate shift (Example 17-6 & Exercise 17-11)
+    # 1. E-P-D-G 4-GPU stage placement & EC cache hit rate shift (Example 19-6 & Exercise 19-11)
     mu_img = 12.0
     mu_pd = 4.0
     single_img_opt_pair = [1, 3]
@@ -37,7 +38,7 @@ def compute_metrics() -> dict:
     kv_mib, ec_mib = 56.25, 7.8125
     warm_demotion_saving_pct = round((1.0 - ec_mib / kv_mib) * 100.0, 2)  # 86.11%
 
-    # 2. Transfusion / Show-o hybrid causal-bidirectional mask & D->G handoff (Example 17-7 & Exercise 17-13)
+    # 2. Transfusion / Show-o hybrid causal-bidirectional mask & D->G handoff (Example 19-7 & Exercise 19-13)
     l_t1, l_i1, l_t2 = 1024, 2048, 1024
     l_tot = l_t1 + l_i1 + l_t2  # 4,096
     area_t1 = (l_t1 * l_t1) // 2  # 524,288
@@ -108,7 +109,7 @@ def compute_metrics() -> dict:
 
 def main() -> None:
     metrics = compute_metrics()
-    for p in (EXPECTED_PATH, RESULTS_PATH):
+    for p in (EXPECTED_PATH, RESULTS_PATH, SUMMARY_PATH):
         p.parent.mkdir(parents=True, exist_ok=True)
         p.write_text(json.dumps(metrics, indent=2, ensure_ascii=False) + "\n")
     print(json.dumps(metrics, indent=2, ensure_ascii=False))

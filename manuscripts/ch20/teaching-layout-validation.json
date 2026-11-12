@@ -1,128 +1,140 @@
-{
-  "chapter": "ch20",
-  "figure_count": 20,
-  "all_passed": true,
-  "total_warnings": 0,
-  "figures": [
-    {
-      "figure": "20-1",
-      "file": "ch20-cloud-llm-slo-vs-embodied-hard-realtime.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "20-2",
-      "file": "ch20-vlalagbench-latency-vs-dynamic-grasp-success.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "20-3",
-      "file": "ch20-action-chunking-and-temporal-ensembling.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "20-4",
-      "file": "ch20-system2-vlm-system1-flow-matching-dual-loop.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "20-5",
-      "file": "ch20-jetson-thor-mig-rtos-deterministic-isolation.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "20-6",
-      "file": "ch20-flow-matching-ode-steps-vs-control-jitter.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "20-7",
-      "file": "ch20-cpu-sim-pcie-bottleneck-vs-gpu-native-sim.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "20-8",
-      "file": "ch20-physics-renderer-policy-three-way-sm-budget.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "20-9",
-      "file": "ch20-contact-divergence-warp-inefficiency.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "20-10",
-      "file": "ch20-multi-camera-tiled-rendering-zero-copy-tensor.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "20-11",
-      "file": "ch20-multi-sensor-ptp-hardware-trigger-alignment.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "20-12",
-      "file": "ch20-shadow-mode-disagreement-edge-trigger.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "20-13",
-      "file": "ch20-3dgs-neural-reconstruction-sim2real-loop.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "20-14",
-      "file": "ch20-onboard-vs-mec-edge-offload-safety-fallback.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "20-15",
-      "file": "ch20-vla-early-exit-and-token-pruning-wcet.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "20-16",
-      "file": "ch20-embodied-ai-full-stack-infrastructure-map.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "20-17",
-      "file": "ch20-three-tier-vlm-flow-wbc-humanoid-control.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "20-18",
-      "file": "ch20-fast-dct-frequency-action-tokenization.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "20-19",
-      "file": "ch20-3dgs-neural-sensor-closed-loop-re-simulation.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "20-20",
-      "file": "ch20-dual-thor-soc-safety-fallback-watchdog-pipeline.svg",
-      "passed": true,
-      "warnings": []
-    }
-  ]
-}
+[
+  {
+    "figure": "ch20-cloud-llm-slo-vs-embodied-hard-realtime",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch20-vlalagbench-latency-vs-dynamic-grasp-success",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch20-action-chunking-and-temporal-ensembling",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch20-system2-vlm-system1-flow-matching-dual-loop",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch20-jetson-thor-mig-rtos-deterministic-isolation",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch20-flow-matching-ode-steps-vs-control-jitter",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch20-cpu-sim-pcie-bottleneck-vs-gpu-native-sim",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch20-physics-renderer-policy-three-way-sm-budget",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch20-contact-divergence-warp-inefficiency",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch20-multi-camera-tiled-rendering-zero-copy-tensor",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch20-multi-sensor-ptp-hardware-trigger-alignment",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch20-shadow-mode-disagreement-edge-trigger",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch20-3dgs-neural-reconstruction-sim2real-loop",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch20-onboard-vs-mec-edge-offload-safety-fallback",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch20-vla-early-exit-and-token-pruning-wcet",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch20-embodied-ai-full-stack-infrastructure-map",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch20-three-tier-vlm-flow-wbc-humanoid-control",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch20-fast-dct-frequency-action-tokenization",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch20-3dgs-neural-sensor-closed-loop-re-simulation",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch20-dual-thor-soc-safety-fallback-watchdog-pipeline",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch20-camera-isp-dmabuf-nvscibuf-zerocopy-vs-ros2-copy-pipeline",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch20-heterogeneous-soc-slc-partitioning-and-memory-qos-isolation",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch20-closed-loop-neural-world-model-policy-regression-harness",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  }
+]

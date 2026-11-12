@@ -1,0 +1,30 @@
+{
+  "experiment_id": "19-01",
+  "qwen3_vl_4b_state": {
+    "visual_tokens": 400,
+    "ec_bytes": 8192000,
+    "ec_mib": 7.8125,
+    "kv_bytes_per_token": 147456,
+    "kv_bytes": 58982400,
+    "kv_mib": 56.25,
+    "kv_to_ec_ratio": 7.2
+  },
+  "video_dit_2d_usp": {
+    "t_tokens": 60,
+    "h_tokens": 68,
+    "w_tokens": 120,
+    "n_vid_tokens": 489600,
+    "ulysses_64_per_layer_mib": 239.0625,
+    "ring_64_step_mib": 119.53125,
+    "ring_64_total_mib": 7530.46875,
+    "usp_8x8_inter_node_mib": 836.71875,
+    "inter_node_reduction_ratio": 9.0
+  },
+  "vae_and_teacache": {
+    "untiled_vae_gib": 118.65,
+    "tiled_vae_gib": 0.6257,
+    "t_baseline_s": 63.6,
+    "t_teacache_s": 30.0,
+    "teacache_speedup": 2.12
+  }
+}

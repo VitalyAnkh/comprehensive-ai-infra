@@ -1,11 +1,12 @@
-# Experiment 19-06: Real-Time 3D Avatar Lip-Sync (< 40 ms Jitter Alignment) & Global Edge WebRTC SFU Mesh
+# 实验 19-06：实时 3D 数字人唇形抖动缓冲对齐（< 40 ms）与全球 Anycast 边缘 WebRTC SFU 媒体网格
 
-Reproduces:
-- **Worked Example 22-6**: Real-time 3D Gaussian Avatar lip-sync rendering (`28.50 ms` rendering + `4.00 ms` NVENC = `32.50 ms` vs. `6.50 ms` causal vocoder + `18.00 ms` steady video RTP jitter skew), where dual-stream RTP `abs-capture-time` alignment buffer (`26.00 ms` audio hold delay) reduces steady audio-lead skew from `44.00 ms` to `18.00 ms` (`59.09%` reduction) and P99 skew from `59.00 ms` to `33.00 ms < 40.0 ms`, keeping end-to-end synchronized avatar TTFA at `190.00 ms < 200.0 ms`.
-- **Worked Example 22-7**: Global Anycast edge WebRTC SFU termination (`12.0 ms` metro RTT + `10.0 ms` JB + `4.5 ms` spatial separation & Mimi RVQ encode) + transoceanic private fiber backbone (`68.0 ms` RTT + `4.0 ms` JB), reducing network & jitter path latency from `175.00 ms` to `98.50 ms` (`43.71%` reduction), reducing end-to-end cross-continental TTFA from `304.00 ms` to `181.50 ms` (`1.67x` speedup), and compressing bidirectional backbone bandwidth from `96.00 kbps` Opus to `2.20 kbps` RVQ tokens (`43.64x` compression, `97.71%` saving).
-- **Exercises 22-11 & 22-12**: Holographic avatar lip-sync (`38.0 -> 16.0 ms` steady skew, `50.0 -> 28.0 ms` P99 skew, `182.00 ms` TTFA) and Tokyo-to-Oregon transpacific edge SFU mesh (`319.00 -> 185.50 ms` TTFA, `1.72x` speedup).
+本实验复现第 19 章 19.8.2 节算例 19-14、算例 19-15 与练习 19-27、实验 19-28 的核心定量模型：
 
-## Run & Verify
+- **算例 19-14**：实时 3D 高斯数字人唇形渲染（`28.50 ms` 渲染 + `4.00 ms` NVENC = `32.50 ms` vs. `6.50 ms` 流式因果声码器 + `18.00 ms` 视频 RTP 稳态抖动偏斜），通过双流 RTP `abs-capture-time` 对齐缓冲（`26.00 ms` 音频补偿驻留）将稳态声超前画偏斜从 `44.00 ms` 压降至 `18.00 ms`（缩减 `59.09%`），将 P99 偏斜从 `59.00 ms` 压降至 `33.00 ms < 40.0 ms`，同时保持音画同步首包延迟为 `190.00 ms < 200.0 ms`。
+- **算例 19-15**：全球 Anycast 边缘 WebRTC SFU 就近终结（城域 `12.0 ms` RTT + `10.0 ms` JB + `4.5 ms` 声源分离与 Mimi RVQ 编码）+ 跨洋私有光纤骨干网（`68.0 ms` RTT + `4.0 ms` JB），将网络与抖动路径延迟从 `175.00 ms` 压降至 `98.50 ms`（缩减 `43.71%`），跨洲端到端 TTFA 从 `304.00 ms` 压降至 `181.50 ms`（提速 `1.67x`），并将跨洋双向干线带宽从 `96.00 kbps` Opus 压缩至 `2.20 kbps` RVQ 离散词元流（压缩 `43.64x`，节省 `97.71%` 带宽）。
+- **练习 19-27 & 实验 19-28**：全息数字人唇形同步（稳态偏斜 `38.0 -> 16.0 ms`，P99 偏斜 `50.0 -> 28.0 ms`，首包 `182.00 ms`）与东京—俄勒冈跨太平洋边缘 SFU 网格（TTFA `319.00 -> 185.50 ms`，提速 `1.72x`）。
+
+## 运行与校验
 
 ```bash
 python3 experiments/ch19/19-06/run.py

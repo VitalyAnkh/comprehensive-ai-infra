@@ -1,25 +1,56 @@
 {
-  "chapter": "ch20",
   "sources": [
     {
-      "path": "manuscripts/20-具身智能与物理仿真.md",
-      "sha256": "f622cf659ccd60da72e1d7860db5c97bfbd3656b36d3a9f2a4bb47f9d6c9216b"
+      "path": "manuscripts/ch20/build.py",
+      "sha256": "acc069b0da7d904ee77a6093c8d3eb1682d1ae4929578f72057d960e3c9f7597"
+    },
+    {
+      "path": "manuscripts/ch20/figure-data.json",
+      "sha256": "989feb49269bf633a8f1721654f27286c6fe675c889939ff2b44da872c9e058c"
     },
     {
       "path": "manuscripts/ch20/figure-index.json",
-      "sha256": "a901291684c6808901c7fd66be23ea0ed6f84af4f4a10881312b97edb2922eed"
+      "sha256": "d03e7d1362cce020490549497231738adfe17fc2081da905549cb25cfadf256f"
+    },
+    {
+      "path": "calculations/results/ch20-embodied-wcet-sim.json",
+      "sha256": "29971f2870ca41880161e158e9daf047ff882e45576d23764f8ee4047828cf73"
+    },
+    {
+      "path": "case-studies/embodied-soc-and-world-model.md",
+      "sha256": "acd0a5fd4d4cf98f0d09fe273643c3c4177440b2db90295cd1cb9e6f47e3a756"
+    },
+    {
+      "path": "case-studies/multimodal-stage-placement.md",
+      "sha256": "8a896fc535ce3e49a950d49e7117fed1b9759d65f9d5ea72de1445a6e38b8c94"
+    },
+    {
+      "path": "case-studies/macbook-rtx-pro6000.md",
+      "sha256": "1cb0053b08f6c2521f87f255a48f81b8b40566f0fb11eabfdfd8270161fcb1f2"
     },
     {
       "path": "experiments/ch20/20-01/run.py",
-      "sha256": "319559845df9255e27198b82fcf2ca7cce973c71caceb81dc7bccd7d21118438"
+      "sha256": "4f8bac2d7f597c05f1d7dafae4cf14e9ea7dad8f948e9f7d043a1e60acf9c180"
     },
     {
       "path": "experiments/ch20/20-02/run.py",
-      "sha256": "069aa6127f1f0acd922ebf6d4cd5d5738665dacd84e3319b13c7163be1a656d2"
+      "sha256": "12f1306aaee5272ab64bc7de9602724b96d7759509d190ac2d317ec15b021301"
     },
     {
       "path": "experiments/ch20/20-03/run.py",
-      "sha256": "67d1f80609aef14717bf294a0403088e6c5ab3285bc4d478b5dc8956991a02f9"
+      "sha256": "7aa8d7a33a43f50cbaa0a6fd744ccd3d424a685961ae1dc5b98b2f7091e0e915"
+    },
+    {
+      "path": "experiments/ch20/20-04/run.py",
+      "sha256": "944f0c2409271153fb4938ccf1a54e50080714e039c80ce2117ca148ae9baf6e"
+    },
+    {
+      "path": "experiments/ch20/20-05/run.py",
+      "sha256": "83b131fe742bfd9646973ca6c2d5532ddf295126621e5f3e241b1e0297f95032"
+    },
+    {
+      "path": "manuscripts/20-具身智能与物理仿真.md",
+      "sha256": "c47c61316ab7c1da164ebd6feafd94228f5f4ff6e3b3eb2682b695f3ae4d2276"
     }
   ]
 }

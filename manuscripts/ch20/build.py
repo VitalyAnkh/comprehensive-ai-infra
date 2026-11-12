@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
-"""Build Chapter 19 figures, locked calculations, and offline HTML preview."""
+"""Build all 23 publication-grade figures (420pt) and validation manifests for Chapter 20."""
+from __future__ import annotations
+
 import base64
 import hashlib
 import json
@@ -30,7 +32,7 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(raw).hexdigest()
 
 
-def fig_19_1_cloud_vs_embodied(ex: Exporter):
+def fig_20_1_cloud_vs_embodied(ex: Exporter) -> None:
     fig, ax = canvas(3.75)
     card(ax, 0.02, 0.04, 0.46, 0.92, '云端对话（软实时 SLO）', color='blue', title_size=11)
     box(ax, 0.04, 0.66, 0.42, 0.16, 'TTFT≤500 ms，TPOT≤50 ms\n偶发抖动仅影响打字体验', 'blue', size=11)
@@ -42,36 +44,36 @@ def fig_19_1_cloud_vs_embodied(ex: Exporter):
 
     card(ax, 0.52, 0.04, 0.46, 0.92, '具身控制（硬实时截止期）', color='orange', title_size=11)
     box(ax, 0.54, 0.66, 0.42, 0.16, '控制周期 5–20 ms（100 Hz）\n抖动 < 1 ms，单样本 B=1', 'orange', size=11)
-    box(ax, 0.54, 0.43, 0.42, 0.16, '盲飞位移 Δx = v·Δt（19-1）\n0.5 m/s × 200 ms = 100 mm', 'orange', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '盲飞位移 Δx = v·Δt（20-1）\n0.5 m/s × 200 ms = 100 mm', 'orange', size=11)
     box(ax, 0.54, 0.20, 0.42, 0.16, '插孔公差 5 mm → Δt ≤ 10 ms\n物理碰撞不可回滚', 'purple', size=11)
     arrow(ax, (0.75, 0.66), (0.75, 0.59))
     arrow(ax, (0.75, 0.43), (0.75, 0.36))
     text(ax, 0.75, 0.10, '时间延迟直接化为空间碰撞误差', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
-    ex.save(fig, 'ch19-cloud-llm-slo-vs-embodied-hard-realtime')
+    ex.save(fig, 'ch20-cloud-llm-slo-vs-embodied-hard-realtime')
 
 
-def fig_19_2_vlalagbench(ex: Exporter):
+def fig_20_2_vlalagbench(ex: Exporter) -> None:
     fig, ax = canvas(3.85)
     card(ax, 0.02, 0.50, 0.96, 0.46, 'VLALagBench：推理延迟对静态与动态操作成功率的冲击', color='orange')
     stages = [
         (0.03, 0.58, 0.29, 0.24, 'Δt_inf = 10 ms\n盲飞漂移 5 mm\n动态成功率 88%', 'teal'),
         (0.355, 0.58, 0.29, 0.24, 'Δt_inf = 100 ms\n盲飞漂移 50 mm\n成功率跌至 56%', 'orange'),
-        (0.68, 0.58, 0.29, 0.24, 'Δt_inf = 200 ms\n盲飞漂移 100 mm\n成功率崩至 18%', 'orange'),
+        (0.68, 0.58, 0.29, 0.24, 'Δt_inf = 200 ms\n盲飞漂移 100 mm\n成功率降至 18%', 'orange'),
     ]
     for x, y, w, h, label, role in stages:
         box(ax, x, y, w, h, label, role, size=11)
     arrow(ax, (0.32, 0.70), (0.355, 0.70))
     arrow(ax, (0.645, 0.70), (0.68, 0.70))
 
-    card(ax, 0.02, 0.03, 0.96, 0.42, '为什么静态抓取能容忍延迟而动态追踪在 100 ms 后崩溃？', color='blue')
+    card(ax, 0.02, 0.03, 0.96, 0.42, '为什么静态抓取能容忍延迟而动态追踪在 100 ms 后失效？', color='blue')
     box(ax, 0.04, 0.13, 0.44, 0.20, '静态桌面抓取（v_obj = 0）\n延迟仅拉长任务总耗时\n成功率保持 > 75% 缓降', 'teal', size=11)
     box(ax, 0.52, 0.13, 0.44, 0.20, '动态接触操作（状态过时）\n动作基于 Δt 前旧图像算出\n闭合时目标已移出接触区', 'orange', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
     text(ax, 0.50, 0.06, '观测过时是单环重型 VLA 无法用于高频动态控制的主因', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch19-vlalagbench-latency-vs-dynamic-grasp-success')
+    ex.save(fig, 'ch20-vlalagbench-latency-vs-dynamic-grasp-success')
 
 
-def fig_19_3_action_chunking(ex: Exporter):
+def fig_20_3_action_chunking(ex: Exporter) -> None:
     fig, ax = canvas(3.85)
     card(ax, 0.02, 0.50, 0.96, 0.46, '动作块预测（Action Chunking, H=16）与时间集成平滑', color='teal')
     stages = [
@@ -88,11 +90,11 @@ def fig_19_3_action_chunking(ex: Exporter):
     box(ax, 0.04, 0.13, 0.44, 0.20, 'H 过长（开环窗口过大）\n中途环境突变无法即时修正\n时间集成还会滞后避障指令', 'orange', size=11)
     box(ax, 0.52, 0.13, 0.44, 0.20, '解耦方案：System 2 低频潜特征\n+ System 1 融合实时力觉反馈\n每 10 ms 闭环修正短动作块', 'teal', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '动作块解决高频抖动，但需配合高频本体反馈消除开环盲区', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch19-action-chunking-and-temporal-ensembling')
+    text(ax, 0.50, 0.06, '动作块抑制高频抖动，但需配合高频本体反馈消除开环盲区', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-action-chunking-and-temporal-ensembling')
 
 
-def fig_19_4_dual_loop(ex: Exporter):
+def fig_20_4_dual_loop(ex: Exporter) -> None:
     fig, ax = canvas(3.85)
     card(ax, 0.02, 0.50, 0.96, 0.46, 'System 2（慢思考 VLM）+ System 1（快反射动作头）双频架构', color='blue')
     stages = [
@@ -106,14 +108,14 @@ def fig_19_4_dual_loop(ex: Exporter):
     arrow(ax, (0.645, 0.70), (0.68, 0.70))
 
     card(ax, 0.02, 0.03, 0.96, 0.42, '双系统频率比 50:1（π0 / Helix / GR00T 主流范式）', color='teal')
-    box(ax, 0.04, 0.13, 0.44, 0.20, 'System 2 单次 500 ms 推理内\nSystem 1 读取最新潜特征 z_t\n连续完成 50 次 10 ms 闭环', 'teal', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '6 步欧拉 ODE 积分耗时 4.2 ms\n严格小于 10 ms 硬实时上限\n兼顾语义泛化与柔顺控制', 'blue', size=11)
+    box(ax, 0.04, 0.13, 0.44, 0.20, 'System 2 单次 500 ms 推理内\nSystem 1 读取最新潜特征 z_t\n连续完成 50 次 10 ms 控制步', 'teal', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '6 步欧拉 ODE 积分耗时 4.2 ms\n严格小于 10 ms 硬实时上限\n兼顾语义泛化与柔顺力控', 'blue', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '慢系统提供语义目标，快系统负责高频抗扰与接触闭环', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch19-system2-vlm-system1-flow-matching-dual-loop')
+    text(ax, 0.50, 0.06, '慢系统提供语义目标，快系统负责高频抗扰与接触力控反馈', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-system2-vlm-system1-flow-matching-dual-loop')
 
 
-def fig_19_5_jetson_thor(ex: Exporter):
+def fig_20_5_jetson_thor(ex: Exporter) -> None:
     fig, ax = canvas(3.85)
     card(ax, 0.02, 0.50, 0.96, 0.46, '单颗机载 SoC（Jetson Thor）上的硬件级确定性隔离', color='teal')
     stages = [
@@ -127,18 +129,18 @@ def fig_19_5_jetson_thor(ex: Exporter):
     arrow(ax, (0.645, 0.70), (0.68, 0.70))
 
     card(ax, 0.02, 0.03, 0.96, 0.42, '共置竞争抖动 vs. MIG + PREEMPT_RT 核绑定确定性保障', color='orange')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '无隔离同卡混跑（MPS/共享流）\n视觉矩阵乘挤占 L2 与带宽\nSystem 1 P99.9 飙至 > 35 ms', 'orange', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '硬件 MIG + PREEMPT_RT 绑核\nCUDA Graph 固化动作头算子\nSystem 1 WCET 锁在 ≤ 4.2 ms', 'teal', size=11)
+    box(ax, 0.04, 0.13, 0.44, 0.20, '无隔离同卡混跑（MPS/共享流）\n视觉矩阵乘挤占 L2 与带宽\nSystem 1 P99.9 升至 > 35 ms', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '硬件 MIG + PREEMPT_RT 绑核\nCUDA Graph 固化动作头算子\nSystem 1 WCET 控制在 ≤ 4.2 ms', 'teal', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
     text(ax, 0.50, 0.06, '硬实时控制看最坏执行时间（WCET），必须切断缓存与带宽干扰', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch19-jetson-thor-mig-rtos-deterministic-isolation')
+    ex.save(fig, 'ch20-jetson-thor-mig-rtos-deterministic-isolation')
 
 
-def fig_19_6_flow_matching_ode(ex: Exporter):
+def fig_20_6_flow_matching_ode(ex: Exporter) -> None:
     fig, ax = canvas(3.75)
     card(ax, 0.02, 0.04, 0.46, 0.92, '传统 DDPM 扩散（50 步）', color='orange', title_size=11)
     box(ax, 0.04, 0.66, 0.42, 0.16, '弯曲随机轨迹需 50–100 步\n串行调用动作网络 50 次', 'orange', size=11)
-    box(ax, 0.04, 0.43, 0.42, 0.16, '单次生成耗时 40–120 ms\n无法满足 100 Hz 闭环周期', 'orange', size=11)
+    box(ax, 0.04, 0.43, 0.42, 0.16, '单次生成耗时 40–120 ms\n无法满足 100 Hz 控制周期', 'orange', size=11)
     box(ax, 0.04, 0.20, 0.42, 0.16, '每步注入随机高斯噪声\n引发力矩抖动与机械谐振', 'orange', size=11)
     arrow(ax, (0.25, 0.66), (0.25, 0.59))
     arrow(ax, (0.25, 0.43), (0.25, 0.36))
@@ -151,18 +153,18 @@ def fig_19_6_flow_matching_ode(ex: Exporter):
     arrow(ax, (0.75, 0.66), (0.75, 0.59))
     arrow(ax, (0.75, 0.43), (0.75, 0.36))
     text(ax, 0.75, 0.10, '少步确定性积分契合硬实时控制', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
-    ex.save(fig, 'ch19-flow-matching-ode-steps-vs-control-jitter')
+    ex.save(fig, 'ch20-flow-matching-ode-steps-vs-control-jitter')
 
 
-def fig_19_7_gpu_native_sim(ex: Exporter):
+def fig_20_7_gpu_native_sim(ex: Exporter) -> None:
     fig, ax = canvas(3.75)
     card(ax, 0.02, 0.04, 0.46, 0.92, 'CPU 仿真 + PCIe 往返瓶颈', color='orange', title_size=11)
     box(ax, 0.04, 0.66, 0.42, 0.16, 'CPU 进程池跑物理步进\n受核数限制仅 64–256 环境', 'orange', size=11)
     box(ax, 0.04, 0.43, 0.42, 0.16, '每步跨 PCIe 传图像与状态\n4,096 环境需 43.39 GB/s', 'orange', size=11)
-    box(ax, 0.04, 0.20, 0.42, 0.16, '打满 PCIe 5.0 x16 带宽上限\nGPU 策略 85% 时间空等 I/O', 'orange', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '耗尽 PCIe 5.0 x16 带宽上限\nGPU 策略 85% 时间空等 I/O', 'orange', size=11)
     arrow(ax, (0.25, 0.66), (0.25, 0.59))
     arrow(ax, (0.25, 0.43), (0.25, 0.36))
-    text(ax, 0.25, 0.10, '跨总线搬移锁死大规模仿真吞吐', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+    text(ax, 0.25, 0.10, '跨总线搬移限制大规模仿真吞吐', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
 
     card(ax, 0.52, 0.04, 0.46, 0.92, 'GPU 原生万级仿真（Isaac）', color='teal', title_size=11)
     box(ax, 0.54, 0.66, 0.42, 0.16, '碰撞求解全编译为 GPU 核\n单卡并发 4,096–16,384 环境', 'teal', size=11)
@@ -171,12 +173,12 @@ def fig_19_7_gpu_native_sim(ex: Exporter):
     arrow(ax, (0.75, 0.66), (0.75, 0.59))
     arrow(ax, (0.75, 0.43), (0.75, 0.36))
     text(ax, 0.75, 0.10, '数据零出卡成就万级并发训练', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
-    ex.save(fig, 'ch19-cpu-sim-pcie-bottleneck-vs-gpu-native-sim')
+    ex.save(fig, 'ch20-cpu-sim-pcie-bottleneck-vs-gpu-native-sim')
 
 
-def fig_19_8_three_way_budget(ex: Exporter):
+def fig_20_8_three_way_budget(ex: Exporter) -> None:
     fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '单卡 4,096 环境三合一显存账本（共 25.52 GiB，算例 19-4）', color='blue')
+    card(ax, 0.02, 0.50, 0.96, 0.46, '单卡 4,096 环境三合一显存账本（共 25.52 GiB，算例 20-4）', color='blue')
     stages = [
         (0.03, 0.58, 0.29, 0.24, '物理与接触缓冲\n状态 2,048 MiB\nBVH 资产 4,096 MiB', 'teal'),
         (0.355, 0.58, 0.29, 0.24, '批量多目渲染缓冲\n4,096 × 双目相机\n占 3,600 MiB', 'blue'),
@@ -188,19 +190,19 @@ def fig_19_8_three_way_budget(ex: Exporter):
     arrow(ax, (0.645, 0.70), (0.68, 0.70))
 
     card(ax, 0.02, 0.03, 0.96, 0.42, '单张 H100（132 SM）上的三方计算单元与 SM 分区协同', color='teal')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '异构硬件单元流水交错\n物理吃 FP32 核（44 SM）\n渲染 48 SM + 策略 40 SM', 'teal', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '双缓冲环境批次（2,048×2）\n半数渲染时另半数跑策略推理\nRT 与 Tensor 核双双拉满', 'blue', size=11)
+    box(ax, 0.04, 0.13, 0.44, 0.20, '异构硬件单元流水交错\n物理用 FP32 核（44 SM）\n渲染 48 SM + 策略 40 SM', 'teal', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '双缓冲环境批次（2,048×2）\n半数渲染时另半数跑策略推理\nRT 与 Tensor 核高利用率并发', 'blue', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
     text(ax, 0.50, 0.06, '物理、渲染与策略恰好对应 SIMT、RT Core 与 Tensor Core', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch19-physics-renderer-policy-three-way-sm-budget')
+    ex.save(fig, 'ch20-physics-renderer-policy-three-way-sm-budget')
 
 
-def fig_19_9_contact_divergence(ex: Exporter):
+def fig_20_9_contact_divergence(ex: Exporter) -> None:
     fig, ax = canvas(3.85)
     card(ax, 0.02, 0.50, 0.96, 0.46, '4,096 并行环境中稀疏碰撞引发的 SIMT Warp 分支发散', color='orange')
     stages = [
         (0.03, 0.58, 0.29, 0.24, '按环境静态映射线程\n1 个 Warp（32 线程）\n绑 32 个相邻环境', 'gray'),
-        (0.355, 0.58, 0.29, 0.24, '29 个环境无碰撞\n0 接触点 1 次迭代\n早早完成空转等待', 'teal'),
+        (0.355, 0.58, 0.29, 0.24, '29 个环境无碰撞\n0 接触点 1 次迭代\n提前完成空转等待', 'teal'),
         (0.68, 0.58, 0.29, 0.24, '3 个环境多点碰撞\n32 接触点迭代 20 轮\n拖慢全 Warp 跌 8x', 'orange'),
     ]
     for x, y, w, h, label, role in stages:
@@ -213,10 +215,10 @@ def fig_19_9_contact_divergence(ex: Exporter):
     box(ax, 0.52, 0.13, 0.44, 0.20, '按活跃接触对分配线程束\nSIMT 占用率从 25% 升至 88%\n支撑灵巧手多指接触高速仿真', 'blue', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
     text(ax, 0.50, 0.06, '从“一环境一线程”改为“一活跃接触对一线程”消除分支发散', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch19-contact-divergence-warp-inefficiency')
+    ex.save(fig, 'ch20-contact-divergence-warp-inefficiency')
 
 
-def fig_19_10_tiled_rendering(ex: Exporter):
+def fig_20_10_tiled_rendering(ex: Exporter) -> None:
     fig, ax = canvas(3.85)
     card(ax, 0.02, 0.50, 0.96, 0.46, '多环境相机画布拼接渲染（Tiled Rendering）与零拷贝映射', color='teal')
     stages = [
@@ -234,10 +236,10 @@ def fig_19_10_tiled_rendering(ex: Exporter):
     box(ax, 0.52, 0.13, 0.44, 0.20, '大画布批量光追 + 零拷贝视图\n4,096 双目渲染耗时压至 1.8 ms\n显存减半且零显存间复制', 'teal', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
     text(ax, 0.50, 0.06, '将数千微型相机合批为单次全屏光追是突破万帧每秒的前提', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch19-multi-camera-tiled-rendering-zero-copy-tensor')
+    ex.save(fig, 'ch20-multi-camera-tiled-rendering-zero-copy-tensor')
 
 
-def fig_19_11_ptp_alignment(ex: Exporter):
+def fig_20_11_ptp_alignment(ex: Exporter) -> None:
     fig, ax = canvas(3.85)
     card(ax, 0.02, 0.50, 0.96, 0.46, '机载多传感器硬件脉冲触发与 PTP 微秒级时间同步', color='blue')
     stages = [
@@ -250,17 +252,17 @@ def fig_19_11_ptp_alignment(ex: Exporter):
     arrow(ax, (0.32, 0.70), (0.355, 0.70))
     arrow(ax, (0.645, 0.70), (0.68, 0.70))
 
-    card(ax, 0.02, 0.03, 0.96, 0.42, '为什么软件接收时间戳（ROS arrival time）会毒化模仿学习？', color='orange')
+    card(ax, 0.02, 0.03, 0.96, 0.42, '为什么软件接收时间戳（ROS arrival time）会污染模仿学习？', color='orange')
     box(ax, 0.04, 0.13, 0.44, 0.20, '软件时间戳受内核调度抖动\n图像与关节角偏移 15–40 ms\n模型学到错误的因果滞后映射', 'orange', size=11)
     box(ax, 0.52, 0.13, 0.44, 0.20, '硬件曝光触发 + 环形缓冲对齐\n跨模态时间同步精度 < 100 μs\n精细操作学习成功率升 22%', 'teal', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '时空未对齐的演示数据比噪音更危险，硬件同步是数据第一门禁', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch19-multi-sensor-ptp-hardware-trigger-alignment')
+    text(ax, 0.50, 0.06, '时空未对齐的演示数据比噪声更危险，硬件同步是数据第一门禁', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-multi-sensor-ptp-hardware-trigger-alignment')
 
 
-def fig_19_12_shadow_mode(ex: Exporter):
+def fig_20_12_shadow_mode(ex: Exporter) -> None:
     fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '真机车队影子模式（Shadow Mode）与难例触发（算例 19-5）', color='teal')
+    card(ax, 0.02, 0.50, 0.96, 0.46, '真机车队影子模式（Shadow Mode）与难例触发（算例 20-5）', color='teal')
     stages = [
         (0.03, 0.58, 0.29, 0.24, '机载 60 s 环形黑匣子\n原始速率 180 MB/s\n全量达 2.592 TB/天', 'gray'),
         (0.355, 0.58, 0.29, 0.24, '影子策略并行旁路\n实时算动作分歧 D_t\n或接管/超限触发', 'orange'),
@@ -275,32 +277,32 @@ def fig_19_12_shadow_mode(ex: Exporter):
     box(ax, 0.04, 0.13, 0.44, 0.20, '① 策略分歧与流匹配方差触发\n在役与影子策略预测轨迹偏离\n或动作分布出现双峰高熵', 'blue', size=11)
     box(ax, 0.52, 0.13, 0.44, 0.20, '② 物理反常与人类接管触发\n遥操作紧急接管、力冲击超限\n或世界模型预测画面失配', 'teal', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '丢弃 99.5% 平庸数据、捕获 0.5% 边界难例可百倍降低闭环成本', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch19-shadow-mode-disagreement-edge-trigger')
+    text(ax, 0.50, 0.06, '丢弃 99.5% 常规数据、捕获 0.5% 边界难例可百倍降低回传成本', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-shadow-mode-disagreement-edge-trigger')
 
 
-def fig_19_13_3dgs_sim2real(ex: Exporter):
+def fig_20_13_3dgs_sim2real(ex: Exporter) -> None:
     fig, ax = canvas(3.85)
     card(ax, 0.02, 0.50, 0.96, 0.46, '3D 高斯泼溅（3DGS）神经重建与可微闭环重仿真流水线', color='purple')
     stages = [
         (0.03, 0.58, 0.29, 0.24, '① 难例日志云端重建\nSLAM 位姿精化\n训 3DGS 辐射场', 'blue'),
         (0.355, 0.58, 0.29, 0.24, '② 物理属性对齐导入\n碰撞网格入 Isaac\n前景物体独立受控', 'teal'),
-        (0.68, 0.58, 0.29, 0.24, '③ 闭环新视角合成\n策略偏离原采集路线\n3DGS 渲染对应视角', 'purple'),
+        (0.68, 0.58, 0.29, 0.24, '③ 动态新视角合成\n策略偏离原采集路线\n3DGS 渲染对应视角', 'purple'),
     ]
     for x, y, w, h, label, role in stages:
         box(ax, x, y, w, h, label, role, size=11)
     arrow(ax, (0.32, 0.70), (0.355, 0.70))
     arrow(ax, (0.645, 0.70), (0.68, 0.70))
 
-    card(ax, 0.02, 0.03, 0.96, 0.42, '跨越 Sim-to-Real：开环日志回放 vs. 3DGS + 物理闭环重仿真', color='teal')
+    card(ax, 0.02, 0.03, 0.96, 0.42, '跨越 Sim-to-Real：开环日志回放 vs. 3DGS + 物理交互重仿真', color='teal')
     box(ax, 0.04, 0.13, 0.44, 0.20, '传统开环视频回放（Log Replay）\n新策略动作偏离原采集轨迹时\n相机画面无法改变，分布偏移', 'orange', size=11)
     box(ax, 0.52, 0.13, 0.44, 0.20, '3DGS 渲染 + 刚体接触物理引擎\n兼具真实光照纹理与反事实交互\n1 个难例扩增 1,000 个变体', 'teal', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '3DGS 消除视觉外观差距，GPU 物理引擎保证接触力学闭环', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch19-3dgs-neural-reconstruction-sim2real-loop')
+    text(ax, 0.50, 0.06, '3DGS 消除视觉外观差距，GPU 物理引擎保证接触力学交互真实', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-3dgs-neural-reconstruction-sim2real-loop')
 
 
-def fig_19_14_edge_offload_safety(ex: Exporter):
+def fig_20_14_edge_offload_safety(ex: Exporter) -> None:
     fig, ax = canvas(3.85)
     card(ax, 0.02, 0.50, 0.96, 0.46, '机载端侧计算、边缘卸载（MEC）与本地安全护盾（CBF）', color='blue')
     stages = [
@@ -313,15 +315,15 @@ def fig_19_14_edge_offload_safety(ex: Exporter):
     arrow(ax, (0.32, 0.70), (0.355, 0.70))
     arrow(ax, (0.645, 0.70), (0.68, 0.70))
 
-    card(ax, 0.02, 0.03, 0.96, 0.42, '具身安全铁律：绝不允许无线网络处于高频闭环控制关键路径', color='orange')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '错误设计：边缘直接下发力矩\n无线重传抖动致机械臂剧烈抽搐\n断网瞬间处于无保护盲飞状态', 'orange', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '正确设计：仅卸载慢规划 VLM\n端侧闭环 System 1 + CBF 护盾\n超时未获新目标自动平滑驻停', 'teal', size=11)
+    card(ax, 0.02, 0.03, 0.96, 0.42, '具身安全准则：绝不允许无线网络处于高频力控关键路径', color='orange')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '错误设计：边缘直接下发力矩\n无线重传抖动致机械臂剧烈振荡\n断网瞬间处于无保护盲飞状态', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '正确设计：仅卸载慢规划 VLM\n端侧运行 System 1 + CBF 护盾\n超时未获新目标自动平滑驻停', 'teal', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '无论大模型多强，最后一层必须是确定性物理安全包络', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch19-onboard-vs-mec-edge-offload-safety-fallback')
+    text(ax, 0.50, 0.06, '无论大模型规模多大，最后一层必须是确定性物理安全包络', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-onboard-vs-mec-edge-offload-safety-fallback')
 
 
-def fig_19_15_vla_token_pruning(ex: Exporter):
+def fig_20_15_vla_token_pruning(ex: Exporter) -> None:
     fig, ax = canvas(3.85)
     card(ax, 0.02, 0.50, 0.96, 0.46, '面向硬实时截止期的视觉词元剪枝（VLA-Pruner）与早退', color='teal')
     stages = [
@@ -339,14 +341,14 @@ def fig_19_15_vla_token_pruning(ex: Exporter):
     box(ax, 0.52, 0.13, 0.44, 0.20, '静态形状兼容 CUDA Graph\n视觉 Prefill 从 145 压至 38 ms\n抖动 < 0.3 ms，成功率无损', 'blue', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
     text(ax, 0.50, 0.06, '用固定配额 Top-K 剪枝替代动态阈值，兼得加速与静态图确定性', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch19-vla-early-exit-and-token-pruning-wcet')
+    ex.save(fig, 'ch20-vla-early-exit-and-token-pruning-wcet')
 
 
-def fig_19_16_full_stack_map(ex: Exporter):
+def fig_20_16_full_stack_map(ex: Exporter) -> None:
     fig, ax = canvas(3.85)
     card(ax, 0.02, 0.50, 0.96, 0.46, '具身智能（VLA）全栈底座：万级仿真、机载硬实时与影子飞轮', color='blue')
     stages = [
-        (0.03, 0.58, 0.29, 0.24, '云端万级 GPU 仿真\n4,096 环境零拷贝\n25.52 GiB（19.3 节）', 'blue'),
+        (0.03, 0.58, 0.29, 0.24, '云端万级 GPU 仿真\n4,096 环境零拷贝\n25.52 GiB（20.3 节）', 'blue'),
         (0.355, 0.58, 0.29, 0.24, '机载双频确定性推理\n2 Hz VLM + 100 Hz 流\nWCET ≤ 4.2 ms', 'teal'),
         (0.68, 0.58, 0.29, 0.24, '车队影子与 3DGS\nPTP + 0.5% 触发\n省带宽 200 倍', 'purple'),
     ]
@@ -355,15 +357,15 @@ def fig_19_16_full_stack_map(ex: Exporter):
     arrow(ax, (0.32, 0.70), (0.355, 0.70))
     arrow(ax, (0.645, 0.70), (0.68, 0.70))
 
-    card(ax, 0.02, 0.03, 0.96, 0.42, '第 19 章三大核心定量结论汇总', color='teal')
+    card(ax, 0.02, 0.03, 0.96, 0.42, '20.1–20.4 节核心定量结论汇总', color='teal')
     box(ax, 0.04, 0.13, 0.44, 0.20, '盲飞位移法则：Δx = v·Δt_inf\n0.5 m/s 下 200 ms 漂移 100 mm\n5 mm 插孔要求周期 ≤ 10 ms', 'orange', size=11)
-    box(ax, 0.52, 0.13, 0.44, 0.20, '仿真与飞轮：破 43.39 GB/s 墙\n单卡 HBM 融合求解光追与训练\n影子触发将 2.59 TB 压至 13 GB', 'teal', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '仿真与飞轮：消解 43.39 GB/s 墙\n单卡 HBM 融合求解光追与训练\n影子触发将 2.59 TB 压至 13 GB', 'teal', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
-    text(ax, 0.50, 0.06, '具身底座的本质是跨越时间确定性（WCET）与空间多样性（Sim2Real）', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch19-embodied-ai-full-stack-infrastructure-map')
+    text(ax, 0.50, 0.06, '具身底座的核心是跨越时间确定性（WCET）与空间多样性（Sim2Real）', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-embodied-ai-full-stack-infrastructure-map')
 
 
-def fig_19_17_three_tier_humanoid_control(ex: Exporter) -> None:
+def fig_20_17_three_tier_humanoid_control(ex: Exporter) -> None:
     fig, ax = canvas(3.85)
     card(ax, 0.02, 0.50, 0.96, 0.46, '人形机器人三级异构频率解耦（2 Hz → 100 Hz → 1,000 Hz）', color='blue')
     tiers = [
@@ -381,13 +383,13 @@ def fig_19_17_three_tier_humanoid_control(ex: Exporter) -> None:
     box(ax, 0.52, 0.13, 0.44, 0.20, '初生打滑抑制（v = 0.12 m/s）\n100 Hz 环滑移 1.80 mm（失稳）\n1,000 Hz 触觉环滑移 0.12 mm', 'purple', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
     text(ax, 0.50, 0.06, '1,000 Hz 视触觉打滑反射与全身动力学平衡运行在实时核紧凑 QP 内', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch19-three-tier-vlm-flow-wbc-humanoid-control')
+    ex.save(fig, 'ch20-three-tier-vlm-flow-wbc-humanoid-control')
 
 
-def fig_19_18_fast_dct_tokenizer(ex: Exporter) -> None:
+def fig_20_18_fast_dct_tokenizer(ex: Exporter) -> None:
     fig, ax = canvas(3.85)
     card(ax, 0.02, 0.50, 0.96, 0.46, '高频动作块（H=50 步 × D_a=14 维 = 700 元素）分词范式对比', color='orange')
-    box(ax, 0.04, 0.58, 0.44, 0.24, '传统时域逐帧分箱（256-Bin）\n50 × 14 = 700 个离散 Token\n相邻帧 Δa≈0 复读，需 2,450 ms', 'orange', size=11)
+    box(ax, 0.04, 0.58, 0.44, 0.24, '传统时域逐帧分箱（256-Bin）\n50 × 14 = 700 个离散 Token\n相邻帧 Δa≈0 冗余，需 2,450 ms', 'orange', size=11)
     box(ax, 0.52, 0.58, 0.44, 0.24, 'FAST 频域动作分词（DCT+BPE）\n前 K=8 低频分量占能 99.47%\n压至 80 Token（8.75× 压缩）', 'teal', size=11)
     arrow(ax, (0.48, 0.70), (0.52, 0.70))
 
@@ -402,31 +404,31 @@ def fig_19_18_fast_dct_tokenizer(ex: Exporter) -> None:
     arrow(ax, (0.32, 0.23), (0.355, 0.23))
     arrow(ax, (0.645, 0.23), (0.68, 0.23))
     text(ax, 0.50, 0.06, '物理机械运动受低通惯性约束：在频域分词可消除 88.57% 的时域冗余', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch19-fast-dct-frequency-action-tokenization')
+    ex.save(fig, 'ch20-fast-dct-frequency-action-tokenization')
 
 
-def fig_19_19_3dgs_closed_loop(ex: Exporter) -> None:
+def fig_20_19_3dgs_closed_loop(ex: Exporter) -> None:
     fig, ax = canvas(3.85)
     card(ax, 0.02, 0.50, 0.96, 0.46, '动静态解耦 3DGS 场景图与全向视锥剔除（留 70 万活跃点）', color='blue')
     stages = [
         (0.03, 0.58, 0.29, 0.24, '① 动静态场景解耦\n静态街道+动态实例\nSE(3) 位姿更新', 'blue'),
         (0.355, 0.58, 0.29, 0.24, '② 视锥+LOD 剔除\n剔除 72% 远场点\n留 70 万活跃高斯', 'teal'),
-        (0.68, 0.58, 0.29, 0.24, '③ 相机+雷达求交\n瓦片光栅+BVH 光追\n零拷贝直通闭环', 'purple'),
+        (0.68, 0.58, 0.29, 0.24, '③ 相机+雷达求交\n瓦片光栅+BVH 光追\n零拷贝直通推理', 'purple'),
     ]
     for x, y, w, h, label, role in stages:
         box(ax, x, y, w, h, label, role, size=11)
     arrow(ax, (0.32, 0.70), (0.355, 0.70))
     arrow(ax, (0.645, 0.70), (0.68, 0.70))
 
-    card(ax, 0.02, 0.03, 0.96, 0.42, '6 路 1080p 环视 + 128 线雷达单步闭环重渲染延迟对比', color='teal')
+    card(ax, 0.02, 0.03, 0.96, 0.42, '6 路 1080p 环视 + 128 线雷达单步仿真重渲染延迟对比', color='teal')
     box(ax, 0.04, 0.13, 0.44, 0.20, '朴素串行渲染（75.00 ms）\n相机 51 ms + 雷达 24 ms\n仅 13.33 FPS（违背 30 Hz）', 'orange', size=11)
     box(ax, 0.52, 0.13, 0.44, 0.20, '批量光栅+光追（16.80 ms）\n相机 11.4 ms + 雷达 5.4 ms\n达 59.52 FPS（提速 4.46×）', 'teal', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
     text(ax, 0.50, 0.06, '单张 GPU 同步合成 6 路环视与 128 线雷达仅需 16.80 ms', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch19-3dgs-neural-sensor-closed-loop-re-simulation')
+    ex.save(fig, 'ch20-3dgs-neural-sensor-closed-loop-re-simulation')
 
 
-def fig_19_20_dual_thor_watchdog(ex: Exporter) -> None:
+def fig_20_20_dual_thor_watchdog(ex: Exporter) -> None:
     fig, ax = canvas(3.85)
     card(ax, 0.02, 0.50, 0.96, 0.46, '车载双 Thor 异构 Simplex 四阶段接管（12.50 ms ≤ 15 ms）', color='orange')
     steps = [
@@ -440,249 +442,379 @@ def fig_19_20_dual_thor_watchdog(ex: Exporter) -> None:
     arrow(ax, (0.645, 0.70), (0.68, 0.70))
 
     card(ax, 0.02, 0.03, 0.96, 0.42, '120 km/h 高速巡航故障失控窗口横向车道偏离对比', color='teal')
-    box(ax, 0.04, 0.13, 0.44, 0.20, '单芯片软件重启（250.0 ms）\n纵向盲奔 8.33 m，违背红线\n失控偏离 Δy = 351.25 mm', 'orange', size=11)
+    box(ax, 0.04, 0.13, 0.44, 0.20, '单芯片软件重启（250.0 ms）\n纵向盲行 8.33 m，超出安全界\n失控偏离 Δy = 351.25 mm', 'orange', size=11)
     box(ax, 0.52, 0.13, 0.44, 0.20, '双 Thor 看门狗（12.50 ms）\n满足 ASIL-D 15.0 ms FTTI\n横向偏离仅 3.02 mm（省116×）', 'teal', size=11)
     arrow(ax, (0.48, 0.23), (0.52, 0.23))
     text(ax, 0.50, 0.06, '端到端 VLA 大模型必须配对独立 ASIL-D 安全岛与 100 Hz MPC 热备', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch19-dual-thor-soc-safety-fallback-watchdog-pipeline')
+    ex.save(fig, 'ch20-dual-thor-soc-safety-fallback-watchdog-pipeline')
+
+
+def fig_20_21_dmabuf_zerocopy_pipeline(ex: Exporter) -> None:
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '传统 ROS 2 套接字序列化路径（9 次 DRAM 遍历 = 11.20 GB/s）', color='orange')
+    stages = [
+        (0.03, 0.58, 0.29, 0.24, '① V4L2→CPU 缓冲\n6×1920×1200 60Hz\nNV12 1.244 GB/s', 'orange'),
+        (0.355, 0.58, 0.29, 0.24, '② DDS 序列化拷贝\nOpenCV 色彩转换\n内核切换与锁抖动', 'purple'),
+        (0.68, 0.58, 0.29, 0.24, '③ HtoD 拷贝入卡\nP99 达 18.60 ms\n抖动达 9.40 ms', 'orange'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.355, 0.70))
+    arrow(ax, (0.645, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, 'DMA-BUF / NvSciBuf + Iceoryx 零拷贝硬件同步路径（算例 20-8）', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, 'CSI/GMSL→ISP 直写统一页\nNvSciSync 信号量直通 GPU\n2 次遍历（2.49 GB/s，省4.5×）', 'teal', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, 'Iceoryx 36 槽共享内存池\n64B 描述符（池 118.65 MiB）\nP99 压至 0.85 ms（抖动0.14ms）', 'blue', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '消除 4 次全帧内存拷贝，传感至 ViT 延迟提速 21.88 倍并根除内核抖动', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-camera-isp-dmabuf-nvscibuf-zerocopy-vs-ros2-copy-pipeline')
+
+
+def fig_20_22_slc_qos_isolation(ex: Exporter) -> None:
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '边缘异构 SoC 64 MiB（16 路组相联）系统级缓存（SLC）硬分区', color='blue')
+    stages = [
+        (0.03, 0.58, 0.29, 0.24, '实时 R52/锁核 CPU\n独占 2 路（8 MiB）\n常驻 3.2MiB MPC', 'teal'),
+        (0.355, 0.58, 0.29, 0.24, 'PVA + System 1\n独占 4 路（16 MiB）\n100 Hz 流匹配确定', 'blue'),
+        (0.68, 0.58, 0.29, 0.24, 'GPU 慢思考 Sys 2\n限制 10 路（40MiB）\n阻断大矩阵驱逐', 'purple'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.355, 0.70))
+    arrow(ax, (0.645, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '内存控制器 Urgent QoS 抢占与非实时带宽配额（算例 20-9）', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '无隔离共享 SLC 与内存总线\n7B VLM 预填充冲刷缓存带宽\n1kHz MPC 升至 1.82 ms（违约）', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, 'SLC 路掩码 + Urgent 抢占\n非实时限速 205.0 GB/s（75%）\nMPC WCET 压至 0.41 ms 达标', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '硬件级 SLC 路掩码与内存控制器带宽限额将 1 kHz 力控 WCET 压缩 4.44 倍', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-heterogeneous-soc-slc-partitioning-and-memory-qos-isolation')
+
+
+def fig_20_23_world_model_regression(ex: Exporter) -> None:
+    fig, ax = canvas(3.85)
+    card(ax, 0.02, 0.50, 0.96, 0.46, '开环离线动作 MSE 倒挂陷阱 vs. 动作条件闭环神经世界模型回归', color='purple')
+    stages = [
+        (0.03, 0.58, 0.29, 0.24, '开环离线评测盲区\n策略B MSE 0.0041\n闭环碰撞达 14.2%', 'orange'),
+        (0.355, 0.58, 0.29, 0.24, '3DGS+动作条件 DiT\n多视角与接触推演\n暴露分布偏移误差', 'blue'),
+        (0.68, 0.58, 0.29, 0.24, 'CBF 安全包络验证\n准入 A（碰撞 1.1%）\n拦截失稳候选策略', 'teal'),
+    ]
+    for x, y, w, h, label, role in stages:
+        box(ax, x, y, w, h, label, role, size=11)
+    arrow(ax, (0.32, 0.70), (0.355, 0.70))
+    arrow(ax, (0.645, 0.70), (0.68, 0.70))
+
+    card(ax, 0.02, 0.03, 0.96, 0.42, '64 卡闭环世界模型集群 vs. 物理真机工位回归账本（算例 20-10）', color='teal')
+    box(ax, 0.04, 0.13, 0.44, 0.20, '物理真机（1,000 场景×100 次）\n受实时比 1× 与人工复位限制\n单轮全量回归成本 $111,360', 'orange', size=11)
+    box(ax, 0.52, 0.13, 0.44, 0.20, '64 卡世界模型（100,000 轨迹）\n24.0 分钟（0.40 h，快 833×）\n算力仅 $768（成本压缩 145×）', 'teal', size=11)
+    arrow(ax, (0.48, 0.23), (0.52, 0.23))
+    text(ax, 0.50, 0.06, '闭环神经世界模型以 145 倍成本压缩消除“开环低误差、真机高碰撞”盲区', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch20-closed-loop-neural-world-model-policy-regression-harness')
 
 
 def build_chapter() -> None:
     ex = Exporter(HERE)
-    fig_19_1_cloud_vs_embodied(ex)
-    fig_19_2_vlalagbench(ex)
-    fig_19_3_action_chunking(ex)
-    fig_19_4_dual_loop(ex)
-    fig_19_5_jetson_thor(ex)
-    fig_19_6_flow_matching_ode(ex)
-    fig_19_7_gpu_native_sim(ex)
-    fig_19_8_three_way_budget(ex)
-    fig_19_9_contact_divergence(ex)
-    fig_19_10_tiled_rendering(ex)
-    fig_19_11_ptp_alignment(ex)
-    fig_19_12_shadow_mode(ex)
-    fig_19_13_3dgs_sim2real(ex)
-    fig_19_14_edge_offload_safety(ex)
-    fig_19_15_vla_token_pruning(ex)
-    fig_19_16_full_stack_map(ex)
-    fig_19_17_three_tier_humanoid_control(ex)
-    fig_19_18_fast_dct_tokenizer(ex)
-    fig_19_19_3dgs_closed_loop(ex)
-    fig_19_20_dual_thor_watchdog(ex)
+    fig_20_1_cloud_vs_embodied(ex)
+    fig_20_2_vlalagbench(ex)
+    fig_20_3_action_chunking(ex)
+    fig_20_4_dual_loop(ex)
+    fig_20_5_jetson_thor(ex)
+    fig_20_6_flow_matching_ode(ex)
+    fig_20_7_gpu_native_sim(ex)
+    fig_20_8_three_way_budget(ex)
+    fig_20_9_contact_divergence(ex)
+    fig_20_10_tiled_rendering(ex)
+    fig_20_11_ptp_alignment(ex)
+    fig_20_12_shadow_mode(ex)
+    fig_20_13_3dgs_sim2real(ex)
+    fig_20_14_edge_offload_safety(ex)
+    fig_20_15_vla_token_pruning(ex)
+    fig_20_16_full_stack_map(ex)
+    fig_20_17_three_tier_humanoid_control(ex)
+    fig_20_18_fast_dct_tokenizer(ex)
+    fig_20_19_3dgs_closed_loop(ex)
+    fig_20_20_dual_thor_watchdog(ex)
+    fig_20_21_dmabuf_zerocopy_pipeline(ex)
+    fig_20_22_slc_qos_isolation(ex)
+    fig_20_23_world_model_regression(ex)
     outputs = ex.finish()
 
     fig_index = [
         {
-            "figure_id": "图 19-1",
+            "figure_id": "图 20-1",
             "number": 1,
-            "file": "ch19-cloud-llm-slo-vs-embodied-hard-realtime.svg",
-            "asset": "ch19/ch19-cloud-llm-slo-vs-embodied-hard-realtime.svg",
-            "section": "19.1.1",
-            "caption": "云端对话软实时 SLO 与物理世界闭环控制硬实时截止期（盲飞位移 Δx = v·Δt_inf，算例 19-1）对比",
-            "source_refs": ["experiments/ch20/20-01/run.py", "manuscripts/ch19/figure-data.json"],
+            "file": "ch20-cloud-llm-slo-vs-embodied-hard-realtime.svg",
+            "asset": "ch20/ch20-cloud-llm-slo-vs-embodied-hard-realtime.svg",
+            "section": "20.1.1",
+            "caption": "云端对话软实时 SLO 与物理世界闭环控制硬实时截止期（盲飞位移 Δx = v·Δt_inf，算例 20-1）对比",
+            "source_refs": ["experiments/ch20/20-01/run.py", "manuscripts/ch20/figure-data.json"],
             "TeachingRole": "建立时间延迟向物理空间碰撞误差转化的第一性原理公式"
         },
         {
-            "figure_id": "图 19-2",
+            "figure_id": "图 20-2",
             "number": 2,
-            "file": "ch19-vlalagbench-latency-vs-dynamic-grasp-success.svg",
-            "asset": "ch19/ch19-vlalagbench-latency-vs-dynamic-grasp-success.svg",
-            "section": "19.1.2",
+            "file": "ch20-vlalagbench-latency-vs-dynamic-grasp-success.svg",
+            "asset": "ch20/ch20-vlalagbench-latency-vs-dynamic-grasp-success.svg",
+            "section": "20.1.2",
             "caption": "VLALagBench 实证规律：静态操作 vs. 动态操作随推理延迟 Δt_inf 增大的成功率退化曲线",
-            "source_refs": ["experiments/ch20/20-01/run.py", "manuscripts/ch19/figure-data.json"],
-            "TeachingRole": "揭示观测过时（Observation Staleness）导致 100 ms 以上动态抓取成功率崩塌的机理"
+            "source_refs": ["experiments/ch20/20-01/run.py", "manuscripts/ch20/figure-data.json"],
+            "TeachingRole": "揭示观测过时（Observation Staleness）导致 100 ms 以上动态抓取成功率退化的机理"
         },
         {
-            "figure_id": "图 19-3",
+            "figure_id": "图 20-3",
             "number": 3,
-            "file": "ch19-action-chunking-and-temporal-ensembling.svg",
-            "asset": "ch19/ch19-action-chunking-and-temporal-ensembling.svg",
-            "section": "19.1.3",
+            "file": "ch20-action-chunking-and-temporal-ensembling.svg",
+            "asset": "ch20/ch20-action-chunking-and-temporal-ensembling.svg",
+            "section": "20.1.3",
             "caption": "动作块预测（Action Chunking H 步）与滑动窗口指数加权时间集成（Temporal Ensembling）时序图",
-            "source_refs": ["manuscripts/ch19/figure-data.json"],
+            "source_refs": ["manuscripts/ch20/figure-data.json"],
             "TeachingRole": "剖析动作块长度在抑制高频抖动与引入开环盲区之间的工程权衡"
         },
         {
-            "figure_id": "图 19-4",
+            "figure_id": "图 20-4",
             "number": 4,
-            "file": "ch19-system2-vlm-system1-flow-matching-dual-loop.svg",
-            "asset": "ch19/ch19-system2-vlm-system1-flow-matching-dual-loop.svg",
-            "section": "19.2.1",
+            "file": "ch20-system2-vlm-system1-flow-matching-dual-loop.svg",
+            "asset": "ch20/ch20-system2-vlm-system1-flow-matching-dual-loop.svg",
+            "section": "20.2.1",
             "caption": "System 2（2 Hz 多模态 VLM 慢思考）+ System 1（100 Hz Flow-Matching 动作头快反射）双频异步架构",
-            "source_refs": ["experiments/ch20/20-01/run.py", "manuscripts/ch19/figure-data.json"],
-            "TeachingRole": "展示 50:1 双频异步协同如何兼顾大模型语义泛化与 10 ms 硬实时闭环控制"
+            "source_refs": [
+                "experiments/ch20/20-01/run.py",
+                "manuscripts/ch20/figure-data.json",
+                "calculations/results/ch20-embodied-wcet-sim.json"
+            ],
+            "TeachingRole": "展示双频异步协同如何兼顾大模型语义泛化与 10 ms 硬实时力控反馈"
         },
         {
-            "figure_id": "图 19-5",
+            "figure_id": "图 20-5",
             "number": 5,
-            "file": "ch19-jetson-thor-mig-rtos-deterministic-isolation.svg",
-            "asset": "ch19/ch19-jetson-thor-mig-rtos-deterministic-isolation.svg",
-            "section": "19.2.2",
+            "file": "ch20-jetson-thor-mig-rtos-deterministic-isolation.svg",
+            "asset": "ch20/ch20-jetson-thor-mig-rtos-deterministic-isolation.svg",
+            "section": "20.2.2",
             "caption": "NVIDIA Jetson Thor / Drive Thor 上利用 GPU MIG 分区与无锁共享内存隔离 System 2 干扰的 WCET 保障",
-            "source_refs": ["experiments/ch20/20-01/run.py"],
-            "TeachingRole": "解析硬件级缓存/带宽隔离与 PREEMPT_RT 核绑定如何锁定 WCET ≤ 4.2 ms"
+            "source_refs": [
+                "experiments/ch20/20-01/run.py",
+                "manuscripts/ch20/figure-data.json",
+                "calculations/results/ch20-embodied-wcet-sim.json"
+            ],
+            "TeachingRole": "解析硬件级缓存/带宽隔离与 PREEMPT_RT 核绑定如何保障 WCET ≤ 4.2 ms"
         },
         {
-            "figure_id": "图 19-6",
+            "figure_id": "图 20-6",
             "number": 6,
-            "file": "ch19-flow-matching-ode-steps-vs-control-jitter.svg",
-            "asset": "ch19/ch19-flow-matching-ode-steps-vs-control-jitter.svg",
-            "section": "19.2.1",
+            "file": "ch20-flow-matching-ode-steps-vs-control-jitter.svg",
+            "asset": "ch20/ch20-flow-matching-ode-steps-vs-control-jitter.svg",
+            "section": "20.2.1",
             "caption": "动作生成头中 DDPM 多步采样 vs. Flow-Matching 少步确定性 ODE 积分的周期稳定性对比",
-            "source_refs": ["experiments/ch20/20-01/run.py"],
+            "source_refs": ["experiments/ch20/20-01/run.py", "manuscripts/ch20/figure-data.json"],
             "TeachingRole": "说明最优传输直线流匹配与静态 CUDA Graph 如何消除扩散采样抖动"
         },
         {
-            "figure_id": "图 19-7",
+            "figure_id": "图 20-7",
             "number": 7,
-            "file": "ch19-cpu-sim-pcie-bottleneck-vs-gpu-native-sim.svg",
-            "asset": "ch19/ch19-cpu-sim-pcie-bottleneck-vs-gpu-native-sim.svg",
-            "section": "19.3.1",
-            "caption": "传统 CPU 物理仿真 + PCIe 往返（43.39 GB/s 瓶颈）vs. GPU 原生万级并行仿真的数据零搬移闭环",
-            "source_refs": ["experiments/ch20/20-01/run.py", "manuscripts/ch19/figure-data.json"],
-            "TeachingRole": "定量证明 4,096 环境跨 PCIe 传输观测必撞带宽墙，必须全驻留 GPU 显存"
+            "file": "ch20-cpu-sim-pcie-bottleneck-vs-gpu-native-sim.svg",
+            "asset": "ch20/ch20-cpu-sim-pcie-bottleneck-vs-gpu-native-sim.svg",
+            "section": "20.3.1",
+            "caption": "传统 CPU 物理仿真 + PCIe 往返（43.39 GB/s 瓶颈）vs. GPU 原生万级并行仿真的数据零搬移架构",
+            "source_refs": [
+                "experiments/ch20/20-01/run.py",
+                "manuscripts/ch20/figure-data.json",
+                "calculations/results/ch20-embodied-wcet-sim.json"
+            ],
+            "TeachingRole": "定量证明 4,096 环境跨 PCIe 传输观测必遇带宽墙，必须全驻留 GPU 显存"
         },
         {
-            "figure_id": "图 19-8",
+            "figure_id": "图 20-8",
             "number": 8,
-            "file": "ch19-physics-renderer-policy-three-way-sm-budget.svg",
-            "asset": "ch19/ch19-physics-renderer-policy-three-way-sm-budget.svg",
-            "section": "19.3.2",
+            "file": "ch20-physics-renderer-policy-three-way-sm-budget.svg",
+            "asset": "ch20/ch20-physics-renderer-policy-three-way-sm-budget.svg",
+            "section": "20.3.2",
             "caption": "单张 GPU 内刚体接触求解器、批量光线追踪渲染器与 VLA 策略网络的三方显存（25.52 GiB）与 SM 分配",
-            "source_refs": ["experiments/ch20/20-01/run.py", "manuscripts/ch19/figure-data.json"],
+            "source_refs": [
+                "experiments/ch20/20-01/run.py",
+                "manuscripts/ch20/figure-data.json",
+                "calculations/results/ch20-embodied-wcet-sim.json"
+            ],
             "TeachingRole": "核算 4,096 并行环境在 HBM 与 132 个 SM（CUDA/RT/Tensor Core）上的协同账本"
         },
         {
-            "figure_id": "图 19-9",
+            "figure_id": "图 20-9",
             "number": 9,
-            "file": "ch19-contact-divergence-warp-inefficiency.svg",
-            "asset": "ch19/ch19-contact-divergence-warp-inefficiency.svg",
-            "section": "19.3.2",
+            "file": "ch20-contact-divergence-warp-inefficiency.svg",
+            "asset": "ch20/ch20-contact-divergence-warp-inefficiency.svg",
+            "section": "20.3.2",
             "caption": "4,096 个并行仿真环境中稀疏多点碰撞导致的 SIMT Warp 分支发散与流式紧缩重排序",
-            "source_refs": ["manuscripts/ch19/figure-data.json"],
+            "source_refs": ["manuscripts/ch20/figure-data.json"],
             "TeachingRole": "展示按活跃接触对流式紧缩（Stream Compaction）如何解决 GPU 物理求解分支发散"
         },
         {
-            "figure_id": "图 19-10",
+            "figure_id": "图 20-10",
             "number": 10,
-            "file": "ch19-multi-camera-tiled-rendering-zero-copy-tensor.svg",
-            "asset": "ch19/ch19-multi-camera-tiled-rendering-zero-copy-tensor.svg",
-            "section": "19.3.1",
+            "file": "ch20-multi-camera-tiled-rendering-zero-copy-tensor.svg",
+            "asset": "ch20/ch20-multi-camera-tiled-rendering-zero-copy-tensor.svg",
+            "section": "20.3.1",
             "caption": "多环境相机画布拼接渲染（Tiled Rendering）直接映射为 PyTorch 张量避免逐环境小 Kernel 启动",
-            "source_refs": ["manuscripts/ch19/figure-data.json"],
+            "source_refs": ["manuscripts/ch20/figure-data.json"],
             "TeachingRole": "通过单次大画布光追与 DLPack 零拷贝映射消除 8,192 次微调用开销"
         },
         {
-            "figure_id": "图 19-11",
+            "figure_id": "图 20-11",
             "number": 11,
-            "file": "ch19-multi-sensor-ptp-hardware-trigger-alignment.svg",
-            "asset": "ch19/ch19-multi-sensor-ptp-hardware-trigger-alignment.svg",
-            "section": "19.4.1",
+            "file": "ch20-multi-sensor-ptp-hardware-trigger-alignment.svg",
+            "asset": "ch20/ch20-multi-sensor-ptp-hardware-trigger-alignment.svg",
+            "section": "20.4.1",
             "caption": "多目相机曝光、激光雷达扫描、IMU 与关节力矩传感器的微秒级硬件 PTP 时间戳对齐",
-            "source_refs": ["manuscripts/ch19/figure-data.json"],
+            "source_refs": ["manuscripts/ch20/figure-data.json"],
             "TeachingRole": "对比软件接收时间戳抖动与硬件曝光触发 + SE(3) 插值对齐的精度差异"
         },
         {
-            "figure_id": "图 19-12",
+            "figure_id": "图 20-12",
             "number": 12,
-            "file": "ch19-shadow-mode-disagreement-edge-trigger.svg",
-            "asset": "ch19/ch19-shadow-mode-disagreement-edge-trigger.svg",
-            "section": "19.4.2",
-            "caption": "真机影子模式（Shadow Mode）：利用策略动作分歧度触发 0.5% 难例切片回传（省带宽 200 倍，算例 19-5）",
-            "source_refs": ["experiments/ch20/20-01/run.py", "manuscripts/ch19/figure-data.json"],
+            "file": "ch20-shadow-mode-disagreement-edge-trigger.svg",
+            "asset": "ch20/ch20-shadow-mode-disagreement-edge-trigger.svg",
+            "section": "20.4.2",
+            "caption": "真机影子模式（Shadow Mode）：利用策略动作分歧度触发 0.5% 难例切片回传（省带宽 200 倍，算例 20-5）",
+            "source_refs": ["experiments/ch20/20-01/run.py", "manuscripts/ch20/figure-data.json"],
             "TeachingRole": "核算机载环形黑匣子与边缘难例触发将单机日传数据从 2.592 TB 压至 12.96 GB"
         },
         {
-            "figure_id": "图 19-13",
+            "figure_id": "图 20-13",
             "number": 13,
-            "file": "ch19-3dgs-neural-reconstruction-sim2real-loop.svg",
-            "asset": "ch19/ch19-3dgs-neural-reconstruction-sim2real-loop.svg",
-            "section": "19.4.2",
-            "caption": "利用真机难例日志构建 3D 高斯泼溅（3DGS）可微数字孪生场景并用于闭环重仿真的完整流水线",
-            "source_refs": ["manuscripts/ch19/figure-data.json"],
-            "TeachingRole": "结合 3DGS 新视角合成与物理碰撞网格实现照片级反事实闭环重仿真"
+            "file": "ch20-3dgs-neural-reconstruction-sim2real-loop.svg",
+            "asset": "ch20/ch20-3dgs-neural-reconstruction-sim2real-loop.svg",
+            "section": "20.4.2",
+            "caption": "利用真机难例日志构建 3D 高斯泼溅（3DGS）可微数字孪生场景并用于交互式重仿真的完整流水线",
+            "source_refs": ["manuscripts/ch20/figure-data.json"],
+            "TeachingRole": "结合 3DGS 新视角合成与物理碰撞网格实现照片级反事实交互重仿真"
         },
         {
-            "figure_id": "图 19-14",
+            "figure_id": "图 20-14",
             "number": 14,
-            "file": "ch19-onboard-vs-mec-edge-offload-safety-fallback.svg",
-            "asset": "ch19/ch19-onboard-vs-mec-edge-offload-safety-fallback.svg",
-            "section": "19.2.2",
+            "file": "ch20-onboard-vs-mec-edge-offload-safety-fallback.svg",
+            "asset": "ch20/ch20-onboard-vs-mec-edge-offload-safety-fallback.svg",
+            "section": "20.4.3",
             "caption": "机载端侧计算与局域 5G/Wi-Fi 7 边缘卸载的抖动边界及本地控制屏障安全护盾（CBF）",
-            "source_refs": ["manuscripts/ch19/figure-data.json"],
-            "TeachingRole": "确立仅卸载慢速语义规划、端侧保留高频闭环与 1,000 Hz 安全护盾的容错边界"
+            "source_refs": ["manuscripts/ch20/figure-data.json"],
+            "TeachingRole": "确立仅卸载慢速语义规划、端侧保留高频控制环与 1,000 Hz 安全护盾的容错边界"
         },
         {
-            "figure_id": "图 19-15",
+            "figure_id": "图 20-15",
             "number": 15,
-            "file": "ch19-vla-early-exit-and-token-pruning-wcet.svg",
-            "asset": "ch19/ch19-vla-early-exit-and-token-pruning-wcet.svg",
-            "section": "19.2.2",
+            "file": "ch20-vla-early-exit-and-token-pruning-wcet.svg",
+            "asset": "ch20/ch20-vla-early-exit-and-token-pruning-wcet.svg",
+            "section": "20.4.3",
             "caption": "面向硬实时截止期的多视角视觉词元固定配额剪枝（VLA-Pruner）与层早退机制",
-            "source_refs": ["manuscripts/ch19/figure-data.json"],
+            "source_refs": ["manuscripts/ch20/figure-data.json"],
             "TeachingRole": "说明为何必须采用固定 Top-K 词元配额才能保持静态张量形状与 CUDA Graph 兼容性"
         },
         {
-            "figure_id": "图 19-16",
+            "figure_id": "图 20-16",
             "number": 16,
-            "file": "ch19-embodied-ai-full-stack-infrastructure-map.svg",
-            "asset": "ch19/ch19-embodied-ai-full-stack-infrastructure-map.svg",
-            "section": "19.4.3",
+            "file": "ch20-embodied-ai-full-stack-infrastructure-map.svg",
+            "asset": "ch20/ch20-embodied-ai-full-stack-infrastructure-map.svg",
+            "section": "20.4.3",
             "caption": "具身智能从万级 GPU 物理仿真、双频实时机载推理到车队影子数据飞轮的全栈基础设施总图",
-            "source_refs": ["experiments/ch20/20-01/run.py"],
-            "TeachingRole": "收束第 19 章硬实时控制、GPU 原生仿真与 Sim-to-Real 数据闭环的工程总账本"
+            "source_refs": ["experiments/ch20/20-01/run.py", "manuscripts/ch20/figure-data.json"],
+            "TeachingRole": "收束第 20 章硬实时控制、GPU 原生仿真与 Sim-to-Real 数据飞轮的工程总账本"
         },
         {
-            "figure_id": "图 19-17",
+            "figure_id": "图 20-17",
             "number": 17,
-            "file": "ch19-three-tier-vlm-flow-wbc-humanoid-control.svg",
-            "asset": "ch19/ch19-three-tier-vlm-flow-wbc-humanoid-control.svg",
-            "section": "19.4.4",
+            "file": "ch20-three-tier-vlm-flow-wbc-humanoid-control.svg",
+            "asset": "ch20/ch20-three-tier-vlm-flow-wbc-humanoid-control.svg",
+            "section": "20.4.4",
             "caption": "人形机器人三级实时控制架构（2 Hz VLM 语义规划 → 100 Hz Flow-Matching 末端轨迹 → 1,000 Hz WBC/MPC 全身力矩平衡与触觉反射）",
-            "source_refs": ["experiments/ch20/20-02/run.py", "manuscripts/ch19/figure-data.json"],
+            "source_refs": ["experiments/ch20/20-02/run.py", "manuscripts/ch20/figure-data.json"],
             "TeachingRole": "剖析 1,000 Hz 视触觉初生打滑反射与 28-DoF 全身动力学二次规划（WCET = 800 μs）的三级解耦"
         },
         {
-            "figure_id": "图 19-18",
+            "figure_id": "图 20-18",
             "number": 18,
-            "file": "ch19-fast-dct-frequency-action-tokenization.svg",
-            "asset": "ch19/ch19-fast-dct-frequency-action-tokenization.svg",
-            "section": "19.4.4",
+            "file": "ch20-fast-dct-frequency-action-tokenization.svg",
+            "asset": "ch20/ch20-fast-dct-frequency-action-tokenization.svg",
+            "section": "20.4.4",
             "caption": "时域逐帧离散化动作 Token 在高频采样下的边际信息坍缩 vs. FAST（离散余弦变换 DCT + BPE）频域动作压缩",
-            "source_refs": ["experiments/ch20/20-02/run.py", "manuscripts/ch19/figure-data.json"],
+            "source_refs": ["experiments/ch20/20-02/run.py", "manuscripts/ch20/figure-data.json"],
             "TeachingRole": "证明利用机械轨迹低通特性将 700 个时域动作值压缩为 80 个频域词元（8.75× 压缩）的机理"
         },
         {
-            "figure_id": "图 19-19",
+            "figure_id": "图 20-19",
             "number": 19,
-            "file": "ch19-3dgs-neural-sensor-closed-loop-re-simulation.svg",
-            "asset": "ch19/ch19-3dgs-neural-sensor-closed-loop-re-simulation.svg",
-            "section": "19.4.4",
-            "caption": "端到端自动驾驶 3D 高斯泼溅（3DGS）动静态解耦与相机+激光雷达闭环重渲染流水线（算例 19-7）",
-            "source_refs": ["experiments/ch20/20-03/run.py", "manuscripts/ch19/figure-data.json"],
-            "TeachingRole": "剖析动静态高斯图解耦、72% 视锥剔除与批量瓦片光栅+RT Core 激光求交实现 16.80 ms (59.52 FPS) 闭环仿真的架构"
+            "file": "ch20-3dgs-neural-sensor-closed-loop-re-simulation.svg",
+            "asset": "ch20/ch20-3dgs-neural-sensor-closed-loop-re-simulation.svg",
+            "section": "20.4.4",
+            "caption": "端到端自动驾驶 3D 高斯泼溅（3DGS）动静态解耦与相机+激光雷达重渲染流水线（算例 20-7）",
+            "source_refs": ["experiments/ch20/20-03/run.py", "manuscripts/ch20/figure-data.json"],
+            "TeachingRole": "剖析动静态高斯图解耦、72% 视锥剔除与批量瓦片光栅+RT Core 激光求交实现 16.80 ms (59.52 FPS) 仿真的架构"
         },
         {
-            "figure_id": "图 19-20",
+            "figure_id": "图 20-20",
             "number": 20,
-            "file": "ch19-dual-thor-soc-safety-fallback-watchdog-pipeline.svg",
-            "asset": "ch19/ch19-dual-thor-soc-safety-fallback-watchdog-pipeline.svg",
-            "section": "19.4.4",
-            "caption": "车载双 Orin/Thor 异构 SoC 的 ASIL-D Simplex 安全降级接管（Safety Fallback Watchdog，12.50 ms 闭环）流水线",
-            "source_refs": ["experiments/ch20/20-03/run.py", "manuscripts/ch19/figure-data.json"],
+            "file": "ch20-dual-thor-soc-safety-fallback-watchdog-pipeline.svg",
+            "asset": "ch20/ch20-dual-thor-soc-safety-fallback-watchdog-pipeline.svg",
+            "section": "20.4.4",
+            "caption": "车载双 Orin/Thor 异构 SoC 的 ASIL-D Simplex 安全降级接管（Safety Fallback Watchdog，12.50 ms 响应）流水线",
+            "source_refs": ["experiments/ch20/20-03/run.py", "manuscripts/ch20/figure-data.json"],
             "TeachingRole": "对比 12.50 ms 双芯片 ASIL-D 看门狗热备接管（横向偏离 3.02 mm）与 250 ms 软件重启（偏离 351.25 mm）的安全边界"
-        }
+        },
+        {
+            "figure_id": "图 20-21",
+            "number": 21,
+            "file": "ch20-camera-isp-dmabuf-nvscibuf-zerocopy-vs-ros2-copy-pipeline.svg",
+            "asset": "ch20/ch20-camera-isp-dmabuf-nvscibuf-zerocopy-vs-ros2-copy-pipeline.svg",
+            "section": "20.5.1",
+            "caption": "6 路 1920×1200@60fps NV12 相机在传统 ROS 2 套接字序列化路径（9 次 DRAM 遍历 = 11.20 GB/s，P99 18.60 ms）与 ISP → DMA-BUF / NvSciBuf + Iceoryx 零拷贝硬件同步路径（2.49 GB/s，P99 0.85 ms）的对比（算例 20-8）",
+            "source_refs": [
+                "experiments/ch20/20-04/run.py",
+                "manuscripts/ch20/figure-data.json",
+                "calculations/results/ch20-embodied-wcet-sim.json",
+                "case-studies/embodied-soc-and-world-model.md"
+            ],
+            "TeachingRole": "定量揭示 4 次 CPU 内存拷贝如何吞噬 11.20 GB/s DRAM 带宽并制造 18.60 ms 传感黑洞，以及硬件零拷贝 21.88 倍提速机理"
+        },
+        {
+            "figure_id": "图 20-22",
+            "number": 22,
+            "file": "ch20-heterogeneous-soc-slc-partitioning-and-memory-qos-isolation.svg",
+            "asset": "ch20/ch20-heterogeneous-soc-slc-partitioning-and-memory-qos-isolation.svg",
+            "section": "20.5.1",
+            "caption": "边缘异构 SoC 64 MiB（16 路）片上系统级缓存（SLC）路掩码硬分区与内存控制器 Urgent QoS 带宽配额将 1 kHz 力控 MPC WCET 从 1.82 ms 压至 0.41 ms（算例 20-9）",
+            "source_refs": [
+                "experiments/ch20/20-05/run.py",
+                "manuscripts/ch20/figure-data.json",
+                "calculations/results/ch20-embodied-wcet-sim.json",
+                "case-studies/embodied-soc-and-world-model.md"
+            ],
+            "TeachingRole": "阐明仅靠计算核心隔离仍会因共享 SLC 驱逐与内存总线拥塞突破 1 ms 力控截止期，必须协同配置缓存路分区与带宽限额"
+        },
+        {
+            "figure_id": "图 20-23",
+            "number": 23,
+            "file": "ch20-closed-loop-neural-world-model-policy-regression-harness.svg",
+            "asset": "ch20/ch20-closed-loop-neural-world-model-policy-regression-harness.svg",
+            "section": "20.5.2",
+            "caption": "基于 3DGS 与动作条件视频世界模型的 64 卡并行策略回归评测器：拦截开环 MSE 倒挂失稳候选并相对物理真机实现 145.0 倍成本压缩（算例 20-10）",
+            "source_refs": [
+                "experiments/ch20/20-05/run.py",
+                "manuscripts/ch20/figure-data.json",
+                "calculations/results/ch20-embodied-wcet-sim.json",
+                "case-studies/embodied-soc-and-world-model.md"
+            ],
+            "TeachingRole": "破解具身策略开环动作误差与真机安全性倒挂悖论，核算 100,000 条轨迹在 24 分钟内完成上线前安全包络验证的经济账本"
+        },
     ]
     for row in fig_index:
-        row['figure'] = f"19-{row['number']}"
+        row['figure'] = f"20-{row['number']}"
         row['name'] = Path(row['file']).stem
     (HERE / 'figure-index.json').write_text(json.dumps(fig_index, ensure_ascii=False, indent=2) + '\n')
 
-    md = HERE.parent / '19-具身智能（VLA）、实时控制与大规模物理仿真底座.md'
+    md = HERE.parent / '20-具身智能与物理仿真.md'
     if md.exists():
-        text_md = md.read_text()
-        display = re.findall(r'\$\$(.+?)\$\$', text_md, re.S)
-        inline = re.findall(r'(?<!\$)\$(?!\$)([^$\n]+?)\$(?!\$)', text_md)
+        text_md = md.read_text(encoding='utf-8')
+        no_code = re.sub(r'^```.*?^```', '', text_md, flags=re.M | re.S)
+        display = re.findall(r'\$\$(.+?)\$\$', no_code, re.S)
+        no_disp = re.sub(r'\$\$.+?\$\$', '', no_code, flags=re.S)
+        no_bt = re.sub(r'`[^`\n]+`', '', no_disp)
+        inline = re.findall(r'(?<!\$)\$(?!\$)([^$\n]+?)\$(?!\$)', no_bt)
         formulas = [f.strip() for f in display + inline]
         katex_js = ROOT / 'manuscripts/ch06/vendor/katex/katex.js'
         js = (
@@ -716,9 +848,9 @@ def build_chapter() -> None:
             b64 = base64.b64encode(p.read_bytes()).decode()
             return f'<figure><img alt="{alt}" src="data:image/png;base64,{b64}"><figcaption>{alt}</figcaption></figure>'
 
-        work = re.sub(r'!\[([^\]]*)\]\((ch19/[^)]+)\)', repl_img, text_md)
+        work = re.sub(r'!\[([^\]]*)\]\((ch20/[^)]+)\)', repl_img, text_md)
         body = markdown.markdown(work, extensions=['tables', 'fenced_code', 'footnotes', 'toc'])
-        html = f'<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>第 19 章：具身智能（VLA）、实时控制与大规模物理仿真底座</title></head><body>{body}</body></html>\n'
+        html = f'<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>第 20 章：具身智能与物理仿真</title></head><body>{body}</body></html>\n'
         out_html = preview_path(md)
         out_html.write_text(html)
 
@@ -726,9 +858,15 @@ def build_chapter() -> None:
         HERE / 'build.py',
         HERE / 'figure-data.json',
         HERE / 'figure-index.json',
+        ROOT / 'calculations/results/ch20-embodied-wcet-sim.json',
+        ROOT / 'case-studies/embodied-soc-and-world-model.md',
+        ROOT / 'case-studies/multimodal-stage-placement.md',
+        ROOT / 'case-studies/macbook-rtx-pro6000.md',
         ROOT / 'experiments/ch20/20-01/run.py',
         ROOT / 'experiments/ch20/20-02/run.py',
         ROOT / 'experiments/ch20/20-03/run.py',
+        ROOT / 'experiments/ch20/20-04/run.py',
+        ROOT / 'experiments/ch20/20-05/run.py',
     ]
     if md.exists():
         sources.append(md)
@@ -755,7 +893,7 @@ def build_chapter() -> None:
         )
         + '\n'
     )
-    print(f'Built {len(outputs)} figure files for Chapter 19; 0 layout warnings.')
+    print(f'Built {len(outputs)} figure files for Chapter 20; 0 layout warnings.')
 
 
 if __name__ == '__main__':

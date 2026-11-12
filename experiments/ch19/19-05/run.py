@@ -11,7 +11,7 @@ RESULTS_PATH = HERE / "results" / "summary.json"
 
 
 def compute_metrics() -> dict:
-    # 1. Barge-in Playback-Cursor Aligned KV Rollback (Ex 22-4)
+    # 1. Barge-in Playback-Cursor Aligned KV Rollback (Example 19-12)
     frame_period_ms = 80.0
     tokens_per_frame = 17  # 8 user audio + 8 assistant audio + 1 inner monologue text
     server_gen_frame = 65
@@ -25,7 +25,7 @@ def compute_metrics() -> dict:
     resume_frame_index = client_playback_frame + 1  # Frame 55
     kv_pointer_rollback_ms = 0.12
 
-    # 2. Live Video (1 FPS, 256 tokens) + Audio (12.5 Hz) Interleaved Chunked Prefill (Ex 22-5)
+    # 2. Live Video (1 FPS, 256 tokens) + Audio (12.5 Hz) Interleaved Chunked Prefill (Example 19-13)
     audio_step_ms = 11.5
     visual_tokens_per_sec = 256
     all_at_once_vis_prefill_ms = 72.0
@@ -38,7 +38,7 @@ def compute_metrics() -> dict:
     interleaved_peak_frame_ms = round(audio_step_ms + interleaved_vis_ms, 2)  # 20.5 ms (<< 80 ms)
     peak_frame_reduction_x = round(naive_peak_frame_ms / interleaved_peak_frame_ms, 2)  # 4.07x
 
-    # 3. 1-Hour Continuous Call Rolling Acoustic & Visual Token Eviction (Ex 22-5)
+    # 3. 1-Hour Continuous Call Rolling Acoustic & Visual Token Eviction (Example 19-13)
     call_duration_sec = 3600
     total_frames = int(call_duration_sec * 12.5)  # 45,000 frames
     full_audio_text_tokens = total_frames * tokens_per_frame  # 765,000 tokens

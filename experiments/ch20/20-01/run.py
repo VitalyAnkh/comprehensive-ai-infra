@@ -20,7 +20,7 @@ def compute_metrics() -> dict:
     blind_drift_cloud_mm = round(velocity_m_s * dt_cloud_ms, 2)  # 180.0 mm
     blind_drift_sys1_mm = round(velocity_m_s * dt_sys1_ms, 2)  # 7.5 mm
     drift_reduction_x = round(blind_drift_cloud_mm / blind_drift_sys1_mm, 2)  # 24.0x
-    # (b) Precision peg-in-hole (v = 0.5 m/s, 200 ms -> 100.0 mm, Ex 19-1)
+    # (b) Precision peg-in-hole (v = 0.5 m/s, 200 ms -> 100.0 mm, Example 20-1)
     blind_drift_05ms_200ms_mm = round(0.5 * 200.0, 2)  # 100.0 mm
 
     # Temporal Ensembling weights w_k = exp(-m * k)
@@ -30,7 +30,7 @@ def compute_metrics() -> dict:
     raw_weights = [math.exp(-decay_m * k) for k in range(horizon_h)]
     weight_sum = sum(raw_weights)
     newest_pred_weight_share = round(raw_weights[0] / weight_sum, 4)  # 0.1192
-    # (b) K=6, m=0.2 (Ex 19-2) -> oldest w_5 / sum = 0.0954, newest w_0 / sum = 0.2594
+    # (b) K=6, m=0.2 (Example 20-2) -> oldest w_5 / sum = 0.0954, newest w_0 / sum = 0.2594
     weights_k6 = [math.exp(-0.2 * k) for k in range(6)]
     sum_k6 = sum(weights_k6)
     oldest_pred_weight_share_k6 = round(weights_k6[5] / sum_k6, 4)  # 0.0954
@@ -68,13 +68,13 @@ def compute_metrics() -> dict:
     )  # 8,448.0 MiB (8.25 GiB)
     total_sim_hbm_gib = round(total_sim_hbm_mib / 1024.0, 2)  # 8.25 GiB
 
-    # Tier B (224x224 stereo packed 176,032 B + 128-dim FP32 state 512 B = 176,544 B/env -> 43.39 GB/s, 25.52 GiB HBM, Ex 19-4)
+    # Tier B (224x224 stereo packed 176,032 B + 128-dim FP32 state 512 B = 176,544 B/env -> 43.39 GB/s, 25.52 GiB HBM, Example 20-4)
     obs_bytes_tier_b = 176032 + 128 * 4  # 176,544 B
     cpu_gpu_pcie_bw_tier_b_gb_s = round(num_envs * sim_step_hz * obs_bytes_tier_b / 1e9, 2)  # 43.39 GB/s
     total_sim_hbm_tier_b_mib = 2048.0 + 4096.0 + 3600.0 + 16384.0  # 26,128.0 MiB
     total_sim_hbm_tier_b_gib = round(total_sim_hbm_tier_b_mib / 1024.0, 2)  # 25.52 GiB
 
-    # 4. Shadow Mode Edge Triage Bandwidth Reduction (Ex 19-5)
+    # 4. Shadow Mode Edge Triage Bandwidth Reduction (Example 20-5)
     raw_mb_per_s = 180.0
     hours_per_day = 4.0
     raw_tb_per_day = round(raw_mb_per_s * hours_per_day * 3600.0 / 1e6, 3)  # 2.592 TB/day

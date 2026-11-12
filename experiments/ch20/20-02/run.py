@@ -36,7 +36,7 @@ def idct_ii_1d(coeffs: list[float]) -> list[float]:
 
 
 def compute_metrics() -> dict:
-    # 1. Three-tier humanoid control hierarchy & 1,000 Hz visuotactile slip reflex (Ex 19-6)
+    # 1. Three-tier humanoid control hierarchy & 1,000 Hz visuotactile slip reflex (Example 20-6)
     tier1_vlm_hz = 2.0
     tier2_flow_hz = 100.0
     tier3_wbc_hz = 1000.0
@@ -57,7 +57,7 @@ def compute_metrics() -> dict:
     slip_disp_1000hz_mm = round(v_slip_m_s * lag_tactile_ms, 2)  # 0.12 mm
     slip_reduction_x = round(slip_disp_100hz_mm / slip_disp_1000hz_mm, 2)  # 15.0x
 
-    # 2. FAST (Frequency-space Action Sequence Tokenization) DCT-II compression (Ex 19-6 & Ex 19-11)
+    # 2. FAST (Frequency-space Action Sequence Tokenization) DCT-II compression (Example 20-6 & Exercise 20-11)
     horizon_h = 50
     action_dims = 14
     naive_tokens = horizon_h * action_dims  # 700 tokens
@@ -98,7 +98,7 @@ def compute_metrics() -> dict:
     energy_retention_pct = round(low_freq_energy / total_energy * 100.0, 2)  # > 99.4%
     recon_rmse_mm = round(math.sqrt(sq_err_sum / (horizon_h * action_dims)), 4)  # < 0.35 mm
 
-    # 3. PTP hardware synchronization vs software arrival timestamp skew & closed-form CBF safety shield (Ex 19-6 & Ex 19-12)
+    # 3. PTP hardware synchronization vs software arrival timestamp skew & closed-form CBF safety shield (Example 20-6 & Exercise 20-12)
     arm_vel_m_s = 0.60
     software_skew_ms = 27.0
     ptp_interp_skew_ms = 0.018  # 18 us < 100 us

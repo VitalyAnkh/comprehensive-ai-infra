@@ -1,0 +1,48 @@
+{
+  "experiment_id": "20-04",
+  "sensor_pipeline_ex20_8": {
+    "num_cameras": 6,
+    "resolution": "1920x1200",
+    "fps": 60,
+    "nv12_bytes_per_frame": 3456000,
+    "raw_camera_ingress_gbps": 1.244,
+    "ros2_dram_traversals": 9,
+    "dmabuf_dram_traversals": 2,
+    "ros2_serialized_dram_gbps": 11.2,
+    "dmabuf_iceoryx_dram_gbps": 2.49,
+    "dram_bandwidth_reduction_x": 4.5,
+    "ros2_stages_ms": {
+      "isp_write_ms": 0.45,
+      "v4l2_mmap_to_userspace_copy_ms": 2.85,
+      "ros2_dds_serialize_loopback_ms": 8.4,
+      "cpu_nv12_to_rgb_convert_ms": 4.3,
+      "cuda_memcpy_htod_sync_ms": 2.6
+    },
+    "dmabuf_stages_ms": {
+      "isp_unified_page_write_ms": 0.45,
+      "nvscisync_hw_fence_signal_ms": 0.05,
+      "iceoryx_64b_descriptor_pub_ms": 0.03,
+      "gpu_vit_fused_nv12_gather_ms": 0.32
+    },
+    "ros2_sensor_to_vit_p99_ms": 18.6,
+    "ros2_sensor_p999_jitter_ms": 9.4,
+    "dmabuf_sensor_to_vit_p99_ms": 0.85,
+    "dmabuf_sensor_p999_jitter_ms": 0.14,
+    "sensor_latency_speedup_x": 21.88,
+    "meets_sub_150us_jitter_sla": true
+  },
+  "exercise_20_15_4k_8cam": {
+    "frame_4k_bytes": 12441600,
+    "raw_4k_ingress_gbps": 2.986,
+    "ros2_4k_dram_gbps": 26.87,
+    "dmabuf_4k_dram_gbps": 5.97,
+    "saved_4k_dram_gbps": 20.9,
+    "saved_blind_drift_mm": 51.35
+  },
+  "exercise_20_16_iceoryx_pool": {
+    "min_slots_per_camera": 6,
+    "total_pool_slots": 36,
+    "total_pool_bytes": 124416000,
+    "total_pool_mib": 118.65
+  }
+}

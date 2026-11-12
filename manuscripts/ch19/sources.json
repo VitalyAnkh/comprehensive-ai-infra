@@ -1,37 +1,60 @@
 {
-  "chapter": "ch19",
   "sources": [
     {
-      "path": "manuscripts/19-多模态生成与实时语音.md",
-      "sha256": "90a913725aab64e747f32291c82f5adeb30c0dad40853a2ea69e4a5def07f8a1"
+      "path": "manuscripts/ch19/build.py",
+      "sha256": "6f5818fc23c89458d0a508e5bbbc1e148f87865049403cf50e8c1880df7cf4b8"
+    },
+    {
+      "path": "manuscripts/ch19/figure-data.json",
+      "sha256": "16d9abc0c2e724cf9ba05f8bf7d50a12bfc3a3c6bf8ca041aaa095187e1d8365"
     },
     {
       "path": "manuscripts/ch19/figure-index.json",
-      "sha256": "b158957d2f2bef6f08bf57cb9e176cc380b0ab3eaa4ffbac161c2a9d6ac7521f"
+      "sha256": "02653bf38ea540f64500bde030ada37b596245ddc49aa85112f284eab358856d"
+    },
+    {
+      "path": "calculations/results/ch19-multimodal-dit-duplex.json",
+      "sha256": "653f2c9dfd401788737e2f90694221131f7f49c1605f19dbda99c0ca1496153f"
+    },
+    {
+      "path": "case-studies/multimodal-stage-placement.md",
+      "sha256": "8a896fc535ce3e49a950d49e7117fed1b9759d65f9d5ea72de1445a6e38b8c94"
+    },
+    {
+      "path": "case-studies/queqiao.md",
+      "sha256": "67c6f999188cb95dd3679a5f84e921e5d82cfff805b490692154dbe606cd9f5c"
+    },
+    {
+      "path": "case-studies/generative-multimodal-models.md",
+      "sha256": "ca5d4122fa7e4b6e0f5e79f440f62a99d208244078c258b234918de43acff004"
     },
     {
       "path": "experiments/ch19/19-01/run.py",
-      "sha256": "4a8f01d8d6da97d1777e61b5c025dd22319975025734d2c63374daff9d0a044f"
+      "sha256": "f082f81301c3316837475f281d90a1d69ece96d26225f9b3213994b1dba2bf1f"
     },
     {
       "path": "experiments/ch19/19-02/run.py",
-      "sha256": "9c78288e0de88125840011cb5852eb232e444d9593994f3597c555767fedae77"
+      "sha256": "6368b333a4afb35239df8b47532e9664ff9729162b5cd4ab556ce587ace504ec"
     },
     {
       "path": "experiments/ch19/19-03/run.py",
-      "sha256": "72932f9d5324ffcb9e90d377ceb0cb9abc6f4541d11c8911dd74e2bb5762266b"
+      "sha256": "3edf3c04085faeddd123590951c967edb212f83c4a02106b71a6b0bd933cffd3"
     },
     {
       "path": "experiments/ch19/19-04/run.py",
-      "sha256": "09ddb11515aca2bdd2caf35e1e129746053c183331f499a0b36c189538ea075c"
+      "sha256": "a2413fb70c0a0a90616998c29cfc03f6f98ac696c91554b3644648a5434c9577"
     },
     {
       "path": "experiments/ch19/19-05/run.py",
-      "sha256": "e9eba3eda2f82339a8aa9b0938332e4374aaebf9890a28ea09500b82bed6e003"
+      "sha256": "a9434d70c69a617c7755594b578893665bc8735fd5d2c057ae10ffe96142c793"
     },
     {
       "path": "experiments/ch19/19-06/run.py",
-      "sha256": "2ee56605c924a3013f4caba7733f7f37a0ea1cef0e3466be2be889f8fab2af0f"
+      "sha256": "bbc959d1f07fc5feb7b0fb0bbea1c3ebacd64620c785189d559d48061bc55499"
+    },
+    {
+      "path": "manuscripts/19-多模态生成与实时语音.md",
+      "sha256": "5eb525ce2af45ba917dff379b21beb34141ed8235ff84e75777ae61014ffb3c7"
     }
   ]
 }

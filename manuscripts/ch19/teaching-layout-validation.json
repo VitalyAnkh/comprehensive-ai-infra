@@ -1,248 +1,242 @@
-{
-  "chapter": "ch19",
-  "figure_count": 40,
-  "all_passed": true,
-  "total_warnings": 0,
-  "figures": [
-    {
-      "figure": "19-1",
-      "file": "ch19-1d-llm-vs-3d-spatiotemporal-dit-tokens.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-2",
-      "file": "ch19-anyres-navit-dynamic-image-tiling.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-3",
-      "file": "ch19-3d-causal-vae-memory-spike-and-tiling.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-4",
-      "file": "ch19-tp-vs-ulysses-vs-ring-attention-comm.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-5",
-      "file": "ch19-2d-usp-hybrid-ulysses-ring-topology.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-6",
-      "file": "ch19-dbsp-dual-balanced-sequence-parallelism.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-7",
-      "file": "ch19-distrifusion-displaced-patch-parallelism.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-8",
-      "file": "ch19-pipefusion-step-patch-2d-pipeline.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-9",
-      "file": "ch19-teacache-timestep-residual-reuse.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-10",
-      "file": "ch19-sageattention3-fp4-quantized-attention.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-11",
-      "file": "ch19-interactive-world-model-rolling-kv-30fps.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-12",
-      "file": "ch19-epdg-four-stage-disaggregated-serving.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-13",
-      "file": "ch19-vit-embedding-cache-vs-llm-kv-cache.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-14",
-      "file": "ch19-audio-video-text-interleaved-batching.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-15",
-      "file": "ch19-multimodal-dataloader-gpu-decode-nvjpeg.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-16",
-      "file": "ch19-dit-cfg-classifier-free-guidance-parallel.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-17",
-      "file": "ch19-video-dit-end-to-end-latency-breakdown.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-18",
-      "file": "ch19-multimodal-world-model-infra-synthesis.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-19",
-      "file": "ch19-transfusion-hybrid-causal-bidirectional-mask.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-20",
-      "file": "ch19-3dgs-scaffold-guided-world-model-dit.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-21",
-      "file": "ch19-causal-streaming-world-model-20fps-kv-rolling.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-22",
-      "file": "ch19-teacache-timestep-embedding-aware-activation-reuse.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-23",
-      "file": "ch19-cascaded-asr-llm-tts-vs-native-full-duplex-s2s.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-24",
-      "file": "ch19-full-duplex-dual-audio-streams-and-inner-monologue.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-25",
-      "file": "ch19-rvq-neural-audio-codec-semantic-acoustic-hierarchy.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-26",
-      "file": "ch19-delayed-codebook-pattern-vs-depth-transformer.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-27",
-      "file": "ch19-temporal-and-depth-transformer-gpu-roofline-trap.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-28",
-      "file": "ch19-webrtc-opus-aec-to-gpu-end-to-end-latency-budget.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-29",
-      "file": "ch19-barge-in-playback-cursor-aligned-kv-rollback.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-30",
-      "file": "ch19-streaming-causal-conv-vocoder-chunk-halo.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-31",
-      "file": "ch19-live-video-1fps-and-audio-12hz-interleaved-pacing.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-32",
-      "file": "ch19-acoustic-token-eviction-and-semantic-anchor-retention.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-33",
-      "file": "ch19-dynamic-batching-under-strict-80ms-isochronous-tick.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-34",
-      "file": "ch19-duplex-turn-taking-backchannel-and-overlap-state-machine.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-35",
-      "file": "ch19-edge-vad-aec-wake-word-and-cloud-duplex-handover.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-36",
-      "file": "ch19-voice-cloning-zero-shot-speaker-embedding-cache.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-37",
-      "file": "ch19-full-duplex-gpu-concurrency-vs-p99-frame-underrun.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-38",
-      "file": "ch19-full-duplex-omni-streaming-infrastructure-synthesis.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-39",
-      "file": "ch19-realtime-avatar-lip-sync-audio-video-jitter-alignment.svg",
-      "passed": true,
-      "warnings": []
-    },
-    {
-      "figure": "19-40",
-      "file": "ch19-global-edge-webrtc-sfu-to-gpu-duplex-mesh.svg",
-      "passed": true,
-      "warnings": []
-    }
-  ]
-}
+[
+  {
+    "figure": "ch19-1d-llm-vs-3d-spatiotemporal-dit-tokens",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-anyres-navit-dynamic-image-tiling",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-3d-causal-vae-memory-spike-and-tiling",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-tp-vs-ulysses-vs-ring-attention-comm",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-2d-usp-hybrid-ulysses-ring-topology",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-dbsp-dual-balanced-sequence-parallelism",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-distrifusion-displaced-patch-parallelism",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-pipefusion-step-patch-2d-pipeline",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-teacache-timestep-residual-reuse",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-sageattention3-fp4-quantized-attention",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-interactive-world-model-rolling-kv-30fps",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-epdg-four-stage-disaggregated-serving",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-vit-embedding-cache-vs-llm-kv-cache",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-audio-video-text-interleaved-batching",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-multimodal-dataloader-gpu-decode-nvjpeg",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-dit-cfg-classifier-free-guidance-parallel",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-video-dit-end-to-end-latency-breakdown",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-multimodal-world-model-infra-synthesis",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-transfusion-hybrid-causal-bidirectional-mask",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-3dgs-scaffold-guided-world-model-dit",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-causal-streaming-world-model-20fps-kv-rolling",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-teacache-timestep-embedding-aware-activation-reuse",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-cascaded-asr-llm-tts-vs-native-full-duplex-s2s",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-full-duplex-dual-audio-streams-and-inner-monologue",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-rvq-neural-audio-codec-semantic-acoustic-hierarchy",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-delayed-codebook-pattern-vs-depth-transformer",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-temporal-and-depth-transformer-gpu-roofline-trap",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-webrtc-opus-aec-to-gpu-end-to-end-latency-budget",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-barge-in-playback-cursor-aligned-kv-rollback",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-streaming-causal-conv-vocoder-chunk-halo",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-live-video-1fps-and-audio-12hz-interleaved-pacing",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-acoustic-token-eviction-and-semantic-anchor-retention",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-dynamic-batching-under-strict-80ms-isochronous-tick",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-duplex-turn-taking-backchannel-and-overlap-state-machine",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-edge-vad-aec-wake-word-and-cloud-duplex-handover",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-voice-cloning-zero-shot-speaker-embedding-cache",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-full-duplex-gpu-concurrency-vs-p99-frame-underrun",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-full-duplex-omni-streaming-infrastructure-synthesis",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-realtime-avatar-lip-sync-audio-video-jitter-alignment",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  },
+  {
+    "figure": "ch19-global-edge-webrtc-sfu-to-gpu-duplex-mesh",
+    "width_pt": 420.0,
+    "min_label_pt": 11.0,
+    "text_extent_warnings": []
+  }
+]
