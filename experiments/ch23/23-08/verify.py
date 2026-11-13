@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify experiment 27-02 results against expected metrics."""
+"""Verify experiment 23-08 results against expected metrics."""
 from __future__ import annotations
 
 import json

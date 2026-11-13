@@ -43,7 +43,21 @@ h2s = re.findall(r'^## (.+)$', s, re.M)
 check('last H2 is 本章小结', len(h2s) >= 5 and h2s[-1].strip() == '本章小结')
 
 exercises = re.findall(r'^(?:>\s*)?\*\*(?:(?:练习|实验|习题|拓展练习|思考题)\s+)?24-(\d+)\b(?!\s*解答)', s, re.M)
-check('sequential exercises 24-1 to 24-20', exercises == [str(i) for i in range(1, 20 + 1)])
+check('sequential exercises 24-1 to 24-22', exercises == [str(i) for i in range(1, 22 + 1)])
+check('no ASCII-digit-prefixed H4 headings', not re.findall(r'^####\s+\d', s, re.M))
+check('links to ch24-ai-factory-capstone.json and all 8 case studies', all(
+    ref in s for ref in [
+        '../calculations/results/ch24-ai-factory-capstone.json',
+        '../case-studies/hundred-megawatt-ai-factory-capstone.md',
+        '../case-studies/kernel-and-fleet-efficiency.md',
+        '../case-studies/profile-and-plan-ranking.md',
+        '../case-studies/expert-dispatch-and-resizing.md',
+        '../case-studies/pd-af-heterogeneous.md',
+        '../case-studies/weight-offload-execution.md',
+        '../case-studies/fusion-legality-and-precision.md',
+        '../case-studies/optimization-evaluation-and-deployment.md',
+    ]
+))
 
 py_blocks = re.findall(r'^```python\b', s, re.M)
 cpp_blocks = re.findall(r'^```cpp\b', s, re.M)
@@ -83,7 +97,7 @@ check('local links exist', not missing)
 
 defs = re.findall(r'^\[\^([^\]]+)\]:', s, re.M)
 refs = re.findall(r'\[\^([^\]]+)\](?!:)', s)
-check('all footnotes used and defined once', set(refs) <= set(defs) and len(defs) == len(set(defs)) and len(defs) == 30)
+check('all footnotes used and defined once', set(refs) <= set(defs) and len(defs) == len(set(defs)) and len(defs) == 32)
 
 for name, key in [('sources.json', 'sources'), ('manifest.json', 'outputs')]:
     data = json.loads((HERE / name).read_text(encoding='utf-8'))[key]

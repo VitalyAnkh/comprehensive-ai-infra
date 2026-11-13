@@ -3,19 +3,47 @@
   "sources": [
     {
       "path": "manuscripts/24-全栈跨层优化与自演进系统.md",
-      "sha256": "69733d4a1616b58884de681d19ba9e230f0603f0d8fd73adb2eccf817f2b5f68"
+      "sha256": "f8b304e13e74a0182380a56a5ac3d7ff918a223c4a9bf80664cde178c3b46a9e"
     },
     {
       "path": "manuscripts/ch24/figure-index.json",
-      "sha256": "c655cb16fcb6856a17a4221a00c66baf0c03edd9c814d1c7b707f35304728b45"
+      "sha256": "f029c2aa3690e71ef3b4c713708eddfc9ca0b632a3931fd01d4e1dc2079a2ccc"
     },
     {
       "path": "manuscripts/ch24/math-validation.json",
-      "sha256": "19ad3be8c0396276efed32a2b36c6eec3499669e2e21bd4cfa5b2d9e4e2a08ca"
+      "sha256": "879382a814ff72db072c03d89504d476973f73b489ede4ca47e81bad238cf570"
     },
     {
       "path": "manuscripts/ch24/teaching-layout-validation.json",
-      "sha256": "b0bf6cf458532bf95b0d9f818854bb628f740551118cd55f1daa6a13eb65e299"
+      "sha256": "7a1e77d00eabfabf067f76247fe0b66192a30e3595a010189036de183071e5e1"
+    },
+    {
+      "path": "calculations/results/ch24-ai-factory-capstone.json",
+      "sha256": "642c42c93fcec0e1015453b2d1df26d70c43bb43e750fcf7f7f10dd7e49a6083"
+    },
+    {
+      "path": "experiments/ch24/24-01/run.py",
+      "sha256": "900f56836fe3c745f4ba462dd5ae3f9a1f16f4b9bb539cb77f487b31de375bec"
+    },
+    {
+      "path": "experiments/ch24/24-02/run.py",
+      "sha256": "e979955f6785a861f21ce9a4a71612ab361cf69df4ab9bfce5c4c0f8e9d4a65e"
+    },
+    {
+      "path": "experiments/ch24/24-03/run.py",
+      "sha256": "7046b00c8c92e3f1f1b13919ffb34491723c11c23058d115277aa245d3664db0"
+    },
+    {
+      "path": "experiments/ch24/24-04/run.py",
+      "sha256": "7eae646bff79ee4482d083643752390e32f5641c1e4731c78714d9852381395b"
+    },
+    {
+      "path": "experiments/ch24/24-05/run.py",
+      "sha256": "68c70b7d89f7bed06ba1f8d949b4d0a2febdaa2e19249e3d753ef0732b88b2e3"
+    },
+    {
+      "path": "experiments/ch24/24-06/run.py",
+      "sha256": "e2401e6fb8ee39c113d1974689f566537a5ce430711be2a77ae394fb1c8290d1"
     }
   ]
 }

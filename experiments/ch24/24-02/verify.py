@@ -23,8 +23,13 @@ def main() -> None:
 
     dp = res["dualpipe"]
     assert dp["pp_stages"] == 16
+    assert dp["microbatches_per_direction"] == 16
     assert dp["bidirectional_microbatches"] == 32
     assert math.isclose(dp["exposed_alltoall_stall_pct"], 0.0, abs_tol=1e-9)
+    assert dp["bubble_slots_1f1b"] == 15
+    assert dp["bubble_slots_dualpipe"] == 7
+    assert math.isclose(dp["bubble_1f1b_pct"], 31.91, rel_tol=1e-4)
+    assert math.isclose(dp["bubble_dualpipe_pct"], 17.95, rel_tol=1e-4)
     print("Experiment 24-02 verified successfully.")
 
 

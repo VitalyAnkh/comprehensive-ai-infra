@@ -3,11 +3,15 @@
   "sources": [
     {
       "path": "manuscripts/23-软硬件协同与新型架构.md",
-      "sha256": "15da4990c4543961ed7ec7f0ebb41c6df882de678ffbacaf379ae5f457a46e98"
+      "sha256": "83064401a5f6132b2454c50ce93ffb84eecb4281b1981b54c3f0dee106c0bbcd"
     },
     {
       "path": "manuscripts/ch23/figure-index.json",
-      "sha256": "bd1ea442f66f92fca5f19cb27cdd77f45bd68e054fda46210c49d5c8797897ec"
+      "sha256": "bb94ace278397971267012ad0b8f49c8cbbf541d32f04b73588699bc3a52cf95"
+    },
+    {
+      "path": "calculations/results/ch24-ai-factory-capstone.json",
+      "sha256": "642c42c93fcec0e1015453b2d1df26d70c43bb43e750fcf7f7f10dd7e49a6083"
     },
     {
       "path": "experiments/ch23/23-01/run.py",
@@ -15,7 +19,7 @@
     },
     {
       "path": "experiments/ch23/23-02/run.py",
-      "sha256": "0ce51191cdece2f804f0d7716e5be40e5259f4bb2dda17210aa782c2dad7c25f"
+      "sha256": "9f607293a4a43e34c8f26b22a04bb130adc4258204cfb832aef65043ceebe6e7"
     },
     {
       "path": "experiments/ch23/23-03/run.py",
@@ -23,15 +27,15 @@
     },
     {
       "path": "experiments/ch23/23-04/run.py",
-      "sha256": "4a1ad10a9955c9e2bef12f114356ad2a266f6b9bae9bc27614da49190eaa4c89"
+      "sha256": "ddb3ee7cddb68c8504dd4fa1b4f38591833057337c42d4eefc9a4805b5cc6cea"
     },
     {
       "path": "experiments/ch23/23-05/run.py",
-      "sha256": "f7d820b60187e7900a8d2c47ea66c802b14f8104ab2f2de8c172c10ecdff6ea6"
+      "sha256": "e53e40d8867d6d0e42072f9a818c73349b001575a7d24c5d4967bd75d275625e"
     },
     {
       "path": "experiments/ch23/23-06/run.py",
-      "sha256": "65ed8d472ed11650a3ad4cc67a4b9aaa3723a8112040963e1c16dab404c6a8e1"
+      "sha256": "74c5358022faa2851597568a1ebaff073f2aeda542c659f9da0b604073705018"
     },
     {
       "path": "experiments/ch23/23-07/run.py",

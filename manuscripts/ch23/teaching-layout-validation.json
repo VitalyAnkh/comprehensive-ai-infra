@@ -1,368 +1,549 @@
 {
   "chapter": "ch23",
   "figure_count": 60,
+  "total_figures": 60,
   "all_passed": true,
   "total_warnings": 0,
   "figures": [
     {
       "figure": "23-1",
       "file": "ch23-codesign-simultaneous-equations.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-2",
       "file": "ch23-v41-dual-track-context-scaling.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-3",
       "file": "ch23-v41-four-stage-attention-pipeline.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-4",
       "file": "ch23-digital-worker-v41-vs-k3-cost.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-5",
       "file": "ch23-opentallas-four-resource-and-wafer-hop.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-6",
       "file": "ch23-five-step-diagnostic-decision-tree.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-7",
       "file": "ch23-dflash-block-diffusion-role-reversal.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-8",
       "file": "ch23-beyond-chinchilla-lifecycle-compute-allocation.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-9",
       "file": "ch23-design-review-3candidate-kv-audit.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-10",
       "file": "ch23-datacenter-vs-consumer-gpu-crossover.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-11",
       "file": "ch23-preregistered-prediction-lifecycle.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-12",
       "file": "ch23-exp13-07-k96-counterexample-and-k192-ratios.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-13",
       "file": "ch23-exp13-07-commit-buffer-idempotence.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-14",
       "file": "ch23-four-double-counting-traps-matrix.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-15",
       "file": "ch23-2023-2026-cost-reduction-telescoping.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-16",
       "file": "ch23-dual-track-book-throughline-summary.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-17",
       "file": "ch23-rubin-v41-codesign-mapping-matrix.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-18",
       "file": "ch23-four-dimensional-codesign-closed-loop.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-19",
       "file": "ch23-chakra-execution-trace-graph-simulation.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-20",
       "file": "ch23-neusight-tile-roofline-calibration.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-21",
       "file": "ch23-farskip-collective-delayed-dependency.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-22",
       "file": "ch23-moe-granularity-vs-network-radix-co-design.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-23",
       "file": "ch23-kv-head-ratio-vs-tensor-parallel-limit.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-24",
       "file": "ch23-codesign-pre-silicon-to-production-loop.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-25",
       "file": "ch23-hardware-aware-hybrid-layer-allocation-pareto.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-26",
       "file": "ch23-sparse-upcycling-and-attention-distillation-pipeline.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-27",
       "file": "ch23-moe-granularity-vs-memory-bandwidth-pareto.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-28",
       "file": "ch23-hardware-aware-neural-architecture-search-loop.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-29",
       "file": "ch23-autoregressive-vs-diffusion-llm-roofline-phase-transition.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-30",
       "file": "ch23-block-diffusion-semi-autoregressive-kv-cache-and-mask.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-31",
       "file": "ch23-dynamic-confidence-threshold-remasking-scheduler.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-32",
       "file": "ch23-dllm-speculative-parallel-verification-hybrid-engine.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-33",
       "file": "ch23-bpe-tokenizer-bottleneck-vs-blt-byte-entropy-patching.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-34",
       "file": "ch23-blt-local-byte-encoder-global-latent-cross-attention.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-35",
       "file": "ch23-blt-ragged-patch-packing-and-load-balancing.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-36",
       "file": "ch23-titans-short-term-attention-and-long-term-neural-memory.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-37",
       "file": "ch23-ttt-token-by-token-vs-chunkwise-dual-form-tensor-core.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-38",
       "file": "ch23-titans-2m-context-constant-memory-vs-kv-cache-growth.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-39",
       "file": "ch23-coconut-continuous-latent-thought-zero-copy-loop.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-40",
       "file": "ch23-coconut-latent-tree-breadth-first-parallel-expansion.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-41",
       "file": "ch23-mixture-of-depths-token-routing-and-warp-divergence.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-42",
       "file": "ch23-stream-compaction-gather-scatter-for-early-exit-layers.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-43",
       "file": "ch23-post-autoregressive-architectures-throughput-latency-pareto.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-44",
       "file": "ch23-next-gen-foundation-model-infrastructure-synthesis.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-45",
       "file": "ch23-sram-wafer-scale-vs-hbm-gpu-memory-wall-comparison.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-46",
       "file": "ch23-cerebras-wse3-wafer-scale-noc-and-weight-streaming.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-47",
       "file": "ch23-groq-lpu-320-chip-deterministic-daisy-chain-pipeline.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-48",
       "file": "ch23-3d-stacked-sram-soic-tsv-thermal-and-bandwidth-model.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-49",
       "file": "ch23-sram-asic-vs-hbm-gpu-tco-crossover-by-batch-size.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-50",
       "file": "ch23-hardware-dynamic-arbitration-vs-cycle-accurate-compiler.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-51",
       "file": "ch23-software-scheduled-tensor-stream-instruction-alignment.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-52",
       "file": "ch23-sub-millisecond-hft-ai-kernel-bypass-nic-to-gpu-p2p.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-53",
       "file": "ch23-cuda-launch-overhead-vs-persistent-polling-megakernel.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-54",
       "file": "ch23-linux-isolcpus-rt-throttling-and-p9999-tail-latency.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-55",
       "file": "ch23-bitnet-b158-ternary-weight-packing-5trits-per-byte.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-56",
       "file": "ch23-fp16-mac-unit-vs-ternary-adder-tree-silicon-area-energy.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-57",
       "file": "ch23-tmac-precomputed-activation-lut-simd-pshufb-kernel.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-58",
       "file": "ch23-bitblas-mixed-precision-w158a8-tensor-core-dequant.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-59",
       "file": "ch23-ultra-low-latency-and-1bit-inference-pareto-frontier.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     },
     {
       "figure": "23-60",
       "file": "ch23-extreme-latency-and-ternary-computing-synthesis.svg",
+      "width_pt": 420.0,
+      "min_label_pt": 11.0,
       "passed": true,
-      "warnings": []
+      "warnings": [],
+      "text_extent_warnings": []
     }
   ]
 }

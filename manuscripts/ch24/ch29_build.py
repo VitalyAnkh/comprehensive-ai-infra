@@ -70,13 +70,11 @@ def draw_dual_band(
             box(ax, x, 0.13, w, 0.20, lbl, role, size=11)
         arrow(ax, (0.48, 0.23), (0.52, 0.23))
 
-    text(ax, 0.50, 0.06, footer, size=11, ha='center', weight='bold', color=COL['ink'])
+    text(ax, 0.50, 0.072, footer, size=11, ha='center', weight='bold', color=COL['ink'])
     ex.save(fig, stem)
 
 
-def build_chapter() -> None:
-    ex = Exporter(HERE)
-
+def build_part1(ex: Exporter) -> None:
     draw_dual_band(
         ex,
         'ch24-deepseek-open-infra-seven-pillar-fullstack-architecture',
@@ -213,10 +211,10 @@ def build_chapter() -> None:
     draw_dual_band(
         ex,
         'ch24-dualpipe-bidirectional-pipeline-schedule-and-20-stage-grid',
-        'DualPipe 双向流水线：PP=16 下双向注入 2M=32 微批掩盖通信',
+        'DualPipe 双向流水线：PP=16 下相向注入 M=32 微批掩盖通信',
         'purple',
         [
-            ('① 两端相向注入流\n正向与反向流交错\n流水气泡减半至 15.8%', 'blue'),
+            ('① 两端相向注入流\n正向与反向流交错\n空泡槽减半至 17.95%', 'blue'),
             ('② 正反微批结对跑\n前向通信配反向计算\n100% 掩盖跨机 EP', 'purple'),
             ('③ 零通信暴露时间\n参数副本换吞吐跃升\n达成极致 MFU 效率', 'teal'),
         ],
@@ -356,30 +354,34 @@ def build_chapter() -> None:
         '传统 PCIe 搬运专家权重（llama.cpp 1.35 tok/s）vs. CPU 原位计算',
         'purple',
         [
-            ('跨 PCIe 搬运专家权重的致命瓶颈：\n每步搬 8 个专家需传数百 MB 权重\nPCIe 4.0 带宽瞬间锁死在 1.35 tok/s', 'orange'),
+            ('跨 PCIe 搬运专家权重的严重瓶颈：\n每步搬 8 个专家需传数百 MB 权重\nPCIe 4.0 带宽受限仅得 1.35 tok/s', 'orange'),
             ('把计算推向权重所在双路 NUMA：\nCPU AMX 就地算完 8 个激活专家\n预填充 286.4 tok/s，解码快 13.8x', 'teal'),
         ],
-        'GPU 算 MLA、双路 CPU AMX 就地算稀疏专家，单卡工作站畅跑满血 671B',
+        'GPU 算 MLA、双路 CPU AMX 就地算稀疏专家，单卡工作站承载满血 671B',
     )
 
     draw_dual_band(
         ex,
         'ch24-deepseek-fullstack-cost-and-efficiency-synthesis',
-        '第 29 章全景：DeepSeek 算子内核、通信流水与存储底座（上）',
+        '第 24 章开源全栈全景：算子内核与通信流水线协同（上）',
         'blue',
         [
-            ('29.1 FlashMLA 与 DeepGEMM：\nH800 跑出 3,000 GB/s 与 580 TF\nJIT 省 56 寄存器达 1,358 TFLOPS', 'blue'),
-            ('29.2 DeepEP 与 DualPipe：\nNormal 153 GB/s / IBGDA 163 us\n双向流水微批交错实现零通信暴露', 'purple'),
+            ('24.1 FlashMLA 与 DeepGEMM：\nH800 跑出 3,000 GB/s 与 580 TF\nJIT 省 56 寄存器达 1,358 TFLOPS', 'blue'),
+            ('24.2 DeepEP 与 DualPipe：\nNormal 153 GB/s / IBGDA 163 us\n双向流水微批交错实现零通信暴露', 'purple'),
         ],
-        '第 29 章全景：去缓存文件系统、P-D 分离集群与异构平民部署（下）',
+        '第 24 章开源全栈全景：去缓存文件系统、KV 池化与异构部署（下）',
         'teal',
         [
-            ('29.3 3FS 与 Smallpond：\n180 节点聚合随机读 6.60 TB/s\n110.5 TiB 排序仅耗时 30 min 14 s', 'blue'),
-            ('29.4 Mooncake 与异构推理：\nRDMA KV 池提 2.1x 有效吞吐\n单卡+双路 AMX 跑出 18.6 tok/s', 'teal'),
+            ('24.3 3FS 与 Smallpond：\n180 节点聚合随机读 6.60 TB/s\n110.5 TiB 排序仅耗时 30 min 14 s', 'blue'),
+            ('24.4 Mooncake 与异构推理：\nRDMA KV 池提 2.1x 有效吞吐\n单卡+双路 AMX 跑出 18.6 tok/s', 'teal'),
         ],
-        '贯通七大开源基础设施引擎，树立软硬协同极致效率的现代 AI 系统标杆',
+        '贯通七大开源基础设施引擎，树立软硬协同高效率的现代 AI 系统标杆',
     )
 
+
+def build_chapter() -> None:
+    ex = Exporter(HERE)
+    build_part1(ex)
     outputs = ex.finish()
     print("Exported", len(outputs), "from b29")
 

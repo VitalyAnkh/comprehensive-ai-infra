@@ -11,7 +11,7 @@ RESULTS_PATH = HERE / "results" / "summary.json"
 
 
 def compute_metrics() -> dict:
-    # 1. Byte Latent Transformer (BLT) Dynamic Entropy Patching (Ex 26-3)
+    # 1. Byte Latent Transformer (BLT) Dynamic Entropy Patching (Ex 23-16)
     vocab_size_v = 256_000
     hidden_dim_d = 4096
     fp16_bytes = 2
@@ -23,7 +23,7 @@ def compute_metrics() -> dict:
     seq_len_reduction_x = round(structured_patch_bytes / base_patch_bytes, 2)  # 2.67x
     e2e_flop_reduction_pct = 52.4
 
-    # 2. Google Titans / TTT-Linear Chunk-wise Dual Form Scan (Ex 26-4)
+    # 2. Google Titans / TTT-Linear Chunk-wise Dual Form Scan (Ex 23-17)
     head_dim = 128
     chunk_size_b = 64
     serial_arith_intensity = 1.5

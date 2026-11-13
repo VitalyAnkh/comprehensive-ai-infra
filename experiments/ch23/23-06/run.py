@@ -11,7 +11,7 @@ RESULTS_PATH = HERE / "results" / "summary.json"
 
 
 def compute_metrics() -> dict:
-    # 1. Coconut Continuous Latent Thought Loop (Ex 26-5)
+    # 1. Coconut Continuous Latent Thought Loop (Ex 23-18)
     discrete_cot_tokens = 300
     compression_ratio_c = 3
     latent_thought_steps = discrete_cot_tokens // compression_ratio_c  # 100 steps
@@ -22,7 +22,7 @@ def compute_metrics() -> dict:
     latency_reduction_pct = round((1.0 - latent_total_ms / discrete_total_ms) * 100.0, 1)  # 69.2%
     coconut_speedup_x = round(discrete_total_ms / latent_total_ms, 2)  # 3.25x
 
-    # 2. Mixture-of-Depths (MoD) Warp Divergence vs Stream Compaction (Ex 26-6)
+    # 2. Mixture-of-Depths (MoD) Warp Divergence vs Stream Compaction (Ex 23-19)
     keep_ratio_rho = 0.25
     warp_size = 32
     uncompacted_warp_eff_pct = 58.1

@@ -2,392 +2,400 @@
   "chapter": 24,
   "outputs": [
     {
-      "path": "manuscripts/ch24/ch24-deepseek-open-infra-seven-pillar-fullstack-architecture.svg",
-      "sha256": "8823dadf1ecd3627ceed73129bb57ec01f6eb5b046c0a37ae5e4c0f71693c0d3"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-deepseek-open-infra-seven-pillar-fullstack-architecture.png",
-      "sha256": "4db06334e2e8297231cfb0bd969dcb684f1d043107f07c5343f384fb866d6a9a"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-deepseek-open-infra-seven-pillar-fullstack-architecture.pdf",
-      "sha256": "11fd8ae3df7cf56e0f59f58c65afc1df3309437b728e738ff7ea8d48467182fa"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-flashmla-512-plus-64-pingpong-warpgroup-pipeline.svg",
-      "sha256": "365de660663c64bbe5d1430ec2a89503a73f0655c71b23dd2ac62e0106ba48f0"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-flashmla-512-plus-64-pingpong-warpgroup-pipeline.png",
-      "sha256": "d19e6bdabbcc5ada0c393ef3b895f59cfe774a6e6e4d181e8113312abe0573ae"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-flashmla-512-plus-64-pingpong-warpgroup-pipeline.pdf",
-      "sha256": "a6f4b62e380c021feb47b787d8f265b251bfe13aa3f6288082b2009f98f48b77"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-flashmla-variable-length-split-kv-load-balancer.svg",
-      "sha256": "ea5658c231e44d52ffc3db59fc3613936c92ea6c68bf5db9a643d81a974a43f1"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-flashmla-variable-length-split-kv-load-balancer.png",
-      "sha256": "bce723b9963e77d494a7f6525645a342b03b8598686945c43af7d4d26e40c768"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-flashmla-variable-length-split-kv-load-balancer.pdf",
-      "sha256": "dbb663a7c3fada5c2d36d99fffa4dd6b5d23eeebdd72b79f4826b1a745a01209"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-deepgemm-runtime-jit-shape-constant-specialization.svg",
-      "sha256": "c01649703d899bf8cc0433cb0c84e2b8691b61cea26a0fce1c97b6c82ae372db"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-deepgemm-runtime-jit-shape-constant-specialization.png",
-      "sha256": "3daa6f3ebdc6a59c57a7cae2a181823b854d82b3073ce22c8a972757524e3cb3"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-deepgemm-runtime-jit-shape-constant-specialization.pdf",
-      "sha256": "fad6403906c19c5c369f7fac4c043d8ede74f9fe318a8d4de54127c865c40659"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-deepgemm-fp8-1x128-128x128-two-level-ffma-accumulation.svg",
-      "sha256": "f599f34fc46c8ef3eee2ee5effa5c90a6b5dce777bb042d0ddd0f61d4b7de173"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-deepgemm-fp8-1x128-128x128-two-level-ffma-accumulation.png",
-      "sha256": "cf050ec7f80d9a17c3946a51edaf33e2ab1f7120ae31436fb8ba17fb27e5386a"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-deepgemm-fp8-1x128-128x128-two-level-ffma-accumulation.pdf",
-      "sha256": "b6ac768b50983a0477a30c4a253924db0318244e3085325d596a97680866ccdf"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-deepep-normal-mode-nvlink-rdma-hybrid-forwarding.svg",
-      "sha256": "c8beb0cb4cef2a1660b2cd3ab1274b64ae39f269c889ae8549676231671c2849"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-deepep-normal-mode-nvlink-rdma-hybrid-forwarding.png",
-      "sha256": "2db5eafcd016e025f85ff790638f026c31c8c528d83d49dd58004ef7d8d6083e"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-deepep-normal-mode-nvlink-rdma-hybrid-forwarding.pdf",
-      "sha256": "a5221b9cc29cd553b341d9c3634e4eaa8c1412e107b24ef09ee49c454252b94b"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-deepep-low-latency-ibgda-zero-sm-hook-overlap.svg",
-      "sha256": "8b237f634acac09c97c4d5a04b84abf38fabf6a1821839858dbee79338efcc23"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-deepep-low-latency-ibgda-zero-sm-hook-overlap.png",
-      "sha256": "c40211f0f111f954e2fe6653efe2771b6cc2bcd97da910d5012886ca1ccb7857"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-deepep-low-latency-ibgda-zero-sm-hook-overlap.pdf",
-      "sha256": "1ee90451a3e044136fd14d7293cf43221b24c22e414e0067aadadb4bfbee2866"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-dualpipe-bidirectional-pipeline-schedule-and-20-stage-grid.svg",
-      "sha256": "b3f4461f10ebe120ab45eaa7a508b60c5fed89d3bdd4c3ebbbf9d66b72574d88"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-dualpipe-bidirectional-pipeline-schedule-and-20-stage-grid.png",
-      "sha256": "05d7c5f67a4c3c00f4ac27a43a6b330998970bdeb96af52a2010b15b6166ac96"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-dualpipe-bidirectional-pipeline-schedule-and-20-stage-grid.pdf",
-      "sha256": "334a33c6abca41b4566eeb4f8695261cf607336a04d1b8011ff7d5a985694fe3"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-dualpipe-fine-grained-backward-input-weight-split.svg",
-      "sha256": "1463417d3a48aaf36f2840319275a4acee4d7d267350a31ead5b1414f3771670"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-dualpipe-fine-grained-backward-input-weight-split.png",
-      "sha256": "0c95d0041d7e0c52b894bca107801e6cf221df9c31cb61f9f76cacbd46572b01"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-dualpipe-fine-grained-backward-input-weight-split.pdf",
-      "sha256": "92df776738a1007bcd84de716b3f17e08cec02dbdcd990fbea43816e17f5ffd7"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-3fs-craq-chain-replication-and-usrbio-zero-copy-ring.svg",
-      "sha256": "322b5d1011dfc2658dd5c9223af94abd76d8e73e195d4cce69112f923e50de0b"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-3fs-craq-chain-replication-and-usrbio-zero-copy-ring.png",
-      "sha256": "ed3570cf538bf3d7c625e31dd5cee773677d70e743fa16cfaa51cefbc975bb34"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-3fs-craq-chain-replication-and-usrbio-zero-copy-ring.pdf",
-      "sha256": "03472c2beda076549e90fb39f29cec2e96a3937dd5ae8d49db4fad721ac73679"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-3fs-180-node-6600gbs-throughput-and-graysort-pipeline.svg",
-      "sha256": "2382a7530c3c60f6b6f4e9b0719dbfda663e6594855dce81c597e315ff4aa63f"
+      "path": "manuscripts/ch24/ch24-3fs-180-node-6600gbs-throughput-and-graysort-pipeline.pdf",
+      "sha256": "d9e90fc70b91659ebe96830f20da7c67e2e9cf697156feab4a2b660c82c44901"
     },
     {
       "path": "manuscripts/ch24/ch24-3fs-180-node-6600gbs-throughput-and-graysort-pipeline.png",
-      "sha256": "b792e9b4f0a30ae237c0d5825c84b77821a4137b0b7499b8b0aa7168d651963c"
+      "sha256": "4c2caf2ba7fdc7c59b88fb04dcb03c5bb1bbfb559f0fa82052fa4a453fe5da8d"
     },
     {
-      "path": "manuscripts/ch24/ch24-3fs-180-node-6600gbs-throughput-and-graysort-pipeline.pdf",
-      "sha256": "e9589e7bb92918ac237058761328c1629ec79c7e7975eec3d2766646669a0f0b"
+      "path": "manuscripts/ch24/ch24-3fs-180-node-6600gbs-throughput-and-graysort-pipeline.svg",
+      "sha256": "403f76dcdb1964d8de22c650c8a246c3c52f3d1a63c39f09f77484ab417cd303"
     },
     {
-      "path": "manuscripts/ch24/ch24-smallpond-duckdb-on-3FS-serverless-parquet-shuffle.svg",
-      "sha256": "e714b7134f5fc39ca0314572c386278befa0bf1ab69e020030cb952a4352aeda"
+      "path": "manuscripts/ch24/ch24-3fs-craq-chain-replication-and-usrbio-zero-copy-ring.pdf",
+      "sha256": "0c7b2ca666076ef0992daed4b4928129f0f055cfa180d048cc6018df90d5017c"
     },
     {
-      "path": "manuscripts/ch24/ch24-smallpond-duckdb-on-3FS-serverless-parquet-shuffle.png",
-      "sha256": "50a6c1b3fcfc1fb12b68bbfc309aef5a87785312030a851ceb85c422da570e9b"
+      "path": "manuscripts/ch24/ch24-3fs-craq-chain-replication-and-usrbio-zero-copy-ring.png",
+      "sha256": "15a1ed238eca9bfb3597cc5eb46f6a26993c4d239ed4409b616bb08684fb2305"
     },
     {
-      "path": "manuscripts/ch24/ch24-smallpond-duckdb-on-3FS-serverless-parquet-shuffle.pdf",
-      "sha256": "c50998a37dce55731ba62accfc54c037d27f8277fdf772d6e54b4967d33d3fed"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-mooncake-transfer-engine-multi-nic-rdma-kv-pool.svg",
-      "sha256": "3a4c3581888861ae7d0496055f85b664b5e340661a4d974acedd68700f96431e"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-mooncake-transfer-engine-multi-nic-rdma-kv-pool.png",
-      "sha256": "c3d5e33ff2faa1e03636dd6e32138131785dd4074bda9b663838f7005517a37a"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-mooncake-transfer-engine-multi-nic-rdma-kv-pool.pdf",
-      "sha256": "b477e8d36cea5a89a0d42be9e341b5812e8db2112f8898bc34f28a21815384f0"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-mooncake-early-rejection-and-sla-goodput-controller.svg",
-      "sha256": "01f2720b7850a60a6c81132231625171ca9333afd84058fe492c3c005c87929b"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-mooncake-early-rejection-and-sla-goodput-controller.png",
-      "sha256": "e1e0582980d0c39819b334d29535761db0e4c699e7e5604f7cdcc22f806ca1f7"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-mooncake-early-rejection-and-sla-goodput-controller.pdf",
-      "sha256": "5d68a22a5677e36147487a7fa72bd1aa9f98a052af8aa814b3211814bea75bf0"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-ktransformers-gpu-mla-and-cpu-amx-numa-expert-offload.svg",
-      "sha256": "b74c976b78c20cdd8836a7ae2e495d9c0a004e6536dd6ec3ee90ec62cdd7c1ad"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-ktransformers-gpu-mla-and-cpu-amx-numa-expert-offload.png",
-      "sha256": "12b4fe3ee15730eea45709497abf3a39083aee448f4785fd7888b9a42ad7a024"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-ktransformers-gpu-mla-and-cpu-amx-numa-expert-offload.pdf",
-      "sha256": "68a3905b0046c55e9ab954d86f8975b25dde3f1a97477deff958b5bf0a968964"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-deepseek-fullstack-cost-and-efficiency-synthesis.svg",
-      "sha256": "f77a3ed4b2889f95846842ae30ac8dffa99a159da712f45943b0bd1f2f8109dd"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-deepseek-fullstack-cost-and-efficiency-synthesis.png",
-      "sha256": "304378d92dfd33a033cee0098ae0a9b5bbcb8dfeb0d3cfc08f350b3717c0eac3"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-deepseek-fullstack-cost-and-efficiency-synthesis.pdf",
-      "sha256": "efecd1f0ae4c9c4b27bd1fcf9fe5e5e4f5d6bb909b45c435e1c92832297313fe"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-llm-rlvr-gpu-kernel-synthesis-closed-loop-architecture.svg",
-      "sha256": "b651cbc4f5c82cb434642bc68740c23fb665e3168bb39576ea418f0a68327c7b"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-llm-rlvr-gpu-kernel-synthesis-closed-loop-architecture.png",
-      "sha256": "369da12a5b3dfcf9e86d42ea45c80c76262337776f604aff671cb8dd49a81519"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-llm-rlvr-gpu-kernel-synthesis-closed-loop-architecture.pdf",
-      "sha256": "d99e0091a1a08cb8a962e1fa79312fbddb4a8628801196bf13718fd6079a8e87"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-nsight-compute-roofline-and-warp-stall-feedback-prompt.svg",
-      "sha256": "a55e617f1f53bf9250f2a27e567fd79c8c25b9efefd1593449d74817d5b5200d"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-nsight-compute-roofline-and-warp-stall-feedback-prompt.png",
-      "sha256": "4b1347bf2d52edb0eef113b350f5dfd64a70e05457ab51ff6c1c21af5083fe13"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-nsight-compute-roofline-and-warp-stall-feedback-prompt.pdf",
-      "sha256": "c9d5c93109e30dc7694996dd65030aa2ed6ee5b4c9bf16da6f38d75ba9f72b27"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-kernelbench-multi-turn-evolution-accuracy-and-speedup.svg",
-      "sha256": "5636a4777e017a574ae1e4ce98346f39581b7459b7ad275010577fbac2b3229f"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-kernelbench-multi-turn-evolution-accuracy-and-speedup.png",
-      "sha256": "7c5fd626d55e797502d95d0968ace38b2d189b6130c8df5e899724542ea3eb95"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-kernelbench-multi-turn-evolution-accuracy-and-speedup.pdf",
-      "sha256": "f643a61c51797d16534904dc8dbf00fb1255b6a750e0b5361ca2da4c644788d7"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-auto-discovered-register-fusion-vs-human-handwritten-kernel.svg",
-      "sha256": "515b6f32d9e8b5f3eff8e84b940614eb4f6691c09df8ca7175098b9052f49753"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-auto-discovered-register-fusion-vs-human-handwritten-kernel.png",
-      "sha256": "38679569c15c0c81cc9536c22f74c646ff54bc8fbbdc4532a1b993c5ab8b3ac5"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-auto-discovered-register-fusion-vs-human-handwritten-kernel.pdf",
-      "sha256": "006987df4d2fbee1ac8165678d9a9631c361305f939ab06bda9c2d8a22a923ee"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-ilp-mcts-5d-auto-parallelism-and-collective-tree-search.svg",
-      "sha256": "67e632886e7c53d4d8e667c1fa760ce8f6bff0b8e6055495683fde8dc940d94e"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-ilp-mcts-5d-auto-parallelism-and-collective-tree-search.png",
-      "sha256": "fa20837389fcf486c7d490813737d0540629e247bf0f41145da77dfff0acf6bb"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-ilp-mcts-5d-auto-parallelism-and-collective-tree-search.pdf",
-      "sha256": "4466e09125ec21322bd12b6a211acc99c977d86d8b6cd27135e19ad3da725af3"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-alphachip-rl-macro-placement-and-wirelength-optimization.svg",
-      "sha256": "9e0533b9311433ff1e0914a26a46e5cfc3cc781dd53fbf5fdf6685111c0bcf50"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-alphachip-rl-macro-placement-and-wirelength-optimization.png",
-      "sha256": "a8ababde5997bfa8d4151ba08bd084830976741de1c6465c0dca7523bec056ab"
+      "path": "manuscripts/ch24/ch24-3fs-craq-chain-replication-and-usrbio-zero-copy-ring.svg",
+      "sha256": "c83761d2223ffd7d9f89fcecb759fa35b76144ab8a08e55c9fe85c1659af590d"
     },
     {
       "path": "manuscripts/ch24/ch24-alphachip-rl-macro-placement-and-wirelength-optimization.pdf",
-      "sha256": "4567f579eaafb4da30c40b3b4073175a7cff5971149c2e7ae073bff83cb5f80f"
+      "sha256": "93460c646af3ee35fdb279540c926371b714be9f5e838ba0d24fb5af74114cfd"
     },
     {
-      "path": "manuscripts/ch24/ch24-per-kernel-dvfs-frequency-scaling-energy-delay-product.svg",
-      "sha256": "517662d1be074628339383274945b76a8d8c9cb1aa2e456d248b305906cb629a"
+      "path": "manuscripts/ch24/ch24-alphachip-rl-macro-placement-and-wirelength-optimization.png",
+      "sha256": "6b46b663e377538881cbcaa82a977e7313ddccbbb6e257dd1e1cffd5ced58601"
     },
     {
-      "path": "manuscripts/ch24/ch24-per-kernel-dvfs-frequency-scaling-energy-delay-product.png",
-      "sha256": "766b9f31bf32b72373c202aec0891523d369888be8a34a2420b26a87a4585118"
+      "path": "manuscripts/ch24/ch24-alphachip-rl-macro-placement-and-wirelength-optimization.svg",
+      "sha256": "9c5663fed6a4101327815a975a2d88b1ef295f36ac991354cf3ed05bfae3a4fd"
     },
     {
-      "path": "manuscripts/ch24/ch24-per-kernel-dvfs-frequency-scaling-energy-delay-product.pdf",
-      "sha256": "76ff486f1dfd31b5270289e82f0f21da5c31815394b395651dbd2aaf77ec4a0c"
+      "path": "manuscripts/ch24/ch24-auto-discovered-register-fusion-vs-human-handwritten-kernel.pdf",
+      "sha256": "1fbe5b37f7c4e57b3de4433b7dde6826fdba1b55260b3d99ce152a33944eb767"
     },
     {
-      "path": "manuscripts/ch24/ch24-autonomous-aiops-straggler-and-pfc-root-cause-graph.svg",
-      "sha256": "b57e7123788da2ea9467ffcfd95b62a4b145273fd6187038608b1ae99933319f"
+      "path": "manuscripts/ch24/ch24-auto-discovered-register-fusion-vs-human-handwritten-kernel.png",
+      "sha256": "cb4264c420a965f33d9218246c96c3d3619c96fcd78ca300fb59d25c25b1a8ee"
     },
     {
-      "path": "manuscripts/ch24/ch24-autonomous-aiops-straggler-and-pfc-root-cause-graph.png",
-      "sha256": "a01aef4829a3227946d7d33665efbb071ce6468727aefed594a088647106eaf9"
+      "path": "manuscripts/ch24/ch24-auto-discovered-register-fusion-vs-human-handwritten-kernel.svg",
+      "sha256": "f7408174564d68fd99a264988c9be8518b1a6f937482a1a11719f3126fe53c4b"
     },
     {
       "path": "manuscripts/ch24/ch24-autonomous-aiops-straggler-and-pfc-root-cause-graph.pdf",
-      "sha256": "66f7c84f28dfa562ab96f69d4066a08892b4ccd546cfb3e963d5643c50e9073f"
+      "sha256": "af4321a966cd7c5b977d47c8a98fa3e913e4df8840d754058ed864f37527d8d8"
     },
     {
-      "path": "manuscripts/ch24/ch24-sub-minute-fault-isolation-mttr-and-ettr-recovery.svg",
-      "sha256": "c65892764e265985d2366e019af86fbac87ea07321bc88b0fd5a8ba622351ac6"
+      "path": "manuscripts/ch24/ch24-autonomous-aiops-straggler-and-pfc-root-cause-graph.png",
+      "sha256": "834b54993208da147a58911afa8c0b898f1d2b87d950907d7ff937ba15030d92"
     },
     {
-      "path": "manuscripts/ch24/ch24-sub-minute-fault-isolation-mttr-and-ettr-recovery.png",
-      "sha256": "027d3ae7d0d011dff7dc9e185366d7a9a58e4cc72773a0a293693457db513703"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-sub-minute-fault-isolation-mttr-and-ettr-recovery.pdf",
-      "sha256": "c952ff1ad5efecabdda69dfc8a53076fc449e38e8303cdbf2d1e429202c7f4e6"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-datacenter-digital-twin-workload-network-thermal-cosim.svg",
-      "sha256": "7d86027b20ecf20f35a11a0f86c6c4590830c6fa28d6b976fe6563d8532a7347"
-    },
-    {
-      "path": "manuscripts/ch24/ch24-datacenter-digital-twin-workload-network-thermal-cosim.png",
-      "sha256": "6607cf71654f31d54196bcefd4206c47e0ef47b1b259997f8cdf1e74e6515c6f"
+      "path": "manuscripts/ch24/ch24-autonomous-aiops-straggler-and-pfc-root-cause-graph.svg",
+      "sha256": "f8935494e53e831e8c32a8216beec15a959892520413007a33901ea8a6cfc3a4"
     },
     {
       "path": "manuscripts/ch24/ch24-datacenter-digital-twin-workload-network-thermal-cosim.pdf",
-      "sha256": "4b91837875d6d8de08c3b0212219a3803006735652b0bef447f7677b217c5e21"
+      "sha256": "33256c4253781d2a096a8a440b334e77ae215be6b0d0ab6cb24519533d07d631"
     },
     {
-      "path": "manuscripts/ch24/ch24-thirty-chapter-five-part-encyclopedia-master-atlas.svg",
-      "sha256": "360b136dbf086afdbb35c99557a2ff250914239e0f787791dff77ae369ca0444"
+      "path": "manuscripts/ch24/ch24-datacenter-digital-twin-workload-network-thermal-cosim.png",
+      "sha256": "c975f8dbac56200512c4ac768510e234d70e932044bebe2727455dadcf1019be"
     },
     {
-      "path": "manuscripts/ch24/ch24-thirty-chapter-five-part-encyclopedia-master-atlas.png",
-      "sha256": "368ce012423ce6aee0e627757c94ef59220bdef02993c5ce58fbed99174a238c"
+      "path": "manuscripts/ch24/ch24-datacenter-digital-twin-workload-network-thermal-cosim.svg",
+      "sha256": "b1f7eccc3acea06a0a8c843bccc8a85de8a0b2984fe54c5bb1a8de67662be051"
     },
     {
-      "path": "manuscripts/ch24/ch24-thirty-chapter-five-part-encyclopedia-master-atlas.pdf",
-      "sha256": "abcd24bc9de756569587af0dd5f9ed12b38ca391006c4481fecf2c4a23ff4eb8"
+      "path": "manuscripts/ch24/ch24-deepep-low-latency-ibgda-zero-sm-hook-overlap.pdf",
+      "sha256": "125a90dbaab6b533bce2ed9ec88748b5fd69aa2006df94c9c7ead5ddf556d125"
     },
     {
-      "path": "manuscripts/ch24/ch24-pillar-1-to-3-hardware-networking-training-inference-map.svg",
-      "sha256": "ffad4d8f15e0475470fb49f5ce40b9846409d237ac31f78c2494024f53d885e1"
+      "path": "manuscripts/ch24/ch24-deepep-low-latency-ibgda-zero-sm-hook-overlap.png",
+      "sha256": "05045063563b7201237e9e333994430f0b0142662c5c40769918861374c56b32"
     },
     {
-      "path": "manuscripts/ch24/ch24-pillar-1-to-3-hardware-networking-training-inference-map.png",
-      "sha256": "1c0586214508d7786f628a01df3746b2d5c3a220638594a258fba3c180d309bf"
+      "path": "manuscripts/ch24/ch24-deepep-low-latency-ibgda-zero-sm-hook-overlap.svg",
+      "sha256": "b032fa1db2f7fb5c4186142453e02a6011f35ad77f3b03c39f8fdccba9e78ad5"
     },
     {
-      "path": "manuscripts/ch24/ch24-pillar-1-to-3-hardware-networking-training-inference-map.pdf",
-      "sha256": "a62878f843e7cec3a97772200df83f6aed71b58a6aff1be81e4779531ff119e8"
+      "path": "manuscripts/ch24/ch24-deepep-normal-mode-nvlink-rdma-hybrid-forwarding.pdf",
+      "sha256": "b3b432913cc52a268083f26d0ccb7bef96f585ef225cdbb6ee6420b44ab0d91c"
     },
     {
-      "path": "manuscripts/ch24/ch24-pillar-4-to-5-multimodal-agent-science-frontier-map.svg",
-      "sha256": "f639469c257d500e02a0165897259a339d99db9f390f1db362a2cb6a9b87cad7"
+      "path": "manuscripts/ch24/ch24-deepep-normal-mode-nvlink-rdma-hybrid-forwarding.png",
+      "sha256": "059642065e72c03c4cb8e7531544af51a46d0d55afd192d962c5f2f7a46a9765"
     },
     {
-      "path": "manuscripts/ch24/ch24-pillar-4-to-5-multimodal-agent-science-frontier-map.png",
-      "sha256": "67622c8041ecb2dcb7481bca968da02a303cafa5c73fae42ece7897033aba765"
+      "path": "manuscripts/ch24/ch24-deepep-normal-mode-nvlink-rdma-hybrid-forwarding.svg",
+      "sha256": "5bf8cf432aa4056ea266101e5a9c4d96eb275518aeaeed31e0ce2eab6811803a"
     },
     {
-      "path": "manuscripts/ch24/ch24-pillar-4-to-5-multimodal-agent-science-frontier-map.pdf",
-      "sha256": "77547c130b6efe18d86c656e7fd014bd419415b4336671c95056d5b64fa0c03c"
+      "path": "manuscripts/ch24/ch24-deepgemm-fp8-1x128-128x128-two-level-ffma-accumulation.pdf",
+      "sha256": "dd197f22ff0cc10a44cdb2c303ef5ae76d4d415ab88eacb9a8dcf3309b33b9a9"
     },
     {
-      "path": "manuscripts/ch24/ch24-four-fundamental-conservation-laws-across-30-chapters.svg",
-      "sha256": "e9576ed8e034299da8d6c1a0d413505dd4f902ec9bdc0cb56439d7a3fd0f5788"
+      "path": "manuscripts/ch24/ch24-deepgemm-fp8-1x128-128x128-two-level-ffma-accumulation.png",
+      "sha256": "755e0d055d882b1e65a5d7ab412c48cf9a45fb281b0126a702b6bb614e09f784"
     },
     {
-      "path": "manuscripts/ch24/ch24-four-fundamental-conservation-laws-across-30-chapters.png",
-      "sha256": "b8fab24b4a0122025071339e402379d723e5b318badbb90f3b52bad89f864614"
+      "path": "manuscripts/ch24/ch24-deepgemm-fp8-1x128-128x128-two-level-ffma-accumulation.svg",
+      "sha256": "87d2170fcba65cc10b9d33e07a93c365974b6d79bce0cdfd0780405d0457c840"
     },
     {
-      "path": "manuscripts/ch24/ch24-four-fundamental-conservation-laws-across-30-chapters.pdf",
-      "sha256": "f1e58ef26de6d3c4f2517a6bb3c4d69bd7f4683fe1eba585689cd61c132d616d"
+      "path": "manuscripts/ch24/ch24-deepgemm-runtime-jit-shape-constant-specialization.pdf",
+      "sha256": "995cabde152c46143c0fd381ebd5bfa8d0504bf25ae63bdd0b780f4fed2cdcc7"
     },
     {
-      "path": "manuscripts/ch24/ch24-ten-year-ai-infrastructure-roadmap-2026-to-2035.svg",
-      "sha256": "b9bacef6efd6c4fbab81240d000c9d578031ec44aeb64aa46136ba422c3da642"
+      "path": "manuscripts/ch24/ch24-deepgemm-runtime-jit-shape-constant-specialization.png",
+      "sha256": "5331e910db5d82b26adf5fe03ccb97c81b59848d364791b37a5de4ae70ccdf4a"
     },
     {
-      "path": "manuscripts/ch24/ch24-ten-year-ai-infrastructure-roadmap-2026-to-2035.png",
-      "sha256": "af5c5f896e4cf8a04de443fae608faf982a707d9e34c977904db204fc58f2bf0"
+      "path": "manuscripts/ch24/ch24-deepgemm-runtime-jit-shape-constant-specialization.svg",
+      "sha256": "ce43d595626d7ce21f2d96f225a30778977d8efc3140e825196eba8177890904"
     },
     {
-      "path": "manuscripts/ch24/ch24-ten-year-ai-infrastructure-roadmap-2026-to-2035.pdf",
-      "sha256": "9683d45d41c18c34134764ecdc1f626f56e4bdd69d5a8dc3c89de2af84bd859a"
+      "path": "manuscripts/ch24/ch24-deepseek-fullstack-cost-and-efficiency-synthesis.pdf",
+      "sha256": "627a26f41462b1ebb1c37eabe1d3bb42cd276bcd44e1c1c3fcaab2ba45f31175"
     },
     {
-      "path": "manuscripts/ch24/ch24-grand-finale-ai-infrastructure-system-engineering-crown.svg",
-      "sha256": "1573a22f7d3b2bdf0138a68225dc4831c21224f34f2afcdf78573b9e0f85a191"
+      "path": "manuscripts/ch24/ch24-deepseek-fullstack-cost-and-efficiency-synthesis.png",
+      "sha256": "586c8d67124c2db84fd6c5e9d766216acc6c73ef84d893c84bc63c7050add9ad"
     },
     {
-      "path": "manuscripts/ch24/ch24-grand-finale-ai-infrastructure-system-engineering-crown.png",
-      "sha256": "9eb9c03ca73f73e503540fe87add25442b82255c25651d6757fadf0360e31a41"
+      "path": "manuscripts/ch24/ch24-deepseek-fullstack-cost-and-efficiency-synthesis.svg",
+      "sha256": "fa71ceebbc66cfe21693ef72c84085979ef2fe4afc2859e08c0ad0347101591e"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-deepseek-open-infra-seven-pillar-fullstack-architecture.pdf",
+      "sha256": "929ebb9fcbd0fdc00e178f9b4136317fcda184901c275b1094b665da6c9f29e8"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-deepseek-open-infra-seven-pillar-fullstack-architecture.png",
+      "sha256": "806d625e164021f5856b395cd2b2f316fad5cdd4bb5f298bfad1ab5a18151298"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-deepseek-open-infra-seven-pillar-fullstack-architecture.svg",
+      "sha256": "6cee6e96ab82afc96ab660409b1e7d6cb3a0399cc73302c4076b37b3c4549a79"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-dualpipe-bidirectional-pipeline-schedule-and-20-stage-grid.pdf",
+      "sha256": "c9f1e5da53b16c6b3b210288f26316a78b468d8d68e09901ad35aedc9346c67f"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-dualpipe-bidirectional-pipeline-schedule-and-20-stage-grid.png",
+      "sha256": "81857d3a0930ad7dde66d430d5a095f80552bf980db0fbf2a1249a60381c9099"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-dualpipe-bidirectional-pipeline-schedule-and-20-stage-grid.svg",
+      "sha256": "de5e0371b87573aea0b2a1acbc093023cf955d139cc6a789ba4e622ca4664493"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-dualpipe-fine-grained-backward-input-weight-split.pdf",
+      "sha256": "6b1c7fe0086a268e292c55c845e43a967318e49945bbd4e2fab7e401484520f7"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-dualpipe-fine-grained-backward-input-weight-split.png",
+      "sha256": "9f6d5cd0beb51045686bb08f1bdcabac7e12e85ae7b7990318ad378281f851c3"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-dualpipe-fine-grained-backward-input-weight-split.svg",
+      "sha256": "9824f6ace907d106ad72cb032ebc5153510d0e6a9d6f05fa0c58fa9b324b6a8e"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-flashmla-512-plus-64-pingpong-warpgroup-pipeline.pdf",
+      "sha256": "d828181e3ebf955320c3119ae1cb2e36c33cae405a970e690d57ddb450d1b61d"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-flashmla-512-plus-64-pingpong-warpgroup-pipeline.png",
+      "sha256": "da6e2593427625a9a0f144179bf4d5a7a441904072e52ee9f226859207675d91"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-flashmla-512-plus-64-pingpong-warpgroup-pipeline.svg",
+      "sha256": "3d6197287c1c58a27f43d02cad48c9538da233adeb19ddee650a92a5d817c0b6"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-flashmla-variable-length-split-kv-load-balancer.pdf",
+      "sha256": "52ea6298036e9b3364e9c1c665c758d6d77fbbbd09b8a4e4622dbf67639efdd4"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-flashmla-variable-length-split-kv-load-balancer.png",
+      "sha256": "9132a51d994624c55ba268ff1e0bb377efc2fb90595ffd05d6a41e0c2fa0a2fb"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-flashmla-variable-length-split-kv-load-balancer.svg",
+      "sha256": "0aabd1699aa132e0d69d77c8ac4ffb31158d43ecb22f35f759768b53dd5fc527"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-four-fundamental-conservation-laws-across-24-chapters.pdf",
+      "sha256": "8893fee3534ed9a911aae3530788616a52d6d387546528c757e4d29c3c79d2f4"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-four-fundamental-conservation-laws-across-24-chapters.png",
+      "sha256": "a0e498cd6232bc6f62558b8ad52558fbeb022eeec31bc617c8c98dee4a65bc0f"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-four-fundamental-conservation-laws-across-24-chapters.svg",
+      "sha256": "d5fe8ba6bea8cafce15e9191f65fc42bde6b9942eebecda2bf5fb1f547d4a949"
     },
     {
       "path": "manuscripts/ch24/ch24-grand-finale-ai-infrastructure-system-engineering-crown.pdf",
-      "sha256": "3cce3ef8be2c5e9d1525241942f7df3effa4012f05b8654a3309b6508db6f0ad"
+      "sha256": "07bafd27fea751f9a5320358a375b2582c4a49576f96038b17c7e75f0525a983"
     },
     {
-      "path": "build/legacy/manuscripts/24-全栈跨层优化与自演进系统.html",
-      "sha256": "ab835ea1b606a681e430293a0ef8fb39c1d1ba8eaf02dff6b4b27903b60b12bf"
+      "path": "manuscripts/ch24/ch24-grand-finale-ai-infrastructure-system-engineering-crown.png",
+      "sha256": "8976d27ea08553b0f609139f1255933b5557cc1060d1c81f5fc4fc5499161efb"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-grand-finale-ai-infrastructure-system-engineering-crown.svg",
+      "sha256": "9f6804d5f1870bdb2249570fb5a540af3e20b1853150e1946874cd3469dc9f58"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-hundred-mw-ai-factory-five-part-master-atlas.pdf",
+      "sha256": "f1918940d358dbe23d8bffa9e14c8d1edc61a6b8eff6160d1b7147fc90738ab6"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-hundred-mw-ai-factory-five-part-master-atlas.png",
+      "sha256": "51ed8cb051837b1ca435e48c3dc7abfb584c5f4d138ed520dda2d285fcd20fcd"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-hundred-mw-ai-factory-five-part-master-atlas.svg",
+      "sha256": "24c8a907c665fb651c4c824caab14bd034ac8f70a604c9ca6420d59d0a466180"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-ilp-mcts-5d-auto-parallelism-and-collective-tree-search.pdf",
+      "sha256": "7700bb1ec2ab44364b796cd46c26dcd73778ae62483647cf74002e2d41cc2819"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-ilp-mcts-5d-auto-parallelism-and-collective-tree-search.png",
+      "sha256": "9630d9e30c2568fb16058b6e5b10d6c6c32a8f03ad868849dbd78230f7bc04d4"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-ilp-mcts-5d-auto-parallelism-and-collective-tree-search.svg",
+      "sha256": "5799c29e93dcbad3e6f8cad17b01e69fe8926cad1422f5e1461fdad7fbf944b6"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-kernelbench-multi-turn-evolution-accuracy-and-speedup.pdf",
+      "sha256": "2ce661293694d2197a82fb76c7e76d8d3fb2e507e59a22424a30426918689619"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-kernelbench-multi-turn-evolution-accuracy-and-speedup.png",
+      "sha256": "d78495ec55c368f5750a0a8858bb5f802341c7d863e64a76107249ca656269f2"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-kernelbench-multi-turn-evolution-accuracy-and-speedup.svg",
+      "sha256": "c97d361682489eb67fb09fc7642830722becf9565e121239b40326f1ae7e4fe2"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-ktransformers-gpu-mla-and-cpu-amx-numa-expert-offload.pdf",
+      "sha256": "2607c743289c672655621a1f678cf8d43f6f4a0a7885c5caf1ec2079501a7a00"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-ktransformers-gpu-mla-and-cpu-amx-numa-expert-offload.png",
+      "sha256": "fed948719430bffaf6323f61f903d7f0c8fb5be026d7fac95115f3a3b6457068"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-ktransformers-gpu-mla-and-cpu-amx-numa-expert-offload.svg",
+      "sha256": "de9b6ad786a6815eb6c1c4f556b7f95f5a065e3b52fb4a62150cc294cce62d00"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-llm-rlvr-gpu-kernel-synthesis-closed-loop-architecture.pdf",
+      "sha256": "a67a8f67ccd2973dd3932a802a9f592fd0c19264c75b851f129d957280d6d052"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-llm-rlvr-gpu-kernel-synthesis-closed-loop-architecture.png",
+      "sha256": "75d3ff6103a4a89329843a7aac2a342c5ae7b3d29d271e1c5f2146bf8379ae88"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-llm-rlvr-gpu-kernel-synthesis-closed-loop-architecture.svg",
+      "sha256": "f0f126ab9ed7b9a32a4392ae6d571bd2b56553db989f2fea4acb8bc52cab3303"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-mooncake-early-rejection-and-sla-goodput-controller.pdf",
+      "sha256": "ce7a89864af44be2006888b60baef60cd8ce26f00d11eaa1f0f199de40433ea9"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-mooncake-early-rejection-and-sla-goodput-controller.png",
+      "sha256": "b232f97a3243dc5293e26b25772772b869cb86424aeb14fd43b8e57ca7d72d22"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-mooncake-early-rejection-and-sla-goodput-controller.svg",
+      "sha256": "c9993723875d4cf32b9b25f63e8b1ab146cc63033f3f6b7ec226b5841c967c9f"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-mooncake-transfer-engine-multi-nic-rdma-kv-pool.pdf",
+      "sha256": "27dfcb46db7c9367366d92786a50b344575e30afa29ca323a9e711869e88bced"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-mooncake-transfer-engine-multi-nic-rdma-kv-pool.png",
+      "sha256": "0b376d8e085fdc94de3228f23f6dcb01c62182b69ce724095507ffda9f87bd69"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-mooncake-transfer-engine-multi-nic-rdma-kv-pool.svg",
+      "sha256": "0936351a8614d040ffdb343afec3d55ad52ef2311c3e7cec7ee0861b867ed097"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-nsight-compute-roofline-and-warp-stall-feedback-prompt.pdf",
+      "sha256": "3b663c74e2c2d5ddf41f1530dfd27814992591b7f934ca964b838cd9b92442d8"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-nsight-compute-roofline-and-warp-stall-feedback-prompt.png",
+      "sha256": "0388ca007a5e7c9e6e0ab68f0de043afd3e51e5d9443fc6a00537a2d83522b15"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-nsight-compute-roofline-and-warp-stall-feedback-prompt.svg",
+      "sha256": "5b18170e70b15adae1432c627048b78ee5ad74465515154d06afc0f415302583"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-per-kernel-dvfs-frequency-scaling-energy-delay-product.pdf",
+      "sha256": "629c4bf9c26a7063dedb247229ca002b294f8e592a55407f2809f98c1be615fe"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-per-kernel-dvfs-frequency-scaling-energy-delay-product.png",
+      "sha256": "46ef79de27595b6cb288a554d90ae52e37e560e425901275b369d8e9441aae30"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-per-kernel-dvfs-frequency-scaling-energy-delay-product.svg",
+      "sha256": "203aeb1f2fd213fee1ca984fc50e3b22a339d7ffbcf0e8ed6506fa3218b2cd32"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-pillar-1-to-3-hardware-networking-training-inference-map.pdf",
+      "sha256": "88a91577f5e6823ae03b473f8d222b857b0f563cba6789cd28191c6f4db6cc8c"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-pillar-1-to-3-hardware-networking-training-inference-map.png",
+      "sha256": "625a4773f6e49305e1cae89dffb3d2f51ae0345a60452339de0b9df37ff03dc0"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-pillar-1-to-3-hardware-networking-training-inference-map.svg",
+      "sha256": "ebaed23a721ca607115844ab27f70a4265f788388199521e00f3f947e1e0485f"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-pillar-4-to-5-multimodal-agent-science-frontier-map.pdf",
+      "sha256": "ea710f7e11960bb118d37c5c65b6a6f6d2c65bbc80b69847efd19f7409a41f70"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-pillar-4-to-5-multimodal-agent-science-frontier-map.png",
+      "sha256": "66db5383cb1609222f33cb6396e5b96f810fedec1ca489798e8b59a30261cafd"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-pillar-4-to-5-multimodal-agent-science-frontier-map.svg",
+      "sha256": "e4f376363f2a02b23d102853b077ebc0a33be032419420ad3ffc3a8a14ef8879"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-smallpond-duckdb-on-3FS-serverless-parquet-shuffle.pdf",
+      "sha256": "277bfb780a475bb0643edb9500bb4b3f612898d2edc65feee21e59ba880c9b42"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-smallpond-duckdb-on-3FS-serverless-parquet-shuffle.png",
+      "sha256": "f4e2d565d9d57e733550d40da900cf932b312e08e2007264793984205b233343"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-smallpond-duckdb-on-3FS-serverless-parquet-shuffle.svg",
+      "sha256": "5883d72dafc22d1316bc8da8c92ce1a2bf0348c54d1d286a8099a1b45076e088"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-sub-minute-fault-isolation-mttr-and-ettr-recovery.pdf",
+      "sha256": "53d53f39fbb4fe6044015df2805b78fbb66fb603651b0ced3c952300e7a472e9"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-sub-minute-fault-isolation-mttr-and-ettr-recovery.png",
+      "sha256": "87113ec094b52cd1000f8222a21aea3e72b639d2afe50362cdd3fc0a9975a2f5"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-sub-minute-fault-isolation-mttr-and-ettr-recovery.svg",
+      "sha256": "d2ef033422d74e1019d5d2080ebdd062ae4ef80e439b2200429c95eead92f0f4"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-ten-year-ai-infrastructure-roadmap-2026-to-2035.pdf",
+      "sha256": "a17ed8e831597b3a0be386d8b0890fd5b27317c56473a0e09f544a785dd7bdc3"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-ten-year-ai-infrastructure-roadmap-2026-to-2035.png",
+      "sha256": "3c36be6c2540e577f55d068e2e560776894bec70cbde4cd553d6d184e4b77f91"
+    },
+    {
+      "path": "manuscripts/ch24/ch24-ten-year-ai-infrastructure-roadmap-2026-to-2035.svg",
+      "sha256": "016bfc48b7b47b383eae02fa154b7aed37d3d9867a40fa7c342e88d33200b126"
+    },
+    {
+      "path": "manuscripts/ch24/figure-index.json",
+      "sha256": "f029c2aa3690e71ef3b4c713708eddfc9ca0b632a3931fd01d4e1dc2079a2ccc"
+    },
+    {
+      "path": "manuscripts/ch24/teaching-layout-validation.json",
+      "sha256": "7a1e77d00eabfabf067f76247fe0b66192a30e3595a010189036de183071e5e1"
+    },
+    {
+      "path": "manuscripts/ch24/math-validation.json",
+      "sha256": "879382a814ff72db072c03d89504d476973f73b489ede4ca47e81bad238cf570"
     }
   ]
 }

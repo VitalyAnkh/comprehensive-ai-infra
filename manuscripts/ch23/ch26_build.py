@@ -70,35 +70,33 @@ def draw_dual_band(
             box(ax, x, 0.13, w, 0.20, lbl, role, size=11)
         arrow(ax, (0.48, 0.23), (0.52, 0.23))
 
-    text(ax, 0.50, 0.06, footer, size=11, ha='center', weight='bold', color=COL['ink'])
+    text(ax, 0.50, 0.072, footer, size=11, ha='center', weight='bold', color=COL['ink'])
     ex.save(fig, stem)
 
 
-def build_chapter() -> None:
-    ex = Exporter(HERE)
-
+def build_part2(ex: Exporter) -> None:
     draw_dual_band(
         ex,
-        'ch26-autoregressive-vs-diffusion-llm-roofline-phase-transition',
+        'ch23-autoregressive-vs-diffusion-llm-roofline-phase-transition',
         '32B 模型自回归解码（100 tok/s）vs. 块扩散去噪（592.6 tok/s）',
         'blue',
         [
-            ('① 自回归逐词元解码\n算术强度 1 FLOP/B\n512 步耗 5.12 s', 'orange'),
-            ('② 块扩散 K=64 并行\n强度升至 64 FLOP/B\n仅 80 次前向传播', 'blue'),
+            ('① 自回归逐词元解码\n算术强度 2 FLOP/B\n512 步耗 5.12 s', 'orange'),
+            ('② 块扩散 K=64 并行\n强度升至 128 FLOP/B\n仅 80 次前向传播', 'blue'),
             ('③ 权重读取减 6.4x\n总耗时 0.864 s\n提速 5.93 倍', 'teal'),
         ],
         '为什么扩散大语言模型（Mercury / LLaDA）能突破内存带宽墙？',
         'teal',
         [
-            ('逐词元自回归的内存带宽死锁：\n生成 512 词元需读 512 次权重\nTensor Core 利用率不足 0.6%', 'orange'),
-            ('块掩码并行去噪（K=64, T=10）：\n每次前向并行炼制 64 个词元\n8B 模型实测飙升至 1,420 tok/s', 'teal'),
+            ('逐词元自回归的内存带宽瓶颈：\n生成 512 词元需读 512 次权重\nTensor Core 利用率不足 0.6%', 'orange'),
+            ('块掩码并行去噪（K=64, T=10）：\n每次前向并行炼制 64 个词元\n8B 模型实测跃升至 1,420 tok/s', 'teal'),
         ],
         '将 512 次串行访存折算为 80 次高算术强度矩阵乘，实现 5.93 倍解码跃迁',
     )
 
     draw_dual_band(
         ex,
-        'ch26-block-diffusion-semi-autoregressive-kv-cache-and-mask',
+        'ch23-block-diffusion-semi-autoregressive-kv-cache-and-mask',
         '半自回归块扩散（Block Diffusion）块间因果与块内双向注意力',
         'purple',
         [
@@ -109,16 +107,16 @@ def build_chapter() -> None:
         '全序列双向扩散（LLaDA）vs. 半自回归块扩散（Block Diffusion）',
         'blue',
         [
-            ('纯全序列双向扩散的局限：\n每步去噪均需重算全部前缀\n长上下文下二次方算力爆炸', 'orange'),
-            ('块间自回归 + 块内并行去噪：\n完美复用 PagedAttention 缓存\n支持任意长度流式低延迟输出', 'teal'),
+            ('纯全序列双向扩散的局限：\n每步去噪均需重算全部前缀\n长上下文下二次方算力激增', 'orange'),
+            ('块间自回归 + 块内并行去噪：\n高效复用 PagedAttention 缓存\n支持任意长度流式低延迟输出', 'teal'),
         ],
         '融合自回归 KV 缓存复用与扩散块内并行去噪，打通长文本生产部署',
     )
 
     draw_dual_band(
         ex,
-        'ch26-dynamic-confidence-threshold-remasking-scheduler',
-        '动态置信度重掩码（gamma=0.92）与块级提前终止（算例 26-2）',
+        'ch23-dynamic-confidence-threshold-remasking-scheduler',
+        '动态置信度重掩码（gamma=0.92）与块级提前终止（算例 23-15）',
         'teal',
         [
             ('① 词元后验概率评估\np_max >= 0.92 锁定\n低置信位重回 MASK', 'blue'),
@@ -136,7 +134,7 @@ def build_chapter() -> None:
 
     draw_dual_band(
         ex,
-        'ch26-dllm-speculative-parallel-verification-hybrid-engine',
+        'ch23-dllm-speculative-parallel-verification-hybrid-engine',
         '扩散草稿批量提议 + 自回归单步精确校验混合推理引擎',
         'blue',
         [
@@ -155,7 +153,7 @@ def build_chapter() -> None:
 
     draw_dual_band(
         ex,
-        'ch26-bpe-tokenizer-bottleneck-vs-blt-byte-entropy-patching',
+        'ch23-bpe-tokenizer-bottleneck-vs-blt-byte-entropy-patching',
         'Byte Latent Transformer（BLT）字节条件熵在线动态分块',
         'purple',
         [
@@ -174,7 +172,7 @@ def build_chapter() -> None:
 
     draw_dual_band(
         ex,
-        'ch26-blt-local-byte-encoder-global-latent-cross-attention',
+        'ch23-blt-local-byte-encoder-global-latent-cross-attention',
         'BLT 三段式架构：局部字节编码—全局潜空间—局部字节解码',
         'teal',
         [
@@ -185,7 +183,7 @@ def build_chapter() -> None:
         '为什么 BLT 能同时兼顾字节级细粒度鲁棒性与词元级长上下文吞吐？',
         'purple',
         [
-            ('纯字节级自回归（ByT5）死穴：\n序列长度膨胀 4.5 倍触发 O(L^2)\n长文本下注意力延迟彻底失控', 'orange'),
+            ('纯字节级自回归（ByT5）瓶颈：\n序列长度膨胀 4.5 倍触发 O(L^2)\n长文本下注意力延迟显著劣化', 'orange'),
             ('局部轻模块 + 全局重骨干解耦：\n字节层仅做短距窗口特征提取\n昂贵长程注意力运行在短 Patch', 'teal'),
         ],
         '用非对称交叉注意力桥接原始字节流与高维潜空间，兼得无分词与高吞吐',
@@ -193,7 +191,7 @@ def build_chapter() -> None:
 
     draw_dual_band(
         ex,
-        'ch26-blt-ragged-patch-packing-and-load-balancing',
+        'ch23-blt-ragged-patch-packing-and-load-balancing',
         'BLT 变长动态分块（1~16 B）非规则交叉注意力（Ragged Kernel）',
         'blue',
         [
@@ -212,7 +210,7 @@ def build_chapter() -> None:
 
     draw_dual_band(
         ex,
-        'ch26-titans-short-term-attention-and-long-term-neural-memory',
+        'ch23-titans-short-term-attention-and-long-term-neural-memory',
         'Google Titans 双系统架构：短期精确注意力 + 长期神经记忆',
         'purple',
         [
@@ -231,7 +229,7 @@ def build_chapter() -> None:
 
     draw_dual_band(
         ex,
-        'ch26-ttt-token-by-token-vs-chunkwise-dual-form-tensor-core',
+        'ch23-ttt-token-by-token-vs-chunkwise-dual-form-tensor-core',
         'TTT 快速权重更新：逐词元串行（1.5）vs. 分块对偶（48 FLOP/B）',
         'teal',
         [
@@ -250,11 +248,11 @@ def build_chapter() -> None:
 
     draw_dual_band(
         ex,
-        'ch26-titans-2m-context-constant-memory-vs-kv-cache-growth',
+        'ch23-titans-2m-context-constant-memory-vs-kv-cache-growth',
         '200 万词元显存对比：Softmax KV Cache vs. Titans 恒定记忆',
         'blue',
         [
-            ('① 标准 MHA KV 缓存\n2M 词元占 1.02 TB\n撑爆单机 8 卡 HBM', 'orange'),
+            ('① 标准 MHA KV 缓存\n2M 词元占 1.02 TB\n超出单机 8 卡 HBM', 'orange'),
             ('② GQA/MLA 线性增长\n随长度仍涨至百 GB\n解码带宽持续恶化', 'purple'),
             ('③ Titans 快速权重\n恒定 16.0 MB/层\nO(1) 显存零膨胀', 'teal'),
         ],
@@ -264,13 +262,13 @@ def build_chapter() -> None:
             ('追加式 KV 缓存的物理极限：\n每增 1 词元即永久占用显存带宽\n百万上下文下单请求需多机分片', 'orange'),
             ('参数化状态记忆（16 MB/层）：\n80 层总记忆状态仅占 1.28 GB\n第 200 万词元解码延迟与首词相同', 'teal'),
         ],
-        '将历史序列压缩为固定维度的可微分参数矩阵，彻底终结长上下文显存墙',
+        '将历史序列压缩为固定维度的可微分参数矩阵，突破长上下文显存容量上限',
     )
 
     draw_dual_band(
         ex,
-        'ch26-coconut-continuous-latent-thought-zero-copy-loop',
-        'Coconut 连续潜空间思维链（c=3）零拷贝回环反馈（算例 26-5）',
+        'ch23-coconut-continuous-latent-thought-zero-copy-loop',
+        'Coconut 连续潜空间思维链（c=3）零拷贝回环反馈（算例 23-18）',
         'purple',
         [
             ('① 省去 LM Head 投影\n免除 256k Softmax\n消除词表采样同步', 'blue'),
@@ -288,7 +286,7 @@ def build_chapter() -> None:
 
     draw_dual_band(
         ex,
-        'ch26-coconut-latent-tree-breadth-first-parallel-expansion',
+        'ch23-coconut-latent-tree-breadth-first-parallel-expansion',
         '连续潜空间隐式波束搜索与多分支树状并行验证',
         'teal',
         [
@@ -307,7 +305,7 @@ def build_chapter() -> None:
 
     draw_dual_band(
         ex,
-        'ch26-mixture-of-depths-token-routing-and-warp-divergence',
+        'ch23-mixture-of-depths-token-routing-and-warp-divergence',
         'Mixture-of-Depths（MoD，rho=0.25）动态跳层与 Warp 发散',
         'blue',
         [
@@ -326,7 +324,7 @@ def build_chapter() -> None:
 
     draw_dual_band(
         ex,
-        'ch26-stream-compaction-gather-scatter-for-early-exit-layers',
+        'ch23-stream-compaction-gather-scatter-for-early-exit-layers',
         'MoD 硬件流紧缩（Stream Compaction）：Gather-GEMM-Scatter',
         'purple',
         [
@@ -345,7 +343,7 @@ def build_chapter() -> None:
 
     draw_dual_band(
         ex,
-        'ch26-post-autoregressive-architectures-throughput-latency-pareto',
+        'ch23-post-autoregressive-architectures-throughput-latency-pareto',
         '后自回归四大范式（dLLM / BLT / Titans / Coconut）帕累托前沿',
         'teal',
         [
@@ -364,22 +362,26 @@ def build_chapter() -> None:
 
     draw_dual_band(
         ex,
-        'ch26-next-gen-foundation-model-infrastructure-synthesis',
-        '第 26 章全景：扩散语言模型与字节级动态分块（上）',
+        'ch23-next-gen-foundation-model-infrastructure-synthesis',
+        '后自回归生成范式全景：扩散语言模型与字节级动态分块（上）',
         'blue',
         [
-            ('26.1 扩散大语言模型 dLLM：\nBlock Diffusion 提速 5.93 倍\n置信度重掩码早退达 911.7 tok/s', 'blue'),
-            ('26.2 字节无分词架构 BLT：\n条件熵动态切分省 4.194 GB 词表\nRagged 核削减 52.4% 端到端算力', 'purple'),
+            ('23.4.1 扩散语言模型 dLLM：\nBlock Diffusion 提速 5.93 倍\n置信度重掩码早退达 911.7 tok/s', 'blue'),
+            ('23.4.2 字节无分词架构 BLT：\n条件熵动态切分省 4.194 GB 词表\nRagged 核削减 52.4% 端到端算力', 'purple'),
         ],
-        '第 26 章全景：测试时记忆网络与连续潜空间推理（下）',
+        '后自回归生成范式全景：测试时记忆网络与连续潜空间推理（下）',
         'teal',
         [
-            ('26.3 测试时记忆 Titans/TTT：\n分块对偶矩阵乘提速 24.60 倍\n2M 上下文保持 16.0 MB/层恒定', 'blue'),
-            ('26.4 潜空间与动态深度路由：\nCoconut 零拷贝回环提速 3.25 倍\nMoD 流紧缩恢复 96.4% Warp 效率', 'teal'),
+            ('23.5.1 测试时记忆 Titans/TTT：\n分块对偶矩阵乘提速 24.60 倍\n2M 上下文保持 16.0 MB/层恒定', 'blue'),
+            ('23.5.2 潜空间与动态深度路由：\nCoconut 零拷贝回环提速 3.25 倍\nMoD 流紧缩恢复 96.4% Warp 效率', 'teal'),
         ],
-        '以块并行、熵分块、分块对偶与流紧缩四大算子原语支撑后自回归模型革命',
+        '以块并行、熵分块、分块对偶与流紧缩四大算子原语支撑后自回归架构演进',
     )
 
+
+def build_chapter() -> None:
+    ex = Exporter(HERE)
+    build_part2(ex)
     outputs = ex.finish()
 
     fig_index = [
@@ -389,7 +391,7 @@ def build_chapter() -> None:
             "file": "ch26-autoregressive-vs-diffusion-llm-roofline-phase-transition.svg",
             "asset": "ch26/ch26-autoregressive-vs-diffusion-llm-roofline-phase-transition.svg",
             "section": "26.1.1",
-            "caption": "32B FP8 模型在 H100 上的解码 Roofline 相变：从逐词元自回归（I=1 FLOP/B，100.0 tok/s）到半自回归块扩散（K=64, T=10，592.6 tok/s，提速 5.93 倍）（算例 26-1）",
+            "caption": "32B FP8 模型在 H100 上的解码 Roofline 相变：从逐词元自回归（I=2.0 FLOP/B，100.0 tok/s）到半自回归块扩散（K=64, I=128 FLOP/B, T=10，592.6 tok/s，提速 5.93 倍）（算例 23-14）",
             "source_refs": ["experiments/ch23/23-01/run.py", "manuscripts/ch26/figure-data.json"],
             "TeachingRole": "揭示扩散语言模型如何通过块内 64 词元并行去噪将权重读取次数削减 6.40 倍并突破内存带宽墙"
         },
@@ -539,7 +541,7 @@ def build_chapter() -> None:
             "file": "ch26-next-gen-foundation-model-infrastructure-synthesis.svg",
             "asset": "ch26/ch26-next-gen-foundation-model-infrastructure-synthesis.svg",
             "section": "26.4.2",
-            "caption": "第 26 章系统工程全景图：从扩散并行去噪、字节熵动态分块、测试时分块对偶记忆到连续潜空间与流紧缩运行时",
+            "caption": "后自回归生成范式（23.4 节）系统工程全景图：从扩散并行去噪、字节熵动态分块、测试时分块对偶记忆到连续潜空间与流紧缩运行时",
             "source_refs": ["manuscripts/ch26/figure-data.json"],
             "TeachingRole": "收束全章四大模块，凝练把动态非规则算法还原为高算术强度分块矩阵原语的统一方法论"
         }
@@ -589,7 +591,7 @@ def build_chapter() -> None:
 
         work = re.sub(r'!\[([^\]]*)\]\((ch26/[^)]+)\)', repl_img, text_md)
         body = markdown.markdown(work, extensions=['tables', 'fenced_code', 'footnotes', 'toc'])
-        html = f'<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>第 26 章：后自回归生成范式基础设施：扩散大语言模型（dLLM）、字节级无分词架构（BLT）与测试时记忆网络（Titans-TTT）</title></head><body>{body}</body></html>\n'
+        html = f'<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>第 23 章（23.4 节）：后自回归生成范式基础设施</title></head><body>{body}</body></html>\n'
         out_html = preview_path(md)
         out_html.write_text(html)
 

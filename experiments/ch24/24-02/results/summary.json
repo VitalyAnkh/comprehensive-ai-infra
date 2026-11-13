@@ -9,8 +9,12 @@
   },
   "dualpipe": {
     "pp_stages": 16,
+    "microbatches_per_direction": 16,
     "bidirectional_microbatches": 32,
     "exposed_alltoall_stall_pct": 0.0,
-    "bubble_reduction_vs_1f1b_x": 2.0
+    "bubble_slots_1f1b": 15,
+    "bubble_slots_dualpipe": 7,
+    "bubble_1f1b_pct": 31.91,
+    "bubble_dualpipe_pct": 17.95
   }
 }

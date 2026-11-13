@@ -35,9 +35,28 @@ md = HERE.parent / '23-软硬件协同与新型架构.md'
 s = md.read_text(encoding='utf-8')
 page = preview_path(md).read_text(encoding='utf-8')
 
-expected_headings = ["23.1", "23.1.1", "23.1.2", "23.1.3", "23.2", "23.2.1", "23.2.2", "23.2.3", "23.3", "23.3.1", "23.3.2", "23.4", "23.4.1", "23.4.2", "23.5", "23.5.1", "23.5.2", "23.5.3", "23.6", "23.6.1", "23.6.2", "23.7", "23.7.1", "23.7.2", "23.8", "23.8.1", "23.8.2", "23.9", "23.9.1", "23.9.2", "23.9.3", "23.10", "23.10.1", "23.10.2", "23.11", "23.11.1", "23.11.2", "23.12", "23.12.1", "23.12.2", "23.13", "23.13.1", "23.13.2", "23.14", "23.14.1", "23.14.2", "23.15", "23.15.1", "23.15.2", "23.16", "23.16.1", "23.16.2", "23.17", "23.17.1", "23.17.2"]
+expected_headings = [
+    "23.1", "23.1.1", "23.1.2", "23.1.3",
+    "23.2", "23.2.1", "23.2.2", "23.2.3",
+    "23.3", "23.3.1", "23.3.2", "23.3.3", "23.3.4",
+    "23.4", "23.4.1", "23.4.2",
+    "23.5", "23.5.1", "23.5.2",
+    "23.6", "23.6.1", "23.6.2", "23.6.3", "23.6.4",
+]
 found_headings = re.findall(r'^#{2,3} (23\.\d+(?:\.\d+)?) ', s, re.M)
 check('all sections and subsections match outline', found_headings == expected_headings)
+check('no ASCII-digit-prefixed H4 headings', not re.findall(r'^####\s+\d', s, re.M))
+check('links to ch24-ai-factory-capstone.json and all 6 case studies', all(
+    ref in s for ref in [
+        '../calculations/results/ch24-ai-factory-capstone.json',
+        '../case-studies/hundred-megawatt-ai-factory-capstone.md',
+        '../case-studies/opentallas.md',
+        '../case-studies/single-agent-serving-cost.md',
+        '../case-studies/hybrid-prefix-state.md',
+        '../case-studies/speculative-execution.md',
+        '../case-studies/accelerator-architecture.md',
+    ]
+))
 
 h2s = re.findall(r'^## (.+)$', s, re.M)
 check('last H2 is 本章小结', len(h2s) >= 5 and h2s[-1].strip() == '本章小结')

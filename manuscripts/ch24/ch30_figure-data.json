@@ -1,6 +1,6 @@
 {
-  "chapter": 30,
-  "title": "自演进 AI 基础设施（AI for AI Infra）：大模型驱动的算子自动合成、强化学习编译寻优与三十章全栈终极收束",
+  "chapter": 24,
+  "title": "全栈跨层优化与自演进系统（下）：大模型驱动的算子自动合成、强化学习编译寻优与百兆瓦智算工厂全栈终极收束",
   "kernelbench_rlvr": {
     "benchmark_tasks": 250,
     "feedback_iterations": 8,
@@ -29,21 +29,21 @@
     "six_month_saved_compute_usd_m": 13.5,
     "digital_twin_oversubscription_slowdown_pct": 21.4
   },
-  "grand_30chapter_ledger": {
-    "total_chapters": 30,
+  "hundred_mw_ai_factory_capstone": {
+    "total_chapters": 24,
     "total_parts": 5,
-    "total_lines_min": 43548,
-    "numbered_figures": 979,
-    "roadmap_unnumbered_figures": 1,
-    "total_figures": 980,
-    "python_code_blocks": 201,
-    "cpp_code_blocks": 1,
-    "total_typed_code_blocks": 202,
-    "worked_examples": 228,
-    "tables": 341,
-    "exercise_blocks": 492,
-    "unique_exercise_ids": 491,
-    "academic_footnotes": 812,
-    "runnable_experiments": 165
+    "facility_power_mw": 100.0,
+    "pue": 1.12,
+    "it_power_mw": 89.29,
+    "total_racks": 496,
+    "total_gpus": 35712,
+    "train_active_gpus": 28672,
+    "effective_train_eflops": 27.81,
+    "flagship_pretrain_days": 62.4,
+    "rlvr_days": 18.5,
+    "total_delivery_days": 80.9,
+    "daily_served_tokens_b": 216.5,
+    "net_cost_usd_per_mtok": 0.61,
+    "grid_gflop_per_joule": 377.89
   }
 }

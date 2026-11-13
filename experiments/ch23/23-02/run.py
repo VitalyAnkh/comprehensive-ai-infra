@@ -8,7 +8,7 @@ RESULTS_DIR = HERE / "results"
 
 
 def compute_telescoping_waterfall():
-    # Locked S0 -> S1 -> S2 -> S3 weight-read lower bound states from Ch14 Section 14.8.2 & calculations.json:
+    # Locked S0 -> S1 -> S2 -> S3 weight-read lower bound states from Ch23 Section 23.3.3 & calculations.json:
     # S0: 70B, 1 Byte/param (INT8/FP8) on H100 (3.35 TB/s) -> 70 / 3.35 = 20.895522 ms (displayed 20.90 ms)
     # S1: 8B, 1 Byte/param on H100 (3.35 TB/s) -> 8 / 3.35 = 2.388060 ms (displayed 2.39 ms, r1 = 70 / 8 = 8.75x)
     # S2: 8B, 0.5 Byte/param (FP4/INT4) on H100 (3.35 TB/s) -> 4 / 3.35 = 1.194030 ms (displayed 1.19 ms, r2 = 2.00x)

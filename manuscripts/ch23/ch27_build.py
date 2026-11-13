@@ -70,16 +70,14 @@ def draw_dual_band(
             box(ax, x, 0.13, w, 0.20, lbl, role, size=11)
         arrow(ax, (0.48, 0.23), (0.52, 0.23))
 
-    text(ax, 0.50, 0.06, footer, size=11, ha='center', weight='bold', color=COL['ink'])
+    text(ax, 0.50, 0.072, footer, size=11, ha='center', weight='bold', color=COL['ink'])
     ex.save(fig, stem)
 
 
-def build_chapter() -> None:
-    ex = Exporter(HERE)
-
+def build_part3(ex: Exporter) -> None:
     draw_dual_band(
         ex,
-        'ch27-sram-wafer-scale-vs-hbm-gpu-memory-wall-comparison',
+        'ch23-sram-wafer-scale-vs-hbm-gpu-memory-wall-comparison',
         '70B 模型解码：4xH100 HBM（164.7）vs. 片上 SRAM（1,850 tok/s）',
         'blue',
         [
@@ -98,7 +96,7 @@ def build_chapter() -> None:
 
     draw_dual_band(
         ex,
-        'ch27-cerebras-wse3-wafer-scale-noc-and-weight-streaming',
+        'ch23-cerebras-wse3-wafer-scale-noc-and-weight-streaming',
         'Cerebras WSE-3 晶圆级芯片（44 GB SRAM / 90 万核心）网格',
         'purple',
         [
@@ -117,7 +115,7 @@ def build_chapter() -> None:
 
     draw_dual_band(
         ex,
-        'ch27-groq-lpu-320-chip-deterministic-daisy-chain-pipeline',
+        'ch23-groq-lpu-320-chip-deterministic-daisy-chain-pipeline',
         'Groq LPU 320 颗芯片（230 MB/颗）全片上 SRAM 菊花链流水线',
         'teal',
         [
@@ -136,7 +134,7 @@ def build_chapter() -> None:
 
     draw_dual_band(
         ex,
-        'ch27-3d-stacked-sram-soic-tsv-thermal-and-bandwidth-model',
+        'ch23-3d-stacked-sram-soic-tsv-thermal-and-bandwidth-model',
         '3D 垂直堆叠 SRAM（TSMC SoIC 8 层 1.5 GB）与热阻耦合模型',
         'blue',
         [
@@ -155,7 +153,7 @@ def build_chapter() -> None:
 
     draw_dual_band(
         ex,
-        'ch27-sram-asic-vs-hbm-gpu-tco-crossover-by-batch-size',
+        'ch23-sram-asic-vs-hbm-gpu-tco-crossover-by-batch-size',
         '片上 SRAM 阵列与 HBM GPU 的并发度—成本交叉点（B*=14.2）',
         'purple',
         [
@@ -174,7 +172,7 @@ def build_chapter() -> None:
 
     draw_dual_band(
         ex,
-        'ch27-hardware-dynamic-arbitration-vs-cycle-accurate-compiler',
+        'ch23-hardware-dynamic-arbitration-vs-cycle-accurate-compiler',
         '动态硬件缓存/路由仲裁 vs. 静态编译期周期精确确定性执行',
         'teal',
         [
@@ -193,7 +191,7 @@ def build_chapter() -> None:
 
     draw_dual_band(
         ex,
-        'ch27-software-scheduled-tensor-stream-instruction-alignment',
+        'ch23-software-scheduled-tensor-stream-instruction-alignment',
         '跨 320 颗 SRAM 芯片的周期精确流寄存器对齐（偏差 <= 2 ns）',
         'blue',
         [
@@ -212,7 +210,7 @@ def build_chapter() -> None:
 
     draw_dual_band(
         ex,
-        'ch27-sub-millisecond-hft-ai-kernel-bypass-nic-to-gpu-p2p',
+        'ch23-sub-millisecond-hft-ai-kernel-bypass-nic-to-gpu-p2p',
         '亚毫秒级（16.5 us）高频量化 AI：网卡内核旁路 P2P 直写显存',
         'purple',
         [
@@ -231,7 +229,7 @@ def build_chapter() -> None:
 
     draw_dual_band(
         ex,
-        'ch27-cuda-launch-overhead-vs-persistent-polling-megakernel',
+        'ch23-cuda-launch-overhead-vs-persistent-polling-megakernel',
         '持久化轮询超级内核（Persistent Megakernel）：0 us 启动开销',
         'teal',
         [
@@ -250,26 +248,26 @@ def build_chapter() -> None:
 
     draw_dual_band(
         ex,
-        'ch27-linux-isolcpus-rt-throttling-and-p9999-tail-latency',
-        'Linux 核心物理隔离（isolcpus）与 P99.99 尾延迟猎杀（24.8 us）',
+        'ch23-linux-isolcpus-rt-throttling-and-p9999-tail-latency',
+        'Linux 核心物理隔离（isolcpus）与 P99.99 尾延迟抑制（24.8 us）',
         'blue',
         [
             ('① 物理核心隔离\nisolcpus + nohz_full\n剥离 OS 调度时钟', 'blue'),
             ('② 屏蔽核间中断\n网卡 IRQ 绑定专核\n关停 C-State 休眠', 'purple'),
-            ('③ P99.99 锁 24.8 us\n较 420 us 降 16.94x\n收窄 P50-P9999 距', 'teal'),
+            ('③ P99.99 控 24.8 us\n较 420 us 降 16.94x\n收窄 P50-P9999 距', 'teal'),
         ],
         '未隔离标准 Linux 环境（P99.99=420 us）vs. 实时核隔离环境对比',
         'teal',
         [
             ('标准操作系统后台噪声源：\n1kHz 时钟中断、RCU 回调与缺页\n打断推理线程造成百微秒尖峰', 'orange'),
-            ('无滴答独占核 + 显存持久驻留：\n推理全链路不经过任何 OS 调度器\nP99.99 尾延迟被死死钉在 24.8 us', 'teal'),
+            ('无滴答独占核 + 显存持久驻留：\n推理全链路不经过任何 OS 调度器\nP99.99 尾延迟严格受控在 24.8 us', 'teal'),
         ],
         '结合 GPU 持久轮询与 CPU 核隔离，实现 16.94 倍 P99.99 尾延迟削减',
     )
 
     draw_dual_band(
         ex,
-        'ch27-bitnet-b158-ternary-weight-packing-5trits-per-byte',
+        'ch23-bitnet-b158-ternary-weight-packing-5trits-per-byte',
         'BitNet b1.58 三值权重（{-1, 0, +1}）5-Trits-per-Byte 编码',
         'purple',
         [
@@ -288,7 +286,7 @@ def build_chapter() -> None:
 
     draw_dual_band(
         ex,
-        'ch27-fp16-mac-unit-vs-ternary-adder-tree-silicon-area-energy',
+        'ch23-fp16-mac-unit-vs-ternary-adder-tree-silicon-area-energy',
         '硬件乘加器革命：从 FP16 浮点乘法器到 BitNet 纯整数加法树',
         'teal',
         [
@@ -299,7 +297,7 @@ def build_chapter() -> None:
         '为什么三值量化能从物理底层改写 AI 芯片的硅片面积与能效极限？',
         'purple',
         [
-            ('浮点乘法器的晶体管与功耗霸权：\n16 位乘法树占算术单元 80% 功耗\n限制了端侧与 3D 堆叠芯片的热密度', 'orange'),
+            ('浮点乘法器的晶体管与功耗占比：\n16 位乘法树占算术单元 80% 功耗\n限制了端侧与 3D 堆叠芯片的热密度', 'orange'),
             ('多路选择器 + 纯整数加法器：\n权重为 0 直接门控关断零翻转\n单位硅片面积算力密度跃升十倍', 'teal'),
         ],
         '彻底消灭矩阵乘中的硬件乘法器，将计算简化为符号多路选择与纯加法归约',
@@ -307,7 +305,7 @@ def build_chapter() -> None:
 
     draw_dual_band(
         ex,
-        'ch27-tmac-precomputed-activation-lut-simd-pshufb-kernel',
+        'ch23-tmac-precomputed-activation-lut-simd-pshufb-kernel',
         'T-MAC 预计算激活查找表（g=4）与 SIMD 寄存器洗牌（pshufb）',
         'blue',
         [
@@ -326,7 +324,7 @@ def build_chapter() -> None:
 
     draw_dual_band(
         ex,
-        'ch27-bitblas-mixed-precision-w158a8-tensor-core-dequant',
+        'ch23-bitblas-mixed-precision-w158a8-tensor-core-dequant',
         'BitBLAS 面向 GPU Tensor Core 的 W1.58A8 寄存器级软件流水',
         'purple',
         [
@@ -345,7 +343,7 @@ def build_chapter() -> None:
 
     draw_dual_band(
         ex,
-        'ch27-ultra-low-latency-and-1bit-inference-pareto-frontier',
+        'ch23-ultra-low-latency-and-1bit-inference-pareto-frontier',
         '超低延迟与三值量化协同：14 GB 70B 模型装入单颗 3D-SRAM',
         'teal',
         [
@@ -364,22 +362,26 @@ def build_chapter() -> None:
 
     draw_dual_band(
         ex,
-        'ch27-extreme-latency-and-ternary-computing-synthesis',
-        '第 27 章全景：晶圆级/3D-SRAM 架构与静态确定性编译（上）',
+        'ch23-extreme-latency-and-ternary-computing-synthesis',
+        '专用架构与极低比特全景：片上 SRAM 阵列与静态确定性编译（上）',
         'blue',
         [
-            ('27.1 全片上 SRAM 架构：\n21 PB/s 带宽跑出 1,850 tok/s\n并发交叉点 B*=14.2 与 3D-SRAM', 'blue'),
-            ('27.2 静态确定性编译器：\n零缓存未命中与零路由包仲裁\n320 芯片 ±2 ns 锁步零排队抖动', 'purple'),
+            ('23.6.1 全片上 SRAM 架构：\n21 PB/s 带宽跑出 1,850 tok/s\n并发交叉点 B*=14.2 与 3D-SRAM', 'blue'),
+            ('23.6.2 静态确定性编译器：\n零缓存未命中与零路由包仲裁\n320 芯片 ±2 ns 锁步零排队抖动', 'purple'),
         ],
-        '第 27 章全景：微秒级高频 AI 系统与 BitNet 三值量化（下）',
+        '专用架构与极低比特全景：微秒级实时链路与 BitNet 三值量化（下）',
         'teal',
         [
-            ('27.3 微秒级高频 AI 推理：\nef_vi P2P + 持久轮询 Megakernel\nP50 16.5 us 且 P99.99 锁 24.8 us', 'blue'),
-            ('27.4 BitNet b1.58 与 T-MAC：\n5 权重/Byte 将 70B 压至 14.0 GB\nSIMD 查找表实现 6.4x 提速省电', 'teal'),
+            ('23.6.3 微秒级实时 AI 推理：\nef_vi P2P + 持久轮询 Megakernel\nP50 16.5 us 且 P99.99 控 24.8 us', 'blue'),
+            ('23.6.4 BitNet b1.58 与 T-MAC：\n5 权重/Byte 将 70B 压至 14.0 GB\nSIMD 查找表实现 6.4x 提速省电', 'teal'),
         ],
         '从片上 SRAM 驻留、静态确定性编译、持久轮询到三值量化全栈贯通',
     )
 
+
+def build_chapter() -> None:
+    ex = Exporter(HERE)
+    build_part3(ex)
     outputs = ex.finish()
 
     fig_index = [
@@ -539,7 +541,7 @@ def build_chapter() -> None:
             "file": "ch27-extreme-latency-and-ternary-computing-synthesis.svg",
             "asset": "ch27/ch27-extreme-latency-and-ternary-computing-synthesis.svg",
             "section": "27.4.2",
-            "caption": "第 27 章系统工程全景图：从晶圆级/3D-SRAM 全片上驻留、静态确定性编译、微秒级内核旁路持久轮询到 BitNet b1.58 查找表计算",
+            "caption": "晶圆级与 3D-SRAM 专用推理架构（23.5–23.6 节）系统工程全景图：从全片上驻留、静态确定性编译、微秒级内核旁路持久轮询到 BitNet b1.58 查找表计算",
             "source_refs": ["manuscripts/ch27/figure-data.json"],
             "TeachingRole": "收束全章四大支柱，总结突破内存带宽墙、调度抖动墙与乘法器能耗墙的统一工程法则"
         }
@@ -589,7 +591,7 @@ def build_chapter() -> None:
 
         work = re.sub(r'!\[([^\]]*)\]\((ch27/[^)]+)\)', repl_img, text_md)
         body = markdown.markdown(work, extensions=['tables', 'fenced_code', 'footnotes', 'toc'])
-        html = f'<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>第 27 章：晶圆级与 3D-SRAM 专用推理芯片（Cerebras-Groq）、微秒级极低延迟 AI 与三值量化（BitNet b1.58）系统</title></head><body>{body}</body></html>\n'
+        html = f'<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>第 23 章（23.5–23.6 节）：晶圆级与 3D-SRAM 专用推理及极低比特架构</title></head><body>{body}</body></html>\n'
         out_html = preview_path(md)
         out_html.write_text(html)
 

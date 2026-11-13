@@ -6,7 +6,9 @@
     "title": "DeepSeek 开源基础设施七大支柱全栈架构图：算子层（FlashMLA、DeepGEMM）、通信与流水层（DeepEP、DualPipe）、存储与数据层（3FS、Smallpond）及推理部署层（Mooncake、KTransformers）",
     "file": "ch24-deepseek-open-infra-seven-pillar-fullstack-architecture.svg",
     "asset": "ch24/ch24-deepseek-open-infra-seven-pillar-fullstack-architecture.svg",
-    "name": "ch24-deepseek-open-infra-seven-pillar-fullstack-architecture"
+    "name": "ch24-deepseek-open-infra-seven-pillar-fullstack-architecture",
+    "section": "24.1",
+    "caption": "DeepSeek 开源基础设施七大支柱全栈架构图：算子层（FlashMLA、DeepGEMM）、通信与流水层（DeepEP、DualPipe）、存储与数据层（3FS、Smallpond）及推理部署层（Mooncake、KTransformers）"
   },
   {
     "number": "24-2",
@@ -15,7 +17,9 @@
     "title": "FlashMLA 深度解剖：矩阵吸收后 [512+64] 非对称头维（1,152 B/token，压缩 28.44 倍）与双消费者 Warpgroup 乒乓流水线（H800 实测 3,000 GB/s 与 580 TFLOPS）（算例 24-1）",
     "file": "ch24-flashmla-512-plus-64-pingpong-warpgroup-pipeline.svg",
     "asset": "ch24/ch24-flashmla-512-plus-64-pingpong-warpgroup-pipeline.svg",
-    "name": "ch24-flashmla-512-plus-64-pingpong-warpgroup-pipeline"
+    "name": "ch24-flashmla-512-plus-64-pingpong-warpgroup-pipeline",
+    "section": "24.1.1",
+    "caption": "FlashMLA 深度解剖：矩阵吸收后 [512+64] 非对称头维（1,152 B/token，压缩 28.44 倍）与双消费者 Warpgroup 乒乓流水线（H800 实测 3,000 GB/s 与 580 TFLOPS）（算例 24-1）"
   },
   {
     "number": "24-3",
@@ -24,7 +28,9 @@
     "title": "FlashMLA 变长序列持久块调度（Split-KV Load Balancer）：按全局 KV 块定额动态切分长短请求并通过在线 LogSumExp 归约消除 SM 尾块空转",
     "file": "ch24-flashmla-variable-length-split-kv-load-balancer.svg",
     "asset": "ch24/ch24-flashmla-variable-length-split-kv-load-balancer.svg",
-    "name": "ch24-flashmla-variable-length-split-kv-load-balancer"
+    "name": "ch24-flashmla-variable-length-split-kv-load-balancer",
+    "section": "24.1.1",
+    "caption": "FlashMLA 变长序列持久块调度（Split-KV Load Balancer）：按全局 KV 块定额动态切分长短请求并通过在线 LogSumExp 归约消除 SM 尾块空转"
   },
   {
     "number": "24-4",
@@ -33,7 +39,9 @@
     "title": "DeepGEMM 运行期 JIT 形状常量化对比：将矩阵维数与分块步长编译为 PTX 立即数，单线程寄存器占用从 248 个降至 192 个（节省 56 个寄存器）（算例 24-2）",
     "file": "ch24-deepgemm-runtime-jit-shape-constant-specialization.svg",
     "asset": "ch24/ch24-deepgemm-runtime-jit-shape-constant-specialization.svg",
-    "name": "ch24-deepgemm-runtime-jit-shape-constant-specialization"
+    "name": "ch24-deepgemm-runtime-jit-shape-constant-specialization",
+    "section": "24.1.2",
+    "caption": "DeepGEMM 运行期 JIT 形状常量化对比：将矩阵维数与分块步长编译为 PTX 立即数，单线程寄存器占用从 248 个降至 192 个（节省 56 个寄存器）（算例 24-2）"
   },
   {
     "number": "24-5",
@@ -42,7 +50,9 @@
     "title": "DeepGEMM FP8 细粒度（1x128 激活与 128x128 权重）二级累加流水线：每 128 个 Tensor Core 周期插入 4 周期 CUDA Core FFMA（开销仅 3.12%），跑出 1,358 TFLOPS（算例 24-2）",
     "file": "ch24-deepgemm-fp8-1x128-128x128-two-level-ffma-accumulation.svg",
     "asset": "ch24/ch24-deepgemm-fp8-1x128-128x128-two-level-ffma-accumulation.svg",
-    "name": "ch24-deepgemm-fp8-1x128-128x128-two-level-ffma-accumulation"
+    "name": "ch24-deepgemm-fp8-1x128-128x128-two-level-ffma-accumulation",
+    "section": "24.1.2",
+    "caption": "DeepGEMM FP8 细粒度（1x128 激活与 128x128 权重）二级累加流水线：每 128 个 Tensor Core 周期插入 4 周期 CUDA Core FFMA（开销仅 3.12%），跑出 1,358 TFLOPS（算例 24-2）"
   },
   {
     "number": "24-6",
@@ -51,7 +61,9 @@
     "title": "DeepEP Normal 模式（面向预填充与训练）：机内 NVLink 预聚合与机间 RDMA 流水转发协同，仅占 24 个 SM 实现 153 GB/s 跨节点 All-to-All 吞吐（算例 24-3）",
     "file": "ch24-deepep-normal-mode-nvlink-rdma-hybrid-forwarding.svg",
     "asset": "ch24/ch24-deepep-normal-mode-nvlink-rdma-hybrid-forwarding.svg",
-    "name": "ch24-deepep-normal-mode-nvlink-rdma-hybrid-forwarding"
+    "name": "ch24-deepep-normal-mode-nvlink-rdma-hybrid-forwarding",
+    "section": "24.2.1",
+    "caption": "DeepEP Normal 模式（面向预填充与训练）：机内 NVLink 预聚合与机间 RDMA 流水转发协同，仅占 24 个 SM 实现 153 GB/s 跨节点 All-to-All 吞吐（算例 24-3）"
   },
   {
     "number": "24-7",
@@ -60,16 +72,20 @@
     "title": "DeepEP Low-Latency 模式（面向在线解码）：基于纯 IBGDA 门铃直写与后台 Hook 完成位轮询，在 0 个 SM 占用下实现 163 us Dispatch 与 194 us Combine（算例 24-3）",
     "file": "ch24-deepep-low-latency-ibgda-zero-sm-hook-overlap.svg",
     "asset": "ch24/ch24-deepep-low-latency-ibgda-zero-sm-hook-overlap.svg",
-    "name": "ch24-deepep-low-latency-ibgda-zero-sm-hook-overlap"
+    "name": "ch24-deepep-low-latency-ibgda-zero-sm-hook-overlap",
+    "section": "24.2.1",
+    "caption": "DeepEP Low-Latency 模式（面向在线解码）：基于纯 IBGDA 门铃直写与后台 Hook 完成位轮询，在 0 个 SM 占用下实现 163 us Dispatch 与 194 us Combine（算例 24-3）"
   },
   {
     "number": "24-8",
     "figure": "24-8",
     "figure_id": "24-8",
-    "title": "DualPipe 双向流水线时间表（PP=16，双向注入 2M=32 微批）：相向微批正反交错使流水气泡减半，并将跨节点专家通信 100% 掩盖在另一方向的矩阵计算之下（算例 24-4）",
+    "title": "DualPipe 双向流水线时间表（PP=16，两端各注入 M_half=16、总计 M=32 微批）：相向微批正反交错使流水空泡槽减半，并将跨节点专家通信 100% 掩盖在另一方向的矩阵计算之下（算例 24-4）",
     "file": "ch24-dualpipe-bidirectional-pipeline-schedule-and-20-stage-grid.svg",
     "asset": "ch24/ch24-dualpipe-bidirectional-pipeline-schedule-and-20-stage-grid.svg",
-    "name": "ch24-dualpipe-bidirectional-pipeline-schedule-and-20-stage-grid"
+    "name": "ch24-dualpipe-bidirectional-pipeline-schedule-and-20-stage-grid",
+    "section": "24.2.2",
+    "caption": "DualPipe 双向流水线时间表（PP=16，两端各注入 M_half=16、总计 M=32 微批）：相向微批正反交错使流水空泡槽减半，并将跨节点专家通信 100% 掩盖在另一方向的矩阵计算之下（算例 24-4）"
   },
   {
     "number": "24-9",
@@ -78,7 +94,9 @@
     "title": "DualPipe 细粒度反向传播拆分：将 Backward 解耦为输入梯度（B 块，激活上游流水）与无跨层依赖的权重梯度（W 块，填充通信等待窗口）",
     "file": "ch24-dualpipe-fine-grained-backward-input-weight-split.svg",
     "asset": "ch24/ch24-dualpipe-fine-grained-backward-input-weight-split.svg",
-    "name": "ch24-dualpipe-fine-grained-backward-input-weight-split"
+    "name": "ch24-dualpipe-fine-grained-backward-input-weight-split",
+    "section": "24.2.2",
+    "caption": "DualPipe 细粒度反向传播拆分：将 Backward 解耦为输入梯度（B 块，激活上游流水）与无跨层依赖的权重梯度（W 块，填充通信等待窗口）"
   },
   {
     "number": "24-10",
@@ -87,7 +105,9 @@
     "title": "3FS（Fire-Flyer File System）架构：链式复制（CRAQ）强一致多副本并发读状态机与 O_DIRECT + USRBIO 用户态零拷贝异步环形队列",
     "file": "ch24-3fs-craq-chain-replication-and-usrbio-zero-copy-ring.svg",
     "asset": "ch24/ch24-3fs-craq-chain-replication-and-usrbio-zero-copy-ring.svg",
-    "name": "ch24-3fs-craq-chain-replication-and-usrbio-zero-copy-ring"
+    "name": "ch24-3fs-craq-chain-replication-and-usrbio-zero-copy-ring",
+    "section": "24.3.1",
+    "caption": "3FS（Fire-Flyer File System）架构：链式复制（CRAQ）强一致多副本并发读状态机与 O_DIRECT + USRBIO 用户态零拷贝异步环形队列"
   },
   {
     "number": "24-11",
@@ -96,7 +116,9 @@
     "title": "3FS 180 台存储节点（2,880 块 NVMe SSD + 360 张 200G 网卡）实测：持续输出 6.60 TB/s 聚合随机读吞吐，并在 30 min 14 s 内完成 110.5 TiB GraySort 排序（算例 24-5）",
     "file": "ch24-3fs-180-node-6600gbs-throughput-and-graysort-pipeline.svg",
     "asset": "ch24/ch24-3fs-180-node-6600gbs-throughput-and-graysort-pipeline.svg",
-    "name": "ch24-3fs-180-node-6600gbs-throughput-and-graysort-pipeline"
+    "name": "ch24-3fs-180-node-6600gbs-throughput-and-graysort-pipeline",
+    "section": "24.3.1",
+    "caption": "3FS 180 台存储节点（2,880 块 NVMe SSD + 360 张 200G 网卡）实测：持续输出 6.60 TB/s 聚合随机读吞吐，并在 30 min 14 s 内完成 110.5 TiB GraySort 排序（算例 24-5）"
   },
   {
     "number": "24-12",
@@ -105,7 +127,9 @@
     "title": "Smallpond 轻量级数据框架：基于 DuckDB 向量化列式引擎与 3FS 共享分区洗牌池的无常驻服务（Serverless）PB 级 Parquet 数据处理流水线",
     "file": "ch24-smallpond-duckdb-on-3FS-serverless-parquet-shuffle.svg",
     "asset": "ch24/ch24-smallpond-duckdb-on-3FS-serverless-parquet-shuffle.svg",
-    "name": "ch24-smallpond-duckdb-on-3FS-serverless-parquet-shuffle"
+    "name": "ch24-smallpond-duckdb-on-3FS-serverless-parquet-shuffle",
+    "section": "24.3.2",
+    "caption": "Smallpond 轻量级数据框架：基于 DuckDB 向量化列式引擎与 3FS 共享分区洗牌池的无常驻服务（Serverless）PB 级 Parquet 数据处理流水线"
   },
   {
     "number": "24-13",
@@ -114,16 +138,20 @@
     "title": "Mooncake Transfer Engine 架构：跨 HBM、主机 DRAM 与 NVMe SSD 的多网卡 RDMA 拓扑感知全局 KV 缓存池与零拷贝 P-D 传输通路",
     "file": "ch24-mooncake-transfer-engine-multi-nic-rdma-kv-pool.svg",
     "asset": "ch24/ch24-mooncake-transfer-engine-multi-nic-rdma-kv-pool.svg",
-    "name": "ch24-mooncake-transfer-engine-multi-nic-rdma-kv-pool"
+    "name": "ch24-mooncake-transfer-engine-multi-nic-rdma-kv-pool",
+    "section": "24.4.1",
+    "caption": "Mooncake Transfer Engine 架构：跨 HBM、主机 DRAM 与 NVMe SSD 的多网卡 RDMA 拓扑感知全局 KV 缓存池与零拷贝 P-D 传输通路"
   },
   {
     "number": "24-14",
     "figure": "24-14",
     "figure_id": "24-14",
-    "title": "Mooncake 基于排队延迟与 KV 池水位预测的提前拒绝（Early Rejection）准入控制器：防止过载级联雪崩并将 SLA 合规有效吞吐（Goodput）提升 2.1 倍",
+    "title": "Mooncake 基于排队延迟与 KV 池容量占用率预测的提前拒绝（Early Rejection）准入控制器：防止过载级联雪崩并将 SLA 合规有效吞吐（Goodput）提升 2.1 倍",
     "file": "ch24-mooncake-early-rejection-and-sla-goodput-controller.svg",
     "asset": "ch24/ch24-mooncake-early-rejection-and-sla-goodput-controller.svg",
-    "name": "ch24-mooncake-early-rejection-and-sla-goodput-controller"
+    "name": "ch24-mooncake-early-rejection-and-sla-goodput-controller",
+    "section": "24.4.1",
+    "caption": "Mooncake 基于排队延迟与 KV 池容量占用率预测的提前拒绝（Early Rejection）准入控制器：防止过载级联雪崩并将 SLA 合规有效吞吐（Goodput）提升 2.1 倍"
   },
   {
     "number": "24-15",
@@ -132,7 +160,9 @@
     "title": "KTransformers 异构卸载架构：单张 24 GB RTX 4090D（驻留 19.2 GB MLA 与共享专家）配合双路 Xeon DDR5（680 GB/s）+ AMX 原位计算 256 个路由专家，实现预填充 286.4 tok/s、解码 18.6 tok/s（提速 13.8 倍）（算例 24-6）",
     "file": "ch24-ktransformers-gpu-mla-and-cpu-amx-numa-expert-offload.svg",
     "asset": "ch24/ch24-ktransformers-gpu-mla-and-cpu-amx-numa-expert-offload.svg",
-    "name": "ch24-ktransformers-gpu-mla-and-cpu-amx-numa-expert-offload"
+    "name": "ch24-ktransformers-gpu-mla-and-cpu-amx-numa-expert-offload",
+    "section": "24.4.2",
+    "caption": "KTransformers 异构卸载架构：单张 24 GB RTX 4090D（驻留 19.2 GB MLA 与共享专家）配合双路 Xeon DDR5（680 GB/s）+ AMX 原位计算 256 个路由专家，实现预填充 286.4 tok/s、解码 18.6 tok/s（提速 13.8 倍）（算例 24-6）"
   },
   {
     "number": "24-16",
@@ -141,150 +171,184 @@
     "title": "第 24 章系统工程全景图：DeepSeek 开源基础设施全栈（FlashMLA、DeepGEMM、DeepEP、DualPipe、3FS、Smallpond、Mooncake、KTransformers）核心性能锚点总览",
     "file": "ch24-deepseek-fullstack-cost-and-efficiency-synthesis.svg",
     "asset": "ch24/ch24-deepseek-fullstack-cost-and-efficiency-synthesis.svg",
-    "name": "ch24-deepseek-fullstack-cost-and-efficiency-synthesis"
+    "name": "ch24-deepseek-fullstack-cost-and-efficiency-synthesis",
+    "section": "24.4.2",
+    "caption": "第 24 章系统工程全景图：DeepSeek 开源基础设施全栈（FlashMLA、DeepGEMM、DeepEP、DualPipe、3FS、Smallpond、Mooncake、KTransformers）核心性能锚点总览"
   },
   {
     "number": "24-17",
     "figure": "24-17",
     "figure_id": "24-17",
-    "title": "大模型驱动的 GPU 内核自动合成闭环架构",
+    "title": "大模型驱动的 GPU 内核自动合成（Kevin / KernelBench 多轮反馈架构）：通过“语法编译校验—多形状数值等价门控—Nsight Compute 硬件计数器剖析反馈”的 8 轮强化学习迭代，将算子正确率从 34.0% 推升至 94.8%",
     "file": "ch24-llm-rlvr-gpu-kernel-synthesis-closed-loop-architecture.svg",
     "asset": "ch24/ch24-llm-rlvr-gpu-kernel-synthesis-closed-loop-architecture.svg",
-    "name": "ch24-llm-rlvr-gpu-kernel-synthesis-closed-loop-architecture"
+    "name": "ch24-llm-rlvr-gpu-kernel-synthesis-closed-loop-architecture",
+    "section": "24.5.1",
+    "caption": "大模型驱动的 GPU 内核自动合成（Kevin / KernelBench 多轮反馈架构）：通过“语法编译校验—多形状数值等价门控—Nsight Compute 硬件计数器剖析反馈”的 8 轮强化学习迭代，将算子正确率从 34.0% 推升至 94.8%"
   },
   {
     "number": "24-18",
     "figure": "24-18",
     "figure_id": "24-18",
-    "title": "Nsight Compute 屋脊线与 Warp Stall 硬件反馈提示词构造",
+    "title": "Nsight Compute 硬件剖析反馈回路：将屋脊线坐标、寄存器溢出量、Shared Memory Bank 冲突率与 Warp 停顿原因结构化注入下一轮推理上下文，将黑盒报错转化为精确的微架构重写指令",
     "file": "ch24-nsight-compute-roofline-and-warp-stall-feedback-prompt.svg",
     "asset": "ch24/ch24-nsight-compute-roofline-and-warp-stall-feedback-prompt.svg",
-    "name": "ch24-nsight-compute-roofline-and-warp-stall-feedback-prompt"
+    "name": "ch24-nsight-compute-roofline-and-warp-stall-feedback-prompt",
+    "section": "24.5.1",
+    "caption": "Nsight Compute 硬件剖析反馈回路：将屋脊线坐标、寄存器溢出量、Shared Memory Bank 冲突率与 Warp 停顿原因结构化注入下一轮推理上下文，将黑盒报错转化为精确的微架构重写指令"
   },
   {
     "number": "24-19",
     "figure": "24-19",
     "figure_id": "24-19",
-    "title": "KernelBench 多轮进化正确率与加速比收敛曲线",
+    "title": "KernelBench 250 个算子基准上的 8 轮进化曲线：从第 1 轮零样本到第 8 轮 Nsight 反馈迭代，编译与数值正确率从 34.0% 跃升至 94.8%，长尾融合算子平均较 PyTorch Eager 提速 3.42 倍、较 torch.compile 提速 1.58 倍",
     "file": "ch24-kernelbench-multi-turn-evolution-accuracy-and-speedup.svg",
     "asset": "ch24/ch24-kernelbench-multi-turn-evolution-accuracy-and-speedup.svg",
-    "name": "ch24-kernelbench-multi-turn-evolution-accuracy-and-speedup"
+    "name": "ch24-kernelbench-multi-turn-evolution-accuracy-and-speedup",
+    "section": "24.5.1",
+    "caption": "KernelBench 250 个算子基准上的 8 轮进化曲线：从第 1 轮零样本到第 8 轮 Nsight 反馈迭代，编译与数值正确率从 34.0% 跃升至 94.8%，长尾融合算子平均较 PyTorch Eager 提速 3.42 倍、较 torch.compile 提速 1.58 倍"
   },
   {
     "number": "24-20",
     "figure": "24-20",
     "figure_id": "24-20",
-    "title": "自动发现的寄存器级融合与非对称分块对比人类手写内核",
+    "title": "RLVR 智能体自主发现的微架构优化：通过将 RoPE 与 FP8 动态量化直接内联进矩阵乘寄存器尾声，消除 38.4 GB/s 中间激活 HBM 落盘，并发现 BM=128、BN=192 的非对称分块甜点",
     "file": "ch24-auto-discovered-register-fusion-vs-human-handwritten-kernel.svg",
     "asset": "ch24/ch24-auto-discovered-register-fusion-vs-human-handwritten-kernel.svg",
-    "name": "ch24-auto-discovered-register-fusion-vs-human-handwritten-kernel"
+    "name": "ch24-auto-discovered-register-fusion-vs-human-handwritten-kernel",
+    "section": "24.5.2",
+    "caption": "RLVR 智能体自主发现的微架构优化：通过将 RoPE 与 FP8 动态量化直接内联进矩阵乘寄存器尾声，消除 38.4 GB/s 中间激活 HBM 落盘，并发现 BM=128、BN=192 的非对称分块甜点"
   },
   {
     "number": "24-21",
     "figure": "24-21",
     "figure_id": "24-21",
-    "title": "ILP 与 MCTS 联合求解 5D 混合并行与集合通信树架构图",
+    "title": "基于两级优化（外层 MCTS 搜索流水阶段切分与网格形状 + 内层 ILP 整数线性规划求解算子级重分片策略）的 5D 自动并行编译器架构",
     "file": "ch24-ilp-mcts-5d-auto-parallelism-and-collective-tree-search.svg",
     "asset": "ch24/ch24-ilp-mcts-5d-auto-parallelism-and-collective-tree-search.svg",
-    "name": "ch24-ilp-mcts-5d-auto-parallelism-and-collective-tree-search"
+    "name": "ch24-ilp-mcts-5d-auto-parallelism-and-collective-tree-search",
+    "section": "24.6.1",
+    "caption": "基于两级优化（外层 MCTS 搜索流水阶段切分与网格形状 + 内层 ILP 整数线性规划求解算子级重分片策略）的 5D 自动并行编译器架构"
   },
   {
     "number": "24-22",
     "figure": "24-22",
     "figure_id": "24-22",
-    "title": "AlphaChip 强化学习芯片宏单元布局与线长优化示意图",
+    "title": "AlphaChip 芯片物理布局强化学习：利用图神经网络表征网表拓扑并在硅片网格上序贯摆放 SRAM 宏单元，在商用 TPU 流片中将片上走线长度缩减 14.2%",
     "file": "ch24-alphachip-rl-macro-placement-and-wirelength-optimization.svg",
     "asset": "ch24/ch24-alphachip-rl-macro-placement-and-wirelength-optimization.svg",
-    "name": "ch24-alphachip-rl-macro-placement-and-wirelength-optimization"
+    "name": "ch24-alphachip-rl-macro-placement-and-wirelength-optimization",
+    "section": "24.6.2",
+    "caption": "AlphaChip 芯片物理布局强化学习：利用图神经网络表征网表拓扑并在硅片网格上序贯摆放 SRAM 宏单元，在商用 TPU 流片中将片上走线长度缩减 14.2%"
   },
   {
     "number": "24-23",
     "figure": "24-23",
     "figure_id": "24-23",
-    "title": "算子级 DVFS 频率缩放与能量延迟积寻优图",
+    "title": "算子级动态电压频率调节（Per-Kernel DVFS）：对访存与通信受限算子自动下调 SM 核心频率 18%，在端到端耗时仅增加 0.72% 的前提下，将动态功耗大幅削减 26.5%",
     "file": "ch24-per-kernel-dvfs-frequency-scaling-energy-delay-product.svg",
     "asset": "ch24/ch24-per-kernel-dvfs-frequency-scaling-energy-delay-product.svg",
-    "name": "ch24-per-kernel-dvfs-frequency-scaling-energy-delay-product"
+    "name": "ch24-per-kernel-dvfs-frequency-scaling-energy-delay-product",
+    "section": "24.6.2",
+    "caption": "算子级动态电压频率调节（Per-Kernel DVFS）：对访存与通信受限算子自动下调 SM 核心频率 18%，在端到端耗时仅增加 0.72% 的前提下，将动态功耗大幅削减 26.5%"
   },
   {
     "number": "24-24",
     "figure": "24-24",
     "figure_id": "24-24",
-    "title": "自治 AIOps 慢节点与 PFC 根因时空图诊断架构",
+    "title": "十万卡智算中心自治 AIOps 多智能体根因诊断（Autonomous RCA）：融合 DCGM 毫秒级硬件遥测、NCCL Flight Recorder 环路延迟偏度与交换机光模块 SNR/FEC 计数器，在时空因果图上秒级锁定肇事慢卡与拥塞端口",
     "file": "ch24-autonomous-aiops-straggler-and-pfc-root-cause-graph.svg",
     "asset": "ch24/ch24-autonomous-aiops-straggler-and-pfc-root-cause-graph.svg",
-    "name": "ch24-autonomous-aiops-straggler-and-pfc-root-cause-graph"
+    "name": "ch24-autonomous-aiops-straggler-and-pfc-root-cause-graph",
+    "section": "24.7.1",
+    "caption": "十万卡智算中心自治 AIOps 多智能体根因诊断（Autonomous RCA）：融合 DCGM 毫秒级硬件遥测、NCCL Flight Recorder 环路延迟偏度与交换机光模块 SNR/FEC 计数器，在时空因果图上秒级锁定肇事慢卡与拥塞端口"
   },
   {
     "number": "24-25",
     "figure": "24-25",
     "figure_id": "24-25",
-    "title": "亚分钟级故障自愈 MTTR 压缩 360 倍与 ETTR 收益图",
+    "title": "自治 AIOps 自愈管线的经济与算力账本：将隐性故障 MTTR 从人工 4.20 小时压缩 360 倍至 42.0 秒，使 32,768 卡集群的有效训练时间比（ETTR）从 88.4% 跃升至 97.8%，半年直接挽回 1,350 万美元等效算力",
     "file": "ch24-sub-minute-fault-isolation-mttr-and-ettr-recovery.svg",
     "asset": "ch24/ch24-sub-minute-fault-isolation-mttr-and-ettr-recovery.svg",
-    "name": "ch24-sub-minute-fault-isolation-mttr-and-ettr-recovery"
+    "name": "ch24-sub-minute-fault-isolation-mttr-and-ettr-recovery",
+    "section": "24.7.1",
+    "caption": "自治 AIOps 自愈管线的经济与算力账本：将隐性故障 MTTR 从人工 4.20 小时压缩 360 倍至 42.0 秒，使 32,768 卡集群的有效训练时间比（ETTR）从 88.4% 跃升至 97.8%，半年直接挽回 1,350 万美元等效算力"
   },
   {
     "number": "24-26",
     "figure": "24-26",
     "figure_id": "24-26",
-    "title": "数据中心级工作负载—集合通信网—液冷热力学三域数字孪生仿真器",
+    "title": "十万卡智算中心“工作负载—集合通信网—液冷热力学”三域耦合数字孪生仿真器：在集群投建前零成本预演不同网络收敛比、路由算法与微批调度下的端到端吞吐与机柜热分布",
     "file": "ch24-datacenter-digital-twin-workload-network-thermal-cosim.svg",
     "asset": "ch24/ch24-datacenter-digital-twin-workload-network-thermal-cosim.svg",
-    "name": "ch24-datacenter-digital-twin-workload-network-thermal-cosim"
+    "name": "ch24-datacenter-digital-twin-workload-network-thermal-cosim",
+    "section": "24.7.2",
+    "caption": "十万卡智算中心“工作负载—集合通信网—液冷热力学”三域耦合数字孪生仿真器：在集群投建前零成本预演不同网络收敛比、路由算法与微批调度下的端到端吞吐与机柜热分布"
   },
   {
     "number": "24-27",
     "figure": "24-27",
     "figure_id": "24-27",
-    "title": "全书 24 章五大架构部类全景数字资产总图",
-    "file": "ch24-thirty-chapter-five-part-encyclopedia-master-atlas.svg",
-    "asset": "ch24/ch24-thirty-chapter-five-part-encyclopedia-master-atlas.svg",
-    "name": "ch24-thirty-chapter-five-part-encyclopedia-master-atlas"
+    "title": "100 MW 智算工厂跨五大架构部类端到端联立账本：从 100 MW 变电站红线与 PUE 1.12 切分出 496 台 72 卡液冷超节点机柜（35,712 张 GPU），联立兑现 27.81 EFLOPS 持续训练算力、80.9 天十万亿旗舰模型交付工期与每百万词元 0.61 美元净服务成本（算例 24-12）",
+    "file": "ch24-hundred-mw-ai-factory-five-part-master-atlas.svg",
+    "asset": "ch24/ch24-hundred-mw-ai-factory-five-part-master-atlas.svg",
+    "name": "ch24-hundred-mw-ai-factory-five-part-master-atlas",
+    "section": "24.8.1",
+    "caption": "100 MW 智算工厂跨五大架构部类端到端联立账本：从 100 MW 变电站红线与 PUE 1.12 切分出 496 台 72 卡液冷超节点机柜（35,712 张 GPU），联立兑现 27.81 EFLOPS 持续训练算力、80.9 天十万亿旗舰模型交付工期与每百万词元 0.61 美元净服务成本（算例 24-12）"
   },
   {
     "number": "24-28",
     "figure": "24-28",
     "figure_id": "24-28",
-    "title": "全书第一至第三部分（第 1 至 12 章）核心技术地图",
+    "title": "第一至第三部分（第 1–12 章）跨层耦合方程与百兆瓦工厂参数锚点：从稀疏激活缩放律、72 卡超节点与 UEC 无损网络，到 QuaRot 量化、PD 分离与每卡时 2.16 美元全池弹性摊销",
     "file": "ch24-pillar-1-to-3-hardware-networking-training-inference-map.svg",
     "asset": "ch24/ch24-pillar-1-to-3-hardware-networking-training-inference-map.svg",
-    "name": "ch24-pillar-1-to-3-hardware-networking-training-inference-map"
+    "name": "ch24-pillar-1-to-3-hardware-networking-training-inference-map",
+    "section": "24.8.1",
+    "caption": "第一至第三部分（第 1–12 章）跨层耦合方程与百兆瓦工厂参数锚点：从稀疏激活缩放律、72 卡超节点与 UEC 无损网络，到 QuaRot 量化、PD 分离与每卡时 2.16 美元全池弹性摊销"
   },
   {
     "number": "24-29",
     "figure": "24-29",
     "figure_id": "24-29",
-    "title": "全书第四至第五部分（第 13 至 24 章）核心技术地图",
+    "title": "第四至第五部分（第 13–24 章）集群底座与自演进应用全栈映射：从 3FS 存储、800V 温水液冷（PUE 1.12）、TEE 机密防护与异步 RLVR，到多模态智能体、片上 SRAM 协同与亚分钟级自治运维",
     "file": "ch24-pillar-4-to-5-multimodal-agent-science-frontier-map.svg",
     "asset": "ch24/ch24-pillar-4-to-5-multimodal-agent-science-frontier-map.svg",
-    "name": "ch24-pillar-4-to-5-multimodal-agent-science-frontier-map"
+    "name": "ch24-pillar-4-to-5-multimodal-agent-science-frontier-map",
+    "section": "24.8.1",
+    "caption": "第四至第五部分（第 13–24 章）集群底座与自演进应用全栈映射：从 3FS 存储、800V 温水液冷（PUE 1.12）、TEE 机密防护与异步 RLVR，到多模态智能体、片上 SRAM 协同与亚分钟级自治运维"
   },
   {
     "number": "24-30",
     "figure": "24-30",
     "figure_id": "24-30",
-    "title": "统治全书 24 章的四大普适物理守恒律矩阵",
-    "file": "ch24-four-fundamental-conservation-laws-across-30-chapters.svg",
-    "asset": "ch24/ch24-four-fundamental-conservation-laws-across-30-chapters.svg",
-    "name": "ch24-four-fundamental-conservation-laws-across-30-chapters"
+    "title": "贯穿全书二十四章的四大普适物理守恒律：屋脊算术强度变换律、分形存储状态局部性定律、关键路径通信与控制完全掩盖律、以及从焦耳热到有效智能比特的能量转换定律",
+    "file": "ch24-four-fundamental-conservation-laws-across-24-chapters.svg",
+    "asset": "ch24/ch24-four-fundamental-conservation-laws-across-24-chapters.svg",
+    "name": "ch24-four-fundamental-conservation-laws-across-24-chapters",
+    "section": "24.8.2",
+    "caption": "贯穿全书二十四章的四大普适物理守恒律：屋脊算术强度变换律、分形存储状态局部性定律、关键路径通信与控制完全掩盖律、以及从焦耳热到有效智能比特的能量转换定律"
   },
   {
     "number": "24-31",
     "figure": "24-31",
     "figure_id": "24-31",
-    "title": "2026 至 2035 未来十年 AI 基础设施技术演进路线图",
+    "title": "2026–2035 未来十年 AI 基础设施演进路线预测：从铜缆超节点、FP4 微缩放与初期 RL 算子合成，迈向晶圆级 3D 光电共封装（CPO）、百万卡洲际联邦集群、吉瓦核能智算园区与全栈自治自演进系统",
     "file": "ch24-ten-year-ai-infrastructure-roadmap-2026-to-2035.svg",
     "asset": "ch24/ch24-ten-year-ai-infrastructure-roadmap-2026-to-2035.svg",
-    "name": "ch24-ten-year-ai-infrastructure-roadmap-2026-to-2035"
+    "name": "ch24-ten-year-ai-infrastructure-roadmap-2026-to-2035",
+    "section": "24.8.2",
+    "caption": "2026–2035 未来十年 AI 基础设施演进路线预测：从铜缆超节点、FP4 微缩放与初期 RL 算子合成，迈向晶圆级 3D 光电共封装（CPO）、百万卡洲际联邦集群、吉瓦核能智算园区与全栈自治自演进系统"
   },
   {
     "number": "24-32",
     "figure": "24-32",
     "figure_id": "24-32",
-    "title": "第 24 章暨全书终极收束：AI 基础设施系统工程的皇冠闭环",
+    "title": "《深入理解 AI Infra：量化分析与系统设计》二十四章全栈演进螺旋：从人类奠定第一性原理与物理守恒律，到百兆瓦级智算工厂孕育万亿参数前沿模型，再到智能体反哺实现算子、编译器、芯片与集群的正向自演进",
     "file": "ch24-grand-finale-ai-infrastructure-system-engineering-crown.svg",
     "asset": "ch24/ch24-grand-finale-ai-infrastructure-system-engineering-crown.svg",
-    "name": "ch24-grand-finale-ai-infrastructure-system-engineering-crown"
+    "name": "ch24-grand-finale-ai-infrastructure-system-engineering-crown",
+    "section": "24.8.2",
+    "caption": "《深入理解 AI Infra：量化分析与系统设计》二十四章全栈演进螺旋：从人类奠定第一性原理与物理守恒律，到百兆瓦级智算工厂孕育万亿参数前沿模型，再到智能体反哺实现算子、编译器、芯片与集群的正向自演进"
   }
 ]

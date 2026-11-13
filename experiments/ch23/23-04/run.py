@@ -11,7 +11,7 @@ RESULTS_PATH = HERE / "results" / "summary.json"
 
 
 def compute_metrics() -> dict:
-    # 1. 32B FP8 Block Diffusion vs Autoregressive LLM (Ex 26-1)
+    # 1. 32B FP8 Block Diffusion vs Autoregressive LLM (Ex 23-14)
     model_params_b = 32.0
     weight_bytes_gb = 32.0
     hbm_bw_gbs = 3350.0
@@ -33,7 +33,7 @@ def compute_metrics() -> dict:
     speedup_vs_ar_x = round(dllm_tok_per_sec / ar_tok_per_sec, 2)  # 5.93x
     dllm_8b_tok_per_sec = 1420.0
 
-    # 2. Dynamic Confidence Threshold Remasking (Ex 26-2)
+    # 2. Dynamic Confidence Threshold Remasking (Ex 23-15)
     confidence_gamma = 0.92
     step_saving_pct = 35.0
     avg_steps_per_block = round(denoise_steps_t * (1.0 - step_saving_pct / 100.0), 1)  # 6.5 steps

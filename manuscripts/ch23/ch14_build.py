@@ -203,7 +203,7 @@ def fig_14_1_simultaneous(ex: Exporter):
     ]
     for x, y, w, h, label, role in levers:
         box(ax, x, y, w, h, label, role, size=11)
-    ex.save(fig, 'ch14-codesign-simultaneous-equations')
+    ex.save(fig, 'ch23-codesign-simultaneous-equations')
 
 
 def fig_14_2_dual_track(ex: Exporter):
@@ -223,7 +223,7 @@ def fig_14_2_dual_track(ex: Exporter):
     arrow(ax, (0.75, 0.66), (0.75, 0.59))
     arrow(ax, (0.75, 0.43), (0.75, 0.36))
     text(ax, 0.75, 0.10, '随 H 拉长逼近渐近上限 ~2.60×', size=11, ha='center', weight='bold', color=BORDER_COL['blue'])
-    ex.save(fig, 'ch14-v41-dual-track-context-scaling')
+    ex.save(fig, 'ch23-v41-dual-track-context-scaling')
 
 
 def fig_14_3_four_stage(ex: Exporter):
@@ -246,25 +246,25 @@ def fig_14_3_four_stage(ex: Exporter):
     box(ax, 0.53, 0.16, 0.43, 0.19, '因子二 (1/4)：CSA2 跨层共享\n全局 KV 3514.25→890 B/tok', 'teal', size=11)
     arrow(ax, (0.47, 0.255), (0.53, 0.255))
     text(ax, 0.50, 0.08, '两项正交机制叠加，使持久化前缀缓存体积降至原架构的约 1/8', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch14-v41-four-stage-attention-pipeline')
+    ex.save(fig, 'ch23-v41-four-stage-attention-pipeline')
 
 
 def fig_14_4_digital_worker(ex: Exporter):
     fig, ax = canvas(3.75)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '算例 14-2：24×7 数字员工（≥30 tok/s）未优化基线成本对比', color='blue')
+    card(ax, 0.02, 0.50, 0.96, 0.46, '算例 23-2：24×7 数字员工（≥30 tok/s）未优化基线成本对比', color='blue')
     box(ax, 0.04, 0.56, 0.44, 0.25, 'V4.1 Flash（1.30→6.42 GiB）\n200K：B200 5.97 vs API 4.69\n1M：B200 13.34 vs API 6.41 ($/M)', 'teal', size=11)
     box(ax, 0.52, 0.56, 0.44, 0.25, 'Kimi K3 基线（5.57→26.17 GiB）\n200K：B300 145.13 vs 65.91\n1M：B200 496.08 vs 125.19 ($/M)', 'orange', size=11)
 
     card(ax, 0.02, 0.03, 0.96, 0.43, '性能归因审计（OPTIMIZATION-AUDIT）：区分架构代价与运行时伪影', color='orange')
-    box(ax, 0.04, 0.16, 0.44, 0.19, '伪影一：逐层固定调度 150 μs\n93 层累加 13.95 ms/tok', 'orange', size=11)
+    box(ax, 0.04, 0.16, 0.44, 0.19, '伪影一：逐层启动调度 150 μs\n93 层累加 13.95 ms/tok', 'orange', size=11)
     box(ax, 0.52, 0.16, 0.44, 0.19, '伪影二：10% 重建 + 漏算 DSpark\n摊入 9.18–9.26 ms/tok（占七成）', 'purple', size=11)
     text(ax, 0.50, 0.08, '审计结论：未启用 MTP/DSpark 与算子融合的基线不能外推为架构劣势', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch14-digital-worker-v41-vs-k3-cost')
+    ex.save(fig, 'ch23-digital-worker-v41-vs-k3-cost')
 
 
 def fig_14_5_opentallas(ex: Exporter):
     fig, ax = canvas(3.75)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '算例 14-3（Case B）：OpenTallas 单步 124.221 μs 四资源账本', color='teal')
+    card(ax, 0.02, 0.50, 0.96, 0.46, '算例 23-3（Case B）：OpenTallas 单步 124.221 μs 四资源账本', color='teal')
     res_boxes = [
         (0.04, 0.58, 0.21, 0.24, 'ROM 权重读\n7.828 μs\n并行隐藏', 'teal'),
         (0.28, 0.58, 0.21, 0.24, 'HBM KV 读\n41.979 μs\n记忆主导', 'blue'),
@@ -275,20 +275,20 @@ def fig_14_5_opentallas(ex: Exporter):
         box(ax, x, y, w, h, label, role, size=11)
 
     card(ax, 0.02, 0.03, 0.96, 0.43, 'Case D 晶圆级跳数延迟越界与 Case E/F 2000 万美元 NRE 回本边界', color='orange')
-    box(ax, 0.04, 0.15, 0.44, 0.20, '晶圆级扩展直径反超（Case D）\n15 跳 × 100 ns × 120 层 = 180 μs\n单凭通信即击穿 124.221 μs 预算', 'orange', size=11)
+    box(ax, 0.04, 0.15, 0.44, 0.20, '晶圆级扩展直径反超（Case D）\n15 跳 × 100 ns × 120 层 = 180 μs\n单凭通信即超出 124.221 μs 预算', 'orange', size=11)
     box(ax, 0.52, 0.15, 0.44, 0.20, '2000 万美元 NRE 回本（Case F）\n需产 40 万亿 tok（省 $0.50/M）\n1 年需 254 台 · 半年需 508 台', 'blue', size=11)
     text(ax, 0.50, 0.08, '专用 ASIC 必须在物理跳数延迟与模型半衰期之间同时闭合方程', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch14-opentallas-four-resource-and-wafer-hop')
+    ex.save(fig, 'ch23-opentallas-four-resource-and-wafer-hop')
 
 
 def fig_14_6_decision_tree(ex: Exporter):
     fig, ax = canvas(3.85)
-    card(ax, 0.02, 0.03, 0.96, 0.94, '全书总结：AI Infra 架构师的五步定量诊断与反事实协同决策树', color='blue')
+    card(ax, 0.02, 0.03, 0.96, 0.94, '软硬件协同方法论：五步定量诊断与反事实协同决策树', color='blue')
     steps = [
         (0.05, 0.72, 0.42, 0.14, '第一步：锁定量纲与负载边界\n区分十进制/二进制 · 明确 SLO', 'blue'),
         (0.53, 0.72, 0.42, 0.14, '第二步：建立四资源下界方程\n计算 / 访存 / 通信 / 存储 I/O', 'teal'),
         (0.53, 0.50, 0.42, 0.15, '第三步：定位瓶颈与翻转点\nRoofline · 利特尔 · Amdahl', 'purple'),
-        (0.05, 0.50, 0.42, 0.15, '第四步：剥离架构与软件伪影\n审计逐层固定开销与双重拷贝', 'orange'),
+        (0.05, 0.50, 0.42, 0.15, '第四步：剥离架构与软件伪影\n审计逐层启动开销与双重拷贝', 'orange'),
         (0.05, 0.26, 0.90, 0.16, '第五步：跨层反事实推演与 TCO 均衡（Counterfactual Co-Design）\n当 HBM 免费 / 互连翻倍 / 半衰期减半时，重验算法—系统—硬件最优解', 'teal'),
     ]
     for x, y, w, h, label, role in steps:
@@ -297,8 +297,8 @@ def fig_14_6_decision_tree(ex: Exporter):
     arrow(ax, (0.74, 0.72), (0.74, 0.65))
     arrow(ax, (0.53, 0.575), (0.47, 0.575))
     arrow(ax, (0.26, 0.50), (0.26, 0.42))
-    box(ax, 0.05, 0.08, 0.90, 0.12, '终极准则：以物理下界指导架构取舍，让每焦耳能量转化为有效智能', 'blue', size=11)
-    ex.save(fig, 'ch14-five-step-diagnostic-decision-tree')
+    box(ax, 0.05, 0.08, 0.90, 0.12, '协同准则：以物理下界指导架构取舍，让每焦耳能量转化为有效智能', 'blue', size=11)
+    ex.save(fig, 'ch23-five-step-diagnostic-decision-tree')
 
 
 def fig_14_7_dflash(ex: Exporter):
@@ -318,7 +318,7 @@ def fig_14_7_dflash(ex: Exporter):
     arrow(ax, (0.75, 0.66), (0.75, 0.59))
     arrow(ax, (0.75, 0.43), (0.75, 0.36))
     text(ax, 0.75, 0.10, '扩散做草稿 + 自回归做验证', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
-    ex.save(fig, 'ch14-dflash-block-diffusion-role-reversal')
+    ex.save(fig, 'ch23-dflash-block-diffusion-role-reversal')
 
 
 def fig_14_8_beyond_chinchilla(ex: Exporter):
@@ -338,7 +338,7 @@ def fig_14_8_beyond_chinchilla(ex: Exporter):
     arrow(ax, (0.75, 0.66), (0.75, 0.59))
     arrow(ax, (0.75, 0.43), (0.75, 0.36))
     text(ax, 0.75, 0.10, '以一次性训练换长期服务降本', size=11, ha='center', weight='bold', color=BORDER_COL['blue'])
-    ex.save(fig, 'ch14-beyond-chinchilla-lifecycle-compute-allocation')
+    ex.save(fig, 'ch23-beyond-chinchilla-lifecycle-compute-allocation')
 
 
 def fig_14_9_design_review(ex: Exporter):
@@ -358,7 +358,7 @@ def fig_14_9_design_review(ex: Exporter):
     arrow(ax, (0.75, 0.66), (0.75, 0.59))
     arrow(ax, (0.75, 0.43), (0.75, 0.36))
     text(ax, 0.75, 0.10, '仅 A 与 C 获准进入下一轮验证', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
-    ex.save(fig, 'ch14-design-review-3candidate-kv-audit')
+    ex.save(fig, 'ch23-design-review-3candidate-kv-audit')
 
 
 def fig_14_10_gpu_crossover(ex: Exporter):
@@ -378,12 +378,12 @@ def fig_14_10_gpu_crossover(ex: Exporter):
     arrow(ax, (0.75, 0.66), (0.75, 0.59))
     arrow(ax, (0.75, 0.43), (0.75, 0.36))
     text(ax, 0.75, 0.10, '严苛 SLO 与强通信不可替代', size=11, ha='center', weight='bold', color=BORDER_COL['blue'])
-    ex.save(fig, 'ch14-datacenter-vs-consumer-gpu-crossover')
+    ex.save(fig, 'ch23-datacenter-vs-consumer-gpu-crossover')
 
 
 def fig_14_11_preregistration(ex: Exporter):
     fig, ax = canvas(3.65)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '预注册预测协议（D11-SP04）：必填字段与 SHA-256 冻结', color='blue')
+    card(ax, 0.02, 0.50, 0.96, 0.46, '预注册预测协议：十项必填字段与 SHA-256 冻结', color='blue')
     fields = [
         (0.04, 0.58, 0.21, 0.24, '① 时间对象\ncreated_utc\ndeadline_utc', 'blue'),
         (0.28, 0.58, 0.21, 0.24, '② 冻结哈希\n脚本与协议\nSHA-256 锁定', 'teal'),
@@ -400,7 +400,7 @@ def fig_14_11_preregistration(ex: Exporter):
     box(ax, 0.04, 0.15, 0.44, 0.20, 'supported_in_scope\n质量全过且落入 [L, U]\n仅限当前条件，严禁外推', 'teal', size=11)
     box(ax, 0.52, 0.15, 0.44, 0.20, 'refuted_in_scope\n13-07 观测 0.6931 < 0.70\n保留 v1 记录，另立 v2', 'orange', size=11)
     text(ax, 0.50, 0.08, '科学诚实准则：预测落空与反例记录比事后拼凑成功更具诊断价值', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch14-preregistered-prediction-lifecycle')
+    ex.save(fig, 'ch23-preregistered-prediction-lifecycle')
 
 
 def fig_14_12_exp13_07_ratios(ex: Exporter):
@@ -420,7 +420,7 @@ def fig_14_12_exp13_07_ratios(ex: Exporter):
     arrow(ax, (0.75, 0.66), (0.75, 0.59))
     arrow(ax, (0.75, 0.43), (0.75, 0.36))
     text(ax, 0.75, 0.10, '严守规则判定 refuted_in_scope', size=11, ha='center', weight='bold', color=BORDER_COL['purple'])
-    ex.save(fig, 'ch14-exp13-07-k96-counterexample-and-k192-ratios')
+    ex.save(fig, 'ch23-exp13-07-k96-counterexample-and-k192-ratios')
 
 
 def fig_14_13_exp13_07_buffer(ex: Exporter):
@@ -442,12 +442,12 @@ def fig_14_13_exp13_07_buffer(ex: Exporter):
     box(ax, 0.04, 0.15, 0.44, 0.20, '机制账本（19,516/19,516）\n总墙钟 522.648 s · 零孤儿\n进程组 RSS 峰值 4.714 GB', 'teal', size=11)
     box(ax, 0.52, 0.15, 0.44, 0.20, 'Trial 2 extract 比率 0.3735\n17.619s vs 重启 47.176s\n第 3 段重算遇 24.4s 停顿', 'blue', size=11)
     text(ax, 0.50, 0.08, '教训：重启策略将前缀重算暴露了 3 次，放大操作系统与加载抖动风险', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch14-exp13-07-commit-buffer-idempotence')
+    ex.save(fig, 'ch23-exp13-07-commit-buffer-idempotence')
 
 
 def fig_14_14_double_counting(ex: Exporter):
     fig, ax = canvas(3.75)
-    card(ax, 0.02, 0.50, 0.96, 0.46, '跨层协同收益归因的四大重复计数陷阱（TC-18）', color='orange')
+    card(ax, 0.02, 0.50, 0.96, 0.46, '跨层协同收益归因的四大重复计数陷阱', color='orange')
     traps = [
         (0.04, 0.69, 0.44, 0.14, '陷阱一：KV 压缩 × 扩批吞吐\n扩批已含 KV 腾出的显存', 'orange'),
         (0.52, 0.69, 0.44, 0.14, '陷阱二：FP4 字宽 × 算力翻倍\n端到端 FP4 已同时含两者', 'orange'),
@@ -460,8 +460,8 @@ def fig_14_14_double_counting(ex: Exporter):
     card(ax, 0.02, 0.03, 0.96, 0.43, '正确归因：固定顺序连乘（Telescoping）与交叉消融', color='teal')
     box(ax, 0.04, 0.15, 0.44, 0.20, '顺序连乘恒等式\nC0/CK = (C0/C1)·(C1/C2)\n单项归因依赖替换次序', 'teal', size=11)
     box(ax, 0.52, 0.15, 0.44, 0.20, '2×2 交叉消融实验\n分离主效应与软硬件耦合\n严禁虚构不支持格式基线', 'blue', size=11)
-    text(ax, 0.50, 0.08, '纪律（TC-18）：只有共享同一任务、质量与分母的相邻状态才可连乘', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch14-four-double-counting-traps-matrix')
+    text(ax, 0.50, 0.08, '归因纪律：只有共享同一任务、质量与分母的相邻状态才可连乘', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch23-four-double-counting-traps-matrix')
 
 
 def fig_14_15_cost_telescoping(ex: Exporter):
@@ -481,7 +481,7 @@ def fig_14_15_cost_telescoping(ex: Exporter):
     arrow(ax, (0.75, 0.66), (0.75, 0.59))
     arrow(ax, (0.75, 0.43), (0.75, 0.36))
     text(ax, 0.75, 0.10, '模型密度 × 低精度 × 带宽 × 调度', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
-    ex.save(fig, 'ch14-2023-2026-cost-reduction-telescoping')
+    ex.save(fig, 'ch23-2023-2026-cost-reduction-telescoping')
 
 
 def fig_14_16_dual_track_book(ex: Exporter):
@@ -489,19 +489,19 @@ def fig_14_16_dual_track_book(ex: Exporter):
     card(ax, 0.02, 0.04, 0.46, 0.92, '轨道 A：Qwen3-8B Dense', color='blue', title_size=11)
     box(ax, 0.04, 0.66, 0.42, 0.16, '第 2–5 章：144 KiB/tok\nRoofline 拐点与 FA 内核', 'blue', size=11)
     box(ax, 0.04, 0.43, 0.42, 0.16, '第 8–12 章：分页 KV 池\n双卡调度、端侧与抢占恢复', 'teal', size=11)
-    box(ax, 0.04, 0.20, 0.42, 0.16, '第 13–14 章：RAG 23/77 块\nFP8 复审与 K192 预注册证伪', 'purple', size=11)
+    box(ax, 0.04, 0.20, 0.42, 0.16, '第 13、23 章：RAG 23/77 块\nFP8 复审与 K192 预注册证伪', 'purple', size=11)
     arrow(ax, (0.25, 0.66), (0.25, 0.59))
     arrow(ax, (0.25, 0.43), (0.25, 0.36))
-    text(ax, 0.25, 0.10, '小而密模型的单卡/端云压榨', size=11, ha='center', weight='bold', color=BORDER_COL['blue'])
+    text(ax, 0.25, 0.10, '小而密模型的单卡/端云优化', size=11, ha='center', weight='bold', color=BORDER_COL['blue'])
 
     card(ax, 0.52, 0.04, 0.46, 0.92, '轨道 B：DeepSeek MoE', color='teal', title_size=11)
     box(ax, 0.54, 0.66, 0.42, 0.16, '第 2–7 章：671B/37B + MLA\nNVL72 超节点与 EP 通信', 'teal', size=11)
-    box(ax, 0.54, 0.43, 0.42, 0.16, '第 9–11 章：PD/AF 与 3FS\nDualPipe 训练与 RL 推演', 'blue', size=11)
-    box(ax, 0.54, 0.20, 0.42, 0.16, '第 13–14 章：CSA2 890 B\n1/8 持久缓存与员工 TCO', 'purple', size=11)
+    box(ax, 0.54, 0.43, 0.42, 0.16, '第 9–17 章：PD/AF 与 DualPipe\n3FS 存储池与异步 RL 推演', 'blue', size=11)
+    box(ax, 0.54, 0.20, 0.42, 0.16, '第 18、23 章：CSA2 890 B\n1/8 持久缓存与员工 TCO', 'purple', size=11)
     arrow(ax, (0.75, 0.66), (0.75, 0.59))
     arrow(ax, (0.75, 0.43), (0.75, 0.36))
     text(ax, 0.75, 0.10, '超大规模稀疏系统的跨层求解', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
-    ex.save(fig, 'ch14-dual-track-book-throughline-summary')
+    ex.save(fig, 'ch23-dual-track-book-throughline-summary')
 
 
 def fig_14_17_rubin_v41(ex: Exporter):
@@ -523,7 +523,7 @@ def fig_14_17_rubin_v41(ex: Exporter):
     box(ax, 0.04, 0.15, 0.44, 0.20, '算存比从 1250 升至 2273\n奖励 RoPE-post 与 DFlash\n吸收 50 PFLOPS 矩阵算力', 'teal', size=11)
     box(ax, 0.52, 0.15, 0.44, 0.20, '22 TB/s HBM4 + 3.6 TB/s\n支撑百万上下文 16K 精排\n与跨卡 AF/EP 无气泡流水', 'blue', size=11)
     text(ax, 0.50, 0.08, '结论：算力增速快于带宽增速的剪刀差，使跨层状态压缩成为永恒主线', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch14-rubin-v41-codesign-mapping-matrix')
+    ex.save(fig, 'ch23-rubin-v41-codesign-mapping-matrix')
 
 
 def fig_14_18_four_dim_loop(ex: Exporter):
@@ -533,16 +533,16 @@ def fig_14_18_four_dim_loop(ex: Exporter):
         (0.04, 0.69, 0.44, 0.16, '第一维：模型结构（Ch02–03）\nCSA2 · KDA · RoPE-post', 'blue'),
         (0.52, 0.69, 0.44, 0.16, '第二维：运行时（Ch05, 08–11）\nFlashMLA · 图重放 · PD 分离', 'teal'),
         (0.04, 0.52, 0.44, 0.14, '第三维：超节点（Ch04, 06–07）\nMXFP4 · HBM4 · NVLink 6', 'purple'),
-        (0.52, 0.52, 0.44, 0.14, '第四维：电力与安全（Ch15–16）\n液冷热学 · 跨城训练 · TEE', 'orange'),
+        (0.52, 0.52, 0.44, 0.14, '第四维：电力与安全（Ch14, 16）\n液冷热学 · 园区互联 · TEE', 'orange'),
     ]
     for x, y, w, h, label, role in dims:
         box(ax, x, y, w, h, label, role, size=11)
 
-    card(ax, 0.02, 0.03, 0.96, 0.43, '承前启后：迈向第 15–16 章的吉瓦级能源与机密安全底座', color='teal')
-    box(ax, 0.04, 0.15, 0.44, 0.20, '向下扎入物理极限（第 15 章）\n单柜 130–600 kW、集群 GW\n电力热学与跨城光网成核心', 'orange', size=11)
+    card(ax, 0.02, 0.03, 0.96, 0.43, '跨部类衔接：联动第 14、16 章底座并迈向第 24 章全栈系统', color='teal')
+    box(ax, 0.04, 0.15, 0.44, 0.20, '向下联动电热底座（第 14 章）\n单柜 130–600 kW、园区百兆瓦\n高压配电与温水液冷成硬约束', 'orange', size=11)
     box(ax, 0.52, 0.15, 0.44, 0.20, '向外筑牢可信防线（第 16 章）\n万亿权重与百万 KV 驻云端\nGPU TEE 与安全沙箱成刚需', 'purple', size=11)
-    text(ax, 0.50, 0.08, '全书通式：用可复算的物理账本与可证伪的实验纪律驾驭智能基础设施', size=11, ha='center', weight='bold', color=COL['ink'])
-    ex.save(fig, 'ch14-four-dimensional-codesign-closed-loop')
+    text(ax, 0.50, 0.08, '协同通式：用可复算的物理账本与可证伪的实验纪律驾驭新型架构', size=11, ha='center', weight='bold', color=COL['ink'])
+    ex.save(fig, 'ch23-four-dimensional-codesign-closed-loop')
 
 
 def fig_14_19_chakra(ex: Exporter):
@@ -562,7 +562,7 @@ def fig_14_19_chakra(ex: Exporter):
     arrow(ax, (0.75, 0.66), (0.75, 0.59))
     arrow(ax, (0.75, 0.43), (0.75, 0.36))
     text(ax, 0.75, 0.10, '模拟器是假设生成器而非真值本身', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
-    ex.save(fig, 'ch14-chakra-execution-trace-graph-simulation')
+    ex.save(fig, 'ch23-chakra-execution-trace-graph-simulation')
 
 
 def fig_14_20_neusight(ex: Exporter):
@@ -582,7 +582,7 @@ def fig_14_20_neusight(ex: Exporter):
     arrow(ax, (0.75, 0.66), (0.75, 0.59))
     arrow(ax, (0.75, 0.43), (0.75, 0.36))
     text(ax, 0.75, 0.10, '严禁仅用端到端总和验证预测器', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
-    ex.save(fig, 'ch14-neusight-tile-roofline-calibration')
+    ex.save(fig, 'ch23-neusight-tile-roofline-calibration')
 
 
 def fig_14_21_farskip(ex: Exporter):
@@ -602,7 +602,7 @@ def fig_14_21_farskip(ex: Exporter):
     arrow(ax, (0.75, 0.66), (0.75, 0.59))
     arrow(ax, (0.75, 0.43), (0.75, 0.36))
     text(ax, 0.75, 0.10, '用模型结构换取一整层通信窗', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
-    ex.save(fig, 'ch14-farskip-collective-delayed-dependency')
+    ex.save(fig, 'ch23-farskip-collective-delayed-dependency')
 
 
 def fig_14_22_moe_granularity(ex: Exporter):
@@ -622,7 +622,7 @@ def fig_14_22_moe_granularity(ex: Exporter):
     arrow(ax, (0.75, 0.66), (0.75, 0.59))
     arrow(ax, (0.75, 0.43), (0.75, 0.36))
     text(ax, 0.75, 0.10, '专家粒度 G 须与网络基数联立', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
-    ex.save(fig, 'ch14-moe-granularity-vs-network-radix-co-design')
+    ex.save(fig, 'ch23-moe-granularity-vs-network-radix-co-design')
 
 
 def fig_14_23_kv_head_tp(ex: Exporter):
@@ -641,8 +641,8 @@ def fig_14_23_kv_head_tp(ex: Exporter):
     box(ax, 0.54, 0.20, 0.42, 0.16, '协同法则：n_kv 取 TP 约数\n或采用 MLA 潜向量 + DP 注意力', 'teal', size=11)
     arrow(ax, (0.75, 0.66), (0.75, 0.59))
     arrow(ax, (0.75, 0.43), (0.75, 0.36))
-    text(ax, 0.75, 0.10, '架构超参数锁死部署并行上限', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
-    ex.save(fig, 'ch14-kv-head-ratio-vs-tensor-parallel-limit')
+    text(ax, 0.75, 0.10, '架构超参数直接制约张量并行上限', size=11, ha='center', weight='bold', color=BORDER_COL['orange'])
+    ex.save(fig, 'ch23-kv-head-ratio-vs-tensor-parallel-limit')
 
 
 def fig_14_24_codesign_loop(ex: Exporter):
@@ -652,8 +652,8 @@ def fig_14_24_codesign_loop(ex: Exporter):
         (0.04, 0.68, 0.44, 0.18, '① 第一性原理四资源下界筛选\n核算计算 / HBM / 网络 / SSD\n直接淘汰违反物理守恒候选', 'blue'),
         (0.52, 0.68, 0.44, 0.18, '② 瓦片级与轨迹图细粒度仿真\nNeuSight 校准 + Chakra ETG\nPhantora / Charon 预估重叠', 'teal'),
         (0.52, 0.44, 0.44, 0.18, '③ 算法—系统—硬件联立改造\nCSA2 压 KV · FarSkip 掩通信\nDFlash 块扩散对齐矩阵单元', 'purple'),
-        (0.04, 0.44, 0.44, 0.18, '④ 预注册预测与留出集门控实验\n实验 14-01（K192 R=0.693141）\n实验 14-02（条件比率瀑布）', 'orange'),
-        (0.04, 0.20, 0.92, 0.18, '⑤ 全生命周期 TCO 与代际半衰期反馈（Beyond-Chinchilla + NRE 摊销）\n将线上实测阶段归因（如 70% 主机固定开销）反馈至下一代芯片定义', 'teal'),
+        (0.04, 0.44, 0.44, 0.18, '④ 预注册预测与留出集门控实验\n实验 13-07（K192 R=0.693141）\n实验 23-02（条件比率瀑布）', 'orange'),
+        (0.04, 0.20, 0.92, 0.18, '⑤ 全生命周期 TCO 与代际半衰期反馈（Beyond-Chinchilla + NRE 摊销）\n将线上实测阶段归因（如 70% 主机调度开销）反馈至下一代芯片定义', 'teal'),
     ]
     for x, y, w, h, label, role in steps:
         box(ax, x, y, w, h, label, role, size=11)
@@ -661,13 +661,13 @@ def fig_14_24_codesign_loop(ex: Exporter):
     arrow(ax, (0.74, 0.68), (0.74, 0.62))
     arrow(ax, (0.52, 0.53), (0.48, 0.53))
     arrow(ax, (0.26, 0.44), (0.26, 0.38))
-    box(ax, 0.04, 0.06, 0.92, 0.10, '第 14 章定理：唯有经受住逐阶段归因与预注册证伪的协同设计才具价值', 'blue', size=11)
-    ex.save(fig, 'ch14-codesign-pre-silicon-to-production-loop')
+    box(ax, 0.04, 0.06, 0.92, 0.10, '协同工程准则：唯有经受住逐阶段归因与预注册证伪的设计才具价值', 'blue', size=11)
+    ex.save(fig, 'ch23-codesign-pre-silicon-to-production-loop')
 
 
 def fig_14_25_hwnas_pareto(ex: Exporter):
     fig, ax = canvas(3.75)
-    card(ax, 0.02, 0.04, 0.46, 0.92, 'A. 算例 14-11：混合层整数规划', color='blue', title_size=11)
+    card(ax, 0.02, 0.04, 0.46, 0.92, 'A. 算例 23-12：混合层整数规划', color='blue', title_size=11)
     box(ax, 0.04, 0.66, 0.42, 0.16, '64 层 · 16 并发 · 预算 ≤36 GiB\n全注意力 4 GiB vs 线性 64 MiB', 'blue', size=11)
     box(ax, 0.04, 0.43, 0.42, 0.16, '规划最优解：1:7 混合装配\n8 层全注意力 + 56 层线性层', 'teal', size=11)
     box(ax, 0.04, 0.20, 0.42, 0.16, '状态 35.50 GiB (省 7.21×)\nTPOT 24.08 ms (快 3.60×)', 'purple', size=11)
@@ -682,12 +682,12 @@ def fig_14_25_hwnas_pareto(ex: Exporter):
     arrow(ax, (0.75, 0.66), (0.75, 0.59))
     arrow(ax, (0.75, 0.43), (0.75, 0.36))
     text(ax, 0.75, 0.10, '将芯片物理边界编译为层间配比', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
-    ex.save(fig, 'ch14-hardware-aware-hybrid-layer-allocation-pareto')
+    ex.save(fig, 'ch23-hardware-aware-hybrid-layer-allocation-pareto')
 
 
 def fig_14_26_sparse_upcycling(ex: Exporter):
     fig, ax = canvas(3.75)
-    card(ax, 0.02, 0.04, 0.46, 0.92, 'A. 算例 14-12：Sparse Upcycling', color='purple', title_size=11)
+    card(ax, 0.02, 0.04, 0.46, 0.92, 'A. 算例 23-13：Sparse Upcycling', color='purple', title_size=11)
     box(ax, 0.04, 0.66, 0.42, 0.16, '起点：8B 稠密底座 (15T 词元)\n复制 FFN 为 8 专家 + 微扰', 'purple', size=11)
     box(ax, 0.04, 0.43, 0.42, 0.16, '0.2T 对齐 + 3.0T 稀疏退火\n总耗 0.2374×10²⁴ FLOPs', 'teal', size=11)
     box(ax, 0.04, 0.20, 0.42, 0.16, '较从头训 15T (1.17×10²⁴)\n净省 79.71% 预训练算力', 'blue', size=11)
@@ -702,7 +702,7 @@ def fig_14_26_sparse_upcycling(ex: Exporter):
     arrow(ax, (0.75, 0.66), (0.75, 0.59))
     arrow(ax, (0.75, 0.43), (0.75, 0.36))
     text(ax, 0.75, 0.10, 'MOHAWK 低成本跨架构迁移范式', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
-    ex.save(fig, 'ch14-sparse-upcycling-and-attention-distillation-pipeline')
+    ex.save(fig, 'ch23-sparse-upcycling-and-attention-distillation-pipeline')
 
 
 def fig_14_27_moe_bw_pareto(ex: Exporter):
@@ -713,7 +713,7 @@ def fig_14_27_moe_bw_pareto(ex: Exporter):
     box(ax, 0.04, 0.20, 0.42, 0.16, '过切 G=16：d_exp=256\n瓦片折半 · 耗时 2.02 ms', 'purple', size=11)
     arrow(ax, (0.25, 0.66), (0.25, 0.59))
     arrow(ax, (0.25, 0.43), (0.25, 0.36))
-    text(ax, 0.25, 0.10, 'd_exp 严丝合缝对齐 N_tile=512', size=11, ha='center', weight='bold', color=BORDER_COL['purple'])
+    text(ax, 0.25, 0.10, 'd_exp 精确对齐 N_tile=512', size=11, ha='center', weight='bold', color=BORDER_COL['purple'])
 
     card(ax, 0.52, 0.04, 0.46, 0.92, 'B. Rubin vs TPU v7 单步账本', color='blue', title_size=11)
     box(ax, 0.54, 0.66, 0.42, 0.16, 'Vera Rubin (22 TB/s HBM4)\n算存比 2,272.73 FLOP/B', 'blue', size=11)
@@ -722,7 +722,7 @@ def fig_14_27_moe_bw_pareto(ex: Exporter):
     arrow(ax, (0.75, 0.66), (0.75, 0.59))
     arrow(ax, (0.75, 0.43), (0.75, 0.36))
     text(ax, 0.75, 0.10, 'HBM4 与 NVLink 6 协同提速', size=11, ha='center', weight='bold', color=BORDER_COL['blue'])
-    ex.save(fig, 'ch14-moe-granularity-vs-memory-bandwidth-pareto')
+    ex.save(fig, 'ch23-moe-granularity-vs-memory-bandwidth-pareto')
 
 
 def fig_14_28_hwnas_loop(ex: Exporter):
@@ -735,14 +735,45 @@ def fig_14_28_hwnas_loop(ex: Exporter):
     arrow(ax, (0.25, 0.43), (0.25, 0.36))
     text(ax, 0.25, 0.10, '剔除 r_attn=50% (54.83 GiB)', size=11, ha='center', weight='bold', color=BORDER_COL['teal'])
 
-    card(ax, 0.52, 0.04, 0.46, 0.92, 'B. 闭环帕累托筛选最优解', color='purple', title_size=11)
+    card(ax, 0.52, 0.04, 0.46, 0.92, 'B. 多约束帕累托筛选最优解', color='purple', title_size=11)
     box(ax, 0.54, 0.66, 0.42, 0.16, '36 组候选筛出 6 组可行解\n按质量函数 Q 降序排列', 'purple', size=11)
     box(ax, 0.54, 0.43, 0.42, 0.16, '锁定 (G*=8, 3.125%, 25%)\n16/512 专家 + 1:3 注意力', 'teal', size=11)
     box(ax, 0.54, 0.20, 0.42, 0.16, '单步 12.91 ms · 状态 28.25G\n综合质量得分 96.80', 'blue', size=11)
     arrow(ax, (0.75, 0.66), (0.75, 0.59))
     arrow(ax, (0.75, 0.43), (0.75, 0.36))
-    text(ax, 0.75, 0.10, '实验 14-03 全自动闭环寻优', size=11, ha='center', weight='bold', color=BORDER_COL['purple'])
-    ex.save(fig, 'ch14-hardware-aware-neural-architecture-search-loop')
+    text(ax, 0.75, 0.10, '实验 23-03 全自动帕累托寻优', size=11, ha='center', weight='bold', color=BORDER_COL['purple'])
+    ex.save(fig, 'ch23-hardware-aware-neural-architecture-search-loop')
+
+
+def build_part1(ex: Exporter) -> None:
+    fig_14_1_simultaneous(ex)
+    fig_14_2_dual_track(ex)
+    fig_14_3_four_stage(ex)
+    fig_14_4_digital_worker(ex)
+    fig_14_5_opentallas(ex)
+    fig_14_6_decision_tree(ex)
+    fig_14_7_dflash(ex)
+    fig_14_8_beyond_chinchilla(ex)
+    fig_14_9_design_review(ex)
+    fig_14_10_gpu_crossover(ex)
+    fig_14_11_preregistration(ex)
+    fig_14_12_exp13_07_ratios(ex)
+    fig_14_13_exp13_07_buffer(ex)
+    fig_14_14_double_counting(ex)
+    fig_14_15_cost_telescoping(ex)
+    fig_14_16_dual_track_book(ex)
+    fig_14_17_rubin_v41(ex)
+    fig_14_18_four_dim_loop(ex)
+    fig_14_19_chakra(ex)
+    fig_14_20_neusight(ex)
+    fig_14_21_farskip(ex)
+    fig_14_22_moe_granularity(ex)
+    fig_14_23_kv_head_tp(ex)
+    fig_14_24_codesign_loop(ex)
+    fig_14_25_hwnas_pareto(ex)
+    fig_14_26_sparse_upcycling(ex)
+    fig_14_27_moe_bw_pareto(ex)
+    fig_14_28_hwnas_loop(ex)
 
 
 def main():
@@ -887,7 +918,7 @@ def main():
             "file": "ch14-preregistered-prediction-lifecycle.svg",
             "asset": "ch14/ch14-preregistered-prediction-lifecycle.svg",
             "section": "14.7.1",
-            "caption": "可证伪系统科学：预注册预测协议的 10 项必填字段与不可篡改状态机（D11-SP04）",
+            "caption": "可证伪系统科学：预注册预测协议的 10 项必填字段与不可篡改状态机",
             "source_refs": ["research/draft11-outline-audit/report.md", "experiments/ch13/13-07/prediction.json"],
             "TeachingRole": "建立面向 AI 系统性能工程的预注册预测、SHA-256 冻结与诚实证伪全流程"
         },
@@ -917,7 +948,7 @@ def main():
             "file": "ch14-four-double-counting-traps-matrix.svg",
             "asset": "ch14/ch14-four-double-counting-traps-matrix.svg",
             "section": "14.8.1",
-            "caption": "跨层协同收益归因的四大重复计数陷阱（Double-Counting Traps）与正交消融实验纪律（TC-18）",
+            "caption": "跨层协同收益归因的四大重复计数陷阱（Double-Counting Traps）与正交消融实验纪律",
             "source_refs": ["research/token-cost-2023-2026/report.md"],
             "TeachingRole": "防止读者将相互耦合的容量、精度、系统基准与推测倍率错误连乘"
         },
@@ -937,7 +968,7 @@ def main():
             "file": "ch14-dual-track-book-throughline-summary.svg",
             "asset": "ch14/ch14-dual-track-book-throughline-summary.svg",
             "section": "14.8.2",
-            "caption": "全书双主线（Qwen3-8B Dense 与 DeepSeek-V3/V4.1 MoE）跨章逐步修正推算全景图（D11-SP01）",
+            "caption": "全书双主线（Qwen3-8B Dense 与 DeepSeek-V3/V4.1 MoE）跨章逐步修正推算全景图",
             "source_refs": ["research/draft11-outline-audit/report.md"],
             "TeachingRole": "串联第 2 章至第 14 章的两条核心模型推算轨道，展现约束逐章具体化的演进脉络"
         },
