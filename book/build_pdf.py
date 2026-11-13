@@ -58,7 +58,7 @@ def prepare(source, dest, assets, source_ref=None):
             relative = resolved.relative_to(ROOT).as_posix()
             if source_ref:
                 from urllib.parse import quote
-                return f'[{match[1]}](https://github.com/bojieli/ai-infra-book/blob/{quote(source_ref, safe="")}/{quote(relative, safe="/")}{fragment})'
+                return f'[{match[1]}](https://github.com/VitalyAnkh/comprehensive-ai-infra/blob/{quote(source_ref, safe="")}/{quote(relative, safe="/")}{fragment})'
             return f'[{match[1]}](../{relative}{fragment})'
         return match[0]
     text = re.sub(r'!\[[^\n]*\]\([^\n)]+\)|(?<!!)\[([^\n\[\]]+)\]\(([^\n)]+)\)',

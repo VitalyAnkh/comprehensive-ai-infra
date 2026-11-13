@@ -37,7 +37,7 @@ MANUSCRIPTS = ROOT / 'manuscripts'
 BOOK_EN = ROOT / 'book-en'
 BOOK_ZH_TW = ROOT / 'book-zh-tw'
 BOOK_RU = ROOT / 'book-ru'
-REPO = 'https://github.com/bojieli/ai-infra-book'
+REPO = 'https://github.com/VitalyAnkh/comprehensive-ai-infra'
 LFS_POINTER = b'version https://git-lfs.github.com/spec/v1'
 FIGURE_WIDTH = 1400  # pixels; sharp on a 300 ppi reader, small enough for phones
 

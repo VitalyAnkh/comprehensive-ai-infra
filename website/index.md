@@ -2,9 +2,9 @@
 
 **数据搬移塑造了 AI Infra 的架构。** 从一次模型执行开始，理解芯片、网络、推理与训练系统如何改变数据的复用、放置和等待。
 
-[本版 GitHub 仓库（Plain Edition）](https://github.com/VitalyAnkh/plain-ai-infra-book) · [前言](../manuscripts/00-前言.md) · [上游原版仓库（@bojieli）](https://github.com/bojieli/ai-infra-book) · [下载原版 PDF](https://github.com/bojieli/ai-infra-book/releases/latest/download/AI-Infra-Book.pdf) · [EPUB](https://github.com/bojieli/ai-infra-book/releases/latest/download/AI-Infra-Book.epub)
+[本版 GitHub 仓库（Comprehensive Edition）](https://github.com/VitalyAnkh/comprehensive-ai-infra) · [前言](../manuscripts/00-前言.md) · [本版修订与扩充说明](../manuscripts/00-前言.md#本版修订与扩充说明) · [上游原版仓库（@bojieli）](https://github.com/bojieli/ai-infra-book) · [下载原版 PDF](https://github.com/bojieli/ai-infra-book/releases/latest/download/AI-Infra-Book.pdf) · [EPUB](https://github.com/bojieli/ai-infra-book/releases/latest/download/AI-Infra-Book.epub)
 
-> **关于本在线版本（清晰易读重述版 / Plain Edition）**：本网站基于[李博杰（@bojieli）](https://github.com/bojieli)所著开源书籍[《深入理解 AI Infra：量化分析与系统设计》](https://github.com/bojieli/ai-infra-book)构建。在严格保留原书全部技术事实、数学推导、量化算例与配图的基础上，去除原初稿中因 AI 参与辅助写作产生的拗口生造词与翻译腔，改写为清晰易读、符合现代汉语习惯的书面语。本版遵循上游原书的 [Apache License 2.0](../LICENSE) 许可，原书著作权归原作者 Bojie Li（李博杰）所有。
+> **关于本在线版本（深度改写与全栈扩充版 / Comprehensive Edition）**：本网站对应开源仓库 [`VitalyAnkh/comprehensive-ai-infra`](https://github.com/VitalyAnkh/comprehensive-ai-infra)，基于[李博杰（@bojieli）](https://github.com/bojieli)所著上游十二章开源书籍[《深入理解 AI Infra：量化分析与系统设计》](https://github.com/bojieli/ai-infra-book)经大规模深度改写与全栈扩充构建。在零删减保留原书全部技术事实、数学推导与实测数据的基础上，全面消除原初稿的 AI 生造词与欧化翻译腔，原位补强前十二章前沿专题，并将全书从十二章体系化扩建为**五大部类二十四章（逾 50,800 行正文、1,022 幅矢量配图、264 个定量算例、542 道全解思考题、179 个实验套件与 77 篇系统案例）**。本版遵循上游原书的 [Apache License 2.0](../LICENSE) 许可，原书著作权归原作者 Bojie Li（李博杰）所有。
 
 ## 这本书写什么
 

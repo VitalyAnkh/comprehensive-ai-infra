@@ -243,7 +243,7 @@ jobs:
           repo = os.environ['REPOSITORY']
           built = os.environ['BUILT_AT']
           latest = f'https://github.com/{repo}/releases/latest/download'
-          site = 'https://vitalyankh.github.io/plain-ai-infra-book'
+          site = 'https://vitalyankh.github.io/comprehensive-ai-infra'
           rows = [
               ('简体中文', 'AI-Infra-Book', f'{site}/'),
               ('English', 'AI-Infra-Book-EN', f'{site}/en/'),
