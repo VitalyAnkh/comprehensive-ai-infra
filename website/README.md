@@ -1,6 +1,6 @@
 # 在线阅读与自动发布
 
-正文维护在 `manuscripts/`，包含前言和十二章 Markdown；网站目录直接从正文生成。MkDocs Material 从这些源文件构建阅读网站：简体中文位于站点根目录，英文版（`book-en/`）和繁體中文版（`book-zh-tw/`）分别位于 `en/` 与 `zh-tw/`，由页眉的语言菜单互相切换。每种语言是独立的 MkDocs 站点，各有导航与搜索索引；译本的配图只有 PDF，构建时用 `pdftoppm`（Poppler）转为 PNG。网站提供章节导航、全文搜索、数学公式、脚注、深色模式和手机阅读布局。
+正文维护在 `manuscripts/`，包含前言和二十四章 Markdown；网站目录直接从正文生成。MkDocs Material 从这些源文件构建阅读网站：简体中文位于站点根目录，英文版（`book-en/`）和繁體中文版（`book-zh-tw/`）分别位于 `en/` 与 `zh-tw/`，由页眉的语言菜单互相切换。每种语言是独立的 MkDocs 站点，各有导航与搜索索引；译本的配图只有 PDF，构建时用 `pdftoppm`（Poppler）转为 PNG。网站提供章节导航、全文搜索、数学公式、脚注、深色模式和手机阅读布局。
 
 ## 本地构建
 
@@ -22,7 +22,7 @@ python scripts/check_site.py
 
 每次 push 到 `main`，GitHub Actions 自动执行：
 
-1. 从同一提交的 Markdown 构建网站与十二章全书 PDF。
+1. 从同一提交的 Markdown 构建网站与二十四章全书 PDF。
 2. 检查网站链接、图片、PDF 章节、文字及字体；保存 PDF 日志和代表页面预览。
 3. 创建按北京时间命名的 GitHub Release，上传三种语言的 PDF 与 EPUB（`AI-Infra-Book`、`AI-Infra-Book-EN`、`AI-Infra-Book-ZH-TW`）。重复运行同一提交会更新全书 PDF 并移除旧的辅助附件。封面、网站压缩包、来源和校验记录保留在 Actions 产物中。
 4. 将网站部署到 GitHub Pages。只有 PDF 和网站都构建成功后才发布；Release 与 Pages 分别执行，Pages 设置问题不会阻止 Release 附件发布。

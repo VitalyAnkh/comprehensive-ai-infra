@@ -171,7 +171,8 @@ def prepare(number, source, edition, source_ref, figures):
         relative = quote(resolved.relative_to(ROOT).as_posix(), safe='/')
         suffix = f'#{fragment}' if fragment else ''
         return f'[{label}]({REPO}/blob/{ref}/{relative}{suffix})'
-    text = re.sub(r'(?<!!)\[([^\]]*)\]\(([^)]+)\)', link, text)
+    text = re.sub(r'!\[[^\n]*\]\([^\n)]+\)|(?<!!)\[([^\n\[\]]+)\]\(([^\n)]+)\)',
+                  lambda m: m[0] if m[1] is None else link(m), text)
     return text
 
 

@@ -1,6 +1,6 @@
 # AI Infra Book · LaTeX 排版
 
-沿用 AI Agent Book 的 ElegantBook 系列模板，生成真正由 XeLaTeX 排版的 PDF。正文读取 `manuscripts/01-*.md` 至 `12-*.md`，不维护另一套章节副本。
+沿用 AI Agent Book 的 ElegantBook 系列模板，生成真正由 XeLaTeX 排版的 PDF。正文读取 `manuscripts/00-前言.md` 与 `01-*.md` 至 `24-*.md`，不维护另一套章节副本。
 
 最新版全书 PDF：<https://github.com/bojieli/ai-infra-book/releases/latest/download/AI-Infra-Book.pdf>（由 GitHub Actions 从 `main` 自动构建并发布到 Releases）。英文版 PDF 由 [`book-en/`](../book-en/README.md) 用同一模板构建，同一 Release 中发布为 `AI-Infra-Book-EN.pdf`。
 
@@ -11,7 +11,7 @@
 在仓库根目录执行：
 
 ```bash
-# 十二章、封面和目录
+# 二十四章、封面和目录
 bash book/build_pdf.sh
 
 # 只看第二章，保留原来的第 2 章及 2.x 编号
@@ -66,7 +66,7 @@ python3 book/build_epub.py --edition zh-tw # 繁體中文版 → book-zh-tw/AI-I
 
 ## 自动构建与 Release
 
-每次 push 到 `main`，工作流在 macOS 15 上从当前 Markdown 自动编译十二章全书、封面 PDF/PNG，检查章节与字体并保存样页和日志。PDF 与网站构建都通过后，自动创建该提交对应的 GitHub Release，并部署网站至 Pages；完整说明见 [发布流程](../website/README.md)。
+每次 push 到 `main`，工作流在 macOS 15 上从当前 Markdown 自动编译二十四章全书、封面 PDF/PNG，检查章节与字体并保存样页和日志。PDF 与网站构建都通过后，自动创建该提交对应的 GitHub Release，并部署网站至 Pages；完整说明见 [发布流程](../website/README.md)。
 
 云端输出写入 `build/pdf/`，不回写仓库中的 PDF。使用 `--source-ref` 参数的发布版会将资料链接改为对应提交的 GitHub 链接。发布构建与本地均使用 Songti SC、Menlo、Arial Unicode MS 和 Heiti SC；通过 Homebrew 安装 TeX Live，Pandoc 固定为 3.7.0.2。编译前运行 `python3 book/check_build_fonts.py` 检查字体是否齐全，编译后检查 PDF 实际使用的字体，缺失或回退即失败。导入的系列模板原件保持不变。
 
